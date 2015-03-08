@@ -1,0 +1,112 @@
+{% extends "master.html" %}
+
+{% import "auth/wtf_bootstrap.html" as form_macros %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block maincontents %}
+      <div class="main padder">
+      <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 m-t-large">
+            <section class="panel">
+            <div class="panel-body">
+              <form class="form-horizontal" method="post" action="/profile" enctype="multipart/form-data" data-validate="parsley">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Photo</label>
+                  <div class="col-lg-9 media">
+                    <div class="bg-light pull-left text-center media-large thumb-large"><img src="{% if c_user.profile_pic  %}{{ c_user.profile_pic }}{% else %}/static/images/avatar.png{% endif %}"  width="80px" /></div>
+                    <div class="media-body">
+                      <input type="file" name="file" title="Change" class="btn btn-sm btn-info m-b-small"><br>
+                      <button class="btn btn-sm btn-default">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Email</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="email" disabled placeholder="Email Adderess" value="{{profile.email}}" class="bg-focus form-control" data-required="true" data-type="email">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Display name</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="name" placeholder="Name" value="{{profile.name}}" data-required="true" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">First name</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="first_name" placeholder="" value="{{profile.first_name}}" data-required="true" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Last name</label>
+                  <div class="col-lg-8">
+                    <input type="text" name="last_name" placeholder="" value="{{profile.last_name}}" data-required="true" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                <label class="col-lg-3 control-label">Notification</label>
+                    <div class="col-lg-6">
+                      <!-- checkbox -->
+                      <div class="checkbox">
+                        <label class="checkbox-custom">
+                          <input type="checkbox" name="train_complete" {% if profile.train_complete %} checked="checked" {% endif %}>
+                          <i class="icon-unchecked"></i>
+                          Train Complete
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label class="checkbox-custom">
+                          <input type="checkbox" name="email_quota_limit" {% if profile.email_quota_limit %} checked="checked" {% endif %} id="2">
+                          <i class="icon-unchecked"></i>
+                          pre quota limit notification
+                        </label>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Privacy</label>
+                    <div class="col-lg-6">
+                      <!-- checkbox -->
+                      <div class="checkbox">
+                        <label class="checkbox-custom">
+                          <input type="checkbox" name="email_updates" {% if profile.email_updates %} checked="checked" {% endif %}>
+                          <i class="icon-unchecked"></i>
+                          Send me email on new feature updates
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label class="checkbox-custom">
+                          <input type="checkbox" name="allow_contact" {% if profile.allow_contact %} checked="checked" {% endif %} id="cb3">
+                          <i class="icon-unchecked"></i>
+                          Allow other users to contact me
+                        </label>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-9 col-lg-offset-3">
+                    <button type="submit" class="btn btn-white">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if ($("input[type=checkbox]").is(':checked')){
+                $(this).attr("value","True");
+            }else{
+                $(this).attr("value","False");
+            }
+        });
+    </script>
+{% endblock %}

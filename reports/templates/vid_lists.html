@@ -1,0 +1,201 @@
+{% extends "reports_base.html" %}
+{% block css_sheets %}{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='lib/pretty-json/pretty-json.css') }}"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+
+{% endblock %}
+{% block title %}Voter ID's{% endblock %}
+
+{% block maincontents %}
+
+        <section class="panel">
+
+            <header class="panel-heading">Voters Cards <i class="icon-info-sign text-muted" data-toggle="popover"
+                                                      data-html="
+            true" data-placement="right" data-content="." title="" data-trigger="hover" data-original-title="Help"></i> </header>
+
+            <header class="panel-heading">Generate Reports
+                <div class="input-daterange" id="datepicker" >
+                    <input type="text" class="input-small" name="start-date" id="start-date" />
+                    <span class="add-on" style="vertical-align: top;height:20px">to</span>
+                    <input type="text" class="input-small" name="end" id="end-date" />
+                     <div class="m-t-small"><a href="#" class="btn btn-sm btn-info" id="generate_button_vid">Generate</a></div>
+                </div>
+                </header>
+            <div class="table-responsive">
+              <table class="table m-b-none" id="my_buckets" data-ride="datatables">
+                <thead>
+                  <tr>
+                    <th width="10%">VID</th>
+                    <th width="20%">Name</th>
+                    <th width="10%">DOB</th>
+                    <th width="20%">Father/Hubband's Name</th>
+                    <th width="10%">Added Date</th>
+                    <th width="15%">Validation Status</th>
+                    <th width="15%">Validation Date</th>
+                  </tr>
+                </thead>
+                <tbody id="my_buckets_body">
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+
+{% endblock %}
+{% block modalcontent %}{{ super() }}
+        <!-- .modal -->
+  <div id="id_modal_add_bucket" class="modal fade">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+            <h4 class="modal-title" id="myModalLabel_Bucket">Update Pan</h4>
+          </div>
+          <div class="modal-body">
+              <form class="m-b-none form-horizontal" id="form_create_bucket" action="/api/bucket/" method="post">
+                    <div class="block">
+                      <label class="control-label">Name</label>
+                      <input type="text" name="name" class="form-control" placeholder="Bucket name">
+                    </div>
+                    <div class="block">
+                      <label class="control-label">Voter's ID</label>
+                      <textarea class="form-control" name="description" placeholder="Bucket description" rows="5"></textarea>
+                    </div>
+                    <input type="hidden" name="owner" value="{{ c_user.id }}">
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="button_create"
+                            data-loading-text="Updating...">Update</button>
+                  </div>
+              </form>
+        </div><!-- /.modal-content -->
+      </div>
+          </div>
+  </div>
+
+
+    <div id="id_modal_train_logs" class="modal fade">
+        <div class="modal-dailog dialog-wide">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Logs</h3>
+                    <p>PanCard Modification logs.</p>
+                </div>
+                <div class="modal-body flickr-result-table scrollable fixed-height-400">
+                    <div id="id_train_logs_body">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="clear_logs" class="btn btn-primary" >Clear Logs</button>
+                    <a href="#" class="btn" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- / .modal -->
+  {% endblock %}
+{% block js_scripts %} {{ super() }}
+
+  <script src="{{ url_for('static', filename='js/backbone-min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/pretty-json/pretty-json-min.js') }}"></script>
+
+
+
+  <!-- datatables -->
+  <script src="{{ url_for('static', filename='js/datatables/jquery.dataTables.min.js') }}"></script>
+
+    <script>
+    var oTable = null;
+    var current_bucket_id = null;
+    function load_data(){
+        smoke.signal("loading all pancards!...", function(e){
+        }, {
+            duration: 2000,
+            classname: "custom-class"
+        });
+        var my_buckets = Array();
+        $.getJSON('/api/voters_cards',function(resp){
+            my_instances = resp.data;
+            for(var i=0;i<my_instances.length;i++){
+                $.localStorage.setItem(my_instances[i].id, JSON.stringify(my_instances[i]));
+            }
+
+            // datatable
+            if (oTable == null){
+                $('[data-ride="datatables"]').each(function() {
+                    oTable = $(this).dataTable( {
+                        "bProcessing": true,
+                        "aaData":my_instances,
+                        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>r>t<'row'<'col-sm-6'i><'col col-sm-6'p>>",
+                        "sPaginationType": "full_numbers",
+                        "aoColumns": [
+                            {   "mData": "vc_number",
+                                "mRender": function ( data, type, full ) {
+return '<input type="hidden"  class="pan" value="'+data+'"><a class="link" href="#'+data+'">'+data+'</a>';
+                                }
+                            },
+                            { "mData": "electors_name",
+                                "mRender": function ( data, type, full ) {
+                                    return '<label class="pname" >'+data+'</label>';
+                                }
+                            },
+                            { "mData": "dob"
+                            },
+                            { "mData": "f_or_h_name" },
+                            { "mData": "date_added" ,"sType":"date"},
+                            { "mData": "validation_state" },
+                            { "mData": "date_validated" ,"sType":"date"}
+
+                        ]
+
+                    } );
+                });
+            }else{
+                var table = oTable.dataTable();
+                var  oSettings = table.fnSettings();
+                table.fnClearTable(this);
+
+                for (var i=0; i<my_instances.length; i++) {
+                    table.oApi._fnAddData(oSettings, my_instances[i]);
+                }
+
+                oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+                table.fnDraw();
+            }
+            /*$("#my_buckets tbody").click(function(event) {
+             console.log($(event.target.parentNode.firstChild).html())
+             window.location = $(event.target.parentNode.childNodes[0].firstChild).attr("href")
+             });*/
+            $('#my_buckets_body tr').click( function() {
+                $('#my_buckets_body tr').each(function(){
+                    $(this).removeClass('row_selected');
+                });
+                $(this).addClass('row_selected');
+                console.log("Row Clicked"+$(this).find('.bid').val());
+                current_bucket_id = $(this).find('.bid').val();
+                $(".current_bucket_id").val($(this).find('.bid').val());
+                $(".current_bucket_name").html($(this).find('.bname').html());
+                $(".current-bucket-name-input").val($(this).find('.bname').html());
+                $(".current-bucket-desc-input").val("new desc here..");
+                $("li.conditional").removeClass('disabled');
+            });
+
+        });
+    }
+    $(document).ready(function(){
+        $.ajaxSetup({ cache: false });
+        load_data();
+
+
+    });
+
+
+    </script>
+
+{% endblock %}

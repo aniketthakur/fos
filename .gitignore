@@ -1,0 +1,6 @@
+.idea
+*.pyc
+venv/
+pygame
+/pitaya/data/
+/pitaya/uploads/

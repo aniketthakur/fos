@@ -1,0 +1,311 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+    <link href="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/css/rickshaw.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="{{ url_for('static', filename='plugins/jquery-morris-chart/css/morris.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="grid-body no-border">
+    <div class="row">
+        <h3>Analytics <span class="semi-bold">Dashboard</span></h3>
+        <br/>
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles green added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles blue added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">Application Validation </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles purple added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">Date Entry </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles red added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">KYC Validation </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles gray added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">Ready for CGT/GRT </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles blue added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">CGT/GRT </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles green added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">Credit underwirting </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles purple added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
+                    <div class="tiles-title text-black">Disbursment </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-body no-border">
+                        <h3>Daily Submitions <span class="semi-bold">Charts</span></h3>
+                        <p>Current Week </p>
+                    </div>
+                    <div class="tiles white no-margin"> <span id="spark-2"></span> </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-body no-border">
+                        <h3>Daily Disbursement <span class="semi-bold">Charts</span></h3>
+                        <p>Current Week </p>
+                    </div>
+                    <div class="tiles white no-margin"> <span id="spark-1"></span> </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+{% endblock %}
+{% block js_scripts_pre %}{{ super() }}
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/d3.v2.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/rickshaw.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-morris-chart/js/morris.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.time.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.selection.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.animator.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.orderBars.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js' )}}"></script>
+
+{% endblock %}
+
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#spark-2").sparkline([350,365,340,340,345,350,355,360,350,370,375,380,385,390,340], {
+                type: 'line',
+                width: '100%',
+                height: '200',
+                lineColor: '#0aa699',
+                fillColor: '#e6f6f5',
+                minSpotColor: '#0c948a',
+                maxSpotColor: '#78cec7',
+                highlightSpotColor: '#78cec7',
+                highlightLineColor: '#78cec7',
+                spotRadius: 5
+            });
+            $("#spark-1").sparkline([340,355,350,350,345,355,355,360,350,370,375,380,385,390,340], {
+                type: 'line',
+                width: '100%',
+                height: '200',
+                lineColor: '#00FF22',
+                fillColor: '#e6f6f5',
+                minSpotColor: '#02948a',
+                maxSpotColor: '#78cec7',
+                highlightSpotColor: '#78cec7',
+                highlightLineColor: '#78cec7',
+                spotRadius: 5
+            });
+        });
+
+
+    </script>
+{% endblock %}

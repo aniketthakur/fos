@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Tokens{% endblock %}
+{% block css_sheets %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='js/select2/select2.css')}}">
+
+{% endblock %}
+
+{% block action_bar %}
+    <li><div class="m-t-small"><a class="btn btn-sm btn-info" data-toggle="modal" href="#generate_token"><i class="icon-plus"></i> Generate Token</a></div></li>
+{% endblock %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <!-- scrollable inbox widget -->
+            <section class="panel">
+                <header class="panel-heading">
+                    <h3>Instance Tokens</h3><br/>
+                    <p>Generate tokens against Instance Buckets, any Instances launched with the chosen Instance Bucket will be accessible by you.</p>
+                </header>
+                <section style="height:400px" id="all_tokens" class="panel-body scrollbar scroll-y m-b">
+
+                </section>
+            </section>
+            <!-- / scrollable inbox widget-->
+        </div>
+    </div>
+
+{% endblock %}
+{% block modalcontent %}
+    <div id="generate_token" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="m-b-none" id="form_generate_token" action="/api/app_token/generate" method="POST" data-validate="parsley">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+                        <h4 class="modal-title" id="myModalLabel_Bucket">Generate Instance Token</h4>
+                    </div>
+                    <div class="modal-body">
+                            <div class="block">
+                                <label class="control-label">Choose instances</label>
+                                <div class="m-b">
+                                    <input type="text" id="instance_bucket" name="bucket_names"  style="width:260px" value=""/>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <label class="control-label">Choose services</label>
+                                <div class="m-b">
+                                    <input type="text" name="services" id="services-tags" style="width:260px" value=""/>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <label class="control-label">Management permissions</label>
+                                <div class="m-b">
+                                    <input type="text" name="management_perms" id="management-tags" style="width:260px" value=""/>
+                                </div>
+                            </div>
+
+                            <div class="block ">
+                                <label class="control-label">Token Expires in</label>
+                                <div class="m-b row">
+                                    <div class="col-lg-6">
+                                        <input type="text" name="token_duration" data-required="true" data-type="number" class="form-control input-sm" placeholder="in munutes">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="button_create"  >Generate</button>
+                            </div>
+
+                    </div><!-- /.modal-content -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}
+    <script src="{{ url_for('static', filename='js/select2/select2.min.js')}}"></script>
+
+    <script type="text/javascript">
+
+    function load_data(){
+        $.getJSON('/api/app_token',function(resp){
+            console.log(resp)
+            var tokens = resp.tokens
+            var html = ""
+            for(var i=0;i<tokens.length;i++){
+                html += '<article class="media">'+
+                        '<div class="media-body">'+
+                        '<div class="pull-right media-mini text-center text-muted">'+
+                        '<small class="label bg-light">'+tokens[i].date_created+'</small>'+
+                        '</div>'+
+                        '<div><code>'+tokens[i].token+'</code></div>'+
+                        '<small class="block"><a href="/instance_buckets#'+tokens[i].id+'" class="">'+tokens[i].instance_buckets+'</a>,'+tokens[i].perms+','+tokens[i].services+' ,expires in '+tokens[i].expires_in+' mins from date created</small>'+
+                        '<button class="btn-sm btn btn-danger delete_token_button" data="'+tokens[i].token+'">Delete Token</button></div>'+
+                        '</article>'+
+                        '<div class="line pull-in"></div>';
+            }
+            $("#all_tokens").html(html);
+
+            $(".delete_token_button").click(function(){
+                var url = "/api/app_token/"+$(this).attr('data');
+                console.log(url)
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    cache: false,
+                    contentType: "application/json",
+                    success : function(data){
+                        smoke.signal(data.message, function(e){
+                        }, {
+                            duration: 2000,
+                            classname: "custom-class"
+                        });
+                        load_data();
+                    }
+                });
+                return false;
+            });
+        });
+    }
+    $(document).ready(function(){
+        $.ajaxSetup({ cache: false });
+        load_data()
+        $("#services-tags").select2({
+                    tags:["IMAGE_MATCHING", "OCR", "FILTER","FACE_RECOGNITION","LICENCE PLATE READING"],
+                    tokenSeparators: [",", " "]}
+        );
+        $("#management-tags").select2({
+                    tags:["ADD_BUCKET", "REMOVE_BUCKET","TRAIN_BUCKET" ,"ADD_OBJECT","REMOVE_OBJECT"],
+                    tokenSeparators: [",", " "]}
+        );
+        $.getJSON('/api/instance_bucket',function(resp){
+            console.log(resp.data)
+            var my_instances = resp.data
+            //var html = ""
+            var instances = Array()
+            for(var i=0;i<my_instances.length;i++){
+                //html += '<option value="'+my_instances[i].id+'">'+my_instances[i].name+'</option>'
+                instances.push(my_instances[i].name)
+            }
+
+            $("#instance_bucket").select2({
+                        tags:instances,
+                        tokenSeparators: [",", " "]}
+            );
+            //$("#instance_bucket").html(html);
+            //$("#instance_bucket").trigger("chosen:updated");
+        });
+
+        $("#form_generate_token").submit(function(){
+            $.ajax({
+                type:'POST',
+                url:$(this).attr("action"),
+                data: JSON.stringify($(this).serializeObject()),
+                contentType:'application/json; charset=utf-16',
+                dataType:'json',
+                cache: false,
+                success:function (resp) {
+                    console.log(resp);
+                    smoke.signal(JSON.stringify(resp), function(e){
+                    }, {
+                        duration: 2000,
+                        classname: "custom-class"
+                    });
+                    $("#generate_token").modal("hide");
+                    load_data()
+                }
+            });
+            return false;
+        });
+
+    })
+
+</script>
+{% endblock %}

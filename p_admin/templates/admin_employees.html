@@ -1,0 +1,138 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-3 pull-right">
+            <a class="btn btn-block btn-success" type="button" href="/admin/add_emp">Add Employee</a></a>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+
+        <div class="span12">
+
+
+            <div class="grid simple ">
+                <div class="grid-title">
+                    <h4><span class="semi-bold">Employees</span></h4>
+
+                    <div class="tools"> <a href="javascript:;" class="reload"></a>  </div>
+                </div>
+
+                <div class="grid-body ">
+                    <table class="table table-hover table-condensed" id="example">
+                        <thead>
+                        <tr >
+                            <th style="width:1%" >
+                                <div class="checkbox check-default">
+                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
+                                    <label for="checkbox10"></label>
+                                </div>
+                            </th>
+                            <th style="width:20%">EMP ID</th>
+                            <th style="width:20%">NAME</th>
+                            <th style="width:20%">ROLE</th>
+                            <th style="width:20%">EMAIL</th>
+                            <th style="width:20%">PHONE NUMBER</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="v-align-middle">
+                                <div class="checkbox check-default">
+                                    <input id="checkbox11" type="checkbox" value="1">
+                                    <label for="checkbox11"></label>
+                                </div>
+                            </td>
+                            <td class="v-align-middle">12444</td>
+                            <td class="v-align-middle"><span class="muted">John Doe</span>
+                            </td>
+                            <td><span class="muted">Executive</span>
+                            </td>
+                            <td><span class="muted">john@esthenos.com</span>
+                            </td>
+                            <td><span class="muted">+91992200223</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-align-middle">
+                                <div class="checkbox check-default">
+                                    <input id="checkbox12" type="checkbox" value="1">
+                                    <label for="checkbox11"></label>
+                                </div>
+                            </td>
+                            <td class="v-align-middle">12944</td>
+                            <td class="v-align-middle"><span class="muted">John Doe</span>
+                            </td>
+                            <td><span class="muted">Executive</span>
+                            </td>
+                            <td><span class="muted">john@esthenos.com</span>
+                            </td>
+                            <td><span class="muted">+91992200223</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-align-middle">
+                                <div class="checkbox check-default">
+                                    <input id="checkbox13" type="checkbox" value="1">
+                                    <label for="checkbox11"></label>
+                                </div>
+                            </td>
+                            <td class="v-align-middle">1214</td>
+                            <td class="v-align-middle"><span class="muted">John Doe</span>
+                            </td>
+                            <td><span class="muted">Executive</span>
+                            </td>
+                            <td><span class="muted">john@esthenos.com</span>
+                            </td>
+                            <td><span class="muted">+91992200223</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="v-align-middle">
+                                <div class="checkbox check-default">
+                                    <input id="checkbox14" type="checkbox" value="1">
+                                    <label for="checkbox11"></label>
+                                </div>
+                            </td>
+                            <td class="v-align-middle">93444</td>
+                            <td class="v-align-middle"><span class="muted">John Doe</span>
+                            </td>
+                            <td><span class="muted">Executive</span>
+                            </td>
+                            <td><span class="muted">john@esthenos.com</span>
+                            </td>
+                            <td><span class="muted">+91992200223</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#source").select2({
+                placeholder: "Select a State",
+                allowClear: true
+            });
+            $("#branch").select2();
+            $("#region").select2();
+            $("#applicationstatus").select2({
+                placeholder: "filter by application state",
+                allowClear: true
+            });
+
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block css_sheets %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <!-- scrollable inbox widget -->
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="label label-large bg-default">{{ count }}</span> Unread Notification
+            </header>
+            <section style="height:400px" class="panel-body scrollbar scroll-y m-b">
+                {% for notif in notifications %}
+              <article class="media">
+                <span class="pull-left thumb-small"><img src="{% if notif.from_user.profile_pic  %}{{ notif.from_user.profile_pic }}{% else %}/static/images/avatar.png{% endif %}" alt="{{ notif.sender_name }}" class="img-circle"></span>
+                <div class="media-body">
+                  <div class="pull-right media-mini text-center text-muted">
+                    <small class="label bg-light">{{ notif.notification_date|strftime }}</small>
+                  </div>
+                  <a href="#" class="h4">{{ notif.message |safe}}</a>
+                  <small class="block"><a href="#" class="">{{ notif.sender_name }}</a></small>
+
+                </div>
+              </article>
+              <div class="line pull-in"></div>
+                {% endfor %}
+
+            </section>
+          </section>
+          <!-- / scrollable inbox widget-->
+        </div>
+      </div>
+
+{% endblock %}
+{% block modalcontent %}
+
+        {% endblock %}
+        {% block js_scripts %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                $.ajax({
+                    url: '/notifications/read',
+                    type: 'PUT',
+                    data: "set_state=read",
+                    async: false,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        </script>
+        {% endblock %}

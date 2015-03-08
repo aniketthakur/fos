@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block css_sheets %}
+        <style type="text/css">
+            tbody tr:hover {
+                cursor: pointer;
+            }
+
+        </style>
+        <style type="text/css">
+            .row_selected{
+                background-color: lightcyan;
+            }
+        </style>
+        <style type="text/css">
+              div .dialog-wide {
+                  width: 80%; /* desired relative width */
+                  left: 10%; /* (100%-width)/2 */
+                  /* place center */
+                  margin-left:auto;
+                  margin-right:auto;
+              }
+
+                .scrollable {
+                    overflow-y: scroll;
+                }
+
+                .fixed-height-400 {
+                    height: 400px !important;
+                    width: 100%;
+                }
+
+            #id_file_upload
+            {
+               margin: 0;
+               opacity: 0;
+               font-size: 30px;
+            }
+            .color-label {
+                background-color: #fffffe;
+                border-radius: 8px;
+                padding-left: 3px;
+                padding-right: 3px;
+                text-align: center;
+                margin-top: 5px;
+
+            }
+            .thumb-class {
+                text-align: center;
+            }
+          </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/select2/select2.css') }}">
+        <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/datepicker.css') }}" >
+ {% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block modalcontent %}
+
+
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+     <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+        <script type="text/javascript">
+
+        </script>
+    <script src="{{ url_for('static', filename='js/select2/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/underscore-min.js') }}"></script>
+    <script type="text/javascript">
+
+        // When the document is ready
+            $(document).ready(function () {
+
+                $('.input-daterange').datepicker({
+                    todayBtn: "linked"
+                });
+                $("#generate_button_pan").click(function() {
+                    console.log($("#start-date").val());
+                    console.log($("#end-date").val());
+                    if(checkDateRange($("#start-date").val(),$("#end-date").val())){
+                        window.open("/pan_reports/download");
+                    }
+                });
+                $("#generate_button_vid").click(function() {
+                    console.log($("#start-date").val());
+                    console.log($("#end-date").val());
+                    if(checkDateRange($("#start-date").val(),$("#end-date").val())){
+                        window.open("/vid_reports/download");
+                    }
+                });
+                $("#generate_button_aadhaar").click(function() {
+                    console.log($("#start-date").val());
+                    console.log($("#end-date").val());
+                    if(checkDateRange($("#start-date").val(),$("#end-date").val())){
+                        window.open("/aadhaar_reports/download");
+                    }
+                });
+                function checkDateRange(start, end) {
+                   // Parse the entries
+                   var startDate = Date.parse(start);
+                   var endDate = Date.parse(end);
+                   var today = new Date();
+
+                   // Make sure they are valid
+                    if (isNaN(startDate)) {
+                      smoke.signal("The start date provided is not valid, please enter a valid date.", function(e){
+                        }, {
+                            duration: 2000,
+                            classname: "custom-class"
+                        })
+                      return false;
+                   }
+                   if (isNaN(endDate)) {
+                       smoke.signal("The end date provided is not valid, please enter a valid date.", function(e){
+                        }, {
+                            duration: 2000,
+                            classname: "custom-class"
+                        })
+                       return false;
+
+                   }
+                   // Check the date range, 86400000 is the number of milliseconds in one day
+                   var difference = (endDate - startDate) / (86400000 * 7);
+                   if (difference < 0) {
+                       smoke.signal("The start date must come before the end date!...", function(e){
+                        }, {
+                            duration: 2000,
+                            classname: "custom-class"
+                        });
+                       return false;
+
+                   }
+                   if (endDate - today > 0) {
+                       smoke.signal("End date cannot be greater than today!...", function(e){
+                        }, {
+                            duration: 2000,
+                            classname: "custom-class"
+                        });
+                       return false;
+                    }
+                   return true;
+                }
+
+            });
+    </script>
+{% endblock %}

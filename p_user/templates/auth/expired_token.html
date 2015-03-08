@@ -1,0 +1,20 @@
+{% extends "master.html" %}
+
+{% import "auth/wtf_bootstrap.html" as form_macros %}
+
+{% block title %}Expired Token{% endblock %}
+
+{% block maincontents %}
+    <div class="main padder">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 m-t-large">
+                <section class="panel"><header class="panel-heading text-center">
+                    Developer Request
+                </header>
+                    <p>Expired Token, please request the account admin to resend the request.</p> <br/>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

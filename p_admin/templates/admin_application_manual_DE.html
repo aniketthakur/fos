@@ -1,0 +1,205 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="row">
+        <form id="commentForm">
+            <div id="rootwizard" class="col-md-12">
+                <div class="form-wizard-steps">
+                    <ul class="wizard-steps">
+                        <li class="" data-target="#step1"> <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">KYC1</span> </a> </li>
+                        <li data-target="#step2" class=""> <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">KYC2</span> </a> </li>
+                        <li data-target="#step3" class=""> <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Application Form</span> </a> </li>
+                        <li data-target="#step4" class=""> <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Done <br>
+                          </span> </a> </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="tab-content transparent">
+                    <div class="tab-pane" id="tab1"> <br>
+                        <h4 class="semi-bold">Step 1 - <span class="light">KYC1 Information</span></h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/vid7.png')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <select id="applicationstatus" multiple style="width:100%">
+                                        <option value="1">AADHAAR</option>
+                                        <option value="2">VOTERS ID</option>
+                                        <option value="3">PANCARD</option>
+                                        <option value="4">OTHER</option>
+                                    </select>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="form3Address" id="form3Address" type="text" class="form-control" placeholder="Address">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <input name="form3City" id="form3City" type="text" class="form-control" placeholder="City">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="form3State" id="form3State" type="text" class="form-control" placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <input name="form3Country" id="form3Country" type="text" class="form-control" placeholder="Country">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input name="form3PostalCode" id="form3PostalCode" type="text" class="form-control" placeholder="Postal Code">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-4">
+                                            <input name="form3TeleCode" id="form3TeleCode" type="text" class="form-control" placeholder="+91">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input name="form3TeleNo" id="form3TeleNo" type="text" class="form-control" placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab2"> <br>
+                        <h4 class="semi-bold">Step 2 - <span class="light">KYC2 Information</span></h4>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/aadhar3.jpg')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <select id="applicationstatus2" multiple style="width:100%">
+                                        <option value="1">AADHAAR</option>
+                                        <option value="2">VOTERS ID</option>
+                                        <option value="3">PANCARD</option>
+                                        <option value="4">OTHER</option>
+                                    </select>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="form3Address" id="form3Address" type="text" class="form-control" placeholder="Address">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <input name="form3City" id="form3City" type="text" class="form-control" placeholder="City">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="form3State" id="form3State" type="text" class="form-control" placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <input name="form3Country" id="form3Country" type="text" class="form-control" placeholder="Country">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input name="form3PostalCode" id="form3PostalCode" type="text" class="form-control" placeholder="Postal Code">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-4">
+                                            <input name="form3TeleCode" id="form3TeleCode" type="text" class="form-control" placeholder="+91">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input name="form3TeleNo" id="form3TeleNo" type="text" class="form-control" placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab3"> <br>
+                        <h4 class="semi-bold">Step 3 - <span class="light">Application Form</span></h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/application1.png')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/application1_.png')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/application2.png')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ url_for('static', filename='sample/application2_.png')}}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab4"> <br>
+                        <h4 class="semi-bold">Step 4 - <span class="light">Review</span></h4>
+                        <br>
+
+                        <div class="row form-row">
+                            <div class="col-md-12">
+                                <p>DINESH </p>
+                                <p>Loan Amount : 25000/-</p>
+                                <p>2 KYC Documents</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class=" wizard wizard-actions">
+                        <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
+                        <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
+                        <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a></li>
+                        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            $('#layout-condensed-toggle').click();
+        });
+        $("#applicationstatus").select2({
+            placeholder: "choose a document type",
+            allowClear: true
+        });
+        $("#applicationstatus2").select2({
+            placeholder: "choose a document type",
+            allowClear: true
+        });
+    </script>
+{% endblock %}
