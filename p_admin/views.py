@@ -10,9 +10,10 @@ from  werkzeug.exceptions import abort
 from flask import  Blueprint
 import psutil
 import os
-from p_user.models import EsthenosUser
+from p_user.models import EsthenosUser,EsthenosOrg
 import urlparse
 from flask_sauth.models import authenticate,User
+from p_user.forms import AddOrganisationForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm,RegistrationFormAdmin
 server_views = Blueprint('server_views', __name__,
@@ -39,7 +40,20 @@ def admin_add_org():
     username = current_user.name
     c_user = current_user
     if request.method == "POST":
-        pass
+        print request.form
+        org_form = AddOrganisationForm( request.form)
+        form = org_form
+        if(form.validate()):
+            form.save()
+            print "success"
+            return redirect("/admin/organisations")
+        else:
+            print "here error"
+            flash_errors(org_form)
+            print org_form.errors
+            kwargs = {"login_form": org_form}
+            return render_template("admin_add_org.html", **kwargs)
+
     else:
         kwargs = locals()
         return render_template("admin_add_org.html", **kwargs)
@@ -73,6 +87,7 @@ def admin_organisations():
         abort(403)
     username = current_user.name
     c_user = current_user
+    organisations = EsthenosOrg.objects.all()
     kwargs = locals()
     return render_template("admin_organisation.html", **kwargs)
 

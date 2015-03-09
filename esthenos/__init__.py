@@ -99,9 +99,10 @@ login_manager.needs_refresh_message_category = "info"
 #login_manager.session_protection = "basic"
 login_manager.session_protection = "strong"
 mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
-from p_user.models import EsthenosUser
+
 @login_manager.user_loader
 def load_user(userid):
+    from p_user.models import EsthenosUser
     user = EsthenosUser.objects(id=userid).first()
     if user is not None and not session.has_key('role') :
         print "In load user"

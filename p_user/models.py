@@ -27,12 +27,14 @@ class OrgStateResource(Resource):
     document= OrgState
 
 
-class OrgDistrict(db.Document):
+class OrgRegion(db.Document):
     district = db.ReferenceField('OrgState')
     name = db.StringField(max_length=60,required=True)
 
-class OrgDistrictResource(Resource):
-    document= OrgDistrict
+class OrgRegiontResource(Resource):
+    document= OrgRegion
+
+
 
 
 class EsthenosOrgRegion(db.Document):
@@ -103,7 +105,27 @@ class EsthenosOrgTokenResource(Resource):
 
 
 
-class EsthenosOrgUser(BaseUser):
+class EsthenosOrg(db.Document):
+    states = db.ListField(db.StringField())
+    regions = db.ListField(db.StringField())
+    areas = db.ListField(db.StringField())
+    branches = db.ListField(db.StringField())
+    name = db.StringField(max_length=512, required=True)
+    profile_pic = db.StringField(max_length=255, required=False)
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+    about = db.StringField(max_length=255, required=False)
+    owner = db.ReferenceField('EsthenosUser')
+    postal_address = db.StringField(max_length=255, required=False)
+    postal_country = db.StringField(max_length=100, required=False)
+    postal_state = db.StringField(max_length=100, required=False)
+    postal_telephone = db.StringField(max_length=20, required=False)
+    postal_tele_code = db.StringField(max_length=20, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
+    postal_code = db.StringField(max_length=10, required=False)
+    email = db.StringField( unique=True)
+
+class EsthenosOrgUser(db.Document):
     state = db.ReferenceField('OrgState')
     district = db.ReferenceField('OrgDistrict')
     name = db.StringField(max_length=512, required=False,default="")

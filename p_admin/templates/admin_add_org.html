@@ -15,14 +15,14 @@
                 <h4>Add <span class="semi-bold">Organisation</span></h4>
 
                 <div class="grid-body no-border">
-                    <form class="form-no-horizontal-spacing" id="form-condensed">
+                    <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/add_org" method="post">
                         <div class="row column-seperation">
 
                             <div class="col-md-6">
                                 <h4>Basic Information</h4>
                                 <div class="row form-row">
                                     <div class="col-md-12">
-                                        <input name="form3FirstName" id="form3FirstName" type="text"  class="form-control" placeholder="Organisation Name">
+                                        <input name="org_name" id="org_name" type="text"  class="form-control" placeholder="Organisation Name">
                                     </div>
 
                                 </div>
@@ -32,7 +32,7 @@
                                     <div class="col-md-12">
                                         <h3>Select <span class="semi-bold">States</span></h3>
                                         <br>
-                                        <select id="multi" style="width:100%" class="select2 form-control" multiple>
+                                        <select id="multi" name="states" style="width:100%" class="select2 form-control" multiple>
                                             <option value='Andaman and Nicobar Islands'>Andaman and Nicobar Islands</option>
                                             <option value='Andhra Pradesh'>Andhra Pradesh</option>
                                             <option value='Arunachal Pradesh'>Arunachal Pradesh</option>
@@ -79,10 +79,26 @@
                                     <div class="col-md-12">
                                         <h3>Select <span class="semi-bold">Regions</span></h3>
                                         <br>
-                                        <select id="multi-region" style="width:100%" class="select2 form-control" multiple>
-                                            <option value='Region1'>Region1</option>
-                                            <option value='Region2'>Region2</option>
-                                        </select>
+                                        <input class="span12 tagsinput" name="regions" type="text" value="" data-role="tagsinput" />
+                                    </div>
+
+                                </div>
+                                <div class="row form-row">
+
+                                    <div class="col-md-12">
+                                        <h3>Select <span class="semi-bold">Area</span></h3>
+                                        <br>
+                                        <input class="span12 tagsinput" name="areas" type="text" value="" data-role="tagsinput" />
+                                    </div>
+
+                                </div>
+
+                                <div class="row form-row">
+
+                                    <div class="col-md-12">
+                                        <h3>Select <span class="semi-bold">Branches</span></h3>
+                                        <br>
+                                        <input class="span12 tagsinput" name="branches" type="text" value="" data-role="tagsinput" />
                                     </div>
 
                                 </div>
@@ -94,41 +110,46 @@
 
                                 <div class="row form-row">
                                     <div class="col-md-12">
-                                        <input name="form3Address" id="form3Address" type="text"  class="form-control" placeholder="Address">
-                                    </div>
-                                </div>
-                                <div class="row form-row">
-                                    <div class="col-md-6">
-                                        <input name="form3City" id="form3City" type="text"  class="form-control" placeholder="City">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input name="form3State" id="form3State" type="text"  class="form-control" placeholder="State">
+                                        <input name="postal_address" id="postal_address" type="text"  class="form-control" placeholder="Address">
                                     </div>
                                 </div>
                                 <div class="row form-row">
                                     <div class="col-md-8">
-                                        <input name="form3Country" id="form3Country" type="text"  class="form-control" placeholder="Country">
+                                        <select name="postal_country" id="country"   class="select2 form-control" placeholder="Country"></select>
                                     </div>
                                     <div class="col-md-4">
-                                        <input name="form3PostalCode" id="form3PostalCode" type="text"  class="form-control" placeholder="Postal Code">
+                                        <input name="postal_code" id="postal_code" type="text"  class="form-control" placeholder="Postal Code">
                                     </div>
                                 </div>
                                 <div class="row form-row">
-                                    <div class="col-md-4">
-                                        <input name="form3TeleCode" id="form3TeleCode" type="text"  class="form-control" placeholder="+91">
+                                    <div class="col-md-6">
+                                        <select name="postal_state" id="state"  class="select2 form-control" placeholder="State"></select>
                                     </div>
-                                    <div class="col-md-8">
-                                        <input name="form3TeleNo" id="form3TeleNo" type="text"  class="form-control" placeholder="Phone Number">
+                                    <div class="col-md-6">
+                                        <input name="postal_city" id="postal_city" type="text"  class="form-control" placeholder="City">
                                     </div>
                                 </div>
 
+                                <div class="row form-row">
+                                    <div class="col-md-4">
+                                        <input name="postal_tele_code" id="postal_tele_code" type="text"  class="form-control" placeholder="+91">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input name="postal_telephone" id="postal_telephone" type="text"  class="form-control" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <input name="email" id="email" type="text"  class="form-control" placeholder="Email address">
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
                         <div class="form-actions">
 
                             <div class="pull-right">
-                                <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
+                                <button class="btn btn-danger btn-cons org-submit" type="submit"><i class="icon-ok"></i> Add</button>
                                 <button class="btn btn-white btn-cons" type="button">Cancel</button>
                             </div>
                         </div>
@@ -140,10 +161,18 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
+    <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#multi").select2();
-            $("#multi-region").select2();
+            populateCountries("country", "state");
+            $("#state").select2();
+            $("#country").select2();
+            $(".org-submit").click(function(){
+                $("#form-organisation").submit();
+            });
+            //$("#multi-region").select2();
+
 
         });
     </script>

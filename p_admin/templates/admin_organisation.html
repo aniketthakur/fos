@@ -40,66 +40,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class='clickable-row' data-href='/admin/organisation/12444/'>
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox11" type="checkbox" value="1">
-                                    <label for="checkbox11"></label>
-                                </div>
-                            </td>
-                            <td class="v-align-middle"><a href="#"></a> 12444</td>
-                            <td class="v-align-middle"><span class="muted">Samastha</span>
-                            </td>
-                            <td><span class="muted">john@samastha.com</span>
-                            </td>
-                            <td><span class="muted">+91992200223</span>
-                            </td>
-                        </tr>
-                        <tr class='clickable-row' data-href='/admin/organisation/12444/'>
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox12" type="checkbox" value="1">
-                                    <label for="checkbox11"></label>
-                                </div>
-                            </td>
-                            <td class="v-align-middle"><a href="/admin/organisation/12444/"></a> 12944</td>
-                            <td class="v-align-middle"><span class="muted">Samastha</span>
-                            </td>
-                            <td><span class="muted">john@samastha.com</span>
-                            </td>
-                            <td><span class="muted">+91992200223</span>
-                            </td>
-                        </tr>
-                        <tr class='clickable-row' data-href='/admin/organisation/12444/'>
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox13" type="checkbox" value="1">
-                                    <label for="checkbox11"></label>
-                                </div>
-                            </td>
-                            <td class="v-align-middle"><a href="/admin/organisation/12444/"></a> 1214</td>
-                            <td class="v-align-middle"><span class="muted">Samastha</span>
-                            </td>
-                            <td><span class="muted">john@samastha.com</span>
-                            </td>
-                            <td><span class="muted">+91992200223</span>
-                            </td>
-                        </tr>
-                        <tr class='clickable-row' data-href='/admin/organisation/12444/'>
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox14" type="checkbox" value="1">
-                                    <label for="checkbox11"></label>
-                                </div>
-                            </td>
-                            <td class="v-align-middle"><a href="/admin/organisation/12444/"></a> 93444</td>
-                            <td class="v-align-middle"><span class="muted">Samastha</span>
-                            </td>
-                            <td><span class="muted">john@samastha.com</span>
-                            </td>
-                            <td><span class="muted">+91992200223</span>
-                            </td>
-                        </tr>
+                        {% for org in organisations %}
+                            <tr class='clickable-row' data-href='/admin/organisation/12444/'>
+                                <td class="v-align-middle">
+                                    <div class="checkbox check-default">
+                                        <input id="checkbox11" type="checkbox" value="1">
+                                        <label for="checkbox11"></label>
+                                    </div>
+                                </td>
+                                <td class="v-align-middle"><a href="#"></a> {{ org.id }}</td>
+                                <td class="v-align-middle"><span class="muted">{{ org.name }}</span>
+                                </td>
+                                <td><span class="muted">{{ org.email }}</span>
+                                </td>
+                                <td><span class="muted">{{ org.postal_tele_code }}{{ org.postal_telephone }}</span>
+                                </td>
+                            </tr>
+                           {% else %}
+                            <tr><em>Unbelievable.  No organisations here so far</em></tr>
+                           {% endfor %}
                         </tbody>
                     </table>
                 </div>
