@@ -99,24 +99,14 @@ login_manager.needs_refresh_message_category = "info"
 #login_manager.session_protection = "basic"
 login_manager.session_protection = "strong"
 mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
-
+from p_user.models import EsthenosUser
 @login_manager.user_loader
 def load_user(userid):
-    user = PUser.objects(id=userid).first()
-    if user is not None and not session.has_key('billing_plan') :
+    user = EsthenosUser.objects(id=userid).first()
+    if user is not None and not session.has_key('role') :
         print "In load user"
-        session['p_user_type'] =  user.p_user_type
-        session['billing_enabled'] = True #user.billing_enabled
-        billing = PUserBilling.objects.get(user=user.id)
-        session['billing_plan'] = billing.plan_name
-        session['storage_disk_used'] = billing.plan_disk_units_used
-        session['storage_disk'] = billing.plan_disk_units
-        session['service_quota_used'] = billing.plan_service_disk_units_used
-        session['service_quota'] = billing.plan_service_disk_units
-        session['instance_quota_used'] = billing.plan_p_gear_units_used
-        session['instance_quota'] = billing.plan_p_gear_units
-        session['user_quota_used'] = billing.plan_users_used
-        session['user_quota'] = billing.plan_users
+        if user.has_role("ADMIN"):
+            session['role'] = "ADMIN"
     return user
 
 @login_manager.unauthorized_handler

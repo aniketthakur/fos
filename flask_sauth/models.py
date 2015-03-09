@@ -145,4 +145,4 @@ def authenticate(email=None, password=None):
 
 from werkzeug import import_string, LocalProxy
 from flask import current_app
-User = LocalProxy( lambda: import_string( current_app.config.get( "USER_MODEL_CLASS", "flask_mongo_auth.default_models.User")))
+User = LocalProxy( lambda: import_string( current_app.config.get( "USER_MODEL_CLASS", "p_user.models.EsthenosUser")))

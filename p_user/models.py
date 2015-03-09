@@ -55,7 +55,6 @@ class EsthenosUser(BaseUser):
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")
     profile_pic = db.StringField(max_length=255, required=False)
-    type = db.ReferenceField('EsthenosUserType', required=True)
     unique_id = db.IntField(default=0)
     status = db.IntField(default=0)
     activation_code = db.StringField(max_length=50, required=False)
@@ -64,8 +63,6 @@ class EsthenosUser(BaseUser):
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     about = db.StringField(max_length=255, required=False)
-    owner = db.ReferenceField('EsthenosUser')
-    notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))
 
 
     def __unicode__(self):
@@ -105,10 +102,6 @@ class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
 
 
-
-from flask.ext.sauth.models import BaseUser
-class EsthenosOrgUserType(db.Document):
-    type = db.StringField(max_length=20,required=True)
 
 class EsthenosOrgUser(BaseUser):
     state = db.ReferenceField('OrgState')

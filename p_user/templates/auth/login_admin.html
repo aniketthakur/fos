@@ -20,7 +20,7 @@
                         <br>
                         <div class="row form-row">
                             <div class="input-append col-md-10 col-sm-10 primary">
-                                <input type="text" name="username" id="appendedInput" class="form-control" placeholder="someone@example.com">
+                                <input type="text" name="email" id="appendedInput" class="form-control" placeholder="someone@example.com">
                                 <span class="add-on"><span class="arrow"></span><i class="fa fa-align-justify"></i> </span> </div>
                         </div>
                         <div class="row form-row">
@@ -28,6 +28,8 @@
                                 <input type="password" name="password" id="appendedInput2" class="form-control" placeholder="your password">
                                 <span class="add-on"><span class="arrow"></span><i class="fa fa-lock"></i> </span> </div>
                         </div>
+                        <input type="hidden" name="role" id="roleId" value="ADMIN" />
+                        <input type="hidden" name="next" value="/admin/dashboard"/>
                     </div>
                     <div class="form-actions">
                         <div class="pull-right">
@@ -44,7 +46,7 @@
 {% block js_scripts %}{{ super() }}
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".login-button").click({
+            $(".login-button").click(function(){
                 $("#login-form").submit();
             });
         });
