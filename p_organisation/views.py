@@ -1,5 +1,5 @@
 __author__ = 'prathvi'
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 from esthenos.mongo_encoder import *
 from flask_sauth.views import flash_errors
 from mongoengine import Q

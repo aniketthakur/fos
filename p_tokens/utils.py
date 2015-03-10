@@ -1,7 +1,7 @@
 __author__ = 'prathvi'
 from functools import wraps
 from flask import request, abort
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 from esthenos import mainapp as app
 from models import EsthenosOrgUserToken
 from flask_login import  current_user,current_app

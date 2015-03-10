@@ -10,12 +10,13 @@ from  werkzeug.exceptions import abort
 from flask import  Blueprint
 import psutil
 import os
-from p_user.models import EsthenosUser,EsthenosOrg
+from p_admin.models import EsthenosUser
+from p_organisation.models import  EsthenosOrg
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_user.forms import AddOrganisationForm
+from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin
 from flask_sauth.views import flash_errors
-from flask_sauth.forms import LoginForm,RegistrationFormAdmin
+from flask_sauth.forms import LoginForm
 import urlparse
 
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app

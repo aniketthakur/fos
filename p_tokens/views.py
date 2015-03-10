@@ -3,7 +3,7 @@ from flask import   request,Response
 from flask_login import current_user, login_required
 from flask import  Blueprint
 import  json
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 import utils,models
 from esthenos.mongo_encoder import encode_model
 token_views = Blueprint('token_views', __name__,template_folder='templates')

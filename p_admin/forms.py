@@ -4,7 +4,8 @@ from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosOrg,EsthenosUser
+from .models import EsthenosUser
+from p_organisation.models import EsthenosOrg
 class AddOrganisationForm( Form):
     org_name = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches = TextField( validators=[v.DataRequired(), v.Length(max=512)])
@@ -41,3 +42,20 @@ class AddOrganisationForm( Form):
         org.email = self.email.data
         org.save()
         return org
+
+from p_organisation.models import EsthenosUser
+class RegistrationFormAdmin( Form):
+    name = TextField( validators=[v.DataRequired(), v.Length(max=256)])
+    email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
+    password = PasswordField( validators=[v.DataRequired(), v.Length(max=256)])
+    type = HiddenField()
+
+    def validate_email( form, field):
+        email = field.data.lower().strip()
+        if( EsthenosUser.objects(email=email).count()):
+            raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
+
+    def save( self):
+        user = EsthenosUser.create_user( self.name.data, self.email.data, self.password.data, email_verified=True)
+        user.save()
+        return user

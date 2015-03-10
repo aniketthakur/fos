@@ -49,7 +49,7 @@ mainapp.config["AWS_SECRET_ACCESS_KEY"] = '24K0Fo+wCJzUgdfUTQwVP8JN0WwJTLyZyMOqb
 
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
 
-mainapp.config["USER_MODEL_CLASS"] = "p_user.models.EsthenosUser"
+mainapp.config["USER_MODEL_CLASS"] = "p_admin.models.EsthenosUser"
 
 mainapp.config['ROOT'] = os.curdir
 print mainapp.config['ROOT']
@@ -100,7 +100,7 @@ login_manager.needs_refresh_message_category = "info"
 login_manager.session_protection = "strong"
 mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
 
-from p_user.models import EsthenosUser
+from p_organisation.models import EsthenosUser
 @login_manager.user_loader
 def load_user(userid):
     user = EsthenosUser.objects(id=userid).first()

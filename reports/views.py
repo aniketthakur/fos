@@ -4,7 +4,7 @@ from flask import render_template, request,Response
 from flask_login import current_user, login_required
 from p_tokens.utils import login_or_key_required
 import json,hashlib
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 from flask import  Blueprint
 import os,tempfile
 from esthenos.crossdomain import *

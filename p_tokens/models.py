@@ -2,7 +2,7 @@ __author__ = 'prathvi'
 
 import datetime
 from esthenos.mongo_encoder import encode_model
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 from esthenos import db
 
 class EsthenosOrgUserToken(db.Document):

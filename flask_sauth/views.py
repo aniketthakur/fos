@@ -92,7 +92,7 @@ def flash_errors(form):
                 error
             ))
 
-from p_user.models import EsthenosUser
+from p_admin.models import EsthenosUser
 from esthenos.utils import random_with_N_digits
 
 @auth_views.route("/accounts/logout")
