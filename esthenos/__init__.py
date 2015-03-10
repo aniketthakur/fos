@@ -21,12 +21,12 @@ mainapp.config.update(
     DEBUG = False,
     TESTING = False,
     MONGODB_SETTINGS = {
-        'HOST': '127.0.0.1',#
+        'HOST': '128.199.156.24',#
         'PORT': 27017,
-        'USERNAME':'test',
-        'PASSWORD':'',
+        'USERNAME':'esthenos',
+        'PASSWORD':'0nrdgjhDFTF5kJ',
         #'DB': 'pitaya_local',
-        'DB': 'esthenos',
+        'DB': 'esthenos_test',
         #'TZ_AWARE': True,
         #'replicaset':"rs0"
     },
