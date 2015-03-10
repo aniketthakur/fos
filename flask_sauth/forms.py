@@ -30,7 +30,7 @@ class RegistrationFormAdmin( Form):
     name = TextField( validators=[v.DataRequired(), v.Length(max=256)])
     email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
     password = PasswordField( validators=[v.DataRequired(), v.Length(max=256)])
-    user_type = HiddenField()
+    type = HiddenField()
 
     def validate_email( form, field):
         email = field.data.lower().strip()

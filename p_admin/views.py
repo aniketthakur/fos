@@ -2,7 +2,7 @@ __author__ = 'prathvi'
 # Flask and Flask-SQLAlchemy initialization here
 from flask import render_template,session,request,Response
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required,confirm_login
 import json
 from p_admin.models import *
 from esthenos.mongo_encoder import encode_model
@@ -16,6 +16,23 @@ from flask_sauth.models import authenticate,User
 from p_user.forms import AddOrganisationForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm,RegistrationFormAdmin
+import urlparse
+
+from flask import Blueprint, render_template, request, session, redirect, flash, current_app
+from flask_login import current_user, login_user, logout_user, login_required
+from p_tokens.models import EsthenosOrgUserToken
+#from flask.ext.sendmail import Message
+from blinker import signal
+from esthenos import mainapp
+import sys,traceback
+import boto
+from p_tokens.utils import verify_dev_request_token
+conn = boto.connect_ses(
+    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
+
+signal_user_registered = signal('user-registered')
+
 server_views = Blueprint('server_views', __name__,
                         template_folder='templates')
 
@@ -175,6 +192,88 @@ def admin_disbursement():
     return render_template("admin_disbursement.html", **kwargs)
 
 
+
+@server_views.route('/admin/logout', methods=["GET"])
+@login_required
+def admin_disbursement():
+    if session['role'] != "ADMIN":
+        abort(403)
+    logout_user()
+    return redirect( "/admin/login")
+
+@server_views.route('/admin/employee/signup', methods=["POST"])
+def developer_signup():
+    if request.method == "POST":
+        register_form = RegistrationForm( request.form)
+        form = register_form
+
+        if(form.validate()):
+            user = form.save()
+            signal_user_registered.send("flask-satuh", user=user,plan_name = form.plan.data)
+            user = EsthenosUser.objects.get(id=user.get_id())
+            user.roles= list()
+            user.roles.append("EMPLOYEE")
+            user.p_user_type = form.user_type.data # "ACCOUNT_OWNER"
+            #new_user.p_user_type = "ACCOUNT_USER"
+            if form.owner_id.data is not None and form.owner_id.data != "":
+                owner = None
+                try:
+                    owner = EsthenosUser.objects.get(id = form.owner_id.data)
+                except Exception,e:
+                    print e.message
+                    type_, value_, traceback_ = sys.exc_info()
+                    print traceback.format_exception(type_, value_, traceback_)
+                user.owner = owner
+                user.billing_enabled = True
+            user.active = True
+            user.save()
+            from pitaya.utils import subscribe
+            subscribe(user.name,user.email)
+            html_data = render_template("email_welcome.html",user = user.name)
+            conn.send_email(current_app.config["SERVER_EMAIL"], "Welcome To Pixuate",None,[user.email],format="html" ,html_body=html_data)
+            return redirect( next_url)
+        else:
+            flash_errors(register_form)
+            kwargs = {"register_form": register_form}
+            return render_template( "auth/signup.html", **kwargs)
+
+
+@server_views.route('/admin/agent/signup', methods=["POST"])
+def agent_signup():
+    if request.method == "POST":
+        register_form = RegistrationForm( request.form)
+        form = register_form
+
+        if(form.validate()):
+            user = form.save()
+            signal_user_registered.send("flask-satuh", user=user,plan_name = form.plan.data)
+            user = EsthenosUser.objects.get(id=user.get_id())
+            user.roles= list()
+            user.roles.append("AGENT")
+            user.p_user_type = form.user_type.data # "ACCOUNT_OWNER"
+            #new_user.p_user_type = "ACCOUNT_USER"
+            if form.owner_id.data is not None and form.owner_id.data != "":
+                owner = None
+                try:
+                    owner = EsthenosUser.objects.get(id = form.owner_id.data)
+                except Exception,e:
+                    print e.message
+                    type_, value_, traceback_ = sys.exc_info()
+                    print traceback.format_exception(type_, value_, traceback_)
+                user.owner = owner
+                user.billing_enabled = True
+            user.active = True
+            user.save()
+            from pitaya.utils import subscribe
+            subscribe(user.name,user.email)
+            html_data = render_template("email_welcome.html",user = user.name)
+            conn.send_email(current_app.config["SERVER_EMAIL"], "Welcome To Pixuate",None,[user.email],format="html" ,html_body=html_data)
+            return redirect( next_url)
+        else:
+            flash_errors(register_form)
+            kwargs = {"register_form": register_form}
+            return render_template( "auth/signup.html", **kwargs)
+
 @server_views.route('/admin/signup', methods=["GET", "POST"])
 #@login_required
 def admin_signup():
@@ -183,7 +282,12 @@ def admin_signup():
         reg_form = RegistrationFormAdmin( request.form)
         form = reg_form
         if(form.validate()):
-            form.save()
+            user = form.save()
+            userobj = EsthenosUser.objects.get(id=user.get_id())
+            userobj.roles= list()
+            userobj.roles.append("ADMIN")
+            userobj.active = True
+            userobj.save()
             print "here entered"
             user = EsthenosUser.objects.get( email=form.email.data)
             print form.type.data
@@ -191,7 +295,7 @@ def admin_signup():
                 login_user(user)
                 session['type'] = "ADMIN"
                 print "success"
-                return do_redirect()
+                return redirect( '/admin/login')
 
         else:
             print "here error"
@@ -226,9 +330,9 @@ def login_admin():
         login_form = LoginForm( request.form)
         form = login_form
         if(form.validate()):
-            user_data = authenticate(form.email.data, form.password.data)
-            login_user(user_data)
             user = EsthenosUser.objects.get( email=form.email.data)
+            login_user(user)
+            confirm_login()
             print form.role.data
             if (form.role.data == "ADMIN" ):
                 session['type'] = "ADMIN"
