@@ -21,7 +21,7 @@ class RenderTemplateView(View):
         return render_template(self.template_name)
 
 from flask import  Blueprint
-organisation_views = Blueprint('dashboard_views', __name__,
+organisation_views = Blueprint('organisation_views', __name__,
                         template_folder='templates')
 
 from math import log10, floor
