@@ -89,7 +89,7 @@ class EsthenosOrg(db.Document):
     postal_code = db.StringField(max_length=10, required=False)
     email = db.StringField( unique=True)
 
-class EsthenosOrgUser(db.Document):
+class EsthenosOrgUser(BaseUser):
     state = db.ReferenceField('OrgState')
     district = db.ReferenceField('OrgDistrict')
     name = db.StringField(max_length=512, required=False,default="")
