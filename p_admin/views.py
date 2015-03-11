@@ -34,7 +34,7 @@ conn = boto.connect_ses(
 
 signal_user_registered = signal('user-registered')
 
-admin_views = Blueprint('server_views', __name__,
+admin_views = Blueprint('admin_views', __name__,
                         template_folder='templates')
 
 
@@ -196,7 +196,7 @@ def admin_disbursement():
 
 @admin_views.route('/admin/logout', methods=["GET"])
 @login_required
-def admin_disbursement():
+def admin_logout():
     if session['role'] != "ADMIN":
         abort(403)
     logout_user()
