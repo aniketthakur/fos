@@ -28,8 +28,12 @@ flask_sauth.commands.add_commands( manager)
 from flask.ext.sauth.views import auth_views
 mainapp.register_blueprint( auth_views)
 
-from p_organisation.views import dashboard_views
-mainapp.register_blueprint( dashboard_views)
+from p_organisation.views import organisation_views
+mainapp.register_blueprint( organisation_views)
+
+
+from p_admin.views import admin_views
+mainapp.register_blueprint( admin_views)
 
 from p_tokens.views import token_views
 mainapp.register_blueprint( token_views)
@@ -39,8 +43,7 @@ from reports.views import reports_views
 mainapp.register_blueprint( reports_views)
 
 
-from p_admin.views import server_views
-mainapp.register_blueprint( server_views)
+
 
 if __name__ == "__main__":
     manager.run()

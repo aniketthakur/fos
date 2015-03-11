@@ -126,6 +126,42 @@ class EsthenosOrgUser(db.Document):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
+class EsthenosOrgAgentUser(BaseUser):
+    first_name = db.StringField(max_length=255, required=False,default="")
+    last_name = db.StringField(max_length=255, required=False,default="")
+    profile_pic = db.StringField(max_length=255, required=False)
+    type = db.ReferenceField('EsthenosOrgUserType', required=True)
+    unique_id = db.IntField(default=0)
+    status = db.IntField(default=0)
+    activation_code = db.StringField(max_length=50, required=False)
+    active = db.BooleanField(default=False)
+    staff = db.BooleanField(default=False)
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+    about = db.StringField(max_length=255, required=False)
+    owner = db.ReferenceField('EsthenosOrgUser')
+    #user_tokens = db.ListField(db.EmbeddedDocumentField(PUserToken))
+    notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))
+
+
+    def __unicode__(self):
+        return self.name + "<" + self.email + ">"
+
+    def is_active(self):
+        return self.active
+
+    def is_staff(self):
+        return self.staff
+
+    def get_fullname(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+    def get_shortname(self):
+        return self.first_name
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -204,78 +240,6 @@ class EsthenosOrgApplication(db.Document):
         return self.application_id + "<" + self.application_name + ">"
 
 
-
-class EsthenosOrgAgentUser(BaseUser):
-    first_name = db.StringField(max_length=255, required=False,default="")
-    last_name = db.StringField(max_length=255, required=False,default="")
-    profile_pic = db.StringField(max_length=255, required=False)
-    type = db.ReferenceField('EsthenosOrgUserType', required=True)
-    unique_id = db.IntField(default=0)
-    status = db.IntField(default=0)
-    activation_code = db.StringField(max_length=50, required=False)
-    active = db.BooleanField(default=False)
-    staff = db.BooleanField(default=False)
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-    about = db.StringField(max_length=255, required=False)
-    owner = db.ReferenceField('EsthenosOrgUser')
-    #user_tokens = db.ListField(db.EmbeddedDocumentField(PUserToken))
-    notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))
-
-
-    def __unicode__(self):
-        return self.name + "<" + self.email + ">"
-
-    def is_active(self):
-        return self.active
-
-    def is_staff(self):
-        return self.staff
-
-    def get_fullname(self):
-        return '%s %s' % (self.first_name, self.last_name)
-
-    def get_shortname(self):
-        return self.first_name
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-class EsthenosOrgAgentUser(BaseUser):
-    first_name = db.StringField(max_length=255, required=False,default="")
-    last_name = db.StringField(max_length=255, required=False,default="")
-    profile_pic = db.StringField(max_length=255, required=False)
-    type = db.ReferenceField('EsthenosUserType', required=True)
-    unique_id = db.IntField(default=0)
-    status = db.IntField(default=0)
-    activation_code = db.StringField(max_length=50, required=False)
-    active = db.BooleanField(default=False)
-    staff = db.BooleanField(default=False)
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-    about = db.StringField(max_length=255, required=False)
-    owner = db.ReferenceField('EsthenosUser')
-    #user_tokens = db.ListField(db.EmbeddedDocumentField(PUserToken))
-    notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))
-
-
-    def __unicode__(self):
-        return self.name + "<" + self.email + ">"
-
-    def is_active(self):
-        return self.active
-
-    def is_staff(self):
-        return self.staff
-
-    def get_fullname(self):
-        return '%s %s' % (self.first_name, self.last_name)
-
-    def get_shortname(self):
-        return self.first_name
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
 
 
 

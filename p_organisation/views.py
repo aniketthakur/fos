@@ -21,7 +21,7 @@ class RenderTemplateView(View):
         return render_template(self.template_name)
 
 from flask import  Blueprint
-dashboard_views = Blueprint('dashboard_views', __name__,
+organisation_views = Blueprint('dashboard_views', __name__,
                         template_folder='templates')
 
 from math import log10, floor
@@ -30,58 +30,58 @@ def round_to_1(x):
         return 0
     return round(x, -int(floor(log10(x))))
 
-@dashboard_views.route('/', methods=["GET"])
+@organisation_views.route('/', methods=["GET"])
 #@login_required
 def home_page():
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
 
-@dashboard_views.route('/upload_documents', methods=["GET"])
+@organisation_views.route('/upload_documents', methods=["GET"])
 #@login_required
 def upload_documents():
     kwargs = locals()
     return render_template("upload_documents.html", **kwargs)
 
 
-@dashboard_views.route('/application_status', methods=["GET"])
+@organisation_views.route('/application_status', methods=["GET"])
 #@login_required
 def application_status():
     kwargs = locals()
     return render_template("centers_n_groups.html", **kwargs)
 
-@dashboard_views.route('/applications', methods=["GET"])
+@organisation_views.route('/applications', methods=["GET"])
 #@login_required
 def applications():
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
 
-@dashboard_views.route('/application/<app_id>/track', methods=["GET"])
+@organisation_views.route('/application/<app_id>/track', methods=["GET"])
 #@login_required
 def applications_track(app_id):
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
-@dashboard_views.route('/download_disbusement', methods=["GET"])
+@organisation_views.route('/download_disbusement', methods=["GET"])
 #@login_required
 def download_disbusement():
     kwargs = locals()
     return render_template("download_disbusement.html", **kwargs)
 
-@dashboard_views.route('/download_grt', methods=["GET"])
+@organisation_views.route('/download_grt', methods=["GET"])
 #@login_required
 def download_grt():
     kwargs = locals()
     return render_template("download_grt.html", **kwargs)
 
 
-@dashboard_views.route('/application/<application_id>', methods=["GET"])
+@organisation_views.route('/application/<application_id>', methods=["GET"])
 #@login_required
 def application_manual_DE(application_id):
     kwargs = locals()
     print application_id
     return render_template("application_manual_DE.html", **kwargs)
 
-@dashboard_views.route('/billing', methods=["GET"])
+@organisation_views.route('/billing', methods=["GET"])
 @login_required
 def billing_view():
     username = current_user.name
@@ -102,7 +102,7 @@ import os,io
 from esthenos  import  s3_bucket
 
 
-@dashboard_views.route('/profile', methods=["GET","POST"])
+@organisation_views.route('/profile', methods=["GET","POST"])
 @login_required
 def user_profile_page():
     username = current_user.name
@@ -141,7 +141,7 @@ def user_profile_page():
         return render_template("user_profile.html", **kwargs)
 
 
-@dashboard_views.route('/notifications', methods=["GET"])
+@organisation_views.route('/notifications', methods=["GET"])
 @login_required
 def notifications_page():
     username = current_user.name
@@ -153,7 +153,7 @@ def notifications_page():
     kwargs = locals()
     return render_template("notifications.html", **kwargs)
 
-@dashboard_views.route('/notifications/read', methods=["PUT"])
+@organisation_views.route('/notifications/read', methods=["PUT"])
 @login_required
 def set_notif_read():
     username = current_user.name
@@ -162,7 +162,7 @@ def set_notif_read():
     return Response('{"message":"status updated"}', content_type="application/json", mimetype='application/json')
 
 
-@dashboard_views.route('/find_users', methods=["GET"])
+@organisation_views.route('/find_users', methods=["GET"])
 @login_required
 def search_user():
     query_param = request.args.get('q')

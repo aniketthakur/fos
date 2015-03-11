@@ -34,13 +34,13 @@ conn = boto.connect_ses(
 
 signal_user_registered = signal('user-registered')
 
-server_views = Blueprint('server_views', __name__,
+admin_views = Blueprint('server_views', __name__,
                         template_folder='templates')
 
 
 
 
-@server_views.route('/admin/dashboard', methods=["GET"])
+@admin_views.route('/admin/dashboard', methods=["GET"])
 @login_required
 def admin_dashboard():
     if session['role'] != "ADMIN":
@@ -50,7 +50,7 @@ def admin_dashboard():
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
 
-@server_views.route('/admin/add_org', methods=["GET","POST"] )
+@admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
 def admin_add_org():
     if session['role'] != "ADMIN":
@@ -77,7 +77,7 @@ def admin_add_org():
         return render_template("admin_add_org.html", **kwargs)
 
 
-@server_views.route('/admin/add_emp', methods=["GET"])
+@admin_views.route('/admin/add_emp', methods=["GET"])
 @login_required
 def admin_add_emp():
     if session['role'] != "ADMIN":
@@ -87,7 +87,7 @@ def admin_add_emp():
     kwargs = locals()
     return render_template("admin_add_emp.html", **kwargs)
 
-@server_views.route('/admin/employees', methods=["GET"])
+@admin_views.route('/admin/employees', methods=["GET"])
 @login_required
 def admin_employees():
     if session['role'] != "ADMIN":
@@ -98,7 +98,7 @@ def admin_employees():
     return render_template("admin_employees.html", **kwargs)
 
 
-@server_views.route('/admin/organisations', methods=["GET"])
+@admin_views.route('/admin/organisations', methods=["GET"])
 @login_required
 def admin_organisations():
     if session['role'] != "ADMIN":
@@ -110,7 +110,7 @@ def admin_organisations():
     return render_template("admin_organisation.html", **kwargs)
 
 
-@server_views.route('/admin/organisation/<org_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>', methods=["GET"])
 @login_required
 def admin_organisation_dashboard(org_id):
     if session['role'] != "ADMIN":
@@ -120,7 +120,7 @@ def admin_organisation_dashboard(org_id):
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
-@server_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET"])
 @login_required
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
@@ -130,7 +130,7 @@ def admin_organisation_add_emp(org_id):
     kwargs = locals()
     return render_template("admin_org_add_emp.html", **kwargs)
 
-@server_views.route('/admin/applications', methods=["GET"])
+@admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
     if session['role'] != "ADMIN":
@@ -141,7 +141,7 @@ def admin_application():
     return render_template("admin_applications.html", **kwargs)
 
 
-@server_views.route('/admin/application/<app_id>', methods=["GET"])
+@admin_views.route('/admin/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(app_id):
     if session['role'] != "ADMIN":
@@ -151,7 +151,7 @@ def admin_application_id(app_id):
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
-@server_views.route('/admin/application/<app_id>/track', methods=["GET"])
+@admin_views.route('/admin/application/<app_id>/track', methods=["GET"])
 @login_required
 def admin_application_id_track(app_id):
     if session['role'] != "ADMIN":
@@ -161,7 +161,7 @@ def admin_application_id_track(app_id):
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
-@server_views.route('/admin/application/<app_id>/track_final', methods=["GET"])
+@admin_views.route('/admin/application/<app_id>/track_final', methods=["GET"])
 @login_required
 def admin_application_id_trackfinal(app_id):
     if session['role'] != "ADMIN":
@@ -171,7 +171,7 @@ def admin_application_id_trackfinal(app_id):
     kwargs = locals()
     return render_template("admin_application_tracking_final.html", **kwargs)
 
-@server_views.route('/admin/cbcheck', methods=["GET"])
+@admin_views.route('/admin/cbcheck', methods=["GET"])
 @login_required
 def admin_cbcheck():
     if session['role'] != "ADMIN":
@@ -182,7 +182,7 @@ def admin_cbcheck():
     return render_template("admin_cbcheck.html", **kwargs)
 
 
-@server_views.route('/admin/disbursement', methods=["GET"])
+@admin_views.route('/admin/disbursement', methods=["GET"])
 @login_required
 def admin_disbursement():
     if session['role'] != "ADMIN":
@@ -194,7 +194,7 @@ def admin_disbursement():
 
 
 
-@server_views.route('/admin/logout', methods=["GET"])
+@admin_views.route('/admin/logout', methods=["GET"])
 @login_required
 def admin_disbursement():
     if session['role'] != "ADMIN":
@@ -202,7 +202,7 @@ def admin_disbursement():
     logout_user()
     return redirect( "/admin/login")
 
-@server_views.route('/admin/employee/signup', methods=["POST"])
+@admin_views.route('/admin/employee/signup', methods=["POST"])
 def developer_signup():
     if request.method == "POST":
         register_form = RegistrationForm( request.form)
@@ -239,7 +239,7 @@ def developer_signup():
             return render_template( "auth/signup.html", **kwargs)
 
 
-@server_views.route('/admin/agent/signup', methods=["POST"])
+@admin_views.route('/admin/agent/signup', methods=["POST"])
 def agent_signup():
     if request.method == "POST":
         register_form = RegistrationForm( request.form)
@@ -275,7 +275,7 @@ def agent_signup():
             kwargs = {"register_form": register_form}
             return render_template( "auth/signup.html", **kwargs)
 
-@server_views.route('/admin/signup', methods=["GET", "POST"])
+@admin_views.route('/admin/signup', methods=["GET", "POST"])
 #@login_required
 def admin_signup():
     if request.method == "POST":
@@ -309,7 +309,7 @@ def admin_signup():
     kwargs = locals()
     return render_template("admin_signup.html", **kwargs)
 
-@server_views.route('/admin/login', methods=["GET", "POST"])
+@admin_views.route('/admin/login', methods=["GET", "POST"])
 def login_admin():
     next_url = request.form.get( "next", None) or request.args.get( "next", None) or session.get("next_url", None)
 
