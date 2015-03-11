@@ -35,9 +35,6 @@ class OrgRegion(db.Document):
 class OrgRegiontResource(Resource):
     document= OrgRegion
 
-
-
-
 class EsthenosOrgRegion(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     region_name = db.StringField(max_length=60,required=True)
@@ -221,6 +218,45 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
     def __unicode__(self):
         return self.elector_name + "<" + self.father_or_husband_name + ">"
 
+
+class EsthenosOrgProduct(db.Document):
+    loan_amount = db.FloatField(default=0.0)
+    life_insurance = db.FloatField(default=0.0)
+    eligible_cycle = db.IntField(default=0)
+    number_installments = db.IntField(default=0)
+    emi = db.FloatField(default=0)
+    last_emi = db.FloatField(default=0)
+    processing_fee = db.FloatField(default=0)
+    total_processing_fees = db.FloatField(default=0)
+    interest_rate = db.FloatField(default=0)
+    insurance_period = db.FloatField(default=0)
+    insurance_free_borrowers_only = db.FloatField(default=0.0)
+    total_processing_fees_borrowers_only = db.FloatField(default=0)
+    insurance_free_borrowers_n_guarnteer = db.FloatField(default=0.0)
+    total_processing_fees_borrowers_n_guarnteer = db.FloatField(default=0)
+    emi_collection_period_weekly =  db.BooleanField(default=False)
+    emi_collection_period_monthly =  db.BooleanField(default=False)
+    emi_collection_period_fortnightly =  db.BooleanField(default=False)
+
+    def __unicode__(self):
+        return "EsthenosOrgProduct"
+
+
+class EsthenosOrgSetings(db.Document):
+    loan_cycle_1_org = db.FloatField(default=35000)
+    loan_cycle_1_rbi = db.FloatField(default=35000)
+    loan_cycle_1_plus_org = db.FloatField(default=50000)
+    loan_cycle_1_plus_rbi = db.FloatField(default=50000)
+    one_year_tenure_limit_rbi = db.FloatField(default=15000)
+    hh_annual_income_limit_rural_rbi = db.FloatField(default=60000)
+    hh_annual_income_limit_annual_rbi = db.FloatField(default=120000)
+    total_indebtness_rbi = db.FloatField(default=50000)
+    max_existing_loan_count_rbi = db.IntField(default=2)
+    sales_tax = db.FloatField(default=0)
+
+    def __unicode__(self):
+        return "EsthenosOrgSetings"
+
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
@@ -231,13 +267,27 @@ class EsthenosOrgApplication(db.Document):
     age = db.IntField(default=0)
     dob = db.StringField(max_length=20, required=False,default="")
     address = db.StringField(max_length=512, required=False,default="")
+    primary_income = db.FloatField(default=0.0)
+    secondary_income = db.FloatField(default=0.0)
+    tertiary_income = db.FloatField(default=0.0)
+    other_income = db.FloatField(default=0.0)
+    total_income = db.FloatField(default=0.0)
+    business_expense = db.FloatField(default=0.0)
+    food_expense = db.FloatField(default=0.0)
+    travel_expense = db.FloatField(default=0.0)
+    entertainment_expense = db.FloatField(default=0.0)
+    educational_expense = db.FloatField(default=0.0)
+    medical_expense = db.FloatField(default=0.0)
+    other_expense = db.FloatField(default=0.0)
+    total_expenditure = db.FloatField(default=0.0)
+    total_liability = db.FloatField(default=0.0)
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
 
 
     def __unicode__(self):
-        return self.application_id + "<" + self.application_name + ">"
+        return self.application_id + "<" + self.applicant_name + ">"
 
 
 
