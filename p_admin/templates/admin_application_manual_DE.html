@@ -1,6 +1,20 @@
 {% extends "admin_base.html" %}
 {% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        input.no-border {
+            font-family: "segoe ui";
+            font-size: 14px;
+            height: 20px;
+            width: 35px;
+            padding: 0px;
+            margin: 0px;
+            margin-bottom: 2px;
+            outline: none;
+            border: 0px;
+            vertical-align: baseline;
+        }
 
+    </style>
 {% endblock %}
 
 {% block action_bar %}
@@ -140,26 +154,34 @@
                             <div class="col-md-7">
                                 <div class="row form-row">
                                     <div class="col-md-12">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small" style="width: 30px;" placeholder="">
+                                        <input   type="text" maxlength="1" data-tag="begin" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border"  placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" data-tag="end" class="form1Name input-small no-border" placeholder="">
+
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <input   type="text" maxlength="1" data-tag="begin" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1"  class="form2Name input-small no-border" placeholder="">
+                                        <input   type="text" maxlength="1" data-tag="end" class="form2Name input-small no-border" placeholder="">
+
                                     </div>
                                 </div>
                             </div>
@@ -208,9 +230,15 @@
 {% block js_scripts %}{{ super() }}
 
     <script type="text/javascript">
+        var cur_tag =1;
+        var $input;
         $( document ).ready(function() {
             console.log( "ready!" );
-            $('#layout-condensed-toggle').click();
+            //$('#layout-condensed-toggle').click();
+            $("input[data-tag='form1Name" + cur_tag + "']").focus();
+            make_fucusable(".form1Name")
+            make_fucusable(".form2Name")
+
         });
         $("#applicationstatus").select2({
             placeholder: "choose a document type",
@@ -220,5 +248,36 @@
             placeholder: "choose a document type",
             allowClear: true
         });
+
+
+        function make_fucusable(classname) {
+            var focusables = $(classname);
+            focusables.keydown(function(e){
+
+                if ((e.keyCode != 9)&&($(this).val().length <= $(this).attr("maxlength"))){
+                    if( (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90 ||e.keyCode == 32)){
+                        $(this).val("");
+                    }
+
+                }
+            });
+            focusables.keyup(function(e) {
+                var maxchar = false;
+                if ($(this).attr("maxlength")) {
+                    if ($(this).val().length >= $(this).attr("maxlength"))
+                        maxchar = true;
+                }
+                if (e.keyCode == 13 || maxchar &&( (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) ||e.keyCode == 32)) {
+                    var current = focusables.index(this),
+                            next = focusables.eq(current+1).length ? focusables.eq(current+1) : focusables.eq(0);
+                    next.focus();
+                }
+            });
+        }
+
+        //$('.form1Name').blur(function() {
+        //    $input = null;
+        //});
+
     </script>
 {% endblock %}
