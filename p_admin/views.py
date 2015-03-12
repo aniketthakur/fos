@@ -51,6 +51,19 @@ def admin_dashboard():
     return render_template("admin_dashboard.html", **kwargs)
 
 
+
+@admin_views.route('/admin/settings', methods=["GET"])
+@login_required
+def admin_settings():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    settings = EsthenosSettings.objects.all()[0]
+    kwargs = locals()
+    return render_template("admin_settings.html", **kwargs)
+
+
 @admin_views.route('/admin/settings', methods=["GET"])
 @login_required
 def admin_dashboard():

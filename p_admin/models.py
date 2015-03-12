@@ -7,6 +7,20 @@ from flask_sauth.models import BaseUser
 # Create your models here.
 
 
+class EsthenosSettings(db.Document):
+    loan_cycle_1_rbi = db.FloatField(default=35000)
+    loan_cycle_1_plus_rbi = db.FloatField(default=50000)
+    one_year_tenure_limit_rbi = db.FloatField(default=15000)
+    hh_annual_income_limit_rural_rbi = db.FloatField(default=60000)
+    hh_annual_income_limit_urban_rbi = db.FloatField(default=120000)
+    total_indebtness_rbi = db.FloatField(default=50000)
+    max_existing_loan_count_rbi = db.IntField(default=2)
+    sales_tax = db.FloatField(default=12.36)
+
+    def __unicode__(self):
+        return "EsthenosSetings"
+
+
 class EsthenosUser(BaseUser):
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")

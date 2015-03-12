@@ -1,0 +1,87 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+
+<br/>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-body no-border invoice-body"> <br>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-left">ADMIN SETTINGS</th>
+                            <th style="width:200px" class="text-right"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Loan cycle 1 limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="loan_cycle_1_rbi" value="{{ settings.loan_cycle_1_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Loan cycle 1 plus limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="loan_cycle_1_plus_rbi" value="{{ settings.loan_cycle_1_plus_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>One Year Tenure limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="one_year_tenure_limit_rbi" value="{{ settings.one_year_tenure_limit_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Household income Rural limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="hh_annual_income_limit_rural_rbi" value="{{ settings.hh_annual_income_limit_rural_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Household income Urban limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="hh_annual_income_limit_urban_rbi" value="{{ settings.hh_annual_income_limit_urban_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Total indebtness (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="total_indebtness_rbi" value="{{ settings.total_indebtness_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Max existing loan limit (RBI)</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="max_existing_loan_count_rbi" value="{{ settings.max_existing_loan_count_rbi }}" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Sales Tax</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="sales_tax" value="{{ settings.sales_tax }}" /></td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="form-actions">
+
+                        <div class="pull-right">
+                            <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}
