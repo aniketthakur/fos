@@ -77,13 +77,16 @@ def admin_add_org():
         return render_template("admin_add_org.html", **kwargs)
 
 
-@admin_views.route('/admin/add_emp', methods=["GET"])
+@admin_views.route('/admin/add_emp', methods=["GET","POST"])
 @login_required
 def admin_add_emp():
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
+    if request.method=="POST":
+        print request.form
+
     kwargs = locals()
     return render_template("admin_add_emp.html", **kwargs)
 
@@ -116,17 +119,19 @@ def admin_organisation_dashboard(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
+    org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
-@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
+    org = EsthenosOrg.objects.get(id=org_id)
     kwargs = locals()
     return render_template("admin_org_add_emp.html", **kwargs)
 
@@ -331,6 +336,7 @@ def login_admin():
         login_form = LoginForm( request.form)
         form = login_form
         if(form.validate()):
+
             user = EsthenosUser.objects.get( email=form.email.data)
             login_user(user)
             confirm_login()

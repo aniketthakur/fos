@@ -9,7 +9,7 @@
 {% block maincontents %}
 
     <div class="row">
-        <h1 class="text-center">Samastha Dashboard</h1>
+        <h1 class="text-center">{{ org.name }} Dashboard</h1>
         <div class="col-md-4 col-vlg-3 col-sm-6">
             <div class="tiles green added-margin  m-b-20">
                 <div class="tiles-body">
@@ -102,7 +102,7 @@
                 <h3>Admin <span class="semi-bold">Actions</span></h3>
                 <p>Samastha Management Panel</p>
                 <br>
-                <a class="btn btn-block btn-success" type="button" href="/admin/organisation/1244/add_emp">Add Samastha Employee</a></a>
+                <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add {{ org.name }} Employee</a></a>
             </div>
         </div>
     </div>
