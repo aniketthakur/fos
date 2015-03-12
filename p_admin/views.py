@@ -64,15 +64,6 @@ def admin_settings():
     return render_template("admin_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/settings', methods=["GET"])
-@login_required
-def admin_dashboard():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    kwargs = locals()
-    return render_template("admin_dashboard.html", **kwargs)
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
@@ -143,6 +134,19 @@ def admin_organisation_dashboard(org_id):
     c_user = current_user
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET"])
+@login_required
+def admin_organisation_settings(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    settings = EsthenosSettings.objects.all()[0]
+    org_settings = EsthenosSettings.objects.all()[0]
+    kwargs = locals()
+    return render_template("admin_org_settings.html", **kwargs)
 
 @admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET"])
 @login_required

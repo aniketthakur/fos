@@ -81,6 +81,13 @@ def application_manual_DE(application_id):
     print application_id
     return render_template("application_manual_DE.html", **kwargs)
 
+@organisation_views.route('/application/<application_id>', methods=["GET"])
+#@login_required
+def application_manual_DE(application_id):
+    kwargs = locals()
+    print application_id
+    return render_template("application_manual_DE.html", **kwargs)
+
 @organisation_views.route('/billing', methods=["GET"])
 @login_required
 def billing_view():

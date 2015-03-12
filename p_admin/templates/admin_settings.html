@@ -11,14 +11,14 @@
 
 <br/>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="grid simple">
                 <div class="grid-body no-border invoice-body"> <br>
 
                     <table class="table">
                         <thead>
                         <tr>
-                            <th class="text-left">ADMIN SETTINGS</th>
+                            <th class="text-left"><h4>RBI <span class="semi-bold"> Compliances and Guidelines</span></h4></th>
                             <th style="width:200px" class="text-right"></th>
                         </tr>
                         </thead>
@@ -58,8 +58,20 @@
                             <td class="text-right"><input type="text" class="form-control text-right" name="max_existing_loan_count_rbi" value="{{ settings.max_existing_loan_count_rbi }}" /></td>
 
                         </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td>Sales Tax</td>
+                            <th class="text-left"><h4>ADMIN <span class="semi-bold"> Settings</span></h4></th>
+                            <th style="width:200px" class="text-right"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td>Sevice Tax</td>
                             <td class="text-right"><input type="text" class="form-control text-right" name="sales_tax" value="{{ settings.sales_tax }}" /></td>
 
                         </tr>
