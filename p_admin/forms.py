@@ -61,6 +61,7 @@ class RegistrationFormAdmin( Form):
         return user
 
 class AddOrganizationEmployee( Form):
+
     form3FirstName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     form3LastName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     form3Designation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -74,6 +75,10 @@ class AddOrganizationEmployee( Form):
     form3PostalCode=TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=6)])
     form3TeleCode=TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=5)])
     form3TeleNo=TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=12)])
+
+
+    def save( self):
+        org=EsthenosOrgUser(name=sel)
 
     def validate_form3Email( form, field):
         email = field.data.lower().strip()
