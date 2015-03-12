@@ -50,6 +50,17 @@ def admin_dashboard():
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
 
+
+@admin_views.route('/admin/settings', methods=["GET"])
+@login_required
+def admin_dashboard():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    kwargs = locals()
+    return render_template("admin_dashboard.html", **kwargs)
+
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
 def admin_add_org():

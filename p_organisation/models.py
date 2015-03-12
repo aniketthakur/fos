@@ -3,7 +3,6 @@ import datetime
 from esthenos  import db
 from flask.ext.mongorest.resources import Resource
 from blinker import signal
-from p_admin.models import EsthenosUser
 from flask_sauth.models import BaseUser
 # Create your models here.
 

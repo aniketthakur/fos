@@ -86,7 +86,7 @@ class AddEmployeeForm( Form):
         return emp
 
 
-from p_organisation.models import EsthenosUser
+from p_admin.models import EsthenosUser
 class RegistrationFormAdmin( Form):
     name = TextField( validators=[v.DataRequired(), v.Length(max=256)])
     email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
