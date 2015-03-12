@@ -49,7 +49,7 @@ class AddOrganisationForm( Form):
 class AddEmployeeForm( Form):
     first_name = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     last_name = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    Executive = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    executive = TextField( validators=[v.DataRequired(), v.Length(max=512)])
     date_of_birth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
     sex = TextField( validators=[v.DataRequired(), v.Length(max=12)])
     postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -71,7 +71,7 @@ class AddEmployeeForm( Form):
         #set fields
         emp.first_name = self.first_name.data.split(",")
         emp.last_name = self.last_name.data.split(",")
-        emp.Executive = self.Executive.data.split(",")
+        emp.executive = self.executive.data
         emp.date_of_birth = self.date_of_birth.data.split(",")
         emp.postal_address = self.postal_address.data
         emp.postal_telephone = self.postal_telephone.data

@@ -21,7 +21,7 @@ class EsthenosUser(BaseUser):
     about = db.StringField(max_length=255, required=False)
     email = db.StringField(max_length=255, required=False)
     Executive=db.StringField(max_length=255, required=False)
-    date_of_birth=db.DateTimeField(default=datetime.date)
+    date_of_birth=db.StringField(max_length=20, required=False)
     postal_address = db.StringField(max_length=255, required=False)
     postal_country = db.StringField(max_length=100, required=False)
     postal_state = db.StringField(max_length=100, required=False)
