@@ -14,7 +14,7 @@ from p_admin.models import EsthenosUser
 from p_organisation.models import  EsthenosOrg
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin
+from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
@@ -92,15 +92,31 @@ def admin_add_org():
         return render_template("admin_add_org.html", **kwargs)
 
 
-@admin_views.route('/admin/add_emp', methods=["GET"])
+@admin_views.route('/admin/add_emp', methods=["GET","POST"])
 @login_required
 def admin_add_emp():
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
-    kwargs = locals()
-    return render_template("admin_add_emp.html", **kwargs)
+    if request.method == "POST":
+        print "hello"
+        org_form = AddEmployeeForm( request.form )
+
+        form = org_form
+        if(form.validate()):
+            form.save()
+            print "success"
+            return redirect("/admin/employees")
+        else:
+            print "here error"
+            flash_errors(org_form)
+            print org_form.errors
+            kwargs = {"login_form": org_form}
+            return render_template("admin_add_emp.html", **kwargs)
+    else:
+        kwargs = locals()
+        return render_template("admin_add_emp.html", **kwargs)
 
 @admin_views.route('/admin/employees', methods=["GET"])
 @login_required
@@ -109,6 +125,7 @@ def admin_employees():
         abort(403)
     username = current_user.name
     c_user = current_user
+    employees=EsthenosUser.objects.all()
     kwargs = locals()
     return render_template("admin_employees.html", **kwargs)
 
@@ -217,6 +234,7 @@ def admin_disbursement():
         abort(403)
     username = current_user.name
     c_user = current_user
+    ec_user = current_user
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
 

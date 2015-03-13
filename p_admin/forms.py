@@ -47,42 +47,39 @@ class AddOrganisationForm( Form):
 
 
 class AddEmployeeForm( Form):
-    first_name = TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    last_name = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    executive = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    date_of_birth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    sex = TextField( validators=[v.DataRequired(), v.Length(max=12)])
-    postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    postal_telephone = TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    postal_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=5)])
-    postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    postal_state = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    postal_city = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
-    postal_code=TextField(validators=[v.DataRequired(),v.Length(max=6)])
-
-    def validate_email( form, field):
-        email = field.data.lower().strip()
-        if( EsthenosUser.objects(name=email).count()):
-            raise ValidationError( "Hey! This organisation is already registered with us")
+    form3FirstName = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3LastName = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    form3Designation = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    form3DateOfBirth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    gender = TextField( validators=[v.DataRequired(), v.Length(max=12)])
+    form3Address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    form3TeleNo = TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    form3TeleCode = TextField( validators=[v.DataRequired(), v.Length(max=5)])
+    form3Country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    form3State = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    form3City = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    form3Email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
+    form3PostalCode=TextField(validators=[v.DataRequired(),v.Length(max=6)])
 
     def save( self):
-        emp = EsthenosUser(name=self.email.data)
-        #set fields
-        emp.first_name = self.first_name.data.split(",")
-        emp.last_name = self.last_name.data.split(",")
-        emp.executive = self.executive.data
-        emp.date_of_birth = self.date_of_birth.data.split(",")
-        emp.postal_address = self.postal_address.data
-        emp.postal_telephone = self.postal_telephone.data
-        emp.postal_tele_code = self.postal_tele_code.data
-        emp.postal_country = self.postal_country.data
-        emp.postal_state = self.postal_state.data
-        emp.postal_city = self.postal_city.data
-        emp.sex=self.sex.data
-        emp.owner =  EsthenosUser.objects.get(id=current_user.id)
-        emp.email = self.email.data
+        emp = EsthenosUser(EsthenosUser.create_user(name=self.form3FirstName.data,email=self.form3Email.data,password=self.form3Email.data,email_verified=True))
         emp.save()
+        #set fields
+        emp.first_name = self.form3FirstName.data
+        emp.last_name = self.form3LastName.data
+        emp.Designation = self.form3Designation.data
+        emp.date_of_birth = self.form3DateOfBirth.data
+        emp.postal_address = self.form3Address.data
+        emp.postal_telephone = self.form3TeleNo.data
+        emp.postal_tele_code = self.form3TeleCode.data
+        emp.postal_country = self.form3Country.data
+        emp.postal_state = self.form3State.data
+        emp.postal_city = self.form3City.data
+        emp.sex=self.gender.data
+        emp.owner =  current_user.id
+        emp.email = self.form3Email.data
+        emp.save()
+
         return emp
 
 

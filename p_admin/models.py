@@ -34,7 +34,7 @@ class EsthenosUser(BaseUser):
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     about = db.StringField(max_length=255, required=False)
     email = db.StringField(max_length=255, required=False)
-    executive=db.StringField(max_length=255, required=False)
+    designation=db.StringField(max_length=255,required=False)
     date_of_birth=db.StringField(max_length=20, required=False)
     postal_address = db.StringField(max_length=255, required=False)
     postal_country = db.StringField(max_length=100, required=False)
