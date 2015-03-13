@@ -22,9 +22,6 @@ class EsthenosSettings(db.Document):
 
 
 class EsthenosUser(BaseUser):
-
-
-
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")
     profile_pic = db.StringField(max_length=255, required=False)
@@ -45,6 +42,8 @@ class EsthenosUser(BaseUser):
     postal_telephone = db.StringField(max_length=20, required=False)
     postal_tele_code = db.StringField(max_length=20, required=False)
     postal_city = db.StringField(max_length=100, required=False)
+    organisation = db.ReferenceField('EsthenosOrg',required=False)
+    owner = db.ReferenceField('EsthenosUser',required=False)
 
 
     def __unicode__(self):

@@ -108,55 +108,55 @@ $(document).ready(function() {
                 focusInvalid: false, 
                 ignore: "",
                 rules: {
-                    form3FirstName: {
+                    first_name_add_organisation: {
                         minlength: 3,
                         required: true
                     },
-					form3LastName: {
+					last_name_add_organisation: {
                         minlength: 3,
                         required: true
                     },
                     form3Gender: {
                         required: true,
                     },
-					form3DateOfBirth: {
+					date_of_birth_add_organisation: {
                         required: true,
                     },
 					form3Occupation: {
 						 minlength: 3,
                         required: true,
                     },
-					form3Email: {
+					email_add_organisation: {
                         required: true,
 						email: true
                     },
-                    form3Address: {
+                    address_add_organisation: {
 						minlength: 10,
                         required: true,
                     },
-					form3City: {
+					city_add_organisation: {
 						minlength: 5,
                         required: true,
                     },
-					form3State: {
+					state_add_organisation: {
 						minlength: 3,
                         required: true,
                     },
-					form3Country: {
+					country_add_organisation: {
 						minlength: 3,
                         required: true,
                     },
-					form3PostalCode: {
+					postal_code_add_organisation: {
 						number: true,
 						maxlength: 4,
                         required: true,
                     },
-					form3TeleCode: {
+					tele_code_add_organisation: {
 						minlength: 3,
 						maxlength: 4,
                         required: true,
                     },
-					form3TeleNo: {
+					teleno_add_organisation: {
 						maxlength: 10,
                         required: true,
                     },

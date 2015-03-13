@@ -11,7 +11,7 @@ from flask import  Blueprint
 import psutil
 import os
 from p_admin.models import EsthenosUser
-from p_organisation.models import  EsthenosOrg, EsthenosOrgUser
+from p_organisation.models import  EsthenosOrg
 import urlparse
 from flask_sauth.models import authenticate,User
 from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm
@@ -158,7 +158,7 @@ def admin_organisation_dashboard(org_id):
     organisation = EsthenosOrg.objects.get(id=org_id)
     print org_id
     try:
-        employees = EsthenosOrgUser.objects.get(organisation=organisation)
+        employees = EsthenosUser.objects.get(organisation=organisation)
     except Exception as e:
         print e.message
 
@@ -183,7 +183,7 @@ def admin_organisation_add_emp(org_id):
         if (form.validate()):
             form.save()
             print "formValidated"
-            employees = EsthenosOrgUser.objects.all()
+            employees = EsthenosUser.objects.all()
             for emp in employees:
                 print emp.name
             kwargs = locals()
@@ -196,6 +196,7 @@ def admin_organisation_add_emp(org_id):
 
 
     else:
+        org = EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 

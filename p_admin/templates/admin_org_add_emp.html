@@ -15,33 +15,42 @@
                     <h4>Add <span class="semi-bold"> Samastha Employee</span></h4>
 
                     <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-condensed" method="POST">
+                        <form class="form-no-horizontal-spacing" novalidate="novalidate" id="form-organisation-emp" method="POST" action="/admin/organisation/{{ org.id }}/add_emp">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
                                     <h4>Basic Information </h4>
                                     <div class="row form-row">
                                         <div class="col-md-5">
-                                            <input name="form3FirstName" id="form3FirstName" type="text" class="form-control" placeholder="First Name">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="first_name_add_organisation" id="first_name_add_organisation" type="text" class="form-control" placeholder="First Name">
+                                               </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="form3LastName" id="form3LastName" type="text" class="form-control" placeholder="Last Name">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="last_name_add_organisation" id="last_name_add_organisation" type="text" class="form-control" placeholder="Last Name">
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-5">
-                                            <select name="form3Designation" id="form3Designation" class="select2 form-control">
-                                                <option value="1">CM(Center Manager)</option>
-                                                <option value="2">BM(Branch Manager)</option>
-                                                <option value="3">AM(Area Manager)</option>
-                                                <option value="4">RM(Regional Manager)</option>
-                                                <option value="5">SH(State Head)</option>
-                                                <option value="6">ZH(Zonal Head)</option>
-                                                <option value="7">VP(Vice President)</option>
-                                                <option value="8">CXO</option>
+                                            <select name="role" id="role" class="select2 form-control">
+                                                <option value="ORG_CM">CM(Center Manager)</option>
+                                                <option value="ORG_BM">BM(Branch Manager)</option>
+                                                <option value="ORG_AM">AM(Area Manager)</option>
+                                                <option value="ORG_RM">RM(Regional Manager)</option>
+                                                <option value="ORG_SH">SH(State Head)</option>
+                                                <option value="ORG_ZH">ZH(Zonal Head)</option>
+                                                <option value="ORG_VP">VP(Vice President)</option>
+                                                <option value="ORG_CXO">CXO</option>
                                             </select>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" placeholder="Date of Birth" class="form-control" id="form3DateOfBirth" name="form3DateOfBirth">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input type="text" placeholder="Date of Birth" class="form-control" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -57,7 +66,10 @@
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="form3Email" id="form3Email" type="text" class="form-control" placeholder="email@address.com">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="email_add_organisation" id="email_add_organisation" type="text" class="form-control" placeholder="email@address.com">
+                                             </div>
                                         </div>
                                     </div>
                                 </div>
@@ -67,31 +79,52 @@
 
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="form3Address" id="form3Address" type="text" class="form-control" placeholder="Address">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="address_add_org_emp" id="address_add_org_emp" type="text" class="form-control" placeholder="Address">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-6">
-                                            <input name="form3City" id="form3City" type="text" class="form-control" placeholder="City">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="city_add_organisation" id="city_add_organisation" type="text" class="form-control" placeholder="City">
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="form3State" id="form3State" type="text" class="form-control" placeholder="State">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="state_add_organisation" id="state_add_organisation" type="text" class="form-control" placeholder="State">
+                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-8">
-                                            <input name="form3Country" id="form3Country" type="text" class="form-control" placeholder="Country">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="country_add_organisation" id="country_add_organisation" type="text" class="form-control" placeholder="Country">
+                                            </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <input name="form3PostalCode" id="form3PostalCode" type="text" class="form-control" placeholder="Postal Code">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="postal_code_add_organisation" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code">
+                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-4">
-                                            <input name="form3TeleCode" id="form3TeleCode" type="text" class="form-control" placeholder="+91">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="tele_code_add_organisation" id="tele_code_add_organisation" type="text" class="form-control" placeholder="+91">
+                                            </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <input name="form3TeleNo" id="form3TeleNo" type="text" class="form-control" placeholder="Phone Number">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="teleno_add_organisation" id="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -116,9 +149,93 @@
 {% block js_scripts %}{{ super() }}
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#form3Designation").select2({
+            $("#role").select2({
                 placeholder: "Select a ROLE",
                 allowClear: true
+            });
+            $('#form-organisation-emp').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    first_name_add_organisation: {
+                        minlength: 3,
+                        required: true
+                    },
+                    last_name_add_organisation: {
+                        minlength: 3,
+                        required: true
+                    },
+                    email_add_organisation: {
+                        email: true,
+                        required: true
+                    },
+                    date_of_birth_add_organisation: {
+                        minlength: 5,
+                        required: true
+                    },
+                    address_add_org_emp: {
+                        minlength: 2,
+                        required: true
+                    },
+                    city_add_organisation: {
+                        minlength: 2,
+                        required: true
+                    },
+                    state_add_organisation: {
+                        minlength: 2,
+                        required: true
+                    },
+                    postal_code_add_organisation: {
+                        number:true,
+                        required: true
+                    },
+                    country_add_organisation: {
+                        minlength: 2,
+                        required: true
+                    },
+                    teleno_add_organisation: {
+                        number:true,
+                        minlength: 8,
+                        required: true
+                    },
+                    tele_code_add_organisation: {
+                        minlength: 2,
+                        required: true
+                    }
+                },
+
+                invalidHandler: function (event, validator) {
+                    //display error alert on form submit
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    var parent = $(element).parent();
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+                    parent.removeClass('error-control').addClass('success-control');
+                },
+
+                submitHandler: function (form) {
+
+                }
             });
         });
     </script>

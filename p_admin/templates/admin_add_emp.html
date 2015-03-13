@@ -15,28 +15,39 @@
                     <h4>Add <span class="semi-bold">Employee</span></h4>
 
                     <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-employee" method="POST">
+                        <form class="form-no-horizontal-spacing" id="form-employee" method="POST" action="/admin/add_emp">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
                                     <h4>Basic Information</h4>
                                     <div class="row form-row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-5 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="FirstName" id="FirstName" type="text" class="form-control" placeholder="First Name">
+                                            </div>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-7 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="LastName" id="LastName" type="text" class="form-control" placeholder="Last Name">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-5">
-                                            <select name="Designation" id="form3Designation" class="select2 form-control">
-                                                <option value="1">Executive</option>
-                                                <option value="2">Manager</option>
-                                                <option value="3">VP</option>
+                                            <select name="role" id="role" class="select2 form-control">
+                                                <option value="EMP_EXECUTIVE">Executive</option>
+                                                <option value="EMP_MANAGER">Manager</option>
+                                                <option value="EMP_VP">VP</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-7">
-                                            <input type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth">
+                                        <div class="col-md-7 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <div class="input-append success date col-md-10 col-lg-6 no-padding">
+                                                    <input type="text" type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth" >
+                                                 <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -51,8 +62,11 @@
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="Email" id="Email" type="text" class="form-control" placeholder="email@address.com">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -61,32 +75,54 @@
                                     <h4>Postal Information</h4>
 
                                     <div class="row form-row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="Address" id="Address" type="text" class="form-control" placeholder="Address">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="City" id="City" type="text" class="form-control" placeholder="City">
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="State" id="State" type="text" class="form-control" placeholder="State">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="Country" id="Country" type="text" class="form-control" placeholder="Country">
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="PostalCode" id="PostalCode" type="text" class="form-control" placeholder="Postal Code">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="TeleCode" id="TeleCode" type="text" class="form-control" placeholder="+91">
+                                            </div>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
                                             <input name="TeleNo" id="TeleNo" type="text" class="form-control" placeholder="Phone Number">
+                                                </div>
+
                                         </div>
                                     </div>
 
@@ -112,97 +148,99 @@
     <script type="text/javascript" src="{{ url_for('static', filename='plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#form3Designation").select2({
+            $("#role").select2({
                 placeholder: "Select a ROLE",
                 allowClear: true
             });
 
         });
         $('#form-employee').validate({
-                errorElement: 'span',
-                errorClass: 'error',
-                focusInvalid: false,
-                ignore: "",
-                rules: {
-                     FirstName: {
-                        minlength: 2,
-                        required: true
-                    },
-                    LastName: {
-                        minlength: 2,
-                        required: true
-                    },
-                    Email: {
-                        minlength: 2,
-                        required: true
-                    },
-                    Address: {
-                        minlength: 2,
-                        required: true
-                    },
-                    City: {
-                        minlength: 2,
-                        required: true
-                    },
-                    State: {
-                        minlength: 2,
-                        required: true
-                    },
-                    Country: {
-                        minlength: 2,
-                        required: true
-                    },
-                    PostalCode: {
-                        minlength: 2,
-                        required: true
-                    },
-                    TeleCode: {
-                        minlength: 2,
-                        required: true
-                    },
-                    TeleNo: {
-                        minlength: 2,
-                        required: true
-                    },
-                    DateOfBirth: {
-                        minlength: 2,
-                        required: true
-                    },
-
-
-
+            errorElement: 'span',
+            errorClass: 'error',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                FirstName: {
+                    minlength: 3,
+                    required: true
                 },
-
-                invalidHandler: function (event, validator) {
-					//display error alert on form submit
+                LastName: {
+                    minlength: 3,
+                    required: true
                 },
-
-                errorPlacement: function (error, element) { // render error placement for each input type
-                    var icon = $(element).parent('.input-with-icon').children('i');
-                    var parent = $(element).parent('.input-with-icon');
-                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
-                    parent.removeClass('success-control').addClass('error-control');
+                Email: {
+                    email: true,
+                    required: true
                 },
-
-                highlight: function (element) { // hightlight error inputs
-					var parent = $(element).parent();
-                    parent.removeClass('success-control').addClass('error-control');
+                Address: {
+                    minlength: 5,
+                    required: true
                 },
-
-                unhighlight: function (element) { // revert the change done by hightlight
-
+                City: {
+                    minlength: 2,
+                    required: true
                 },
-
-                success: function (label, element) {
-                    var icon = $(element).parent('.input-with-icon').children('i');
-					var parent = $(element).parent('.input-with-icon');
-                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
-					parent.removeClass('error-control').addClass('success-control');
+                State: {
+                    minlength: 2,
+                    required: true
                 },
-
-                submitHandler: function (form) {
-                    $('#form-employee').submit();
+                Country: {
+                    minlength: 2,
+                    required: true
+                },
+                PostalCode: {
+                    number:true,
+                    required: true
+                },
+                TeleCode: {
+                    minlength: 2,
+                    required: true
+                },
+                TeleNo: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                DateOfBirth: {
+                    minlength: 2,
+                    required: true
                 }
-            });
+            },
+
+            invalidHandler: function (event, validator) {
+                //display error alert on form submit
+            },
+
+            errorPlacement: function (error, element) { // render error placement for each input type
+                var icon = $(element).parent('.input-with-icon').children('i');
+                var parent = $(element).parent('.input-with-icon');
+                icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                var parent = $(element).parent();
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+
+            },
+
+            success: function (label, element) {
+                var icon = $(element).parent('.input-with-icon').children('i');
+                var parent = $(element).parent('.input-with-icon');
+                icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+                parent.removeClass('error-control').addClass('success-control');
+            },
+
+            submitHandler: function (form) {
+
+            }
+        });
+        $('.input-append.date').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
     </script>
 {% endblock %}
