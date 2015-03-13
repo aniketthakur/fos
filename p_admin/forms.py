@@ -47,37 +47,37 @@ class AddOrganisationForm( Form):
 
 
 class AddEmployeeForm( Form):
-    form3FirstName = TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    form3LastName = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    form3Designation = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    form3DateOfBirth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    FirstName = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    LastName = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    Designation = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    DateOfBirth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
     gender = TextField( validators=[v.DataRequired(), v.Length(max=12)])
-    form3Address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    form3TeleNo = TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    form3TeleCode = TextField( validators=[v.DataRequired(), v.Length(max=5)])
-    form3Country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    form3State = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    form3City = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    form3Email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
-    form3PostalCode=TextField(validators=[v.DataRequired(),v.Length(max=6)])
+    Address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    TeleNo = TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    TeleCode = TextField( validators=[v.DataRequired(), v.Length(max=5)])
+    Country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    State = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    City = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    Email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
+    PostalCode=TextField(validators=[v.DataRequired(),v.Length(max=6)])
 
     def save( self):
-        emp = EsthenosUser(EsthenosUser.create_user(name=self.form3FirstName.data,email=self.form3Email.data,password=self.form3Email.data,email_verified=True))
+        emp = EsthenosUser.create_user(self.FirstName.data,self.Email.data,self.Email.data,True)
         emp.save()
         #set fields
-        emp.first_name = self.form3FirstName.data
-        emp.last_name = self.form3LastName.data
-        emp.Designation = self.form3Designation.data
-        emp.date_of_birth = self.form3DateOfBirth.data
-        emp.postal_address = self.form3Address.data
-        emp.postal_telephone = self.form3TeleNo.data
-        emp.postal_tele_code = self.form3TeleCode.data
-        emp.postal_country = self.form3Country.data
-        emp.postal_state = self.form3State.data
-        emp.postal_city = self.form3City.data
+        emp.first_name = self.FirstName.data
+        emp.last_name = self.LastName.data
+        emp.Designation = self.Designation.data
+        emp.date_of_birth = self.DateOfBirth.data
+        emp.postal_address = self.Address.data
+        emp.postal_telephone = self.TeleNo.data
+        emp.postal_tele_code = self.TeleCode.data
+        emp.postal_country = self.Country.data
+        emp.postal_state = self.State.data
+        emp.postal_city = self.City.data
         emp.sex=self.gender.data
         emp.owner =  current_user.id
-        emp.email = self.form3Email.data
+        emp.email = self.Email.data
         emp.save()
 
         return emp
