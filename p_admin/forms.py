@@ -61,7 +61,7 @@ class RegistrationFormAdmin( Form):
         return user
 
 class AddOrganizationEmployee( Form):
-
+    org_id = TextField( validators=[ v.Length(max=255)])
     form3FirstName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     form3LastName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     form3Designation=TextField( validators=[v.DataRequired(), v.Length(max=255)])

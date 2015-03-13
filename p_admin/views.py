@@ -18,7 +18,7 @@ from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
-
+from .forms import AddOrganizationEmployee
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from p_tokens.models import EsthenosOrgUserToken
@@ -121,6 +121,7 @@ def admin_organisation_dashboard(org_id):
     username = current_user.name
     org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
+    organisation = EsthenosOrg.objects.get(id=org_id)
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
@@ -131,7 +132,14 @@ def admin_organisation_add_emp(org_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    if request.method == "POST":
+        form  =AddOrganizationEmployee(request.form)
+        form.org_id = org_id
+        if (form.validate()):
+            form.save()
+
     org = EsthenosOrg.objects.get(id=org_id)
+
     kwargs = locals()
     return render_template("admin_org_add_emp.html", **kwargs)
 
