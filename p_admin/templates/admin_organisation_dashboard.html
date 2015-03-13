@@ -105,13 +105,13 @@
                 <div class="grid-body ">
                     <div class="row">
                 <div class="col-md-4">
-                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/1244/add_emp">Add Samastha Employee</a></a>
+                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add Samastha Employee</a></a>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/1244/products">Samastha Products</a></a>
+                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Samastha Products</a></a>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/1244/settings">Samastha Settings</a></a>
+                    <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Samastha Settings</a></a>
                 </div>
                         </div>
                 </div>
@@ -141,6 +141,25 @@
                             <th style="width:22%">PHONE NUMBER</th>
                         </tr>
                         </thead>
+
+                        <tbody>
+                        {% for emp in employees %}
+                            <tr>
+                                <td class="v-align-middle">
+                                    <div class="checkbox check-default">
+                                        <input id="checkbox11" type="checkbox" value="1">
+                                        <label for="checkbox11"></label>
+                                    </div>
+                                </td>
+                                <td class="v-align-middle"><span class="muted">{{ emp.unique_id}}</span></td>
+                                <td class="v-align-middle">{{ emp.first_name }}</td>
+                                <td><span class="muted">{{ emp.name }}</span></td>
+                                <td><span class="muted">{{ emp.email }}</span></td>
+                                <td><span class="muted"></span></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
 
                     </table>
                 </div>
