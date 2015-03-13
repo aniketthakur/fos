@@ -22,6 +22,9 @@ class EsthenosSettings(db.Document):
 
 
 class EsthenosUser(BaseUser):
+
+
+
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")
     profile_pic = db.StringField(max_length=255, required=False)

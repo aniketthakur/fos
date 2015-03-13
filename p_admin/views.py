@@ -18,7 +18,7 @@ from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployee
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
-
+from .forms import AddOrganizationEmployee
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from p_tokens.models import EsthenosOrgUserToken
@@ -148,32 +148,41 @@ def admin_organisation_dashboard(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
+    org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
+    organisation = EsthenosOrg.objects.get(id=org_id)
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
-
-@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET"])
-@login_required
-def admin_organisation_settings(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    settings = EsthenosSettings.objects.all()[0]
-    org_settings = EsthenosSettings.objects.all()[0]
-    kwargs = locals()
-    return render_template("admin_org_settings.html", **kwargs)
-
-@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
-    kwargs = locals()
-    return render_template("admin_org_add_emp.html", **kwargs)
+    print "reached here"
+    if request.method == "POST":
+        org_emp  = AddOrganizationEmployee(request.form)
+        form=org_emp
+        print form
+        form.org_id = org_id
+        print org_id
+        if (form.validate()):
+            form.save()
+            print "formValidated"
+            org = EsthenosOrg.objects.get(id=org_id)
+            kwargs = locals()
+            return redirect("/admin/organisation/"+org_id)
+        else:
+            flash_errors(form)
+            kwargs = locals()
+            return render_template("admin_org_add_emp.html", **kwargs)
+
+
+    else:
+        kwargs = locals()
+        return render_template("admin_org_add_emp.html", **kwargs)
 
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
@@ -377,6 +386,7 @@ def login_admin():
         login_form = LoginForm( request.form)
         form = login_form
         if(form.validate()):
+
             user = EsthenosUser.objects.get( email=form.email.data)
             login_user(user)
             confirm_login()
