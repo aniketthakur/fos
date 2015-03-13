@@ -50,6 +50,12 @@ def admin_dashboard():
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
 
+@admin_views.route('/admin/test', methods=["GET"])
+@login_required
+def admin_test():
+
+        return render_template("test.html")
+
 
 
 @admin_views.route('/admin/settings', methods=["GET"])

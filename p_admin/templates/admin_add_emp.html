@@ -15,16 +15,16 @@
                     <h4>Add <span class="semi-bold">Employee</span></h4>
 
                     <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-condensed" method="POST">
+                        <form class="form-no-horizontal-spacing" id="form-employee" method="POST">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
                                     <h4>Basic Information</h4>
                                     <div class="row form-row">
                                         <div class="col-md-5">
-                                            <input name="FirstName" id="form3FirstName" type="text" class="form-control" placeholder="First Name">
+                                            <input name="FirstName" id="FirstName" type="text" class="form-control" placeholder="First Name">
                                         </div>
                                         <div class="col-md-7">
-                                            <input name="LastName" id="form3LastName" type="text" class="form-control" placeholder="Last Name">
+                                            <input name="LastName" id="LastName" type="text" class="form-control" placeholder="Last Name">
                                         </div>
                                     </div>
                                     <div class="row form-row">
@@ -36,7 +36,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" placeholder="Date of Birth" class="form-control" id="form3DateOfBirth" name="DateOfBirth">
+                                            <input type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth">
                                         </div>
                                     </div>
 
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="Email" id="form3Email" type="text" class="form-control" placeholder="email@address.com">
+                                            <input name="Email" id="Email" type="text" class="form-control" placeholder="email@address.com">
                                         </div>
                                     </div>
                                 </div>
@@ -62,31 +62,31 @@
 
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="Address" id="form3Address" type="text" class="form-control" placeholder="Address">
+                                            <input name="Address" id="Address" type="text" class="form-control" placeholder="Address">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-6">
-                                            <input name="City" id="form3City" type="text" class="form-control" placeholder="City">
+                                            <input name="City" id="City" type="text" class="form-control" placeholder="City">
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="State" id="form3State" type="text" class="form-control" placeholder="State">
+                                            <input name="State" id="State" type="text" class="form-control" placeholder="State">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-8">
-                                            <input name="Country" id="form3Country" type="text" class="form-control" placeholder="Country">
+                                            <input name="Country" id="Country" type="text" class="form-control" placeholder="Country">
                                         </div>
                                         <div class="col-md-4">
-                                            <input name="PostalCode" id="form3PostalCode" type="text" class="form-control" placeholder="Postal Code">
+                                            <input name="PostalCode" id="PostalCode" type="text" class="form-control" placeholder="Postal Code">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-4">
-                                            <input name="TeleCode" id="form3TeleCode" type="text" class="form-control" placeholder="+91">
+                                            <input name="TeleCode" id="TeleCode" type="text" class="form-control" placeholder="+91">
                                         </div>
                                         <div class="col-md-8">
-                                            <input name="TeleNo" id="form3TeleNo" type="text" class="form-control" placeholder="Phone Number">
+                                            <input name="TeleNo" id="TeleNo" type="text" class="form-control" placeholder="Phone Number">
                                         </div>
                                     </div>
 
@@ -96,7 +96,7 @@
                             <div class="form-actions">
 
                                 <div class="pull-right">
-                                    <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
+                                    <button class="btn btn-danger btn-cons"  id="submitForm2" type="submit"><i class="icon-ok"></i> Save</button>
                                     <button class="btn btn-white btn-cons" type="button">Cancel</button>
                                 </div>
                             </div>
@@ -109,6 +109,7 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#form3Designation").select2({
@@ -117,5 +118,91 @@
             });
 
         });
+        $('#form-employee').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                     FirstName: {
+                        minlength: 2,
+                        required: true
+                    },
+                    LastName: {
+                        minlength: 2,
+                        required: true
+                    },
+                    Email: {
+                        minlength: 2,
+                        required: true
+                    },
+                    Address: {
+                        minlength: 2,
+                        required: true
+                    },
+                    City: {
+                        minlength: 2,
+                        required: true
+                    },
+                    State: {
+                        minlength: 2,
+                        required: true
+                    },
+                    Country: {
+                        minlength: 2,
+                        required: true
+                    },
+                    PostalCode: {
+                        minlength: 2,
+                        required: true
+                    },
+                    TeleCode: {
+                        minlength: 2,
+                        required: true
+                    },
+                    TeleNo: {
+                        minlength: 2,
+                        required: true
+                    },
+                    DateOfBirth: {
+                        minlength: 2,
+                        required: true
+                    },
+
+
+
+                },
+
+                invalidHandler: function (event, validator) {
+					//display error alert on form submit
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                highlight: function (element) { // hightlight error inputs
+					var parent = $(element).parent();
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-with-icon').children('i');
+					var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+					parent.removeClass('error-control').addClass('success-control');
+                },
+
+                submitHandler: function (form) {
+                    $('#form-employee').submit();
+                }
+            });
     </script>
 {% endblock %}
