@@ -124,8 +124,9 @@ class AddOrganizationEmployeeForm(Form):
         emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
         emp.organisation = EsthenosOrg.objects.get(id=org_id)
         emp.postal_address = self.address_add_org_emp.data
-        emp.has_role(self.role)
-        emp.is_active = True
+        emp.roles= list()
+        emp.roles.append(self.role.data)
+        emp.active = True
         emp.owner = EsthenosUser.objects.get(id=current_user.id)
         emp.name=self.first_name_add_organisation.data
         emp.email=self.email_add_organisation.data

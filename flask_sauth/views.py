@@ -65,8 +65,9 @@ def login():
             if (form.role.data == "ADMIN"):
                 session['role'] = "ADMIN"
                 return redirect("/admin/servers")
-            if (form.role.data == "USER"):
-                session['role'] = "USER"
+            if (form.role.data == "ORG_CM"):
+                session['role'] = "ORG_CM"
+                return redirect("/")
             token =  request.args.get('token',None)
             if token is not None:
                 req_token = DevRequestToken.objects.get(token=token)

@@ -181,10 +181,6 @@ def admin_organisation_add_emp(org_id):
         if (form.validate()):
             form.save(org_id)
             print "formValidated"
-            employees = EsthenosUser.objects.get(organisation=org_id)
-            for emp in employees:
-                print emp.name
-            kwargs = locals()
             return redirect("/admin/organisation/"+org_id)
         else:
             print "some Error"
@@ -196,7 +192,7 @@ def admin_organisation_add_emp(org_id):
 
 
     else:
-        org = EsthenosOrg.objects.get(organisation=org_id)
+        org = EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 
