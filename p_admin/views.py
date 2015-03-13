@@ -132,16 +132,28 @@ def admin_organisation_add_emp(org_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    print "reached here"
     if request.method == "POST":
-        form  =AddOrganizationEmployee(request.form)
+        org_emp  = AddOrganizationEmployee(request.form)
+        form=org_emp
+        print form
         form.org_id = org_id
+        print org_id
         if (form.validate()):
             form.save()
+            print "formValidated"
+            org = EsthenosOrg.objects.get(id=org_id)
+            kwargs = locals()
+            return redirect("/admin/organisation/"+org_id)
+        else:
+            flash_errors(form)
+            kwargs = locals()
+            return render_template("admin_org_add_emp.html", **kwargs)
 
-    org = EsthenosOrg.objects.get(id=org_id)
 
-    kwargs = locals()
-    return render_template("admin_org_add_emp.html", **kwargs)
+    else:
+        kwargs = locals()
+        return render_template("admin_org_add_emp.html", **kwargs)
 
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required

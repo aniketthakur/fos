@@ -100,6 +100,7 @@ class EsthenosOrgUser(BaseUser):
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     about = db.StringField(max_length=255, required=False)
+    organisation = db.ReferenceField('EsthenosOrg')
     owner = db.ReferenceField('EsthenosUser')
     #user_tokens = db.ListField(db.EmbeddedDocumentField(PUserToken))
     notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))

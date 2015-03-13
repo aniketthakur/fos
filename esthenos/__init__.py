@@ -16,9 +16,9 @@ from werkzeug.contrib.fixers import ProxyFix
 mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
 
 mainapp.url_map.strict_slashes = False
-
+mainapp.config['DEBUG'] = True
 mainapp.config.update(
-    DEBUG = False,
+    DEBUG = True,
     TESTING = False,
     MONGODB_SETTINGS = {
         'HOST': '128.199.156.24',#
