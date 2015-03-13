@@ -102,14 +102,13 @@ class RegistrationFormAdmin( Form):
         return user
 
 class AddOrganizationEmployeeForm(Form):
-    org_id = TextField( validators=[ v.Length(max=255)])
     first_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     last_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     role=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     date_of_birth_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     gender=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     email_add_organisation= TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
-    address_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    address_add_org_emp=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     city_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     state_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     country_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -121,9 +120,10 @@ class AddOrganizationEmployeeForm(Form):
         email_add_organisation = field.data.lower().strip()
         if( EsthenosUser.objects(email=email_add_organisation).count()):
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
-    def save( self):
+    def save( self,org_id):
         emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
-        emp.organisation = self.org_id
+        emp.organisation = EsthenosOrg.objects.get(id=org_id)
+        emp.postal_address = self.address_add_org_emp.data
         emp.has_role(self.role)
         emp.is_active = True
         emp.owner = EsthenosUser.objects.get(id=current_user.id)

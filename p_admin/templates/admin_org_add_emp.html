@@ -15,7 +15,7 @@
                     <h4>Add <span class="semi-bold"> Samastha Employee</span></h4>
 
                     <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" novalidate="novalidate" id="form-organisation-emp" method="POST" action="/admin/organisation/{{ org.id }}/add_emp">
+                        <form class="form-no-horizontal-spacing" novalidate="novalidate" id="form-organisation-emp" method="post" action="/admin/organisation/{{ org.id }}/add_emp">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
                                     <h4>Basic Information </h4>
@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <select name="role" id="role" class="select2 form-control">
                                                 <option value="ORG_CM">CM(Center Manager)</option>
                                                 <option value="ORG_BM">BM(Branch Manager)</option>
@@ -46,10 +46,12 @@
                                                 <option value="ORG_CXO">CXO</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-7">
+                                        <div class="col-md-6">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input type="text" placeholder="Date of Birth" class="form-control" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation">
+                                                <div class="input-append success date col-md-10 col-lg-6 no-padding">
+                                                    <input type="text" type="text" placeholder="Date of Birth" class="form-control" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation" >
+                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -86,27 +88,29 @@
                                         </div>
                                     </div>
                                     <div class="row form-row">
+
                                         <div class="col-md-6">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="city_add_organisation" id="city_add_organisation" type="text" class="form-control" placeholder="City">
+                                                <select name="country_add_organisation" id="country" class="form-control select2" placeholder="Country"></select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="state_add_organisation" id="state_add_organisation" type="text" class="form-control" placeholder="State">
-                                             </div>
+                                                <select name="state_add_organisation" id="state" class="form-control select2" placeholder="State"></select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="country_add_organisation" id="country_add_organisation" type="text" class="form-control" placeholder="Country">
+                                                <input name="city_add_organisation" id="city_add_organisation" type="text" class="form-control" placeholder="City">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+
+                                        <div class="col-md-6">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
                                             <input name="postal_code_add_organisation" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code">
@@ -147,8 +151,13 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
+    <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+
         $(document).ready(function(){
+            populateCountries("country", "state");
+            $("#country").select2();
+            $("#state").select2();
             $("#role").select2({
                 placeholder: "Select a ROLE",
                 allowClear: true
@@ -171,10 +180,6 @@
                         email: true,
                         required: true
                     },
-                    date_of_birth_add_organisation: {
-                        minlength: 5,
-                        required: true
-                    },
                     address_add_org_emp: {
                         minlength: 2,
                         required: true
@@ -183,18 +188,12 @@
                         minlength: 2,
                         required: true
                     },
-                    state_add_organisation: {
-                        minlength: 2,
-                        required: true
-                    },
+
                     postal_code_add_organisation: {
                         number:true,
                         required: true
                     },
-                    country_add_organisation: {
-                        minlength: 2,
-                        required: true
-                    },
+
                     teleno_add_organisation: {
                         number:true,
                         minlength: 8,
@@ -234,8 +233,14 @@
                 },
 
                 submitHandler: function (form) {
-
+                    $('#form-organisation-emp').submit();
+                    console.log("Success");
                 }
+            });
+
+            $('.input-append.date').datepicker({
+                autoclose: true,
+                todayHighlight: true
             });
         });
     </script>

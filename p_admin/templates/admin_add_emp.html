@@ -15,7 +15,7 @@
                     <h4>Add <span class="semi-bold">Employee</span></h4>
 
                     <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-employee" method="POST" action="/admin/add_emp">
+                        <form class="form-no-horizontal-spacing" id="form-employee" method="post" action="/admin/add_emp">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
                                     <h4>Basic Information</h4>
@@ -235,7 +235,7 @@
             },
 
             submitHandler: function (form) {
-
+                $('#form-organisation-emp').submit();
             }
         });
         $('.input-append.date').datepicker({

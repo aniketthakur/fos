@@ -157,11 +157,11 @@ def admin_organisation_dashboard(org_id):
     c_user = current_user
     organisation = EsthenosOrg.objects.get(id=org_id)
     print org_id
+    employees = []
     try:
-        employees = EsthenosUser.objects.get(organisation=organisation)
+        employees = EsthenosUser.objects.filter(organisation=organisation)
     except Exception as e:
         print e.message
-
 
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
@@ -177,13 +177,11 @@ def admin_organisation_add_emp(org_id):
     if request.method == "POST":
         org_emp  = AddOrganizationEmployeeForm(request.form)
         form=org_emp
-        print form
-        form.org_id = org_id
         print org_id
         if (form.validate()):
-            form.save()
+            form.save(org_id)
             print "formValidated"
-            employees = EsthenosUser.objects.all()
+            employees = EsthenosUser.objects.get(organisation=org_id)
             for emp in employees:
                 print emp.name
             kwargs = locals()
@@ -191,12 +189,14 @@ def admin_organisation_add_emp(org_id):
         else:
             print "some Error"
             flash_errors(form)
+            print form.errors
+            org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
             return render_template("admin_org_add_emp.html", **kwargs)
 
 
     else:
-        org = EsthenosOrg.objects.get(id=org_id)
+        org = EsthenosOrg.objects.get(organisation=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 

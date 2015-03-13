@@ -104,13 +104,13 @@
                 </div>
                 <div class="grid-body ">
                     <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add Samastha Employee</a></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Samastha Products</a></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Samastha Settings</a></a>
                 </div>
                         </div>
@@ -138,7 +138,7 @@
                             <th style="width:20%">EMP ID</th>
                             <th style="width:23%">NAME</th>
                             <th style="width:25%">EMAIL</th>
-                            <th style="width:22%">PHONE NUMBER</th>
+                            <th style="width:22%">ROLES</th>
                         </tr>
                         </thead>
 
@@ -151,11 +151,10 @@
                                         <label for="checkbox11"></label>
                                     </div>
                                 </td>
-                                <td class="v-align-middle"><span class="muted">{{ emp.unique_id}}</span></td>
+                                <td class="v-align-middle"><span class="muted">{{ emp.id}}</span></td>
                                 <td class="v-align-middle">{{ emp.first_name }}</td>
-                                <td><span class="muted">{{ emp.name }}</span></td>
                                 <td><span class="muted">{{ emp.email }}</span></td>
-                                <td><span class="muted"></span></td>
+                                <td><span class="muted">{{ emp.roles }}</span></td>
                             </tr>
                         {% endfor %}
 
@@ -163,7 +162,6 @@
 
                     </table>
                 </div>
-                <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add {{ org.name }} Employee</a></a>
             </div>
         </div>
     </div>
