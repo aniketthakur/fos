@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
+from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError, DateField
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
 from p_organisation.models import EsthenosOrg
 
+from p_organisation.models import EsthenosOrg, EsthenosOrgUser
 
 class AddOrganisationForm( Form):
     org_name = TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -102,4 +103,33 @@ class RegistrationFormAdmin( Form):
         user = EsthenosUser.create_user( self.name.data, self.email.data, self.password.data, email_verified=True)
         user.save()
         return user
+
+class AddOrganizationEmployee( Form):
+    org_id = TextField( validators=[ v.Length(max=255)])
+    form3FirstName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3LastName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3Designation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3DateOfBirth=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    gender=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3Email= TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
+    form3Address=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3City=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3State=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3Country=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3PostalCode=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3TeleCode=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    form3TeleNo=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+
+    def validate_form3Email( form,field):
+        form3Email = field.data.lower().strip()
+        if( EsthenosUser.objects(email=form3Email).count()):
+            raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
+    def save( self):
+        emp=EsthenosOrgUser.create_user(self.form3FirstName.data,self.form3Email.data,self.form3Email.data,True)
+        emp.organisation =  EsthenosOrg.objects.get(id=self.org_id)
+        emp.name=self.form3FirstName.data
+        emp.email=self.form3Email.data
+        emp.type=self.form3Designation.data
+        emp.save()
+        return emp
 
