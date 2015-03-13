@@ -8,7 +8,6 @@ from .models import EsthenosUser
 from p_organisation.models import EsthenosOrg
 
 from p_organisation.models import EsthenosOrg, EsthenosOrgUser
-
 class AddOrganisationForm( Form):
     org_name = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches = TextField( validators=[v.DataRequired(), v.Length(max=512)])
@@ -84,7 +83,7 @@ class AddEmployeeForm( Form):
         return emp
 
 
-from p_admin.models import EsthenosUser
+
 class RegistrationFormAdmin( Form):
     name = TextField( validators=[v.DataRequired(), v.Length(max=256)])
     email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
@@ -101,7 +100,7 @@ class RegistrationFormAdmin( Form):
         user.save()
         return user
 
-class AddOrganizationEmployee( Form):
+class AddOrganizationEmployeeForm( Form):
     org_id = TextField( validators=[ v.Length(max=255)])
     form3FirstName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     form3LastName=TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -123,7 +122,8 @@ class AddOrganizationEmployee( Form):
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
     def save( self):
         emp=EsthenosOrgUser.create_user(self.form3FirstName.data,self.form3Email.data,self.form3Email.data,True)
-        emp.organisation =  EsthenosOrg.objects.get(id=self.org_id)
+        emp.organisation = self.org_id
+        emp.owner = EsthenosUser.objects.get(id=current_user.id)
         emp.name=self.form3FirstName.data
         emp.email=self.form3Email.data
         emp.type=self.form3Designation.data

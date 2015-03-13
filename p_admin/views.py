@@ -11,14 +11,13 @@ from flask import  Blueprint
 import psutil
 import os
 from p_admin.models import EsthenosUser
-from p_organisation.models import  EsthenosOrg
+from p_organisation.models import  EsthenosOrg, EsthenosOrgUser
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm
+from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
-from .forms import AddOrganizationEmployee
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from p_tokens.models import EsthenosOrgUserToken
@@ -151,6 +150,13 @@ def admin_organisation_dashboard(org_id):
     org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
     organisation = EsthenosOrg.objects.get(id=org_id)
+    print org_id
+    try:
+        employees = EsthenosOrgUser.objects.get(organisation=organisation)
+    except Exception as e:
+        print e.message
+
+
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
@@ -163,7 +169,7 @@ def admin_organisation_add_emp(org_id):
     c_user = current_user
     print "reached here"
     if request.method == "POST":
-        org_emp  = AddOrganizationEmployee(request.form)
+        org_emp  = AddOrganizationEmployeeForm(request.form)
         form=org_emp
         print form
         form.org_id = org_id
@@ -171,10 +177,13 @@ def admin_organisation_add_emp(org_id):
         if (form.validate()):
             form.save()
             print "formValidated"
-            org = EsthenosOrg.objects.get(id=org_id)
+            employees = EsthenosOrgUser.objects.all()
+            for emp in employees:
+                print emp.name
             kwargs = locals()
             return redirect("/admin/organisation/"+org_id)
         else:
+            print "some Error"
             flash_errors(form)
             kwargs = locals()
             return render_template("admin_org_add_emp.html", **kwargs)

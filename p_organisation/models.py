@@ -86,11 +86,11 @@ class EsthenosOrg(db.Document):
     email = db.StringField( unique=True)
 
 class EsthenosOrgUser(BaseUser):
-    state = db.ReferenceField('OrgState')
-    district = db.ReferenceField('OrgDistrict')
+    state = db.ReferenceField('OrgState',required=False)
+    district = db.ReferenceField('OrgDistrict',required=False)
     name = db.StringField(max_length=512, required=False,default="")
     profile_pic = db.StringField(max_length=255, required=False)
-    type = db.ReferenceField('EsthenosOrgUserType', required=True)
+    type = db.StringField(max_length=255, required=False)
     unique_id = db.IntField(default=0)
     status = db.IntField(default=0)
     activation_code = db.StringField(max_length=50, required=False)
@@ -100,7 +100,7 @@ class EsthenosOrgUser(BaseUser):
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     about = db.StringField(max_length=255, required=False)
     organisation = db.ReferenceField('EsthenosOrg')
-    owner = db.ReferenceField('EsthenosUser')
+    owner = db.ReferenceField('EsthenosUser',required=False)
     #user_tokens = db.ListField(db.EmbeddedDocumentField(PUserToken))
     notifications = db.ListField(db.ReferenceField('EsthenosOrgNotification'))
 
