@@ -7,6 +7,7 @@ from models import EsthenosOrgUserToken
 from flask_login import  current_user,current_app
 from flask_login import current_user, login_user
 from mongoengine.queryset import DoesNotExist
+from .models import *
 # The actual decorator function
 def login_or_key_required(view_function):
     @wraps(view_function)

@@ -12,6 +12,9 @@ from esthenos  import mainapp
 from esthenos.utils import request_wants_json
 from esthenos.mongo_encoder import encode_model
 from flask.views import View
+from esthenos.utils import random_with_N_digits
+import os,tempfile
+from pixuate_storage import upload_images
 from datetime import timedelta
 import traceback
 class RenderTemplateView(View):
@@ -35,6 +38,91 @@ def round_to_1(x):
 def home_page():
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
+
+@organisation_views.route('/uploads_group_app', methods=["GET","POST"])
+#@login_required
+def uploads_group_app():
+    kwargs = locals()
+    file = request.files['file']
+    center_name = request.form.get('center_name')
+    group_game = request.form.get('group_game')
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+
+@organisation_views.route('/uploads_group_kyc', methods=["GET","POST"])
+#@login_required
+def uploads_group_kyc():
+    kwargs = locals()
+    file = request.files['file']
+    center_name = request.form.get('center_name')
+    group_game = request.form.get('group_game')
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_indivijual_app', methods=["GET","POST"])
+#@login_required
+def uploads_indivijual_app():
+    kwargs = locals()
+    file = request.files['file']
+    center_name = request.form.get('center_name')
+    group_game = request.form.get('group_game')
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_indivijual_kyc', methods=["GET","POST"])
+#@login_required
+def uploads_indivijual_kyc():
+    kwargs = locals()
+    file = request.files['file']
+    center_name = request.form.get('center_name')
+    group_game = request.form.get('group_game')
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
 
 @organisation_views.route('/upload_documents', methods=["GET"])
 #@login_required
