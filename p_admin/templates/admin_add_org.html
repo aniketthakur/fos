@@ -23,7 +23,7 @@
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="org_name" id="org_name" type="text"  class="form-control" placeholder="Organisation Name">
+                                            <input name="org_name" id="org_name" type="text" value="New Org"  class="form-control" placeholder="Organisation Name">
                                         </div>
                                     </div>
 
@@ -121,34 +121,36 @@
                                 <h4>Postal Information</h4>
 
                                 <div class="row form-row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 form-group" >
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="postal_address" id="postal_address" type="text"  class="form-control" placeholder="Address">
+                                        <input name="postal_address" value="HAL 2rd Stage" id="postal_address" type="text"  class="form-control" placeholder="Address">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row form-row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6 form-group">
                                         <select name="postal_country" id="country"   class="select2 form-control" placeholder="Country"></select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="postal_code" id="postal_code" type="text"  class="form-control" placeholder="Postal Code">
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="row form-row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 form-group">
                                         <select name="postal_state" id="state"  class="select2 form-control" placeholder="State"></select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <br/>
+                                </div>
+                                <div class="row form-row">
+
+                                    <div class="col-md-8">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="postal_city" id="postal_city" type="text"  class="form-control" placeholder="City">
+                                        <input name="postal_city" id="postal_city" type="text"  value="Bangalore" class="form-control" placeholder="City">
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="postal_code" id="postal_code" type="text" value="580002"  class="form-control" placeholder="Postal Code">
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -156,13 +158,13 @@
                                     <div class="col-md-4">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="postal_tele_code" id="postal_tele_code" type="text"  class="form-control" placeholder="+91">
+                                        <input name="postal_tele_code" id="postal_tele_code" value="91" type="text"  class="form-control" placeholder="+91">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="postal_telephone" id="postal_telephone" type="text"  class="form-control" placeholder="Phone Number">
+                                        <input name="postal_telephone" id="postal_telephone" value="89239432423" type="text"  class="form-control" placeholder="Phone Number">
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +172,7 @@
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                        <input name="email" id="email" type="text"  class="form-control" placeholder="Email address">
+                                        <input name="email" id="email" type="text"  value="abc@neworg.com" class="form-control" placeholder="Email address">
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +194,6 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
-
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -238,6 +239,7 @@
                         required:true
                     },
                     email:{
+                        email:true,
                         required:true
                     }
                 },
@@ -270,7 +272,8 @@
                 },
 
                 submitHandler: function (form) {
-                    $('#form-organisation').submit();
+                    form.submit();
+                    console.log("Success");
                 }
             });
 

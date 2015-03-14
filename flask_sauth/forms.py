@@ -39,7 +39,8 @@ class LoginForm( Form):
         print self.email.data
         try:
             user = User.objects.get(email=self.email.data)
-            if(not user or not user.has_role(field.data)):
+            print user.roles
+            if(not user or not user.roles[0]==(str(field.data))):
                 raise ValidationError("This email address is not registered for this role.")
         except:
             raise ValidationError("This email address is not registered for this role.")

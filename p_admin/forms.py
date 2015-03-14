@@ -50,7 +50,7 @@ class AddOrganisationForm( Form):
 class AddEmployeeForm( Form):
     FirstName = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     LastName = TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    Designation = TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    role = TextField( validators=[v.DataRequired(), v.Length(max=512)])
     DateOfBirth= TextField( validators=[v.DataRequired(), v.Length(max=512)])
     gender = TextField( validators=[v.DataRequired(), v.Length(max=12)])
     Address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -63,12 +63,12 @@ class AddEmployeeForm( Form):
     PostalCode=TextField(validators=[v.DataRequired(),v.Length(max=6)])
 
     def save( self):
-        emp = EsthenosUser.create_user(self.FirstName.data,self.Email.data,self.Email.data,True)
+        emp = EsthenosUser.create_user(self.FirstName.data,self.Email.data,"Pass123",True)
         emp.save()
         #set fields
         emp.first_name = self.FirstName.data
         emp.last_name = self.LastName.data
-        emp.Designation = self.Designation.data
+        emp.add_role(self.role.data)
         emp.date_of_birth = self.DateOfBirth.data
         emp.postal_address = self.Address.data
         emp.postal_telephone = self.TeleNo.data
@@ -77,7 +77,7 @@ class AddEmployeeForm( Form):
         emp.postal_state = self.State.data
         emp.postal_city = self.City.data
         emp.sex=self.gender.data
-        emp.owner =  current_user.id
+        emp.owner =  EsthenosUser.objects.get(id=current_user.id)
         emp.email = self.Email.data
         emp.save()
 
@@ -102,14 +102,13 @@ class RegistrationFormAdmin( Form):
         return user
 
 class AddOrganizationEmployeeForm(Form):
-    org_id = TextField( validators=[ v.Length(max=255)])
     first_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     last_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     role=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     date_of_birth_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     gender=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     email_add_organisation= TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
-    address_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    address_add_org_emp=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     city_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     state_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     country_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -121,11 +120,13 @@ class AddOrganizationEmployeeForm(Form):
         email_add_organisation = field.data.lower().strip()
         if( EsthenosUser.objects(email=email_add_organisation).count()):
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
-    def save( self):
+    def save( self,org_id):
         emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
-        emp.organisation = self.org_id
-        emp.has_role(self.role)
-        emp.is_active = True
+        emp.organisation = EsthenosOrg.objects.get(id=org_id)
+        emp.postal_address = self.address_add_org_emp.data
+        emp.roles= list()
+        emp.roles.append(self.role.data)
+        emp.active = True
         emp.owner = EsthenosUser.objects.get(id=current_user.id)
         emp.name=self.first_name_add_organisation.data
         emp.email=self.email_add_organisation.data

@@ -9,14 +9,14 @@
             <img src="{{ url_for('static', filename='img/logo-icon.png') }}" alt="" data-src="assets/img/logo-icon.png" width="300" height="200">
         </div>
         <div class="col-md-5 "> <br>
-            <form id="login-form" class="login-form" action="index.html" method="post">
+            <form id="login-form" class="login-form" action="/accounts/login" method="post">
                 <div class="row">
                     <div class="form-group col-md-10">
                         <label class="form-label">Username</label>
                         <div class="controls">
                             <div class="input-with-icon  right">
                                 <i class=""></i>
-                                <input type="text" name="txtusername" id="txtusername" class="form-control">
+                                <input type="text" name="email" id="txtusername" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                         <div class="controls">
                             <div class="input-with-icon  right">
                                 <i class=""></i>
-                                <input type="password" name="txtpassword" id="txtpassword" class="form-control">
+                                <input type="password" name="password" id="txtpassword" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -40,10 +40,12 @@
                             <label for="checkbox1">Keep me reminded </label>
                         </div>
                     </div>
+
                 </div>
+                <input type="hidden" value="ORG_CM" name="role">
                 <div class="row">
                     <div class="col-md-10">
-                        <a href="/" class="btn btn-primary btn-cons pull-right" type="submit">Login</a>
+                        <button class="btn btn-primary btn-cons pull-right" type="submit">Login</button>
                     </div>
                 </div>
             </form>
