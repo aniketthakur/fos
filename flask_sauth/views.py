@@ -68,6 +68,10 @@ def login():
             if (form.role.data == "ORG_CM"):
                 session['role'] = "ORG_CM"
                 return redirect("/")
+            if (form.role.data == "EMP_EXECUTIVE"):
+                session['role'] = "EMP_EXECUTIVE"
+                return redirect("/dashboard")
+
             token =  request.args.get('token',None)
             if token is not None:
                 req_token = DevRequestToken.objects.get(token=token)
