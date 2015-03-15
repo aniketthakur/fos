@@ -3,7 +3,6 @@ from bson import ObjectId
 from bson.dbref import DBRef
 import  mongoengine
 import datetime
-import numpy
 def encode_model(obj, recursive=False):
     if obj is None:
         return obj
@@ -37,8 +36,6 @@ def encode_model(obj, recursive=False):
         out = obj
     elif isinstance(obj, int):
         out = obj
-    elif isinstance(obj, numpy.int32):
-        out = int(obj)
     else:
         raise TypeError, "Could not JSON-encode type '%s': %s" % (type(obj), str(obj))
     return out
