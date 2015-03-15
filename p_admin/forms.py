@@ -68,7 +68,9 @@ class AddEmployeeForm( Form):
         #set fields
         emp.first_name = self.FirstName.data
         emp.last_name = self.LastName.data
-        emp.add_role(self.role.data)
+        emp.roles= list()
+        emp.roles.append(self.role.data)
+        emp.active = True
         emp.date_of_birth = self.DateOfBirth.data
         emp.postal_address = self.Address.data
         emp.postal_telephone = self.TeleNo.data
@@ -127,6 +129,16 @@ class AddOrganizationEmployeeForm(Form):
         emp.roles= list()
         emp.roles.append(self.role.data)
         emp.active = True
+        emp.first_name = self.first_name_add_organisation.data
+        emp.last_name = self.last_name_add_organisation.data
+        emp.add_role(self.role.data)
+        emp.date_of_birth = self.date_of_birth_add_organisation.data
+        emp.postal_address = self.address_add_org_emp.data
+        emp.postal_telephone = self.teleno_add_organisation.data
+        emp.postal_tele_code = self.tele_code_add_organisation.data
+        emp.postal_country = self.country_add_organisation.data
+        emp.postal_state = self.state_add_organisation.data
+        emp.postal_city = self.city_add_organisation.data
         emp.owner = EsthenosUser.objects.get(id=current_user.id)
         emp.name=self.first_name_add_organisation.data
         emp.email=self.email_add_organisation.data

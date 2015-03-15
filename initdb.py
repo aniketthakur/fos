@@ -4,6 +4,9 @@ from p_admin.models import  EsthenosSettings,EsthenosUser
 
 user = EsthenosUser.create_user("admin","admin@esthenos.com","Admin312",True)
 user.add_role("ADMIN")
+user.first_name = "Admin"
+user.last_name = ""
+user.username = "Admin"
 user.active = True
 user.save()
 

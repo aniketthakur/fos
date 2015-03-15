@@ -46,14 +46,9 @@ def admin_dashboard():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
-
-@admin_views.route('/admin/test', methods=["GET"])
-@login_required
-def admin_test():
-
-        return render_template("test.html")
 
 
 
@@ -64,6 +59,7 @@ def admin_settings():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     settings = EsthenosSettings.objects.all()[0]
     kwargs = locals()
     return render_template("admin_settings.html", **kwargs)
@@ -77,6 +73,7 @@ def admin_add_org():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     if request.method == "POST":
         print request.form
         org_form = AddOrganisationForm( request.form)
@@ -104,6 +101,7 @@ def admin_add_emp():
         abort(403)
     username = current_user.name
     c_user = current_user
+
     if request.method == "POST":
         print "hello"
         org_form = AddEmployeeForm( request.form )
@@ -120,6 +118,7 @@ def admin_add_emp():
             kwargs = {"login_form": org_form}
             return render_template("admin_add_emp.html", **kwargs)
     else:
+        user = EsthenosUser.objects.get(id=c_user.id)
         kwargs = locals()
         return render_template("admin_add_emp.html", **kwargs)
 
@@ -130,7 +129,8 @@ def admin_employees():
         abort(403)
     username = current_user.name
     c_user = current_user
-    employees=EsthenosUser.objects.all()
+    user = EsthenosUser.objects.get(id=c_user.id)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE","EMP_MANAGER","EMP_VP"])
     kwargs = locals()
     return render_template("admin_employees.html", **kwargs)
 
@@ -142,6 +142,7 @@ def admin_organisations():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     organisations = EsthenosOrg.objects.all()
     kwargs = locals()
     return render_template("admin_organisation.html", **kwargs)
@@ -155,6 +156,7 @@ def admin_organisation_dashboard(org_id):
     username = current_user.name
     org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
     print org_id
     employees = []
@@ -192,6 +194,7 @@ def admin_organisation_add_emp(org_id):
 
 
     else:
+        user = EsthenosUser.objects.get(id=c_user.id)
         org = EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
@@ -203,6 +206,7 @@ def admin_application():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
@@ -214,6 +218,7 @@ def admin_application_id(app_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
@@ -224,6 +229,7 @@ def admin_application_id_track(app_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
@@ -234,6 +240,7 @@ def admin_application_id_trackfinal(app_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_application_tracking_final.html", **kwargs)
 
@@ -244,6 +251,7 @@ def admin_cbcheck():
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
 
@@ -255,7 +263,7 @@ def admin_disbursement():
         abort(403)
     username = current_user.name
     c_user = current_user
-    ec_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
 
@@ -306,41 +314,6 @@ def developer_signup():
             return render_template( "auth/signup.html", **kwargs)
 
 
-@admin_views.route('/admin/agent/signup', methods=["POST"])
-def agent_signup():
-    if request.method == "POST":
-        register_form = RegistrationForm( request.form)
-        form = register_form
-
-        if(form.validate()):
-            user = form.save()
-            signal_user_registered.send("flask-satuh", user=user,plan_name = form.plan.data)
-            user = EsthenosUser.objects.get(id=user.get_id())
-            user.roles= list()
-            user.roles.append("AGENT")
-            user.p_user_type = form.user_type.data # "ACCOUNT_OWNER"
-            #new_user.p_user_type = "ACCOUNT_USER"
-            if form.owner_id.data is not None and form.owner_id.data != "":
-                owner = None
-                try:
-                    owner = EsthenosUser.objects.get(id = form.owner_id.data)
-                except Exception,e:
-                    print e.message
-                    type_, value_, traceback_ = sys.exc_info()
-                    print traceback.format_exception(type_, value_, traceback_)
-                user.owner = owner
-                user.billing_enabled = True
-            user.active = True
-            user.save()
-            from pitaya.utils import subscribe
-            subscribe(user.name,user.email)
-            html_data = render_template("email_welcome.html",user = user.name)
-            conn.send_email(current_app.config["SERVER_EMAIL"], "Welcome To Pixuate",None,[user.email],format="html" ,html_body=html_data)
-            return redirect( next_url)
-        else:
-            flash_errors(register_form)
-            kwargs = {"register_form": register_form}
-            return render_template( "auth/signup.html", **kwargs)
 
 @admin_views.route('/admin/signup', methods=["GET", "POST"])
 #@login_required

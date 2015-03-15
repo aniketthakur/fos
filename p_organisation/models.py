@@ -65,8 +65,26 @@ class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
 
 
+class EsthenosOrgApplicationMap(db.EmbeddedDocument):
+    file_id = db.IntField(required=True)
+    app_file_pixuate_id = db.StringField(max_length=255)
+    kyc_file_pixuate_id = db.ListField(db.StringField())
+
+class EsthenosOrgUserUploadSession(db.Document):
+    unique_session_key = db.StringField(max_length=255, required=True)
+    owner = db.ReferenceField('EsthenosUser')
+    session_group = db.ReferenceField('EsthenosOrgGroup', required=False)
+    session_center = db.ReferenceField('EsthenosOrgCenter', required=False)
+    number_of_applications = db.IntField(default=0, required=False)
+    number_of_kycs = db.IntField(default=0, required=False)
+    date_created = db.DateTimeField(default=datetime.datetime.now)
+    date_updated = db.DateTimeField(default=datetime.datetime.now)
+    applications = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationMap), required=False)
+    tagged = db.BooleanField(default=False)
 
 class EsthenosOrg(db.Document):
+    logo_url = db.StringField(max_length=255, required=False)
+    domain = db.StringField(max_length=128, required=False)
     states = db.ListField(db.StringField())
     regions = db.ListField(db.StringField())
     areas = db.ListField(db.StringField())
@@ -97,6 +115,7 @@ class EsthenosOrgCenterResource(Resource):
 
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
+    center = db.ReferenceField('EsthenosOrgCenter',required=False)
     group_name = db.StringField(max_length=60,required=True)
 
 class EsthenosOrgBranchResource(Resource):
@@ -125,6 +144,7 @@ class EsthenosOrgApplicationVID(db.EmbeddedDocument):
     dist = db.StringField(max_length=128, required=False,default="")
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
+    date_created = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.elector_name + "<" + self.father_or_husband_name + ">"
@@ -141,6 +161,7 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
     dist = db.StringField(max_length=128, required=False,default="")
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
+    date_created = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.elector_name + "<" + self.father_or_husband_name + ">"
