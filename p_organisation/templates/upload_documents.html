@@ -32,12 +32,15 @@
 								    <i class="icon-align-justify"></i>
 								  </span>
                                     <div class="row form-row">
+                                        <form id="group_app_center" action="/upload_documents" method="post">
                                         <div class="col-md-6">
-                                            <input name="centerName" id="g_centerName" type="text"  class="form-control" placeholder="Center Name">
+                                            <input name="center_name" id="g_centerName" type="text"  class="form-control" placeholder="Center Name">
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="groupName" id="g_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                            <input name="group_name" id="g_groupName" type="text"  class="form-control" placeholder="Group Name">
                                         </div>
+                                            <input type="hidden" name="unique_key" value="{{ unique_key }}">
+                                        </form>
                                     </div>
                                 </div>
 
@@ -49,7 +52,8 @@
                                         </div>
                                         <div class="grid-body no-border">
                                             <div class="row-fluid">
-                                                <form action="/file-upload" class="dropzone no-margin">
+                                                <form id="group_app" action="/uploads_group_app" class="dropzone no-margin">
+                                                    <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                                     <div class="fallback">
                                                         <input name="file" type="file" multiple />
                                                     </div>
@@ -66,7 +70,8 @@
                                         </div>
                                         <div class="grid-body no-border">
                                             <div class="row-fluid">
-                                                <form action="/file-upload" class="dropzone no-margin">
+                                                <form id="group_kyc" action="/uploads_group_kyc" class="dropzone no-margin">
+                                                    <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                                     <div class="fallback">
                                                         <input name="file" type="file" multiple />
                                                     </div>
@@ -89,12 +94,16 @@
 								    <i class="icon-align-justify"></i>
 								  </span>
                                     <div class="row form-row">
-                                        <div class="col-md-6">
-                                            <input name="centerName" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
-                                        </div>
+                                        <form id="indivijual_app_center" action="/upload_documents" method="post">
+                                            <div class="col-md-6">
+                                                <input name="center_name" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="group_name" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                            </div>
+                                            <input type="hidden" name="unique_key" value="{{ unique_key }}">
+                                        </form>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -105,9 +114,11 @@
                                         </div>
                                         <div class="grid-body no-border">
                                             <div class="row-fluid">
-                                                <form action="/file-upload" class="dropzone no-margin">
+                                                <form id="indivijual_app" action="/uploads_indivijual_app" class="dropzone no-margin">
+                                                    <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                                     <div class="fallback">
-                                                        <input name="file" type="file" multiple />
+                                                        <input name="file" type="file"  />
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -122,7 +133,8 @@
                                         </div>
                                         <div class="grid-body no-border">
                                             <div class="row-fluid">
-                                                <form action="/file-upload" class="dropzone no-margin">
+                                                <form id="indivijual_kyc" action="/uploads_indivijual_kyc" class="dropzone no-margin">
+                                                    <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                                     <div class="fallback">
                                                         <input name="file" type="file" multiple />
                                                     </div>
@@ -151,12 +163,45 @@
     <script type="text/javascript">
         $(document).ready(function(){
            console.log("ready");
-           $('.submit_i_application').click(function(){
+           $('.submit_i_application').click(function(e){
+               e.preventDefault();
                Messenger().post("uploading indivijual applications!");
+               $("#indivijual_app_center").submit();
+
+               return false;
+
            });
-            $('.submit_g_application').click(function(){
-                Messenger().post("uploading group applications!");
+            $("#indivijual_app_center").bind('ajax:complete', function() {
+
+                // tasks to do
+                window.location = "/upload_documents";
+
             });
+            $('.submit_g_application').click(function(e){
+                e.preventDefault();
+                Messenger().post("uploading group applications!");
+                $("#group_app_center").submit();
+                return false;
+            });
+            $("#group_app_center").bind('ajax:complete', function() {
+
+                // tasks to do
+                window.location = "/upload_documents";
+
+            });
+            $("div#group_app").dropzone({ url: "/uploads_group_app" });
+            $("div#group_kyc").dropzone({ url: "/uploads_group_kyc" });
+            $("div#indivijual_app").dropzone({ url: "/uploads_indivijual_app" });
+            $("div#indivijual_kyc").dropzone({ url: "/uploads_indivijual_kyc" });
+{#            $(".submit_i_application").click(function(){#}
+{#                  $("#indivijual_app").submit();#}
+{#                  $("#indivijual_kyc").submit();#}
+{#            });#}
+{#            $(".submit_g_application").click(function(){#}
+{#                $("#group_app").submit();#}
+{#                $("#group_kyc").submit();#}
+{#            });#}
+
         });
     </script>
 {% endblock %}

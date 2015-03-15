@@ -80,7 +80,7 @@
                         <div class="user-details">
                             <div class="username">
                                 <span class="badge badge-important">3</span>
-                                John <span class="bold">Smith</span>
+                                {{ user.first_name }} <span class="bold">{{ user.last_name }}</span>
 
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                             <li><a href="/accounts/profile"> My Account</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="/accounts/login"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                            <li><a href="/accounts/logout"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                         </ul>
                     </li>
 
@@ -152,15 +152,15 @@
                 -->
                 <div class="user-info">
                     <div class="greeting">Welcome</div>
-                    <div class="username">John <span class="semi-bold">Smith</span></div>
+                    <div class="username">{{ user.first_name }} <span class="bold">{{ user.last_name }}</span></div>
                     <br/>
                     <div>
-                       <h3> Samastha</h3><br/>
-                        <span class="title"> State:</span>Karnataka<br/>
-                        <span class="title">District:</span>Bangalore<br/>
-                        <span class="title">Regional Office:</span>Bangalore<br/>
-                        <span class="title">Branch:</span>BranchABC<br/>
-                        <span class="title">Agent/Center Manager/Field Officer:</span>XYZ<br/>
+                       <h4> <span class="bold">{{ user.organisation.name }}</span></h4><br/>
+                         State:<span class="bold">Karnataka</span><br/>
+                        District:<span class="bold">Bangalore</span><br/>
+                        Regional Office:<span class="bold">Bangalore</span><br/>
+                        Branch:<span class="bold">BranchABC</span><br/>
+                        Agent/Center Manager/Field Officer:<span class="bold">XYZ</span><br/>
                     </div>
 
                 </div>

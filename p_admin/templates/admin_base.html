@@ -90,7 +90,7 @@
                         <div class="user-details">
                             <div class="username">
                                 <span class="badge badge-important">3</span>
-                                John <span class="bold">Smith</span>
+                                {{ user.first_name }} <span class="bold">{{ user.last_name }}</span>
 
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                 -->
                 <div class="user-info">
                     <div class="greeting">Welcome</div>
-                    <div class="username">John <span class="semi-bold">Smith</span></div>
+                    <div class="username">{{ user.first_name }} <span class="bold">{{ user.last_name }}</span></div>
                     <div class="status">Status<a href="#"><div class="status-icon green"></div>Online</a></div>
                 </div>
             </div>

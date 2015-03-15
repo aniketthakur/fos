@@ -12,7 +12,13 @@ from esthenos  import mainapp
 from esthenos.utils import request_wants_json
 from esthenos.mongo_encoder import encode_model
 from flask.views import View
+from esthenos.utils import random_with_N_digits
+import os,tempfile
+from pixuate_storage import upload_images
+from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
+import uuid
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -31,49 +37,287 @@ def round_to_1(x):
     return round(x, -int(floor(log10(x))))
 
 @organisation_views.route('/', methods=["GET"])
-#@login_required
+@login_required
 def home_page():
+    print session['role']
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
 
-@organisation_views.route('/upload_documents', methods=["GET"])
-#@login_required
-def upload_documents():
+@organisation_views.route('/accounts/logout', methods=["GET"])
+@login_required
+def admin_logout():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    logout_user()
+    return redirect( "/accounts/login")
+
+@organisation_views.route('/uploads_group_app', methods=["GET","POST"])
+@login_required
+def update_session_data():
+    print session['role']
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
-    return render_template("upload_documents.html", **kwargs)
+    center_name = request.form.get('center_name')
+    group_game = request.form.get('group_game')
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_group_app', methods=["GET","POST"])
+@login_required
+def uploads_group_app():
+    print session['role']
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    unique_key = request.form.get('unique_key')
+
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+
+@organisation_views.route('/uploads_group_kyc', methods=["GET","POST"])
+@login_required
+def uploads_group_kyc():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+
+    unique_key = request.form.get('unique_key')
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        upload_images(o_fname)
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_indivijual_app', methods=["GET","POST"])
+@login_required
+def uploads_indivijual_app():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    index = -1
+    application = None
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == 100:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = 100
+
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.app_file_pixuate_id = uploaded_resp[0]["id"]
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_applications = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_applications = 1
+        session_obj.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_indivijual_kyc', methods=["GET","POST"])
+@login_required
+def uploads_indivijual_kyc():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    application = None
+    index = -1
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == 100:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = 100
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_kycs = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/upload_documents', methods=["GET","POST"])
+@login_required
+def upload_documents():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    if request.method == "GET":
+        unique_key =  uuid.uuid4()
+        session_obj =  EsthenosOrgUserUploadSession()
+        session_obj.owner = user
+        session_obj.unique_session_key = str(unique_key)
+        session_obj.save()
+        kwargs = locals()
+        return render_template("upload_documents.html", **kwargs)
+    elif request.method == "POST":
+        center_name = request.form.get('center_name')
+        group_name = request.form.get('group_name')
+        center = None
+        group = None
+        if center_name !=None and len(center_name)>0:
+            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+        elif center_name !=None and len(center_name)>0:
+            group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
+        if center!=None or group != None:
+            unique_key = request.form.get('unique_key')
+            session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+            session_obj.center = center
+            session_obj.group = group
+            session_obj.tagged = True
+            session_obj.save()
+        unique_key =  uuid.uuid4()
+        session_obj =  EsthenosOrgUserUploadSession()
+        session_obj.owner = user
+        session_obj.unique_session_key = str(unique_key)
+        session_obj.save()
+        kwargs = locals()
+        return render_template("upload_documents.html", **kwargs)
+
+
 
 
 @organisation_views.route('/application_status', methods=["GET"])
-#@login_required
+@login_required
 def application_status():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("centers_n_groups.html", **kwargs)
 
 @organisation_views.route('/applications', methods=["GET"])
-#@login_required
+@login_required
 def applications():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
 
 @organisation_views.route('/application/<app_id>/track', methods=["GET"])
-#@login_required
+@login_required
 def applications_track(app_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
 @organisation_views.route('/download_disbusement', methods=["GET"])
-#@login_required
+@login_required
 def download_disbusement():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("download_disbusement.html", **kwargs)
 
 @organisation_views.route('/download_grt', methods=["GET"])
-#@login_required
+@login_required
 def download_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("download_grt.html", **kwargs)
-
-
 
 @organisation_views.route('/billing', methods=["GET"])
 @login_required
