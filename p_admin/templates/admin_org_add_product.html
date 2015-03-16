@@ -1,160 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
 
 
-<link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
+<br/>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="grid simple">
+                <div class="grid-body no-border invoice-body"> <br>
 
-<!-- BEGIN CORE CSS FRAMEWORK -->
-<link href="assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-<!-- END CORE CSS FRAMEWORK -->
-<!-- BEGIN CSS TEMPLATE -->
-<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/print.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
- <div class="row">
-    <div class="col-md-12">
-        <div class="grid simple">
-            <div class="grid-title no-border">
-                <h4>Add <span class="semi-bold">Organisation</span></h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-left"><h4>Organisation <span class="semi-bold"> Products</span></h4></th>
+                            <th style="width:200px" class="text-right"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Loan Amount</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="loan_amount" value="" /></td>
 
-                <div class="grid-body no-border">
-                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/add_org" method="post">
-                        <div class="row column-seperation">
+                        </tr>
+                        <tr>
+                            <td> Life Insurance</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="life_insurance" value="" /></td>
 
-                            <div class="col-md-6">
-                                <h4>Basic Information</h4>
+                        </tr>
+                        <tr>
+                            <td>Eligible Cycle</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="" value="" /></td>
 
-                                        <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="loan_amount" id="loan_amount" type="text" value=""  class="form-control" placeholder="loan_amount">
-                                        </div>
+                        </tr>
+                        <tr>
+                            <td>Number Installments</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="number_installments" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Emi</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="emi" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Last Emi </td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="last_emi " value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Processing Fee</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="processing_fee" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Total Processing Fees</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="total_processing_fees" value="" /></td>
 
-                                        <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="life_insurance " id="life_insurance " type="text" value=""  class="form-control" placeholder="life_insurance ">
-                                        </div>
+                        </tr>
+                        <tr>
+                            <td> Interest Rate</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="interest_rate" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Insurance Period</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="insurance_period" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Insurance Free Borrowers Only</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="insurance_free_borrowers_only" value="" /></td>
 
-                                <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" eligible_cycle " id=" eligible_cycle " type="text" value=""  class="form-control" placeholder=" eligible_cycle ">
-                                        </div>
+                        </tr>
+                        <tr>
+                            <td> Total Processing Fees Borrowers Only</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="total_processing_fees_borrowers_only" value="" /></td>
 
-                                 <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" number_installmentse " id=" number_installments " type="text" value=""  class="form-control" placeholder=" number_installments ">
-                                        </div>
+                        </tr>
+                        <tr>
+                            <td>Insurance Free Borrowers_n_ Quarnteer</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="insurance_free_borrowers_n_guarnteer" value="" /></td>
 
-                                 <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" emi" id=" emi " type="text" value=""  class="form-control" placeholder=" emi ">
-                                        </div>
+                        </tr>
+                        <tr>
+                            <td>Total Processing Fees Borrowers_n_Quarnteer</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="total_processing_fees_borrowers_n_guarnteer" value="" /></td>
 
+                        </tr><tr>
+                            <td>Emi Collection Period Weekly</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="emi_collection_period_weekly" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Emi Collection Period Monthly</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="emi_collection_period_monthly" value="" /></td>
 
+                        </tr>
+                        <tr>
+                            <td>Emi Collection Period Fortnightly</td>
+                            <td class="text-right"><input type="text" class="form-control text-right" name="emi_collection_period_fortnightly" value="" /></td>
 
-
-                             <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" last_emi" id="last_emi " type="text" value=""  class="form-control" placeholder=" last_emi ">
-                                        </div>
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="  processing_fee" id=" processing_fee " type="text" value=""  class="form-control" placeholder=" processing_fee">
-                                        </div>
-
-     <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" total_processing_fees" id="total_processing_fees " type="text" value=""  class="form-control" placeholder=" total_processing_fees">
-                                        </div>
-
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" interest_rate" id=" interest_rate" type="text" value=""  class="form-control" placeholder="  interest_rate">
-                                        </div>
-
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="  insurance_period" id=" insurance_period" type="text" value=""  class="form-control" placeholder="  insurance_period">
-                                        </div>
-                             <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="   insurance_free_borrowers_only" id="  insurance_free_borrowers_only" type="text" value=""  class="form-control" placeholder="   insurance_free_borrowers_only">
-                                        </div>
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="  total_processing_fees_borrowers_only" id=" total_processing_fees_borrowers_only" type="text" value=""  class="form-control" placeholder=" total_processing_fees_borrowers_only">
-                                        </div>
-                                <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="  insurance_free_borrowers_n_guarnteer" id=" insurance_free_borrowers_n_guarnteer" type="text" value=""  class="form-control" placeholder="  iinsurance_free_borrowers_n_guarnteer">
-                                        </div>
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="   total_processing_fees_borrowers_n_guarnteer " id="  total_processing_fees_borrowers_n_guarnteer " type="text" value=""  class="form-control" placeholder="   total_processing_fees_borrowers_n_guarnteer ">
-                                        </div>
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name=" emi_collection_period_weekly" id=" emi_collection_period_weekly" type="text" value=""  class="form-control" placeholder=" emi_collection_period_weekly">
-                                        </div>
- <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="  emi_collection_period_monthly" id=" emi_collection_period_monthly" type="text" value=""  class="form-control" placeholder=" emi_collection_period_monthly">
-                                        </div>
-<div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="   emi_collection_period_fortnightly" id="  emi_collection_period_fortnightly" type="text" value=""  class="form-control" placeholder="  emi_collection_period_fortnightly">
-                                        </div>
+                        </tr>
 
 
+                        </tbody>
+                    </table>
 
 
+                    <div class="form-actions">
 
-                        <div class="form-actions">
-
-                            <div class="pull-right">
-                                <button class="btn btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i class="icon-ok"></i> Add</button>
-                                <button class="btn btn-white btn-cons" type="button">Cancel</button>
-                            </div>
+                        <div class="pull-right">
+                            <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
                         </div>
-                        </form>
+
+                        <div class="pull-right">
+                            <button class="btn btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
 
-<script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/plugins/breakpoints.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
-<script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
-<!-- END CORE JS FRAMEWORK -->
-<!-- BEGIN PAGE LEVEL JS -->
-<script src="assets/plugins/jquery-slider/jquery.sidr.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN CORE TEMPLATE JS -->
-<script src="assets/js/core.js" type="text/javascript"></script>
-<script src="assets/js/chat.js" type="text/javascript"></script>
-<script src="assets/js/demo.js" type="text/javascript"></script>
-</body>
-</html>
+        });
+    </script>
+{% endblock %}
