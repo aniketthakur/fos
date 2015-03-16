@@ -168,6 +168,7 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
 
 
 class EsthenosOrgProduct(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg')
     loan_amount = db.FloatField(default=0.0)
     life_insurance = db.FloatField(default=0.0)
     eligible_cycle = db.IntField(default=0)

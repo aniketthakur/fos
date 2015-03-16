@@ -14,7 +14,7 @@ from p_admin.models import EsthenosUser
 from p_organisation.models import  EsthenosOrg
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm
+from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
@@ -190,6 +190,7 @@ def admin_organisation_add_emp(org_id):
             print form.errors
             org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
+
             return render_template("admin_org_add_emp.html", **kwargs)
 
 
@@ -198,6 +199,37 @@ def admin_organisation_add_emp(org_id):
         org = EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET','POST'])
+@login_required
+def admin_organisation_product(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_add_org_product.html", **kwargs)
+        else:
+            product=AddOrganisationProductForm(request.form)
+            org_product=product
+            if(org_product.validate()):
+                print "Product Details Validated,Saving the form"
+                org_product.save(org_id)
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                organisation = EsthenosOrg.objects.get(id=org_id)
+                kwargs = locals()
+                return redirect("/admin/organisation/"+org_id)
+            else:
+                print "Validation Error"
+                print flash_errors(org_product)
+                kwargs = locals()
+                return redirect("/admin/organisation/"+org_id+"/add_product")
+    else:
+        return abort(403)
 
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
