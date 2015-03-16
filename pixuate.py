@@ -27,3 +27,4 @@ def get_aadhaar_details(path):
     response = requests.post(addhaar_url, files=files,headers=headers)
     print response.content
     return response.content
+

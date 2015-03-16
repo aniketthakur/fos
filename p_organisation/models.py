@@ -64,11 +64,17 @@ class EsthenosOrgToken(db.EmbeddedDocument):
 class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
 
+class PixuateObjectUrlMap(db.Document):
+    pixuate_id = db.StringField(max_length=255)
+    pixuate_url = db.StringField(max_length=512)
+    pixuate_original_url = db.StringField(max_length=512)
+
 
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
     app_file_pixuate_id = db.StringField(max_length=255)
     kyc_file_pixuate_id = db.ListField(db.StringField())
+    gkyc_file_pixuate_id = db.ListField(db.StringField())
 
 class EsthenosOrgUserUploadSession(db.Document):
     unique_session_key = db.StringField(max_length=255, required=True)
