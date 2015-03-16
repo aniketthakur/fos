@@ -96,10 +96,17 @@
                                     <div class="row form-row">
                                         <form id="indivijual_app_center" action="/upload_documents" method="post">
                                             <div class="col-md-6">
+                                                <div class="input-with-icon  right">
+                                                <i class=""></i>
                                                 <input name="center_name" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
+                                                <div class="input-with-icon  right">
+                                                <i class=""></i>
                                                 <input name="group_name" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                                </div>
+
                                             </div>
                                             <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                         </form>
@@ -163,26 +170,129 @@
     <script type="text/javascript">
         $(document).ready(function(){
            console.log("ready");
-           $('.submit_i_application').click(function(e){
-               e.preventDefault();
-               Messenger().post("uploading indivijual applications!");
-               $("#indivijual_app_center").submit();
+            $('.submit_i_application').click(function(e){
+                e.preventDefault();
+                $("#indivijual_app_center").submit();
+                return false;
+            });
+            $('#indivijual_app_center').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    center_name: {
+                        minlength: 3,
+                        required: true
+                    },
+                    group_name: {
+                        minlength: 3,
+                        required: true
+                    }
+                },
 
-               return false;
+                invalidHandler: function (event, validator) {
+                    //display error alert on form submit
+                },
 
-           });
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    var parent = $(element).parent();
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+                    parent.removeClass('error-control').addClass('success-control');
+
+                },
+
+                submitHandler: function (form) {
+                    Messenger().post("uploading indivijual applications!");
+                    form.submit();
+                    console.log("Success");
+
+                }
+            });
+
+            $('.submit_g_application').click(function(e){
+
+                e.preventDefault();
+                Messenger().post("uploading group applications!");
+                $("#group_app_center").submit();
+                return false;
+            });
+            $('#group_app_center').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    center_name: {
+                        minlength: 3,
+                        required: true
+                    },
+                    group_name: {
+                        minlength: 3,
+                        required: true
+                    }
+                },
+
+                invalidHandler: function (event, validator) {
+                    //display error alert on form submit
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                    var parent = $(element).parent();
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+                    parent.removeClass('error-control').addClass('success-control');
+
+                },
+
+                submitHandler: function (form) {
+                    Messenger().post("uploading indivijual applications!");
+                    form.submit();
+                    console.log("Success");
+
+                }
+            });
+
             $("#indivijual_app_center").bind('ajax:complete', function() {
 
                 // tasks to do
                 window.location = "/upload_documents";
 
             });
-            $('.submit_g_application').click(function(e){
-                e.preventDefault();
-                Messenger().post("uploading group applications!");
-                $("#group_app_center").submit();
-                return false;
-            });
+
             $("#group_app_center").bind('ajax:complete', function() {
 
                 // tasks to do

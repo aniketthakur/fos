@@ -209,6 +209,7 @@ def admin_organisation_add_emp(org_id):
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 
+from p_organisation.models import EsthenosOrgApplication
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -217,6 +218,7 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 

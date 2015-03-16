@@ -103,6 +103,7 @@ class EsthenosOrg(db.Document):
     postal_city = db.StringField(max_length=100, required=False)
     postal_code = db.StringField(max_length=10, required=False)
     email = db.StringField( unique=True)
+    application_count = db.IntField(default=1)
 
 
 class EsthenosOrgCenter(db.Document):
@@ -205,7 +206,10 @@ class EsthenosOrgSettings(db.Document):
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
+    organisation = db.ReferenceField('EsthenosOrg')
+    tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap)
     application_id = db.StringField(max_length=255, required=False,default="")
+    upload_type = db.StringField(max_length=20, required=False,default="")
     status = db.StringField(max_length=45, required=False,default="")
     applicant_name = db.StringField(max_length=45, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
@@ -229,7 +233,8 @@ class EsthenosOrgApplication(db.Document):
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-
+    date_created = db.DateTimeField(default=datetime.datetime.now)
+    date_updated = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"

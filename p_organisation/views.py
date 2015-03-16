@@ -18,7 +18,7 @@ from pixuate_storage import upload_images
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import uuid
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -249,6 +249,19 @@ def upload_documents():
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+            for app in session_obj.applications:
+                organisation = user.organisation
+                organisation.update(inc__application_count=1)
+                tagged_application =  EsthenosOrgApplication()
+                tagged_application.organisation = organisation
+                tagged_application.center = center
+                tagged_application.group = group
+                tagged_application.tag  = app
+                tagged_application.application_id = organisation.name.upper()[0:2]+"{0:06d}".format(organisation.application_count)
+                tagged_application.upload_type = "MANUAL_UPLOAD"
+                tagged_application.status = "TAGGING_DONE"
+                tagged_application.save()
+
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True
