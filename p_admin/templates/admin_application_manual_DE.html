@@ -56,7 +56,7 @@
                                     </select>
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="address_add_organisation" id="address_add_organisation" type="text" class="form-control" placeholder="Address">
+                                            <input name="address1_add_organisation" id="address1_add_organisation" type="text" class="form-control" placeholder="Address">
                                         </div>
                                     </div>
                                     <div class="row form-row">
@@ -93,7 +93,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="grid simple">
+                                <div class="grid simple" id="kycForm1">
                                     <div class="grid-title no-border">
                                         <img src="{{ url_for('static', filename='sample/aadhar3.jpg')}}" width="100%" class=""/>
                                     </div>
@@ -154,18 +154,16 @@
                             <div class="col-md-7">
                                 <div class="row form-row">
                                     <div class="col-md-12">
-                                        <input   type="text" maxlength="1" data-tag="begin" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border"  placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1"  class="form1Name input-small no-border" placeholder="">
-                                        <input   type="text" maxlength="1" data-tag="end" class="form1Name input-small no-border" placeholder="">
-
+                                       <table>
+                                           <tr>
+                                               <td>
+                                                   <td width="10%" align= "Left" ><p>STATE<br/> TALUK</p>
+</td>
+<td  width="40%" align= "Left"><input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>&nbsp;<input type="text" id="1" size="1" maxlength="1"/>
+</td>
+                                               </td>
+                                           </tr>
+                                       </table>
                                     </div>
                                 </div>
                                 <div class="row form-row">
@@ -219,7 +217,8 @@
                         <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
                         <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
                         <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a></li>
-                        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
+                        <li class="next"><a href="javascript:;" class="btn btn-primary" type="submit" id="submitForm3">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -273,11 +272,14 @@
                     next.focus();
                 }
             });
-        }
 
+            }
         //$('.form1Name').blur(function() {
         //    $input = null;
         //});
 
+
+
     </script>
+
 {% endblock %}

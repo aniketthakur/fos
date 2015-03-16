@@ -220,7 +220,7 @@ def admin_organisation_product(org_id):
         org=EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         if request.method=="GET":
-            return render_template("admin_add_org_product.html", **kwargs)
+            return render_template("admin_org_add_product.html", **kwargs)
         else:
             product=AddOrganisationProductForm(request.form)
             org_product=product
