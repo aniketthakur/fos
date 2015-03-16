@@ -226,7 +226,7 @@ def admin_organisation_product(org_id):
             product=AddOrganisationProductForm(request.form)
             org_product=product
             print request.form
-            org_product.save(org_id)
+#            org_product.save(org_id)
             if(org_product.validate()):
                 print "Product Details Validated,Saving the form"
                 org_product.save(org_id)
