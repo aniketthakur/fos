@@ -175,7 +175,7 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
 
 
 class EsthenosOrgProduct(db.Document):
-    name=db.StringField(max_length=128,required=True)
+    product_name=db.StringField(max_length=128,required=True)
     organisation = db.ReferenceField('EsthenosOrg')
     loan_amount = db.FloatField(default=0.0)
     life_insurance = db.FloatField(default=0.0)

@@ -170,10 +170,10 @@ class AddOrganisationProductForm( Form):
 
     def validate_product_name(form,field):
         product_name =field.data.lower().strip()
-        if( EsthenosOrgProduct.objects(name=product_name).count()):
+        if( EsthenosOrgProduct.objects(product_name=product_name).count()):
             raise ValidationError( "Hey! This product is already registered with us")
     def save( self,org_id):
-        prod=EsthenosOrgProduct(name=self.product_name.data)
+        prod=EsthenosOrgProduct(product_name=self.product_name.data)
         prod.loan_amount=float(self.loan_amount.data)
         prod.life_insurance=float(self.life_insurance.data)
         prod.eligible_cycle=int(self.eligible_cycle.data)
