@@ -64,7 +64,17 @@ def admin_settings():
     kwargs = locals()
     return render_template("admin_settings.html", **kwargs)
 
-
+# @admin_views.route('/admin/organisation/products', methods=["GET"])
+# @login_required
+# def admin_org_add_product():
+#     if session['role'] != "ADMIN":
+#         abort(403)
+#     username = current_user.name
+#     c_user = current_user
+#     user = EsthenosUser.objects.get(id=c_user.id)
+#     settings = EsthenosSettings.objects.all()[0]
+#     kwargs = locals()
+#     return render_template("admin_org_add_product.html", **kwargs)
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
