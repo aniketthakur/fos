@@ -147,32 +147,58 @@ class AddOrganizationEmployeeForm(Form):
 
 
 
-class AddOrganisationProductForm(Form):
+class AddOrganisationProductForm( Form):
+#    ([('number_installments', u'1'), ('life_insurance', u'1'), ('insurance_free_borrowers_n_guarnteer', u'1'), ('loan_amount', u'1'),
+#      ('eligible_cycle', u'1'), ('emi_repayment', u'emi_collection_period_fortnightly'), ('total_processing_fees_borrowers_only', u'1'),
+#      ('insurance_free_borrowers_only', u'1'), ('interest_rate', u'1'), ('emi', u'1'), ('insurance_period', u'1'), ('total_processing_fees', u'1'),
+#      ('processing_fee', u'1'), ('total_processing_fees_borrowers_n_guarnteer', u'1'), ('last_emi ', u'1'), ('product_name', u'XYX')])
 
-    product_name=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    loan_amount=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    life_insurance=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    eligible_cycle=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    number_installments=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    emi=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    last_emi=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    processing_fee=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    total_processing_fees=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    interest_rate=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    insurance_period=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    insurance_free_borrowers_only=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    insurance_free_borrowers_n_guarnteer=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    product_name=           TextField( validators=[v.Length(max=255)])
+    loan_amount=            TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    life_insurance=         TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    eligible_cycle=         TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    number_installments=    TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi=                    TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    last_emi=               TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    processing_fee=         TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    total_processing_fees=  TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    interest_rate=          TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_period=       TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_free_borrowers_only=              TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_free_borrowers_n_guarnteer=       TextField( validators=[v.DataRequired(), v.Length(max=255)])
     total_processing_fees_borrowers_n_guarnteer=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    emi_collection_period_weekly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    emi_collection_period_monthly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    emi_collection_period_fortnightly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi_repayment=                              TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    total_processing_fees_borrowers_only=       TextField( validators=[v.DataRequired(), v.Length(max=255)])
+#
+#logo_url = db.StringField(max_length=255, required=False)
+#domain = db.StringField(max_length=128, required=False)
+#states = db.ListField(db.StringField())
+#regions = db.ListField(db.StringField())
+#areas = db.ListField(db.StringField())
+#branches = db.ListField(db.StringField())
+#name = db.StringField(max_length=512, required=True)
+#profile_pic = db.StringField(max_length=255, required=False)
+#created_at = db.DateTimeField(default=datetime.datetime.now)
+#updated_at = db.DateTimeField(default=datetime.datetime.now)
+#about = db.StringField(max_length=255, required=False)
+#owner = db.ReferenceField('EsthenosUser')
+#postal_address = db.StringField(max_length=255, required=False)
+#postal_country = db.StringField(max_length=100, required=False)
+#postal_state = db.StringField(max_length=100, required=False)
+#postal_telephone = db.StringField(max_length=20, required=False)
+#postal_tele_code = db.StringField(max_length=20, required=False)
+#postal_city = db.StringField(max_length=100, required=False)
+#postal_code = db.StringField(max_length=10, required=False)
+#email = db.StringField( unique=True)
+#application_count = db.IntField(default=1)
+#
 
-
-    def save(self,org_id):
-        prod=EsthenosOrgProduct(name=self.product_name)
+def save(self,org_id):
+        prod=EsthenosOrgProduct(name=self.product_name.data)
         prod.loan_amount=self.loan_amount.data
         prod.life_insurance=self.life_insurance.data
         prod.eligible_cycle=self.eligible_cycle.data
+        prod.number_installments=self.number_installments.data
         prod.emi=self.emi.data
         prod.last_emi=self.last_emi.data
         prod.processing_fee=self.processing_fee.data
@@ -182,10 +208,9 @@ class AddOrganisationProductForm(Form):
         prod.insurance_free_borrowers_only=self.insurance_free_borrowers_only.data
         prod.insurance_free_borrowers_n_guarnteer=self.insurance_free_borrowers_n_guarnteer.data
         prod.total_processing_fees_borrowers_n_guarnteer=self.total_processing_fees_borrowers_n_guarnteer.data
-        prod.emi_collection_period_weekly=self.emi_collection_period_weekly.data
-        prod.emi_collection_period_monthly=self.emi_collection_period_monthly.data
-        prod.emi_collection_period_fortnightly=self.emi_collection_period_fortnightly.data
         prod.organisation=EsthenosOrg.objects.get(id=org_id)
+        prod.total_processing_fees_borrowers_only=self.total_processing_fees_borrowers_only.data
+        prod.emi_repayment=self.emi_repayment.data
         prod.save()
         return prod
 

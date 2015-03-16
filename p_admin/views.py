@@ -190,6 +190,7 @@ def admin_organisation_add_emp(org_id):
         org_emp  = AddOrganizationEmployeeForm(request.form)
         form=org_emp
         print org_id
+        form.save(org_id)
         if (form.validate()):
             form.save(org_id)
             print "formValidated"
@@ -220,10 +221,12 @@ def admin_organisation_product(org_id):
         org=EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         if request.method=="GET":
-            return render_template("admin_add_org_product.html", **kwargs)
+            return render_template("admin_org_add_product.html", **kwargs)
         else:
             product=AddOrganisationProductForm(request.form)
             org_product=product
+            print request.form
+            org_product.save(org_id)
             if(org_product.validate()):
                 print "Product Details Validated,Saving the form"
                 org_product.save(org_id)
