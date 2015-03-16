@@ -253,7 +253,7 @@ def admin_application():
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
-
+from pixuate_storage import  *
 @admin_views.route('/admin/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(app_id):
@@ -262,6 +262,12 @@ def admin_application_id(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    application = EsthenosOrgApplication.objects.get(application_id = app_id)
+    app_1 = get_url_with_id(application.tag.app_file_pixuate_id)
+    kyc_urls = list()
+    for kyc_id in application.tag.kyc_file_pixuate_id:
+        kyc_urls.append(get_url_with_id(kyc_id))
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
