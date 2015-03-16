@@ -5,7 +5,7 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
-from p_organisation.models import EsthenosOrg
+from p_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from p_admin.models import EsthenosUser
 from p_organisation.models import EsthenosOrg
 from p_admin.models import EsthenosUser
@@ -144,4 +144,50 @@ class AddOrganizationEmployeeForm(Form):
         emp.email=self.email_add_organisation.data
         emp.save()
         return emp
+
+
+
+class AddOrganisationProductForm(Form):
+
+    product_name=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    loan_amount=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    life_insurance=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    eligible_cycle=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    number_installments=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    last_emi=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    processing_fee=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    total_processing_fees=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    interest_rate=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_period=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_free_borrowers_only=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    insurance_free_borrowers_n_guarnteer=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    total_processing_fees_borrowers_n_guarnteer=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi_collection_period_weekly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi_collection_period_monthly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    emi_collection_period_fortnightly=TextField( validators=[v.DataRequired(), v.Length(max=255)])
+
+
+    def save(self,org_id):
+        prod=EsthenosOrgProduct(name=self.product_name)
+        prod.loan_amount=self.loan_amount.data
+        prod.life_insurance=self.life_insurance.data
+        prod.eligible_cycle=self.eligible_cycle.data
+        prod.emi=self.emi.data
+        prod.last_emi=self.last_emi.data
+        prod.processing_fee=self.processing_fee.data
+        prod.total_processing_fees=self.total_processing_fees.data
+        prod.interest_rate=self.interest_rate.data
+        prod.insurance_period=self.insurance_period.data
+        prod.insurance_free_borrowers_only=self.insurance_free_borrowers_only.data
+        prod.insurance_free_borrowers_n_guarnteer=self.insurance_free_borrowers_n_guarnteer.data
+        prod.total_processing_fees_borrowers_n_guarnteer=self.total_processing_fees_borrowers_n_guarnteer.data
+        prod.emi_collection_period_weekly=self.emi_collection_period_weekly.data
+        prod.emi_collection_period_monthly=self.emi_collection_period_monthly.data
+        prod.emi_collection_period_fortnightly=self.emi_collection_period_fortnightly.data
+        prod.organisation=EsthenosOrg.objects.get(id=org_id)
+        prod.save()
+        return prod
+
+
 
