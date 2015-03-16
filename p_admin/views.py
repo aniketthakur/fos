@@ -190,6 +190,7 @@ def admin_organisation_add_emp(org_id):
         org_emp  = AddOrganizationEmployeeForm(request.form)
         form=org_emp
         print org_id
+        form.save(org_id)
         if (form.validate()):
             form.save(org_id)
             print "formValidated"
@@ -224,6 +225,8 @@ def admin_organisation_product(org_id):
         else:
             product=AddOrganisationProductForm(request.form)
             org_product=product
+            print request.form
+#            org_product.save(org_id)
             if(org_product.validate()):
                 print "Product Details Validated,Saving the form"
                 org_product.save(org_id)
