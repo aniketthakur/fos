@@ -160,7 +160,7 @@ def uploads_indivijual_app():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.app_file_pixuate_id = uploaded_resp[0]["id"]
+        application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
         if index == -1:
             application.applications = []
             session_obj.applications.append(application)
@@ -219,6 +219,54 @@ def uploads_indivijual_kyc():
     return Response(response=content,
         status=200,\
         mimetype="application/json")
+
+
+@organisation_views.route('/uploads_indivijual_gkyc', methods=["GET","POST"])
+@login_required
+def uploads_indivijual_gkyc():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    application = None
+    index = -1
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == 100:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = 100
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_kycs = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required

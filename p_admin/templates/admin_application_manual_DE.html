@@ -22,14 +22,14 @@
 {% endblock %}
 {% block maincontents %}
     <div class="row">
-        <form id="commentForm">
+        <form id="root_data_entry_wizard">
             <div id="rootwizard" class="col-md-12">
                 <div class="form-wizard-steps">
                     <ul class="wizard-steps">
-                        <li class="" data-target="#step1"> <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">KYC1</span> </a> </li>
-                        <li data-target="#step2" class=""> <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">KYC2</span> </a> </li>
-                        <li data-target="#step3" class=""> <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Application Form</span> </a> </li>
-                        <li data-target="#step4" class=""> <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Done <br>
+                        <li class="" data-target="#step1"> <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">KYC User1</span> </a> </li>
+                        <li data-target="#step2" class=""> <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">KYC User2</span> </a> </li>
+                        <li data-target="#step3" class=""> <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">KYC Borrower</span> </a> </li>
+                        <li data-target="#step4" class=""> <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Application Form</span> </a> </li>
                           </span> </a> </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -48,12 +48,33 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="grid simple">
-                                    <select id="applicationstatus"  style="width:100%">
+                                    <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
+                                    <select id="applicationtype"  style="width:100%">
                                         <option value="AADHAAR">AADHAAR</option>
                                         <option value="VID">VOTERS ID</option>
                                         <option value="PANCARD">PANCARD</option>
                                         <option value="OTHER">OTHER</option>
                                     </select>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc1_kycid" type="text" class="form-control" placeholder="KYC ID">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc1_name" type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc1_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc1_dob" type="text" class="form-control" placeholder="Date of Birth">
+                                        </div>
+                                    </div>
                                     <div class="row form-row">
                                         <div class="col-md-12">
                                             <input name="address" id="kyc1_address" type="text" class="form-control" placeholder="Address">
@@ -101,39 +122,61 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="grid simple">
-                                    <select id="applicationstatus2"  style="width:100%">
+                                    <input type="hidden" name="kycid2"  id="kycid2" value="{{ kyc_ids[1] }}">
+                                    <select id="applicationtype2"  style="width:100%">
                                         <option value="AADHAAR">AADHAAR</option>
                                         <option value="VID">VOTERS ID</option>
                                         <option value="PANCARD">PANCARD</option>
                                         <option value="OTHER">OTHER</option>
                                     </select>
+
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="address" id="key2_address" type="text" class="form-control" placeholder="Address">
+                                            <input name="address" id="kyc2_kycid" type="text" class="form-control" placeholder="KYC ID">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc2_name" type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc2_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc2_dob" type="text" class="form-control" placeholder="Date of Birth">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc2_address" type="text" class="form-control" placeholder="Address">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-6">
-                                            <input name="city" id="key2_city" type="text" class="form-control" placeholder="City">
+                                            <input name="city" id="kyc2_city" type="text" class="form-control" placeholder="City">
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="state" id="key2_state" type="text" class="form-control" placeholder="State">
+                                            <input name="state" id="kyc2_state" type="text" class="form-control" placeholder="State">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-8">
-                                            <input name="country" id="key2_country" type="text" class="form-control" placeholder="Country">
+                                            <input name="country" id="kyc2_country" type="text" class="form-control" placeholder="Country">
                                         </div>
                                         <div class="col-md-4">
-                                            <input name="postal_code" id="key2_postal_code" type="text" class="form-control" placeholder="Postal Code">
+                                            <input name="postal_code" id="kyc2_postal_code" type="text" class="form-control" placeholder="Postal Code">
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-4">
-                                            <input name="tele_code" id="key2_tele_code" type="text" class="form-control" placeholder="+91">
+                                            <input name="tele_code" id="kyc2_tele_code" type="text" class="form-control" placeholder="+91">
                                         </div>
                                         <div class="col-md-8">
-                                            <input name="teleno" id="key2_teleno" type="text" class="form-control" placeholder="Phone Number">
+                                            <input name="teleno" id="kyc2_teleno" type="text" class="form-control" placeholder="Phone Number">
                                         </div>
                                     </div>
                                 </div>
@@ -141,54 +184,113 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab3"> <br>
-                        <h4 class="semi-bold">Step 3 - <span class="light">Application Form</span></h4>
+                        <h4 class="semi-bold">Step 3 - <span class="light">KYC Borrower Information</span></h4>
                         <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="grid simple">
                                     <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
+                                        {% if gkyc_urls[0] %}
+                                        <img src="{{ gkyc_urls[0] }}" width="100%" class=""/>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
+                                    <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
+                                    <select id="applicationtype3" name="applicationtype"  style="width:100%">
+                                        <option value="AADHAAR">AADHAAR</option>
+                                        <option value="VID">VOTERS ID</option>
+                                        <option value="PANCARD">PANCARD</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc3_kycid" type="text" class="form-control" placeholder="KYC ID">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc3_name" type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc3_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc3_dob" type="text" class="form-control" placeholder="Date of Birth">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="address" id="kyc3_address" type="text" class="form-control" placeholder="Address">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <input name="city" id="kyc3_city" type="text" class="form-control" placeholder="City">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="state" id="kyc3_state" type="text" class="form-control" placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <input name="country" id="kyc3_country" type="text" class="form-control" placeholder="Country">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input name="postal_code" id="kyc3_postal_code" type="text" class="form-control" placeholder="Postal Code">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-4">
+                                            <input name="tele_code" id="kyc3_tele_code" type="text" class="form-control" placeholder="+91">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input name="teleno" id="kyc3_teleno" type="text" class="form-control" placeholder="Phone Number">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab4"> <br>
-                        <h4 class="semi-bold">Step 4 - <span class="light">Review</span></h4>
+                        <h4 class="semi-bold">Step 4 - <span class="light">Application Form</span></h4>
                         <br>
-
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <p>DINESH </p>
-                                <p>Loan Amount : 25000/-</p>
-                                <p>2 KYC Documents</p>
+                        <div class="row">
+                            {% for app in app_urls %}
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ app }}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ app_1 }}" width="100%" class=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="grid simple">
+                                    <div class="grid-title no-border">
+                                        <img src="{{ app_1 }}" width="100%" class=""/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <ul class=" wizard wizard-actions">
                         <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
                         <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
@@ -214,13 +316,167 @@
             //make_fucusable(".form2Name")
 
         });
-        $("#applicationstatus").select2({
+        $("#applicationtype").select2({
             placeholder: "choose a document type",
             allowClear: true
         });
-        $("#applicationstatus2").select2({
+        /*
+        $("#applicationtype").on("select2-selecting", function(e) {
+            // what you would like to happen
+            console.log($(e.target).val());
+            console.log($("#applicationtype").val());
+
+        });
+        */
+        $('#applicationtype').select2()
+                .on("change", function(e) {
+                    // mostly used event, fired to the original element when the value changes
+                    console.log("change val=" + e.val);
+                })
+                .on("select2-close", function() {
+                    // fired to the original element when the dropdown closes
+                    console.log("close");
+                    console.log($("#applicationtype").val());
+                    var type = $("#applicationtype").val();
+
+                    if(type=="AADHAAR"){
+                        $.getJSON( "/admin/read_aadhaar/"+$("#kycid1").val(), function( data ) {
+                            console.log(data);
+                        });
+                    }else if(type=="PANCARD"){
+                        $.getJSON( "/admin/read_pan/"+$("#kycid1").val(), function( data ) {
+                            console.log(data);
+                            var name = data["scan_result"][0]["Name"];
+                            $("#kyc1_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                            $("#kyc1_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc1_dob").val(dob);
+                            var kycid = data["scan_result"][0]["PAN"];
+                            $("#kyc1_kycid").val(kycid);
+                        });
+                    }else if(type=="VID"){
+                        $.getJSON( "/admin/read_vid/"+$("#kycid1").val(), function( data ) {
+                            console.log(data);
+                            var name = data["scan_result"][0]["Elector's Name"];
+                            $("#kyc1_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                            $("#kyc1_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc1_dob").val(dob);
+                            var kycid = data["scan_result"][0]["VID"];
+                            $("#kyc1_kycid").val(kycid);
+                        });
+                    }
+
+                });
+
+        $("#applicationtype2").select2({
             placeholder: "choose a document type",
             allowClear: true
+        });
+
+        $('#applicationtype2').select2()
+                .on("change", function(e) {
+                    // mostly used event, fired to the original element when the value changes
+                    console.log("change val=" + e.val);
+                })
+                .on("select2-close", function() {
+                    // fired to the original element when the dropdown closes
+                    console.log("close");
+                    console.log($("#applicationtype2").val());
+                    var type = $("#applicationtype2").val();
+
+                    if(type=="AADHAAR"){
+                        $.getJSON( "/admin/read_aadhaar/"+$("#kycid2").val(), function( data ) {
+                            console.log(data);
+                        });
+                    }else if(type=="PANCARD"){
+                        $.getJSON( "/admin/read_pan/"+$("#kycid2").val(), function( data ) {
+                            console.log(data);
+                            var name = data["scan_result"][0]["Name"];
+                            $("#kyc2_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                            $("#kyc2_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc2_dob").val(dob);
+                            var kycid = data["scan_result"][0]["PAN"];
+                            $("#kyc2_kycid").val(kycid);
+                        });
+                    }else if(type=="VID"){
+                        $.getJSON( "/admin/read_vid/"+$("#kycid2").val(), function( data ) {
+                            console.log(data);
+                            var name = data["scan_result"][0]["Elector's Name"];
+                            $("#kyc2_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                            $("#kyc2_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc2_dob").val(dob);
+                            var kycid = data["scan_result"][0]["VID"];
+                            $("#kyc2_kycid").val(kycid);
+                        });
+                    }
+
+                });
+
+        $("#applicationtype3").select2({
+            placeholder: "choose a document type",
+            allowClear: true
+        });
+        $('#applicationtype3').select2()
+                .on("change", function(e) {
+                    // mostly used event, fired to the original element when the value changes
+                    console.log("change val=" + e.val);
+                })
+                .on("select2-close", function() {
+                    // fired to the original element when the dropdown closes
+                    console.log("close");
+                    console.log($("#applicationtype3").val());
+                    var type = $("#applicationtype3").val();
+
+                    if(type=="AADHAAR"){
+                        $.getJSON( "/admin/read_aadhaar/"+$("#gkycid1").val(), function( data ) {
+                            console.log(data);
+                        });
+                    }else if(type=="PANCARD"){
+                        $.getJSON( "/admin/read_pan/"+$("#gkycid1").val(), function( data ) {
+                            console.log(data);
+                            $("#kyc3_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                            $("#kyc3_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc3_dob").val(dob);
+                            var kycid = data["scan_result"][0]["PAN"];
+                            $("#kyc3_kycid").val(kycid);
+                        });
+                    }else if(type=="VID"){
+                        $.getJSON( "/admin/read_vid/"+$("#gkycid1").val(), function( data ) {
+                            console.log(data);
+                            var name = data["scan_result"][0]["Elector's Name"];
+                            $("#kyc3_name").val(name);
+                            var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                            $("#kyc3_f_or_h_name").val(fname);
+                            var dob = data["scan_result"][0]["DOB"];
+                            $("#kyc3_dob").val(dob);
+                            var kycid = data["scan_result"][0]["VID"];
+                            $("#kyc3_kycid").val(kycid);
+                        });
+                    }
+
+                });
+        $('#root_data_entry_wizard').bootstrapWizard({
+            'tabClass': 'form-wizard',
+            'onNext': function(tab, navigation, index) {
+                var $valid = $("#root_data_entry_wizard").valid();
+                if(!$valid) {
+                    $validator.focusInvalid();
+                    return false;
+                }
+                else{
+                    $('#root_data_entry_wizard').find('.form-wizard').children('li').eq(index-1).addClass('complete');
+                    $('#root_data_entry_wizard').find('.form-wizard').children('li').eq(index-1).find('.step').html('<i class="fa fa-check"></i>');
+                }
+            }
         });
 
 

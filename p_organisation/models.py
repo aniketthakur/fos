@@ -72,7 +72,7 @@ class PixuateObjectUrlMap(db.Document):
 
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
-    app_file_pixuate_id = db.StringField(max_length=255)
+    app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
     kyc_file_pixuate_id = db.ListField(db.StringField())
     gkyc_file_pixuate_id = db.ListField(db.StringField())
 
