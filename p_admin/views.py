@@ -287,7 +287,7 @@ def admin_application_id(org_id,app_id):
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
 @login_required
-def admin_application_id(org_id,app_id):
+def admin_application_cashflow(org_id,app_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
