@@ -18,7 +18,7 @@ from pixuate_storage import upload_images
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import uuid
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -160,7 +160,7 @@ def uploads_indivijual_app():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.app_file_pixuate_id = uploaded_resp[0]["id"]
+        application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
         if index == -1:
             application.applications = []
             session_obj.applications.append(application)
@@ -220,6 +220,54 @@ def uploads_indivijual_kyc():
         status=200,\
         mimetype="application/json")
 
+
+@organisation_views.route('/uploads_indivijual_gkyc', methods=["GET","POST"])
+@login_required
+def uploads_indivijual_gkyc():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    application = None
+    index = -1
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == 100:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = 100
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_kycs = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
 def upload_documents():
@@ -249,6 +297,19 @@ def upload_documents():
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+            for app in session_obj.applications:
+                organisation = user.organisation
+                organisation.update(inc__application_count=1)
+                tagged_application =  EsthenosOrgApplication()
+                tagged_application.organisation = organisation
+                tagged_application.center = center
+                tagged_application.group = group
+                tagged_application.tag  = app
+                tagged_application.application_id = organisation.name.upper()[0:2]+"{0:06d}".format(organisation.application_count)
+                tagged_application.upload_type = "MANUAL_UPLOAD"
+                tagged_application.status = "TAGGING_DONE"
+                tagged_application.save()
+
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True

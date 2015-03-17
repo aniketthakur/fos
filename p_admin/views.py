@@ -11,10 +11,10 @@ from flask import  Blueprint
 import psutil
 import os
 from p_admin.models import EsthenosUser
-from p_organisation.models import  EsthenosOrg
+from p_organisation.models import  EsthenosOrg, EsthenosOrgApplication
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm
+from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
@@ -64,7 +64,17 @@ def admin_settings():
     kwargs = locals()
     return render_template("admin_settings.html", **kwargs)
 
-
+# @admin_views.route('/admin/organisation/products', methods=["GET"])
+# @login_required
+# def admin_org_add_product():
+#     if session['role'] != "ADMIN":
+#         abort(403)
+#     username = current_user.name
+#     c_user = current_user
+#     user = EsthenosUser.objects.get(id=c_user.id)
+#     settings = EsthenosSettings.objects.all()[0]
+#     kwargs = locals()
+#     return render_template("admin_org_add_product.html", **kwargs)
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
@@ -180,6 +190,7 @@ def admin_organisation_add_emp(org_id):
         org_emp  = AddOrganizationEmployeeForm(request.form)
         form=org_emp
         print org_id
+        form.save(org_id)
         if (form.validate()):
             form.save(org_id)
             print "formValidated"
@@ -190,6 +201,7 @@ def admin_organisation_add_emp(org_id):
             print form.errors
             org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
+
             return render_template("admin_org_add_emp.html", **kwargs)
 
 
@@ -199,6 +211,39 @@ def admin_organisation_add_emp(org_id):
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 
+
+@admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET','POST'])
+@login_required
+def admin_organisation_product(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_org_add_product.html", **kwargs)
+        else:
+            product=AddOrganisationProductForm(request.form)
+            org_product=product
+            print request.form
+#            org_product.save(org_id)
+            if(org_product.validate()):
+                print "Product Details Validated,Saving the form"
+                org_product.save(org_id)
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                organisation = EsthenosOrg.objects.get(id=org_id)
+                kwargs = locals()
+                return redirect("/admin/organisation/"+org_id)
+            else:
+                print "Validation Error"
+                print flash_errors(org_product)
+                kwargs = locals()
+                return redirect("/admin/organisation/"+org_id+"/add_product")
+    else:
+        return abort(403)
+
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -207,10 +252,11 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
-
+from pixuate_storage import  *
 @admin_views.route('/admin/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(app_id):
@@ -219,8 +265,73 @@ def admin_application_id(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    app_urls = list()
+    application = EsthenosOrgApplication.objects.get(application_id = app_id)
+    for app_id in application.tag.app_file_pixuate_id:
+        app_urls.append(get_url_with_id(app_id))
+
+    kyc_urls = list()
+    kyc_ids = application.tag.kyc_file_pixuate_id
+    for kyc_id in application.tag.kyc_file_pixuate_id:
+        kyc_urls.append(get_url_with_id(kyc_id))
+
+    gkyc_urls = list()
+    gkyc_ids = application.tag.gkyc_file_pixuate_id
+    for gkyc_id in application.tag.gkyc_file_pixuate_id:
+        gkyc_urls.append(get_url_with_id(gkyc_id))
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
+
+from pixuate_storage import  *
+from pixuate import  *
+@admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
+@login_required
+def read_pan(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_pan_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
+
+@admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
+@login_required
+def read_vid(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_vid_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
+
+@admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
+@login_required
+def read_aadhaar(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_aadhaar_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
 
 @admin_views.route('/admin/application/<app_id>/track', methods=["GET"])
 @login_required

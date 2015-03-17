@@ -64,11 +64,17 @@ class EsthenosOrgToken(db.EmbeddedDocument):
 class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
 
+class PixuateObjectUrlMap(db.Document):
+    pixuate_id = db.StringField(max_length=255)
+    pixuate_url = db.StringField(max_length=512)
+    pixuate_original_url = db.StringField(max_length=512)
+
 
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
-    app_file_pixuate_id = db.StringField(max_length=255)
+    app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
     kyc_file_pixuate_id = db.ListField(db.StringField())
+    gkyc_file_pixuate_id = db.ListField(db.StringField())
 
 class EsthenosOrgUserUploadSession(db.Document):
     unique_session_key = db.StringField(max_length=255, required=True)
@@ -103,6 +109,7 @@ class EsthenosOrg(db.Document):
     postal_city = db.StringField(max_length=100, required=False)
     postal_code = db.StringField(max_length=10, required=False)
     email = db.StringField( unique=True)
+    application_count = db.IntField(default=1)
 
 
 class EsthenosOrgCenter(db.Document):
@@ -168,6 +175,8 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
 
 
 class EsthenosOrgProduct(db.Document):
+    product_name=db.StringField(max_length=128,required=True)
+    organisation = db.ReferenceField('EsthenosOrg')
     loan_amount = db.FloatField(default=0.0)
     life_insurance = db.FloatField(default=0.0)
     eligible_cycle = db.IntField(default=0)
@@ -182,9 +191,7 @@ class EsthenosOrgProduct(db.Document):
     total_processing_fees_borrowers_only = db.FloatField(default=0)
     insurance_free_borrowers_n_guarnteer = db.FloatField(default=0.0)
     total_processing_fees_borrowers_n_guarnteer = db.FloatField(default=0)
-    emi_collection_period_weekly =  db.BooleanField(default=False)
-    emi_collection_period_monthly =  db.BooleanField(default=False)
-    emi_collection_period_fortnightly =  db.BooleanField(default=False)
+    emi_repayment=db.StringField(max_length=128,required=False)
 
     def __unicode__(self):
         return "EsthenosOrgProduct"
@@ -205,7 +212,10 @@ class EsthenosOrgSettings(db.Document):
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
+    organisation = db.ReferenceField('EsthenosOrg')
+    tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap)
     application_id = db.StringField(max_length=255, required=False,default="")
+    upload_type = db.StringField(max_length=20, required=False,default="")
     status = db.StringField(max_length=45, required=False,default="")
     applicant_name = db.StringField(max_length=45, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
@@ -229,7 +239,8 @@ class EsthenosOrgApplication(db.Document):
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-
+    date_created = db.DateTimeField(default=datetime.datetime.now)
+    date_updated = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
