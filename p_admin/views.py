@@ -265,14 +265,73 @@ def admin_application_id(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    app_urls = list()
     application = EsthenosOrgApplication.objects.get(application_id = app_id)
-    app_1 = get_url_with_id(application.tag.app_file_pixuate_id)
+    for app_id in application.tag.app_file_pixuate_id:
+        app_urls.append(get_url_with_id(app_id))
+
     kyc_urls = list()
+    kyc_ids = application.tag.kyc_file_pixuate_id
     for kyc_id in application.tag.kyc_file_pixuate_id:
         kyc_urls.append(get_url_with_id(kyc_id))
 
+    gkyc_urls = list()
+    gkyc_ids = application.tag.gkyc_file_pixuate_id
+    for gkyc_id in application.tag.gkyc_file_pixuate_id:
+        gkyc_urls.append(get_url_with_id(gkyc_id))
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
+
+from pixuate_storage import  *
+from pixuate import  *
+@admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
+@login_required
+def read_pan(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_pan_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
+
+@admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
+@login_required
+def read_vid(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_vid_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
+
+@admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
+@login_required
+def read_aadhaar(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    url = get_url_with_id(object_id)
+    data = get_aadhaar_details_url(url)
+    print data
+    kwargs = locals()
+    return Response(response=data,
+        status=200,\
+        mimetype="application/json")
 
 @admin_views.route('/admin/application/<app_id>/track', methods=["GET"])
 @login_required
