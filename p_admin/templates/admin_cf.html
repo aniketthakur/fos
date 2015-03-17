@@ -1,0 +1,791 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="page-title">
+        <h3>
+            Cash Flow Analysis <span class="bold"> (CFA)</span>
+        </h3>
+    </div>
+
+    <div class="grid simple">
+    <div class="grid-body no-border invoice-body">
+
+        <div class="row">
+            <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">
+                    Application ID
+                </label>
+                <div class="controls">
+                    <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">
+                    Name of the Customer
+                </label>
+                <div class="controls">
+                    <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3 pull-right">
+                <div class="form-group">
+                    <label class="form-label">
+                        Cash Flow Verification Pending
+                    </label>
+                <a class="btn btn-block btn-warning form-control" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CGT/GRT Ready</a></a>
+                </div>
+            </div>
+        </div>
+
+    <table class="table" cols=3>
+    <tbody>
+    <thead>
+    <tr>
+        <th style="width:60px" class="unseen text-center">
+        </th>
+        <th class="text-left">
+        </th>
+        <th style="width:150px">
+        </th>
+    </tr>
+    </thead>
+    <tr>
+        <td colspan="3" >
+            <h4 class="semi-bold">
+                Total Gross Income said at the time of Sourcing (A)
+            </h4>
+        </td>
+    </tr>
+    <tr>
+        <td class="unseen text-center">
+            1
+        </td>
+
+        <td>
+            Primary Business Income
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text" class="form-control text-right" value="{{ application.primary_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            2
+        </td>
+
+        <td>
+            Secondary Business Income
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.secondary_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            3
+        </td>
+
+        <td>
+            Tertiary Business Income
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right"  value="{{ application.tertiary_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            4
+        </td>
+
+        <td>
+            Other income
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.other_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+        </td>
+
+        <td class="bold text-right">
+            <strong>
+                Total Income (A)
+            </strong>
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" >
+            <h4 class="semi-bold">
+                Total Gross expenditure said at the time of sourcing (B)
+            </h4>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="unseen text-center">
+            5
+        </td>
+
+        <td>
+            Business expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.business_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            6
+        </td>
+
+        <td>
+            Food expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.food_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            7
+        </td>
+
+        <td>
+            Travel expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.travel_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            8
+        </td>
+
+        <td>
+            Entertainment expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.educational_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            9
+        </td>
+
+        <td>
+            Education expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.entertainment_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            10
+        </td>
+
+        <td>
+            Medical expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.medical_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            11
+        </td>
+
+        <td>
+            Other expense
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.other_expense }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="unseen text-center">
+        </td>
+
+        <td class="bold text-right">
+            <strong>
+                Total Expenditure (B)
+            </strong>
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_expenditure }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3" >
+            <h4 class="semi-bold">
+                Outstanding from other MFI/NBFI/Banks
+            </h4>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="unseen text-center">
+            12
+        </td>
+
+        <td>
+            Outstanding-1
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.outstanding_1 }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            13
+        </td>
+
+        <td>
+            Outstanding-2
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.outstanding_2 }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            14
+        </td>
+
+        <td>
+            Outstanding-3
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.outstanding_3 }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            15
+        </td>
+
+        <td>
+            Outstanding-4
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.outstanding_4 }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="unseen text-center">
+        </td>
+
+        <td class="bold text-right">
+            <strong>
+                Total Outstanding (C.)
+            </strong>
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_outstanding }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="3" >
+            <h4 class="semi-bold">
+                Other Liability (D)
+            </h4>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="unseen text-center">
+            16
+        </td>
+
+        <td>
+            Chit
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_chit }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            17
+        </td>
+
+        <td>
+            Insurance
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_insurance }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td class="unseen text-center">
+            18
+        </td>
+
+        <td>
+            EMI
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_emi }}" data-a-sep="," data-a-dec=".">
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="unseen text-center">
+        </td>
+
+        <td class="bold text-right">
+            <strong>
+                Total Outstanding (D)
+            </strong>
+        </td>
+
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_other_outstanding }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Net Income (A-B-D)
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.net_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Total Existing Running no of Loans
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_running_loans }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Total Existing Loan Outstanding from
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Total Existing Running no of Loans from MFIs
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Total Existing Loan Outstanding from MFIs
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Existing Loan Cycle
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.existing_loan_cycle }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Eligible Loan Cycle
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.eligible_loan_cycle }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Default with no of MFIs
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Attendance %
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.attendence_percentage }}"  data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Loan eligibility based on Net Income
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" >
+            <h6 class="semi-bold">
+                Loan eligibility based on company policy
+            </h6>
+        </td>
+        <td>
+            <div class="controls">
+                <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" data-a-sep="," data-a-dec=".">
+            </div>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <div class="form-group">
+                    <label class="form-label">
+                        Cash Flow Verification Pending
+                    </label>
+                    <a class="btn btn-block btn-warning form-control"  type="button" href="#"><i class="fa fa-check"></i>CGT/GRT Ready</a></a>
+                </div>
+            </div>
+        </div>
+
+    <!--
+    <table class="table" cols=3 >
+        <tbody>
+        <thead>
+        <tr>
+            <th style="width:120px" class="unseen text-left">Criteria
+            </th>
+            <th style="width:120px">Eligibility
+            </th>
+            <th style="width:120px">Logical Test
+            </th>
+
+        </tr>
+        <tr>
+
+
+            <td class="text-left">
+                Existing No. Of Running Loans                                         </td>
+
+            <td class="text-left">
+                Less than 3                                        </td>
+
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-left">
+                Existing Loan Os from MFI                                      </td>
+
+            <td class="text-left">
+                Less than 50,000                                         </td>
+
+
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-left">
+                Default with other MFIs                                         </td>
+
+            <td class="text-left">
+                Less than 1                                       </td>
+
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-left">
+                Attendance                                          </td>
+
+            <td class="text-left">
+                Greater than 80%                                        </td>
+
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+
+        </thead>
+        </tbody>
+    </table>
+    <table class="table" cols=2 style="width:260px">
+        <tbody>
+        <thead>
+        <tr>
+            <th style="width:160px" class="unseen text-center">Loan Cycle
+            </th>
+            <th style="width:190px">Amount Eligibility
+            </th>
+        </tr>
+        <tr>
+
+
+            <td class="text-center">
+                1                                            </td>
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-center">
+                2                                            </td>
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-center">
+                3                                            </td>
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+
+
+            <td class="text-center">
+                4                                            </td>
+
+            <td>
+                <div class="controls">
+                    <input type="text" class="form-control" data-a-sep="," data-a-dec=".">
+                </div>
+            </td>
+        </tr>
+
+
+        </thead>
+        </tbody>
+    </table>
+    -->
+
+    </div>
+
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+
+{% endblock %}

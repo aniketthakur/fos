@@ -8,7 +8,7 @@ from .models import EsthenosUser
 from p_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from p_admin.models import EsthenosUser
 from p_organisation.models import EsthenosOrg
-from p_admin.models import EsthenosUser
+from p_admin.models import EsthenosUser,EsthenosSettings
 class AddOrganisationForm( Form):
     org_name =TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches =TextField( validators=[v.DataRequired(), v.Length(max=512)])
@@ -29,7 +29,8 @@ class AddOrganisationForm( Form):
             raise ValidationError( "Hey! This organisation is already registered with us")
 
     def save( self):
-        org =EsthenosOrg(name=self.org_name.data)
+        settings = EsthenosSettings.objects.all()[0]
+        org =EsthenosOrg(name=self.org_name.data,code = settings.organisations_count)
         #set fields
         org.branches =self.branches.data.split(",")
         org.states =self.states.data.split(",")
