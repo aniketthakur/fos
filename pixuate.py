@@ -45,3 +45,7 @@ def get_aadhaar_details_url(path):
     response = requests.post(addhaar_url, data=data,headers=headers)
     print response.content
     return response.content
+
+
+if  __name__== "__main__":
+    get_aadhaar_details_url("http://api.pixuate.com/objects/55041d942a76201b0bf035ff/693c07c22f8d96204f194152d38d641a_o.jpg")
