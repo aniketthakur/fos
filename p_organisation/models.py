@@ -89,6 +89,7 @@ class EsthenosOrgUserUploadSession(db.Document):
     tagged = db.BooleanField(default=False)
 
 class EsthenosOrg(db.Document):
+    code = db.StringField(max_length=5, required=False)
     logo_url = db.StringField(max_length=255, required=False)
     domain = db.StringField(max_length=128, required=False)
     states = db.ListField(db.StringField())
@@ -205,6 +206,7 @@ class EsthenosOrgSettings(db.Document):
     hh_annual_income_limit_annual_org = db.FloatField(default=120000)
     total_indebtness_org = db.FloatField(default=50000)
     max_existing_loan_count_org = db.IntField(default=2)
+    applicatant_min_attendence_percentage = db.FloatField(default=0.0)
 
     def __unicode__(self):
         return "EsthenosOrgSetings"
@@ -236,6 +238,26 @@ class EsthenosOrgApplication(db.Document):
     other_expense = db.FloatField(default=0.0)
     total_expenditure = db.FloatField(default=0.0)
     total_liability = db.FloatField(default=0.0)
+    outstanding_1 = db.FloatField(default=0.0)
+    outstanding_2 = db.FloatField(default=0.0)
+    outstanding_3 = db.FloatField(default=0.0)
+    outstanding_4 = db.FloatField(default=0.0)
+    total_outstanding = db.FloatField(default=0.0)
+    other_outstanding_chit = db.FloatField(default=0.0)
+    other_outstanding_insurance = db.FloatField(default=0.0)
+    other_outstanding_emi = db.FloatField(default=0.0)
+    total_other_outstanding = db.FloatField(default=0.0)
+    net_income = db.FloatField(default=0.0)
+    total_running_loans = db.IntField(default=0.0)
+    total_existing_outstanding_from = db.FloatField(default=0.0)
+    total_running_loans_from_mfi = db.IntField(default=0)
+    total_existing_outstanding_from_mfi = db.FloatField(default=0.0)
+    existing_loan_cycle = db.IntField(default=0)
+    eligible_loan_cycle = db.IntField(default=0)
+    defaults_with_no_mfis = db.IntField(default=0)
+    attendence_percentage = db.FloatField(default=0.0)
+    loan_eligibility_based_on_net_income = db.FloatField(default=0.0)
+    loan_eligibility_based_on_company_policy = db.FloatField(default=0.0)
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)

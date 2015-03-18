@@ -90,6 +90,8 @@ def admin_add_org():
         form = org_form
         if(form.validate()):
             form.save()
+            settings = EsthenosSettings.objects.all()[0]
+            settings.update(inc__organisations_count=1)
             print "success"
             return redirect("/admin/organisations")
         else:
@@ -257,16 +259,16 @@ def admin_application():
     return render_template("admin_applications.html", **kwargs)
 
 from pixuate_storage import  *
-@admin_views.route('/admin/application/<app_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
-def admin_application_id(app_id):
+def admin_application_id(org_id,app_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.get(application_id = app_id)
+    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
     for app_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
@@ -282,6 +284,20 @@ def admin_application_id(app_id):
 
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
+
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
+@login_required
+def admin_application_cashflow(org_id,app_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    app_urls = list()
+    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
+
+    kwargs = locals()
+    return render_template("admin_cf.html", **kwargs)
 
 from pixuate_storage import  *
 from pixuate import  *
