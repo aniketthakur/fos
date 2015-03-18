@@ -476,6 +476,29 @@
                     if(type=="AADHAAR"){
                         $.getJSON( "/admin/read_aadhaar/"+$("#kycid1").val(), function( data ) {
                             console.log(data);
+                            console.log("Trying to prefill");
+                            var name = data["scan_result"]["name"];
+                            $("#kyc1_name").val(name);
+                            var fname = data["scan_result"]["co"];
+                            $("#kyc1_f_or_h_name").val(fname);
+                            var dob = data["scan_result"]["year_of_birth"];
+                            $("#kyc1_dob").val(dob);
+                            var kycid = data["scan_result"]["aadhaar_id"];
+                            $("#kyc1_kycid").val(kycid);
+                            var temp=data["scan_result"]
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc1_state").val(data["scan_result"]['state']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc1_city").val(data["scan_result"]['dist']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc1_postal_code").val(data["scan_result"]['pc']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc1_address").val(data["scan_result"]['house']);
+                            }
+
                         });
                     }else if(type=="PANCARD"){
                         $.getJSON( "/admin/read_pan/"+$("#kycid1").val(), function( data ) {
@@ -524,6 +547,29 @@
                     if(type=="AADHAAR"){
                         $.getJSON( "/admin/read_aadhaar/"+$("#kycid2").val(), function( data ) {
                             console.log(data);
+                            var name = data["scan_result"]["name"];
+                            $("#kyc2_name").val(name);
+                            var fname = data["scan_result"]["co"];
+                            $("#kyc2_f_or_h_name").val(fname);
+                            var dob = data["scan_result"]["year_of_birth"];
+                            $("#kyc2_dob").val(dob);
+                            var kycid = data["scan_result"]["aadhaar_id"];
+                            $("#kyc2_kycid").val(kycid);
+                            var temp=data["scan_result"]
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc2_state").val(data["scan_result"]['state']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc2_city").val(data["scan_result"]['dist']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc2_postal_code").val(data["scan_result"]['pc']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc2_address").val(data["scan_result"]['house']);
+                            }
+
+
                         });
                     }else if(type=="PANCARD"){
                         $.getJSON( "/admin/read_pan/"+$("#kycid2").val(), function( data ) {
@@ -571,6 +617,29 @@
                     if(type=="AADHAAR"){
                         $.getJSON( "/admin/read_aadhaar/"+$("#gkycid1").val(), function( data ) {
                             console.log(data);
+                            var name = data["scan_result"]["name"];
+                            $("#kyc3_name").val(name);
+                            var fname = data["scan_result"]["co"];
+                            $("#kyc3_f_or_h_name").val(fname);
+                            var dob = data["scan_result"]["year_of_birth"];
+                            $("#kyc3_dob").val(dob);
+                            var kycid = data["scan_result"]["aadhaar_id"];
+                            $("#kyc3_kycid").val(kycid);
+                            var temp=data["scan_result"]
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc3_state").val(data["scan_result"]['state']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc3_city").val(data["scan_result"]['dist']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc3_postal_code").val(data["scan_result"]['pc']);
+                            }
+                            if(temp.hasOwnProperty('dist')){
+                                $("#kyc3_address").val(data["scan_result"]['house']);
+                            }
+
+
                         });
                     }else if(type=="PANCARD"){
                         $.getJSON( "/admin/read_pan/"+$("#gkycid1").val(), function( data ) {

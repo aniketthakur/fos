@@ -16,6 +16,7 @@ class EsthenosSettings(db.Document):
     total_indebtness_rbi = db.FloatField(default=50000)
     max_existing_loan_count_rbi = db.IntField(default=2)
     sales_tax = db.FloatField(default=12.36)
+    organisations_count = db.IntField(default=0)
 
     def __unicode__(self):
         return "EsthenosSetings"
