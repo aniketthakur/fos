@@ -268,6 +268,17 @@ def uploads_indivijual_gkyc():
         mimetype="application/json")
 
 
+organisation_views.route('/organisation/<org_id>/application', methods=["POST"])
+@login_required
+def submit_application():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+
+    pass
+
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
 def upload_documents():
