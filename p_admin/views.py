@@ -268,7 +268,7 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
+    application = EsthenosOrgApplication.objects.get(application_id = app_id)
     for app_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
@@ -294,7 +294,7 @@ def admin_application_cashflow(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
+    application = EsthenosOrgApplication.objects.get(application_id = app_id)
 
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
