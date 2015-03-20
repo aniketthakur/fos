@@ -18,6 +18,7 @@ class AddOrganisationForm( Form):
     postal_address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     postal_telephone =TextField( validators=[v.DataRequired(), v.Length(max=20)])
     postal_tele_code =TextField( validators=[v.DataRequired(), v.Length(max=5)])
+    postal_code =TextField( validators=[v.DataRequired(), v.Length(max=10)])
     postal_country =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     postal_state =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     postal_city =TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -38,6 +39,7 @@ class AddOrganisationForm( Form):
         org.postal_country =self.postal_country.data
         org.postal_state =self.postal_state.data
         org.postal_city =self.postal_city.data
+        org.postal_code = self.postal_code.data
 
         org.owner =EsthenosUser.objects.get(id=current_user.id)
 
