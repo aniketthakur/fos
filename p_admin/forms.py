@@ -55,7 +55,7 @@ class AddOrganisationForm( Form):
 
         my_states = []
         for state in self.states.data.split(","):
-            st = EsthenosOrgState.objects.create(state_name=branch,organisation=org)
+            st = EsthenosOrgState.objects.create(state_name=state,organisation=org)
             st.save()
             my_states.append(st)
         org.states =my_states
