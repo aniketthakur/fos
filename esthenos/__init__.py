@@ -26,7 +26,7 @@ mainapp.config.update(
         'USERNAME':'esthenos',
         'PASSWORD':'Ofn2cXHkTMQ8LE',
         #'DB': 'pitaya_local',
-        'DB': 'esthenos_cust_enroll_dev',
+        'DB': 'esthenos_dev_v1',
         #'TZ_AWARE': True,
         #'replicaset':"rs0"
     },
