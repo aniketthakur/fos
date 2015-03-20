@@ -243,6 +243,18 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
+@admin_views.route('/admin/cbcheck', methods=["GET"])
+@login_required
+def admin_cbcheck():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.all()
+    kwargs = locals()
+    return render_template("admin_cbcheck.html", **kwargs)
+
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -367,16 +379,16 @@ def admin_application_id_trackfinal(app_id):
     kwargs = locals()
     return render_template("admin_application_tracking_final.html", **kwargs)
 
-@admin_views.route('/admin/cbcheck', methods=["GET"])
-@login_required
-def admin_cbcheck():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template("admin_cbcheck.html", **kwargs)
+# @admin_views.route('/admin/cbcheck', methods=["GET"])
+# @login_required
+# def admin_cbcheck():
+#     if session['role'] != "ADMIN":
+#         abort(403)
+#     username = current_user.name
+#     c_user = current_user
+#     user = EsthenosUser.objects.get(id=c_user.id)
+#     kwargs = locals()
+#     return render_template("admin_cbcheck.html", **kwargs)
 
 
 @admin_views.route('/admin/disbursement', methods=["GET"])
