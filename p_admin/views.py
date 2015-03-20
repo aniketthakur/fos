@@ -292,7 +292,6 @@ def admin_application_cashflow(org_id,app_id):
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
     application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
-
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
 
