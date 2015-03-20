@@ -31,7 +31,7 @@ class AddOrganisationForm( Form):
 
     def save( self):
         settings = EsthenosSettings.objects.all()[0]
-        org =EsthenosOrg(name=self.org_name.data,code = ""+settings.organisations_count)
+        org =EsthenosOrg(name=self.org_name.data,code = ""+str(settings.organisations_count))
         #set fields
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
@@ -45,6 +45,7 @@ class AddOrganisationForm( Form):
 
         org.email =self.email.data
         org.save()
+        org = EsthenosOrg.objects.get(name=self.org_name.data)
         my_branches = []
         for branch in self.branches.data.split(","):
             br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
@@ -56,7 +57,7 @@ class AddOrganisationForm( Form):
         for state in self.states.data.split(","):
             st = EsthenosOrgState.objects.create(state_name=branch,organisation=org)
             st.save()
-            my_states.append(state)
+            my_states.append(st)
         org.states =my_states
 
         my_areas = []
