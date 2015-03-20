@@ -1,311 +1,1097 @@
 {% extends "admin_base.html" %}
 {% block css_sheets %}{{ super() }}
-    <style type="text/css">
-        input.no-border {
-            font-family: "segoe ui";
-            font-size: 14px;
-            height: 20px;
-            width: 35px;
-            padding: 0px;
-            margin: 0px;
-            margin-bottom: 2px;
-            outline: none;
-            border: 0px;
-            vertical-align: baseline;
-        }
+<style type="text/css">
+    input.no-border {
+    font-family: "segoe ui";
+    font-size: 14px;
+    height: 20px;
+    width: 35px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 2px;
+    outline: none;
+    border: 0px;
+    vertical-align: baseline;
+    }
 
-    </style>
+</style>
 {% endblock %}
 
 {% block action_bar %}
 
 {% endblock %}
 {% block maincontents %}
-    <div class="row">
-        <form id="root_data_entry_wizard">
-            <div id="rootwizard" class="col-md-12">
-                <div class="form-wizard-steps">
-                    <ul class="wizard-steps">
-                        <li class="" data-target="#step1"> <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">KYC User1</span> </a> </li>
-                        <li data-target="#step2" class=""> <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">KYC User2</span> </a> </li>
-                        <li data-target="#step3" class=""> <a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">KYC Borrower</span> </a> </li>
-                        <li data-target="#step4" class=""> <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Application Form</span> </a> </li>
-                          </span> </a> </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="tab-content transparent">
-                    <div class="tab-pane" id="tab1"> <br>
-                        <h4 class="semi-bold">Step 1 - <span class="light">KYC1 Information</span></h4>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ kyc_urls[0] }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
-                                    <select id="applicationtype"  style="width:100%">
-                                        <option value="AADHAAR">AADHAAR</option>
-                                        <option value="VID">VOTERS ID</option>
-                                        <option value="PANCARD">PANCARD</option>
-                                        <option value="OTHER">OTHER</option>
-                                    </select>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc1_kycid" type="text" class="form-control" placeholder="KYC ID">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc1_name" type="text" class="form-control" placeholder="Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc1_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc1_dob" type="text" class="form-control" placeholder="Date of Birth">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc1_address" type="text" class="form-control" placeholder="Address">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6">
-                                            <input name="city" id="kyc1_city" type="text" class="form-control" placeholder="City">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input name="state" id="kyc1_state" type="text" class="form-control" placeholder="State">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <input name="country" id="kyc1_country" type="text" class="form-control" placeholder="Country">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input name="postal_code" id="kyc1_postal_code" type="text" class="form-control" placeholder="Postal Code">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-4">
-                                            <input name="tele_code" id="kyc1_tele_code" type="text" class="form-control" placeholder="+91">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input name="teleno" id="kyc1_teleno" type="text" class="form-control" placeholder="Phone Number">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab2"> <br>
-                        <h4 class="semi-bold">Step 2 - <span class="light">KYC2 Information</span></h4>
-                        <br>
+<div class="row">
+    <form id="root_data_entry_wizard">
+        <div id="rootwizard" class="col-md-12">
+            <div class="form-wizard-steps">
+                <ul class="wizard-steps">
+                    <li class="" data-target="#step1"><a href="#tab1" data-toggle="tab"> <span class="step">1</span>
+                        <span class="title">KYC User1</span> </a></li>
+                    <li data-target="#step2" class=""><a href="#tab2" data-toggle="tab"> <span class="step">2</span>
+                        <span class="title">KYC User2</span> </a></li>
+                    <li data-target="#step3" class=""><a href="#tab3" data-toggle="tab"> <span class="step">3</span>
+                        <span class="title">KYC Borrower</span> </a></li>
+                    <li data-target="#step4" class=""><a href="#tab4" data-toggle="tab"> <span class="step">4</span>
+                        <span class="title">Application Form</span> </a></li>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ kyc_urls[1] }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <input type="hidden" name="kycid2"  id="kycid2" value="{{ kyc_ids[1] }}">
-                                    <select id="applicationtype2"  style="width:100%">
-                                        <option value="AADHAAR">AADHAAR</option>
-                                        <option value="VID">VOTERS ID</option>
-                                        <option value="PANCARD">PANCARD</option>
-                                        <option value="OTHER">OTHER</option>
-                                    </select>
-
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc2_kycid" type="text" class="form-control" placeholder="KYC ID">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc2_name" type="text" class="form-control" placeholder="Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc2_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc2_dob" type="text" class="form-control" placeholder="Date of Birth">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc2_address" type="text" class="form-control" placeholder="Address">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6">
-                                            <input name="city" id="kyc2_city" type="text" class="form-control" placeholder="City">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input name="state" id="kyc2_state" type="text" class="form-control" placeholder="State">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <input name="country" id="kyc2_country" type="text" class="form-control" placeholder="Country">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input name="postal_code" id="kyc2_postal_code" type="text" class="form-control" placeholder="Postal Code">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-4">
-                                            <input name="tele_code" id="kyc2_tele_code" type="text" class="form-control" placeholder="+91">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input name="teleno" id="kyc2_teleno" type="text" class="form-control" placeholder="Phone Number">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab3"> <br>
-                        <h4 class="semi-bold">Step 3 - <span class="light">KYC Borrower Information</span></h4>
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        {% if gkyc_urls[0] %}
-                                        <img src="{{ gkyc_urls[0] }}" width="100%" class=""/>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
-                                    <select id="applicationtype3" name="applicationtype"  style="width:100%">
-                                        <option value="AADHAAR">AADHAAR</option>
-                                        <option value="VID">VOTERS ID</option>
-                                        <option value="PANCARD">PANCARD</option>
-                                        <option value="OTHER">OTHER</option>
-                                    </select>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc3_kycid" type="text" class="form-control" placeholder="KYC ID">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc3_name" type="text" class="form-control" placeholder="Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc3_f_or_h_name" type="text" class="form-control" placeholder="Father's/husband's Name">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc3_dob" type="text" class="form-control" placeholder="Date of Birth">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="address" id="kyc3_address" type="text" class="form-control" placeholder="Address">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6">
-                                            <input name="city" id="kyc3_city" type="text" class="form-control" placeholder="City">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input name="state" id="kyc3_state" type="text" class="form-control" placeholder="State">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <input name="country" id="kyc3_country" type="text" class="form-control" placeholder="Country">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input name="postal_code" id="kyc3_postal_code" type="text" class="form-control" placeholder="Postal Code">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-4">
-                                            <input name="tele_code" id="kyc3_tele_code" type="text" class="form-control" placeholder="+91">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input name="teleno" id="kyc3_teleno" type="text" class="form-control" placeholder="Phone Number">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab4"> <br>
-                        <h4 class="semi-bold">Step 4 - <span class="light">Application Form</span></h4>
-                        <br>
-                        <div class="row">
-                            {% for app in app_urls %}
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="grid simple">
-                                    <div class="grid-title no-border">
-                                        <img src="{{ app_1 }}" width="100%" class=""/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class=" wizard wizard-actions">
-                        <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
-                        <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
-                        <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a></li>
-                        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
-                    </ul>
-                </div>
+                </ul>
+                <div class="clearfix"></div>
             </div>
-        </form>
-    </div>
+            <div class="tab-content transparent">
+                <div class="tab-pane" id="tab1"><br>
+                    <h4 class="semi-bold">Step 1 - <span class="light">KYC1 Information</span></h4>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-title no-border">
+                                    <img src="{{ kyc_urls[0] }}" width="100%" class=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
+                                <select id="applicationtype" style="width:100%">
+                                    <option value="AADHAAR">AADHAAR</option>
+                                    <option value="VID">VOTERS ID</option>
+                                    <option value="PANCARD">PANCARD</option>
+                                    <option value="OTHER">OTHER</option>
+                                </select>
+
+                                <div class="row form-row">
+
+                                    <div class="col-md-12">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+
+                                            <input name="address" id="address" type="text" class="form-control"
+                                                   placeholder="KYC ID">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+
+                                            <input name="kyc1name" id="kyc1name" type="text" class="form-control"
+                                                   placeholder="Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="fathername" id="fathername" type="text" class="form-control"
+                                                   placeholder="Father's/husband's Name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="dateofbirth" id="dateofbirth" type="text" class="form-control"
+                                                   placeholder="Date of Birth">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc1address" id="kyc1address" type="text" class="form-control"
+                                                   placeholder="Address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc1city" id="kyc1city" type="text" class="form-control"
+                                                   placeholder="City">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        <input name="kyc1state" id="kyc1state" type="text" class="form-control"
+                                               placeholder="State">
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-8">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc1country" id="kyc1country" type="text" class="form-control"
+                                                   placeholder="Country">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        <input name="kyc1postal_code" id="kyc1postal_code" type="text"
+                                               class="form-control" placeholder="Postal Code">
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-4">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc1tele_code" id="kyc1tele_code" type="text"
+                                                   class="form-control" placeholder="+91">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc1teleno" id="kyc1teleno" type="text" class="form-control"
+                                                   placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2"><br>
+                    <h4 class="semi-bold">Step 2 - <span class="light">KYC2 Information</span></h4>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-title no-border">
+                                    <img src="{{ kyc_urls[1] }}" width="100%" class=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-body no-border invoice-body"><br>
+                                    <input type="hidden" name="kycid2" id="kycid2" value="{{ kyc_ids[1] }}">
+                                    <select id="applicationtype2" style="width:100%">
+                                        <option value="AADHAAR">AADHAAR</option>
+                                        <option value="VID">VOTERS ID</option>
+                                        <option value="PANCARD">PANCARD</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select>
+
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2id" id="kyc2id" type="text" class="form-control"
+                                                       placeholder="KYC ID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2name" id="kyc2name" type="text" class="form-control"
+                                                       placeholder="Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2fathername" id="kyc2fathername" type="text"
+                                                       class="form-control" placeholder="Father's/husband's Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2dob" id="kyc2dob" type="text" class="form-control"
+                                                       placeholder="Date of Birth">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2address" id="kyc2address" type="text" class="form-control"
+                                                       placeholder="Address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2city" id="kyc2city" type="text" class="form-control"
+                                                       placeholder="City">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc2state" id="kyc2state" type="text" class="form-control"
+                                                   placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2country" id="kyc2country" type="text" class="form-control"
+                                                       placeholder="Country">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc2postal_code" id="kyc2postal_code" type="text"
+                                                   class="form-control" placeholder="Postal Code">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-4">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc2tele_code" id="kyc2tele_code" type="text"
+                                                       class="form-control" placeholder="+91">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc2teleno" id="kyc2teleno" type="text" class="form-control"
+                                                   placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3"><br>
+                    <h4 class="semi-bold">Step 3 - <span class="light">KYC Borrower Information</span></h4>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-title no-border">
+                                    {% if gkyc_urls[0] %}
+                                    <img src="{{ gkyc_urls[0] }}" width="100%" class=""/>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-body no-border invoice-body"><br>
+                                    <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
+                                    <select id="applicationtype3" name="applicationtype" style="width:100%">
+                                        <option value="AADHAAR">AADHAAR</option>
+                                        <option value="VID">VOTERS ID</option>
+                                        <option value="PANCARD">PANCARD</option>
+                                        <option value="OTHER">OTHER</option>
+                                    </select>
+
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3kycid" id="kyc3kycid" type="text" class="form-control"
+                                                       placeholder="KYC ID">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3_name" id="kyc3_name" type="text" class="form-control"
+                                                       placeholder="Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3fathername" id="kyc3fathername" type="text"
+                                                       class="form-control" placeholder="Father's/husband's Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3_dob" id="kyc3_dob" type="text" class="form-control"
+                                                       placeholder="Date of Birth">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3_address" id="kyc3_address" type="text"
+                                                       class="form-control" placeholder="Address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3_city" id="kyc3_city" type="text" class="form-control"
+                                                       placeholder="City">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc3_state" id="kyc3_state" type="text" class="form-control"
+                                                   placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+
+                                            <div class="col-md-8">
+                                                <input name="kyc3_country" id="kyc3_country" type="text"
+                                                       class="form-control" placeholder="Country">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc3_postal_code" id="kyc3_postal_code" type="text"
+                                                   class="form-control" placeholder="Postal Code">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-4">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="kyc3_tele_code" id="kyc3_tele_code" type="text"
+                                                       class="form-control" placeholder="+91">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input name="kyc3_teleno" id="kyc3_teleno" type="text" class="form-control"
+                                                   placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab4"><br>
+                    <h4 class="semi-bold">Step 4 - <span class="light">Application Form</span></h4>
+                    <br>
+
+                    <div class="row">
+                        {% for app in app_urls %}
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-title no-border">
+                                    <img src="{{ app }}" width="100%" class=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Application begin-->
+                        <div class="col-md-6">
+                            <div class="grid simple">
+                                <div class="grid-body no-border invoice-body"><br>
+
+                                    <div class="row form-row">
+                                        <div class="col-md-8 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" name="state" id="state" value=""
+                                                       placeholder="State"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" name="taluk" id="taluk" value=""
+                                                       placeholder="Taluk"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row form-row">-->
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" name="Stateid" id="stateid" value=""
+                                                       placeholder="SateId"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control" name="religion" id="religion"
+                                                       value="" placeholder="Religion"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--</div>-->
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" name="village" id="village" value=""
+                                                       placeholder="Village"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control" name="regionid" id="regionid"
+                                                       value="" placeholder="Regionid"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="branch" id="branch"
+                                                       value="" placeholder="Branch"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control" name="branchid" id="branchid"
+                                                       value="" placeholder="Branchid"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="cmid" id="cmid" value=""
+                                                       placeholder="Cmid"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="cmcellno" id="cmcellno"
+                                                       value="" placeholder="Cmcellno"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="cycle" id="cycle"
+                                                       value="" placeholder="Cycle"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="idforrepeatclient"
+                                                       id="idforrepeatclient" value="" placeholder="Idforrepeatclient"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+
+                                                <h4>Repayment Mode</h4>
+                                                <input id="weekly" type="radio" name="weekly" value="" checked="">
+                                                <label for="weekly">Weekly</label>
+                                                <input id="monthly" type="radio" name="monthly" value="">
+                                                <label for="monthly">Monthly</label>
+                                                <input id="fortnightly" type="radio" name="fortnightly" value="">
+                                                <label for="fortnightly">Fortnightly</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="appliedloanamount"
+                                                       id="appliedloanamount" value="" placeholder="AppliedLoanAmount"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input id="intertedbuyingotherfinancialproduct" type="radio"
+                                                       name="intertedbuyingotherfinancialproduct" value="" checked="">
+                                                <label for="intertedbuyingotherfinancialproduct">Interted Buying Other
+                                                    Financial Product</label>
+                                                <input id="NPS" type="radio" name="NPS" value="">
+                                                <label for="NPS">NPS</label>
+                                                <input id="healthinsurance'lifeinsurance" type="radio"
+                                                       name="healthinsurance'lifeinsurance" value="">
+                                                <label for="healthinsurance'lifeinsurance">Health Insurance'Life
+                                                    Insurance</label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <input type="hidden" name="region" id="region" value="">
+                                                <select id="applicationtype7" name="applicationtype" style="width:100%">
+                                                    <option value="HINDU">HINDU</option>
+                                                    <option value="MISILM">MUSILM</option>
+                                                    <option value="SIKH">SIKH</option>
+                                                    <option value="CHIRSTIAN">CHIRSTIAN</option>
+                                                    <option value="JAIN">JAIN</option>
+                                                    <option value="BHUDHIST">BHUDHIST</option>
+                                                    <option value="JEU">JEU</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <input type="hidden" name="category" id="category" value="">
+                                                <select id="applicationtype9" name="applicationtype" style="width:100%">
+                                                    <option value="GENERAL">GENERAL</option>
+                                                    <option value="OBC">OBC</option>
+                                                    <option value="MBC">MBC</option>
+                                                    <option value="SC/ST">SC/ST</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <input type="hidden" name="typeofresidence" id="typeofresidence"
+                                                       value="">
+                                                <select id="applicationtype10" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="FAMILY OWNED">FAMILY OWNED</option>
+                                                    <option value="SELF OWNED">SELF OWNED</option>
+                                                    <option value="SELF OWNED">RENTED/LEASED</option>
+                                                    <option value="ALLOTED">ALLOTED</option>
+                                                    <option value="GIFTED">GIFTED</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+
+                                                <h4>Disability</h4>
+                                                <input id="yes" type="radio" name="yes" value="" checked="">
+                                                <label for="yes">Yes</label>
+                                                <input id="no" type="radio" name="no" value="">
+                                                <label for="no">no</label>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <h4>Quality Of House</h4>
+                                                <input type="hidden" name="qualityofhouse" id="qualityofhouse" value="">
+                                                <select id="applicationtype13" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="FAMILY OWNED">PAKKA</option>
+                                                    <option value="SELF OWNED">SEMI-PAKKA</option>
+                                                    <option value="SELF OWNED">KUCHHA</option>
+                                                    <option value="ALLOTED">THATCHED</option>
+                                                    <option value="GIFTED">TILLED</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <h4>Drinking Water</h4>
+                                                <input type="hidden" name="drinkingwater" id="drinkingwater"
+                                                       value="drinkingwater">
+                                                <select id="applicationtype11" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="FAMILY OWNED">PIPED</option>
+                                                    <option value="SELF OWNED">BOREWELL</option>
+                                                    <option value="SELF OWNED">SHARED BOREWELL</option>
+                                                    <option value="ALLOTED">GOVT BOREWELL</option>
+                                                    <option value="GIFTED">OPEN WELL</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="purposeofloan"
+                                                       id="purposeofloan" value="" placeholder="Purpose Of Loan"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="familysize"
+                                                       id="familysize" value="" placeholder="Family Size"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="child18-12"
+                                                       id="child18-12" value="" placeholder="Child 18-12"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control "
+                                                       name="monthlyincomefrommainbusiness"
+                                                       id="monthlyincomefrommainbusiness" value=""
+                                                       placeholder="Monthly Income From Main Business"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <h4>Business Category </h4>
+                                                <input type="hidden" name="businesscategory" id="d"
+                                                       value="businesscategory">
+                                                <select id="applicationtype14" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="TRADING">TRADING</option>
+                                                    <option value="SERVICES">SERVICES</option>
+                                                    <option value="AGRICULTURE">AGRICULTURE</option>
+                                                    <option value="ALLIED AGRI">ALLIED AGRI</option>
+                                                    <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                                                    <option value="LABOURER">LABOURER</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <h4>Business </h4>
+                                                <input type="hidden" name="business" id="business" value="">
+                                                <select id="applicationtype15" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="ORCHARD">ORCHARD</option>
+                                                    <option value="MANGO">MANGO</option>
+                                                    <option value="ARECANUT">ARECANUT</option>
+                                                    <option value="COCONUT">COCONUT</option>
+                                                    <option value="PALM TREE">PALM TREE</option>
+                                                    <option value="AMLA">AMLA</option>
+                                                    <option value="TAMRIND">TAMRIND</option>
+                                                    <option value="VEGETABLES">VEGETABLES</option>
+                                                    <option value="CATTLE">CATTLE</option>
+                                                    <option value="COW">COW</option>
+                                                    <option value="BUFFOLOES">BUFFOLOES</option>
+                                                    <option value="SHIP">SHIP</option>
+                                                    <option value="BULLOCKS">BULLOCKS</option>
+                                                    <option value="PIGS">PIGS</option>
+                                                    <option value="CHICKEN">CHICKEN</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6">
+                                            <div class="grid simple">
+                                                <h4>Income </h4>
+                                                <input type="hidden" name="income" id="income" value="">
+                                                <select id="applicationtype16" name="applicationtype"
+                                                        style="width:100%">
+                                                    <option value="ORCHARD">FAILY ASSET</option>
+                                                    <option value="MANGO">TV</option>
+                                                    <option value="ARECANUT">FRIDGE</option>
+                                                    <option value="COCONUT">MIXER</option>
+                                                    <option value="PALM TREE">WASHING MACHINE</option>
+                                                    <option value="AMLA">2WHEELER</option>
+                                                    <option value="TAMRIND">GAS CONNECTION</option>
+                                                    <option value="VEGETABLES">DISH TV</option>
+                                                    <option value="CATTLE">DISH TV</option>
+                                                    <option value="COW">TRACKTOR</option>
+                                                    <option value="BUFFOLOES">BULLOCK CART</option>
+                                                    <option value="SHIP">BYCYCLE</option>
+                                                    <option value="BULLOCKS">BULLOCKS</option>
+                                                    <option value="PIGS">AUTO RIKSWA</option>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="agricultureland"
+                                                       id="agricultureland" value="" placeholder="Agriculture Land"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="selfowend" id="selfowend"
+                                                       value="" placeholder="Self Owend"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="shared" id="shared"
+                                                       value="" placeholder="Shared"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="patta" id="patta" value=""
+                                                       placeholder="Patta"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="financialinclusion"
+                                                       id="financialinclusion" value="" placeholder="Financial Inclusion"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input type="text" class="form-control " name="loans" id="loans" value=""
+                                                       placeholder="Loans"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="chits" id="chits" value=""
+                                                   placeholder="Chits"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="insurance" id="insurance"
+                                                   value="" placeholder="Insurance"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="bankaccount" id="bankaccount"
+                                                   value="" placeholder="Bank Account"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="micropension"
+                                                   id="micropension" value="" placeholder="Micro Pension"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="pastofficeaccount"
+                                                   id="postofficeaccount" value="" placeholder="Post Office Account"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="businessexpenditure"
+                                                   id="businessexpenditure" value=""
+                                                   placeholder="Business Expenditure"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="householdexpenditure"
+                                                   id="householdexpenditure" value=""
+                                                   placeholder="Household Expenditure"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="food" id="food" value=""
+                                                   placeholder="Food"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="medical" id="medical"
+                                                   value="" placeholder="Medical"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="education" id="education"
+                                                   value="" placeholder="Education"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="entretainmaint"
+                                                   id="entretainmaint" value="" placeholder="Entretainmaint"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="festival" id="festival"
+                                                   value="" placeholder="Festival"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="travel" id="travel" value=""
+                                                   placeholder="Travel"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="friendandfamily"
+                                                   id="friendandfamily" value="" placeholder="Friend And Family"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="amount" id="amount" value=""
+                                                   placeholder="Amount"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="roi" id="roi" value=""
+                                                   placeholder="ROI"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="moneylenders"
+                                                   id="moneylenders" value="" placeholder="Money Lenders"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="bankfi" id="bankfi" value=""
+                                                   placeholder="BankFI"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="houserent" id="houserent"
+                                                   value="" placeholder="House Rent"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="centrename" id="centrename"
+                                                   value="" placeholder="Centre Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="groupname" id="groupname"
+                                                   value="" placeholder="Group Name"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="size" id="size" value=""
+                                                   placeholder="Size"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="size" id="size1" value=""
+                                                   placeholder="Size"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="centreleader"
+                                                   id="centreleader" value="" placeholder="Centre Leader"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="groupleader" id="groupleader"
+                                                   value="" placeholder="Group Leader"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="cell" id="cell" value=""
+                                                   placeholder="Cell"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="cell" id="cell2" value=""
+                                                   placeholder="Cell"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="date" id="date" value=""
+                                                   placeholder="DD/MM/YYYY"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <i class=""></i>
+                                            <input type="text" class="form-control " name="excepteddisbursmentdate"
+                                                   id="excepteddisbursmentdate" value=""
+                                                   placeholder="Excepted Disbursment Date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Appplication end-->
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="form-actions">
+
+                    <div class="pull-right">
+                        <button class="btn btn-danger btn-cons" id="submitForm2" type="submit"><i class="icon-ok"></i>
+                            Save
+                        </button>
+                        <button class="btn btn-white btn-cons" type="button">Cancel</button>
+                    </div>
+                </div>
+
+                <ul class=" wizard wizard-actions">
+                    <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a>
+                    </li>
+                    <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
+                    <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a>
+                    </li>
+                    <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+</form>
+</div>
+
 
 {% endblock %}
 {% block js_scripts %}{{ super() }}
 
-    <script type="text/javascript">
+<script type="text/javascript">
         var cur_tag =1;
         var $input;
         $( document ).ready(function() {
@@ -577,6 +1363,220 @@
         //$('.form1Name').blur(function() {
         //    $input = null;
         //});
+        $('#root_data_entry_wizard').validate({
+            errorElement: 'span',
+            errorClass: 'error',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                address: {
+                    minlength: 3,
+                    required: true
+                },
+               kyc1name: {
+                    minlength: 3,
+                    required: true
+                },
+                fathername: {
+                    minlength: 5,
+                    required: true
+                },
+                kyc1state: {
+                    minlength: 5,
+                    required: true
+                },
+               kyc1country: {
+                    minlength: 2,
+                    required: true
+                },
+                kyc1postal_code: {
+                    number:true,
+                    required: true
+                },
+                kyc1tele_code: {
+                    minlength: 2,
+                    required: true
+                },
+                kyc1teleno: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                  kyc1city: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                  dateofbirth: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc1address: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2id: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2name: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2fathername: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2dob: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2address: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2city: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2address: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2state: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2country: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc2postal_code: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2tele_code: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc2teleno: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3kycid: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_name: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc3fathername: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_dob: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_address: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_city: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_state: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_country: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                kyc3_postal_code: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_tele_code: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
+                 kyc3_teleno: {
+                    number:true,
+                    minlength: 8,
+                    required: true
+                },
 
-    </script>
+
+
+
+
+
+            },
+
+            invalidHandler: function (event, validator) {
+                //display error alert on form submit
+            },
+
+            errorPlacement: function (error, element) { // render error placement for each input type
+                var icon = $(element).parent('.input-with-icon').children('i');
+                var parent = $(element).parent('.input-with-icon');
+                icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                var parent = $(element).parent();
+                parent.removeClass('success-control').addClass('error-control');
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+
+            },
+
+            success: function (label, element) {
+                var icon = $(element).parent('.input-with-icon').children('i');
+                var parent = $(element).parent('.input-with-icon');
+                icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+                parent.removeClass('error-control').addClass('success-control');
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+                console.log("Success");
+            }
+        });
+        $('.input-append.date').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+
+    
+</script>
 {% endblock %}

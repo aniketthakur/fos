@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="grid-body no-border">
-                            <h3>GroupABC   <span class="semi-bold">Application</span></h3>
+                            <h3>{% if center_id == '' %} Group: {{ group.group_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>
                             <div class="col-md-6">
                                 <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>

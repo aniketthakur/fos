@@ -18,7 +18,7 @@ from pixuate_storage import upload_images
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import uuid
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -268,6 +268,17 @@ def uploads_indivijual_gkyc():
         mimetype="application/json")
 
 
+organisation_views.route('/organisation/<org_id>/application', methods=["POST"])
+@login_required
+def submit_application():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+
+    pass
+
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
 def upload_documents():
@@ -289,7 +300,7 @@ def upload_documents():
         group_name = request.form.get('group_name')
         center = None
         group = None
-        if center_name !=None and len(center_name)>0:
+        if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
             center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
             group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
         elif center_name !=None and len(center_name)>0:
@@ -298,14 +309,14 @@ def upload_documents():
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
             for app in session_obj.applications:
-                organisation = user.organisation
-                organisation.update(inc__application_count=1)
+                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=1)
+
                 tagged_application =  EsthenosOrgApplication()
-                tagged_application.organisation = organisation
+                tagged_application.organisation = user.organisation
                 tagged_application.center = center
                 tagged_application.group = group
                 tagged_application.tag  = app
-                tagged_application.application_id = organisation.name.upper()[0:2]+"{0:06d}".format(organisation.application_count)
+                tagged_application.application_id = user.organisation.name.upper()[0:2]+"{0:06d}".format(user.organisation.application_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"
                 tagged_application.status = "TAGGING_DONE"
                 tagged_application.save()
@@ -333,6 +344,9 @@ def application_status():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups.html", **kwargs)
 
@@ -343,7 +357,24 @@ def applications():
         abort(403)
     username = current_user.name
     c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None:
+        center = EsthenosOrgCenter.objects.get(id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None:
+        group = EsthenosOrgGroup.objects.get(id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
     user = EsthenosUser.objects.get(id=c_user.id)
+
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
 

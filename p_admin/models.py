@@ -44,6 +44,10 @@ class EsthenosUser(BaseUser):
     postal_tele_code = db.StringField(max_length=20, required=False)
     postal_city = db.StringField(max_length=100, required=False)
     organisation = db.ReferenceField('EsthenosOrg',required=False)
+    org_state = db.ReferenceField('EsthenosOrgState')
+    org_area =   db.ReferenceField('EsthenosOrgArea')
+    org_region = db.ReferenceField('EsthenosOrgRegion')
+    org_branch = db.ReferenceField('EsthenosOrgBranch')
     owner = db.ReferenceField('EsthenosUser',required=False)
 
 

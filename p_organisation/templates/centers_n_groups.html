@@ -42,59 +42,21 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class='clickable-row' data-href='/applications'>
+                                        {% for center in centers %}
+                                        <tr class='clickable-row' data-href='/applications/?center={{ center.id }}'>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-default">
                                                     <input id="checkbox11" type="checkbox" value="1">
                                                     <label for="checkbox11"></label>
                                                 </div>
                                             </td>
-                                            <td class="v-align-middle">1213444</td>
-                                            <td class="v-align-middle"><span class="muted">CenterXXY</span>
+                                            <td class="v-align-middle">{{ center.id }}</td>
+                                            <td class="v-align-middle"><span class="muted">{{ center.center_name }}</span>
                                             </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-                                        </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox12" type="checkbox" value="1">
-                                                    <label for="checkbox12"></label>
-                                                </div>
-                                            </td>
-                                            <td>12134442</td>
-                                            <td><span class="muted">CenterXYZ</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-
-                                        </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox13" type="checkbox" value="1">
-                                                    <label for="checkbox13"></label>
-                                                </div>
-                                            </td>
-                                            <td>1213442</td>
-                                            <td class="v-align-middle"><span class="muted">CenterABC</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
+                                            <td><span class="muted">{{ center.created_date }}</span>
                                             </td>
                                         </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox14" type="checkbox" value="1">
-                                                    <label for="checkbox14"></label>
-                                                </div>
-                                            </td>
-                                            <td>12134449</td>
-                                            <td class="v-align-middle"><span class="muted">CenterABV</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                  </div>
@@ -116,59 +78,21 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td class="v-align-middle">
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox11" type="checkbox" value="1">
-                                                    <label for="checkbox11"></label>
-                                                </div>
-                                            </td>
-                                            <td class="v-align-middle">1213444</td>
-                                            <td class="v-align-middle"><span class="muted">GroupXXY</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-                                        </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox12" type="checkbox" value="1">
-                                                    <label for="checkbox12"></label>
-                                                </div>
-                                            </td>
-                                            <td>12134442</td>
-                                            <td><span class="muted">GroupXYZ</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-
-                                        </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox13" type="checkbox" value="1">
-                                                    <label for="checkbox13"></label>
-                                                </div>
-                                            </td>
-                                            <td>1213442</td>
-                                            <td class="v-align-middle"><span class="muted">GroupABC</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-                                        </tr>
-                                        <tr class='clickable-row' data-href='/applications'>
-                                            <td>
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox14" type="checkbox" value="1">
-                                                    <label for="checkbox14"></label>
-                                                </div>
-                                            </td>
-                                            <td>12134449</td>
-                                            <td class="v-align-middle"><span class="muted">GroupABV</span>
-                                            </td>
-                                            <td><span class="muted">12/02/2015</span>
-                                            </td>
-                                        </tr>
+                                        {% for group in groups %}
+                                            <tr class='clickable-row' data-href='/applications?group={{ group.id }}'>
+                                                <td class="v-align-middle">
+                                                    <div class="checkbox check-default">
+                                                        <input id="checkbox11" type="checkbox" value="1">
+                                                        <label for="checkbox11"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle">{{ group.id }}</td>
+                                                <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
+                                                </td>
+                                                <td><span class="muted">{{ group.created_date }}</span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

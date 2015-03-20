@@ -5,7 +5,7 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
-from p_organisation.models import EsthenosOrg, EsthenosOrgProduct
+from p_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState
 from p_admin.models import EsthenosUser
 from p_organisation.models import EsthenosOrg
 from p_admin.models import EsthenosUser,EsthenosSettings
@@ -24,7 +24,7 @@ class AddOrganisationForm( Form):
     email =TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
 
     def validate_org_name( form, field):
-        org_name =field.data.lower().strip()
+        org_name = field.data.lower().strip()
         if( EsthenosOrg.objects(name=org_name).count()):
             raise ValidationError( "Hey! This organisation is already registered with us")
 
@@ -32,18 +32,44 @@ class AddOrganisationForm( Form):
         settings = EsthenosSettings.objects.all()[0]
         org =EsthenosOrg(name=self.org_name.data,code = settings.organisations_count)
         #set fields
-        org.branches =self.branches.data.split(",")
-        org.states =self.states.data.split(",")
-        org.areas =self.areas.data.split(",")
-        org.regions =self.regions.data.split(",")
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
         org.postal_tele_code =self.postal_tele_code.data
         org.postal_country =self.postal_country.data
         org.postal_state =self.postal_state.data
         org.postal_city =self.postal_city.data
+
         org.owner =EsthenosUser.objects.get(id=current_user.id)
+
         org.email =self.email.data
+        org.save()
+        my_branches = []
+        for branch in self.branches.data.split(","):
+            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
+            br.save()
+            my_branches.append(br)
+        org.branches =my_branches
+
+        my_states = []
+        for state in self.states.data.split(","):
+            st = EsthenosOrgState.objects.create(state_name=branch,organisation=org)
+            st.save()
+            my_states.append(state)
+        org.states =my_states
+
+        my_areas = []
+        for area in self.areas.data.split(","):
+            ar = EsthenosOrgArea.objects.create(area_name=area,organisation=org)
+            ar.save()
+            my_areas.append(ar)
+        org.areas =my_areas
+
+        my_regions = []
+        for region in self.regions.data.split(","):
+            reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org)
+            reg.save()
+            my_regions.append(reg)
+        org.regions =my_regions
         org.save()
         return org
 
