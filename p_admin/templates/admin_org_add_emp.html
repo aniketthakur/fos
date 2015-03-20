@@ -80,14 +80,14 @@
                                         <div class="col-md-6 form-group">
                                             <select name="state" id="state" class="select2 form-control">
                                                 {% for state in org.states %}
-                                                    <option value="{{ state }}">{{ state }}</option>
+                                                    <option value="{{ state.state_name }}">{{ state.state_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <select name="region" id="region" class="select2 form-control">
                                                 {% for region in org.regions %}
-                                                    <option value="{{ region }}">{{ region }}</option>
+                                                    <option value="{{ region.region_name }}">{{ region.region_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -96,14 +96,14 @@
                                         <div class="col-md-6 form-group">
                                             <select name="area" id="area" class="select2 form-control">
                                                 {% for area in org.areas %}
-                                                    <option value="{{ area }}">{{ area }}</option>
+                                                    <option value="{{ area.area_name }}">{{ area.area_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <select name="branch" id="branch" class="select2 form-control">
                                                 {% for branch in org.branches %}
-                                                    <option value="{{ branch }}">{{ branch }}</option>
+                                                    <option value="{{ branch.branch_name }}">{{ branch.branch_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
