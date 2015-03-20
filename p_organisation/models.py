@@ -216,6 +216,20 @@ class EsthenosOrgSettings(db.Document):
     def __unicode__(self):
         return "EsthenosOrgSetings"
 
+class EsthenosOrgApplicationStatusTypes(db.Document):
+    staus =  db.StringField(max_length=20, required=True,default="")
+    staus_message =  db.StringField(max_length=512, required=True,default="")
+    status_code = db.IntField(default=0)
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatusTypes"
+
+class EsthenosOrgApplicationStatus(db.EmbeddedDocument):
+    status = db.ReferenceField('EsthenosOrgApplicationStatusTypes')
+    message = db.StringField(max_length=512, required=False,default="")
+
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatus"
+
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
@@ -247,6 +261,7 @@ class EsthenosOrgApplication(db.Document):
     outstanding_2 = db.FloatField(default=0.0)
     outstanding_3 = db.FloatField(default=0.0)
     outstanding_4 = db.FloatField(default=0.0)
+
     total_outstanding = db.FloatField(default=0.0)
     other_outstanding_chit = db.FloatField(default=0.0)
     other_outstanding_insurance = db.FloatField(default=0.0)
@@ -266,6 +281,8 @@ class EsthenosOrgApplication(db.Document):
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    current_status = db.ReferenceField('EsthenosOrgApplicationStatusTypes')
+    timeline =  db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationStatus))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
 
@@ -274,8 +291,19 @@ class EsthenosOrgApplication(db.Document):
 
 
 
+class EsthenosOrgApplicationHighMark(db.Document):
+    application_id = db.StringField(max_length=255, required=True,default="")
 
+    raw = db.StringField(max_length=4096, required=True,default="")
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatus"
 
+class EsthenosOrgApplicationHighMarkRequest(db.Document):
+    application_id = db.StringField(max_length=255, required=True,default="")
+    sent_status = db.BooleanField(default=False)
+    segment_identifier = db.StringField(max_length=255, required=True,default="")
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatus"
 
 sauth_user_registered = signal('user-registered')
 

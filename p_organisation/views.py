@@ -374,6 +374,13 @@ def applications():
         center_id = ''
 
     user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group)
+    else:
+        applications = EsthenosOrgApplication.objects.all()
 
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
@@ -389,6 +396,21 @@ def applications_track(app_id):
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
+@organisation_views.route('/check_disbusement', methods=["GET"])
+@login_required
+def check_disbusement():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_disbussment.html", **kwargs)
+
 @organisation_views.route('/download_disbusement', methods=["GET"])
 @login_required
 def download_disbusement():
@@ -399,6 +421,22 @@ def download_disbusement():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("download_disbusement.html", **kwargs)
+
+
+@organisation_views.route('/check_grt', methods=["GET"])
+@login_required
+def check_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_grt.html", **kwargs)
 
 @organisation_views.route('/download_grt', methods=["GET"])
 @login_required
