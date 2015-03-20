@@ -60,19 +60,19 @@ class AddOrganisationForm( Form):
             my_states.append(st)
         org.states =my_states
 
-        my_areas = []
-        for area in self.areas.data.split(","):
-            ar = EsthenosOrgArea.objects.create(area_name=area,organisation=org)
-            ar.save()
-            my_areas.append(ar)
-        org.areas =my_areas
-
-        my_regions = []
-        for region in self.regions.data.split(","):
-            reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org)
-            reg.save()
-            my_regions.append(reg)
-        org.regions =my_regions
+#        my_areas = []
+#        for area in self.areas.data.split(","):
+#            ar = EsthenosOrgArea.objects.create(area_name=area,organisation=org)
+#            ar.save()
+#            my_areas.append(ar)
+#        org.areas =my_areas
+#
+#        my_regions = []
+#        for region in self.regions.data.split(","):
+#            reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org)
+#            reg.save()
+#            my_regions.append(reg)
+#        org.regions =my_regions
         org.save()
         return org
 
