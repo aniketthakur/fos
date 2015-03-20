@@ -80,78 +80,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class='clickable-row' data-href='/admin/application/12444/track'>
+                        {% for app in  tagged_applications %}
+                        <tr class='clickable-row' data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'>
                             <td class="v-align-middle">
                                 <div class="checkbox check-default">
                                     <input id="checkbox11" type="checkbox" value="1">
                                     <label for="checkbox11"></label>
                                 </div>
                             </td>
-                            <td class="v-align-middle">1213444</td>
-                            <td class="v-align-middle"><span class="muted">Redesign project template</span>
+                            <td class="v-align-middle">{{ app.application_id }}</td>
+                            <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
                             </td>
-                            <td><span class="muted">12/02/2015</span>
+                            <td><span class="muted">{{ app.date_created }}</span>
                             </td>
                             <td class="v-align-middle">
                                 <div class="progress">
-                                    <div data-percentage="50%"  class="progress-bar progress-bar-success animate-progress-bar"></div>
+                                    <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
                                 </div>
                             </td>
                         </tr>
-                        <tr class='clickable-row' data-href='/admin/application/12444/track'>
-                            <td>
-                                <div class="checkbox check-default">
-                                    <input id="checkbox12" type="checkbox" value="1">
-                                    <label for="checkbox12"></label>
-                                </div>
-                            </td>
-                            <td>12134442</td>
-                            <td><span class="muted">Something goes here</span>
-                            </td>
-                            <td><span class="muted">12/02/2015</span>
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div data-percentage="50%" class="progress-bar progress-bar-danger animate-progress-bar"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class='clickable-row' data-href='/admin/application/12444/track'>
-                            <td>
-                                <div class="checkbox check-default">
-                                    <input id="checkbox13" type="checkbox" value="1">
-                                    <label for="checkbox13"></label>
-                                </div>
-                            </td>
-                            <td>1213442</td>
-                            <td class="v-align-middle"><span class="muted">A project in business and science is typically defined</span>
-                            </td>
-                            <td><span class="muted">12/02/2015</span>
-                            </td>
-                            <td>
-                                <div class="progress">
-                                    <div data-percentage="50%" class="progress-bar progress-bar-info animate-progress-bar"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class='clickable-row' data-href='/admin/application/12444/track'>
-                            <td>
-                                <div class="checkbox check-default">
-                                    <input id="checkbox14" type="checkbox" value="1">
-                                    <label for="checkbox14"></label>
-                                </div>
-                            </td>
-                            <td>12134449</td>
-                            <td class="v-align-middle"><span class="muted">frequently involving research or design</span>
-                            </td>
-                            <td><span class="muted">12/02/2015</span>
-                            </td>
-                            <td>
-                                <div class="progress ">
-                                    <div data-percentage="50%" class="progress-bar progress-bar-warning animate-progress-bar"></div>
-                                </div>
-                            </td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
