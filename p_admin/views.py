@@ -1,6 +1,8 @@
+from p_organisation.forms import AddApplicationMobile
+
 __author__ = 'prathvi'
 # Flask and Flask-SQLAlchemy initialization here
-from flask import render_template,session,request,Response
+from flask import render_template,session,request,Response, jsonify
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required,confirm_login
 import json
@@ -265,7 +267,7 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
+    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
     for app_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
@@ -291,7 +293,7 @@ def admin_application_cashflow(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
+    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
 
@@ -515,3 +517,16 @@ def login_admin():
 
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
+
+
+@admin_views.route('/admin/mobile/application',methods=['POST'])
+def mobile_application():
+    json = request.json
+    print(json)
+    application=AddApplicationMobile(request.json)
+    if(application.validate()):
+        application.save()
+
+    return jsonify(json)
+
+
