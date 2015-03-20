@@ -34,7 +34,33 @@
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-7">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                                <div class="input-append success date  col-lg-6 no-padding">
+                                                    <input type="text" type="text" placeholder="Date of Birth" class="form-control" value="" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation" >
+                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="radio form-group">
+                                                <input id="male" type="radio" name="gender" value="male" checked="checked">
+                                                <label for="male">Male</label>
+                                                <input id="female" type="radio" name="gender" value="female">
+                                                <label for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12 form-group">
                                             <select name="role" id="role" class="select2 form-control">
                                                 <option value="ORG_CM">CM(Center Manager)</option>
                                                 <option value="ORG_BM">BM(Branch Manager)</option>
@@ -46,32 +72,40 @@
                                                 <option value="ORG_CXO">CXO</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                                <div class="input-append success date  col-lg-6 no-padding">
-                                                    <input type="text" type="text" placeholder="Date of Birth" class="form-control" value="" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation" >
-                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
-                                            </div>
-                                        </div>
+
                                     </div>
 
+
                                     <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <div class="radio">
-                                                <input id="male" type="radio" name="gender" value="male" checked="checked">
-                                                <label for="male">Male</label>
-                                                <input id="female" type="radio" name="gender" value="female">
-                                                <label for="female">Female</label>
-                                            </div>
+                                        <div class="col-md-6 form-group">
+                                            <select name="state" id="state" class="select2 form-control">
+                                                {% for state in org.states %}
+                                                    <option value="{{ state }}">{{ state }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <select name="region" id="region" class="select2 form-control">
+                                                {% for region in org.regions %}
+                                                    <option value="{{ region }}">{{ region }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com">
-                                             </div>
+                                        <div class="col-md-6 form-group">
+                                            <select name="area" id="area" class="select2 form-control">
+                                                {% for area in org.areas %}
+                                                    <option value="{{ area }}">{{ area }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <select name="branch" id="branch" class="select2 form-control">
+                                                {% for branch in org.branches %}
+                                                    <option value="{{ branch }}">{{ branch }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -92,13 +126,13 @@
                                         <div class="col-md-6 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                                <select name="country_add_organisation" id="country"  class="form-control select2" placeholder="Country"></select>
+                                                <select name="country_add_organisation" id="postal_country"  class="form-control select2" placeholder="Country"></select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                                <select name="state_add_organisation" id="state" class="form-control select2" placeholder="State"></select>
+                                                <select name="state_add_organisation" id="postal_state" class="form-control select2" placeholder="State"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -155,10 +189,26 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-            populateCountries("country", "state");
-            $("#country").select2();
-            $("#state").select2();
+            populateCountries("postal_country", "postal_state");
+            $("#postal_country").select2();
+            $("#postal_state").select2();
             $("#role").select2({
+                placeholder: "Select a ROLE",
+                allowClear: true
+            });
+            $("#branch").select2({
+                placeholder: "Select a ROLE",
+                allowClear: true
+            });
+            $("#state").select2({
+                placeholder: "Select a ROLE",
+                allowClear: true
+            });
+            $("#area").select2({
+                placeholder: "Select a ROLE",
+                allowClear: true
+            });
+            $("#region").select2({
                 placeholder: "Select a ROLE",
                 allowClear: true
             });

@@ -21,19 +21,20 @@ class EsthenosOrgNotificationResource(Resource):
     document= EsthenosOrgNotification
 
 
-class OrgState(db.Document):
-    name = db.StringField(max_length=60,required=True)
+class EsthenosOrgState(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg')
+    state_name = db.StringField(max_length=60,required=True)
 
-class OrgStateResource(Resource):
-    document= OrgState
+class EsthenosOrgStateResource(Resource):
+    document= EsthenosOrgState
 
 
-class OrgRegion(db.Document):
-    district = db.ReferenceField('OrgState')
-    name = db.StringField(max_length=60,required=True)
+class EsthenosOrgArea(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg')
+    area_name = db.StringField(max_length=60,required=True)
 
-class OrgRegiontResource(Resource):
-    document= OrgRegion
+class EsthenosOrgAreaResource(Resource):
+    document= EsthenosOrgArea
 
 class EsthenosOrgRegion(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -92,10 +93,10 @@ class EsthenosOrg(db.Document):
     code = db.StringField(max_length=5, required=False)
     logo_url = db.StringField(max_length=255, required=False)
     domain = db.StringField(max_length=128, required=False)
-    states = db.ListField(db.StringField())
-    regions = db.ListField(db.StringField())
-    areas = db.ListField(db.StringField())
-    branches = db.ListField(db.StringField())
+    states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
+    regions = db.ListField(db.ReferenceField('EsthenosOrgArea'), required=False)
+    areas = db.ListField(db.ReferenceField('EsthenosOrgRegion'), required=False)
+    branches = db.ListField(db.ReferenceField('EsthenosOrgBranch'), required=False)
     name = db.StringField(max_length=512, required=True)
     profile_pic = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now)
@@ -116,6 +117,8 @@ class EsthenosOrg(db.Document):
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center_name = db.StringField(max_length=60,required=True)
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -125,6 +128,8 @@ class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
     group_name = db.StringField(max_length=60,required=True)
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup

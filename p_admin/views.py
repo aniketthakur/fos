@@ -203,10 +203,7 @@ def admin_organisation_add_emp(org_id):
             print form.errors
             org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
-
             return render_template("admin_org_add_emp.html", **kwargs)
-
-
     else:
         user = EsthenosUser.objects.get(id=c_user.id)
         org = EsthenosOrg.objects.get(id=org_id)
@@ -268,7 +265,7 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
+    application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
     for app_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
@@ -294,7 +291,7 @@ def admin_application_cashflow(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.get(organisation= org_id,application_id = app_id)
+    application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
 
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
