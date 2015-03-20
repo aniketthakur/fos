@@ -31,7 +31,7 @@ class AddOrganisationForm( Form):
 
     def save( self):
         settings = EsthenosSettings.objects.all()[0]
-        org =EsthenosOrg(name=self.org_name.data,code = settings.organisations_count)
+        org =EsthenosOrg(name=self.org_name.data,code = ""+settings.organisations_count)
         #set fields
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
