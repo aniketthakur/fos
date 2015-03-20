@@ -242,7 +242,7 @@ def admin_organisation_product(org_id):
                 return redirect("/admin/organisation/"+org_id+"/add_product")
     else:
         return abort(403)
-
+# Added by Deepak
 @admin_views.route('/admin/cbcheck', methods=["GET"])
 @login_required
 def admin_cbcheck():
@@ -254,7 +254,18 @@ def admin_cbcheck():
     tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
-
+# Added by Deepak
+@admin_views.route('/admin/disbursement', methods=["GET"])
+@login_required
+def admin_disbursement():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.all()
+    kwargs = locals()
+    return render_template("admin_disbursement.html", **kwargs)
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -277,7 +288,7 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(organisation= org_id,application_id = app_id)[0]
+    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
     for app_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
@@ -391,16 +402,16 @@ def admin_application_id_trackfinal(app_id):
 #     return render_template("admin_cbcheck.html", **kwargs)
 
 
-@admin_views.route('/admin/disbursement', methods=["GET"])
-@login_required
-def admin_disbursement():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template("admin_disbursement.html", **kwargs)
+# @admin_views.route('/admin/disbursement', methods=["GET"])
+# @login_required
+# def admin_disbursement():
+#     if session['role'] != "ADMIN":
+#         abort(403)
+#     username = current_user.name
+#     c_user = current_user
+#     user = EsthenosUser.objects.get(id=c_user.id)
+#     kwargs = locals()
+#     return render_template("admin_disbursement.html", **kwargs)
 
 
 
