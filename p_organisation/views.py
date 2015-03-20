@@ -361,13 +361,13 @@ def applications():
     group_id = request.args.get("group")
     print  center_id," ",group_id
     center = None
-    if center_id is not None:
+    if center_id is not None and center_id != '':
         center = EsthenosOrgCenter.objects.get(id=center_id)
         print center.center_name
     else:
         group_id = ''
     group = None
-    if group_id is not None:
+    if group_id is not None and group_id != '':
         group = EsthenosOrgGroup.objects.get(id=group_id)
         print group.group_name
     else:
