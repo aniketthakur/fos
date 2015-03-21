@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from p_admin.models import  EsthenosSettings,EsthenosUser
+from p_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
 
 user = EsthenosUser.create_user("admin","admin@esthenos.com","Admin312",True)
 user.add_role("ADMIN")
@@ -17,3 +18,16 @@ settings = EsthenosSettings()
 print settings
 settings.save()
 
+if len(EsthenosOrgApplicationHighMarkRequest.objects.all()) ==1:
+    EsthenosOrgApplicationHighMarkRequest.objects.all()[0].delete()
+
+settings = EsthenosOrgApplicationHighMarkRequest()
+print settings
+settings.save()
+
+if len(EsthenosOrgApplicationHighMark.objects.all()) ==1:
+   EsthenosOrgApplicationHighMark.objects.all()[0].delete()
+
+settings = EsthenosOrgApplicationHighMark()
+print settings
+settings.save()
