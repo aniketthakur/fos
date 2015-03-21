@@ -524,7 +524,11 @@ def mobile_application():
     json = request.json
     print(json)
 
-    app_form=AddApplicationMobile(request.json)
+
+#    jsondata=request.json['ajax']
+#    print jsondata
+    jsonlist= json.loads(request.json)
+    app_form=AddApplicationMobile(jsonlist)
     if(app_form.validate()):
         print "Form Validated"
         print "Saving Form"
