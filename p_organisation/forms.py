@@ -84,7 +84,7 @@ class AddApplicationMobile(Form):
     application_repeat_client_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_cycle= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-
+    application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     def save( self):
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
         app.center = self.application_
@@ -99,7 +99,7 @@ class AddApplicationMobile(Form):
         app.address = self.application_postal_address
         app.primary_income =self.application_monthly_income.data
         app.secondary_income = self.application_secondary_business_income.data
-#       app.tertiary_income =
+        app.tertiary_income =self.application_tertiary_income.data
 #       app.other_income =
 #       app.total_income =
 #       app.business_expense =

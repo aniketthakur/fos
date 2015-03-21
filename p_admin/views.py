@@ -523,10 +523,15 @@ def login_admin():
 def mobile_application():
     json = request.json
     print(json)
-    application=AddApplicationMobile(request.json)
-    if(application.validate()):
-        application.save()
 
+    app_form=AddApplicationMobile(request.json)
+    if(app_form.validate()):
+        print "Form Validated"
+        print "Saving Form"
+        app_form.save()
+    else:
+        flash_errors(app_form)
+        print "Could Not validate"
     return jsonify(json)
 
 
