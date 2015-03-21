@@ -17,14 +17,14 @@ if len(EsthenosSettings.objects.all()) ==1:
 settings = EsthenosSettings()
 print settings
 settings.save()
-
+#Added by Deepak
 if len(EsthenosOrgApplicationHighMarkRequest.objects.all()) ==1:
     EsthenosOrgApplicationHighMarkRequest.objects.all()[0].delete()
 
 settings = EsthenosOrgApplicationHighMarkRequest()
 print settings
 settings.save()
-
+#Added By Deepak
 if len(EsthenosOrgApplicationHighMark.objects.all()) ==1:
    EsthenosOrgApplicationHighMark.objects.all()[0].delete()
 
