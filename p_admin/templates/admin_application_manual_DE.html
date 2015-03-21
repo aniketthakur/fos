@@ -13,6 +13,11 @@
             border: 0px;
             vertical-align: baseline;
         }
+        .col-fixed{
+            border: solid red 2px;
+            overflow: scroll;
+            height: 700px;
+        }
 
     </style>
 {% endblock %}
@@ -275,12 +280,12 @@
                             </div>
 
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-fixed">
                             <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" name="state" id="state" value=""
+                                        <input type="text" name="state" id="state" value="" class="no-boarder form-control"
                                                placeholder="State"/>
                                     </div>
                                 </div>
@@ -288,40 +293,40 @@
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" name="taluk" id="taluk" value=""
+                                        <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control"
                                                placeholder="Taluk"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" name="Stateid" id="stateid" value=""
-                                               placeholder="SateId"/>
+                                        <input type="text" name="stateid" id="stateid" value="" class="no-boarder form-control"
+                                               placeholder="SateID"/>
                                     </div>
                                 </div>
                             </div>
                             <!--<div class="row form-row">-->
-                            <div class="row form-row ">
+                            <div class="form-row row">
 
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" name="village" id="village" value=""
+                                        <input type="text" name="village" id="village" value="" class="no-boarder form-control"
                                                placeholder="Village"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text"class="no-boarder form-control" name="regionid" id="regionid"
-                                               value="" placeholder="Regionid"/>
+                                        <input type="text" class="no-boarder form-control" name="regionid" id="regionid"
+                                               value="" placeholder="RegionId"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text"class="no-boarder form-control" name="religion" id="religion"
+                                        <input type="text" class="no-boarder form-control" name="religion" id="religion"
                                                value="" placeholder="Religion"/>
                                     </div>
                                 </div>
@@ -340,7 +345,7 @@
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text"class="no-boarder form-control" name="branchid" id="branchid"
-                                               value="" placeholder="Branchid"/>
+                                               value="" placeholder="BranchID"/>
                                     </div>
                                 </div>
 
@@ -348,7 +353,7 @@
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="cmid" id="cmid" value=""
-                                               placeholder="Cmid"/>
+                                               placeholder="CMID"/>
                                     </div>
                                 </div>
 
@@ -358,87 +363,98 @@
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="cmcellno" id="cmcellno"
-                                               value="" placeholder="Cmcellno"/>
+                                               value="" placeholder="CMCellNo"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="cycle" id="cycle"
-                                               value="" placeholder="Cycle"/>
+                                               value="" placeholder="Current Cycle"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="idforrepeatclient"
-                                               id="idforrepeatclient" value="" placeholder="Idforrepeatclient"/>
+                                               id="idforrepeatclient" value="" placeholder="REPEAT_ID"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row form-row">
-                                <div class="col-md-12">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
 
+                                <div class="col-md-6">
+                                    <div class="radio radio-success">
                                         <h4>Repayment Mode</h4>
-                                        <input id="weekly" type="radio" name="weekly" value="" checked="">
+                                        <input id="weekly" type="radio" name="weekly" value="weekly" >
                                         <label for="weekly">Weekly</label>
-                                        <input id="monthly" type="radio" name="monthly" value="">
+                                        <input id="monthly" type="radio" name="monthly" value="monthly">
                                         <label for="monthly">Monthly</label>
-                                        <input id="fortnightly" type="radio" name="fortnightly" value="">
+                                        <input id="fortnightly" type="radio" name="fortnightly" value="fortnightly">
                                         <label for="fortnightly">Fortnightly</label>
-
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="radio radio-success">
+                                        <h4>Interted Buying Other  Financial Product</h4>
+                                        <input id="interested_in_other_fp" type="radio" name="interested_in_other_fp" value="yes" checked="checked">
+                                        <label for="interested_in_other_fp">Agree</label>
+                                        <input id="interested_in_other_fp_no" type="radio" name="interested_in_other_fp_no" value="no" >
+                                        <label for="interested_in_other_fp_no">Disagree</label>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="row form-row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="radio radio-success">
+                                        <h4>Interted Buying NPS</h4>
+                                        <input id="interested_in_nps_yes" type="radio" name="interested_in_nps_yes" value="yes" checked="checked">
+                                        <label for="interested_in_nps_yes">Agree</label>
+                                        <input id="interested_in_nps_no" type="radio" name="interested_in_nps_no" value="no" >
+                                        <label for="interested_in_nps_no">Disagree</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="radio radio-success">
+                                        <h4>Interted Buying Health Insurance/Life Insurance</h4>
+                                        <input id="interested_in_health_indurance_yes" type="radio" name="interested_in_health_indurance_yes" value="yes" checked="checked">
+                                        <label for="interested_in_health_indurance_yes">Agree</label>
+                                        <input id="interested_in_health_indurance_no" type="radio" name="interested_in_health_indurance_no" value="no" >
+                                        <label for="interested_in_health_indurance_no">Disagree</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-6">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="appliedloanamount"
-                                               id="appliedloanamount" value="" placeholder="AppliedLoanAmount"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input id="intertedbuyingotherfinancialproduct" type="radio"
-                                               name="intertedbuyingotherfinancialproduct" value="" checked="">
-                                        <label for="intertedbuyingotherfinancialproduct">Interted Buying Other
-                                            Financial Product</label>
-                                        <input id="NPS" type="radio" name="NPS" value="">
-                                        <label for="NPS">NPS</label>
-                                        <input id="healthinsurance'lifeinsurance" type="radio"
-                                               name="healthinsurance'lifeinsurance" value="">
-                                        <label for="healthinsurance'lifeinsurance">Health Insurance'Life
-                                            Insurance</label>
-
+                                               id="appliedloanamount" value="" placeholder="Applied Loan Amount"/>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="grid simple">
-                                        <input type="hidden" name="region" id="region" value="">
-                                        <select id="applicationtype7" name="applicationtype" style="width:100%">
+
+                                        <select id="select_religion" name="select_religion" style="width:100%">
                                             <option value="HINDU">HINDU</option>
                                             <option value="MISILM">MUSILM</option>
                                             <option value="SIKH">SIKH</option>
                                             <option value="CHIRSTIAN">CHIRSTIAN</option>
                                             <option value="JAIN">JAIN</option>
                                             <option value="BHUDHIST">BHUDHIST</option>
-                                            <option value="JEU">JEU</option>
+                                            <option value="JEW">JEW</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-row">
                                 <div class="col-md-6">
-                                    <div class="grid simple">
-                                        <input type="hidden" name="category" id="category" value="">
-                                        <select id="applicationtype9" name="applicationtype" style="width:100%">
+                                    <div class="radio radio-success">
+
+                                        <select id="select_caste_category" name="select_caste_category" style="width:100%">
                                             <option value="GENERAL">GENERAL</option>
                                             <option value="OBC">OBC</option>
                                             <option value="MBC">MBC</option>
@@ -449,9 +465,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="grid simple">
-                                        <input type="hidden" name="typeofresidence" id="typeofresidence"
-                                               value="">
-                                        <select id="applicationtype10" name="applicationtype"
+
+                                        <select id="select_typeofresidence" name="select_typeofresidence"
                                                 style="width:100%">
                                             <option value="FAMILY OWNED">FAMILY OWNED</option>
                                             <option value="SELF OWNED">SELF OWNED</option>
@@ -465,16 +480,12 @@
                             </div>
                             <div class="row form-row">
                                 <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-
+                                    <div class="radio radio-success">
                                         <h4>Disability</h4>
-                                        <input id="yes" type="radio" name="yes" value="" checked="">
-                                        <label for="yes">Yes</label>
-                                        <input id="no" type="radio" name="no" value="">
-                                        <label for="no">no</label>
-
-
+                                        <input id="disability_yes" type="radio" name="disability_yes" value="" checked="">
+                                        <label for="disability_yes">Yes</label>
+                                        <input id="disability_no" type="radio" name="disability_no" value="">
+                                        <label for="disability_no">no</label>
                                     </div>
                                 </div>
                             </div>
@@ -482,8 +493,7 @@
                                 <div class="col-md-6">
                                     <div class="grid simple">
                                         <h4>Quality Of House</h4>
-                                        <input type="hidden" name="qualityofhouse" id="qualityofhouse" value="">
-                                        <select id="applicationtype13" name="applicationtype"
+                                        <select id="select_house_type" name="select_house_type"
                                                 style="width:100%">
                                             <option value="FAMILY OWNED">PAKKA</option>
                                             <option value="SELF OWNED">SEMI-PAKKA</option>
@@ -494,14 +504,13 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
+
                                 <div class="col-md-6">
                                     <div class="grid simple">
                                         <h4>Drinking Water</h4>
                                         <input type="hidden" name="drinkingwater" id="drinkingwater"
                                                value="drinkingwater">
-                                        <select id="applicationtype11" name="applicationtype"
+                                        <select id="select_drinking_water" name="select_drinking_water"
                                                 style="width:100%">
                                             <option value="FAMILY OWNED">PIPED</option>
                                             <option value="SELF OWNED">BOREWELL</option>
@@ -528,8 +537,6 @@
                                                id="familysize" value="" placeholder="Family Size"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -537,6 +544,9 @@
                                                id="child18-12" value="" placeholder="Child 18-12"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row form-row">
+
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -548,86 +558,167 @@
                                 </div>
                             </div>
                             <div class="row form-row">
-                                <div class="col-md-6">
-                                    <div class="grid simple">
-                                        <h4>Business Category </h4>
-                                        <input type="hidden" name="businesscategory" id="d"
-                                               value="businesscategory">
-                                        <select id="applicationtype14" name="applicationtype"
-                                                style="width:100%">
-                                            <option value="TRADING">TRADING</option>
-                                            <option value="SERVICES">SERVICES</option>
-                                            <option value="AGRICULTURE">AGRICULTURE</option>
-                                            <option value="ALLIED AGRI">ALLIED AGRI</option>
-                                            <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
-                                            <option value="LABOURER">LABOURER</option>
+                                <div class="col-md-5">
+                                    <h4>Business Category </h4>
 
-                                        </select>
-                                    </div>
+                                    <select id="p_businesscategory" name="p_businesscategory"
+                                            style="width:100%">
+                                        <option value="TRADING">TRADING</option>
+                                        <option value="SERVICES">SERVICES</option>
+                                        <option value="AGRICULTURE">AGRICULTURE</option>
+                                        <option value="ALLIED AGRI">ALLIED AGRI</option>
+                                        <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                                        <option value="LABOURER">LABOURER</option>
+
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="col-md-6">
-                                    <div class="grid simple">
-                                        <h4>Business </h4>
-                                        <input type="hidden" name="business" id="business" value="">
-                                        <select id="applicationtype15" name="applicationtype"
-                                                style="width:100%">
-                                            <option value="ORCHARD">ORCHARD</option>
-                                            <option value="MANGO">MANGO</option>
-                                            <option value="ARECANUT">ARECANUT</option>
-                                            <option value="COCONUT">COCONUT</option>
-                                            <option value="PALM TREE">PALM TREE</option>
-                                            <option value="AMLA">AMLA</option>
-                                            <option value="TAMRIND">TAMRIND</option>
-                                            <option value="VEGETABLES">VEGETABLES</option>
-                                            <option value="CATTLE">CATTLE</option>
-                                            <option value="COW">COW</option>
-                                            <option value="BUFFOLOES">BUFFOLOES</option>
-                                            <option value="SHIP">SHIP</option>
-                                            <option value="BULLOCKS">BULLOCKS</option>
-                                            <option value="PIGS">PIGS</option>
-                                            <option value="CHICKEN">CHICKEN</option>
 
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="col-md-6">
-                                    <div class="grid simple">
-                                        <h4>Income </h4>
-                                        <input type="hidden" name="income" id="income" value="">
-                                        <select id="applicationtype16" name="applicationtype"
-                                                style="width:100%">
-                                            <option value="ORCHARD">FAILY ASSET</option>
-                                            <option value="MANGO">TV</option>
-                                            <option value="ARECANUT">FRIDGE</option>
-                                            <option value="COCONUT">MIXER</option>
-                                            <option value="PALM TREE">WASHING MACHINE</option>
-                                            <option value="AMLA">2WHEELER</option>
-                                            <option value="TAMRIND">GAS CONNECTION</option>
-                                            <option value="VEGETABLES">DISH TV</option>
-                                            <option value="CATTLE">DISH TV</option>
-                                            <option value="COW">TRACKTOR</option>
-                                            <option value="BUFFOLOES">BULLOCK CART</option>
-                                            <option value="SHIP">BYCYCLE</option>
-                                            <option value="BULLOCKS">BULLOCKS</option>
-                                            <option value="PIGS">AUTO RIKSWA</option>
-
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="agricultureland"
-                                               id="agricultureland" value="" placeholder="Agriculture Land"/>
+                                    <h4>Business </h4>
+                                    <select id="p_business" name="p_business"
+                                            style="width:100%">
+                                        <option value="ORCHARD">ORCHARD</option>
+                                        <option value="MANGO">MANGO</option>
+                                        <option value="ARECANUT">ARECANUT</option>
+                                        <option value="COCONUT">COCONUT</option>
+                                        <option value="PALM TREE">PALM TREE</option>
+                                        <option value="AMLA">AMLA</option>
+                                        <option value="TAMRIND">TAMRIND</option>
+                                        <option value="VEGETABLES">VEGETABLES</option>
+                                        <option value="CATTLE">CATTLE</option>
+                                        <option value="COW">COW</option>
+                                        <option value="BUFFOLOES">BUFFOLOES</option>
+                                        <option value="SHIP">SHIP</option>
+                                        <option value="BULLOCKS">BULLOCKS</option>
+                                        <option value="PIGS">PIGS</option>
+                                        <option value="CHICKEN">CHICKEN</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Income</label>
+                                    <input type="text" class="no-boarder form-control" name="p_income"
+                                           id="p_income" value="" placeholder="Income"/>
+
+                                </div>
+
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-5">
+                                    <h4>Business Category </h4>
+
+                                    <select id="s_businesscategory" name="s_businesscategory"
+                                            style="width:100%">
+                                        <option value="TRADING">TRADING</option>
+                                        <option value="SERVICES">SERVICES</option>
+                                        <option value="AGRICULTURE">AGRICULTURE</option>
+                                        <option value="ALLIED AGRI">ALLIED AGRI</option>
+                                        <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                                        <option value="LABOURER">LABOURER</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>Business </h4>
+                                    <select id="s_business" name="s_business"
+                                            style="width:100%">
+                                        <option value="ORCHARD">ORCHARD</option>
+                                        <option value="MANGO">MANGO</option>
+                                        <option value="ARECANUT">ARECANUT</option>
+                                        <option value="COCONUT">COCONUT</option>
+                                        <option value="PALM TREE">PALM TREE</option>
+                                        <option value="AMLA">AMLA</option>
+                                        <option value="TAMRIND">TAMRIND</option>
+                                        <option value="VEGETABLES">VEGETABLES</option>
+                                        <option value="CATTLE">CATTLE</option>
+                                        <option value="COW">COW</option>
+                                        <option value="BUFFOLOES">BUFFOLOES</option>
+                                        <option value="SHIP">SHIP</option>
+                                        <option value="BULLOCKS">BULLOCKS</option>
+                                        <option value="PIGS">PIGS</option>
+                                        <option value="CHICKEN">CHICKEN</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Income</label>
+                                    <input type="text" class="no-boarder form-control" name="s_income"
+                                           id="s_income" value="" placeholder="Income"/>
+
+                                </div>
+
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-5">
+                                    <h4>Business Category </h4>
+
+                                    <select id="t_businesscategory" name="t_businesscategory"
+                                            style="width:100%">
+                                        <option value="TRADING">TRADING</option>
+                                        <option value="SERVICES">SERVICES</option>
+                                        <option value="AGRICULTURE">AGRICULTURE</option>
+                                        <option value="ALLIED AGRI">ALLIED AGRI</option>
+                                        <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                                        <option value="LABOURER">LABOURER</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>Business </h4>
+                                    <select id="t_business" name="t_business"
+                                            style="width:100%">
+                                        <option value="ORCHARD">ORCHARD</option>
+                                        <option value="MANGO">MANGO</option>
+                                        <option value="ARECANUT">ARECANUT</option>
+                                        <option value="COCONUT">COCONUT</option>
+                                        <option value="PALM TREE">PALM TREE</option>
+                                        <option value="AMLA">AMLA</option>
+                                        <option value="TAMRIND">TAMRIND</option>
+                                        <option value="VEGETABLES">VEGETABLES</option>
+                                        <option value="CATTLE">CATTLE</option>
+                                        <option value="COW">COW</option>
+                                        <option value="BUFFOLOES">BUFFOLOES</option>
+                                        <option value="SHIP">SHIP</option>
+                                        <option value="BULLOCKS">BULLOCKS</option>
+                                        <option value="PIGS">PIGS</option>
+                                        <option value="CHICKEN">CHICKEN</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Income</label>
+                                    <input type="text" class="no-boarder form-control" name="t_income"
+                                           id="t_income" value="" placeholder="Income"/>
+
+                                </div>
+
+                            </div>
+                            <div class="row form-row">
+                                <div class="col-md-6">
+                                    <div class="grid simple">
+                                        <h4>Family Asset </h4>
+
+                                        <select id="select_family_asset" name="select_family_asset"
+                                                style="width:100%">
+                                            <option value="TV">TV</option>
+                                            <option value="FRIDGE">FRIDGE</option>
+                                            <option value="MIXER">MIXER</option>
+                                            <option value="WASHING_MACHINE">WASHING MACHINE</option>
+                                            <option value="2WHEELER">2 WHEELER</option>
+                                            <option value="GAS_CONNECTION">GAS CONNECTION</option>
+                                            <option value="DISH_TV">DISH TV</option>
+                                            <option value="TRACKTOR">TRACKTOR</option>
+                                            <option value="BULLOCK_CART">BULLOCK CART</option>
+                                            <option value="BYCYCLE">BYCYCLE</option>
+                                            <option value="AUTO_RIKSWA">AUTO RIKSWA</option>
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row form-row">
+                                <h3> Agriculture Land </h3>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -635,8 +726,6 @@
                                                value="" placeholder="Self Owend"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -652,14 +741,9 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row form-row">
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="financialinclusion"
-                                               id="financialinclusion" value="" placeholder="Financial Inclusion"/>
-                                    </div>
-                                </div>
+                                <h3> Financial Inclusion </h3>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -667,8 +751,6 @@
                                                placeholder="Loans"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -683,8 +765,17 @@
                                                value="" placeholder="Insurance"/>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        <input type="text" class="no-boarder form-control" name="friendandfamily"
+                                               id="friendandfamily" value="" placeholder="Friend And Family"/>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="row form-row">
+                                <h3> Financial Plus </h3>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -695,12 +786,17 @@
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
+                                        <input type="text" class="no-boarder form-control" name="p_chits" id="p_chits" value=""
+                                               placeholder="Chits"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="micropension"
                                                id="micropension" value="" placeholder="Micro Pension"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -708,16 +804,10 @@
                                                id="postofficeaccount" value="" placeholder="Post Office Account"/>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="businessexpenditure"
-                                               id="businessexpenditure" value=""
-                                               placeholder="Business Expenditure"/>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row form-row">
+
+                                <h3>Business Expenditure</h3>
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -733,8 +823,6 @@
                                                placeholder="Food"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -742,14 +830,8 @@
                                                value="" placeholder="Medical"/>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="education" id="education"
-                                               value="" placeholder="Education"/>
-                                    </div>
-                                </div>
                             </div>
+
                             <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
@@ -765,7 +847,15 @@
                                                value="" placeholder="Festival"/>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        <input type="text" class="no-boarder form-control" name="education" id="education"
+                                               value="" placeholder="Education"/>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
@@ -777,11 +867,15 @@
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="friendandfamily"
-                                               id="friendandfamily" value="" placeholder="Friend And Family"/>
+                                        <input type="text" class="no-boarder form-control" name="house_rent" id="house_rent" value=""
+                                               placeholder="House Rent"/>
                                     </div>
                                 </div>
+
                             </div>
+
+                            <br/>
+                            <br/>
                             <div class="row form-row">
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
@@ -815,13 +909,7 @@
                                 </div>
                             </div>
                             <div class="row form-row">
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="houserent" id="houserent"
-                                               value="" placeholder="House Rent"/>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -1156,6 +1244,38 @@
             placeholder: "choose a document type",
             allowClear: true
         });
+        $("#select_religion").select2({
+            placeholder: "choose a religion",
+            allowClear: true
+        });
+        $("#select_typeofresidence").select2({
+            placeholder: "type of residence",
+            allowClear: true
+        });
+        $("#select_caste_category").select2({
+            placeholder: "select caste",
+            allowClear: true
+        });
+        $("#select_house_type").select2({
+            placeholder: "select house type",
+            allowClear: true
+        });
+
+        $("#select_drinking_water").select2({
+            placeholder: "select house type",
+            allowClear: true
+        });
+
+        $("#businesscategory").select2({
+            placeholder: "select business category",
+            allowClear: true
+        });
+        $("#business").select2({
+            placeholder: "select business",
+            allowClear: true
+        });
+
+
         $('#applicationtype3').select2()
                 .on("change", function(e) {
                     // mostly used event, fired to the original element when the value changes
