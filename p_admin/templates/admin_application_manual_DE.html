@@ -14,7 +14,7 @@
             vertical-align: baseline;
         }
         .col-fixed{
-            border: solid red 2px;
+            border: solid #ffffff 2px;
             overflow: scroll;
             height: 700px;
         }
@@ -54,7 +54,7 @@
                             <div class="col-md-6">
                                 <div class="grid simple">
                                     <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
-                                    <select id="applicationtype"  style="width:100%">
+                                    <select id="applicationtype"   >
                                         <option value="AADHAAR">AADHAAR</option>
                                         <option value="VID">VOTERS ID</option>
                                         <option value="PANCARD">PANCARD</option>
@@ -128,7 +128,7 @@
                             <div class="col-md-6">
                                 <div class="grid simple">
                                     <input type="hidden" name="kycid2"  id="kycid2" value="{{ kyc_ids[1] }}">
-                                    <select id="applicationtype2"  style="width:100%">
+                                    <select id="applicationtype2"  >
                                         <option value="AADHAAR">AADHAAR</option>
                                         <option value="VID">VOTERS ID</option>
                                         <option value="PANCARD">PANCARD</option>
@@ -205,7 +205,7 @@
                             <div class="col-md-6">
                                 <div class="grid simple">
                                     <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
-                                    <select id="applicationtype3" name="applicationtype"  style="width:100%">
+                                    <select id="applicationtype3" name="applicationtype"   >
                                         <option value="AADHAAR">AADHAAR</option>
                                         <option value="VID">VOTERS ID</option>
                                         <option value="PANCARD">PANCARD</option>
@@ -438,7 +438,7 @@
                                 <div class="col-md-6">
                                     <div class="grid simple">
 
-                                        <select id="select_religion" name="select_religion" style="width:100%">
+                                        <select id="select_religion" name="select_religion" >
                                             <option value="HINDU">HINDU</option>
                                             <option value="MISILM">MUSILM</option>
                                             <option value="SIKH">SIKH</option>
@@ -454,7 +454,7 @@
                                 <div class="col-md-6">
                                     <div class="radio radio-success">
 
-                                        <select id="select_caste_category" name="select_caste_category" style="width:100%">
+                                        <select id="select_caste_category" name="select_caste_category" >
                                             <option value="GENERAL">GENERAL</option>
                                             <option value="OBC">OBC</option>
                                             <option value="MBC">MBC</option>
@@ -466,8 +466,8 @@
                                 <div class="col-md-6">
                                     <div class="grid simple">
 
-                                        <select id="select_typeofresidence" name="select_typeofresidence"
-                                                style="width:100%">
+                                        <select id="select_typeofresidence" name="select_typeofresidence" style="width: 100%;"
+                                                >
                                             <option value="FAMILY OWNED">FAMILY OWNED</option>
                                             <option value="SELF OWNED">SELF OWNED</option>
                                             <option value="SELF OWNED">RENTED/LEASED</option>
@@ -493,8 +493,8 @@
                                 <div class="col-md-6">
                                     <div class="grid simple">
                                         <h4>Quality Of House</h4>
-                                        <select id="select_house_type" name="select_house_type"
-                                                style="width:100%">
+                                        <select id="select_house_type" name="select_house_type" style="width: 100%;"
+                                                >
                                             <option value="FAMILY OWNED">PAKKA</option>
                                             <option value="SELF OWNED">SEMI-PAKKA</option>
                                             <option value="SELF OWNED">KUCHHA</option>
@@ -510,8 +510,8 @@
                                         <h4>Drinking Water</h4>
                                         <input type="hidden" name="drinkingwater" id="drinkingwater"
                                                value="drinkingwater">
-                                        <select id="select_drinking_water" name="select_drinking_water"
-                                                style="width:100%">
+                                        <select id="select_drinking_water" name="select_drinking_water" style="width: 100%;"
+                                                >
                                             <option value="FAMILY OWNED">PIPED</option>
                                             <option value="SELF OWNED">BOREWELL</option>
                                             <option value="SELF OWNED">SHARED BOREWELL</option>
@@ -561,8 +561,8 @@
                                 <div class="col-md-5">
                                     <h4>Business Category </h4>
 
-                                    <select id="p_businesscategory" name="p_businesscategory"
-                                            style="width:100%">
+                                    <select id="p_businesscategory" name="p_businesscategory" class="select2" style="width: 100%;"
+                                            >
                                         <option value="TRADING">TRADING</option>
                                         <option value="SERVICES">SERVICES</option>
                                         <option value="AGRICULTURE">AGRICULTURE</option>
@@ -575,8 +575,8 @@
 
                                 <div class="col-md-4">
                                     <h4>Business </h4>
-                                    <select id="p_business" name="p_business"
-                                            style="width:100%">
+                                    <select id="p_business" name="p_business" class="select2" style="width: 100%;"
+                                            >
                                         <option value="ORCHARD">ORCHARD</option>
                                         <option value="MANGO">MANGO</option>
                                         <option value="ARECANUT">ARECANUT</option>
@@ -607,8 +607,8 @@
                                 <div class="col-md-5">
                                     <h4>Business Category </h4>
 
-                                    <select id="s_businesscategory" name="s_businesscategory"
-                                            style="width:100%">
+                                    <select id="s_businesscategory" name="s_businesscategory" class="select2" style="width: 100%;"
+                                            >
                                         <option value="TRADING">TRADING</option>
                                         <option value="SERVICES">SERVICES</option>
                                         <option value="AGRICULTURE">AGRICULTURE</option>
@@ -621,8 +621,8 @@
 
                                 <div class="col-md-4">
                                     <h4>Business </h4>
-                                    <select id="s_business" name="s_business"
-                                            style="width:100%">
+                                    <select id="s_business" name="s_business" class="select2" style="width: 100%;"
+                                            >
                                         <option value="ORCHARD">ORCHARD</option>
                                         <option value="MANGO">MANGO</option>
                                         <option value="ARECANUT">ARECANUT</option>
@@ -653,8 +653,8 @@
                                 <div class="col-md-5">
                                     <h4>Business Category </h4>
 
-                                    <select id="t_businesscategory" name="t_businesscategory"
-                                            style="width:100%">
+                                    <select id="t_businesscategory" name="t_businesscategory" class="select2" style="width: 100%;"
+                                            >
                                         <option value="TRADING">TRADING</option>
                                         <option value="SERVICES">SERVICES</option>
                                         <option value="AGRICULTURE">AGRICULTURE</option>
@@ -667,8 +667,8 @@
 
                                 <div class="col-md-4">
                                     <h4>Business </h4>
-                                    <select id="t_business" name="t_business"
-                                            style="width:100%">
+                                    <select id="t_business" name="t_business" class="select2" style="width: 100%;"
+                                            >
                                         <option value="ORCHARD">ORCHARD</option>
                                         <option value="MANGO">MANGO</option>
                                         <option value="ARECANUT">ARECANUT</option>
@@ -697,24 +697,22 @@
                             </div>
                             <div class="row form-row">
                                 <div class="col-md-6">
-                                    <div class="grid simple">
-                                        <h4>Family Asset </h4>
+                                    <h4>Family Asset </h4>
 
-                                        <select id="select_family_asset" name="select_family_asset"
-                                                style="width:100%">
-                                            <option value="TV">TV</option>
-                                            <option value="FRIDGE">FRIDGE</option>
-                                            <option value="MIXER">MIXER</option>
-                                            <option value="WASHING_MACHINE">WASHING MACHINE</option>
-                                            <option value="2WHEELER">2 WHEELER</option>
-                                            <option value="GAS_CONNECTION">GAS CONNECTION</option>
-                                            <option value="DISH_TV">DISH TV</option>
-                                            <option value="TRACKTOR">TRACKTOR</option>
-                                            <option value="BULLOCK_CART">BULLOCK CART</option>
-                                            <option value="BYCYCLE">BYCYCLE</option>
-                                            <option value="AUTO_RIKSWA">AUTO RIKSWA</option>
-                                        </select>
-                                    </div>
+                                    <select id="select_family_asset" name="select_family_asset" class="select2" style="width: 100%;"
+                                            >
+                                        <option value="TV">TV</option>
+                                        <option value="FRIDGE">FRIDGE</option>
+                                        <option value="MIXER">MIXER</option>
+                                        <option value="WASHING_MACHINE">WASHING MACHINE</option>
+                                        <option value="2WHEELER">2 WHEELER</option>
+                                        <option value="GAS_CONNECTION">GAS CONNECTION</option>
+                                        <option value="DISH_TV">DISH TV</option>
+                                        <option value="TRACKTOR">TRACKTOR</option>
+                                        <option value="BULLOCK_CART">BULLOCK CART</option>
+                                        <option value="BYCYCLE">BYCYCLE</option>
+                                        <option value="AUTO_RIKSWA">AUTO RIKSWA</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row form-row">
@@ -917,6 +915,13 @@
                                                value="" placeholder="Centre Name"/>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        <input type="text" class="no-boarder form-control" name="size_center" id="size" value=""
+                                               placeholder="Size"/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row form-row">
                                 <div class="col-md-4">
@@ -929,11 +934,13 @@
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="size" id="size" value=""
+                                        <input type="text" class="no-boarder form-control" name="size_group" id="size1" value=""
                                                placeholder="Size"/>
                                     </div>
                                 </div>
-                                 </div>
+
+                             </div>
+                            <div class="row form-row">
                                  <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
@@ -941,12 +948,12 @@
                                                id="centreleader" value="" placeholder="Centre Leader"/>
                                     </div>
                                 </div>
-                            <div class="row form-row">
+
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="size" id="size1" value=""
-                                               placeholder="Size"/>
+                                        <input type="text" class="no-boarder form-control" name="cell" id="cell" value=""
+                                               placeholder="Cell"/>
                                     </div>
                                 </div>
 
@@ -962,46 +969,33 @@
                                 <div class="col-md-4">
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="cell" id="cell" value=""
-                                               placeholder="Cell"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row form-row">
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
                                         <input type="text" class="no-boarder form-control" name="cell" id="cell2" value=""
                                                placeholder="Cell"/>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                            </div>
+                            <div class="row form-row">
+
+                                <div class="col-md-4 form-group">
+                                    <label>Excepted Disbursment Date</label>
                                     <div class="input-with-icon  right">
                                         <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="date" id="date" value=""
+                                        <input type="text" class="no-boarder form-control" name="excepteddisbursmentdate" id="excepteddisbursmentdate" value=""
                                                placeholder="DD/MM/YYYY"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-row">
-                                <div class="col-md-4">
-                                    <div class="input-with-icon  right">
-                                        <i class=""></i>
-                                        <input type="text" class="no-boarder form-control" name="excepteddisbursmentdate"
-                                               id="excepteddisbursmentdate" value=""
-                                               placeholder="Excepted Disbursment Date"/>
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="row form-row">
+
+                             <div class="row form-row">
 
                                 <h3>Village Facilities</h3>
-                                    <div class="row form-row">
-                                <div class="col-md-5">
+
+                                <div class="col-md-4 form-group">
                                     <h4>Medical Facilities </h4>
 
-                                    <select id="p_medicalfacilities" name="p_medicalfacilities"
-                                            style="width:100%">
+                                    <select id="p_medicalfacilities" name="p_medicalfacilities" class="select2" style="width: 100%;"
+                                            >
                                         <option value="PHC">PHC</option>
                                         <option value="PUBLIC HOSPITAL">PUBLIC HOSPITAL</option>
                                         <option value="PRIVATE HOSPITAL">PRIVATE HOSPITAL</option>
@@ -1010,10 +1004,10 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 form-group">
                                     <h4>Hospital Category </h4>
-                                    <select id="p_hospitalcategory" name="p_hospitalcategory"
-                                            style="width:100%">
+                                    <select id="p_hospitalcategory" name="p_hospitalcategory" class="select2" style="width: 100%;"
+                                            >
                                         <option value="ALLOPATHY">ALLOPATHY</option>
                                         <option value="HOMEOPATHY">HOMEOPATHY</option>
                                         <option value="AYURVEDIC">AYURVEDIC</option>
@@ -1022,10 +1016,10 @@
 
                                     </select>
                                 </div>
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-4 form-group form-group">
                                     <h4>ROAD </h4>
-                                    <select id="p_road" name="p_road"
-                                            style="width:100%">
+                                    <select id="p_road" name="p_road" class="select2" style="width: 100%;"
+                                            >
                                         <option value="CONCRETE">CONCRETE</option>
                                         <option value="KACHHA">KACHHA</option>
                                         <option value="TAR">TAR</option>
@@ -1036,12 +1030,12 @@
                                 </div>
 
                             </div>
-                                      <div class="row form-row">
-                                <div class="col-md-5">
+                              <div class="row form-row">
+                                <div class="col-md-4">
                                     <h4>Public Transport </h4>
 
-                                    <select id="p_publictransport" name="p_publictransport"
-                                            style="width:100%">
+                                    <select id="p_publictransport" name="p_publictransport" class="select2" style="width: 100%;"
+                                            >
                                         <option value="BUS">BUS</option>
                                         <option value="TRAIN">TRAIN</option>
                                         <option value="NONE">NONE</option>
@@ -1052,8 +1046,8 @@
 
                                 <div class="col-md-4">
                                     <h4>Water </h4>
-                                    <select id="p_water" name="p_water"
-                                            style="width:100%">
+                                    <select id="p_water" name="p_water" class="select2" style="width: 100%;"
+                                            >
                                         <option value="POND">POND</option>
                                         <option value="WELL">WELL</option>
                                         <option value="RIVER">RIVER</option>
@@ -1062,10 +1056,10 @@
 
                                     </select>
                                 </div>
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-4 form-group">
                                     <h4>Electricity </h4>
-                                    <select id="p_electricity" name="p_electricity"
-                                            style="width:100%">
+                                    <select id="p_electricity" name="p_electricity" class="select2" style="width: 100%;"
+                                            >
                                         <option value="12HR">12HR</option>
                                         <option value="24HR">24HR</option>
                                         <option value="12-24HR">12-24HR</option>
@@ -1075,7 +1069,8 @@
 
                                 </div>
 
-                            </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -1172,6 +1167,10 @@
                         $('#rootwizard').find('.form-wizard').children('li').eq(index-1).find('.step').html('<i class="fa fa-check"></i>');
                     }
                 }
+            });
+            $(".select2").select2({
+                placeholder: "select",
+                allowClear: true
             });
 
         });
