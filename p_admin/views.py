@@ -426,6 +426,39 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
+@admin_views.route('/admin/ipnpfr', methods=["GET"])
+@login_required
+def admin_ipnpfr():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_IPNPFR.html", **kwargs)
+
+@admin_views.route('/admin/ljlga', methods=["GET"])
+@login_required
+def admin_ljlga():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_LJLGAgreement.html", **kwargs)
+
+@admin_views.route('/admin/lrpassbook', methods=["GET"])
+@login_required
+def admin_lrpassbook():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_LRPassbook.html", **kwargs)
+
 @admin_views.route('/admin/employee/signup', methods=["POST"])
 def developer_signup():
     if request.method == "POST":
