@@ -437,6 +437,18 @@ def admin_ipnpfr():
     kwargs = locals()
     return render_template( "pdf_IPNPFR.html", **kwargs)
 
+
+@admin_views.route('/admin/disbursement_pdf', methods=["GET"])
+@login_required
+def admin_disbursement_pdf():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_disbursement.html", **kwargs)
+
 @admin_views.route('/admin/ljlga', methods=["GET"])
 @login_required
 def admin_ljlga():
