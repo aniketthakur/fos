@@ -437,6 +437,41 @@ def admin_ipnpfr():
     kwargs = locals()
     return render_template( "pdf_IPNPFR.html", **kwargs)
 
+#Added By Deepak
+
+@admin_views.route('/admin/ipnpfrtwo', methods=["GET"])
+@login_required
+def admin_ipnpfrtwo():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_IPNPFR_two.html", **kwargs)
+
+#Added By Deepak
+@admin_views.route('/admin/schedule', methods=["GET"])
+@login_required
+def admin_schedule():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_SCHEDULE_A.html", **kwargs)
+#Added By Deepak
+@admin_views.route('/admin/dpn', methods=["GET"])
+@login_required
+def admin_dpn():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_DPN.html", **kwargs)
 
 @admin_views.route('/admin/disbursement_pdf', methods=["GET"])
 @login_required

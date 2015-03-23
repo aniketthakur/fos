@@ -15,8 +15,8 @@ if len(EsthenosSettings.objects.all()) ==1:
     EsthenosSettings.objects.all()[0].delete()
 
 settings = EsthenosSettings()
-Highmarkrequest=EsthenosOrgApplicationHighMarkRequest()
-Highmarkresponse=EsthenosOrgApplicationHighMark()
+EsthenosSettings=EsthenosSettings()
+EsthenosSettings=EsthenosSettings()
 
 print settings
 settings.save()
