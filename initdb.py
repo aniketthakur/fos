@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from p_admin.models import  EsthenosSettings,EsthenosUser
-from p_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
+from p_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplication
 
 user = EsthenosUser.create_user("admin","admin@esthenos.com","Admin312",True)
 user.add_role("ADMIN")
@@ -86,3 +86,63 @@ if len(EsthenosOrgApplicationHighMark.objects.all()) ==1:
 Highmarkresponse = EsthenosOrgApplicationHighMark()
 print Highmarkresponse
 Highmarkresponse.save()
+
+#Added By Deepak
+if len(EsthenosOrgApplication.objects.all()) ==1:
+   EsthenosOrgApplication.objects.all()[0].delete()
+
+EsthenosOrgApplication = EsthenosOrgApplication()
+EsthenosOrgApplication.aadhaar_card("565061987998")
+EsthenosOrgApplication.address("Hal")
+EsthenosOrgApplication.age("40")
+EsthenosOrgApplication.applicant_name("Loan")
+EsthenosOrgApplication.application_id("45D")
+EsthenosOrgApplication.attendence_percentage("40")
+EsthenosOrgApplication.business_expense("456789")
+EsthenosOrgApplication.center("Hal")
+EsthenosOrgApplication.current_status("")
+EsthenosOrgApplication.date_created("12/1/2014")
+EsthenosOrgApplication.date_updated("12/1/2014")
+EsthenosOrgApplication.defaults_with_no_mfis("")
+EsthenosOrgApplication.dob("12/1/2045")
+EsthenosOrgApplication.educational_expense("20000")
+EsthenosOrgApplication.eligible_loan_cycle("1")
+EsthenosOrgApplication.entertainment_expense("200")
+EsthenosOrgApplication.existing_loan_cycle("2")
+EsthenosOrgApplication.food_expense("20")
+EsthenosOrgApplication.gender("F")
+EsthenosOrgApplication.group("")
+EsthenosOrgApplication.loan_eligibility_based_on_company_policy("")
+EsthenosOrgApplication.loan_eligibility_based_on_net_income("")
+EsthenosOrgApplication.medical_expense("100")
+EsthenosOrgApplication.net_income("1000")
+EsthenosOrgApplication.organisation("sarmik")
+EsthenosOrgApplication.other_expense("100")
+EsthenosOrgApplication.other_income("45")
+EsthenosOrgApplication.other_outstanding_chit("7")
+EsthenosOrgApplication.other_outstanding_emi("4")
+EsthenosOrgApplication.other_outstanding_insurance("7")
+EsthenosOrgApplication.outstanding_1("1")
+EsthenosOrgApplication.outstanding_2("1")
+EsthenosOrgApplication.outstanding_3("4")
+EsthenosOrgApplication.outstanding_4("5")
+EsthenosOrgApplication.pan_card("BTRPP2391C")
+EsthenosOrgApplication.primary_income("12")
+EsthenosOrgApplication.secondary_income("1")
+EsthenosOrgApplication.status("")
+EsthenosOrgApplication.tag("")
+EsthenosOrgApplication.tertiary_income("4")
+EsthenosOrgApplication.timeline("1")
+EsthenosOrgApplication.total_existing_outstanding_from("1")
+EsthenosOrgApplication.total_existing_outstanding_from_mfi("1")
+EsthenosOrgApplication.total_expenditure("45")
+EsthenosOrgApplication.total_income("14")
+EsthenosOrgApplication.total_liability("12")
+EsthenosOrgApplication.travel_expense("45")
+EsthenosOrgApplication.upload_type("simple")
+EsthenosOrgApplication.vid_card("bvcbb")
+EsthenosOrgApplication.total_running_loans("5")
+EsthenosOrgApplication.total_other_outstanding("4")
+EsthenosOrgApplication.total_outstanding("56")
+print EsthenosOrgApplication
+EsthenosOrgApplication.save()
