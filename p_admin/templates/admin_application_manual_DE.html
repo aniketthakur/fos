@@ -4,6 +4,7 @@
         input.no-border {
             font-family: "segoe ui";
             font-size: xx-small;
+            line-height: 10px;
             height: 20px;
             width: 35px;
             padding: 0px;
@@ -12,8 +13,57 @@
             outline: none;
             border: 0px;
             vertical-align: baseline;
+            text-shadow: 0px 1px 1px #000;
         }
 
+        input::-webkit-input-placeholder {
+            color: #dddddd; /* white color with alpha = 1 (alpha = opacity varies on a scale of 0 to 1 with decimal values in between) */
+            text-transform: capitalize;
+            font-size:9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: none;  /* blink property doesn't work in chrome right now */
+        }
+        input::-moz-placeholder {
+            color: #dddddd;
+            text-transform: capitalize;
+            font-size: 9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 25px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
+        input:-moz-placeholder {   /* Older versions of Firefox */
+            color: #dddddd;    /* alpha property doesn't properly work Firefox */
+            text-transform: capitalize;
+            font-size: 9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
+        input:-ms-input-placeholder {
+            color: #dddddd;
+            text-transform: capitalize;
+            font-size: 8px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
         select {
             font-family: "segoe ui";
             font-size: xx-small;
@@ -318,12 +368,9 @@
     <div class="col-md-6">
         {% for app in app_urls %}
 
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <img src="{{ app }}" width="100%" class=""/>
-                </div>
-            </div>
+            <img src="{{ app }}" width="100%" class=""/>
         {% endfor %}
+        <img src="{{ url_for('static', filename='sample/application2.png')}}" width="100%" class=""/>
     </div>
 
 
@@ -436,11 +483,11 @@
         <div class="col-md-6">
             <div class="radio radio-success">
                 <h5>Repayment Mode</h5>
-                <input id="weekly" type="radio" name="weekly" value="weekly">
+                <input id="weekly" type="radio" name="repayment_mode" value="weekly">
                 <label for="weekly">Weekly</label>
-                <input id="monthly" type="radio" name="monthly" value="monthly">
+                <input id="monthly" type="radio" name="repayment_mode" value="monthly">
                 <label for="monthly">Monthly</label>
-                <input id="fortnightly" type="radio" name="fortnightly" value="fortnightly">
+                <input id="fortnightly" type="radio" name="repayment_mode" value="fortnightly">
                 <label for="fortnightly">Fortnightly</label>
             </div>
         </div>
@@ -450,7 +497,7 @@
                 <input id="interested_in_other_fp" type="radio" name="interested_in_other_fp" value="yes"
                        checked="checked">
                 <label for="interested_in_other_fp">Agree</label>
-                <input id="interested_in_other_fp_no" type="radio" name="interested_in_other_fp_no" value="no">
+                <input id="interested_in_other_fp_no" type="radio" name="interested_in_other_fp" value="no">
                 <label for="interested_in_other_fp_no">Disagree</label>
             </div>
         </div>
@@ -460,27 +507,135 @@
         <div class="col-md-6">
             <div class="radio radio-success">
                 <h5>Interested Buying NPS</h5>
-                <input id="interested_in_nps_yes" type="radio" name="interested_in_nps_yes" value="yes"
+                <input id="interested_in_nps_yes" type="radio" name="interested_in_nps" value="yes"
                        checked="checked">
                 <label for="interested_in_nps_yes">Agree</label>
-                <input id="interested_in_nps_no" type="radio" name="interested_in_nps_no" value="no">
+                <input id="interested_in_nps_no" type="radio" name="interested_in_nps" value="no">
                 <label for="interested_in_nps_no">Disagree</label>
             </div>
         </div>
         <div class="col-md-6">
             <div class="radio radio-success">
                 <h5>Interested Buying Health Insurance/Life Insurance</h5>
-                <input id="interested_in_health_indurance_yes" type="radio" name="interested_in_health_indurance_yes"
+                <input id="interested_in_health_indurance_yes" type="radio" name="interested_in_health_indurance"
                        value="yes" checked="checked">
                 <label for="interested_in_health_indurance_yes">Agree</label>
-                <input id="interested_in_health_indurance_no" type="radio" name="interested_in_health_indurance_no"
+                <input id="interested_in_health_indurance_no" type="radio" name="interested_in_health_indurance"
                        value="no">
                 <label for="interested_in_health_indurance_no">Disagree</label>
             </div>
         </div>
     </div>
+    <div class="row form-row">
+        <div class="col-md-10">
+            <input id="member_fullname" type="text" class="no-boarder form-control input-sm" name="member_fullname"
+                   value="" placeholder="Member Full Name">
+        </div>
+        <div class="col-md-2">
+            <input id="member_age" type="text" class="no-boarder form-control input-sm" name="member_age"
+                   value="" placeholder="Age">
+        </div>
+        <div class="col-md-12">
+            <input id="member_fathername" type="text" class="no-boarder form-control input-sm" name="member_fathername"
+                   value="" placeholder="Member Father Name">
+        </div>
+        <div class="col-md-10">
+            <input id="member_husbandname" type="text" class="no-boarder form-control input-sm" name="member_husbandname"
+                   value="" placeholder="Member Husband Name">
+        </div>
+        <div class="col-md-2">
+            <input id="member_husband_age" type="text" class="no-boarder form-control input-sm" name="member_husband_age"
+                   value="" placeholder="Age">
+        </div>
 
+        <div class="col-md-12">
+            <input id="member_address1" type="text" class="no-boarder form-control input-sm" name="member_address1"
+                   value="" placeholder="Address1 (As per address proof)">
+        </div>
+        <div class="col-md-12">
+            <input id="member_address2" type="text" class="no-boarder form-control input-sm" name="member_address2"
+                   value="" placeholder="Address2">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4">
+            <input id="member_pincode" type="text" class="no-boarder form-control input-sm" name="member_pincode"
+                   value="" placeholder="Pin Code">
+        </div>
+        <div class="col-md-4">
+            <input id="member_telephone" type="text" class="no-boarder form-control input-sm" name="member_telephone"
+                   value="" placeholder="Member Telephone">
+        </div>
+        <div class="col-md-4">
+            <input id="member_husband_telephone" type="text" class="no-boarder form-control input-sm" name="member_husband_telephone"
+                   value="" placeholder="Husband Telephone">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Member ID Proof</label>
+            <div class="radio radio-success">
+                <input id="member_id_proof_aadhaar" type="radio" name="member_id_proof" value="" checked="">
+                <label for="member_id_proof_aadhaar">Aadhaar</label>
+                <input id="member_id_proof_vid" type="radio" name="member_id_proof" value="">
+                <label for="member_id_proof_vid">Voter's ID</label>
+                <input id="member_id_proof_others" type="radio" name="member_id_proof" value="">
+                <label for="member_id_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="member_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Member Address Proof</label>
+            <div class="radio radio-success">
+                <input id="member_address_proof_aadhaar" type="radio" name="member_address_proof" value="" checked="">
+                <label for="member_address_proof_aadhaar">Aadhaar</label>
+                <input id="member_address_proof_vid" type="radio" name="member_address_proof" value="">
+                <label for="member_address_proof_vid">Voter's ID</label>
+                <input id="member_address_proof_others" type="radio" name="member_address_proof" value="">
+                <label for="member_address_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="member_aadhaar_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+    <div class="row form-row">
 
+<<<<<<< HEAD
+
+=======
+        <div class="col-md-12">
+            <input id="guarantor_fullname" type="text" class="no-boarder form-control input-sm" name="guarantor_fullname"
+                   value="" placeholder="Guarantor Full Name">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Guarantor ID Proof</label>
+            <div class="radio radio-success">
+                <input id="guarantor_id_proof_aadhaar" type="radio" name="guarantor_id_proof" value="" checked="">
+                <label for="guarantor_id_proof_aadhaar">Aadhaar</label>
+                <input id="guarantor_id_proof_vid" type="radio" name="guarantor_id_proof" value="">
+                <label for="guarantor_id_proof_vid">Voter's ID</label>
+                <input id="guarantor_id_proof_others" type="radio" name="guarantor_id_proof" value="">
+                <label for="guarantor_id_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="guarantor_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+>>>>>>> e4e652e42fc19c1b41f3a7356c5945f6a52cb4fa
     <div class="row form-row">
         <div class="col-md-4">
             <div class="grid simple">
@@ -509,9 +664,9 @@
         <div class="col-md-4">
             <label>Disability</label>
             <div class="radio radio-success">
-                <input id="disability_yes" type="radio" name="disability_yes" value="" checked="">
+                <input id="disability_yes" type="radio" name="disability" value="" checked="">
                 <label for="disability_yes">Yes</label>
-                <input id="disability_no" type="radio" name="disability_no" value="">
+                <input id="disability_no" type="radio" name="disability" value="">
                 <label for="disability_no">no</label>
             </div>
         </div>
@@ -521,9 +676,9 @@
             <label>Type Of House</label>
             <select id="select_typeofresidence" name="select_typeofresidence" style="width: 100%;"
                     >
-                <option value="FAMILY OWNED">FAMILY OWNED</option>
-                <option value="SELF OWNED">SELF OWNED</option>
-                <option value="SELF OWNED">RENTED/LEASED</option>
+                <option value="FAMILY_OWNED">FAMILY OWNED</option>
+                <option value="SELF_OWNED">SELF OWNED</option>
+                <option value="RENTED_LEASED">RENTED/LEASED</option>
                 <option value="ALLOTED">ALLOTED</option>
                 <option value="GIFTED">GIFTED</option>
 
@@ -533,11 +688,11 @@
             <label>Quality Of House</label>
             <select id="select_house_type" name="select_house_type" style="width: 100%;"
                     >
-                <option value="FAMILY OWNED">PAKKA</option>
-                <option value="SELF OWNED">SEMI-PAKKA</option>
-                <option value="SELF OWNED">KUCHHA</option>
-                <option value="ALLOTED">THATCHED</option>
-                <option value="GIFTED">TILLED</option>
+                <option value="PAKKA">PAKKA</option>
+                <option value="SEMI_PAKKA">SEMI-PAKKA</option>
+                <option value="KUCHHA">KUCHHA</option>
+                <option value="THATCHED">THATCHED</option>
+                <option value="TILLED">TILLED</option>
 
             </select>
         </div>
@@ -545,11 +700,11 @@
             <label>Drinking Water</label>
             <select id="select_drinking_water" name="select_drinking_water" style="width: 100%;"
                     >
-                <option value="FAMILY OWNED">PIPED</option>
-                <option value="SELF OWNED">BOREWELL</option>
-                <option value="SELF OWNED">SHARED BOREWELL</option>
-                <option value="ALLOTED">GOVT BOREWELL</option>
-                <option value="GIFTED">OPEN WELL</option>
+                <option value="PIPED">PIPED</option>
+                <option value="BOREWELL">BOREWELL</option>
+                <option value="SHARED_BOREWELL">SHARED BOREWELL</option>
+                <option value="GOVT_BOREWELL">GOVT BOREWELL</option>
+                <option value="OPEN_WELL">OPEN WELL</option>
 
             </select>
         </div>
@@ -639,8 +794,8 @@
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
                 <option value="AGRICULTURE">AGRICULTURE</option>
-                <option value="ALLIED AGRI">ALLIED AGRI</option>
-                <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                <option value="ALLIED_AGRI">ALLIED AGRI</option>
+                <option value="SMALL_MANUFACTURING">SMALL MANUFACTURING</option>
                 <option value="LABOURER">LABOURER</option>
 
             </select>
@@ -654,7 +809,7 @@
                 <option value="MANGO">MANGO</option>
                 <option value="ARECANUT">ARECANUT</option>
                 <option value="COCONUT">COCONUT</option>
-                <option value="PALM TREE">PALM TREE</option>
+                <option value="PALM_TREE">PALM TREE</option>
                 <option value="AMLA">AMLA</option>
                 <option value="TAMRIND">TAMRIND</option>
                 <option value="VEGETABLES">VEGETABLES</option>
@@ -665,7 +820,6 @@
                 <option value="BULLOCKS">BULLOCKS</option>
                 <option value="PIGS">PIGS</option>
                 <option value="CHICKEN">CHICKEN</option>
-
             </select>
         </div>
         <div class="col-md-3 form-group">
@@ -685,8 +839,8 @@
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
                 <option value="AGRICULTURE">AGRICULTURE</option>
-                <option value="ALLIED AGRI">ALLIED AGRI</option>
-                <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                <option value="ALLIED_AGRI">ALLIED AGRI</option>
+                <option value="SMALL_MANUFACTURING">SMALL MANUFACTURING</option>
                 <option value="LABOURER">LABOURER</option>
 
             </select>
@@ -700,7 +854,7 @@
                 <option value="MANGO">MANGO</option>
                 <option value="ARECANUT">ARECANUT</option>
                 <option value="COCONUT">COCONUT</option>
-                <option value="PALM TREE">PALM TREE</option>
+                <option value="PALM_TREE">PALM TREE</option>
                 <option value="AMLA">AMLA</option>
                 <option value="TAMRIND">TAMRIND</option>
                 <option value="VEGETABLES">VEGETABLES</option>
@@ -1129,10 +1283,8 @@
                 <select id="p_electricity" name="p_electricity" class="select2" style="width: 100%;"
                         >
                     <option value="12HR">12HR</option>
-                    <option value="24HR">24HR</option>
                     <option value="12-24HR">12-24HR</option>
-
-
+                    <option value="24HR">24HR</option>
                 </select>
 
             </div>
