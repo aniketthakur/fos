@@ -263,7 +263,6 @@ class EsthenosOrgApplication(db.Document):
     outstanding_2 = db.FloatField(default=0.0)
     outstanding_3 = db.FloatField(default=0.0)
     outstanding_4 = db.FloatField(default=0.0)
-
     total_outstanding = db.FloatField(default=0.0)
     other_outstanding_chit = db.FloatField(default=0.0)
     other_outstanding_insurance = db.FloatField(default=0.0)

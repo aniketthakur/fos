@@ -115,7 +115,7 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
-                    <select id="applicationtype">
+                    <select id="applicationtype" style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
                         <option value="PANCARD">PANCARD</option>
@@ -201,10 +201,9 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="kycid2" id="kycid2" value="{{ kyc_ids[1] }}">
-                    <select id="applicationtype2">
+                    <select id="applicationtype2"  style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
-                        <option value="PANCARD">PANCARD</option>
                         <option value="OTHER">OTHER</option>
                     </select>
 
@@ -289,7 +288,7 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
-                    <select id="applicationtype3" name="applicationtype">
+                    <select id="applicationtype3" name="applicationtype"  style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
                         <option value="PANCARD">PANCARD</option>
@@ -603,15 +602,12 @@
         </div>
         <div class="col-md-5">
             <label>KYC Number</label>
-            <input id="member_aadhaar_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+            <input id="member_address_proof_number" type="text" class="no-boarder form-control input-sm" name="member_address_proof_number"
                    value="" placeholder="">
         </div>
     </div>
     <div class="row form-row">
 
-<<<<<<< HEAD
-
-=======
         <div class="col-md-12">
             <input id="guarantor_fullname" type="text" class="no-boarder form-control input-sm" name="guarantor_fullname"
                    value="" placeholder="Guarantor Full Name">
@@ -631,11 +627,11 @@
         </div>
         <div class="col-md-5">
             <label>KYC Number</label>
-            <input id="guarantor_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+            <input id="guarantor_id_proof_number" type="text" class="no-boarder form-control input-sm" name="guarantor_id_proof_number"
                    value="" placeholder="">
         </div>
     </div>
->>>>>>> e4e652e42fc19c1b41f3a7356c5945f6a52cb4fa
+
     <div class="row form-row">
         <div class="col-md-4">
             <div class="grid simple">
@@ -717,13 +713,7 @@
                        id="appliedloanamount" value="" placeholder="Applied Loan Amount"/>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="purposeofloan"
-                       id="purposeofloan" value="" placeholder="Purpose Of Loan"/>
-            </div>
-        </div>
+
         <div class="col-md-4">
             <div class="input-with-icon  right">
                 <i class=""></i>
@@ -736,6 +726,13 @@
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="child18-12"
                        id="child18-12" value="" placeholder="Child 18-12"/>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="purposeofloan"
+                       id="purposeofloan" value="" placeholder="Purpose Of Loan"/>
             </div>
         </div>
     </div>
@@ -1429,8 +1426,10 @@
                         console.log("Trying to prefill");
                         var name = data["scan_result"]["name"];
                         $("#kyc1_name").val(name);
+
                         var fname = data["scan_result"]["co"];
                         $("#kyc1_f_or_h_name").val(fname);
+
                         var dob = data["scan_result"]["year_of_birth"];
                         $("#kyc1_dob").val(dob);
                         var kycid = data["scan_result"]["aadhaar_id"];
@@ -1449,10 +1448,18 @@
                             $("#kyc1_address").val(data["scan_result"]['house']);
                         }
 
+                        $("#member_fullname").val(name);
+                        $("#member_fathername").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_aadhaar').prop('checked', true);
+
                     });
                 } else if (type == "PANCARD") {
                     $.getJSON("/admin/read_pan/" + $("#kycid1").val(), function (data) {
                         console.log(data);
+
+
+
                         var name = data["scan_result"][0]["Name"];
                         $("#kyc1_name").val(name);
                         var fname = data["scan_result"][0]["Father's/Organisation Name"];
@@ -1461,10 +1468,18 @@
                         $("#kyc1_dob").val(dob);
                         var kycid = data["scan_result"][0]["PAN"];
                         $("#kyc1_kycid").val(kycid);
+
+                        $("#member_fullname").val(name);
+                        $("#member_fathername").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_others').prop('checked', true);
+
                     });
                 } else if (type == "VID") {
                     $.getJSON("/admin/read_vid/" + $("#kycid1").val(), function (data) {
                         console.log(data);
+
+
                         var name = data["scan_result"][0]["Elector's Name"];
                         $("#kyc1_name").val(name);
                         var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
@@ -1473,6 +1488,11 @@
                         $("#kyc1_dob").val(dob);
                         var kycid = data["scan_result"][0]["VID"];
                         $("#kyc1_kycid").val(kycid);
+
+                        $("#member_fullname").val(name);
+                        $("#member_fathername").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_vid').prop('checked', true);
                     });
                 }
 
@@ -1517,7 +1537,11 @@
                         }
                         if (temp.hasOwnProperty('dist')) {
                             $("#kyc2_address").val(data["scan_result"]['house']);
+                            $("#member_address1").val(data["scan_result"]['house']+" "+data["scan_result"]['pc'])
+                            $("#member_address2").val(data["scan_result"]['dist']+" "+data["scan_result"]['state'])
+                            $("#member_pincode").val(data["scan_result"]['pc'])
                         }
+                        $("#member_address_proof_number").val(kycid);
 
 
                     });
@@ -1532,6 +1556,7 @@
                         $("#kyc2_dob").val(dob);
                         var kycid = data["scan_result"][0]["PAN"];
                         $("#kyc2_kycid").val(kycid);
+                        $("#member_address_proof_number").val(kycid);
                     });
                 } else if (type == "VID") {
                     $.getJSON("/admin/read_vid/" + $("#kycid2").val(), function (data) {
@@ -1544,6 +1569,7 @@
                         $("#kyc2_dob").val(dob);
                         var kycid = data["scan_result"][0]["VID"];
                         $("#kyc2_kycid").val(kycid);
+                        $("#member_address_proof_number").val(kycid);
                     });
                 }
 
@@ -1620,7 +1646,9 @@
                         if (temp.hasOwnProperty('dist')) {
                             $("#kyc3_address").val(data["scan_result"]['house']);
                         }
-
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_aadhaar").val(kycid);
+                        $('#member_id_proof_aadhaar').prop('checked', true);
 
                     });
                 } else if (type == "PANCARD") {
@@ -1633,6 +1661,9 @@
                         $("#kyc3_dob").val(dob);
                         var kycid = data["scan_result"][0]["PAN"];
                         $("#kyc3_kycid").val(kycid);
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_number").val(kycid);
+                        $('#guarantor_id_proof_others').prop('checked', true);
                     });
                 } else if (type == "VID") {
                     $.getJSON("/admin/read_vid/" + $("#gkycid1").val(), function (data) {
@@ -1645,6 +1676,9 @@
                         $("#kyc3_dob").val(dob);
                         var kycid = data["scan_result"][0]["VID"];
                         $("#kyc3_kycid").val(kycid);
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_number").val(kycid);
+                        $('#guarantor_id_proof_vid').prop('checked', true);
                     });
                 }
 

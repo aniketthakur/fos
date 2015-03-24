@@ -642,6 +642,7 @@ def login_admin():
 def mobile_application():
     jsonlist= request.form
     print jsonlist
+    request.files
     app_form=AddApplicationMobile(jsonlist)
     if(app_form.validate()):
         print "Form Validated"

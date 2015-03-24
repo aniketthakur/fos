@@ -92,8 +92,8 @@ class AddApplicationMobile(Form):
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     def save( self):
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
-#        app.center = self.application_
-#        app.organisation =
+#       app.center = self.application_
+#       app.organisation =
 #       app.application_id =
 #       app.upload_type =
 #       app.status =
