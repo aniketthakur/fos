@@ -625,13 +625,8 @@ def login_admin():
 
 @admin_views.route('/admin/mobile/application',methods=['POST'])
 def mobile_application():
-    json = request.json
-    print(json)
-
-
-#    jsondata=request.json['ajax']
-#    print jsondata
-    jsonlist= json.loads(request.json)
+    jsonlist= request.form
+    print jsonlist
     app_form=AddApplicationMobile(jsonlist)
     if(app_form.validate()):
         print "Form Validated"
@@ -640,6 +635,8 @@ def mobile_application():
     else:
         flash_errors(app_form)
         print "Could Not validate"
-    return jsonify(json)
+    kwargs = locals()
+    return render_template("auth/login_admin.html", **kwargs)
+
 
 

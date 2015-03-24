@@ -23,92 +23,98 @@ class UpdateApplicationForm( Form):
 
 
 class AddApplicationMobile(Form):
-    application_postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_telephone = TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    application_postal_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=5)])
+
+
+    application_postal_telephone = TextField( validators=[ v.Length(max=20)])
     application_postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_state = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_city = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_village= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+
     application_member_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_member_dob= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_member_co_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_member_relationship_status= TextField( validators=[v.Length(max=100)])
-    application_telephone_number= TextField( validators=[ v.Length(max=100)])
-    application_mobile_number= TextField( validators=[ v.Length(max=100)])
-    application_member_applied_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_religion= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_category= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_cast= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_education= TextField( validators=[ v.Length(max=100)])
-    application_type_of_residence= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_quality_of_house= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_drinking_water= TextField( validators=[ v.Length(max=100)])
-    application_purpose_of_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_family_size= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_adult_count= TextField( validators=[ v.Length(max=100)])
     application_children_below18= TextField( validators=[ v.Length(max=100)])
     application_children_below12= TextField( validators=[v.Length(max=100)])
-    application_monthly_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_business_category= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_relationship_status= TextField( validators=[v.Length(max=100)])
     application_business= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_secondary_business_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_family_asset= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_agricultural_land= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_applied_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_religion= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_self_owned= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_patta= TextField( validators=[v.Length(max=100)])
     application_shared= TextField( validators=[ v.Length(max=100)])
-    application_loans= TextField( validators=[ v.Length(max=100)])
     application_chits= TextField( validators=[ v.Length(max=100)])
     application_insurance= TextField( validators=[ v.Length(max=100)])
-    application_house_hold_expenditure= TextField( validators=[ v.Length(max=100)])
-    application_food_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_quality_of_house= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_medical_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_education_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_travel_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_friends_family_loan_roi= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_bank_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_repeat_client_id= TextField( validators=[ v.Length(max=100)])
+    application_cycle= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+
+    application_branch_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=9)])
+    application_postal_state = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_city = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_village= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_dob= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_co_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_telephone_number= TextField( validators=[ v.Length(max=100)])
+    application_mobile_number= TextField( validators=[ v.Length(max=100)])
+    application_education= TextField( validators=[ v.Length(max=100)])
+    application_category= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_cast= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_type_of_residence= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_drinking_water= TextField( validators=[ v.Length(max=100)])
+    application_purpose_of_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_monthly_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_business_category= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_family_asset= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_agricultural_land= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_loans= TextField( validators=[ v.Length(max=100)])
+    application_house_hold_expenditure= TextField( validators=[ v.Length(max=100)])
+    application_food_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_entertainment_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_festival_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_travel_expenditure= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_friends_family_loans= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_friends_family_loan_roi= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_money_lenders_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_money_lenders_loan_roi= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_bank_loan= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_bank_loan_roi= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_branch_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     applciation_branch_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_state_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_region_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_cm_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_cm_cell_no= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_repeat_client_id= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_cycle= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     def save( self):
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
-        app.center = self.application_
+#        app.center = self.application_
 #        app.organisation =
 #       app.application_id =
 #       app.upload_type =
 #       app.status =
         app.applicant_name = self.application_member_name.data
+        app.dob = self.application_member_dob.data
+        app.address = self.application_postal_address.data
+        app.primary_income =float(self.application_monthly_income.data)
+        app.secondary_income = float(self.application_secondary_business_income.data)
+        app.tertiary_income =float(self.application_tertiary_income.data)
+
 #       app.gender =
 #       app.age =
-        app.dob = self.application_member_dob.data
-        app.address = self.application_postal_address
-        app.primary_income =self.application_monthly_income.data
-        app.secondary_income = self.application_secondary_business_income.data
-        app.tertiary_income =self.application_tertiary_income.data
 #       app.other_income =
 #       app.total_income =
 #       app.business_expense =
-        app.food_expense = self.application_food_expenditure.data
-        app.travel_expense =self.application_travel_expenditure.data
-        app.entertainment_expense =self.application_entertainment_expenditure.data
-        app.educational_expense = self.application_education_expenditure.data
-        app.medical_expense =self.application_medical_expenditure.data
-        app.other_expense = self.application_house_hold_expenditure.data
+        app.food_expense = float(self.application_food_expenditure.data)
+        app.travel_expense =float(self.application_travel_expenditure.data)
+        app.entertainment_expense =float(self.application_entertainment_expenditure.data)
+        app.educational_expense = float(self.application_education_expenditure.data)
+        app.medical_expense =float(self.application_medical_expenditure.data)
+        app.other_expense = float(self.application_house_hold_expenditure.data)
 #       app.total_expenditure =
 #       app.total_liability =
 #       app.outstanding_1 =
@@ -116,8 +122,8 @@ class AddApplicationMobile(Form):
 #       app.outstanding_3 =
 #       app.outstanding_4 =
 #       app.total_outstanding =
-        app.other_outstanding_chit = self.application_chits
-        app.other_outstanding_insurance = self.application_insurance
+        app.other_outstanding_chit = float(self.application_chits.data)
+        app.other_outstanding_insurance = float(self.application_insurance.data)
 #       app.other_outstanding_emi =
 #       app.total_other_outstanding =
 #       app.net_income =
