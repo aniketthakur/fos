@@ -472,6 +472,21 @@ def admin_dpn():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_DPN.html", **kwargs)
+#Added By Deepak
+
+@admin_views.route('/admin/sanction', methods=["GET"])
+@login_required
+def admin_sanction():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_Sanction_Letter.html", **kwargs)
+
+
+
 
 @admin_views.route('/admin/disbursement_pdf', methods=["GET"])
 @login_required
