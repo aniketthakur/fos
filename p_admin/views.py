@@ -472,6 +472,21 @@ def admin_dpn():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_DPN.html", **kwargs)
+#Added By Deepak
+
+@admin_views.route('/admin/sanction', methods=["GET"])
+@login_required
+def admin_sanction():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_Sanction_Letter.html", **kwargs)
+
+
+
 
 @admin_views.route('/admin/disbursement_pdf', methods=["GET"])
 @login_required
@@ -625,13 +640,8 @@ def login_admin():
 
 @admin_views.route('/admin/mobile/application',methods=['POST'])
 def mobile_application():
-    json = request.json
-    print(json)
-
-
-#    jsondata=request.json['ajax']
-#    print jsondata
-    jsonlist= json.loads(request.json)
+    jsonlist= request.form
+    print jsonlist
     app_form=AddApplicationMobile(jsonlist)
     if(app_form.validate()):
         print "Form Validated"
@@ -640,6 +650,8 @@ def mobile_application():
     else:
         flash_errors(app_form)
         print "Could Not validate"
-    return jsonify(json)
+    kwargs = locals()
+    return render_template("auth/login_admin.html", **kwargs)
+
 
 
