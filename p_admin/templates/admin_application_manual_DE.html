@@ -72,7 +72,7 @@
         .col-fixed {
             border: solid #ffffff 2px;
             overflow: scroll;
-            height: 700px;
+            height: 1000px;
         }
 
     </style>
@@ -83,7 +83,7 @@
 {% endblock %}
 {% block maincontents %}
     <div class="row">
-    <form id="root_data_entry_wizard" action="/admin/submit_application" method="post">
+    <form id="form_user_application" action="/admin/submit_application" method="post">
     <div id="rootwizard" class="col-md-12">
     <div class="form-wizard-steps">
         <ul class="wizard-steps">
@@ -124,61 +124,61 @@
 
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc1_kycid" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="KYC ID">
+                            <input name="kyc1_kycid" id="kyc1_kycid" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="KYC ID"  required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc1_name" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Name">
+                            <input name="kyc1_name" id="kyc1_name" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Name" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc1_f_or_h_name" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
+                            <input name="kyc1_f_or_h_name" id="kyc1_f_or_h_name" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc1_dob" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Date of Birth">
+                            <input name="kyc1_dob" id="kyc1_dob" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Date of Birth" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc1_address" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_address" id="kyc1_address" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Address">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-6">
-                            <input name="city" id="kyc1_city" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_city" id="kyc1_city" type="text" class="no-boarder form-control input-sm"
                                    placeholder="City">
                         </div>
                         <div class="col-md-6">
-                            <input name="state" id="kyc1_state" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_state" id="kyc1_state" type="text" class="no-boarder form-control input-sm"
                                    placeholder="State">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-8">
-                            <input name="country" id="kyc1_country" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_country" id="kyc1_country" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Country">
                         </div>
                         <div class="col-md-4">
-                            <input name="postal_code" id="kyc1_postal_code" type="text"
+                            <input name="kyc1_postal_code" id="kyc1_postal_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="Postal Code">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-4">
-                            <input name="tele_code" id="kyc1_tele_code" type="text"
+                            <input name="kyc1_tele_code" id="kyc1_tele_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="+91">
                         </div>
                         <div class="col-md-8">
-                            <input name="teleno" id="kyc1_teleno" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_teleno" id="kyc1_teleno" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Phone Number">
                         </div>
                     </div>
@@ -210,61 +210,61 @@
 
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc2_kycid" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_kycid" id="kyc2_kycid" type="text" class="no-boarder form-control input-sm"
                                    placeholder="KYC ID">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc2_name" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_name" id="kyc2_name" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc2_f_or_h_name" type="text"
+                            <input name="kyc2_f_or_h_name" id="kyc2_f_or_h_name" type="text"
                                    class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc2_dob" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_dob" id="kyc2_dob" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Date of Birth">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc2_address" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_address" id="kyc2_address" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Address">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-6">
-                            <input name="city" id="kyc2_city" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_city" id="kyc2_city" type="text" class="no-boarder form-control input-sm"
                                    placeholder="City">
                         </div>
                         <div class="col-md-6">
-                            <input name="state" id="kyc2_state" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_state" id="kyc2_state" type="text" class="no-boarder form-control input-sm"
                                    placeholder="State">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-8">
-                            <input name="country" id="kyc2_country" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_country" id="kyc2_country" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Country">
                         </div>
                         <div class="col-md-4">
-                            <input name="postal_code" id="kyc2_postal_code" type="text"
+                            <input name="kyc2_postal_code" id="kyc2_postal_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="Postal Code">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-4">
-                            <input name="tele_code" id="kyc2_tele_code" type="text"
+                            <input name="kyc2_tele_code" id="kyc2_tele_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="+91">
                         </div>
                         <div class="col-md-8">
-                            <input name="teleno" id="kyc2_teleno" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_teleno" id="kyc2_teleno" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Phone Number">
                         </div>
                     </div>
@@ -298,61 +298,61 @@
 
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc3_kycid" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_kycid" id="kyc3_kycid" type="text" class="no-boarder form-control input-sm"
                                    placeholder="KYC ID">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc3_name" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_name" id="kyc3_name" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc3_f_or_h_name" type="text"
+                            <input name="kyc3_f_or_h_name" id="kyc3_f_or_h_name" type="text"
                                    class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc3_dob" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Date of Birth">
+                            <input name="kyc3_dob" id="kyc3_dob" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Date of Birth/Year of birth">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="address" id="kyc3_address" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_address" id="kyc3_address" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Address">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-6">
-                            <input name="city" id="kyc3_city" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_city" id="kyc3_city" type="text" class="no-boarder form-control input-sm"
                                    placeholder="City">
                         </div>
                         <div class="col-md-6">
-                            <input name="state" id="kyc3_state" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_state" id="kyc3_state" type="text" class="no-boarder form-control input-sm"
                                    placeholder="State">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-8">
-                            <input name="country" id="kyc3_country" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_country" id="kyc3_country" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Country">
                         </div>
                         <div class="col-md-4">
-                            <input name="postal_code" id="kyc3_postal_code" type="text"
+                            <input name="kyc3_postal_code" id="kyc3_postal_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="Postal Code">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-4">
-                            <input name="tele_code" id="kyc3_tele_code" type="text"
+                            <input name="kyc3_tele_code" id="kyc3_tele_code" type="text"
                                    class="no-boarder form-control input-sm" placeholder="+91">
                         </div>
                         <div class="col-md-8">
-                            <input name="teleno" id="kyc3_teleno" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc3_teleno" id="kyc3_teleno" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Phone Number">
                         </div>
                     </div>
@@ -1310,59 +1310,7 @@
     <script type="text/javascript">
     var cur_tag = 1;
     var $input;
-    var $validator = $("#root_data_entry_wizard").validate({
-        rules:{
-            kyc1_kycid:{
-                minlength:3,
-                required:true
-            },
-            kyc1_address:{
-                minlength:3,
-                required:false
-            },
-            kyc1_name:{
-                minlength:3,
-                required:true
-            },
-            kyc1_f_or_h_name:{
-                minlength:5,
-                required:true
-            },
-            kyc1_state:{
-                minlength:5,
-                required:false
-            },
-            kyc1_country:{
-                minlength:2,
-                required:false
-            },
-            kyc1_postal_code:{
-                number:true,
-                required:false
-            },
-            kyc1_tele_code:{
-                minlength:2,
-                required:false
-            },
-            kyc1_teleno:{
-                number:true,
-                minlength:8,
-                required:false
-            },
-            kyc1_city:{
-                minlength:8,
-                required:false
-            },
-            kyc1_dob:{
-                minlength:8,
-                required:true
-            }
-        },
-        errorPlacement:function (label, element) {
-            $('<span class="arrow"></span>').insertBefore(element);
-            $('<span class="error"></span>').insertAfter(element).append(label)
-        }
-    });
+
     $(document).ready(function () {
         console.log("ready!");
         //$('#layout-condensed-toggle').click();
@@ -1370,12 +1318,68 @@
         //make_fucusable(".form1Name")
         //make_fucusable(".form2Name")
         //Form Wizard Validations
+        var $validator = $("#form_user_application").validate({
+            rules: {
+                kyc1_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc1_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc1_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                kyc1_dob: {
+                    required: true,
+                    minlength: 2
+                },
+                kyc2_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc2_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc2_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                kyc2_dob: {
+                    required: true,
+                    minlength: 2
+                },
+                kyc3_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc3_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc3_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                kyc3_dob: {
+                    required: true,
+                    minlength: 2
+                }
+            },
 
+            errorPlacement:function (label, element) {
+                $('<span class="arrow"></span>').insertBefore(element);
+                $('<span class="error"></span>').insertAfter(element).append(label)
+            }
+        });
 
         $('#rootwizard').bootstrapWizard({
             'tabClass':'form-wizard',
             'onNext':function (tab, navigation, index) {
-                var $valid = $("#root_data_entry_wizard").valid();
+                var $valid = $("#form_user_application").valid();
                 if (!$valid) {
                     $validator.focusInvalid();
                     return false;

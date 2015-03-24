@@ -181,3 +181,5 @@ EsthenosOrgApplication.total_other_outstanding("4")
 EsthenosOrgApplication.total_outstanding("56")
 print EsthenosOrgApplication
 EsthenosOrgApplication.save()
+
+#added by prathvi
