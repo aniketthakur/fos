@@ -724,8 +724,8 @@
         <div class="col-md-4">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="child18-12"
-                       id="child18-12" value="" placeholder="Child 18-12"/>
+                <input type="text" class="no-boarder form-control input-sm" name="child"
+                       id="child" value="" placeholder="Child 18-12"/>
             </div>
         </div>
         <div class="col-md-12">
@@ -1078,12 +1078,12 @@
                         <td>Money Lenders</td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders_amount"
                                    id="moneylenders_amount" value="" placeholder="Amount"/>
                         </div></td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders_roi"
                                    id="moneylenders_roi" value="" placeholder="ROI"/>
                         </div></td>
                     </tr>
@@ -1091,12 +1091,12 @@
                         <td>Chit</td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="chit_amount"
                                    id="chit_amount" value="" placeholder="Amount"/>
                         </div></td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="chit_roi"
                                    id="chit_roi" value="" placeholder="ROI"/>
                         </div></td>
                     </tr>
@@ -1104,12 +1104,12 @@
                         <td>BankFI</td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="bankfi_amount"
                                    id="bankfi_amount" value="" placeholder="Amount"/>
                         </div></td>
                         <td><div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders"
+                            <input type="text" class="no-boarder form-control input-sm" name="bankfi_roi"
                                    id="bankfi_roi" value="" placeholder="ROI"/>
                         </div></td>
                     </tr>
@@ -1129,7 +1129,7 @@
             <div class="col-md-3">
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="size_center" id="size" value=""
+                    <input type="text" class="no-boarder form-control input-sm" name="size" id="size" value=""
                            placeholder="Size"/>
                 </div>
             </div>
@@ -1144,7 +1144,7 @@
         <div class="col-md-3">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="size_group" id="size1" value=""
+                <input type="text" class="no-boarder form-control input-sm" name="size1" id="size1" value=""
                        placeholder="Size"/>
             </div>
         </div>
@@ -1183,7 +1183,7 @@
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cell" id="cell2" value=""
+                <input type="text" class="no-boarder form-control input-sm" name="cell2" id="cell2" value=""
                        placeholder="Cell"/>
             </div>
         </div>
@@ -1612,6 +1612,14 @@
                     minlength: 2
                 },
                 excepteddisbursmentdate: {
+                    required: true,
+                    minlength: 2
+                },
+                education: {
+                    required: true,
+                    minlength: 2
+                },
+                child: {
                     required: true,
                     minlength: 2
                 },
