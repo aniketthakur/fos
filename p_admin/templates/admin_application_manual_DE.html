@@ -777,7 +777,7 @@
         <div class="col-md-3">
             <label>Income</label>
             <input type="text" class="no-boarder form-control input-sm" name="p_income"
-                   id="p_income" value="" placeholder="Income"/>
+                   id="p_income"  value="3500" placeholder="Income"/>
 
         </div>
 
@@ -922,42 +922,50 @@
     </div>
     <div class="row form-row">
         <div class="col-md-12">
-            <h4> Financial Inclusion </h4>
+            <h4> Financial Liabilities </h4>
 
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="loans" id="loans" value=""
-                           placeholder="Loans"/>
-                </div>
+            <div class="col-md-4 radio radio-success">
+                <h5>Loans</h5>
+                <input id="loans_yes" type="radio" name="loans_inclusion" value="yes"
+                       checked="checked">
+                <label for="loans_yes">Yes</label>
+                <input id="loans_no" type="radio" name="loans_inclusion" value="no">
+                <label for="loans_no">No</label>
+
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="chits" id="chits" value=""
-                           placeholder="Chits"/>
-                </div>
+            <div class="col-md-4 radio radio-success">
+                <h5>Chits</h5>
+                <input id="chits_yes" type="radio" name="chits_inclusion" value="yes"
+                       checked="checked">
+                <label for="chits_yes">Yes</label>
+                <input id="chits_no" type="radio" name="chits_inclusion" value="no">
+                <label for="chits_no">No</label>
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="insurance" id="insurance"
-                           value="" placeholder="Insurance"/>
-                </div>
+            <div class="col-md-4 radio radio-success">
+
+                <h5>Insurance</h5>
+                <input id="insurance_yes" type="radio" name="insurance_inclusion" value="yes"
+                       checked="checked">
+                <label for="insurance_yes">Yes</label>
+                <input id="insurance_no" type="radio" name="insurance_inclusion" value="no">
+                <label for="insurance_no">No</label>
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="friendandfamily"
-                           id="friendandfamily" value="" placeholder="Friend And Family"/>
-                </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6 radio radio-success">
+                <h5>Friend And Family</h5>
+                <input id="fnf_yes" type="radio" name="fnf_inclusion" value="yes"
+                       checked="checked">
+                <label for="fnf_yes">Yes</label>
+                <input id="fnf_no" type="radio" name="fnf_inclusion" value="no">
+                <label for="fnf_no">No</label>
             </div>
         </div>
     </div>
 
     <div class="row form-row">
         <div class="col-md-12">
-            <h4> Financial Plus </h4>
+            <h4> Financial Inclusions </h4>
 
             <div class="col-md-4">
                 <div class="input-with-icon  right">

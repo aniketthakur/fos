@@ -97,6 +97,44 @@ class AddApplicationMobile(Form):
 #       app.application_id =
 #       app.upload_type =
 #       app.status =
+        app.postal_telephone = self.application_postal_telephone.data
+        app.postal_tele_code = self.application_postal_tele_code.data
+        app.postal_country = self.application_postal_country.data
+        app.postal_state = self.application_postal_state.data
+        app.postal_city = self.application_postal_city.data
+        app.postal_taluk = self.application_postal_taluk.data
+        app.postal_village = self.application_postal_village.data
+        app.member_relationship_status = self.application_member_relationship_status.data
+        app.telephone_number = self.application_telephone_number.data
+        app.mobile_number = self.application_mobile_number.data
+        app.member_applied_loan = self.application_member_applied_loan.data
+        app.religion = self.application_religion.data
+        app.category = self.application_category.data
+        app.cast = self.application_cast.data
+        app.education = self.application_education.data
+        app.type_of_residence = self.application_type_of_residence.data
+        app.quality_of_house = self.application_quality_of_house.data
+        app.drinking_water = self.application_drinking_water.data
+        app.purpose_of_loan = self.application_purpose_of_loan.data
+        app.family_size  = self.application_family_size.data
+        app.adult_count  = self.application_adult_count.data
+        app.children_below18 = self.application_children_below18.data
+        app.children_below12 = self.application_children_below12.data
+        app.business_category = self.application_business_category.data
+        app.business = self.application_business.data
+        app.family_asset = self.application_family_asset.data
+        app.money_lenders_loan = self.application_money_lenders_loan.data
+        app.money_lenders_loan_roi = self.application_money_lenders_loan_roi.data
+        app.bank_loan = self.application_bank_loan.data
+        app.bank_loan_roi = float(self.application_bank_loan_roi.data)
+        app.branch_name = self.application_branch_name.data
+        app.branch_id  = self.applciation_branch_id.data
+        app.state_id = self.application_state_id.data
+        app.region_id = self.application_region_id.data
+        app.cm_id = self.application_cm_id.data
+        app.cm_cell_no = self.application_cm_cell_no.data
+        app.repeat_client_id = self.application_repeat_client_id.data
+        app.repayment_method = self.application_repayment_method.data
         app.applicant_name = self.application_member_name.data
         app.dob = self.application_member_dob.data
         app.address = self.application_postal_address.data
@@ -106,8 +144,8 @@ class AddApplicationMobile(Form):
 
 #       app.gender =
 #       app.age =
-#       app.other_income =
-#       app.total_income =
+        app.other_income = 0
+        app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #       app.business_expense =
         app.food_expense = float(self.application_food_expenditure.data)
         app.travel_expense =float(self.application_travel_expenditure.data)
@@ -115,7 +153,7 @@ class AddApplicationMobile(Form):
         app.educational_expense = float(self.application_education_expenditure.data)
         app.medical_expense =float(self.application_medical_expenditure.data)
         app.other_expense = float(self.application_house_hold_expenditure.data)
-#       app.total_expenditure =
+        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense
 #       app.total_liability =
 #       app.outstanding_1 =
 #       app.outstanding_2 =
@@ -125,8 +163,8 @@ class AddApplicationMobile(Form):
         app.other_outstanding_chit = float(self.application_chits.data)
         app.other_outstanding_insurance = float(self.application_insurance.data)
 #       app.other_outstanding_emi =
-#       app.total_other_outstanding =
-#       app.net_income =
+        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance
+        app.net_income = app.total_income - app.total_expenditure
 #       app.total_running_loans =
 #       app.total_existing_outstanding_from =
 #       app.total_running_loans_from_mfi =
@@ -139,8 +177,6 @@ class AddApplicationMobile(Form):
 #       app.loan_eligibility_based_on_company_policy =
 #       app.pan_card =
 #       app.vid_card =
-#       app.date_created =
-#       app.date_updated =
         app.save()
 
         return None
@@ -151,42 +187,3 @@ class AddApplicationMobile(Form):
 
 
 
-        #        application_postal_telephone
-        #        application_postal_tele_code
-        #        application_postal_country
-        #        application_postal_state
-        #        application_postal_city
-        #        application_postal_taluk
-        #        application_postal_village
-        #        application_member_relationship_status
-        #        application_telephone_number
-        #        application_mobile_number
-        #        application_member_applied_loan
-        #        application_religion
-        #        application_category
-        #        application_cast
-        #        application_education
-        #        application_type_of_residence
-        #        application_quality_of_house
-        #        application_drinking_water
-        #        application_purpose_of_loan
-        #        application_family_size
-        #        application_adult_count
-        #        application_children_below18
-        #        application_children_below12
-        #        application_business_category
-        #        application_business
-        #        application_family_asse
-        #        application_money_lenders_loan
-        #        application_money_lenders_loan_roi
-        #        application_bank_loan
-        #        application_bank_loan_roi
-        #        application_branch_name
-        #        applciation_branch_id
-        #        application_state_id
-        #        application_region_id
-        #        application_cm_id
-        #        application_cm_cell_no
-        #        application_repeat_client_id
-        #        application_repayment_method
-        #        application_repayment_method

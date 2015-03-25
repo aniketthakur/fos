@@ -57,10 +57,8 @@ mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/up
 mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/')
 
 mainapp.config.update(
-    CELERY_BROKER_URL='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',
-    CELERY_RESULT_BACKEND='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',#train.pixuate.com
-    CELERY_BROKER_URL_2='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',#queue.pixuate.com
-    CELERY_RESULT_BACKEND_2='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train'
+    CELERY_BROKER_URL='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',
+    CELERY_RESULT_BACKEND='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',#train.pixuate.com
 )
 from boto.s3.connection import S3Connection
 connection = None
