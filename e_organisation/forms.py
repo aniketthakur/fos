@@ -6,10 +6,10 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser, EsthenosOrgApplication
-from p_organisation.models import EsthenosOrg, EsthenosOrgProduct
-from p_admin.models import EsthenosUser
-from p_organisation.models import EsthenosOrg
-from p_admin.models import EsthenosUser,EsthenosSettings
+from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
+from e_admin.models import EsthenosUser
+from e_organisation.models import EsthenosOrg
+from e_admin.models import EsthenosUser,EsthenosSettings
 class UpdateApplicationForm( Form):
     application_postal_address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_postal_telephone =TextField( validators=[v.DataRequired(), v.Length(max=20)])

@@ -1,4 +1,4 @@
-from p_organisation.forms import AddApplicationMobile
+from e_organisation.forms import AddApplicationMobile
 
 __author__ = 'prathvi'
 # Flask and Flask-SQLAlchemy initialization here
@@ -6,29 +6,29 @@ from flask import render_template,session,request,Response, jsonify
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required,confirm_login
 import json
-from p_admin.models import *
+from e_admin.models import *
 from esthenos.mongo_encoder import encode_model
 from  werkzeug.exceptions import abort
 from flask import  Blueprint
 import psutil
 import os
-from p_admin.models import EsthenosUser
-from p_organisation.models import  EsthenosOrg, EsthenosOrgApplication
+from e_admin.models import EsthenosUser
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication
 import urlparse
 from flask_sauth.models import authenticate,User
-from p_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
+from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
 from flask_sauth.views import flash_errors
 from flask_sauth.forms import LoginForm
 import urlparse
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required
-from p_tokens.models import EsthenosOrgUserToken
+from e_tokens.models import EsthenosOrgUserToken
 #from flask.ext.sendmail import Message
 from blinker import signal
 from esthenos import mainapp
 import sys,traceback
 import boto
-from p_tokens.utils import verify_dev_request_token
+from e_tokens.utils import verify_dev_request_token
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))

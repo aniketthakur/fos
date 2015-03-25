@@ -6,7 +6,7 @@ from esthenos  import db
 from flask.ext.mongorest.resources import Resource
 from blinker import signal
 from flask_sauth.models import BaseUser
-from p_admin.models import EsthenosUser
+from e_admin.models import EsthenosUser
 # Create your models here.
 
 class EsthenosOrgNotification(db.Document):

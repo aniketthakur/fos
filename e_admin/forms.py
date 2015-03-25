@@ -5,10 +5,10 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
-from p_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState
-from p_admin.models import EsthenosUser
-from p_organisation.models import EsthenosOrg
-from p_admin.models import EsthenosUser,EsthenosSettings
+from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState
+from e_admin.models import EsthenosUser
+from e_organisation.models import EsthenosOrg
+from e_admin.models import EsthenosUser,EsthenosSettings
 class AddOrganisationForm( Form):
     org_name =TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches =TextField( validators=[v.DataRequired(), v.Length(max=512)])

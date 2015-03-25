@@ -28,14 +28,14 @@ flask_sauth.commands.add_commands( manager)
 from flask.ext.sauth.views import auth_views
 mainapp.register_blueprint( auth_views)
 
-from p_organisation.views import organisation_views
+from e_organisation.views import organisation_views
 mainapp.register_blueprint( organisation_views)
 
 
-from p_admin.views import admin_views
+from e_admin.views import admin_views
 mainapp.register_blueprint( admin_views)
 
-from p_tokens.views import token_views
+from e_tokens.views import token_views
 mainapp.register_blueprint( token_views)
 
 

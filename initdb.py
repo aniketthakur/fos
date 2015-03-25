@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-from p_admin.models import  EsthenosSettings,EsthenosUser
-from p_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplication,EsthenosOrgApplicationStatusTypes
+from e_admin.models import  EsthenosSettings,EsthenosUser
+from e_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplication,EsthenosOrgApplicationStatusTypes
 
 user = EsthenosUser.create_user("admin","admin@esthenos.com","Admin312",True)
 user.add_role("ADMIN")

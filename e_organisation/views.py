@@ -1,5 +1,5 @@
 __author__ = 'prathvi'
-from p_admin.models import EsthenosUser
+from e_admin.models import EsthenosUser
 from esthenos.mongo_encoder import *
 from flask_sauth.views import flash_errors
 from mongoengine import Q
@@ -18,7 +18,7 @@ from pixuate_storage import upload_images
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import uuid
-from p_admin.models import EsthenosSettings
+from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
 import traceback
 class RenderTemplateView(View):

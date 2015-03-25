@@ -49,7 +49,7 @@ mainapp.config["AWS_SECRET_ACCESS_KEY"] = '24K0Fo+wCJzUgdfUTQwVP8JN0WwJTLyZyMOqb
 
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
 
-mainapp.config["USER_MODEL_CLASS"] = "p_admin.models.EsthenosUser"
+mainapp.config["USER_MODEL_CLASS"] = "e_admin.models.EsthenosUser"
 
 mainapp.config['ROOT'] = os.curdir
 print mainapp.config['ROOT']
@@ -101,7 +101,7 @@ mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
 
 @login_manager.user_loader
 def load_user(userid):
-    from p_admin.models import EsthenosUser
+    from e_admin.models import EsthenosUser
     user = EsthenosUser.objects(id=userid).first()
     if user is not None and not session.has_key('role') :
         print "In load user"

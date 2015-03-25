@@ -19,7 +19,7 @@ def upload_images(path):
 
 def get_url_with_id(object_id):
     obj = None
-    from p_organisation.models import PixuateObjectUrlMap
+    from e_organisation.models import PixuateObjectUrlMap
     try:
         obj = PixuateObjectUrlMap.objects.get(pixuate_id=object_id)
     except Exception as e:
