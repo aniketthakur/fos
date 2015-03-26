@@ -378,90 +378,104 @@
     <br/>
     <div class="row form-row">
         <div class="col-md-4">
+            <label>State</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="state" id="state" value="" class="no-boarder form-control input-sm"
+                <input type="text" name="state" id="state" value="{{ application.tag.owner.org_state }}" class="no-boarder form-control input-sm"
                        placeholder="State"/>
             </div>
         </div>
 
         <div class="col-md-4">
+            <label>Taluk</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control input-sm"
+                <input type="text" name="taluk" id="taluk" value="{{ application.tag.owner.org_region }}" class="no-boarder form-control input-sm"
                        placeholder="Taluk"/>
             </div>
         </div>
+        <!--
         <div class="col-md-4">
+            <label>SateID</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" name="stateid" id="stateid" value="" class="no-boarder form-control input-sm"
                        placeholder="SateID"/>
             </div>
         </div>
+        -->
     </div>
     <!--<div class="row form-row">-->
     <div class="form-row row">
 
         <div class="col-md-4">
+            <label>Village</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" name="village" id="village" value="" class="no-boarder form-control input-sm"
                        placeholder="Village"/>
             </div>
         </div>
+        <!--
         <div class="col-md-4">
+            <label>RegionId</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="regionid" id="regionid"
-                       value="" placeholder="RegionId"/>
+                       value="{{ application.tag.owner.org_state }}" placeholder="RegionId"/>
             </div>
         </div>
-
+        -->
         <div class="col-md-4">
+            <label>Religion</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="religion" id="religion"
-                       value="" placeholder="Religion"/>
+                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
+                       value="{{ application.tag.owner.org_region }}" placeholder="Region"/>
             </div>
         </div>
     </div>
     <!--</div>-->
     <div class="row form-row">
+        <label>Branch</label>
         <div class="col-md-4">
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
-                       value="" placeholder="Branch"/>
+                       value="{{ application.tag.owner.org_branch }}" placeholder="Branch"/>
             </div>
         </div>
-
+        <!--
         <div class="col-md-4">
+            <label>BranchID</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="branchid" id="branchid"
                        value="" placeholder="BranchID"/>
             </div>
         </div>
-
+        -->
         <div class="col-md-4">
+            <label>CMID</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cmid" id="cmid" value=""
+                <input type="text" class="no-boarder form-control input-sm" name="cmid" id="cmid" value="{{ application.tag.owner.id }}"
                        placeholder="CMID"/>
             </div>
         </div>
 
     </div>
     <div class="row form-row">
+        <label>CMCellNo</label>
         <div class="col-md-4">
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="cmcellno" id="cmcellno"
-                       value="" placeholder="CMCellNo"/>
+                       value="{{ application.tag.owner.postal_telephone }}" placeholder="CMCellNo"/>
             </div>
         </div>
         <div class="col-md-4">
+            <label>Current Cycle</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="cycle" id="cycle"
@@ -469,6 +483,7 @@
             </div>
         </div>
         <div class="col-md-4">
+            <label>REPEAT_ID</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="idforrepeatclient"
@@ -526,46 +541,56 @@
         </div>
     </div>
     <div class="row form-row">
+        <label>Member Full Name</label>
         <div class="col-md-10">
             <input id="member_fullname" type="text" class="no-boarder form-control input-sm" name="member_fullname"
                    value="" placeholder="Member Full Name">
         </div>
         <div class="col-md-2">
+            <label>Age</label>
             <input id="member_age" type="text" class="no-boarder form-control input-sm" name="member_age"
                    value="" placeholder="Age">
         </div>
         <div class="col-md-12">
+            <label>Member Father Name</label>
             <input id="member_fathername" type="text" class="no-boarder form-control input-sm" name="member_fathername"
                    value="" placeholder="Member Father Name">
         </div>
         <div class="col-md-10">
+            <label>Member Husband Name</label>
             <input id="member_husbandname" type="text" class="no-boarder form-control input-sm" name="member_husbandname"
                    value="" placeholder="Member Husband Name">
         </div>
         <div class="col-md-2">
+            <label>Age</label>
             <input id="member_husband_age" type="text" class="no-boarder form-control input-sm" name="member_husband_age"
                    value="" placeholder="Age">
         </div>
 
         <div class="col-md-12">
+            <label>Address1 (As per address proof)</label>
             <input id="member_address1" type="text" class="no-boarder form-control input-sm" name="member_address1"
                    value="" placeholder="Address1 (As per address proof)">
         </div>
         <div class="col-md-12">
+            <label>Address2</label>
             <input id="member_address2" type="text" class="no-boarder form-control input-sm" name="member_address2"
                    value="" placeholder="Address2">
         </div>
     </div>
     <div class="row form-row">
+        <label>Pin Code</label>
         <div class="col-md-4">
             <input id="member_pincode" type="text" class="no-boarder form-control input-sm" name="member_pincode"
                    value="" placeholder="Pin Code">
         </div>
         <div class="col-md-4">
+            <label>Member Telephone</label>
             <input id="member_telephone" type="text" class="no-boarder form-control input-sm" name="member_telephone"
                    value="" placeholder="Member Telephone">
         </div>
         <div class="col-md-4">
+            <label>Husband Telephone</label>
             <input id="member_husband_telephone" type="text" class="no-boarder form-control input-sm" name="member_husband_telephone"
                    value="" placeholder="Husband Telephone">
         </div>
@@ -583,6 +608,7 @@
             </div>
         </div>
         <div class="col-md-5">
+
             <label>KYC Number</label>
             <input id="member_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
                    value="" placeholder="">
@@ -707,6 +733,7 @@
     </div>
     <div class="row form-row">
         <div class="col-md-4">
+            <label>Applied Loan Amount</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="appliedloanamount"
@@ -715,6 +742,7 @@
         </div>
 
         <div class="col-md-4">
+            <label>Family Size</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Family Size</label>
@@ -723,6 +751,7 @@
             </div>
         </div>
         <div class="col-md-4">
+            <label>Child 18-12</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="child"
@@ -730,6 +759,7 @@
             </div>
         </div>
         <div class="col-md-12">
+            <label>Purpose Of Loan</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="purposeofloan"
@@ -899,6 +929,7 @@
             <h4> Agriculture Land </h4>
 
             <div class="col-md-4">
+                <label>Self Owend</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="selfowend" id="selfowend"
@@ -906,6 +937,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Share</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="shared" id="shared"
@@ -913,6 +945,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Patta</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="patta" id="patta" value="2Acare"
@@ -939,6 +972,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="fl_insurance" id="fl_insurance" value="2000"
@@ -964,6 +998,7 @@
             <h4> Financial Inclusions </h4>
             <div class="col-md-4 radio radio-success">
 
+<<<<<<< HEAD
                 <h5>Bank Account</h5>
                 <input id="bankaccount_yes" type="radio" name="bankaccount_inclusion" value="yes"
                        checked="checked">
@@ -1000,6 +1035,39 @@
                 <label for="postofficeaccount_yes">Yes</label>
                 <input id="postofficeaccount_no" type="radio" name="postofficeaccount_inclusion" value="no">
                 <label for="postofficeaccount_no">No</label>
+=======
+            <div class="col-md-4">
+                <label>Bank Account</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="bankaccount" id="bankaccount"
+                           value="500" placeholder="Bank Account"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="p_chits" id="p_chits" value=""
+                           placeholder="Chits"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Micro Pension</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="micropension"
+                           id="micropension" value="" placeholder="Micro Pension"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Post Office Account</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="pastofficeaccount"
+                           id="postofficeaccount" value="500" placeholder="Post Office Account"/>
+                </div>
+>>>>>>> 36ff0b32301bd862307dbe762e4c25b3bbb329f8
             </div>
 
         </div>
@@ -1009,6 +1077,7 @@
             <h4>Business Expenditure</h4>
 
             <div class="col-md-4">
+                <label>Household Expenditure</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="householdexpenditure"
@@ -1017,6 +1086,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Food</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="food" id="food" value="300"
@@ -1024,6 +1094,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Medical</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="medical" id="medical"
@@ -1035,6 +1106,7 @@
     <div class="row form-row">
         <div class="col-md-12">
             <div class="col-md-4">
+                <label>Entretainmaint</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="entretainmaint"
@@ -1042,6 +1114,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Festiva</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="festival" id="festival"
@@ -1049,6 +1122,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>Education</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="education" id="education"
@@ -1060,6 +1134,7 @@
     <div class="row form-row">
         <div class="col-md-12">
             <div class="col-md-4">
+                <label>Travel</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="travel" id="travel" value="20"
@@ -1067,6 +1142,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <label>House Rent</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="house_rent" id="house_rent"
@@ -1230,6 +1306,7 @@
 
                 <select id="p_medicalfacilities" name="p_medicalfacilities" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="PHC">PHC</option>
                     <option value="PUBLIC HOSPITAL">PUBLIC HOSPITAL</option>
                     <option value="PRIVATE HOSPITAL">PRIVATE HOSPITAL</option>
@@ -1242,6 +1319,7 @@
                 <h5>Hospital Category </h5>
                 <select id="p_hospitalcategory" name="p_hospitalcategory" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="ALLOPATHY">ALLOPATHY</option>
                     <option value="HOMEOPATHY">HOMEOPATHY</option>
                     <option value="AYURVEDIC">AYURVEDIC</option>
@@ -1254,6 +1332,7 @@
                 <h5>ROAD </h5>
                 <select id="p_road" name="p_road" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="CONCRETE">CONCRETE</option>
                     <option value="KACHHA">KACHHA</option>
                     <option value="TAR">TAR</option>
@@ -1271,6 +1350,7 @@
 
                 <select id="p_publictransport" name="p_publictransport" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="BUS">BUS</option>
                     <option value="TRAIN">TRAIN</option>
                     <option value="NONE">NONE</option>
@@ -1283,6 +1363,7 @@
                 <h5>Water </h5>
                 <select id="p_water" name="p_water" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="POND">POND</option>
                     <option value="WELL">WELL</option>
                     <option value="RIVER">RIVER</option>
@@ -1295,6 +1376,7 @@
                 <h5>Electricity </h5>
                 <select id="p_electricity" name="p_electricity" class="select2" style="width: 100%;"
                         >
+                    <option value="PHC">NONE</option>
                     <option value="12HR">12HR</option>
                     <option value="12-24HR">12-24HR</option>
                     <option value="24HR">24HR</option>
@@ -1318,7 +1400,10 @@
     </ul>
     </div>
     </div>
+    </div>
     </form>
+    </div>
+
     </div>
 
 {% endblock %}
@@ -1392,7 +1477,7 @@
                 },
                 stateid: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 village: {
                     required: true,
@@ -1400,7 +1485,8 @@
                 },
                  regionid: {
                     required: true,
-                    minlength: 2
+                    number:true
+
                 },
                  religion: {
                     required: true,
@@ -1412,11 +1498,11 @@
                 },
                  branchid: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  cmid: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  cmcellno: {
                     required: true,
@@ -1453,19 +1539,19 @@
                  member_pincode: {
                     required: true,
                     minlength: 5,
-                     number:true
+                    number:true
                 },
                  member_telephone: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 member_husband_telephone: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 member_id_proof_number: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 guarantor_fullname: {
                     required: true,
@@ -1473,15 +1559,15 @@
                 },
                guarantor_id_proof_number: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 appliedloanamount: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  familysize: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 purposeofloan: {
                     required: true,
@@ -1489,15 +1575,15 @@
                 },
                  p_income: {
                     required: true,
-                    minlength: 2
+                     number:true
                 },
                  s_income: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  t_income: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  selfowend: {
                     required: true,
@@ -1513,7 +1599,7 @@
                 },
                  loans: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  chits: {
                     required: true,
@@ -1529,23 +1615,23 @@
                 },
                  bankaccount: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  p_chits: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  micropension: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  pastofficeaccount: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  householdexpenditure: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                  food: {
                     required: true,
@@ -1570,31 +1656,31 @@
                 },
                 house_rent: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 moneylenders_amount: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 moneylenders_roi: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 chit_amount: {
                     required: true,
-                    minlength: 2
+                   number:true
                 },
                 chit_roi: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 bankfi_amount: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 bankfi_roi: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 centrename: {
                     required: true,
@@ -1602,7 +1688,7 @@
                 },
                 size: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 groupname: {
                     required: true,
@@ -1610,7 +1696,7 @@
                 },
                 size1: {
                     required: true,
-                    minlength: 2
+                    number:true
                 },
                 centreleader: {
                     required: true,
@@ -1640,8 +1726,6 @@
                     required: true,
                     minlength: 2
                 },
-
-
         },
 
             errorPlacement:function (label, element) {
