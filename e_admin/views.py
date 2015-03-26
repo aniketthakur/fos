@@ -28,7 +28,7 @@ from blinker import signal
 from esthenos import mainapp
 import sys,traceback
 import boto
-from e_tokens.utils import verify_dev_request_token, login_or_key_required
+from e_tokens.utils import login_or_key_required
 
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
