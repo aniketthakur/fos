@@ -24,107 +24,107 @@ settings.save()
 if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_UPLOADED"
-    status_type.staus_message = "Your application is uploaded to system"
+    status_type.status_message = "Your application is uploaded to system"
     status_type.status_code = 0
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "BAD_DOCUMENT"
-    status_type.staus_message = "Cannot process current document"
+    status_type.status_message = "Cannot process current document"
     status_type.status_code = 1
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "DOCUMENT MISSING"
-    status_type.staus_message = "Some documents required for the processing are missing"
+    status_type.status_message = "Some documents required for the processing are missing"
     status_type.status_code = 2
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_ACCEPTED"
-    status_type.staus_message = "Application is accepted in first round of checking"
+    status_type.status_message = "Application is accepted in first round of checking"
     status_type.status_code = 3
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_TAGGED"
-    status_type.staus_message = "Application is tagged and ready of data entry"
+    status_type.status_message = "Application is tagged and ready of data entry"
     status_type.status_code = 4
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CBCHECK_READY"
-    status_type.staus_message = "Application data entry done and ready for CB Check"
+    status_type.status_message = "Application data entry done and ready for CB Check"
     status_type.status_code = 5
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CBCHECK_DONE"
-    status_type.staus_message = "Application CB Check has completed, waiting for validation"
+    status_type.status_message = "Application CB Check has completed, waiting for validation"
     status_type.status_code = 6
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CBCHECK_SUCCESS"
-    status_type.staus_message = "Application CB Check has completed, validation successful"
+    status_type.status_message = "Application CB Check has completed, validation successful"
     status_type.status_code = 7
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CBCHECK_FAILED"
-    status_type.staus_message = "Application CB Check has completed, failed in one or multiple criteria match"
+    status_type.status_message = "Application CB Check has completed, failed in one or multiple criteria match"
     status_type.status_code = 8
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_KYC_VALIDATION_PASSED"
-    status_type.staus_message = "Application KYC has completed, validation successfulh"
+    status_type.status_message = "Application KYC has completed, validation successfulh"
     status_type.status_code = 9
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_KYC_VALIDATION_FAILED"
-    status_type.staus_message = "Application KYC has completed, failed in one or multiple criteria match"
+    status_type.status_message = "Application KYC has completed, failed in one or multiple criteria match"
     status_type.status_code = 10
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CASH_FLOW_READY"
-    status_type.staus_message = "Application is Cash Flow Ready"
+    status_type.status_message = "Application is Cash Flow Ready"
     status_type.status_code = 11
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CASH_FLOW_PASSED"
-    status_type.staus_message = "Application  Cash Flow has Passed"
+    status_type.status_message = "Application  Cash Flow has Passed"
     status_type.status_code = 12
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CASH_FLOW_FAILED"
-    status_type.staus_message = "Application  Cash Flow has Failed, failed in one or multiple criteria match"
+    status_type.status_message = "Application  Cash Flow has Failed, failed in one or multiple criteria match"
     status_type.status_code = 13
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CGT_GRT_PASSED"
-    status_type.staus_message = "Application has passed CGT-GRT"
+    status_type.status_message = "Application has passed CGT-GRT"
     status_type.status_code = 14
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CGT_GRT_READY"
-    status_type.staus_message = "Application is CGT-GRT Ready"
+    status_type.status_message = "Application is CGT-GRT Ready"
     status_type.status_code = 15
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CGT_GRT_PASSED"
-    status_type.staus_message = "Application has passed CGT-GRT"
+    status_type.status_message = "Application has passed CGT-GRT"
     status_type.status_code = 16
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_UNDERWRITING_DONE"
-    status_type.staus_message = "Application Under writing done"
+    status_type.status_message = "Application Under writing done"
     status_type.status_code = 17
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_READY"
-    status_type.staus_message = "Application Disbursement ready"
+    status_type.status_message = "Application Disbursement ready"
     status_type.status_code = 18
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_CANCELLED"
-    status_type.staus_message = "Application Disbursement has been cancelled,possibly due to CGT-GRT failure"
+    status_type.status_message = "Application Disbursement has been cancelled,possibly due to CGT-GRT failure"
     status_type.status_code = 19
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_PENDING"
-    status_type.staus_message = "Application Disbursement ready, waiting for disbursement over a week"
+    status_type.status_message = "Application Disbursement ready, waiting for disbursement over a week"
     status_type.status_code = 20
     status_type.save()
 
