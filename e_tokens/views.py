@@ -1,52 +1,42 @@
 __author__ = 'prathvi'
 from flask import   request,Response
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required,login_user
 from flask import  Blueprint
 import  json
 from e_admin.models import EsthenosUser
 import utils,models
 from esthenos.mongo_encoder import encode_model
+from flask_sauth.forms import RegistrationForm, LoginForm
 token_views = Blueprint('token_views', __name__,template_folder='templates')
 
 @token_views.route('/api/app_token/generate', methods=["POST"])
-@login_required
 def generate_token_view():
     c_user = current_user
     kwargs = locals()
-    expires = int(request.json.get('token_duration'))
-    if expires < 0:
-        expires = -1
-    else:
-        expires = expires *60
-    b_name = request.json.get('bucket_names')
-    buckets = []
-    if b_name != None and b_name != "":
-        b_names = b_name.split(",")
-        for name in b_names:
-            buck = PTrainedBucket.objects.get(name= name)
-            buckets.append(buck)
-    services = request.json.get("services")
-    management_perms = request.json.get("management_perms")
-    user = PUser.objects.get(id= c_user.id)
-    if expires is -1:
-        full_token = utils.generate_auth_token(c_user,expiration=360000)
-    else:
-        full_token = utils.generate_auth_token(c_user,expiration=expires)
-    print expires
-    token  = full_token.split(".")[2]
-    token_obj = models.InstanceToken(full_token= full_token,token = token,trained_buckets = buckets,\
-                 services=services.split(","),management_perms=management_perms.split(","),user = user,expires_in=expires)
-    token_obj.save()
+    expires = -1
+    login_form = LoginForm( request.form)
+    form = login_form
+    if(form.validate()):
+        user = EsthenosUser.objects.get( email=form.email.data)
+        if expires is -1:
+            full_token = utils.generate_auth_token(c_user,expiration=360000)
+        else:
+            full_token = utils.generate_auth_token(c_user,expiration=expires)
+        print expires
+        token  = full_token.split(".")[2]
+        token_obj = models.EsthenosOrgUserToken(full_token= full_token,token = token,user = user,expires_in=expires)
+        token_obj.save()
 
-    print utils.verify_auth_token(token)
-    return Response(json.dumps({'message':'token generated'}), content_type="application/json", mimetype='application/json')
+        print utils.verify_auth_token(token)
+        return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
+    return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
 
 @token_views.route('/api/app_token/<token>', methods=["DELETE"])
 @login_required
 def delete_token(token):
     c_user = current_user
     kwargs = locals()
-    tokenobj = models.InstanceToken.objects.get(token=token)
+    tokenobj = models.EsthenosOrgUserToken.objects.get(token=token)
     if str(tokenobj.user.id) == str(c_user.id):
         tokenobj.delete()
         return Response(json.dumps({"message":"successfully deleted"}), content_type="application/json", mimetype='application/json')
@@ -57,7 +47,7 @@ def delete_token(token):
 def get_tokens():
     c_user = current_user
     kwargs = locals()
-    all_tokens = models.InstanceToken.objects(user=c_user.id)
+    all_tokens = models.EsthenosOrgUserToken.objects(user=c_user.id)
     tokens = list()
     for token in all_tokens:
         tok = dict()

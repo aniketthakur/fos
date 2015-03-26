@@ -21,8 +21,8 @@ def login_or_key_required(view_function):
                 return view_function(*args, **kwargs)
             else:
                 abort(401)
-        elif request.headers.has_key('InstanceToken'):
-            user = verify_auth_token(token=request.headers['InstanceToken'])
+        elif request.headers.has_key('EsthenosOrgUserToken'):
+            user = verify_auth_token(token=request.headers['EsthenosOrgUserToken'])
             if user is not None and current_user.is_authenticated():
                 #see if you want to add something more here
                 return view_function(*args, **kwargs)
@@ -61,7 +61,7 @@ def verify_auth_token(token):
     tokenobj = None
     data = dict()
     try:
-        tokenobj = InstanceToken.objects.get(token = token)
+        tokenobj = models.EsthenosOrgUserToken.objects.get(token = token)
         print tokenobj.full_token
         data = s.loads(tokenobj.full_token)
         print "valid token"

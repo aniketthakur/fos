@@ -13,7 +13,7 @@ from flask import  Blueprint
 import psutil
 import os
 from e_admin.models import EsthenosUser
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct
 import urlparse
 from flask_sauth.models import authenticate,User
 from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
@@ -179,6 +179,11 @@ def admin_organisation_dashboard(org_id):
     except Exception as e:
         print e.message
 
+    products = []
+    try:
+        products = EsthenosOrgProduct.objects.filter(organisation=organisation)
+    except Exception as e:
+        print e.message
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 

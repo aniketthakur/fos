@@ -231,6 +231,7 @@ class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
     organisation = db.ReferenceField('EsthenosOrg')
+    owner = db.ReferenceField('EsthenosUser')
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap)
     application_id = db.StringField(max_length=255, required=False,default="")
     upload_type = db.StringField(max_length=20, required=False,default="")

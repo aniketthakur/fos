@@ -23,6 +23,11 @@ settings.save()
 
 if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_UPLOADED"
+    status_type.staus_message = "Your application is uploaded to system"
+    status_type.status_code = 0
+    status_type.save()
+    status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "BAD_DOCUMENT"
     status_type.staus_message = "Cannot process current document"
     status_type.status_code = 1

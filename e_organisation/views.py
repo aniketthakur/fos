@@ -20,6 +20,7 @@ from datetime import timedelta
 import uuid
 from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
+from models import EsthenosOrgApplicationStatusType
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -412,6 +413,8 @@ def upload_documents():
                 tagged_application.center = center
                 tagged_application.group = group
                 tagged_application.tag  = app
+                tagged_application.owner = user
+                tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=0)
                 settings = EsthenosSettings.objects.all()[0]
                 tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"

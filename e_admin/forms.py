@@ -217,7 +217,7 @@ class AddOrganisationProductForm( Form):
 
     def validate_product_name(form,field):
         product_name =field.data.lower().strip()
-        if( EsthenosOrgProduct.objects.get(product_name=product_name).count()):
+        if( EsthenosOrgProduct.objects.filter(product_name=product_name).count()):
             raise ValidationError( "Hey! This product is already registered with us")
     def save( self,org_id):
         prod=EsthenosOrgProduct(product_name=self.product_name.data)

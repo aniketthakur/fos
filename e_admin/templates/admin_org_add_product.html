@@ -13,17 +13,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <div class="grid-body no-border invoice-body"><br>
+            <div class="grid-title no-border">
+                <h4>Organisation <span class="semi-bold"> Products</span></h4>
+
+            </div>
+            <div class="grid-body no-border">
 
                     <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"
                           action="/admin/organisation/{{ org.id }}/add_product" method="POST">
 
-                        <div class="row form-row">
-                            <h4>Organisation <span class="semi-bold"> Products</span></h4>
 
-                        </div>
                         <div class="row">
-                            <div class="col-md-3 col-md-offset-1">
+                            <div class="col-md-3">
 
                                 <div class="row form-row">
 
@@ -56,7 +57,7 @@
                                        <i class=""></i>
                                     <input type="text" class="form-control text-right" name="life_insurance" id="life_insurance"
                                            value="1"/>
-                                 </div>
+                                    </div>
                                 </div>
 
 
@@ -67,11 +68,8 @@
                                        <i class=""></i>
                                     <input type="text" class="form-control text-right" id="eligible_cycle"
                                            name="eligible_cycle" value="1"/>
-                               </div>
+                                     </div>
                                 </div>
-
-
-
 
                             </div>
                             <div class="col-md-3 col-md-offset-1 ">
@@ -87,7 +85,7 @@
                                 </div>
                                 </div>
                                 <div class="row form-row">
-                                    Emi
+                                    EMI
                                     <div class="input-with-icon  right">
 
                                        <i class=""></i>
@@ -96,7 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="row form-row">
-                                    Last Emi
+                                    Last EMI
                                      <div class="input-with-icon  right">
 
                                        <i class=""></i>
@@ -176,7 +174,7 @@
 
 
                                 <div class="row form-row">
-                                    Insurance Free Borrowers_And_ Quarnteer
+                                    Insurance Free Borrowers And Quarnteer
                                      <div class="input-with-icon  right">
 
                                        <i class=""></i>
@@ -187,30 +185,24 @@
 
 
                                 <div class="row form-row">
-                                    Total Processing Fees Borrowers_And_Quarnteer
+                                    Total Processing Fees Borrowers And Quarnteer
                                      <div class="input-with-icon  right">
 
                                        <i class=""></i>
                                     <input type="text" class="form-control text-right"  id="total_processing_fees_borrowers_n_guarnteer"
                                            name="total_processing_fees_borrowers_n_guarnteer" value="1"/>
                                             </div>
-                                    <div class="row form-row">
-                                        <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            EMI Payment Duration:
-                                            <select id="emi_repayment" style="width: 100%"
-                                                    name="emi_repayment" class="select2">
-                                                <option  value="emi_collection_period_weekly">Weekly
-                                                </option>
-                                                <option
-                                                        class="form-control" value="emi_collection_period_monthly">Monthly
-                                                </option>
-                                                <option  class="form-control"
-                                                        value="emi_collection_period_fortnightly">
-                                                    Fortnightly
-                                                </option>
-                                            </select>
-                                        </div>
+
+                                </div>
+                                <div class="row form-row">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        EMI Payment Duration:
+                                        <select id="emi_repayment" style="width: 100%" name="emi_repayment" class="select2">
+                                            <option  value="emi_collection_period_weekly">Weekly</option>
+                                            <option  value="emi_collection_period_monthly">Monthly</option>
+                                            <option value="emi_collection_period_fortnightly">Fortnightly</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
