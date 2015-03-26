@@ -33,6 +33,7 @@ class LoginForm( Form):
 
     def validate_email( self, field):
         if( not  User.objects( email=field.data).count()):
+            print "This email address is not registered."
             raise ValidationError( "This email address is not registered.")
 
     def validate_role(self, field):
@@ -42,14 +43,19 @@ class LoginForm( Form):
             print user.roles
             if(not user or not user.roles[0]==(str(field.data))):
                 raise ValidationError("This email address is not registered for this role.")
+                print "This email address is not registered for this role."
         except:
+            print "This email address is not registered for this role."
             raise ValidationError("This email address is not registered for this role.")
 
     def validate_password( self, field):
         self.user_cache = authenticate(email=self.email.data, password=field.data)
         if self.user_cache is None:
+            print "Please enter correct information. Note that password is case-sensitive."
             raise ValidationError("Please enter correct information. Note that password is case-sensitive.")
+
         elif not self.user_cache.is_email_activated:
+            print"This account is inactive."
             raise ValidationError("This account is inactive.")
 
 

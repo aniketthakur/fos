@@ -13,7 +13,7 @@ from flask import  Blueprint
 import psutil
 import os
 from e_admin.models import EsthenosUser
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct, EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplicationStatusType
 import urlparse
 from flask_sauth.models import authenticate,User
 from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
@@ -28,7 +28,8 @@ from blinker import signal
 from esthenos import mainapp
 import sys,traceback
 import boto
-from e_tokens.utils import verify_dev_request_token
+from e_tokens.utils import verify_dev_request_token, login_or_key_required
+
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
@@ -645,12 +646,36 @@ def login_admin():
 
 
 @admin_views.route('/admin/mobile/application',methods=['POST'])
+@login_or_key_required
 def mobile_application():
-    jsonlist= request.form
-    print jsonlist
-    request.files
-    app_form=AddApplicationMobile(jsonlist)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    form= request.form
+    print form
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    center = None
+    group = None
+    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+    elif center_name !=None and len(center_name)>0:
+        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
+    app_form=AddApplicationMobile(form)
     if(app_form.validate()):
+
+        tagged_application =  EsthenosOrgApplication()
+        tagged_application.organisation = user.organisation
+        tagged_application.center = center
+        tagged_application.group = group
+        tagged_application.owner = user
+        tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        settings = EsthenosSettings.objects.all()[0]
+        tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
+        tagged_application.upload_type = "MANUAL_UPLOAD"
+        tagged_application.status = "TAGGING_DONE"
+        tagged_application.save()
         print "Form Validated"
         print "Saving Form"
         app_form.save()
