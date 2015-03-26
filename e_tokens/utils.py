@@ -43,25 +43,13 @@ def generate_auth_token(current_user, expiration = 3600):
     s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
     return s.dumps({ 'id': str(current_user.unique_id) })
 
-def verify_dev_request_token(token):
-    s = Serializer(app.config['SECRET_KEY'])
-    try:
-        tokenobj = DevRequestToken.objects.get(token = token)
-        print tokenobj.full_token
-        data = s.loads(tokenobj.full_token)
-    except SignatureExpired:
-        return None # valid token, but expired
-    except BadSignature:
-        return None # invalid token
-    user = PUser.objects.get(unique_id=data['id'])
-    return user
 
 def verify_auth_token(token):
     s = Serializer(app.config['SECRET_KEY'])
     tokenobj = None
     data = dict()
     try:
-        tokenobj = models.EsthenosOrgUserToken.objects.get(token = token)
+        tokenobj = EsthenosOrgUserToken.objects.get(token = token)
         print tokenobj.full_token
         data = s.loads(tokenobj.full_token)
         print "valid token"
