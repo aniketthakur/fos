@@ -10,6 +10,15 @@
         </div>
         <div class="col-md-5 "> <br>
             <form id="login-form" class="login-form" action="/accounts/login" method="post">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class=flashes>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
                 <div class="row">
                     <div class="form-group col-md-10">
                         <label class="form-label">Username</label>

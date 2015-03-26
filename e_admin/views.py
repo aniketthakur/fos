@@ -189,6 +189,7 @@ def admin_organisation_add_emp(org_id):
         abort(403)
     username = current_user.name
     c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
     print "reached here"
     if request.method == "POST":
         print request.form
@@ -208,7 +209,7 @@ def admin_organisation_add_emp(org_id):
             kwargs = locals()
             return render_template("admin_org_add_emp.html", **kwargs)
     else:
-        user = EsthenosUser.objects.get(id=c_user.id)
+
         org = EsthenosOrg.objects.get(id=org_id)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)

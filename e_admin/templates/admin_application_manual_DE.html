@@ -72,7 +72,7 @@
         .col-fixed {
             border: solid #ffffff 2px;
             overflow: scroll;
-            height: 1000px;
+            height: 1600px;
         }
 
     </style>
@@ -465,7 +465,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="cycle" id="cycle"
-                       value="" placeholder="Current Cycle"/>
+                       value="2" placeholder="Current Cycle"/>
             </div>
         </div>
         <div class="col-md-4">
@@ -484,7 +484,7 @@
                 <h5>Repayment Mode</h5>
                 <input id="weekly" type="radio" name="repayment_mode" value="weekly">
                 <label for="weekly">Weekly</label>
-                <input id="monthly" type="radio" name="repayment_mode" value="monthly">
+                <input id="monthly" type="radio" name="repayment_mode" value="monthly" checked="checked">
                 <label for="monthly">Monthly</label>
                 <input id="fortnightly" type="radio" name="repayment_mode" value="fortnightly">
                 <label for="fortnightly">Fortnightly</label>
@@ -717,6 +717,7 @@
         <div class="col-md-4">
             <div class="input-with-icon  right">
                 <i class=""></i>
+                <label>Family Size</label>
                 <input type="text" class="no-boarder form-control input-sm" name="familysize"
                        id="familysize" value="5" placeholder="Family Size"/>
             </div>
@@ -923,55 +924,37 @@
     <div class="row form-row">
         <div class="col-md-12">
             <h4> Financial Liabilities </h4>
-
-            <div class="col-md-4 radio radio-success">
-                <h5>Loans</h5>
-                <input id="loans_yes" type="radio" name="loans_inclusion" value="yes"
-                       checked="checked">
-                <label for="loans_yes">Yes</label>
-                <input id="loans_no" type="radio" name="loans_inclusion" value="no">
-                <label for="loans_no">No</label>
-
-            </div>
-            <div class="col-md-4 radio radio-success">
-                <h5>Chits</h5>
-                <input id="chits_yes" type="radio" name="chits_inclusion" value="yes"
-                       checked="checked">
-                <label for="chits_yes">Yes</label>
-                <input id="chits_no" type="radio" name="chits_inclusion" value="no">
-                <label for="chits_no">No</label>
             <div class="col-md-4">
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="loans" id="loans" value="10000"
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_loans" id="fl_loans" value="2000"
                            placeholder="Loans"/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="chits" id="chits" value="2000"
-                           placeholder="Chits"/>
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_chits" id="fl_chits" value="2000"
+                           placeholder="Loans"/>
                 </div>
             </div>
-            <div class="col-md-4 radio radio-success">
-
-                <h5>Insurance</h5>
-                <input id="insurance_yes" type="radio" name="insurance_inclusion" value="yes"
-                       checked="checked">
-                <label for="insurance_yes">Yes</label>
-                <input id="insurance_no" type="radio" name="insurance_inclusion" value="no">
-                <label for="insurance_no">No</label>
+            <div class="col-md-4">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_insurance" id="fl_insurance" value="2000"
+                           placeholder="Loans"/>
+                </div>
             </div>
+
+
         </div>
         <div class="col-md-12">
-            <div class="col-md-6 radio radio-success">
-                <h5>Friend And Family</h5>
-                <input id="fnf_yes" type="radio" name="fnf_inclusion" value="yes"
-                       checked="checked">
-                <label for="fnf_yes">Yes</label>
-                <input id="fnf_no" type="radio" name="fnf_inclusion" value="no">
-                <label for="fnf_no">No</label>
+            <div class="col-md-4">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="fnf_inclusion" id="fnf_inclusion" value="2000"
+                           placeholder="Loans"/>
+                </div>
             </div>
         </div>
     </div>
@@ -979,35 +962,46 @@
     <div class="row form-row">
         <div class="col-md-12">
             <h4> Financial Inclusions </h4>
+            <div class="col-md-4 radio radio-success">
 
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="bankaccount" id="bankaccount"
-                           value="500" placeholder="Bank Account"/>
-                </div>
+                <h5>Bank Account</h5>
+                <input id="bankaccount_yes" type="radio" name="bankaccount_inclusion" value="yes"
+                       checked="checked">
+                <label for="bankaccount_yes">Yes</label>
+                <input id="bankaccount_no" type="radio" name="bankaccount_inclusion" value="no">
+                <label for="bankaccount_no">No</label>
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="p_chits" id="p_chits" value=""
-                           placeholder="Chits"/>
-                </div>
+
+            <div class="col-md-4 radio radio-success">
+
+                <h5>Chits</h5>
+                <input id="chits_yes" type="radio" name="chits_inclusion" value="yes"
+                       checked="checked">
+                <label for="chits_yes">Yes</label>
+                <input id="chits_no" type="radio" name="chits_inclusion" value="no">
+                <label for="chits_no">No</label>
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="micropension"
-                           id="micropension" value="" placeholder="Micro Pension"/>
-                </div>
+            <div class="col-md-4 radio radio-success">
+
+                <h5>Micro Pension</h5>
+                <input id="micropension_yes" type="radio" name="micropension_inclusion" value="yes"
+                       checked="checked">
+                <label for="micropension_yes">Yes</label>
+                <input id="micropension_no" type="radio" name="micropension_inclusion" value="no">
+                <label for="micropension_no">No</label>
             </div>
-            <div class="col-md-4">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="pastofficeaccount"
-                           id="postofficeaccount" value="500" placeholder="Post Office Account"/>
-                </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4 radio radio-success">
+
+                <h5>Post Office Account</h5>
+                <input id="postofficeaccount_yes" type="radio" name="postofficeaccount_inclusion" value="yes"
+                       checked="checked">
+                <label for="postofficeaccount_yes">Yes</label>
+                <input id="postofficeaccount_no" type="radio" name="postofficeaccount_inclusion" value="no">
+                <label for="postofficeaccount_no">No</label>
             </div>
+
         </div>
     </div>
     <div class="row form-row">
@@ -1140,35 +1134,36 @@
     </div>
     <div class="row form-row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-9">
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="centrename" id="centrename"
-                           value="" placeholder="Centre Name"/>
+                    <input type="text" class="no-boarder form-control input-sm" name="centername" id="centername"
+                           value="MUDDANAHALLI" placeholder="Center Name"/>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="size" id="size" value=""
+                    <input type="text" class="no-boarder form-control input-sm" name="size" id="size" value="8"
                            placeholder="Size"/>
                 </div>
             </div>
-
-        <div class="col-md-3">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="groupname" id="groupname"
-                       value="" placeholder="Group Name"/>
-            </div>
         </div>
-        <div class="col-md-3">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="size1" id="size1" value=""
-                       placeholder="Size"/>
+        <div class="col-md-12">
+            <div class="col-md-9">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="groupname" id="groupname"
+                           value="DHANALAKSHMI" placeholder="Group Name"/>
+                </div>
             </div>
-        </div>
+            <div class="col-md-3">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="size1" id="size1" value="100"
+                           placeholder="Size"/>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row form-row">
@@ -1177,7 +1172,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="centreleader"
-                       id="centreleader" value="" placeholder="Centre Leader"/>
+                       id="centreleader" value="Rajamma" placeholder="Centre Leader"/>
             </div>
         </div>
 
@@ -1198,7 +1193,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="groupleader" id="groupleader"
-                       value="" placeholder="Group Leader"/>
+                       value="Ganga" placeholder="Group Leader"/>
             </div>
         </div>
         <div class="col-md-6">
@@ -1432,20 +1427,20 @@
                     minlength: 2
                 },
                  idforrepeatclient: {
-                    required: true,
+                    required: false,
                     minlength: 2
                 },
                  member_age: {
                     required: true,
-                    minlength: 2
+                    number: true
                 },
                 member_husbandname: {
                     required: true,
-                    minlength: 2
+                    minlength: 8
                 },
                  member_husband_age: {
                     required: true,
-                    minlength: 2
+                     number: true
                 },
                  member_address1: {
                     required: true,
@@ -1457,7 +1452,8 @@
                 },
                  member_pincode: {
                     required: true,
-                    minlength: 2
+                    minlength: 5,
+                     number:true
                 },
                  member_telephone: {
                     required: true,

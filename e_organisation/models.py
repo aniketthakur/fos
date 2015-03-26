@@ -218,19 +218,14 @@ class EsthenosOrgSettings(db.Document):
     def __unicode__(self):
         return "EsthenosOrgSetings"
 
-class EsthenosOrgApplicationStatusType(db.Document):
-    status =  db.StringField(max_length=20, required=True,default="")
+class EsthenosOrgApplicationStatusType(db.EmbeddedDocument):
+    status =  db.StringField(max_length=100, required=True,default="")
     staus_message =  db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusTypes"
+        return "EsthenosOrgApplicationStatusType"
 
-class EsthenosOrgApplicationStatus(db.EmbeddedDocument):
-    status = db.ReferenceField('EsthenosOrgApplicationStatusTypes')
-    message = db.StringField(max_length=512, required=False,default="")
 
-    def __unicode__(self):
-        return "EsthenosOrgApplicationStatus"
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -322,8 +317,8 @@ class EsthenosOrgApplication(db.Document):
     pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
     vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
     aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-    current_status = db.ReferenceField('EsthenosOrgApplicationStatusTypes')
-    timeline =  db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationStatus))
+    current_status = db.EmbeddedDocumentField('EsthenosOrgApplicationStatusType')
+    timeline =  db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationStatusType))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
 

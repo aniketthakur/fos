@@ -55,7 +55,7 @@ def admin_logout():
     if not session['role'].startswith("ORG_"):
         abort(403)
     logout_user()
-    return redirect( "/accounts/login")
+    return redirect("/accounts/login")
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required
@@ -85,7 +85,23 @@ def uploads_group_app():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     file = request.files['file']
+    file_id = file.filename.split("_")[0]
+    print file_id
+
     unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    index = -1
+    application = None
+    for app in session_obj.applications:
+        index = index+1
+
+        if app.file_id == file_id:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = file_id
 
     if file:
         filename = secure_filename(file.filename)
@@ -95,7 +111,16 @@ def uploads_group_app():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        upload_images(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_applications = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_applications = 1
+        session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
         status=200,\
@@ -112,8 +137,21 @@ def uploads_group_kyc():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     file = request.files['file']
-
+    file_id = file.filename.split("_")[0]
+    print file_id
     unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    application = None
+    index = -1
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == file_id:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = file_id
     if file:
         filename = secure_filename(file.filename)
         filename = str(random_with_N_digits(6)) +filename
@@ -122,7 +160,64 @@ def uploads_group_kyc():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        upload_images(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_kycs = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/uploads_group_gkyc', methods=["GET","POST"])
+@login_required
+def uploads_group_gkyc():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    file = request.files['file']
+    file_id = file.filename.split("_")[0]
+    print file_id
+    unique_key = request.form.get('unique_key')
+    session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
+    application = None
+    index = -1
+    for app in session_obj.applications:
+        index = index+1
+        if app.file_id == file_id:
+            application = app
+            break
+
+    if application == None:
+        application =  EsthenosOrgApplicationMap()
+        application.file_id = file_id
+    if file:
+        filename = secure_filename(file.filename)
+        filename = str(random_with_N_digits(6)) +filename
+        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
+        if os.path.exists(o_fname):
+            os.remove(o_fname)
+        print "saving to .."+o_fname
+        file.save(o_fname)
+        uploaded_resp =  json.loads(upload_images(o_fname))
+        application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        if index == -1:
+            application.applications = []
+            session_obj.applications.append(application)
+            session_obj.number_of_kycs = 1
+        else:
+            session_obj.applications[index] = application
+            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
         status=200,\
@@ -318,7 +413,7 @@ def upload_documents():
                 tagged_application.group = group
                 tagged_application.tag  = app
                 settings = EsthenosSettings.objects.all()[0]
-                tagged_application.application_id = user.organisation.name.upper()[0:2]+settings.organisation_count+"{0:06d}".format(user.organisation.application_count)
+                tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"
                 tagged_application.status = "TAGGING_DONE"
                 tagged_application.save()
