@@ -2,6 +2,7 @@
 {% block css_sheets %}{{ super() }}
     <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='plugins/dropzone/css/dropzone.css')}}" rel="stylesheet" type="text/css"/>
+
 {% endblock %}
 
 {% block action_bar %}
@@ -39,97 +40,45 @@
                                             <label for="checkbox10"></label>
                                         </div>
                                     </th>
-                                    <th style="width:19%">Group ID</th>
-                                    <th style="width:19%">Group Name</th>
+                                    <th style="width:10%">Application ID</th>
+                                    <th style="width:19%">Applicant Name</th>
+                                    <th style="width:10%">Group Name</th>
+                                    <th style="width:10%">Center Name</th>
                                     <th style="width:16%">Date</th>
-                                    <th style="width:20%">Progress Status</th>
-                                    <th style="width:28%">Actions</th>
+                                    <th style="width:15%">Progress</th>
+                                    <th style="width:15%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class='clickable-row' data-href='/applications'>
-                                    <td class="v-align-middle">
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox11" type="checkbox" value="1">
-                                            <label for="checkbox11"></label>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle">1213444</td>
-                                    <td class="v-align-middle">GroupXZW</td>
-                                    <td><span class="muted">12/02/2015</span>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <div class="progress">
-                                            <div data-percentage="100%"  class="progress-bar progress-bar-success animate-progress-bar"></div>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
-                                    </td>
+                                {% for app in applications %}
+                                    <tr >
+                                        <td class="v-align-middle">
+                                            <div class="checkbox check-default">
+                                                <input id="checkbox11" type="checkbox" value="1">
+                                                <label for="checkbox11"></label>
+                                            </div>
+                                        </td>
+                                        <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track' ><ins>{{ app.application_id }}</ins></td>
+                                        <td class="v-align-middle">{{ app.applicant_name }}</td>
+                                        <td class="v-align-middle">{{ app.group.group_name }}</td>
+                                        <td class="v-align-middle">{{ app.center.center_name }}</td>
+                                        <td><span class="muted">{{ app.date_created }}</span>
+                                        </td>
+                                        <td class="v-align-middle">
+                                            <div class="progress">
+                                                <div data-percentage="80%"  class="progress-bar progress-bar-info animate-progress-bar"></div>
+                                            </div>
+                                        </td>
+                                        <td class="v-align-middle">
+                                            <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
+                                        </td>
 
-                                </tr>
-                                <tr class='clickable-row' data-href='/applications'>
-                                    <td>
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox12" type="checkbox" value="1">
-                                            <label for="checkbox12"></label>
-                                        </div>
-                                    </td>
-                                    <td>12134442</td>
-                                    <td class="v-align-middle">GroupXZW</td>
-                                    <td><span class="muted">12/02/2015</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div data-percentage="100%"  class="progress-bar progress-bar-success animate-progress-bar"></div>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
-                                    </td>
-                                </tr>
-                                <tr class='clickable-row' data-href='/applications'>
-                                    <td>
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox13" type="checkbox" value="1">
-                                            <label for="checkbox13"></label>
-                                        </div>
-                                    </td>
-                                    <td>1213442</td>
-                                    <td class="v-align-middle">GroupXZW</td>
-                                    <td><span class="muted">12/02/2015</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div data-percentage="100%"  class="progress-bar progress-bar-success animate-progress-bar"></div>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
-                                    </td>
-                                </tr>
-                                <tr class='clickable-row' data-href='/applications'>
-                                    <td>
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox14" type="checkbox" value="1">
-                                            <label for="checkbox14"></label>
-                                        </div>
-                                    </td>
-                                    <td>12134449</td>
-                                    <td class="v-align-middle">GroupXZW</td>
-                                    <td><span class="muted">12/02/2015</span>
-                                    </td>
-                                    <td>
-                                        <div class="progress ">
-                                            <div data-percentage="100%"  class="progress-bar progress-bar-success animate-progress-bar"></div>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
-                                    </td>
-                                </tr>
+                                    </tr>
+                                {% endfor %}
+
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>

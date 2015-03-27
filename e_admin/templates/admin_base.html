@@ -30,7 +30,14 @@
     <link href="{{ url_for('static', filename='css/custom-icon-set.css' )}}" rel="stylesheet" type="text/css"/>
 
     {% block css_sheets %}
-
+        <style type="text/css">
+            .clickable-row{
+                color: #ff0000;
+                text-decoration: underline;
+                -moz-text-decoration-color: red; /* Code for Firefox */
+                text-decoration-color: red;
+            }
+        </style>
     {% endblock %}
     <!-- END CSS TEMPLATE -->
 

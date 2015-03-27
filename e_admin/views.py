@@ -286,6 +286,7 @@ def admin_application():
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
+from datetime import date, timedelta
 from pixuate_storage import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
@@ -309,9 +310,28 @@ def admin_application_id(org_id,app_id):
     gkyc_ids = application.tag.gkyc_file_pixuate_id
     for gkyc_id in application.tag.gkyc_file_pixuate_id:
         gkyc_urls.append(get_url_with_id(gkyc_id))
-
+    today= datetime.datetime.today()
+    disbursement_date = datetime.datetime.today() + timedelta(days=1)
+    disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
+    products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
+
+
+
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["POST"])
+@login_required
+def submit_application(org_id,app_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+
+    print request.form
+
+    return redirect("/admin/organisation/5512da35e77989097c031a66/application/SA0000007/")
+
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
 @login_required
@@ -387,16 +407,6 @@ def admin_application_id_track(app_id):
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
-@admin_views.route('/admin/application/<app_id>/track_final', methods=["GET"])
-@login_required
-def admin_application_id_trackfinal(app_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template("admin_application_tracking_final.html", **kwargs)
 
 # @admin_views.route('/admin/cbcheck', methods=["GET"])
 # @login_required
@@ -525,42 +535,6 @@ def admin_lrpassbook():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_LRPassbook.html", **kwargs)
-
-@admin_views.route('/admin/employee/signup', methods=["POST"])
-def developer_signup():
-    if request.method == "POST":
-        register_form = RegistrationForm( request.form)
-        form = register_form
-
-        if(form.validate()):
-            user = form.save()
-            signal_user_registered.send("flask-satuh", user=user,plan_name = form.plan.data)
-            user = EsthenosUser.objects.get(id=user.get_id())
-            user.roles= list()
-            user.roles.append("EMPLOYEE")
-            user.p_user_type = form.user_type.data # "ACCOUNT_OWNER"
-            #new_user.p_user_type = "ACCOUNT_USER"
-            if form.owner_id.data is not None and form.owner_id.data != "":
-                owner = None
-                try:
-                    owner = EsthenosUser.objects.get(id = form.owner_id.data)
-                except Exception,e:
-                    print e.message
-                    type_, value_, traceback_ = sys.exc_info()
-                    print traceback.format_exception(type_, value_, traceback_)
-                user.owner = owner
-                user.billing_enabled = True
-            user.active = True
-            user.save()
-            from pitaya.utils import subscribe
-            subscribe(user.name,user.email)
-            html_data = render_template("email_welcome.html",user = user.name)
-            conn.send_email(current_app.config["SERVER_EMAIL"], "Welcome To Pixuate",None,[user.email],format="html" ,html_body=html_data)
-            return redirect( next_url)
-        else:
-            flash_errors(register_form)
-            kwargs = {"register_form": register_form}
-            return render_template( "auth/signup.html", **kwargs)
 
 
 

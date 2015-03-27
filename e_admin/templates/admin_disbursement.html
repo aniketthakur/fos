@@ -82,14 +82,14 @@
                         <tbody>
                         <!--made changes by Deepak-->
                         {% for app in  tagged_applications %}
-                        <tr class='clickable-row' data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'>
+                        <tr >
                             <td class="v-align-middle">
                                 <div class="checkbox check-default">
                                     <input id="checkbox11" type="checkbox" value="1">
                                     <label for="checkbox11"></label>
                                 </div>
                             </td>
-                            <td class="v-align-middle">{{ app.application_id }}</td>
+                            <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
                             <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
                             </td>
                             <td><span class="muted">{{ app.date_created }}</span>

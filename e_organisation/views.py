@@ -20,7 +20,7 @@ from datetime import timedelta
 import uuid
 from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
-from models import EsthenosOrgApplicationStatusType
+from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification
 import traceback
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -398,10 +398,20 @@ def upload_documents():
         center = None
         group = None
         if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
-            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
-            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+            unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:03d}".format(user.organisation.center_count)
+            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
+            if status:
+                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+
+            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:03d}".format(user.organisation.group_count)
+            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,group_id = unique_group_id,organisation=user.organisation,group_name=group_name)
+            if status:
+                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+
+
         elif center_name !=None and len(center_name)>0:
-            group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
+            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:03d}".format(user.organisation.group_count)
+            group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_id = unique_group_id,group_name=group_name)
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
@@ -462,13 +472,13 @@ def applications():
     print  center_id," ",group_id
     center = None
     if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(id=center_id)
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
         print center.center_name
     else:
         group_id = ''
     group = None
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
         print group.group_name
     else:
         center_id = ''
@@ -518,7 +528,30 @@ def download_disbusement():
         abort(403)
     username = current_user.name
     c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None and center_id != '':
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None and group_id != '':
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
     user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group)
+    else:
+        applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("download_disbusement.html", **kwargs)
 
@@ -545,26 +578,34 @@ def download_grt():
         abort(403)
     username = current_user.name
     c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None and center_id != '':
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None and group_id != '':
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
     user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group)
+    else:
+        applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("download_grt.html", **kwargs)
 
-@organisation_views.route('/billing', methods=["GET"])
-@login_required
-def billing_view():
-    username = current_user.name
-    c_user = current_user
-    from p_payments.models import PCardInfo
-    cards = PCardInfo.objects(user_id=str(current_user.id))
-    p_user_type = session['p_user_type']
-    billing = None
-    if p_user_type == "ACCOUNT_OWNER":
-        billing  = PUserBilling.objects.get(user = c_user.id)
-        print p_user_type
-        kwargs = locals()
-        return render_template("user_billing.html", **kwargs)
-    else:
-        abort(401)
+
 from werkzeug.utils import secure_filename
 import os,io
 from esthenos  import  s3_bucket
@@ -575,7 +616,7 @@ from esthenos  import  s3_bucket
 def user_profile_page():
     username = current_user.name
     c_user = current_user
-    profile = PUser.objects.get(id=current_user.id)
+    profile = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
 
     if request.method == "GET":
@@ -614,7 +655,7 @@ def user_profile_page():
 def notifications_page():
     username = current_user.name
     c_user = current_user
-    notifications = PUserNotification.objects.filter(to_user = c_user.id,read_state=False)
+    notifications = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False)
     if request_wants_json():
         return Response(json.dumps({"result":notifications},default=encode_model), content_type="application/json", mimetype='application/json')
     count = len(notifications)
@@ -626,7 +667,7 @@ def notifications_page():
 def set_notif_read():
     username = current_user.name
     c_user = current_user
-    res = PUserNotification.objects.filter(to_user = c_user.id,read_state=False).update(set__read_state=True)
+    res = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False).update(set__read_state=True)
     return Response('{"message":"status updated"}', content_type="application/json", mimetype='application/json')
 
 
@@ -638,7 +679,7 @@ def search_user():
     username = current_user.name
     c_user = current_user
     kwargs = locals()
-    users = PUser.objects(Q(name__contains=query_param) |Q(first_name__contains=query_param) | Q(last_name__contains=query_param) |Q(email__contains=query_param) ).only("name","email","id")
+    users = EsthenosUser.objects(Q(name__contains=query_param) |Q(first_name__contains=query_param) | Q(last_name__contains=query_param) |Q(email__contains=query_param) ).only("name","email","id")
     user_dict = list()
     for result in users:
         if str(result.id) != str(c_user.id):

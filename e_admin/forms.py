@@ -164,6 +164,7 @@ class AddOrganizationEmployeeForm(Form):
         emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
         emp.organisation =EsthenosOrg.objects.get(id=org_id)
         emp.postal_address =self.address_add_org_emp.data
+        emp.unique_id = emp.organisation.name.upper()[0:2]+"{0:03d}".format(emp.organisation.employee_count)
         emp.roles=list()
         emp.roles.append(self.role.data)
         emp.active =True
@@ -190,6 +191,8 @@ class AddOrganizationEmployeeForm(Form):
             emp.org_branch = EsthenosOrgBranch.objects.get(organisation=emp.organisation,branch_name = self.branch.data)
 
         emp.save()
+        org = EsthenosOrg.objects.get(id = emp.organisation.id)
+        org.update(inc__employee_count=1)
         return emp
 
 
@@ -197,6 +200,7 @@ class AddOrganizationEmployeeForm(Form):
 #      ('eligible_cycle', u'1'), ('emi_repayment', u'emi_collection_period_fortnightly'), ('total_processing_fees_borrowers_only', u'1'),
 #      ('insurance_free_borrowers_only', u'1'), ('interest_rate', u'1'), ('emi', u'1'), ('insurance_period', u'1'), ('total_processing_fees', u'1'),
 #      ('processing_fee', u'1'), ('total_processing_fees_borrowers_n_guarnteer', u'1'), ('last_emi ', u'1'), ('product_name', u'XYX')])
+
 class AddOrganisationProductForm( Form):
     product_name=TextField( validators=[v.Length(max=255)])
     loan_amount=TextField( validators=[ v.Length(max=255)])

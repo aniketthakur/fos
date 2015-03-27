@@ -3,7 +3,7 @@
     <style type="text/css">
         input.no-border {
             font-family: "segoe ui";
-            font-size: xx-small;
+            font-center_size: xx-small;
             line-height: 10px;
             height: 20px;
             width: 35px;
@@ -19,7 +19,7 @@
         input::-webkit-input-placeholder {
             color: #dddddd; /* white color with alpha = 1 (alpha = opacity varies on a scale of 0 to 1 with decimal values in between) */
             text-transform: capitalize;
-            font-size:9px;
+            font-center_size:9px;
             /*font-style: italic;*/
             font-weight: normal;
             letter-spacing: 0.1em;
@@ -31,7 +31,7 @@
         input::-moz-placeholder {
             color: #dddddd;
             text-transform: capitalize;
-            font-size: 9px;
+            font-center_size: 9px;
             /*font-style: italic;*/
             font-weight: normal;
             letter-spacing: 0.1em;
@@ -43,7 +43,7 @@
         input:-moz-placeholder {   /* Older versions of Firefox */
             color: #dddddd;    /* alpha property doesn't properly work Firefox */
             text-transform: capitalize;
-            font-size: 9px;
+            font-center_size: 9px;
             /*font-style: italic;*/
             font-weight: normal;
             letter-spacing: 0.1em;
@@ -55,7 +55,7 @@
         input:-ms-input-placeholder {
             color: #dddddd;
             text-transform: capitalize;
-            font-size: 8px;
+            font-center_size: 8px;
             /*font-style: italic;*/
             font-weight: normal;
             letter-spacing: 0.1em;
@@ -66,7 +66,7 @@
         }
         select {
             font-family: "segoe ui";
-            font-size: xx-small;
+            font-center_size: xx-small;
         }
 
         .col-fixed {
@@ -83,7 +83,7 @@
 {% endblock %}
 {% block maincontents %}
     <div class="row">
-    <form id="form_user_application" action="/admin/submit_application" method="post">
+    <form id="form_user_application" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}" method="post">
     <div id="rootwizard" class="col-md-12">
     <div class="form-wizard-steps">
         <ul class="wizard-steps">
@@ -364,34 +364,73 @@
     <br>
 
     <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         {% for app in app_urls %}
 
             <img src="{{ app }}" width="100%" class=""/>
         {% endfor %}
-        <img src="{{ url_for('static', filename='sample/application2.png')}}" width="100%" class=""/>
     </div>
 
 
-    <div class="col-md-6 col-fixed">
+    <div class="col-md-7 col-fixed">
     <br/>
     <br/>
     <div class="row form-row">
-        <div class="col-md-4">
+        <div class="col-md-6">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Search REPEAT ID/Customer Name/KYC ID</label>
+                <input type="text" class="no-boarder form-control input-sm" name="repeat_client_id"
+                       id="repeat_client_id" value="" placeholder="REPEAT_ID"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Choose a Product</label>
+                <select id="product_id" name="product_id" class="select2" style="width: 100%;">
+                    {% for p in products %}
+                        <option value="{{ p.id }}">{{ p.product_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-3">
             <label>State</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="state" id="state" value="{{ application.owner.org_state }}" class="no-boarder form-control input-sm"
+                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}" class="no-boarder form-control input-sm"
                        placeholder="State"/>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Taluk</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="taluk" id="taluk" value="{{ application.owner.org_region }}" class="no-boarder form-control input-sm"
+                <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control input-sm"
                        placeholder="Taluk"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Religion</label>
+                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
+                       value="{{ application.owner.org_region.region_name }}" placeholder="Region"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Branch</label>
+                <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
+                       value="{{ application.owner.org_branch.branch_name }}" placeholder="Branch"/>
             </div>
         </div>
         <!--
@@ -403,48 +442,37 @@
                        placeholder="SateID"/>
             </div>
         </div>
-        -->
-    </div>
-    <!--<div class="row form-row">-->
-    <div class="form-row row">
+        <div class="col-md-3">
 
-        <div class="col-md-4">
-            <label>Village</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
+                <label>Village</label>
                 <input type="text" name="village" id="village" value="" class="no-boarder form-control input-sm"
                        placeholder="Village"/>
             </div>
         </div>
+        -->
+    </div>
+    <!--<div class="row form-row">
+    <div class="form-row row">
+
+
         <!--
         <div class="col-md-4">
             <label>RegionId</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="regionid" id="regionid"
-                       value="{{ application.owner.org_state }}" placeholder="RegionId"/>
+                       value="{{ application.owner.org_state.state_name }}" placeholder="RegionId"/>
             </div>
         </div>
-        -->
-        <div class="col-md-4">
-            <label>Religion</label>
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
-                       value="{{ application.owner.org_region }}" placeholder="Region"/>
-            </div>
-        </div>
+
+
     </div>
     <!--</div>-->
     <div class="row form-row">
-        <label>Branch</label>
-        <div class="col-md-4">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
-                       value="{{ application.owner.org_branch }}" placeholder="Branch"/>
-            </div>
-        </div>
+
+
         <!--
         <div class="col-md-4">
             <label>BranchID</label>
@@ -455,41 +483,33 @@
             </div>
         </div>
         -->
-        <div class="col-md-4">
-            <label>CMID</label>
+        <div class="col-md-3">
+
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cmid" id="cmid" value="{{ application.owner.id }}"
+                <label>CMID</label>
+                <input type="text" class="no-boarder form-control input-sm" name="cm_id" id="cm_id" value="{{ application.owner.unique_id }}"
                        placeholder="CMID"/>
             </div>
         </div>
-
-    </div>
-    <div class="row form-row">
-        <label>CMCellNo</label>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cmcellno" id="cmcellno"
+                <label>CM Cell#</label>
+                <input type="text" class="no-boarder form-control input-sm" name="cm_cell_no" id="cm_cell_no"
                        value="{{ application.owner.postal_telephone }}" placeholder="CMCellNo"/>
             </div>
         </div>
-        <div class="col-md-4">
-            <label>Current Cycle</label>
+        <div class="col-md-3">
+
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cycle" id="cycle"
-                       value="2" placeholder="Current Cycle"/>
+                <label>Current Cycle</label>
+                <input type="text" class="no-boarder form-control input-sm" name="current_cycle" id="current_cycle"
+                       value="1" placeholder="Current Cycle"/>
             </div>
         </div>
-        <div class="col-md-4">
-            <label>REPEAT_ID</label>
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="idforrepeatclient"
-                       id="idforrepeatclient" value="" placeholder="REPEAT_ID"/>
-            </div>
-        </div>
+
     </div>
 
     <div class="row form-row">
@@ -541,8 +561,9 @@
         </div>
     </div>
     <div class="row form-row">
-        <label>Member Full Name</label>
+
         <div class="col-md-10">
+            <label>Member Full Name</label>
             <input id="member_fullname" type="text" class="no-boarder form-control input-sm" name="member_fullname"
                    value="" placeholder="Member Full Name">
         </div>
@@ -551,14 +572,9 @@
             <input id="member_age" type="text" class="no-boarder form-control input-sm" name="member_age"
                    value="" placeholder="Age">
         </div>
-        <div class="col-md-12">
-            <label>Member Father Name</label>
-            <input id="member_fathername" type="text" class="no-boarder form-control input-sm" name="member_fathername"
-                   value="" placeholder="Member Father Name">
-        </div>
         <div class="col-md-10">
-            <label>Member Husband Name</label>
-            <input id="member_husbandname" type="text" class="no-boarder form-control input-sm" name="member_husbandname"
+            <label>Member Father/Husband Name</label>
+            <input id="member_f_or_h_name" type="text" class="no-boarder form-control input-sm" name="member_f_or_h_name"
                    value="" placeholder="Member Husband Name">
         </div>
         <div class="col-md-2">
@@ -579,8 +595,9 @@
         </div>
     </div>
     <div class="row form-row">
-        <label>Pin Code</label>
+
         <div class="col-md-4">
+            <label>Pin Code</label>
             <input id="member_pincode" type="text" class="no-boarder form-control input-sm" name="member_pincode"
                    value="" placeholder="Pin Code">
         </div>
@@ -608,7 +625,6 @@
             </div>
         </div>
         <div class="col-md-5">
-
             <label>KYC Number</label>
             <input id="member_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
                    value="" placeholder="">
@@ -662,7 +678,7 @@
         <div class="col-md-4">
             <div class="grid simple">
                 <label>Caste</label>
-                <select id="select_religion" name="select_religion">
+                <select id="select_member_religion" name="select_member_religion" style="width: 100%;">
                     <option value="HINDU">HINDU</option>
                     <option value="MISILM">MUSILM</option>
                     <option value="SIKH">SIKH</option>
@@ -675,7 +691,7 @@
         </div>
         <div class="col-md-4">
             <label>Category</label>
-            <select id="select_caste_category" name="select_caste_category">
+            <select id="select_member_caste_category" name="select_member_caste_category" style="width: 100%;">
                 <option value="GENERAL">GENERAL</option>
                 <option value="OBC">OBC</option>
                 <option value="MBC">MBC</option>
@@ -686,9 +702,9 @@
         <div class="col-md-4">
             <label>Disability</label>
             <div class="radio radio-success">
-                <input id="disability_yes" type="radio" name="disability" value="" checked="">
+                <input id="disability_yes" type="radio" name="radio_member_disability" value="" checked="">
                 <label for="disability_yes">Yes</label>
-                <input id="disability_no" type="radio" name="disability" value="">
+                <input id="disability_no" type="radio" name="radio_member_disability" value="">
                 <label for="disability_no">no</label>
             </div>
         </div>
@@ -696,7 +712,7 @@
     <div class="row form-row">
         <div class="col-md-4">
             <label>Type Of House</label>
-            <select id="select_typeofresidence" name="select_typeofresidence" style="width: 100%;"
+            <select id="select_type_of_residence" name="select_type_of_residence" style="width: 100%;"
                     >
                 <option value="FAMILY_OWNED">FAMILY OWNED</option>
                 <option value="SELF_OWNED">SELF OWNED</option>
@@ -736,34 +752,41 @@
             <label>Applied Loan Amount</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="appliedloanamount"
-                       id="appliedloanamount" value="10000" placeholder="Applied Loan Amount"/>
+                <input type="text" class="no-boarder form-control input-sm" name="applied_loan_amount"
+                       id="applied_loan_amount" value="10000" placeholder="Applied Loan Amount"/>
             </div>
         </div>
 
         <div class="col-md-4">
-            <label>Family Size</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Family Size</label>
-                <input type="text" class="no-boarder form-control input-sm" name="familysize"
-                       id="familysize" value="5" placeholder="Family Size"/>
+                <input type="text" class="no-boarder form-control input-sm" name="family_size"
+                       id="family_size" value="5" placeholder="Family Size"/>
             </div>
         </div>
-        <div class="col-md-4">
-            <label>Child 18-12</label>
+        <div class="col-md-2">
+            <label>Child 12-18</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <input type="text" class="no-boarder form-control input-sm" name="child"
-                       id="child" value="1" placeholder="Child 18-12"/>
+                       id="child_12_18" value="1" placeholder="Child 12-18"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Child above 18</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="child"
+                       id="child_above_18" value="1" placeholder="Child above 18"/>
             </div>
         </div>
         <div class="col-md-12">
             <label>Purpose Of Loan</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="purposeofloan"
-                       id="purposeofloan" value="farming" placeholder="Purpose Of Loan"/>
+                <input type="text" class="no-boarder form-control input-sm" name="purpose_of_loan"
+                       id="purpose_of_loan" value="farming" placeholder="Purpose Of Loan"/>
             </div>
         </div>
     </div>
@@ -771,7 +794,7 @@
     <div class="row form-row">
         <div class="col-md-5">
             <label>Business Category </label>
-            <select id="p_businesscategory" name="p_businesscategory" class="select2" style="width: 100%;"
+            <select id="selec_p_business_category" name="selec_p_business_category" class="select2" style="width: 100%;"
                     >
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
@@ -785,7 +808,7 @@
 
         <div class="col-md-4">
             <label>Business </label>
-            <select id="p_business" name="p_business" class="select2" style="width: 100%;"
+            <select id="selec_p_business" name="selec_p_business" class="select2" style="width: 100%;"
                     >
                 <option value="ORCHARD">ORCHARD</option>
                 <option value="MANGO">MANGO</option>
@@ -817,7 +840,7 @@
         <div class="col-md-5">
             <label>Business Category </label>
 
-            <select id="s_businesscategory" name="s_businesscategory" class="select2" style="width: 100%;"
+            <select id="select_s_business_category" name="select_s_business_category" class="select2" style="width: 100%;"
                     >
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
@@ -831,7 +854,7 @@
 
         <div class="col-md-4">
             <label>Business </label>
-            <select id="s_business" name="s_business" class="select2" style="width: 100%;"
+            <select id="select_s_business" name="select_s_business" class="select2" style="width: 100%;"
                     >
                 <option value="ORCHARD">ORCHARD</option>
                 <option value="MANGO">MANGO</option>
@@ -862,7 +885,7 @@
         <div class="col-md-5">
             <label>Business Category </label>
 
-            <select id="t_businesscategory" name="t_businesscategory" class="select2" style="width: 100%;"
+            <select id="select_t_business_category" name="select_t_business_category" class="select2" style="width: 100%;"
                     >
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
@@ -876,7 +899,7 @@
 
         <div class="col-md-4">
             <label>Business </label>
-            <select id="t_business" name="t_business" class="select2" style="width: 100%;"
+            <select id="select_t_business" name="select_t_business" class="select2" style="width: 100%;"
                     >
                 <option value="ORCHARD">ORCHARD</option>
                 <option value="MANGO">MANGO</option>
@@ -932,7 +955,7 @@
                 <label>Self Owend</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="selfowend" id="selfowend"
+                    <input type="text" class="no-boarder form-control input-sm" name="self_owned_land" id="self_owned_land"
                            value="1 Acare" placeholder="Self Owend"/>
                 </div>
             </div>
@@ -940,7 +963,7 @@
                 <label>Share</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="shared" id="shared"
+                    <input type="text" class="no-boarder form-control input-sm" name="shared_land" id="shared_land"
                            value="" placeholder="Shared"/>
                 </div>
             </div>
@@ -948,7 +971,7 @@
                 <label>Patta</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="patta" id="patta" value="2Acare"
+                    <input type="text" class="no-boarder form-control input-sm" name="patta_land" id="patta_land" value="2Acare"
                            placeholder="Patta"/>
                 </div>
             </div>
@@ -957,37 +980,39 @@
     <div class="row form-row">
         <div class="col-md-12">
             <h4> Financial Liabilities </h4>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="input-with-icon  right">
                     <i class=""></i>
+                    <label>Loans</label>
                     <input type="text" class="no-boarder form-control input-sm" name="fl_loans" id="fl_loans" value="2000"
                            placeholder="Loans"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="input-with-icon  right">
                     <i class=""></i>
+                    <label>Chits</label>
                     <input type="text" class="no-boarder form-control input-sm" name="fl_chits" id="fl_chits" value="2000"
-                           placeholder="Loans"/>
+                           placeholder="Chits"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="input-with-icon  right">
                     <i class=""></i>
+                    <label>Insurance</label>
                     <input type="text" class="no-boarder form-control input-sm" name="fl_insurance" id="fl_insurance" value="2000"
-                           placeholder="Loans"/>
+                           placeholder="Insurance"/>
                 </div>
             </div>
 
 
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="input-with-icon  right">
                     <i class=""></i>
+                    <label>Family and Friends</label>
                     <input type="text" class="no-boarder form-control input-sm" name="fnf_inclusion" id="fnf_inclusion" value="2000"
-                           placeholder="Loans"/>
+                           placeholder="Family n Friends"/>
                 </div>
             </div>
         </div>
@@ -996,7 +1021,7 @@
     <div class="row form-row">
         <div class="col-md-12">
             <h4> Financial Inclusions </h4>
-            <div class="col-md-4 radio radio-success">
+            <div class="col-md-3 radio radio-success">
 
                 <h5>Bank Account</h5>
                 <input id="bankaccount_yes" type="radio" name="bankaccount_inclusion" value="yes"
@@ -1006,7 +1031,7 @@
                 <label for="bankaccount_no">No</label>
             </div>
 
-            <div class="col-md-4 radio radio-success">
+            <div class="col-md-3 radio radio-success">
 
                 <h5>Chits</h5>
                 <input id="chits_yes" type="radio" name="chits_inclusion" value="yes"
@@ -1015,7 +1040,7 @@
                 <input id="chits_no" type="radio" name="chits_inclusion" value="no">
                 <label for="chits_no">No</label>
             </div>
-            <div class="col-md-4 radio radio-success">
+            <div class="col-md-3 radio radio-success">
 
                 <h5>Micro Pension</h5>
                 <input id="micropension_yes" type="radio" name="micropension_inclusion" value="yes"
@@ -1024,9 +1049,8 @@
                 <input id="micropension_no" type="radio" name="micropension_inclusion" value="no">
                 <label for="micropension_no">No</label>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-4 radio radio-success">
+
+            <div class="col-md-3 radio radio-success">
 
                 <h5>Post Office Account</h5>
                 <input id="postofficeaccount_yes" type="radio" name="postofficeaccount_inclusion" value="yes"
@@ -1041,76 +1065,74 @@
         <div class="col-md-12">
             <h4>Business Expenditure</h4>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Household Expenditure</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="householdexpenditure"
-                           id="householdexpenditure" value="1000"
+                    <input type="text" class="no-boarder form-control input-sm" name="house_hold_expenditure"
+                           id="house_hold_expenditure" value="1000"
                            placeholder="Household Expenditure"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Food</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="food" id="food" value="300"
+                    <input type="text" class="no-boarder form-control input-sm" name="food_expenditure" id="food_expenditure" value="300"
                            placeholder="Food"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Medical</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="medical" id="medical"
+                    <input type="text" class="no-boarder form-control input-sm" name="medical_expenditure" id="medical_expenditure"
                            value="200" placeholder="Medical"/>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row form-row">
-        <div class="col-md-12">
-            <div class="col-md-4">
+
+            <div class="col-md-3">
                 <label>Entretainmaint</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="entretainmaint"
-                           id="entretainmaint" value="50" placeholder="Entretainmaint"/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label>Festiva</label>
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="festival" id="festival"
-                           value="100" placeholder="Festival"/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <label>Education</label>
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="education" id="education"
-                           value="50" placeholder="Education"/>
+                    <input type="text" class="no-boarder form-control input-sm" name="entertainment_expenditure"
+                           id="entertainment_expenditure" value="50" placeholder="Entretainmaint"/>
                 </div>
             </div>
         </div>
     </div>
     <div class="row form-row">
         <div class="col-md-12">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <label>Festiva</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="festival_expenditure" id="festival_expenditure"
+                           value="100" placeholder="Festival"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Education</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="education_expenditure" id="education_expenditure"
+                           value="50" placeholder="Education"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <label>Travel</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="travel" id="travel" value="20"
+                    <input type="text" class="no-boarder form-control input-sm" name="travel_expenditure" id="travel_expenditure" value="20"
                            placeholder="Travel"/>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>House Rent</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="house_rent" id="house_rent"
+                    <input type="text" class="no-boarder form-control input-sm" name="house_rent_expenditure" id="house_rent_expenditure"
                            value=""
                            placeholder="House Rent"/>
                 </div>
@@ -1174,180 +1196,170 @@
         </div>
     </div>
     <div class="row form-row">
-        <div class="col-md-12">
-            <div class="col-md-9">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="centername" id="centername"
-                           value="MUDDANAHALLI" placeholder="Center Name"/>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="size" id="size" value="8"
-                           placeholder="Size"/>
-                </div>
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_name" id="center_name"
+                       value="MUDDANAHALLI" placeholder="Center Name"/>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="col-md-9">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="groupname" id="groupname"
-                           value="DHANALAKSHMI" placeholder="Group Name"/>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="size1" id="size1" value="100"
-                           placeholder="Size"/>
-                </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_size" id="center_size" value="8"
+                       placeholder="Size"/>
             </div>
         </div>
     </div>
     <div class="row form-row">
-        <div class="col-md-12">
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_name" id="group_name"
+                       value="DHANALAKSHMI" placeholder="Group Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_size" id="group_size" value="100"
+                       placeholder="Size"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="centreleader"
-                       id="centreleader" value="Rajamma" placeholder="Centre Leader"/>
+                <label>Centre Leader</label>
+                <input type="text" class="no-boarder form-control input-sm" name="centre_leader"
+                       id="centre_leader" value="Rajamma" placeholder="Centre Leader"/>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cell" id="cell" value=""
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_leader_cell" id="center_leader_cell" value=""
                        placeholder="Cell"/>
             </div>
         </div>
-
-        </div>
-
     </div>
     <div class="row form-row">
-        <div class="col-md-12">
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="groupleader" id="groupleader"
+                <label>Group Leader</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_leader" id="group_leader"
                        value="Ganga" placeholder="Group Leader"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" class="no-boarder form-control input-sm" name="cell2" id="cell2" value=""
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_leader_cell" id="group_leader_cell" value=""
                        placeholder="Cell"/>
             </div>
         </div>
-        </div>
     </div>
     <div class="row form-row">
-        <div class="col-md-12">
-            <div class="col-md-4 form-group">
-                <label>Excepted Disbursment Date</label>
+        <div class="col-md-4 form-group">
+            <label>Excepted Disbursment Date</label>
 
-                <div class="input-with-icon  right">
-                    <i class=""></i>
-                    <input type="text" class="no-boarder form-control input-sm" name="excepteddisbursmentdate"
-                           id="excepteddisbursmentdate" value=""
-                           placeholder="DD/MM/YYYY"/>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row form-row">
-        <div class="col-md-12">
-            <h4>Village Facilities</h4>
-
-            <div class="col-md-4 form-group">
-                <h5>Medical Facilities </h5>
-
-                <select id="p_medicalfacilities" name="p_medicalfacilities" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="PHC">PHC</option>
-                    <option value="PUBLIC HOSPITAL">PUBLIC HOSPITAL</option>
-                    <option value="PRIVATE HOSPITAL">PRIVATE HOSPITAL</option>
-
-
-                </select>
-            </div>
-
-            <div class="col-md-4 form-group">
-                <h5>Hospital Category </h5>
-                <select id="p_hospitalcategory" name="p_hospitalcategory" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="ALLOPATHY">ALLOPATHY</option>
-                    <option value="HOMEOPATHY">HOMEOPATHY</option>
-                    <option value="AYURVEDIC">AYURVEDIC</option>
-                    <option value="YUNANI">YUNANI</option>
-
-
-                </select>
-            </div>
-            <div class="col-md-4 form-group form-group">
-                <h5>ROAD </h5>
-                <select id="p_road" name="p_road" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="CONCRETE">CONCRETE</option>
-                    <option value="KACHHA">KACHHA</option>
-                    <option value="TAR">TAR</option>
-
-
-                </select>
-
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="excepted_disbursment_date"
+                       id="excepted_disbursment_date" value="{{ disbursement_date_str }}"
+                       placeholder="DD/MM/YYYY"/>
             </div>
         </div>
     </div>
+
     <div class="row form-row">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <h5>Public Transport </h5>
+        <h4>Village Facilities</h4>
 
-                <select id="p_publictransport" name="p_publictransport" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="BUS">BUS</option>
-                    <option value="TRAIN">TRAIN</option>
-                    <option value="NONE">NONE</option>
+        <div class="col-md-4 form-group">
+            <h5>Medical Facilities </h5>
 
-
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <h5>Water </h5>
-                <select id="p_water" name="p_water" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="POND">POND</option>
-                    <option value="WELL">WELL</option>
-                    <option value="RIVER">RIVER</option>
-                    <option value="BOREWELL">BOREWELL</option>
+            <select id="village_medical_facilities" name="village_medical_facilities" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="PHC">PHC</option>
+                <option value="PUBLIC HOSPITAL">PUBLIC HOSPITAL</option>
+                <option value="PRIVATE HOSPITAL">PRIVATE HOSPITAL</option>
 
 
-                </select>
-            </div>
-            <div class="col-md-4 form-group">
-                <h5>Electricity </h5>
-                <select id="p_electricity" name="p_electricity" class="select2" style="width: 100%;"
-                        >
-                    <option value="PHC">NONE</option>
-                    <option value="12HR">12HR</option>
-                    <option value="12-24HR">12-24HR</option>
-                    <option value="24HR">24HR</option>
-                </select>
+            </select>
+        </div>
 
-            </div>
+        <div class="col-md-4 form-group">
+            <h5>Hospital Category </h5>
+            <select id="village_hospital_category" name="village_hospital_category" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="ALLOPATHY">ALLOPATHY</option>
+                <option value="HOMEOPATHY">HOMEOPATHY</option>
+                <option value="AYURVEDIC">AYURVEDIC</option>
+                <option value="YUNANI">YUNANI</option>
+
+
+            </select>
+        </div>
+        <div class="col-md-4 form-group form-group">
+            <h5>ROAD </h5>
+            <select id="village_road" name="village_road" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="CONCRETE">CONCRETE</option>
+                <option value="KACHHA">KACHHA</option>
+                <option value="TAR">TAR</option>
+
+
+            </select>
+
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4">
+            <h5>Public Transport </h5>
+
+            <select id="village_public_transport" name="village_public_transport" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="BUS">BUS</option>
+                <option value="TRAIN">TRAIN</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <h5>Water </h5>
+            <select id="village_water" name="village_water" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="POND">POND</option>
+                <option value="WELL">WELL</option>
+                <option value="RIVER">RIVER</option>
+                <option value="BOREWELL">BOREWELL</option>
+
+
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <h5>Electricity </h5>
+            <select id="village_electricity" name="village_electricity" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="12HR">12HR</option>
+                <option value="12-24HR">12-24HR</option>
+                <option value="24HR">24HR</option>
+            </select>
 
         </div>
     </div>
@@ -1361,7 +1373,11 @@
         <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
         <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a>
         </li>
-        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a></li>
+        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Document Accepted&nbsp;&nbsp;</a></li>
+
+        <li class=""><a href="javascript:;" class="btn btn-warning">&nbsp;&nbsp;Bad Document&nbsp;&nbsp;</a></li>
+        <li class=""><a href="javascript:;" class="btn btn-warning">&nbsp;&nbsp;Document Missing&nbsp;&nbsp;</a></li>
+        <li class="next"><a href="javascript:;" class="btn btn-success" id="application_tagged">&nbsp;&nbsp;Application Tagged&nbsp;&nbsp;</a></li>
     </ul>
     </div>
     </div>
@@ -1465,17 +1481,17 @@
                     required: true,
                     number:true
                 },
-                 cmid: {
+                 cm_id: {
                     required: true,
                     number:true
                 },
-                 cmcellno: {
+                 cm_cell_no: {
                     required: true,
                     minlength: 2
                 },
-                 cycle: {
+                 current_cycle: {
                     required: true,
-                    minlength: 2
+                    number: true
                 },
                  idforrepeatclient: {
                     required: false,
@@ -1485,7 +1501,7 @@
                     required: true,
                     number: true
                 },
-                member_husbandname: {
+                member_f_or_h_name: {
                     required: true,
                     minlength: 8
                 },
@@ -1516,7 +1532,11 @@
                 },
                 member_id_proof_number: {
                     required: true,
-                    number:true
+                    minlength: 6
+                },
+                member_address_proof_number:{
+                    required: true,
+                    minlength: 6
                 },
                 guarantor_fullname: {
                     required: true,
@@ -1524,9 +1544,9 @@
                 },
                guarantor_id_proof_number: {
                     required: true,
-                    number:true
+                    minlength: 6
                 },
-                appliedloanamount: {
+                applied_loan_amount: {
                     required: true,
                     number:true
                 },
@@ -1534,7 +1554,7 @@
                     required: true,
                     number:true
                 },
-                purposeofloan: {
+                purpose_of_loan: {
                     required: true,
                     minlength: 2
                 },
@@ -1550,16 +1570,16 @@
                     required: true,
                     number:true
                 },
-                 selfowend: {
-                    required: true,
+                 self_owned_land: {
+                    required: false,
                     minlength: 2
                 },
-                 shared: {
-                    required: true,
+                 shared_land: {
+                    required: false,
                     minlength: 2
                 },
-                 patta: {
-                    required: true,
+                 patta_land: {
+                    required: false,
                     minlength: 2
                 },
                  loans: {
@@ -1567,95 +1587,95 @@
                     number:true
                 },
                  chits: {
-                    required: true,
+                    required: false,
                     minlength: 2
                 },
                  insurance: {
-                    required: true,
+                    required: false,
                     minlength: 2
                 },
                  friendandfamily: {
-                    required: true,
+                    required: false,
                     minlength: 2
                 },
                  bankaccount: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                  p_chits: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                  micropension: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                  pastofficeaccount: {
+                    required: false,
+                    number:true
+                },
+                 house_hold_expenditure: {
                     required: true,
                     number:true
                 },
-                 householdexpenditure: {
-                    required: true,
-                    number:true
-                },
-                 food: {
+                 food_expenditure: {
                     required: true,
                     minlength: 2
                 },
-                 medical: {
-                    required: true,
+                 medical_expenditure: {
+                    required: false,
                     minlength: 2
                 },
-                 entretainmaint: {
-                    required: true,
+                 entertainment_expenditure: {
+                    required: false,
                     minlength: 2
                 },
 
-                festival: {
-                    required: true,
+                festival_expenditure: {
+                    required: false,
                     minlength: 2
                 },
-                travel: {
-                    required: true,
+                travel_expenditure: {
+                    required: false,
                     minlength: 2
                 },
-                house_rent: {
-                    required: true,
+                house_rent_expenditure: {
+                    required: false,
                     number:true
                 },
                 moneylenders_amount: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                 moneylenders_roi: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                 chit_amount: {
-                    required: true,
+                    required: false,
                    number:true
                 },
                 chit_roi: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                 bankfi_amount: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                 bankfi_roi: {
-                    required: true,
+                    required: false,
                     number:true
                 },
                 centrename: {
                     required: true,
                     minlength: 2
                 },
-                size: {
+                center_size: {
                     required: true,
                     number:true
                 },
-                groupname: {
+                group_name: {
                     required: true,
                     minlength: 2
                 },
@@ -1663,34 +1683,38 @@
                     required: true,
                     number:true
                 },
-                centreleader: {
+                centre_leader: {
                     required: true,
                     minlength: 2
                 },
-                cell: {
+                center_leader_cell: {
+                    required: false,
+                    number :true
+                },
+                group_leader: {
                     required: true,
                     minlength: 2
                 },
-                groupleader: {
+                group_leader_cell: {
+                    required: false,
+                    number :true
+                },
+                excepted_disbursment_date: {
                     required: true,
                     minlength: 2
                 },
-                cell2: {
+                education_expenditure: {
                     required: true,
                     minlength: 2
                 },
-                excepteddisbursmentdate: {
-                    required: true,
-                    minlength: 2
+                child_above_18: {
+                    required: false,
+                    number: true
                 },
-                education: {
-                    required: true,
-                    minlength: 2
-                },
-                child: {
-                    required: true,
-                    minlength: 2
-                },
+                child_12_18: {
+                    required: false,
+                    number: true
+                }
         },
 
             errorPlacement:function (label, element) {
@@ -1710,6 +1734,9 @@
                 else {
                     $('#rootwizard').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
                     $('#rootwizard').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                    $("#application_tagged").click(function(){
+                        $("#form_user_application").submit();
+                    });
                 }
             }
         });
@@ -1771,7 +1798,7 @@
                         }
 
                         $("#member_fullname").val(name);
-                        $("#member_fathername").val(fname);
+                        $("#member_f_or_h_name").val(fname);
                         $("#member_id_proof_number").val(kycid);
                         $('#member_id_proof_aadhaar').prop('checked', true);
 
@@ -1792,7 +1819,7 @@
                         $("#kyc1_kycid").val(kycid);
 
                         $("#member_fullname").val(name);
-                        $("#member_fathername").val(fname);
+                        $("#member_f_or_h_name").val(fname);
                         $("#member_id_proof_number").val(kycid);
                         $('#member_id_proof_others').prop('checked', true);
 
@@ -1812,7 +1839,7 @@
                         $("#kyc1_kycid").val(kycid);
 
                         $("#member_fullname").val(name);
-                        $("#member_fathername").val(fname);
+                        $("#member_f_or_h_name").val(fname);
                         $("#member_id_proof_number").val(kycid);
                         $('#member_id_proof_vid').prop('checked', true);
                     });
@@ -1901,15 +1928,15 @@
         placeholder:"choose a document type",
         allowClear:true
     });
-    $("#select_religion").select2({
+    $("#select_member_religion").select2({
         placeholder:"choose a religion",
         allowClear:true
     });
-    $("#select_typeofresidence").select2({
+    $("#select_type_of_residence").select2({
         placeholder:"type of residence",
         allowClear:true
     });
-    $("#select_caste_category").select2({
+    $("#select_member_caste_category").select2({
         placeholder:"select caste",
         allowClear:true
     });
