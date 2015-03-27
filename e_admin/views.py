@@ -664,7 +664,6 @@ def mobile_application():
         group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
     app_form=AddApplicationMobile(form)
     if(app_form.validate()):
-
         tagged_application =  EsthenosOrgApplication()
         tagged_application.organisation = user.organisation
         tagged_application.center = center
@@ -679,6 +678,7 @@ def mobile_application():
         print "Form Validated"
         print "Saving Form"
         app_form.save()
+        return Response(json.dumps({'status':'sucess','application_id':tagged_application.application_id}), content_type="application/json", mimetype='application/json')
     else:
         flash_errors(app_form)
         print "Could Not validate"
