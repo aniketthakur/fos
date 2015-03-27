@@ -2,8 +2,8 @@ __author__ = 'prathvi'
 from esthenos  import db
 import datetime
 
-from p_organisation.models import PUser
+from e_admin.models import EsthenosUser
 class Metadata(db.Document):
-    user = db.ReferenceField(PUser)
+    user = db.ReferenceField(EsthenosUser)
     data = db.StringField(max_length=2048,default='{}')
     date_modified = db.DateTimeField(default=datetime.datetime.now)

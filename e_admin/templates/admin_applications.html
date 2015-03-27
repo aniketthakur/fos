@@ -1,0 +1,149 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="row">
+        <h3>Loan <span class="semi-bold">Applications</span></h3>
+        <p>Note: Results are loaded after selecting organisation </p>
+        <br>
+        <div class="col-md-6">
+
+            <select id="source" style="width:100%">
+                <option value="1">Samasta</option>
+                <option value="2">XYZ</option>
+                <option value="3">ABC</option>
+                <option value="4">MNO</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="branch" style="width:100%">
+                <option value="1">Branch1</option>
+                <option value="2">Branch2</option>
+                <option value="3">Branch3</option>
+                <option value="4">Branch4</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="region" style="width:100%">
+                <option value="1">Region1</option>
+                <option value="2">Region2</option>
+                <option value="3">Region3</option>
+                <option value="4">Region4</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by center">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by group">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by center id">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by group id">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by application id">
+        </div>
+
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by KYC id">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="search by applicant name">
+        </div>
+        <div class="col-md-3">
+            <select id="applicationstatus" multiple style="width:100%">
+                <option value="1">PROCESSING</option>
+                <option value="2">CB_CHECK_READY</option>
+                <option value="3">CB_REJECTED</option>
+                <option value="4">CB_ACCEPTED</option>
+            </select>
+        </div>
+    </div>
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="grid simple ">
+                <div class="grid-title">
+                    <h4>Loan <span class="semi-bold">Application</span></h4>
+                    <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config" data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
+                </div>
+                <div class="grid-body ">
+                    <table class="table table-hover table-condensed" id="example">
+                        <thead>
+                        <tr>
+                            <th style="width:1%" >
+                                <div class="checkbox check-default">
+                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
+                                    <label for="checkbox10"></label>
+                                </div>
+                            </th>
+                            <th style="width:10%">Application ID</th>
+                            <th style="width:15%">Source</th>
+                            <th style="width:20%">Date</th>
+                            <th style="width:20%">Progress Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for app in  tagged_applications %}
+                        <tr >
+                            <td class="v-align-middle">
+                                <div class="checkbox check-default">
+                                    <input id="checkbox11" type="checkbox" value="1">
+                                    <label for="checkbox11"></label>
+                                </div>
+                            </td>
+                            <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
+                            <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
+                            </td>
+                            <td><span class="muted">{{ app.date_created }}</span>
+                            </td>
+                            <td class="v-align-middle">
+                                <div class="progress">
+                                    <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#source").select2({
+                placeholder: "Select a State",
+                allowClear: true
+            });
+            $("#branch").select2();
+            $("#region").select2();
+            $("#applicationstatus").select2({
+                placeholder: "filter by application state",
+                allowClear: true
+            });
+
+            $(".clickable-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+{% endblock %}

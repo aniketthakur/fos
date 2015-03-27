@@ -1,0 +1,2072 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        input.no-border {
+            font-family: "segoe ui";
+            font-center_size: xx-small;
+            line-height: 10px;
+            height: 20px;
+            width: 35px;
+            padding: 0px;
+            margin: 0px;
+            margin-bottom: 2px;
+            outline: none;
+            border: 0px;
+            vertical-align: baseline;
+            text-shadow: 0px 1px 1px #000;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #dddddd; /* white color with alpha = 1 (alpha = opacity varies on a scale of 0 to 1 with decimal values in between) */
+            text-transform: capitalize;
+            font-center_size:9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: none;  /* blink property doesn't work in chrome right now */
+        }
+        input::-moz-placeholder {
+            color: #dddddd;
+            text-transform: capitalize;
+            font-center_size: 9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 25px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
+        input:-moz-placeholder {   /* Older versions of Firefox */
+            color: #dddddd;    /* alpha property doesn't properly work Firefox */
+            text-transform: capitalize;
+            font-center_size: 9px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
+        input:-ms-input-placeholder {
+            color: #dddddd;
+            text-transform: capitalize;
+            font-center_size: 8px;
+            /*font-style: italic;*/
+            font-weight: normal;
+            letter-spacing: 0.1em;
+            line-height: 18px;
+            padding: 0px 10px;
+            text-align: left;
+            text-decoration: blink;
+        }
+        select {
+            font-family: "segoe ui";
+            font-center_size: xx-small;
+        }
+
+        .col-fixed {
+            border: solid #ffffff 2px;
+            overflow: scroll;
+            height: 1600px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="row">
+    <form id="form_user_application" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}" method="post">
+    <div id="rootwizard" class="col-md-12">
+    <div class="form-wizard-steps">
+        <ul class="wizard-steps">
+            <li class="" data-target="#step1"><a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span
+                    class="title">KYC User1</span> </a></li>
+            <li data-target="#step2" class=""><a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span
+                    class="title">KYC User2</span> </a></li>
+            <li data-target="#step3" class=""><a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span
+                    class="title">KYC Borrower</span> </a></li>
+            <li data-target="#step4" class=""><a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span
+                    class="title">Application Form</span> </a></li>
+            </span> </a> </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="tab-content transparent">
+    <div class="tab-pane" id="tab1"><br>
+        <h4 class="semi-bold">Step 1 - <span class="light">KYC1 Information</span></h4>
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-title no-border">
+                        <img src="{{ kyc_urls[0] }}" width="100%" class=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
+                    <select id="applicationtype" style="width: 100%;">
+                        <option value="AADHAAR">AADHAAR</option>
+                        <option value="VID">VOTERS ID</option>
+                        <option value="PANCARD">PANCARD</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc1_kycid" id="kyc1_kycid" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="KYC ID"  required>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc1_name" id="kyc1_name" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc1_f_or_h_name" id="kyc1_f_or_h_name" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name" required>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc1_dob" id="kyc1_dob" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Date of Birth" required>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc1_address" id="kyc1_address" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <input name="kyc1_city" id="kyc1_city" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <input name="kyc1_state" id="kyc1_state" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="State">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-8">
+                            <input name="kyc1_country" id="kyc1_country" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Country">
+                        </div>
+                        <div class="col-md-4">
+                            <input name="kyc1_postal_code" id="kyc1_postal_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-4">
+                            <input name="kyc1_tele_code" id="kyc1_tele_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="+91">
+                        </div>
+                        <div class="col-md-8">
+                            <input name="kyc1_teleno" id="kyc1_teleno" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Phone Number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tab2"><br>
+        <h4 class="semi-bold">Step 2 - <span class="light">KYC2 Information</span></h4>
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-title no-border">
+                        <img src="{{ kyc_urls[1] }}" width="100%" class=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <input type="hidden" name="kycid2" id="kycid2" value="{{ kyc_ids[1] }}">
+                    <select id="applicationtype2"  style="width: 100%;">
+                        <option value="AADHAAR">AADHAAR</option>
+                        <option value="VID">VOTERS ID</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc2_kycid" id="kyc2_kycid" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="KYC ID">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc2_name" id="kyc2_name" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc2_f_or_h_name" id="kyc2_f_or_h_name" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc2_dob" id="kyc2_dob" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Date of Birth">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc2_address" id="kyc2_address" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <input name="kyc2_city" id="kyc2_city" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <input name="kyc2_state" id="kyc2_state" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="State">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-8">
+                            <input name="kyc2_country" id="kyc2_country" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Country">
+                        </div>
+                        <div class="col-md-4">
+                            <input name="kyc2_postal_code" id="kyc2_postal_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-4">
+                            <input name="kyc2_tele_code" id="kyc2_tele_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="+91">
+                        </div>
+                        <div class="col-md-8">
+                            <input name="kyc2_teleno" id="kyc2_teleno" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Phone Number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tab3"><br>
+        <h4 class="semi-bold">Step 3 - <span class="light">KYC Borrower Information</span></h4>
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-title no-border">
+                        {% if gkyc_urls[0] %}
+                            <img src="{{ gkyc_urls[0] }}" width="100%" class=""/>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
+                    <select id="applicationtype3" name="applicationtype"  style="width: 100%;">
+                        <option value="AADHAAR">AADHAAR</option>
+                        <option value="VID">VOTERS ID</option>
+                        <option value="PANCARD">PANCARD</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc3_kycid" id="kyc3_kycid" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="KYC ID">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc3_name" id="kyc3_name" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc3_f_or_h_name" id="kyc3_f_or_h_name" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc3_dob" id="kyc3_dob" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Date of Birth/Year of birth">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <input name="kyc3_address" id="kyc3_address" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <input name="kyc3_city" id="kyc3_city" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="City">
+                        </div>
+                        <div class="col-md-6">
+                            <input name="kyc3_state" id="kyc3_state" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="State">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-8">
+                            <input name="kyc3_country" id="kyc3_country" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Country">
+                        </div>
+                        <div class="col-md-4">
+                            <input name="kyc3_postal_code" id="kyc3_postal_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-4">
+                            <input name="kyc3_tele_code" id="kyc3_tele_code" type="text"
+                                   class="no-boarder form-control input-sm" placeholder="+91">
+                        </div>
+                        <div class="col-md-8">
+                            <input name="kyc3_teleno" id="kyc3_teleno" type="text" class="no-boarder form-control input-sm"
+                                   placeholder="Phone Number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="tab4"><br>
+    <h4 class="semi-bold">Step 4 - <span class="light">Application Form</span></h4>
+    <br>
+
+    <div class="row">
+    <div class="col-md-5">
+        {% for app in app_urls %}
+
+            <img src="{{ app }}" width="100%" class=""/>
+        {% endfor %}
+    </div>
+
+
+    <div class="col-md-7 col-fixed">
+    <br/>
+    <br/>
+    <div class="row form-row">
+        <div class="col-md-6">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Search REPEAT ID/Customer Name/KYC ID</label>
+                <input type="text" class="no-boarder form-control input-sm" name="repeat_client_id"
+                       id="repeat_client_id" value="" placeholder="REPEAT_ID"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Choose a Product</label>
+                <select id="product_id" name="product_id" class="select2" style="width: 100%;">
+                    {% for p in products %}
+                        <option value="{{ p.id }}">{{ p.product_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-3">
+            <label>State</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}" class="no-boarder form-control input-sm"
+                       placeholder="State"/>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <label>Taluk</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control input-sm"
+                       placeholder="Taluk"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Religion</label>
+                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
+                       value="{{ application.owner.org_region.region_name }}" placeholder="Region"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Branch</label>
+                <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
+                       value="{{ application.owner.org_branch.branch_name }}" placeholder="Branch"/>
+            </div>
+        </div>
+        <!--
+        <div class="col-md-4">
+            <label>SateID</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" name="stateid" id="stateid" value="" class="no-boarder form-control input-sm"
+                       placeholder="SateID"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Village</label>
+                <input type="text" name="village" id="village" value="" class="no-boarder form-control input-sm"
+                       placeholder="Village"/>
+            </div>
+        </div>
+        -->
+    </div>
+    <!--<div class="row form-row">
+    <div class="form-row row">
+
+
+        <!--
+        <div class="col-md-4">
+            <label>RegionId</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="regionid" id="regionid"
+                       value="{{ application.owner.org_state.state_name }}" placeholder="RegionId"/>
+            </div>
+        </div>
+
+
+    </div>
+    <!--</div>-->
+    <div class="row form-row">
+
+
+        <!--
+        <div class="col-md-4">
+            <label>BranchID</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="branchid" id="branchid"
+                       value="" placeholder="BranchID"/>
+            </div>
+        </div>
+        -->
+        <div class="col-md-3">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>CMID</label>
+                <input type="text" class="no-boarder form-control input-sm" name="cm_id" id="cm_id" value="{{ application.owner.unique_id }}"
+                       placeholder="CMID"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>CM Cell#</label>
+                <input type="text" class="no-boarder form-control input-sm" name="cm_cell_no" id="cm_cell_no"
+                       value="{{ application.owner.postal_telephone }}" placeholder="CMCellNo"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Current Cycle</label>
+                <input type="text" class="no-boarder form-control input-sm" name="current_cycle" id="current_cycle"
+                       value="1" placeholder="Current Cycle"/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row form-row">
+
+        <div class="col-md-6">
+            <div class="radio radio-success">
+                <h5>Repayment Mode</h5>
+                <input id="weekly" type="radio" name="repayment_mode" value="weekly">
+                <label for="weekly">Weekly</label>
+                <input id="monthly" type="radio" name="repayment_mode" value="monthly" checked="checked">
+                <label for="monthly">Monthly</label>
+                <input id="fortnightly" type="radio" name="repayment_mode" value="fortnightly">
+                <label for="fortnightly">Fortnightly</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="radio radio-success">
+                <h5>Interested Buying Other Financial Product</h5>
+                <input id="interested_in_other_fp" type="radio" name="interested_in_other_fp" value="yes"
+                       checked="checked">
+                <label for="interested_in_other_fp">Agree</label>
+                <input id="interested_in_other_fp_no" type="radio" name="interested_in_other_fp" value="no">
+                <label for="interested_in_other_fp_no">Disagree</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="row form-row">
+        <div class="col-md-6">
+            <div class="radio radio-success">
+                <h5>Interested Buying NPS</h5>
+                <input id="interested_in_nps_yes" type="radio" name="interested_in_nps" value="yes"
+                       checked="checked">
+                <label for="interested_in_nps_yes">Agree</label>
+                <input id="interested_in_nps_no" type="radio" name="interested_in_nps" value="no">
+                <label for="interested_in_nps_no">Disagree</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="radio radio-success">
+                <h5>Interested Buying Health Insurance/Life Insurance</h5>
+                <input id="interested_in_health_indurance_yes" type="radio" name="interested_in_health_indurance"
+                       value="yes" checked="checked">
+                <label for="interested_in_health_indurance_yes">Agree</label>
+                <input id="interested_in_health_indurance_no" type="radio" name="interested_in_health_indurance"
+                       value="no">
+                <label for="interested_in_health_indurance_no">Disagree</label>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+
+        <div class="col-md-10">
+            <label>Member Full Name</label>
+            <input id="member_fullname" type="text" class="no-boarder form-control input-sm" name="member_fullname"
+                   value="" placeholder="Member Full Name">
+        </div>
+        <div class="col-md-2">
+            <label>Age</label>
+            <input id="member_age" type="text" class="no-boarder form-control input-sm" name="member_age"
+                   value="" placeholder="Age">
+        </div>
+        <div class="col-md-10">
+            <label>Member Father/Husband Name</label>
+            <input id="member_f_or_h_name" type="text" class="no-boarder form-control input-sm" name="member_f_or_h_name"
+                   value="" placeholder="Member Husband Name">
+        </div>
+        <div class="col-md-2">
+            <label>Age</label>
+            <input id="member_husband_age" type="text" class="no-boarder form-control input-sm" name="member_husband_age"
+                   value="" placeholder="Age">
+        </div>
+
+        <div class="col-md-12">
+            <label>Address1 (As per address proof)</label>
+            <input id="member_address1" type="text" class="no-boarder form-control input-sm" name="member_address1"
+                   value="" placeholder="Address1 (As per address proof)">
+        </div>
+        <div class="col-md-12">
+            <label>Address2</label>
+            <input id="member_address2" type="text" class="no-boarder form-control input-sm" name="member_address2"
+                   value="" placeholder="Address2">
+        </div>
+    </div>
+    <div class="row form-row">
+
+        <div class="col-md-4">
+            <label>Pin Code</label>
+            <input id="member_pincode" type="text" class="no-boarder form-control input-sm" name="member_pincode"
+                   value="" placeholder="Pin Code">
+        </div>
+        <div class="col-md-4">
+            <label>Member Telephone</label>
+            <input id="member_telephone" type="text" class="no-boarder form-control input-sm" name="member_telephone"
+                   value="" placeholder="Member Telephone">
+        </div>
+        <div class="col-md-4">
+            <label>Husband Telephone</label>
+            <input id="member_husband_telephone" type="text" class="no-boarder form-control input-sm" name="member_husband_telephone"
+                   value="" placeholder="Husband Telephone">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Member ID Proof</label>
+            <div class="radio radio-success">
+                <input id="member_id_proof_aadhaar" type="radio" name="member_id_proof" value="" checked="">
+                <label for="member_id_proof_aadhaar">Aadhaar</label>
+                <input id="member_id_proof_vid" type="radio" name="member_id_proof" value="">
+                <label for="member_id_proof_vid">Voter's ID</label>
+                <input id="member_id_proof_others" type="radio" name="member_id_proof" value="">
+                <label for="member_id_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="member_id_proof_number" type="text" class="no-boarder form-control input-sm" name="member_id_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Member Address Proof</label>
+            <div class="radio radio-success">
+                <input id="member_address_proof_aadhaar" type="radio" name="member_address_proof" value="" checked="">
+                <label for="member_address_proof_aadhaar">Aadhaar</label>
+                <input id="member_address_proof_vid" type="radio" name="member_address_proof" value="">
+                <label for="member_address_proof_vid">Voter's ID</label>
+                <input id="member_address_proof_others" type="radio" name="member_address_proof" value="">
+                <label for="member_address_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="member_address_proof_number" type="text" class="no-boarder form-control input-sm" name="member_address_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+    <div class="row form-row">
+
+        <div class="col-md-12">
+            <input id="guarantor_fullname" type="text" class="no-boarder form-control input-sm" name="guarantor_fullname"
+                   value="" placeholder="Guarantor Full Name">
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-7">
+            <label>Guarantor ID Proof</label>
+            <div class="radio radio-success">
+                <input id="guarantor_id_proof_aadhaar" type="radio" name="guarantor_id_proof" value="" checked="">
+                <label for="guarantor_id_proof_aadhaar">Aadhaar</label>
+                <input id="guarantor_id_proof_vid" type="radio" name="guarantor_id_proof" value="">
+                <label for="guarantor_id_proof_vid">Voter's ID</label>
+                <input id="guarantor_id_proof_others" type="radio" name="guarantor_id_proof" value="">
+                <label for="guarantor_id_proof_others">Other's</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>KYC Number</label>
+            <input id="guarantor_id_proof_number" type="text" class="no-boarder form-control input-sm" name="guarantor_id_proof_number"
+                   value="" placeholder="">
+        </div>
+    </div>
+
+    <div class="row form-row">
+        <div class="col-md-4">
+            <div class="grid simple">
+                <label>Caste</label>
+                <select id="select_member_religion" name="select_member_religion" style="width: 100%;">
+                    <option value="HINDU">HINDU</option>
+                    <option value="MISILM">MUSILM</option>
+                    <option value="SIKH">SIKH</option>
+                    <option value="CHIRSTIAN">CHIRSTIAN</option>
+                    <option value="JAIN">JAIN</option>
+                    <option value="BHUDHIST">BHUDHIST</option>
+                    <option value="JEW">JEW</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Category</label>
+            <select id="select_member_caste_category" name="select_member_caste_category" style="width: 100%;">
+                <option value="GENERAL">GENERAL</option>
+                <option value="OBC">OBC</option>
+                <option value="MBC">MBC</option>
+                <option value="SC/ST">SC/ST</option>
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label>Disability</label>
+            <div class="radio radio-success">
+                <input id="disability_yes" type="radio" name="radio_member_disability" value="" checked="">
+                <label for="disability_yes">Yes</label>
+                <input id="disability_no" type="radio" name="radio_member_disability" value="">
+                <label for="disability_no">no</label>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4">
+            <label>Type Of House</label>
+            <select id="select_type_of_residence" name="select_type_of_residence" style="width: 100%;"
+                    >
+                <option value="FAMILY_OWNED">FAMILY OWNED</option>
+                <option value="SELF_OWNED">SELF OWNED</option>
+                <option value="RENTED_LEASED">RENTED/LEASED</option>
+                <option value="ALLOTED">ALLOTED</option>
+                <option value="GIFTED">GIFTED</option>
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label>Quality Of House</label>
+            <select id="select_house_type" name="select_house_type" style="width: 100%;"
+                    >
+                <option value="PAKKA">PAKKA</option>
+                <option value="SEMI_PAKKA">SEMI-PAKKA</option>
+                <option value="KUCHHA">KUCHHA</option>
+                <option value="THATCHED">THATCHED</option>
+                <option value="TILLED">TILLED</option>
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label>Drinking Water</label>
+            <select id="select_drinking_water" name="select_drinking_water" style="width: 100%;"
+                    >
+                <option value="PIPED">PIPED</option>
+                <option value="BOREWELL">BOREWELL</option>
+                <option value="SHARED_BOREWELL">SHARED BOREWELL</option>
+                <option value="GOVT_BOREWELL">GOVT BOREWELL</option>
+                <option value="OPEN_WELL">OPEN WELL</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4">
+            <label>Applied Loan Amount</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="applied_loan_amount"
+                       id="applied_loan_amount" value="10000" placeholder="Applied Loan Amount"/>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Family Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="family_size"
+                       id="family_size" value="5" placeholder="Family Size"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Child 12-18</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="child"
+                       id="child_12_18" value="1" placeholder="Child 12-18"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Child above 18</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="child"
+                       id="child_above_18" value="1" placeholder="Child above 18"/>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label>Purpose Of Loan</label>
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="purpose_of_loan"
+                       id="purpose_of_loan" value="farming" placeholder="Purpose Of Loan"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-row">
+        <div class="col-md-5">
+            <label>Business Category </label>
+            <select id="selec_p_business_category" name="selec_p_business_category" class="select2" style="width: 100%;"
+                    >
+                <option value="TRADING">TRADING</option>
+                <option value="SERVICES">SERVICES</option>
+                <option value="AGRICULTURE">AGRICULTURE</option>
+                <option value="ALLIED AGRI">ALLIED AGRI</option>
+                <option value="SMALL MANUFACTURING">SMALL MANUFACTURING</option>
+                <option value="LABOURER">LABOURER</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Business </label>
+            <select id="selec_p_business" name="selec_p_business" class="select2" style="width: 100%;"
+                    >
+                <option value="ORCHARD">ORCHARD</option>
+                <option value="MANGO">MANGO</option>
+                <option value="ARECANUT">ARECANUT</option>
+                <option value="COCONUT">COCONUT</option>
+                <option value="PALM TREE">PALM TREE</option>
+                <option value="AMLA">AMLA</option>
+                <option value="TAMRIND">TAMRIND</option>
+                <option value="VEGETABLES">VEGETABLES</option>
+                <option value="CATTLE">CATTLE</option>
+                <option value="COW">COW</option>
+                <option value="BUFFOLOES">BUFFOLOES</option>
+                <option value="SHIP">SHIP</option>
+                <option value="BULLOCKS">BULLOCKS</option>
+                <option value="PIGS">PIGS</option>
+                <option value="CHICKEN">CHICKEN</option>
+
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Income</label>
+            <input type="text" class="no-boarder form-control input-sm" name="p_income"
+                   id="p_income"  value="3500" placeholder="Income"/>
+
+        </div>
+
+    </div>
+    <div class="row form-row">
+        <div class="col-md-5">
+            <label>Business Category </label>
+
+            <select id="select_s_business_category" name="select_s_business_category" class="select2" style="width: 100%;"
+                    >
+                <option value="TRADING">TRADING</option>
+                <option value="SERVICES">SERVICES</option>
+                <option value="AGRICULTURE">AGRICULTURE</option>
+                <option value="ALLIED_AGRI">ALLIED AGRI</option>
+                <option value="SMALL_MANUFACTURING">SMALL MANUFACTURING</option>
+                <option value="LABOURER">LABOURER</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Business </label>
+            <select id="select_s_business" name="select_s_business" class="select2" style="width: 100%;"
+                    >
+                <option value="ORCHARD">ORCHARD</option>
+                <option value="MANGO">MANGO</option>
+                <option value="ARECANUT">ARECANUT</option>
+                <option value="COCONUT">COCONUT</option>
+                <option value="PALM_TREE">PALM TREE</option>
+                <option value="AMLA">AMLA</option>
+                <option value="TAMRIND">TAMRIND</option>
+                <option value="VEGETABLES">VEGETABLES</option>
+                <option value="CATTLE">CATTLE</option>
+                <option value="COW">COW</option>
+                <option value="BUFFOLOES">BUFFOLOES</option>
+                <option value="SHIP">SHIP</option>
+                <option value="BULLOCKS">BULLOCKS</option>
+                <option value="PIGS">PIGS</option>
+                <option value="CHICKEN">CHICKEN</option>
+            </select>
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Income</label>
+            <input type="text" class="no-boarder form-control input-sm" name="s_income"
+                   id="s_income" value="1500" placeholder="Income"/>
+
+        </div>
+
+    </div>
+    <div class="row form-row">
+        <div class="col-md-5">
+            <label>Business Category </label>
+
+            <select id="select_t_business_category" name="select_t_business_category" class="select2" style="width: 100%;"
+                    >
+                <option value="TRADING">TRADING</option>
+                <option value="SERVICES">SERVICES</option>
+                <option value="AGRICULTURE">AGRICULTURE</option>
+                <option value="ALLIED_AGRI">ALLIED AGRI</option>
+                <option value="SMALL_MANUFACTURING">SMALL MANUFACTURING</option>
+                <option value="LABOURER">LABOURER</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label>Business </label>
+            <select id="select_t_business" name="select_t_business" class="select2" style="width: 100%;"
+                    >
+                <option value="ORCHARD">ORCHARD</option>
+                <option value="MANGO">MANGO</option>
+                <option value="ARECANUT">ARECANUT</option>
+                <option value="COCONUT">COCONUT</option>
+                <option value="PALM_TREE">PALM TREE</option>
+                <option value="AMLA">AMLA</option>
+                <option value="TAMRIND">TAMRIND</option>
+                <option value="VEGETABLES">VEGETABLES</option>
+                <option value="CATTLE">CATTLE</option>
+                <option value="COW">COW</option>
+                <option value="BUFFOLOES">BUFFOLOES</option>
+                <option value="SHIP">SHIP</option>
+                <option value="BULLOCKS">BULLOCKS</option>
+                <option value="PIGS">PIGS</option>
+                <option value="CHICKEN">CHICKEN</option>
+
+            </select>
+        </div>
+        <div class="col-md-3 form-group">
+            <label>Income</label>
+            <input type="text" class="no-boarder form-control input-sm" name="t_income"
+                   id="t_income" value="1500" placeholder="Income"/>
+
+        </div>
+
+    </div>
+    <div class="row form-row">
+        <div class="col-md-12">
+            <h4>Family Asset </h4>
+
+            <select id="select_family_asset" name="select_family_asset" multiple class="select2" style="width: 100%;"
+                    >
+                <option value="TV">TV</option>
+                <option value="FRIDGE">FRIDGE</option>
+                <option value="MIXER">MIXER</option>
+                <option value="WASHING_MACHINE">WASHING MACHINE</option>
+                <option value="2WHEELER">2 WHEELER</option>
+                <option value="GAS_CONNECTION">GAS CONNECTION</option>
+                <option value="DISH_TV">DISH TV</option>
+                <option value="TRACKTOR">TRACKTOR</option>
+                <option value="BULLOCK_CART">BULLOCK CART</option>
+                <option value="BYCYCLE">BYCYCLE</option>
+                <option value="AUTO_RIKSWA">AUTO RIKSWA</option>
+            </select>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-12">
+            <h4> Agriculture Land </h4>
+
+            <div class="col-md-4">
+                <label>Self Owend</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="self_owned_land" id="self_owned_land"
+                           value="1 Acare" placeholder="Self Owend"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Share</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="shared_land" id="shared_land"
+                           value="" placeholder="Shared"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label>Patta</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="patta_land" id="patta_land" value="2Acare"
+                           placeholder="Patta"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-12">
+            <h4> Financial Liabilities </h4>
+            <div class="col-md-3">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <label>Loans</label>
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_loans" id="fl_loans" value="2000"
+                           placeholder="Loans"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <label>Chits</label>
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_chits" id="fl_chits" value="2000"
+                           placeholder="Chits"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <label>Insurance</label>
+                    <input type="text" class="no-boarder form-control input-sm" name="fl_insurance" id="fl_insurance" value="2000"
+                           placeholder="Insurance"/>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <label>Family and Friends</label>
+                    <input type="text" class="no-boarder form-control input-sm" name="fnf_inclusion" id="fnf_inclusion" value="2000"
+                           placeholder="Family n Friends"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-row">
+        <div class="col-md-12">
+            <h4> Financial Inclusions </h4>
+            <div class="col-md-3 radio radio-success">
+
+                <h5>Bank Account</h5>
+                <input id="bankaccount_yes" type="radio" name="bankaccount_inclusion" value="yes"
+                       checked="checked">
+                <label for="bankaccount_yes">Yes</label>
+                <input id="bankaccount_no" type="radio" name="bankaccount_inclusion" value="no">
+                <label for="bankaccount_no">No</label>
+            </div>
+
+            <div class="col-md-3 radio radio-success">
+
+                <h5>Chits</h5>
+                <input id="chits_yes" type="radio" name="chits_inclusion" value="yes"
+                       checked="checked">
+                <label for="chits_yes">Yes</label>
+                <input id="chits_no" type="radio" name="chits_inclusion" value="no">
+                <label for="chits_no">No</label>
+            </div>
+            <div class="col-md-3 radio radio-success">
+
+                <h5>Micro Pension</h5>
+                <input id="micropension_yes" type="radio" name="micropension_inclusion" value="yes"
+                       checked="checked">
+                <label for="micropension_yes">Yes</label>
+                <input id="micropension_no" type="radio" name="micropension_inclusion" value="no">
+                <label for="micropension_no">No</label>
+            </div>
+
+            <div class="col-md-3 radio radio-success">
+
+                <h5>Post Office Account</h5>
+                <input id="postofficeaccount_yes" type="radio" name="postofficeaccount_inclusion" value="yes"
+                       checked="checked">
+                <label for="postofficeaccount_yes">Yes</label>
+                <input id="postofficeaccount_no" type="radio" name="postofficeaccount_inclusion" value="no">
+                <label for="postofficeaccount_no">No</label>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-12">
+            <h4>Business Expenditure</h4>
+
+            <div class="col-md-3">
+                <label>Household Expenditure</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="house_hold_expenditure"
+                           id="house_hold_expenditure" value="1000"
+                           placeholder="Household Expenditure"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Food</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="food_expenditure" id="food_expenditure" value="300"
+                           placeholder="Food"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Medical</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="medical_expenditure" id="medical_expenditure"
+                           value="200" placeholder="Medical"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Entertainment</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="entertainment_expenditure"
+                           id="entertainment_expenditure" value="50" placeholder="Entertainment"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <label>Festival</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="festival_expenditure" id="festival_expenditure"
+                           value="100" placeholder="Festival"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Education</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="education_expenditure" id="education_expenditure"
+                           value="50" placeholder="Education"/>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label>Travel</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="travel_expenditure" id="travel_expenditure" value="20"
+                           placeholder="Travel"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>House Rent</label>
+                <div class="input-with-icon  right">
+                    <i class=""></i>
+                    <input type="text" class="no-boarder form-control input-sm" name="house_rent_expenditure" id="house_rent_expenditure"
+                           value=""
+                           placeholder="House Rent"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row form-row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;"></th>
+                        <th style="width: 25%;"> Amount </th>
+                        <th style="width: 25%;"> ROI </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Money Lenders</td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders_amount"
+                                   id="moneylenders_amount" value="1000" placeholder="Amount"/>
+                        </div></td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="moneylenders_roi"
+                                   id="moneylenders_roi" value="15" placeholder="ROI"/>
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td>Chit</td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="chit_amount"
+                                   id="chit_amount" value="" placeholder="Amount"/>
+                        </div></td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="chit_roi"
+                                   id="chit_roi" value="" placeholder="ROI"/>
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td>BankFI</td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="bankfi_amount"
+                                   id="bankfi_amount" value="" placeholder="Amount"/>
+                        </div></td>
+                        <td><div class="input-with-icon  right">
+                            <i class=""></i>
+                            <input type="text" class="no-boarder form-control input-sm" name="bankfi_roi"
+                                   id="bankfi_roi" value="" placeholder="ROI"/>
+                        </div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_name" id="center_name"
+                       value="MUDDANAHALLI" placeholder="Center Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_size" id="center_size" value="8"
+                       placeholder="Size"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_name" id="group_name"
+                       value="DHANALAKSHMI" placeholder="Group Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_size" id="group_size" value="100"
+                       placeholder="Size"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-6">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Centre Leader</label>
+                <input type="text" class="no-boarder form-control input-sm" name="centre_leader"
+                       id="centre_leader" value="Rajamma" placeholder="Centre Leader"/>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_leader_cell" id="center_leader_cell" value=""
+                       placeholder="Cell"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-6">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Leader</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_leader" id="group_leader"
+                       value="Ganga" placeholder="Group Leader"/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_leader_cell" id="group_leader_cell" value=""
+                       placeholder="Cell"/>
+            </div>
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4 form-group">
+            <label>Excepted Disbursment Date</label>
+
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <input type="text" class="no-boarder form-control input-sm" name="excepted_disbursment_date"
+                       id="excepted_disbursment_date" value="{{ disbursement_date_str }}"
+                       placeholder="DD/MM/YYYY"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-row">
+        <h4>Village Facilities</h4>
+
+        <div class="col-md-4 form-group">
+            <h5>Medical Facilities </h5>
+
+            <select id="village_medical_facilities" name="village_medical_facilities" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="PHC">PHC</option>
+                <option value="PUBLIC HOSPITAL">PUBLIC HOSPITAL</option>
+                <option value="PRIVATE HOSPITAL">PRIVATE HOSPITAL</option>
+
+
+            </select>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <h5>Hospital Category </h5>
+            <select id="village_hospital_category" name="village_hospital_category" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="ALLOPATHY">ALLOPATHY</option>
+                <option value="HOMEOPATHY">HOMEOPATHY</option>
+                <option value="AYURVEDIC">AYURVEDIC</option>
+                <option value="YUNANI">YUNANI</option>
+
+
+            </select>
+        </div>
+        <div class="col-md-4 form-group form-group">
+            <h5>ROAD </h5>
+            <select id="village_road" name="village_road" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="CONCRETE">CONCRETE</option>
+                <option value="KACHHA">KACHHA</option>
+                <option value="TAR">TAR</option>
+
+
+            </select>
+
+        </div>
+    </div>
+    <div class="row form-row">
+        <div class="col-md-4">
+            <h5>Public Transport </h5>
+
+            <select id="village_public_transport" name="village_public_transport" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="BUS">BUS</option>
+                <option value="TRAIN">TRAIN</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <h5>Water </h5>
+            <select id="village_water" name="village_water" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="POND">POND</option>
+                <option value="WELL">WELL</option>
+                <option value="RIVER">RIVER</option>
+                <option value="BOREWELL">BOREWELL</option>
+
+
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <h5>Electricity </h5>
+            <select id="village_electricity" name="village_electricity" class="select2" style="width: 100%;"
+                    >
+                <option value="NONE">NONE</option>
+                <option value="12HR">12HR</option>
+                <option value="12-24HR">12-24HR</option>
+                <option value="24HR">24HR</option>
+            </select>
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <ul class=" wizard wizard-actions">
+        <li class="previous first" style="display:none;"><a href="javascript:;" class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a>
+        </li>
+        <li class="previous"><a href="javascript:;" class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
+        <li class="next last" style="display:none;"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a>
+        </li>
+        <li class="next"><a href="javascript:;" class="btn btn-primary">&nbsp;&nbsp;Document Accepted&nbsp;&nbsp;</a></li>
+
+        <li class=""><a href="javascript:;" class="btn btn-warning">&nbsp;&nbsp;Bad Document&nbsp;&nbsp;</a></li>
+        <li class=""><a href="javascript:;" class="btn btn-warning">&nbsp;&nbsp;Document Missing&nbsp;&nbsp;</a></li>
+        <li class="next"><a href="javascript:;" class="btn btn-success" id="application_tagged">&nbsp;&nbsp;Application Tagged&nbsp;&nbsp;</a></li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </form>
+    </div>
+
+    </div>
+
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+
+    <script type="text/javascript">
+    var cur_tag = 1;
+    var $input;
+
+    $(document).ready(function () {
+        console.log("ready!");
+        //$('#layout-condensed-toggle').click();
+        $("input[data-tag='form1Name" + cur_tag + "']").focus();
+        //make_fucusable(".form1Name")
+        //make_fucusable(".form2Name")
+        //Form Wizard Validations
+        var $validator = $("#form_user_application").validate({
+            rules: {
+                kyc1_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc1_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc1_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                kyc1_dob: {
+                    required: true,
+                    minlength: 2
+                },
+                kyc2_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc2_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc2_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                kyc2_dob: {
+                    required: true,
+                    minlength: 2
+                },
+                kyc3_kycid: {
+                    required: true,
+                    minlength:5
+                },
+                kyc3_name: {
+                    required: true,
+                    minlength: 10
+                },
+                kyc3_f_or_h_name: {
+                    required: true,
+                    minlength:5
+                },
+                state: {
+                    required: true,
+                    minlength: 2
+                },
+
+                 taluk: {
+                    required: true,
+                    minlength: 2
+                },
+                stateid: {
+                    required: true,
+                    number:true
+                },
+                village: {
+                    required: true,
+                    minlength: 2
+                },
+                 regionid: {
+                    required: true,
+                    number:true
+
+                },
+                 religion: {
+                    required: true,
+                    minlength: 2
+                },
+                branch: {
+                    required: true,
+                    minlength: 2
+                },
+                 branchid: {
+                    required: true,
+                    number:true
+                },
+                 cm_id: {
+                    required: true,
+                    number:true
+                },
+                 cm_cell_no: {
+                    required: true,
+                    minlength: 2
+                },
+                 current_cycle: {
+                    required: true,
+                    number: true
+                },
+                 idforrepeatclient: {
+                    required: false,
+                    minlength: 2
+                },
+                 member_age: {
+                    required: true,
+                    number: true
+                },
+                member_f_or_h_name: {
+                    required: true,
+                    minlength: 8
+                },
+                 member_husband_age: {
+                    required: true,
+                     number: true
+                },
+                 member_address1: {
+                    required: true,
+                    minlength: 2
+                },
+                 member_address2: {
+                    required: true,
+                    minlength: 2
+                },
+                 member_pincode: {
+                    required: true,
+                    minlength: 5,
+                    number:true
+                },
+                 member_telephone: {
+                    required: true,
+                    number:true
+                },
+                member_husband_telephone: {
+                    required: true,
+                    number:true
+                },
+                member_id_proof_number: {
+                    required: true,
+                    minlength: 6
+                },
+                member_address_proof_number:{
+                    required: true,
+                    minlength: 6
+                },
+                guarantor_fullname: {
+                    required: true,
+                    minlength: 2
+                },
+               guarantor_id_proof_number: {
+                    required: true,
+                    minlength: 6
+                },
+                applied_loan_amount: {
+                    required: true,
+                    number:true
+                },
+                 familysize: {
+                    required: true,
+                    number:true
+                },
+                purpose_of_loan: {
+                    required: true,
+                    minlength: 2
+                },
+                 p_income: {
+                    required: true,
+                     number:true
+                },
+                 s_income: {
+                    required: true,
+                    number:true
+                },
+                 t_income: {
+                    required: true,
+                    number:true
+                },
+                 self_owned_land: {
+                    required: false,
+                    minlength: 2
+                },
+                 shared_land: {
+                    required: false,
+                    minlength: 2
+                },
+                 patta_land: {
+                    required: false,
+                    minlength: 2
+                },
+                 loans: {
+                    required: true,
+                    number:true
+                },
+                 chits: {
+                    required: false,
+                    minlength: 2
+                },
+                 insurance: {
+                    required: false,
+                    minlength: 2
+                },
+                 friendandfamily: {
+                    required: false,
+                    minlength: 2
+                },
+                 bankaccount: {
+                    required: false,
+                    number:true
+                },
+                 p_chits: {
+                    required: false,
+                    number:true
+                },
+                 micropension: {
+                    required: false,
+                    number:true
+                },
+                 pastofficeaccount: {
+                    required: false,
+                    number:true
+                },
+                 house_hold_expenditure: {
+                    required: true,
+                    number:true
+                },
+                 food_expenditure: {
+                    required: true,
+                    number: true
+                },
+                 medical_expenditure: {
+                    required: false,
+                     number: true
+                },
+                 entertainment_expenditure: {
+                    required: false,
+                     number: true
+                },
+
+                festival_expenditure: {
+                    required: false,
+                    number: true
+                },
+                travel_expenditure: {
+                    required: false,
+                    number: true
+                },
+                house_rent_expenditure: {
+                    required: false,
+                    number:true
+                },
+                moneylenders_amount: {
+                    required: false,
+                    number:true
+                },
+                moneylenders_roi: {
+                    required: false,
+                    number:true
+                },
+                chit_amount: {
+                    required: false,
+                   number:true
+                },
+                chit_roi: {
+                    required: false,
+                    number:true
+                },
+                bankfi_amount: {
+                    required: false,
+                    number:true
+                },
+                bankfi_roi: {
+                    required: false,
+                    number:true
+                },
+                centrename: {
+                    required: true,
+                    minlength: 2
+                },
+                center_size: {
+                    required: true,
+                    number:true
+                },
+                group_name: {
+                    required: true,
+                    minlength: 2
+                },
+                size1: {
+                    required: true,
+                    number:true
+                },
+                centre_leader: {
+                    required: true,
+                    minlength: 2
+                },
+                center_leader_cell: {
+                    required: false,
+                    number :true
+                },
+                group_leader: {
+                    required: true,
+                    minlength: 2
+                },
+                group_leader_cell: {
+                    required: false,
+                    number :true
+                },
+                excepted_disbursment_date: {
+                    required: true,
+                    minlength: 2
+                },
+                education_expenditure: {
+                    required: true,
+                    minlength: 2
+                },
+                child_above_18: {
+                    required: false,
+                    number: true
+                },
+                child_12_18: {
+                    required: false,
+                    number: true
+                }
+        },
+
+            errorPlacement:function (label, element) {
+                $('<span class="arrow"></span>').insertBefore(element);
+                $('<span class="error"></span>').insertAfter(element).append(label)
+            }
+        });
+
+        $('#rootwizard').bootstrapWizard({
+            'tabClass':'form-wizard',
+            'onNext':function (tab, navigation, index) {
+                var $valid = $("#form_user_application").valid();
+                if (!$valid) {
+                    $validator.focusInvalid();
+                    return false;
+                }
+                else {
+                    $('#rootwizard').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
+                    $('#rootwizard').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
+                    $("#application_tagged").click(function(){
+                        $("#form_user_application").submit();
+                    });
+                }
+            }
+        });
+        $(".select2").select2({
+            placeholder:"select",
+            allowClear:true
+        });
+
+    });
+    $("#applicationtype").select2({
+        placeholder:"choose a document type",
+        allowClear:true
+    });
+    /*
+     $("#applicationtype").on("select2-selecting", function(e) {
+     // what you would like to happen
+     console.log($(e.target).val());
+     console.log($("#applicationtype").val());
+
+     });
+     */
+    $('#applicationtype').select2()
+            .on("change", function (e) {
+                // mostly used event, fired to the original element when the value changes
+                console.log("change val=" + e.val);
+            })
+            .on("select2-close", function () {
+                // fired to the original element when the dropdown closes
+                console.log("close");
+                console.log($("#applicationtype").val());
+                var type = $("#applicationtype").val();
+
+                if (type == "AADHAAR") {
+                    $.getJSON("/admin/read_aadhaar/" + $("#kycid1").val(), function (data) {
+                        console.log(data);
+                        console.log("Trying to prefill");
+                        var name = data["scan_result"]["name"];
+                        $("#kyc1_name").val(name);
+
+                        var fname = data["scan_result"]["co"];
+                        $("#kyc1_f_or_h_name").val(fname);
+
+                        var dob = data["scan_result"]["year_of_birth"];
+                        $("#kyc1_dob").val(dob);
+                        var kycid = data["scan_result"]["aadhaar_id"];
+                        $("#kyc1_kycid").val(kycid);
+                        var temp = data["scan_result"]
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc1_state").val(data["scan_result"]['state']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc1_city").val(data["scan_result"]['dist']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc1_postal_code").val(data["scan_result"]['pc']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc1_address").val(data["scan_result"]['house']);
+                        }
+
+                        $("#member_fullname").val(name);
+                        $("#member_f_or_h_name").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_aadhaar').prop('checked', true);
+
+                    });
+                } else if (type == "PANCARD") {
+                    $.getJSON("/admin/read_pan/" + $("#kycid1").val(), function (data) {
+                        console.log(data);
+
+
+
+                        var name = data["scan_result"][0]["Name"];
+                        $("#kyc1_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                        $("#kyc1_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc1_dob").val(dob);
+                        var kycid = data["scan_result"][0]["PAN"];
+                        $("#kyc1_kycid").val(kycid);
+
+                        $("#member_fullname").val(name);
+                        $("#member_f_or_h_name").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_others').prop('checked', true);
+
+                    });
+                } else if (type == "VID") {
+                    $.getJSON("/admin/read_vid/" + $("#kycid1").val(), function (data) {
+                        console.log(data);
+
+
+                        var name = data["scan_result"][0]["Elector's Name"];
+                        $("#kyc1_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                        $("#kyc1_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc1_dob").val(dob);
+                        var kycid = data["scan_result"][0]["VID"];
+                        $("#kyc1_kycid").val(kycid);
+
+                        $("#member_fullname").val(name);
+                        $("#member_f_or_h_name").val(fname);
+                        $("#member_id_proof_number").val(kycid);
+                        $('#member_id_proof_vid').prop('checked', true);
+                    });
+                }
+
+            });
+
+    $("#applicationtype2").select2({
+        placeholder:"choose a document type",
+        allowClear:true
+    });
+
+    $('#applicationtype2').select2()
+            .on("change", function (e) {
+                // mostly used event, fired to the original element when the value changes
+                console.log("change val=" + e.val);
+            })
+            .on("select2-close", function () {
+                // fired to the original element when the dropdown closes
+                console.log("close");
+                console.log($("#applicationtype2").val());
+                var type = $("#applicationtype2").val();
+
+                if (type == "AADHAAR") {
+                    $.getJSON("/admin/read_aadhaar/" + $("#kycid2").val(), function (data) {
+                        console.log(data);
+                        var name = data["scan_result"]["name"];
+                        $("#kyc2_name").val(name);
+                        var fname = data["scan_result"]["co"];
+                        $("#kyc2_f_or_h_name").val(fname);
+                        var dob = data["scan_result"]["year_of_birth"];
+                        $("#kyc2_dob").val(dob);
+                        var kycid = data["scan_result"]["aadhaar_id"];
+                        $("#kyc2_kycid").val(kycid);
+                        var temp = data["scan_result"]
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc2_state").val(data["scan_result"]['state']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc2_city").val(data["scan_result"]['dist']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc2_postal_code").val(data["scan_result"]['pc']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc2_address").val(data["scan_result"]['house']);
+                            $("#member_address1").val(data["scan_result"]['house']+" "+data["scan_result"]['pc'])
+                            $("#member_address2").val(data["scan_result"]['dist']+" "+data["scan_result"]['state'])
+                            $("#member_pincode").val(data["scan_result"]['pc'])
+                        }
+                        $("#member_address_proof_number").val(kycid);
+
+
+                    });
+                } else if (type == "PANCARD") {
+                    $.getJSON("/admin/read_pan/" + $("#kycid2").val(), function (data) {
+                        console.log(data);
+                        var name = data["scan_result"][0]["Name"];
+                        $("#kyc2_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                        $("#kyc2_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc2_dob").val(dob);
+                        var kycid = data["scan_result"][0]["PAN"];
+                        $("#kyc2_kycid").val(kycid);
+                        $("#member_address_proof_number").val(kycid);
+                    });
+                } else if (type == "VID") {
+                    $.getJSON("/admin/read_vid/" + $("#kycid2").val(), function (data) {
+                        console.log(data);
+                        var name = data["scan_result"][0]["Elector's Name"];
+                        $("#kyc2_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                        $("#kyc2_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc2_dob").val(dob);
+                        var kycid = data["scan_result"][0]["VID"];
+                        $("#kyc2_kycid").val(kycid);
+                        $("#member_address_proof_number").val(kycid);
+                    });
+                }
+
+            });
+
+    $("#applicationtype3").select2({
+        placeholder:"choose a document type",
+        allowClear:true
+    });
+    $("#select_member_religion").select2({
+        placeholder:"choose a religion",
+        allowClear:true
+    });
+    $("#select_type_of_residence").select2({
+        placeholder:"type of residence",
+        allowClear:true
+    });
+    $("#select_member_caste_category").select2({
+        placeholder:"select caste",
+        allowClear:true
+    });
+    $("#select_house_type").select2({
+        placeholder:"select house type",
+        allowClear:true
+    });
+
+    $("#select_drinking_water").select2({
+        placeholder:"select house type",
+        allowClear:true
+    });
+
+    $("#businesscategory").select2({
+        placeholder:"select business category",
+        allowClear:true
+    });
+    $("#business").select2({
+        placeholder:"select business",
+        allowClear:true
+    });
+
+
+    $('#applicationtype3').select2()
+            .on("change", function (e) {
+                // mostly used event, fired to the original element when the value changes
+                console.log("change val=" + e.val);
+            })
+            .on("select2-close", function () {
+                // fired to the original element when the dropdown closes
+                console.log("close");
+                console.log($("#applicationtype3").val());
+                var type = $("#applicationtype3").val();
+
+                if (type == "AADHAAR") {
+                    $.getJSON("/admin/read_aadhaar/" + $("#gkycid1").val(), function (data) {
+                        console.log(data);
+                        var name = data["scan_result"]["name"];
+                        $("#kyc3_name").val(name);
+                        var fname = data["scan_result"]["co"];
+                        $("#kyc3_f_or_h_name").val(fname);
+                        var dob = data["scan_result"]["year_of_birth"];
+                        $("#kyc3_dob").val(dob);
+                        var kycid = data["scan_result"]["aadhaar_id"];
+                        $("#kyc3_kycid").val(kycid);
+                        var temp = data["scan_result"]
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc3_state").val(data["scan_result"]['state']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc3_city").val(data["scan_result"]['dist']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc3_postal_code").val(data["scan_result"]['pc']);
+                        }
+                        if (temp.hasOwnProperty('dist')) {
+                            $("#kyc3_address").val(data["scan_result"]['house']);
+                        }
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_aadhaar").val(kycid);
+                        $('#member_id_proof_aadhaar').prop('checked', true);
+
+                    });
+                } else if (type == "PANCARD") {
+                    $.getJSON("/admin/read_pan/" + $("#gkycid1").val(), function (data) {
+                        console.log(data);
+                        $("#kyc3_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Organisation Name"];
+                        $("#kyc3_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc3_dob").val(dob);
+                        var kycid = data["scan_result"][0]["PAN"];
+                        $("#kyc3_kycid").val(kycid);
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_number").val(kycid);
+                        $('#guarantor_id_proof_others').prop('checked', true);
+                    });
+                } else if (type == "VID") {
+                    $.getJSON("/admin/read_vid/" + $("#gkycid1").val(), function (data) {
+                        console.log(data);
+                        var name = data["scan_result"][0]["Elector's Name"];
+                        $("#kyc3_name").val(name);
+                        var fname = data["scan_result"][0]["Father's/Mother's/Husband's Name"];
+                        $("#kyc3_f_or_h_name").val(fname);
+                        var dob = data["scan_result"][0]["DOB"];
+                        $("#kyc3_dob").val(dob);
+                        var kycid = data["scan_result"][0]["VID"];
+                        $("#kyc3_kycid").val(kycid);
+                        $("#guarantor_fullname").val(name);
+                        $("#guarantor_id_proof_number").val(kycid);
+                        $('#guarantor_id_proof_vid').prop('checked', true);
+                    });
+                }
+
+            });
+
+
+    $('.input-append.date').datepicker({
+        autoclose:true,
+        todayHighlight:true
+    });
+
+    {#        function make_fucusable(classname) {#}
+    {#            var focusables = $(classname);#}
+    {#            focusables.keydown(function(e){#}
+    {##}
+    {#                if ((e.keyCode != 9)&&($(this).val().length <= $(this).attr("maxlength"))){#}
+    {#                    if( (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90 ||e.keyCode == 32)){#}
+    {#                        $(this).val("");#}
+    {#                    }#}
+    {##}
+    {#                }#}
+    {#            });#}
+    {#            focusables.keyup(function(e) {#}
+    {#                var maxchar = false;#}
+    {#                if ($(this).attr("maxlength")) {#}
+    {#                    if ($(this).val().length >= $(this).attr("maxlength"))#}
+    {#                        maxchar = true;#}
+    {#                }#}
+    {#                if (e.keyCode == 13 || maxchar &&( (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) ||e.keyCode == 32)) {#}
+    {#                    var current = focusables.index(this),#}
+    {#                            next = focusables.eq(current+1).length ? focusables.eq(current+1) : focusables.eq(0);#}
+    {#                    next.focus();#}
+    {#                }#}
+    {#            });#}
+    {#        }#}
+
+    //$('.form1Name').blur(function() {
+    //    $input = null;
+    //});
+
+    </script>
+{% endblock %}

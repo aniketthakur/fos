@@ -49,7 +49,7 @@ mainapp.config["AWS_SECRET_ACCESS_KEY"] = '24K0Fo+wCJzUgdfUTQwVP8JN0WwJTLyZyMOqb
 
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
 
-mainapp.config["USER_MODEL_CLASS"] = "p_admin.models.EsthenosUser"
+mainapp.config["USER_MODEL_CLASS"] = "e_admin.models.EsthenosUser"
 
 mainapp.config['ROOT'] = os.curdir
 print mainapp.config['ROOT']
@@ -57,10 +57,8 @@ mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/up
 mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/')
 
 mainapp.config.update(
-    CELERY_BROKER_URL='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',
-    CELERY_RESULT_BACKEND='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',#train.pixuate.com
-    CELERY_BROKER_URL_2='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train',#queue.pixuate.com
-    CELERY_RESULT_BACKEND_2='amqp://pitaya-train:pitaya@console.digikyc.com:5672//pitaya-train'
+    CELERY_BROKER_URL='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',
+    CELERY_RESULT_BACKEND='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',#train.pixuate.com
 )
 from boto.s3.connection import S3Connection
 connection = None
@@ -103,7 +101,7 @@ mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
 
 @login_manager.user_loader
 def load_user(userid):
-    from p_admin.models import EsthenosUser
+    from e_admin.models import EsthenosUser
     user = EsthenosUser.objects(id=userid).first()
     if user is not None and not session.has_key('role') :
         print "In load user"

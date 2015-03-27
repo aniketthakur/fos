@@ -1,0 +1,337 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+            <div class="grid-title no-border">
+                <h4>Organisation <span class="semi-bold"> Products</span></h4>
+
+            </div>
+            <div class="grid-body no-border">
+
+                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"
+                          action="/admin/organisation/{{ org.id }}/add_product" method="POST">
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                <div class="row form-row">
+
+                                    Product Name
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right"
+                                           name="product_name"  id="product_name" value="XYX"/>
+                                        </div>
+
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Loan Amount
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" name="loan_amount" id="loan_amount"
+                                           value="1"/>
+                              </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Life Insurance
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" name="life_insurance" id="life_insurance"
+                                           value="1"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Eligible Cycle
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="eligible_cycle"
+                                           name="eligible_cycle" value="1"/>
+                                     </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 col-md-offset-1 ">
+
+                                <div class="row form-row">
+
+                                    Number Installments
+                                    <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="number_installments"
+                                           name="number_installments" value="1"/>
+                                </div>
+                                </div>
+                                <div class="row form-row">
+                                    EMI
+                                    <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" name="emi" id="emi"
+                                           value="1"/>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    Last EMI
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" name="last_emi"  id="last_emi"
+                                           value="1"/>
+                                      </div>
+                                </div>
+
+                                <div class="row form-row">
+                                    Processing Fee
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="processing_fee"
+                                           name="processing_fee" value="1"/>
+                                   </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Total Processing Fees
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="total_processing_fees"
+                                           name="total_processing_fees" value="1"/>
+                                  </div>
+                                </div>
+
+                                <div class="row form-row">
+                                    Interest Rate
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="interest_rate"
+                                           name="interest_rate" value="1"/>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-md-offset-1 ">
+
+
+
+
+
+                                <div class="row form-row">
+                                    Insurance Period
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="insurance_period"
+                                           name="insurance_period" value="1"/>
+                                       </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Insurance Free Borrowers Only
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="insurance_free_borrowers_only"
+                                           name="insurance_free_borrowers_only" value="1"/>
+                                   </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Total Processing Fees Borrowers Only
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right" id="total_processing_fees_borrowers_only"
+                                           name="total_processing_fees_borrowers_only" value="1"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Insurance Free Borrowers And Quarnteer
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right"  id="insurance_free_borrowers_n_guarnteer"
+                                           name="insurance_free_borrowers_n_guarnteer" value="1"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row form-row">
+                                    Total Processing Fees Borrowers And Quarnteer
+                                     <div class="input-with-icon  right">
+
+                                       <i class=""></i>
+                                    <input type="text" class="form-control text-right"  id="total_processing_fees_borrowers_n_guarnteer"
+                                           name="total_processing_fees_borrowers_n_guarnteer" value="1"/>
+                                            </div>
+
+                                </div>
+                                <div class="row form-row">
+                                    <div class="input-with-icon  right">
+                                        <i class=""></i>
+                                        EMI Payment Duration:
+                                        <select id="emi_repayment" style="width: 100%" name="emi_repayment" class="select2">
+                                            <option  value="emi_collection_period_weekly">Weekly</option>
+                                            <option  value="emi_collection_period_monthly">Monthly</option>
+                                            <option value="emi_collection_period_fortnightly">Fortnightly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+
+                            <div class="pull-right">
+                                <button class="btn btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i
+                                        class="icon-ok"></i> Add
+                                </button>
+                                <button class="btn btn-white btn-cons" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#emi_repayment").select2();
+        });
+        $('#form-organisation').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    product_name: {
+                        minlength: 2,
+                        required: true
+                    },
+                    loan_amount:{
+                    maxlength:2,
+                    required: true
+                    },
+                    life_insurance:{
+                    maxlength:2,
+                    required: true
+                    },
+                     eligible_cycle:{
+                    maxlength:2,
+                    required: true
+                    },
+                    number_installments:{
+                    maxlength:2,
+                    required: true
+                    },
+                     emi:{
+                    maxlength:2,
+                    required: true
+                    },
+                     last_emi:{
+                    maxlength:2,
+                    required: true
+                    },
+                     processing_fee:{
+                    maxlength:2,
+                    required: true
+                    },
+                     total_processing_fees:{
+                    maxlength:2,
+                    required: true
+                    },
+                     interest_rate:{
+                    maxlength:2,
+                    required: true
+                    },
+                     insurance_period:{
+                    maxlength:2,
+                    required: true
+                    },
+                     insurance_free_borrowers_only:{
+                    maxlength:2,
+                    required: true
+                    },
+                    total_processing_fees_borrowers_only:{
+                    maxlength:2,
+                    required: true
+                    },
+                     insurance_free_borrowers_n_guarnteer:{
+                    maxlength:2,
+                    required: true
+                    },
+                    total_processing_fees_borrowers_n_guarnteer:{
+                    maxlength:2,
+                    required: true
+                    },
+
+
+
+
+                },
+
+                invalidHandler: function (event, validator) {
+					//display error alert on form submit
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    var icon = $(element).parent('.input-with-icon').children('i');
+                    var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                highlight: function (element) { // hightlight error inputs
+					var parent = $(element).parent();
+                    parent.removeClass('success-control').addClass('error-control');
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+
+                },
+
+                success: function (label, element) {
+                    var icon = $(element).parent('.input-with-icon').children('i');
+					var parent = $(element).parent('.input-with-icon');
+                    icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+					parent.removeClass('error-control').addClass('success-control');
+                },
+
+                submitHandler: function (form) {
+                    form.submit();
+                    console.log("Success");
+                }
+            });
+    </script>
+{% endblock %}
