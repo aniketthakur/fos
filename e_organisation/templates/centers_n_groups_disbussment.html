@@ -35,9 +35,10 @@
                                                     <label for="checkbox10"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:33%">Center ID</th>
-                                            <th style="width:33%">Center Name</th>
-                                            <th style="width:33%">Added Date</th>
+                                            <th style="width:25%">Center ID</th>
+                                            <th style="width:25%">Center Name</th>
+                                            <th style="width:25%">Added Date</th>
+                                            <th style="width:25%">Action</th>
 
                                         </tr>
                                         </thead>
@@ -55,6 +56,9 @@
                                             </td>
                                             <td><span class="muted">{{ center.created_at }}</span>
                                             </td>
+                                            <td class="v-align-middle">
+                                                <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                         </tbody>
@@ -71,9 +75,10 @@
                                                     <label for="checkbox10"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:33%">Group ID</th>
-                                            <th style="width:33%">Group Name</th>
-                                            <th style="width:33%">Added Date</th>
+                                            <th style="width:25%">Group ID</th>
+                                            <th style="width:25%">Group Name</th>
+                                            <th style="width:25%">Added Date</th>
+                                            <th style="width:25%">Action</th>
 
                                         </tr>
                                         </thead>
@@ -90,6 +95,9 @@
                                                 <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                                 </td>
                                                 <td><span class="muted">{{ group.created_at }}</span>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
