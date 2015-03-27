@@ -34,10 +34,16 @@
                                     <div class="row form-row">
                                         <form id="group_app_center" action="/upload_documents" method="post">
                                         <div class="col-md-6">
-                                            <input name="center_name" id="g_centerName" type="text"  class="form-control" placeholder="Center Name">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="g_center_name" id="g_center_name" type="text"  class="form-control" placeholder="Center Name">
+                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <input name="group_name" id="g_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                            <div class="input-with-icon  right">
+                                                <i class=""></i>
+                                            <input name="g_group_name" id="g_group_name" type="text"  class="form-control" placeholder="Group Name">
+                                            </div>
                                         </div>
                                             <input type="hidden" name="unique_key" value="{{ unique_key }}">
                                         </form>
@@ -47,7 +53,7 @@
                                 <div class="col-md-4">
                                     <div class="grid simple">
                                         <div class="grid-title no-border">
-                                            <h4>Drag n Drop <span class="semi-bold">Group Application's</span></h4>
+                                            <h5>Drag n Drop <span class="semi-bold">Group Application's</span></h5>
                                             <div class="tools"> </div>
                                         </div>
                                         <div class="grid-body no-border">
@@ -65,7 +71,7 @@
                                 <div class="col-md-4">
                                     <div class="grid simple">
                                         <div class="grid-title no-border">
-                                            <h4>Drag n Drop <span class="semi-bold">KYC Document's</span></h4>
+                                            <h5>Drag n Drop <span class="semi-bold">KYC Document's</span></h5>
                                             <div class="tools">  </div>
                                         </div>
                                         <div class="grid-body no-border">
@@ -83,7 +89,7 @@
                                 <div class="col-md-4">
                                     <div class="grid simple">
                                         <div class="grid-title no-border">
-                                            <h4>Drag n Drop <span class="semi-bold">Guarantor KYC Document's</span></h4>
+                                            <h5>Drag n Drop <span class="semi-bold">Guarantor KYC Document's</span></h5>
                                             <div class="tools"> </div>
                                         </div>
                                         <div class="grid-body no-border">
@@ -116,13 +122,13 @@
                                             <div class="col-md-6">
                                                 <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                                <input name="center_name" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
+                                                <input name="i_center_name" id="i_center_name" type="text"  class="form-control" placeholder="Center Name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                                <input name="group_name" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                                <input name="i_group_name" id="i_group_name" type="text"  class="form-control" placeholder="Group Name">
                                                 </div>
 
                                             </div>
@@ -217,11 +223,11 @@
                 focusInvalid: false,
                 ignore: "",
                 rules: {
-                    center_name: {
+                    i_center_name: {
                         minlength: 3,
                         required: true
                     },
-                    group_name: {
+                    i_group_name: {
                         minlength: 3,
                         required: true
                     }
@@ -276,11 +282,11 @@
                 focusInvalid: false,
                 ignore: "",
                 rules: {
-                    center_name: {
+                    g_center_name: {
                         minlength: 3,
                         required: true
                     },
-                    group_name: {
+                    g_group_name: {
                         minlength: 3,
                         required: true
                     }
