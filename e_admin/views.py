@@ -332,6 +332,7 @@ def admin_application_id(org_id,app_id):
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
+    kyc_urls = list()
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
@@ -664,10 +665,12 @@ def mobile_application():
         tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
         tagged_application.upload_type = "MANUAL_UPLOAD"
         tagged_application.status = "TAGGING_DONE"
+        app_form.application_id=tagged_application.application_id
         tagged_application.save()
         print "Form Validated"
         print "Saving Form"
-        app_form.save()
+
+        app_form.save(tagged_application.application_id)
         return Response(json.dumps({'status':'sucess','application_id':tagged_application.application_id}), content_type="application/json", mimetype='application/json')
     else:
         flash_errors(app_form)

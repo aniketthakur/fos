@@ -197,7 +197,6 @@ def uploads_group_gkyc():
         if app.file_id == file_id:
             application = app
             break
-
     if application == None:
         application =  EsthenosOrgApplicationMap()
         application.file_id = file_id
