@@ -236,69 +236,65 @@
                 ignore: "",
                 rules: {
                     product_name: {
-                        minlength: 2,
+                        minlength: 6,
                         required: true
                     },
                     loan_amount:{
-                    maxlength:2,
-                    required: true
+                        number:true,
+                        required: true
                     },
                     life_insurance:{
-                    maxlength:2,
-                    required: true
+                        number:true,
+                        required: true
                     },
                      eligible_cycle:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                     number_installments:{
-                    maxlength:2,
-                    required: true
+                        number:true,
+                        required: true
                     },
-                     emi:{
-                    maxlength:2,
-                    required: true
+                    emi:{
+                        number:true,
+                        required: true
                     },
                      last_emi:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                      processing_fee:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                      total_processing_fees:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                      interest_rate:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                      insurance_period:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                      insurance_free_borrowers_only:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                     total_processing_fees_borrowers_only:{
-                    maxlength:2,
-                    required: true
+                        number:true,
+                        required: true
                     },
                      insurance_free_borrowers_n_guarnteer:{
-                    maxlength:2,
-                    required: true
+                         number:true,
+                         required: true
                     },
                     total_processing_fees_borrowers_n_guarnteer:{
-                    maxlength:2,
-                    required: true
-                    },
-
-
-
-
+                        number:true,
+                        required: true
+                    }
                 },
 
                 invalidHandler: function (event, validator) {
