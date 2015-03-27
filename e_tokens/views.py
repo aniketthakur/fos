@@ -15,6 +15,7 @@ def generate_token_view():
     kwargs = locals()
     expires = -1
     login_form = LoginForm( request.form)
+    print login_form
     form = login_form
     if(form.validate()):
         user = EsthenosUser.objects.get( email=form.email.data)
@@ -42,7 +43,7 @@ def delete_token(token):
     return Response(json.dumps({"tokens":"unauthorised"}), content_type="application/json", mimetype='application/json')
 
 @token_views.route('/api/app_token', methods=["GET"])
-@login_required
+@utils.login_or_key_required
 def get_tokens():
     c_user = current_user
     kwargs = locals()
