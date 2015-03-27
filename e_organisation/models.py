@@ -114,10 +114,14 @@ class EsthenosOrg(db.Document):
     postal_code = db.StringField(max_length=10, required=False)
     email = db.StringField( unique=True)
     application_count = db.IntField(default=1)
+    group_count = db.IntField(default=1)
+    center_count = db.IntField(default=1)
+    employee_count = db.IntField(default=1)
 
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
+    center_id = db.StringField(max_length=10,required=True)
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
@@ -129,6 +133,7 @@ class EsthenosOrgCenterResource(Resource):
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
+    group_id = db.StringField(max_length=10,required=True)
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)

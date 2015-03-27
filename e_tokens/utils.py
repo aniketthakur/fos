@@ -75,6 +75,6 @@ def verify_auth_token(token):
 
     print data
 
-    user = PUser.objects.get(unique_id=data['id'])
+    user = EsthenosUser.objects.get(unique_id=data['id'])
     login_user(user)
     return user

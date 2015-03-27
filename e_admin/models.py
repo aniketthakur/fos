@@ -26,7 +26,7 @@ class EsthenosUser(BaseUser):
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")
     profile_pic = db.StringField(max_length=255, required=False)
-    unique_id = db.IntField(default=0)
+    unique_id = db.StringField(max_length=20, required=False)
     status = db.IntField(default=0)
     activation_code = db.StringField(max_length=50, required=False)
     active = db.BooleanField(default=False)

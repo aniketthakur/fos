@@ -41,14 +41,14 @@
                         </thead>
                         <tbody>
                         {% for org in organisations %}
-                            <tr class='clickable-row' data-href='/admin/organisation/{{ org.id }}/'>
+                            <tr >
                                 <td class="v-align-middle">
                                     <div class="checkbox check-default">
                                         <input id="checkbox11" type="checkbox" value="1">
                                         <label for="checkbox11"></label>
                                     </div>
                                 </td>
-                                <td class="v-align-middle"><a href="#"></a> {{ org.id }}</td>
+                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ org.id }}/'> <ins>{{ org.id }}</ins></td>
                                 <td class="v-align-middle"><span class="muted">{{ org.name }}</span>
                                 </td>
                                 <td><span class="muted">{{ org.email }}</span>

@@ -49,18 +49,18 @@
                                 </thead>
                                 <tbody>
                                 {% for app in applications %}
-                                <tr class='clickable-row' data-href='/application/{{ app.application_id }}/track'>
+                                <tr>
                                     <td class="v-align-middle">
                                         <div class="checkbox check-default">
                                             <input id="checkbox11" type="checkbox" value="1">
                                             <label for="checkbox11"></label>
                                         </div>
                                     </td>
-                                    <td class="v-align-middle">{{ app.application_id }}</td>
+                                    <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track' ><ins>{{ app.application_id }}</ins></td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
                                     <td class="v-align-middle">{{ app.group.group_name }}</td>
                                     <td class="v-align-middle">{{ app.center.center_name }}</td>
-                                    <td><span class="muted">{{ app.created_at }}</span>
+                                    <td><span class="muted">{{ app.date_created }}</span>
                                     </td>
                                     <td class="v-align-middle">
                                         <div class="progress">

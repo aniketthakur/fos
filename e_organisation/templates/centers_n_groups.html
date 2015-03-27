@@ -28,7 +28,7 @@
                                     <input name="centerName" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
                                     <table class="table no-more-tables ">
                                         <thead>
-                                        <tr class='clickable-row' data-href='/applications'>
+                                        <tr>
                                             <th style="width:1%" >
                                                 <div class="checkbox check-default">
                                                     <input id="checkbox10" type="checkbox" value="1" class="checkall">
@@ -43,14 +43,14 @@
                                         </thead>
                                         <tbody>
                                         {% for center in centers %}
-                                        <tr class='clickable-row' data-href='/applications/?center={{ center.id }}'>
+                                        <tr >
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-default">
                                                     <input id="checkbox11" type="checkbox" value="1">
                                                     <label for="checkbox11"></label>
                                                 </div>
                                             </td>
-                                            <td class="v-align-middle">{{ center.id }}</td>
+                                            <td class="v-align-middle clickable-row" data-href='/applications/?center={{ center.center_id }}'><ins>{{ center.center_id }}</ins></td>
                                             <td class="v-align-middle"><span class="muted">{{ center.center_name }}</span>
                                             </td>
                                             <td><span class="muted">{{ center.created_at }}</span>
@@ -79,14 +79,14 @@
                                         </thead>
                                         <tbody>
                                         {% for group in groups %}
-                                            <tr class='clickable-row' data-href='/applications?group={{ group.id }}'>
+                                            <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
                                                         <input id="checkbox11" type="checkbox" value="1">
                                                         <label for="checkbox11"></label>
                                                     </div>
                                                 </td>
-                                                <td class="v-align-middle">{{ group.id }}</td>
+                                                <td class="v-align-middle clickable-row" data-href='/applications?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
                                                 <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                                 </td>
                                                 <td><span class="muted">{{ group.created_at }}</span>
