@@ -1092,11 +1092,11 @@
             </div>
 
             <div class="col-md-3">
-                <label>Entretainmaint</label>
+                <label>Entertainment</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="entertainment_expenditure"
-                           id="entertainment_expenditure" value="50" placeholder="Entretainmaint"/>
+                           id="entertainment_expenditure" value="50" placeholder="Entertainment"/>
                 </div>
             </div>
         </div>
@@ -1104,7 +1104,7 @@
     <div class="row form-row">
         <div class="col-md-12">
             <div class="col-md-3">
-                <label>Festiva</label>
+                <label>Festival</label>
                 <div class="input-with-icon  right">
                     <i class=""></i>
                     <input type="text" class="no-boarder form-control input-sm" name="festival_expenditure" id="festival_expenditure"
@@ -1620,24 +1620,24 @@
                 },
                  food_expenditure: {
                     required: true,
-                    minlength: 2
+                    number: true
                 },
                  medical_expenditure: {
                     required: false,
-                    minlength: 2
+                     number: true
                 },
                  entertainment_expenditure: {
                     required: false,
-                    minlength: 2
+                     number: true
                 },
 
                 festival_expenditure: {
                     required: false,
-                    minlength: 2
+                    number: true
                 },
                 travel_expenditure: {
                     required: false,
-                    minlength: 2
+                    number: true
                 },
                 house_rent_expenditure: {
                     required: false,
