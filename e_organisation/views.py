@@ -58,22 +58,6 @@ def admin_logout():
     logout_user()
     return redirect("/accounts/login")
 
-@organisation_views.route('/uploads_group_app', methods=["GET","POST"])
-@login_required
-def update_session_data():
-    print session['role']
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    center_name = request.form.get('center_name')
-    group_game = request.form.get('group_game')
-    content = {'response': 'OK'}
-    return Response(response=content,
-        status=200,\
-        mimetype="application/json")
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required
@@ -91,18 +75,16 @@ def uploads_group_app():
 
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-    index = -1
     application = None
-    for app in session_obj.applications:
-        index = index+1
-
-        if app.file_id == file_id:
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
+        if (app.file_id) == int(file_id):
             application = app
             break
 
     if application == None:
         application =  EsthenosOrgApplicationMap()
-        application.file_id = file_id
+        application.file_id = int(file_id)
 
     if file:
         filename = secure_filename(file.filename)
@@ -114,13 +96,8 @@ def uploads_group_app():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_applications = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_applications = 1
+        session_obj.applications[file_id]=application
+        session_obj.number_of_applications = session_obj.number_of_applications + 1
         session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -143,16 +120,15 @@ def uploads_group_kyc():
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
-    index = -1
-    for app in session_obj.applications:
-        index = index+1
-        if app.file_id == file_id:
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
+        if (app.file_id) == int(file_id):
             application = app
             break
 
     if application == None:
         application =  EsthenosOrgApplicationMap()
-        application.file_id = file_id
+        application.file_id = int(file_id)
     if file:
         filename = secure_filename(file.filename)
         filename = str(random_with_N_digits(6)) +filename
@@ -163,13 +139,8 @@ def uploads_group_kyc():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_kycs = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.applications[file_id]=application
+        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
         session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -191,15 +162,14 @@ def uploads_group_gkyc():
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
-    index = -1
-    for app in session_obj.applications:
-        index = index+1
-        if app.file_id == file_id:
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
+        if (app.file_id) == int(file_id):
             application = app
             break
     if application == None:
         application =  EsthenosOrgApplicationMap()
-        application.file_id = file_id
+        application.file_id = int(file_id)
     if file:
         filename = secure_filename(file.filename)
         filename = str(random_with_N_digits(6)) +filename
@@ -210,13 +180,8 @@ def uploads_group_gkyc():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_kycs = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+        session_obj.applications[file_id]=application
+        session_obj.number_of_kycs = session_obj.number_of_gkycs+ 1
         session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -235,10 +200,9 @@ def uploads_indivijual_app():
     file = request.files['file']
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-    index = -1
     application = None
-    for app in session_obj.applications:
-        index = index+1
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
         if app.file_id == 100:
             application = app
             break
@@ -257,14 +221,10 @@ def uploads_indivijual_app():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_applications = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_applications = 1
-        session_obj.save()
+        session_obj.applications["1"] = application
+        session_obj.number_of_applications = 1
+
+    session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
         status=200,\
@@ -283,9 +243,8 @@ def uploads_indivijual_kyc():
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
-    index = -1
-    for app in session_obj.applications:
-        index = index+1
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
         if app.file_id == 100:
             application = app
             break
@@ -303,14 +262,9 @@ def uploads_indivijual_kyc():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_kycs = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
-        session_obj.save()
+        session_obj.applications["1"] = application
+        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+    session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
         status=200,\
@@ -331,7 +285,8 @@ def uploads_indivijual_gkyc():
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
     index = -1
-    for app in session_obj.applications:
+    for appkey in session_obj.applications.keys():
+        app = session_obj.applications[appkey]
         index = index+1
         if app.file_id == 100:
             application = app
@@ -350,14 +305,10 @@ def uploads_indivijual_gkyc():
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
         application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
-        if index == -1:
-            application.applications = []
-            session_obj.applications.append(application)
-            session_obj.number_of_kycs = 1
-        else:
-            session_obj.applications[index] = application
-            session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
-        session_obj.save()
+        session_obj.applications["1"] = application
+        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
+
+    session_obj.save()
     content = {'response': 'OK'}
     return Response(response=content,
         status=200,\
@@ -387,13 +338,18 @@ def upload_documents():
         unique_key =  uuid.uuid4()
         session_obj =  EsthenosOrgUserUploadSession()
         session_obj.owner = user
+        print unique_key
         session_obj.unique_session_key = str(unique_key)
         session_obj.save()
         kwargs = locals()
         return render_template("upload_documents.html", **kwargs)
     elif request.method == "POST":
-        center_name = request.form.get('center_name')
-        group_name = request.form.get('group_name')
+        center_name = request.form.get('i_center_name')
+        group_name = request.form.get('i_group_name')
+        if center_name ==None:
+            center_name = request.form.get('g_center_name')
+            group_name = request.form.get('g_group_name')
+
         center = None
         group = None
         if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
@@ -413,10 +369,10 @@ def upload_documents():
             group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_id = unique_group_id,group_name=group_name)
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
-            session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-            for app in session_obj.applications:
-                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=1)
-
+            session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key,tagged=False)
+            inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count
+            for appkey in session_obj.applications.keys():
+                app = session_obj.applications[appkey]
                 tagged_application =  EsthenosOrgApplication()
                 tagged_application.organisation = user.organisation
                 tagged_application.center = center
@@ -425,11 +381,13 @@ def upload_documents():
                 tagged_application.owner = user
                 tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=0)
                 settings = EsthenosSettings.objects.all()[0]
-                tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
+                tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"
                 tagged_application.status = "TAGGING_DONE"
                 tagged_application.save()
+                inc_count = inc_count+1
 
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=inc_count)
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True

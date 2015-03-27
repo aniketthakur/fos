@@ -86,9 +86,10 @@ class EsthenosOrgUserUploadSession(db.Document):
     session_center = db.ReferenceField('EsthenosOrgCenter', required=False)
     number_of_applications = db.IntField(default=0, required=False)
     number_of_kycs = db.IntField(default=0, required=False)
+    number_of_gkycs = db.IntField(default=0, required=False)
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
-    applications = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationMap), required=False)
+    applications = db.DictField()
     tagged = db.BooleanField(default=False)
 
 class EsthenosOrg(db.Document):
@@ -125,6 +126,9 @@ class EsthenosOrgCenter(db.Document):
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False)
+
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -137,6 +141,8 @@ class EsthenosOrgGroup(db.Document):
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -235,6 +241,7 @@ class EsthenosOrgSettings(db.Document):
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
 
+
     def __unicode__(self):
         return "EsthenosOrgSetings"
 
@@ -245,7 +252,11 @@ class EsthenosOrgApplicationStatusType(db.Document):
     def __unicode__(self):
         return "EsthenosOrgApplicationStatusType"
 
-
+class EsthenosOrgApplicationStatus(db.Document):
+    status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    updated_on = db.DateTimeField(default=datetime.datetime.now)
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatusType"
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -284,8 +295,12 @@ class EsthenosOrgApplication(db.Document):
     adult_count =  db.IntField(default=0)
     children_below18 =  db.IntField(default=0)
     children_below12 =  db.IntField(default=0)
-    business_category = db.StringField(max_length=20, required=False,default="")
-    business = db.StringField(max_length=20, required=False,default="")
+    primary_business_category = db.StringField(max_length=20, required=False,default="")
+    primary_business = db.StringField(max_length=20, required=False,default="")
+    secondary_business_category = db.StringField(max_length=20, required=False,default="")
+    secondary_business = db.StringField(max_length=20, required=False,default="")
+    tertiary_business_category = db.StringField(max_length=20, required=False,default="")
+    tertiary_business = db.StringField(max_length=20, required=False,default="")
     family_assets = db.StringField(max_length=512, required=False,default="")
     money_lenders_loan = db.FloatField(default=0.0)
     money_lenders_loan_roi = db.FloatField(default=0.0)
@@ -347,7 +362,8 @@ class EsthenosOrgApplication(db.Document):
     gkyc_1_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
     gkyc_1_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
     current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
-    timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatusType'))
+    current_status_updated = db.DateTimeField(default=datetime.datetime.now)
+    timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
 
