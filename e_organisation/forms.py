@@ -5,7 +5,7 @@ from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser, EsthenosOrgApplication
+from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
@@ -274,7 +274,8 @@ class AddApplicationMobile(Form):
 
     application_postal_telephone = TextField( validators=[ v.Length(max=20)])
     application_postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-
+    group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    center_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     application_member_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_family_size= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_adult_count= TextField( validators=[ v.Length(max=100)])
@@ -337,13 +338,20 @@ class AddApplicationMobile(Form):
 
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    def save( self):
+    def save( self,user):
+
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
-#       app.center = self.application_
-#       app.organisation =
-#       app.application_id =
-#       app.upload_type =
-#       app.status =
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
+        app.organisation = user.organisation
+        app.center = center
+        app.group = group
+        app.owner = user
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        settings = EsthenosSettings.objects.all()[0]
+        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
+        app.upload_type = "AUTOMATIC_UPLOAD"
+        app.status = "TAGGING_DONE"
         app.postal_telephone = self.application_postal_telephone.data
         app.postal_tele_code = self.application_postal_tele_code.data
         app.postal_country = self.application_postal_country.data

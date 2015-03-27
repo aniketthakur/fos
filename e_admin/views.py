@@ -317,18 +317,21 @@ def admin_application_id(org_id,app_id):
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
     application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
-    for app_id in application.tag.app_file_pixuate_id:
+    for kyc_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(app_id))
 
     kyc_urls = list()
     kyc_ids = application.tag.kyc_file_pixuate_id
-    for kyc_id in application.tag.kyc_file_pixuate_id:
+    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+        kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
         kyc_urls.append(get_url_with_id(kyc_id))
 
     gkyc_urls = list()
     gkyc_ids = application.tag.gkyc_file_pixuate_id
-    for gkyc_id in application.tag.gkyc_file_pixuate_id:
+    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+        gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
         gkyc_urls.append(get_url_with_id(gkyc_id))
+
     today= datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
@@ -350,7 +353,9 @@ def submit_application(org_id,app_id):
     if form.validate():
         form.save()
     print form.errors
-    return redirect("/admin/applications")#/admin/organisation/5512da35e77989097c031a66/application/"+str(int(app_id[-6:])+1)+"/")
+    new_num = int(app_id[-6:])+1
+    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
@@ -656,23 +661,12 @@ def mobile_application():
         group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
     app_form=AddApplicationMobile(form)
     if(app_form.validate()):
-        tagged_application =  EsthenosOrgApplication()
-        tagged_application.organisation = user.organisation
-        tagged_application.center = center
-        tagged_application.group = group
-        tagged_application.owner = user
-        tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
-        settings = EsthenosSettings.objects.all()[0]
-        tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
-        tagged_application.upload_type = "MANUAL_UPLOAD"
-        tagged_application.status = "TAGGING_DONE"
-        tagged_application.save()
         print "Form Validated"
         print "Saving Form"
-        app_form.save()
-        return Response(json.dumps({'status':'sucess','application_id':tagged_application.application_id}), content_type="application/json", mimetype='application/json')
+        app_form.save(user)
+        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
     else:
-        flash_errors(app_form)
+        print app_form.errors
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)

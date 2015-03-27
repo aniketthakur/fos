@@ -76,8 +76,8 @@ class PixuateObjectUrlMap(db.Document):
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
     app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
-    kyc_file_pixuate_id = db.ListField(db.StringField())
-    gkyc_file_pixuate_id = db.ListField(db.StringField())
+    kyc_file_pixuate_id = db.DictField()
+    gkyc_file_pixuate_id = db.DictField()
 
 class EsthenosOrgUserUploadSession(db.Document):
     unique_session_key = db.StringField(max_length=255, required=True)
@@ -122,7 +122,7 @@ class EsthenosOrg(db.Document):
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
-    center_id = db.StringField(max_length=10,required=True)
+    center_id = db.StringField(max_length=10,required=False)
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
@@ -137,7 +137,7 @@ class EsthenosOrgCenterResource(Resource):
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
-    group_id = db.StringField(max_length=10,required=True)
+    group_id = db.StringField(max_length=10,required=False)
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
