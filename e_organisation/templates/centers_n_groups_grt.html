@@ -24,7 +24,7 @@
                         <div class="grid-body no-border">
                             <h3>Search   <span class="semi-bold">Applications</span></h3>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input name="centerName" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
                                     <table class="table no-more-tables ">
                                         <thead>
@@ -39,11 +39,12 @@
                                             <th style="width:25%">Center Name</th>
                                             <th style="width:25%">Added Date</th>
                                             <th style="width:25%">Action</th>
-
+                                            <th style="width:10%" class="text-center">Fail</th>
+                                            <th style="width:10%" class="text-center" >Pass</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for center in centers %}
+                                        {% for center in centers[0:10] %}
                                         <tr>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-default">
@@ -59,12 +60,20 @@
                                             <td class="v-align-middle">
                                                 <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
                                             </td>
+                                            <td>
+                                                <button class="btn btn-small btn-danger btn-cons" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                            </td>
+                                            <td >
+                                                <button class="btn btn-small btn-primary btn-cons" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                         </tbody>
                                     </table>
                                  </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
                                     <table class="table no-more-tables ">
                                         <thead>
@@ -79,11 +88,12 @@
                                             <th style="width:25%">Group Name</th>
                                             <th style="width:25%">Added Date</th>
                                             <th style="width:25%">Action</th>
-
+                                            <th style="width:10%" class="text-center">Fail</th>
+                                            <th style="width:10%" class="text-center" >Pass</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for group in groups %}
+                                        {% for group in groups[0:10] %}
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -98,6 +108,12 @@
                                                 </td>
                                                 <td class="v-align-middle">
                                                     <button class="btn btn-small btn-success btn-cons" type="button">Download</button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-small btn-danger btn-cons" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                                </td>
+                                                <td >
+                                                    <button class="btn btn-small btn-primary btn-cons" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                                 </td>
                                             </tr>
                                         {% endfor %}

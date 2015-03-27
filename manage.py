@@ -27,7 +27,6 @@ flask_sauth.commands.add_commands( manager)
 
 from flask.ext.sauth.views import auth_views
 mainapp.register_blueprint( auth_views)
-
 from e_organisation.views import organisation_views
 mainapp.register_blueprint( organisation_views)
 
