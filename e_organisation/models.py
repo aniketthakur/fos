@@ -125,6 +125,9 @@ class EsthenosOrgCenter(db.Document):
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=True)
+    disbursement_pdf_link = db.StringField(max_length=512,required=True)
+
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -137,6 +140,8 @@ class EsthenosOrgGroup(db.Document):
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=True)
+    disbursement_pdf_link = db.StringField(max_length=512,required=True)
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -235,6 +240,7 @@ class EsthenosOrgSettings(db.Document):
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
 
+
     def __unicode__(self):
         return "EsthenosOrgSetings"
 
@@ -284,8 +290,12 @@ class EsthenosOrgApplication(db.Document):
     adult_count =  db.IntField(default=0)
     children_below18 =  db.IntField(default=0)
     children_below12 =  db.IntField(default=0)
-    business_category = db.StringField(max_length=20, required=False,default="")
-    business = db.StringField(max_length=20, required=False,default="")
+    primary_business_category = db.StringField(max_length=20, required=False,default="")
+    primary_business = db.StringField(max_length=20, required=False,default="")
+    secondary_business_category = db.StringField(max_length=20, required=False,default="")
+    secondary_business = db.StringField(max_length=20, required=False,default="")
+    tertiary_business_category = db.StringField(max_length=20, required=False,default="")
+    tertiary_business = db.StringField(max_length=20, required=False,default="")
     family_assets = db.StringField(max_length=512, required=False,default="")
     money_lenders_loan = db.FloatField(default=0.0)
     money_lenders_loan_roi = db.FloatField(default=0.0)

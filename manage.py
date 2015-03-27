@@ -13,7 +13,7 @@ manager = Manager(mainapp)
 manager.add_command("runserver", Server(
     use_debugger=True,
     use_reloader=True,
-    host='0.0.0.0',port=8090)
+    host='0.0.0.0',port=8080)
 )
 
 from GunicornServer import GunicornServer

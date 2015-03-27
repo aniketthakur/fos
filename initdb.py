@@ -19,8 +19,6 @@ settings = EsthenosSettings()
 print settings
 settings.save()
 
-
-
 if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_UPLOADED"
