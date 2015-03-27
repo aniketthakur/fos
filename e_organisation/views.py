@@ -116,6 +116,7 @@ def uploads_group_kyc():
     kwargs = locals()
     file = request.files['file']
     file_id = file.filename.split("_")[0]
+    kyc_type = file.filename.split("_")[1][0]
     print file_id
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
@@ -138,7 +139,7 @@ def uploads_group_kyc():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications[file_id]=application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
         session_obj.save()
@@ -158,6 +159,7 @@ def uploads_group_gkyc():
     kwargs = locals()
     file = request.files['file']
     file_id = file.filename.split("_")[0]
+    kyc_type = file.filename.split("_")[1][0]
     print file_id
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
@@ -179,7 +181,7 @@ def uploads_group_gkyc():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications[file_id]=application
         session_obj.number_of_kycs = session_obj.number_of_gkycs+ 1
         session_obj.save()
@@ -240,6 +242,7 @@ def uploads_indivijual_kyc():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     file = request.files['file']
+    kyc_type = file.filename.split("_")[1][0]
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
@@ -261,7 +264,7 @@ def uploads_indivijual_kyc():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.kyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications["1"] = application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
     session_obj.save()
@@ -281,6 +284,7 @@ def uploads_indivijual_gkyc():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     file = request.files['file']
+    kyc_type = file.filename.split("_")[1][0]
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
@@ -304,7 +308,7 @@ def uploads_indivijual_gkyc():
         print "saving to .."+o_fname
         file.save(o_fname)
         uploaded_resp =  json.loads(upload_images(o_fname))
-        application.gkyc_file_pixuate_id.append(uploaded_resp[0]["id"])
+        application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications["1"] = application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
 

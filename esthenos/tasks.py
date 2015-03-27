@@ -15,12 +15,44 @@ conn = None
 dirname,file_name = os.path.split(os.path.abspath(__file__))
 root_dir = os.path.join(dirname,"data")+"/"
 from celery.task import periodic_task
-
+from pixuate_storage import get_url_with_id
+from pixuate import get_aadhaar_details_url,get_pan_details_url,get_vid_details_url
 from job import make_celery
 celery = make_celery('esthenos.tasks',mainapp.config['CELERY_BROKER_URL'],mainapp.config['CELERY_RESULT_BACKEND'])
 
 from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus
 #from e_admin.models import EsthenosOrgApplication
+
+def prefill_applications():
+
+    status_tagged = EsthenosOrgApplicationStatusType.objects.filter(status_code=0)[0]
+    uploaded_applications = EsthenosOrgApplication.objects.filter(current_status=status_tagged)
+
+    for application in uploaded_applications:
+        kyc_urls = list()
+        kyc_ids = application.tag.kyc_file_pixuate_id
+        for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+            kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+            url = get_url_with_id(kyc_id)
+            if kyc_id == "p":
+                data = get_pan_details_url(url)
+            if kyc_id == "a":
+                data = get_aadhaar_details_url(url)
+            if kyc_id == "v":
+                data = get_vid_details_url(url)
+
+        gkyc_urls = list()
+        gkyc_ids = application.tag.gkyc_file_pixuate_id
+        for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+            gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+            url = get_url_with_id(gkyc_id)
+            if kyc_id == "p":
+                data = get_pan_details_url(url)
+            if kyc_id == "a":
+                data = get_aadhaar_details_url(url)
+            if kyc_id == "v":
+                data = get_vid_details_url(url)
+
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def all_tagged_applications():

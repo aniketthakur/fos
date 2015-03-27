@@ -76,8 +76,8 @@ class PixuateObjectUrlMap(db.Document):
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
     app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
-    kyc_file_pixuate_id = db.ListField(db.StringField())
-    gkyc_file_pixuate_id = db.ListField(db.StringField())
+    kyc_file_pixuate_id = db.DictField()
+    gkyc_file_pixuate_id = db.DictField()
 
 class EsthenosOrgUserUploadSession(db.Document):
     unique_session_key = db.StringField(max_length=255, required=True)
@@ -122,7 +122,7 @@ class EsthenosOrg(db.Document):
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
-    center_id = db.StringField(max_length=10,required=True)
+    center_id = db.StringField(max_length=10,required=False)
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
@@ -137,7 +137,7 @@ class EsthenosOrgCenterResource(Resource):
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
-    group_id = db.StringField(max_length=10,required=True)
+    group_id = db.StringField(max_length=10,required=False)
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
@@ -366,6 +366,36 @@ class EsthenosOrgApplication(db.Document):
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
+    village_electricity=db.IntField(default=0)
+    interested_in_other_fp=db.StringField(max_length=20, required=False,default="")
+    radio_member_disability=db.StringField(max_length=20, required=False,default="")
+    village_water=db.StringField(max_length=20, required=False,default="")
+    festival_expenditure=db.IntField(default=0)
+    excepted_disbursment_date=db.DateTimeField( required=False,default="")
+    village_medical_facilities=db.StringField(max_length=20, required=False,default="")
+    micropension_inclusion=db.StringField(max_length=20, required=False,default="")
+    self_owned_land=db.StringField(max_length=20, required=False,default="")
+    center_leader_cell=db.StringField(max_length=20, required=False,default="")
+    center_size=db.IntField(default=0)
+    applicationtype=db.StringField(max_length=20, required=False,default="")
+    shared_land=db.StringField(max_length=20, required=False,default="")
+    bankaccount_inclusion=db.StringField(max_length=20, required=False,default="")
+    fl_loans=db.IntField(default=0)
+    village_hospital_category=db.StringField(max_length=20, required=False,default="")
+    group_leader_cell=db.StringField(max_length=20, required=False,default="")
+    bankfi_amount=db.IntField(default=0)
+    patta_land=db.StringField(max_length=20, required=False,default="")
+    group_size=db.IntField(default=0)
+    select_house_type=db.StringField(max_length=20, required=False,default="")
+    village_road=db.StringField(max_length=20, required=False,default="")
+    fnf_inclusion=db.IntField(default=0)
+    member_f_or_h_name=db.StringField(max_length=20, required=False,default="")
+    member_pincode=db.IntField(default=0)
+    repayment_mode=db.StringField(max_length=20, required=False,default="")
+    moneylenders_amount=db.IntField(default=0)
+    house_rent_expenditure=db.IntField(default=0)
+    village_public_transport=db.StringField(max_length=20, required=False,default="")
+    house_hold_expenditure=db.IntField(default=0)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
