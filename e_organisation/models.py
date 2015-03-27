@@ -147,7 +147,7 @@ class EsthenosOrgApplicationPanCard(db.EmbeddedDocument):
     father_or_org_name = db.StringField(max_length=255, required=False,default="")
     dob = db.StringField(max_length=20, required=False,default="")
     pan_number = db.StringField(max_length=20, required=False,default="")
-
+    validation = db.StringField(max_length=20, required=True,default="PENDING")
     def __unicode__(self):
         return self.name_or_org_name + "<" + self.father_or_org_name + ">"
 
@@ -165,6 +165,7 @@ class EsthenosOrgApplicationVID(db.EmbeddedDocument):
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
+    validation = db.StringField(max_length=20, required=True,default="PENDING")
 
     def __unicode__(self):
         return self.elector_name + "<" + self.father_or_husband_name + ">"
@@ -182,9 +183,20 @@ class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
+    validation = db.StringField(max_length=20, required=True,default="PENDING")
 
     def __unicode__(self):
-        return self.elector_name + "<" + self.father_or_husband_name + ">"
+        return self.aadhaar_number + "<" + self.name + ">"
+
+class EsthenosOrgApplicationOther(db.EmbeddedDocument):
+    name_or_org_name = db.StringField(max_length=255, required=False,default="")
+    father_or_org_name = db.StringField(max_length=255, required=False,default="")
+    dob = db.StringField(max_length=20, required=False,default="")
+    kyc_number = db.StringField(max_length=20, required=False,default="")
+    validation = db.StringField(max_length=20, required=True,default="PENDING")
+    raw = db.StringField(max_length=1024, required=False)
+    def __unicode__(self):
+        return self.name_or_org_name + "<" + self.father_or_org_name + ">"
 
 
 class EsthenosOrgProduct(db.Document):
@@ -211,14 +223,17 @@ class EsthenosOrgProduct(db.Document):
 
 
 class EsthenosOrgSettings(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg')
     loan_cycle_1_org = db.FloatField(default=35000)
     loan_cycle_1_plus_org = db.FloatField(default=50000)
     one_year_tenure_limit_org = db.FloatField(default=15000)
     hh_annual_income_limit_rural_org = db.FloatField(default=60000)
-    hh_annual_income_limit_annual_org = db.FloatField(default=120000)
+    hh_annual_income_limit_urban_org = db.FloatField(default=120000)
     total_indebtness_org = db.FloatField(default=50000)
     max_existing_loan_count_org = db.IntField(default=2)
     applicatant_min_attendence_percentage = db.FloatField(default=0.0)
+    highmark_username = db.StringField(max_length=100, required=True,default="")
+    highmark_password = db.StringField(max_length=100, required=True,default="")
 
     def __unicode__(self):
         return "EsthenosOrgSetings"
@@ -320,9 +335,17 @@ class EsthenosOrgApplication(db.Document):
     attendence_percentage = db.FloatField(default=0.0)
     loan_eligibility_based_on_net_income = db.FloatField(default=0.0)
     loan_eligibility_based_on_company_policy = db.FloatField(default=0.0)
-    pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
-    vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
-    aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    kyc_1_pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
+    kyc_1_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
+    kyc_1_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    kyc_1_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
+    kyc_2_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
+    kyc_2_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    kyc_2_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
+    gkyc_1_pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
+    gkyc_1_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
+    gkyc_1_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    gkyc_1_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
     current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatusType'))
     date_created = db.DateTimeField(default=datetime.datetime.now)

@@ -19,14 +19,13 @@ def generate_token_view():
     if(form.validate()):
         user = EsthenosUser.objects.get( email=form.email.data)
         if expires is -1:
-            full_token = utils.generate_auth_token(c_user,expiration=360000)
+            full_token = utils.generate_auth_token(user,expiration=360000)
         else:
-            full_token = utils.generate_auth_token(c_user,expiration=expires)
+            full_token = utils.generate_auth_token(user,expiration=expires)
         print expires
+        print full_token
         token  = full_token.split(".")[2]
-        token_obj = models.EsthenosOrgUserToken(full_token= full_token,token = token,user = user,expires_in=expires)
-        token_obj.save()
-
+        token_obj,status = models.EsthenosOrgUserToken.objects.get_or_create(full_token= full_token,token = token,user = user,expires_in=expires)
         print utils.verify_auth_token(token)
         return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
     return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')

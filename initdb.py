@@ -47,36 +47,39 @@ if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type.status_message = "Application is tagged and ready of data entry"
     status_type.status_code = 4
     status_type.save()
-    status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CBCHECK_READY"
-    status_type.status_message = "Application data entry done and ready for CB Check"
-    status_type.status_code = 5
-    status_type.save()
-    status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CBCHECK_DONE"
-    status_type.status_message = "Application CB Check has completed, waiting for validation"
-    status_type.status_code = 6
-    status_type.save()
-    status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CBCHECK_SUCCESS"
-    status_type.status_message = "Application CB Check has completed, validation successful"
-    status_type.status_code = 7
-    status_type.save()
-    status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CBCHECK_FAILED"
-    status_type.status_message = "Application CB Check has completed, failed in one or multiple criteria match"
-    status_type.status_code = 8
-    status_type.save()
+
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_KYC_VALIDATION_PASSED"
     status_type.status_message = "Application KYC has completed, validation successfulh"
-    status_type.status_code = 9
+    status_type.status_code = 5
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_KYC_VALIDATION_FAILED"
     status_type.status_message = "Application KYC has completed, failed in one or multiple criteria match"
+    status_type.status_code = 6
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CBCHECK_READY"
+    status_type.status_message = "Application data entry done and ready for CB Check"
+    status_type.status_code = 7
+    status_type.save()
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CBCHECK_SUBMITED"
+    status_type.status_message = "Application CB Check has completed, waiting for results"
+    status_type.status_code = 8
+    status_type.save()
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CBCHECK_SUCCESS"
+    status_type.status_message = "Application CB Check has completed, validation cashflow analysis"
+    status_type.status_code = 9
+    status_type.save()
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CBCHECK_FAILED"
+    status_type.status_message = "Application CB Check has completed, failed in one or multiple criteria match"
     status_type.status_code = 10
     status_type.save()
+
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_CASH_FLOW_READY"
     status_type.status_message = "Application is Cash Flow Ready"

@@ -13,7 +13,7 @@ from flask import  Blueprint
 import psutil
 import os
 from e_admin.models import EsthenosUser
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct,EsthenosOrgSettings
 import urlparse
 from flask_sauth.models import authenticate,User
 from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
@@ -185,6 +185,21 @@ def admin_organisation_dashboard(org_id):
         print e.message
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
+
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET"])
+@login_required
+def admin_organisation_settings(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    org = EsthenosOrg.objects.get(id=org_id)
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = EsthenosOrg.objects.get(id=org_id)
+    settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    print settings.loan_cycle_1_org
+    kwargs = locals()
+    return render_template("admin_org_settings.html", **kwargs)
 
 @admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
