@@ -271,7 +271,7 @@ class AddApplicationManual(Form):
 
 class AddApplicationMobile(Form):
 
-
+    application_id=TextField( validators=[ v.Length(max=20)])
     application_postal_telephone = TextField( validators=[ v.Length(max=20)])
     application_postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
     group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
@@ -338,6 +338,7 @@ class AddApplicationMobile(Form):
 
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+
     def save( self,user):
 
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
@@ -372,15 +373,15 @@ class AddApplicationMobile(Form):
         app.drinking_water = self.application_drinking_water.data
         app.purpose_of_loan = self.application_purpose_of_loan.data
         app.family_size  = self.application_family_size.data
-        app.adult_count  = self.application_adult_count.data
-        app.children_below18 = self.application_children_below18.data
-        app.children_below12 = self.application_children_below12.data
+        app.adult_count  = int(self.application_adult_count.data)
+#        app.children_below18 = int(self.application_children_below18.data)
+#        app.children_below12 = int(self.application_children_below12.data)
         app.business_category = self.application_business_category.data
         app.business = self.application_business.data
         app.family_asset = self.application_family_asset.data
-        app.money_lenders_loan = self.application_money_lenders_loan.data
-        app.money_lenders_loan_roi = self.application_money_lenders_loan_roi.data
-        app.bank_loan = self.application_bank_loan.data
+        app.money_lenders_loan = float(self.application_money_lenders_loan.data)
+        app.money_lenders_loan_roi = float(self.application_money_lenders_loan_roi.data)
+        app.bank_loan = float(self.application_bank_loan.data)
         app.bank_loan_roi = float(self.application_bank_loan_roi.data)
         app.branch_name = self.application_branch_name.data
         app.branch_id  = self.applciation_branch_id.data

@@ -336,6 +336,7 @@ def admin_application_id(org_id,app_id):
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
+    kyc_urls = list()
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 

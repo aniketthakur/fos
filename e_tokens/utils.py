@@ -49,7 +49,7 @@ def verify_auth_token(token):
     tokenobj = None
     data = dict()
     try:
-        tokenobj = EsthenosOrgUserToken.objects.get(token = token)
+        tokenobj = EsthenosOrgUserToken.objects.filter(token = token)[0]
         print tokenobj.full_token
         data = s.loads(tokenobj.full_token)
         print "valid token"
