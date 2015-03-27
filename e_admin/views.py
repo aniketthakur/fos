@@ -14,6 +14,7 @@ import psutil
 import os
 from e_admin.models import EsthenosUser
 from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct,EsthenosOrgSettings
+from e_organisation.forms import AddApplicationManual
 from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct, EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplicationStatusType
 import urlparse
 from flask_sauth.models import authenticate,User
@@ -345,10 +346,11 @@ def submit_application(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-
-    print request.form
-
-    return redirect("/admin/organisation/5512da35e77989097c031a66/application/SA0000007/")
+    form = AddApplicationManual(request.form)
+    if form.validate():
+        form.save()
+    print form.errors
+    return redirect("/admin/applications")#/admin/organisation/5512da35e77989097c031a66/application/"+str(int(app_id[-6:])+1)+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
