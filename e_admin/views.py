@@ -352,6 +352,7 @@ def submit_application(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    application_id = request.form.get("application_id")
     form = AddApplicationManual(request.form)
     if form.validate():
         form.save()
