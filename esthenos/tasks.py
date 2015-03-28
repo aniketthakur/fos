@@ -50,10 +50,14 @@ def prefill_applications():
                     data = json.loads(rawdata)["scan_result"][0]
                     #{"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
-                    kyc.name =  data["Name"].strip()
-                    kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
-                    kyc.kyc_number = data["PAN"].strip()
-                    kyc.dob = data["DOB"].strip()
+                    if "Name" in data.keys():
+                        kyc.name =  data["Name"].strip()
+                    if "Father's/Organisation Name" in data.keys():
+                        kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
+                    if "PAN" in data.keys():
+                        kyc.kyc_number = data["PAN"].strip()
+                    if "DOB" in data.keys():
+                        kyc.dob = data["DOB"].strip()
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     if cur_index == 1:
