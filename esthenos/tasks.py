@@ -45,76 +45,9 @@ def prefill_applications():
             for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
                 kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
                 url = get_url_with_id(kyc_id)
-                if kyc_id == "p":
-                    data = get_pan_details_url(url)
-                    #{"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
-                    kyc = EsthenosOrgApplicationKYC()
-                    kyc.name =  data["Name"].strip()
-                    kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
-                    kyc.kyc_number = data["PAN"].strip()
-                    kyc.dob = data["DOB"].strip()
-                    kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
-                    if cur_index == 1:
-                        application.kyc_1 = kyc
-                    else:
-                        application.kyc_2 = kyc
-
-                if kyc_id == "a":
-                    data = get_aadhaar_details_url(url)
-                    #{"scan_result": [{"VID": "XKP/0560292", "DOB": "09/11/1987", "Gender": "Female", "raw": " is-1:\n33 3.1\n'.. .'.S\"u-1\nWfiirasan\n\nIDENTITY\n. qn4 Hi...\nCOMMISSION\nELECTION\n\n./J\nU31\nW3-T1171\n1'eFcTTTFf\nOF\nINDIA\nCARD\namfm\nXKP/0560292\nHE\nIEEIET\n71TH\n09/11/1987\nDate of Birth\nElectors Name\nTrFHa'v1aTiITG\nWIHI/WEI '\nEm .\nWW\nF ather's/Husband's\n/ Female\nSex\n1511\n3111\nIE-3131\nDINESH BATARANA\nDIPIKA BATARANA\nWWFIT\nEWIYFIT\n", "Elector's Name": " DIPIKA BATARANA", "Father's/Mother's/Husband's Name": " DINESH BATARANA"}], "validation_result": "PENDING"}
-                    kyc = EsthenosOrgApplicationKYC()
-                    if "Elector's Name" in data.keys():
-                        kyc.name =  data["Elector's Name"].strip()
-                    if "Father's/Mother's/Husband's Name" in data.keys():
-                        kyc.father_or_husband_name =  data["Father's/Mother's/Husband's Name"].strip()
-                    if "VID" in data.keys():
-                        kyc.kyc_number = data["VID"].strip()
-                    if "Gender" in data.keys():
-                        kyc.gender = data["Gender"].strip()
-                    if "DOB" in data.keys():
-                        kyc.dob = data["DOB"].strip()
-                    if "Address" in data.keys():
-                        kyc.address1 = data["Address"].strip()
-                    if "Pincode" in data.keys():
-                        kyc.pincode = data["Pincode"].strip()
-                    kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
-                    if cur_index == 1:
-                        application.kyc_1 = kyc
-                    else:
-                        application.kyc_2 = kyc
-
-                if kyc_id == "v":
-                    data = get_vid_details_url(url)
-                    #{"scan_result": {"vtc": "Lakkireddipalle", "co": "S/O Fyroz Basha", "name": "Pattan Saddam Hussain", "gender": "M", "state": "Andhra Pradesh", "raw": "\n\nv. V1V   1 .V .'r \n  :   1 ,  ,/J4... 4.u.n..L\nFun\ni 26515 26rgv'75a 7.'Ixi'fo 35\nPattan Saddam Hussain\n", "year_of_birth": "1992", "house": "4/166", "aadhaar_id": "565061987998", "dist": "Cuddapah"}, "validation_result": "PENDING"}
-                    kyc = EsthenosOrgApplicationKYC()
-                    kyc.name =  data["name"].strip()
-                    kyc.father_or_husband_name =  data["co"].strip()
-                    kyc.kyc_number = data["aadhaar_id"].strip()
-                    kyc.gender = data["gender"].strip()
-                    if "state" in data.keys():
-                        kyc.state = data["state"].strip()
-                    if "pincode" in data.keys():
-                        kyc.pincode = data["pincode"].strip()
-                    if "house" in data.keys() and "vtc" in data.keys() and "dist" in data.keys():
-                        kyc.address1 = data["house"]+ ", " +data["vtc"] + ", " +data["dist"]
-                    if "vtc" in data.keys() and "dist" in data.keys():
-                        kyc.address1 = data["vtc"] + ", " +data["dist"]
-                    if "year_of_birth" in data.keys():
-                        kyc.dob = data["year_of_birth"]
-                    kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
-                    if cur_index == 1:
-                        application.kyc_1 = kyc
-                    else:
-                        application.kyc_2 = kyc
-
-            for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-                gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-                url = get_url_with_id(gkyc_id)
-                if kyc_id == "p":
-                    data = get_pan_details_url(url)
+                if str(kyc_id_key) == "p":
+                    rawdata = get_pan_details_url(url)
+                    data = json.loads(rawdata)["scan_result"][0]
                     #{"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
                     if "Name" in data.keys():
@@ -126,10 +59,15 @@ def prefill_applications():
                     if "DOB" in data.keys():
                         kyc.dob = data["DOB"].strip()
                     kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
-                    application.gkyc_1 = kyc
-                if kyc_id == "a":
-                    data = get_aadhaar_details_url(url)
+                    kyc.validation = json.loads(rawdata)["validation_result"]
+                    if cur_index == 1:
+                        application.kyc_1 = kyc
+                    else:
+                        application.kyc_2 = kyc
+
+                if str(kyc_id_key) == "v":
+                    rawdata = get_vid_details_url(url)
+                    data = json.loads(rawdata)["scan_result"][0]
                     #{"scan_result": [{"VID": "XKP/0560292", "DOB": "09/11/1987", "Gender": "Female", "raw": " is-1:\n33 3.1\n'.. .'.S\"u-1\nWfiirasan\n\nIDENTITY\n. qn4 Hi...\nCOMMISSION\nELECTION\n\n./J\nU31\nW3-T1171\n1'eFcTTTFf\nOF\nINDIA\nCARD\namfm\nXKP/0560292\nHE\nIEEIET\n71TH\n09/11/1987\nDate of Birth\nElectors Name\nTrFHa'v1aTiITG\nWIHI/WEI '\nEm .\nWW\nF ather's/Husband's\n/ Female\nSex\n1511\n3111\nIE-3131\nDINESH BATARANA\nDIPIKA BATARANA\nWWFIT\nEWIYFIT\n", "Elector's Name": " DIPIKA BATARANA", "Father's/Mother's/Husband's Name": " DINESH BATARANA"}], "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
                     if "Elector's Name" in data.keys():
@@ -147,10 +85,15 @@ def prefill_applications():
                     if "Pincode" in data.keys():
                         kyc.pincode = data["Pincode"].strip()
                     kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
-                    application.gkyc_1 = kyc
-                if kyc_id == "v":
-                    data = get_vid_details_url(url)
+                    kyc.validation = json.loads(rawdata)["validation_result"]
+                    if cur_index == 1:
+                        application.kyc_1 = kyc
+                    else:
+                        application.kyc_2 = kyc
+
+                if str(kyc_id_key) == "a":
+                    rawdata = get_aadhaar_details_url(url)
+                    data = json.loads(rawdata)["scan_result"]
                     #{"scan_result": {"vtc": "Lakkireddipalle", "co": "S/O Fyroz Basha", "name": "Pattan Saddam Hussain", "gender": "M", "state": "Andhra Pradesh", "raw": "\n\nv. V1V   1 .V .'r \n  :   1 ,  ,/J4... 4.u.n..L\nFun\ni 26515 26rgv'75a 7.'Ixi'fo 35\nPattan Saddam Hussain\n", "year_of_birth": "1992", "house": "4/166", "aadhaar_id": "565061987998", "dist": "Cuddapah"}, "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
                     kyc.name =  data["name"].strip()
@@ -168,7 +111,74 @@ def prefill_applications():
                     if "year_of_birth" in data.keys():
                         kyc.dob = data["year_of_birth"]
                     kyc.raw = data["raw"]
-                    kyc.validation = data["validation_result"]
+                    kyc.validation = json.loads(rawdata)["validation_result"]
+                    if cur_index == 1:
+                        application.kyc_1 = kyc
+                    else:
+                        application.kyc_2 = kyc
+
+            for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+                gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+                url = get_url_with_id(gkyc_id)
+                if str(gkyc_id_key) == "p":
+                    rawdata = get_pan_details_url(url)
+                    data = json.loads(rawdata)["scan_result"][0]
+                    #{"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
+                    kyc = EsthenosOrgApplicationKYC()
+                    if "Name" in data.keys():
+                        kyc.name =  data["Name"].strip()
+                    if "Father's/Organisation Name" in data.keys():
+                        kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
+                    if "PAN" in data.keys():
+                        kyc.kyc_number = data["PAN"].strip()
+                    if "DOB" in data.keys():
+                        kyc.dob = data["DOB"].strip()
+                    kyc.raw = data["raw"]
+                    kyc.validation = json.loads(rawdata)["validation_result"]
+                    application.gkyc_1 = kyc
+                if str(gkyc_id_key) == "v":
+                    rawdata = get_vid_details_url(url)
+                    data = json.loads(rawdata)["scan_result"][0]
+                    #{"scan_result": [{"VID": "XKP/0560292", "DOB": "09/11/1987", "Gender": "Female", "raw": " is-1:\n33 3.1\n'.. .'.S\"u-1\nWfiirasan\n\nIDENTITY\n. qn4 Hi...\nCOMMISSION\nELECTION\n\n./J\nU31\nW3-T1171\n1'eFcTTTFf\nOF\nINDIA\nCARD\namfm\nXKP/0560292\nHE\nIEEIET\n71TH\n09/11/1987\nDate of Birth\nElectors Name\nTrFHa'v1aTiITG\nWIHI/WEI '\nEm .\nWW\nF ather's/Husband's\n/ Female\nSex\n1511\n3111\nIE-3131\nDINESH BATARANA\nDIPIKA BATARANA\nWWFIT\nEWIYFIT\n", "Elector's Name": " DIPIKA BATARANA", "Father's/Mother's/Husband's Name": " DINESH BATARANA"}], "validation_result": "PENDING"}
+                    kyc = EsthenosOrgApplicationKYC()
+                    if "Elector's Name" in data.keys():
+                        kyc.name =  data["Elector's Name"].strip()
+                    if "Father's/Mother's/Husband's Name" in data.keys():
+                        kyc.father_or_husband_name =  data["Father's/Mother's/Husband's Name"].strip()
+                    if "VID" in data.keys():
+                        kyc.kyc_number = data["VID"].strip()
+                    if "Gender" in data.keys():
+                        kyc.gender = data["Gender"].strip()
+                    if "DOB" in data.keys():
+                        kyc.dob = data["DOB"].strip()
+                    if "Address" in data.keys():
+                        kyc.address1 = data["Address"].strip()
+                    if "Pincode" in data.keys():
+                        kyc.pincode = data["Pincode"].strip()
+                    kyc.raw = data["raw"]
+                    kyc.validation = json.loads(rawdata)["validation_result"]
+                    application.gkyc_1 = kyc
+                if str(gkyc_id_key) == "a":
+                    rawdata = get_aadhaar_details_url(url)
+                    data = json.loads(rawdata)["scan_result"]
+                    #{"scan_result": {"vtc": "Lakkireddipalle", "co": "S/O Fyroz Basha", "name": "Pattan Saddam Hussain", "gender": "M", "state": "Andhra Pradesh", "raw": "\n\nv. V1V   1 .V .'r \n  :   1 ,  ,/J4... 4.u.n..L\nFun\ni 26515 26rgv'75a 7.'Ixi'fo 35\nPattan Saddam Hussain\n", "year_of_birth": "1992", "house": "4/166", "aadhaar_id": "565061987998", "dist": "Cuddapah"}, "validation_result": "PENDING"}
+                    kyc = EsthenosOrgApplicationKYC()
+                    kyc.name =  data["name"].strip()
+                    kyc.father_or_husband_name =  data["co"].strip()
+                    kyc.kyc_number = data["aadhaar_id"].strip()
+                    kyc.gender = data["gender"].strip()
+                    if "state" in data.keys():
+                        kyc.state = data["state"].strip()
+                    if "pincode" in data.keys():
+                        kyc.pincode = data["pincode"].strip()
+                    if "house" in data.keys() and "vtc" in data.keys() and "dist" in data.keys():
+                        kyc.address1 = data["house"]+ ", " +data["vtc"] + ", " +data["dist"]
+                    if "vtc" in data.keys() and "dist" in data.keys():
+                        kyc.address1 = data["vtc"] + ", " +data["dist"]
+                    if "year_of_birth" in data.keys():
+                        kyc.dob = data["year_of_birth"]
+                    kyc.raw = data["raw"]
+                    kyc.validation = json.loads(rawdata)["validation_result"]
                     application.gkyc_1 = kyc
 
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=1)[0]

@@ -210,13 +210,117 @@
     <script src="{{ url_for('static', filename='js/tabs_accordian.js')}}" type="text/javascript"></script>
     <script src="{{ url_for('static', filename='plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
+
         $(document).ready(function(){
            console.log("ready");
+            Dropzone.options.groupApp = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Aplication:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Aplication:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Aplication:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
+            Dropzone.options.groupKyc = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group KYC:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group KYC:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group KYC:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
+            Dropzone.options.groupGkyc = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Borrower KYC:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Borrower KYC:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Group Borrower KYC:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
+            Dropzone.options.indivijualApp = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Aplication:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Aplication:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Aplication:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
+            Dropzone.options.indivijualKyc = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual KYC:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual KYC:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual KYC:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
+            Dropzone.options.indivijualGkyc = {
+                init: function() {
+                    this.on("addedfile", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Borrower KYC:uploading "+file.name+" !");
+                    });
+                    this.on("success", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Borrower KYC:sucessfully uploaded "+file.name+" !");
+                    });
+                    this.on("error", function(file) {
+                        console.log("uploading "+file.name+" !");
+                        Messenger().post("Indivijual Borrower KYC:upload failed "+file.name+" !");
+                    });
+
+                }
+            };
             $('.submit_i_application').click(function(e){
                 e.preventDefault();
                 $("#indivijual_app_center").submit();
                 return false;
             });
+
             $('#indivijual_app_center').validate({
                 errorElement: 'span',
                 errorClass: 'error',

@@ -278,7 +278,7 @@ def admin_cbcheck():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(status=7)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
 # Added by Deepak
@@ -290,7 +290,7 @@ def admin_disbursement():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(status=19)
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
 @admin_views.route('/admin/applications', methods=["GET"])
