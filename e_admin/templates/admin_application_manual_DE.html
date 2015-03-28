@@ -566,7 +566,7 @@
         <div class="col-md-10">
             <label>Member Full Name</label>
             <input id="member_fullname" type="text" class="no-boarder form-control input-sm" name="member_fullname"
-                   value="" placeholder="Member Full Name">
+                   value="{{ application.applicant_name }}" placeholder="Member Full Name">
         </div>
         <div class="col-md-2">
             <label>Age</label>
@@ -576,18 +576,18 @@
         <div class="col-md-10">
             <label>Member Father/Husband Name</label>
             <input id="member_f_or_h_name" type="text" class="no-boarder form-control input-sm" name="member_f_or_h_name"
-                   value="" placeholder="Member Husband Name">
+                   value="{{ application.member_f_or_h_name }}" placeholder="Member Husband Name">
         </div>
         <div class="col-md-2">
             <label>Age</label>
             <input id="member_husband_age" type="text" class="no-boarder form-control input-sm" name="member_husband_age"
-                   value="" placeholder="Age">
+                   value="{{ application.age }}" placeholder="Age">
         </div>
 
         <div class="col-md-12">
             <label>Address1 (As per address proof)</label>
             <input id="member_address1" type="text" class="no-boarder form-control input-sm" name="member_address1"
-                   value="" placeholder="Address1 (As per address proof)">
+                   value="{{ application.address }}" placeholder="Address1 (As per address proof)">
         </div>
         <div class="col-md-12">
             <label>Address2</label>
@@ -600,7 +600,7 @@
         <div class="col-md-4">
             <label>Pin Code</label>
             <input id="member_pincode" type="text" class="no-boarder form-control input-sm" name="member_pincode"
-                   value="" placeholder="Pin Code">
+                   value="{{ application.member_pincode }}" placeholder="Pin Code">
         </div>
         <div class="col-md-4">
             <label>Member Telephone</label>
@@ -653,7 +653,7 @@
 
         <div class="col-md-12">
             <input id="guarantor_fullname" type="text" class="no-boarder form-control input-sm" name="guarantor_fullname"
-                   value="" placeholder="Guarantor Full Name">
+                   value="{{ application.gkyc_1.name }}" placeholder="Guarantor Full Name">
         </div>
     </div>
     <div class="row form-row">
@@ -671,7 +671,7 @@
         <div class="col-md-5">
             <label>KYC Number</label>
             <input id="guarantor_id_proof_number" type="text" class="no-boarder form-control input-sm" name="guarantor_id_proof_number"
-                   value="" placeholder="">
+                   value="{{ application.gkyc_1.kyc_number }}" placeholder="">
         </div>
     </div>
 
@@ -1502,6 +1502,10 @@
                     required: true,
                     number: true
                 },
+                member_fullname:{
+                    required: true,
+                    minlength: 8
+                },
                 member_f_or_h_name: {
                     required: true,
                     minlength: 8
@@ -1512,11 +1516,11 @@
                 },
                  member_address1: {
                     required: true,
-                    minlength: 2
+                    minlength: 5
                 },
                  member_address2: {
-                    required: true,
-                    minlength: 2
+                    required: false,
+                    minlength: 0
                 },
                  member_pincode: {
                     required: true,
@@ -1525,11 +1529,11 @@
                 },
                  member_telephone: {
                     required: true,
-                    number:true
+                    number:false
                 },
                 member_husband_telephone: {
-                    required: true,
-                    number:true
+                    required: false,
+                    number:false
                 },
                 member_id_proof_number: {
                     required: true,

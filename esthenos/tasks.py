@@ -22,7 +22,18 @@ celery = make_celery('esthenos.tasks',mainapp.config['CELERY_BROKER_URL'],mainap
 
 from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC
 #from e_admin.models import EsthenosOrgApplication
+from datetime import date
 
+def calculate_age(born):
+    today = date.today()
+    try:
+        birthday = born.replace(year=today.year)
+    except ValueError: # raised when birth date is February 29 and the current year is not a leap year
+        birthday = born.replace(year=today.year, month=born.month+1, day=1)
+    if birthday > today:
+        return today.year - born.year - 1
+    else:
+        return today.year - born.year
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 @celery.task
@@ -52,8 +63,10 @@ def prefill_applications():
                     kyc = EsthenosOrgApplicationKYC()
                     if "Name" in data.keys():
                         kyc.name =  data["Name"].strip()
+                        application.applicant_name = kyc.name
                     if "Father's/Organisation Name" in data.keys():
                         kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
+                        application.member_f_or_h_name = kyc.father_or_husband_name
                     if "PAN" in data.keys():
                         kyc.kyc_number = data["PAN"].strip()
                     if "DOB" in data.keys():
@@ -80,6 +93,7 @@ def prefill_applications():
                         kyc.gender = data["Gender"].strip()
                     if "DOB" in data.keys():
                         kyc.dob = data["DOB"].strip()
+
                     if "Address" in data.keys():
                         kyc.address1 = data["Address"].strip()
                     if "Pincode" in data.keys():
@@ -106,16 +120,19 @@ def prefill_applications():
                         kyc.pincode = data["pincode"].strip()
                     if "house" in data.keys() and "vtc" in data.keys() and "dist" in data.keys():
                         kyc.address1 = data["house"]+ ", " +data["vtc"] + ", " +data["dist"]
+                        application.address = kyc.address1
                     if "vtc" in data.keys() and "dist" in data.keys():
                         kyc.address1 = data["vtc"] + ", " +data["dist"]
                     if "year_of_birth" in data.keys():
                         kyc.dob = data["year_of_birth"]
+                        application.age = calculate_age(datetime.datetime(year=kyc.dob, month=1, day=1))
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     if cur_index == 1:
                         application.kyc_1 = kyc
                     else:
                         application.kyc_2 = kyc
+                cur_index = cur_index+1
 
             for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
                 gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]

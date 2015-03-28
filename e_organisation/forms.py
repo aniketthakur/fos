@@ -10,16 +10,6 @@ from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
-class UpdateApplicationForm( Form):
-    application_postal_address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_telephone =TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    application_postal_tele_code =TextField( validators=[v.DataRequired(), v.Length(max=5)])
-    application_postal_country =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_state =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_city =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-
-    def save( self):
-        return None
 
 """
 ImmutableMultiDict([('kyc1_teleno', u''), ('center_name', u'MUDDANAHALLI'), ('kyc2_kycid', u'VB/05/041/336769'),
@@ -37,7 +27,7 @@ ImmutableMultiDict([('kyc1_teleno', u''), ('center_name', u'MUDDANAHALLI'), ('ky
 ('fl_loans', u'2000'), ('guarantor_id_proof_number', u'ZMQ2471183'), ('fl_chits', u'2000'), ('kyc1_kycid', u'565061987998'),
 ('selec_p_business_category', u'TRADING'), ('village_hospital_category', u'ALLOPATHY'), ('chit_amount', u''),
 ('cm_id', u'0'), ('member_id_proof_number', u'565061987998'), ('member_telephone', u'8197998833'), ('kyc2_dob', u'20'),
-('kyc1_postal_code', u''), ('group_leader_cell', u''), ('bankfi_amount', u''), ('kyc1_address', u'4/166'), ('patta_land', u'2Acare'),
+('kyc1_member_code', u''), ('group_leader_cell', u''), ('bankfi_amount', u''), ('kyc1_address', u'4/166'), ('patta_land', u'2Acare'),
 ('chits_inclusion', u'yes'), ('moneylenders_roi', u'15'), ('kyc3_dob', u'27/08/1988'), ('current_cycle', u'1'),
 ('kyc3_address', u''), ('member_age', u'25'), ('select_family_asset', u'MIXER'), ('select_family_asset', u'BULLOCK_CART'),
 ('select_family_asset', u'BYCYCLE'), ('guarantor_fullname', u' Prathwirai Palekar'), ('purpose_of_loan', u'farming'),
@@ -49,12 +39,12 @@ ImmutableMultiDict([('kyc1_teleno', u''), ('center_name', u'MUDDANAHALLI'), ('ky
 ('education_expenditure', u'50'), ('branch', u'Branch1'), ('applied_loan_amount', u'10000'), ('member_f_or_h_name', u'S/O Fyroz Basha'),
 ('travel_expenditure', u'20'), ('t_income', u'1500'), ('member_pincode', u'580003'), ('repayment_mode', u'monthly'),
 ('taluk', u'Honavar'), ('group_leader', u'Ganga'), ('bankfi_roi', u''), ('member_husband_telephone', u'982929029'),
- ('kyc3_postal_code', u''), ('selec_p_business', u'ORCHARD'), ('select_member_religion', u'HINDU'),
+ ('kyc3_member_code', u''), ('selec_p_business', u'ORCHARD'), ('select_member_religion', u'HINDU'),
 ('select_member_caste_category', u'GENERAL'), ('moneylenders_amount', u'1000'), ('guarantor_id_proof', u''),
 ('house_rent_expenditure', u''), ('s_income', u'1500'), ('village_public_transport', u'BUS'), ('kyc1_tele_code', u''),
  ('house_hold_expenditure', u'1000'), ('kyc2_address', u''), ('village_electricity', u'12HR'), ('kyc2_tele_code', u''),
 ('product_id', u'5513c64957ab391b2fb50191'), ('kyc1_city', u'Cuddapah'), ('region', u'R1'), ('kyc3_teleno', u''),
-('kyc3_kycid', u'ZMQ2471183'), ('fl_insurance', u'2000'), ('select_drinking_water', u'PIPED'), ('kyc2_postal_code', u''),
+('kyc3_kycid', u'ZMQ2471183'), ('fl_insurance', u'2000'), ('select_drinking_water', u'PIPED'), ('kyc2_member_code', u''),
 ('select_s_business_category', u'TRADING'), ('kyc3_state', u''), ('select_t_business_category', u'TRADING')])
     """
 class AddApplicationManual(Form):
@@ -148,13 +138,13 @@ class AddApplicationManual(Form):
 
     def save( self):
         app=EsthenosOrgApplication(applicant_name=self.member_fullname.data)
-#       app.postal_telephone = self.member_telephone.data
-#       app.postal_tele_code = self.postal_tele_code.data
-#       app.postal_country = self.kyc1_country.data
-        app.postal_state = self.state.data
-#       app.postal_city = self.postal_city.data
-        app.postal_taluk = self.taluk.data
-#        app.postal_village = self.postal_village.data
+        app.member_telephone = self.member_telephone.data
+#       app.member_tele_code = self.postal_tele_code.data
+#       app.member_country = self.kyc1_country.data
+        app.member_state = self.state.data
+#       app.member_city = self.member_city.data
+        app.member_taluk = self.taluk.data
+#        app.member_village = self.member_village.data
 #        app.member_relationship_status = self.member_relationship_status.data
         app.telephone_number = self.member_husband_telephone.data
 #        app.mobile_number = self.mobile_number.data
@@ -284,8 +274,8 @@ class AddApplicationManual(Form):
 class AddApplicationMobile(Form):
 
     application_id=TextField( validators=[ v.Length(max=20)])
-    application_postal_telephone = TextField( validators=[ v.Length(max=20)])
-    application_postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_telephone = TextField( validators=[ v.Length(max=20)])
+    application_member_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
     group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     center_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     application_member_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -313,12 +303,12 @@ class AddApplicationMobile(Form):
     application_cycle= TextField( validators=[v.DataRequired(), v.Length(max=100)])
 
     application_branch_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=9)])
-    application_postal_state = TextField( validators=[v.Length(max=100)])
-    application_postal_city = TextField( validators=[ v.Length(max=100)])
-    application_postal_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_village= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=9)])
+    application_member_state = TextField( validators=[v.Length(max=100)])
+    application_member_city = TextField( validators=[ v.Length(max=100)])
+    application_member_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_member_village= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_member_dob= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_member_co_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_telephone_number= TextField( validators=[ v.Length(max=100)])
@@ -366,13 +356,13 @@ class AddApplicationMobile(Form):
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
         app.upload_type = "AUTOMATIC_UPLOAD"
         app.status = 0
-        app.postal_telephone = self.application_postal_telephone.data
-        app.postal_tele_code = self.application_postal_tele_code.data
-        app.postal_country = self.application_postal_country.data
-        app.postal_state = self.application_postal_state.data
-        app.postal_city = self.application_postal_city.data
-        app.postal_taluk = self.application_postal_taluk.data
-        app.postal_village = self.application_postal_village.data
+        app.member_telephone = self.application_member_telephone.data
+        app.member_tele_code = self.application_member_tele_code.data
+        app.member_country = self.application_member_country.data
+        app.member_state = self.application_member_state.data
+        app.member_city = self.application_member_city.data
+        app.member_taluk = self.application_member_taluk.data
+        app.member_village = self.application_member_village.data
         app.member_relationship_status = self.application_member_relationship_status.data
         app.telephone_number = self.application_telephone_number.data
         app.mobile_number = self.application_mobile_number.data
@@ -406,7 +396,7 @@ class AddApplicationMobile(Form):
         app.repayment_method = self.application_repayment_method.data
         app.applicant_name = self.application_member_name.data
         app.dob = self.application_member_dob.data
-        app.address = self.application_postal_address.data
+        app.address = self.application_member_address.data
         app.primary_income =float(self.application_monthly_income.data)
         app.secondary_income = float(self.application_secondary_business_income.data)
         app.tertiary_income =float(self.application_tertiary_income.data)
