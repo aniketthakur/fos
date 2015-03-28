@@ -14,8 +14,8 @@ def make_celery(task_name,broker=None,resultbackend=None):
 
     celery = Celery(task_name,backend=resultbackend ,broker=broker)
     celery.conf.update(app.config)
-    #from esthenos  import celeryconfig
-    #celery.config_from_object(celeryconfig)
+    from esthenos  import celeryconfig
+    celery.config_from_object(celeryconfig)
     TaskBase = celery.Task
     class ContextTask(TaskBase):
         abstract = True

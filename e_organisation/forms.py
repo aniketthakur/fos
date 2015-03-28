@@ -1,11 +1,11 @@
 __author__ = 'prathvi'
 #!/usr/bin/env python
-
+import datetime
 from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError, DateField
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser, EsthenosOrgApplication
+from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
@@ -61,69 +61,152 @@ class AddApplicationManual(Form):
     center_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     medical_expenditure= TextField( validators=[ v.Length(max=10)])
+    interested_in_nps= TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    centre_leader=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    state=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    interested_in_other_fp=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_t_business=TextField( validators=[v.DataRequired(), v.Length(max=30)])
+    radio_member_disability=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_water=TextField( validators=[v.DataRequired(), v.Length(max=30)])
+    festival_expenditure=TextField( validators=[ v.Length(max=10)])
+    cm_cell_no=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    excepted_disbursment_date=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_medical_facilities=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    micropension_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    p_income=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    self_owned_land=TextField( validators=[ v.Length(max=10)])
+    member_address_proof=TextField( validators=[ v.Length(max=200)])
+    center_leader_cell=TextField( validators=[ v.Length(max=10)])
+    center_size=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_type_of_residence=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    application_type=TextField( validators=[ v.Length(max=20)])
+    application_type2=TextField( validators=[ v.Length(max=20)])
+    application_type3=TextField( validators=[ v.Length(max=20)])
+    shared_land=TextField( validators=[ v.Length(max=10)])
+    child=TextField( validators=[ v.Length(max=10)])
+    bankaccount_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    fl_loans=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    guarantor_id_proof_number=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    fl_chits=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_p_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_hospital_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    chit_amount=TextField( validators=[ v.Length(max=10)])
+    cm_id=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_telephone=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    group_leader_cell=TextField( validators=[ v.Length(max=10)])
+    bankfi_amount=TextField( validators=[ v.Length(max=10)])
+    patta_land=TextField( validators=[ v.Length(max=10)])
+    chits_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    moneylenders_roi=TextField( validators=[ v.Length(max=10)])
+    current_cycle=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_age=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_family_asset=TextField( validators=[ v.Length(max=20)])
+    guarantor_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    purpose_of_loan=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    group_size=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_husband_age=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_id_proof_number=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_house_type=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_road=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    chit_roi=TextField( validators=[ v.Length(max=10)])
+    family_size=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_address2=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_s_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_address1=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    food_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    repeat_client_id=TextField( validators=[ v.Length(max=20)])
+    entertainment_expenditure=TextField( validators=[ v.Length(max=10)])
+
+    fnf_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    education_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    branch=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    applied_loan_amount=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_f_or_h_name=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    travel_expenditure=TextField( validators=[ v.Length(max=10)])
+    t_income=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    member_pincode=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    repayment_mode=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    taluk=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    group_leader=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    bankfi_roi=TextField( validators=[ v.Length(max=10)])
+    member_husband_telephone=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_p_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_member_religion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_member_caste_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    moneylenders_amount=TextField( validators=[ v.Length(max=10)])
+    house_rent_expenditure=TextField( validators=[ v.Length(max=10)])
+    s_income=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_public_transport=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    house_hold_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    village_electricity=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    product_id=TextField( validators=[v.DataRequired(), v.Length(max=64)])
+    region=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    fl_insurance=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_drinking_water=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_t_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
 
     def save( self):
         app=EsthenosOrgApplication(applicant_name=self.member_fullname.data)
-#        app.center =
-#        app.organisation =
-#        app.application_id =
-#        app.upload_type =
-#        app.status =
-#        app.postal_telephone = self.member_telephone.data
-#        app.postal_tele_code = self.postal_tele_code.data
-#        app.postal_country = self.kyc1_country.data
-#        app.postal_state = self.postal_state.data
-#        app.postal_city = self.postal_city.data
-#        app.postal_taluk = self.postal_taluk.data
+#       app.postal_telephone = self.member_telephone.data
+#       app.postal_tele_code = self.postal_tele_code.data
+#       app.postal_country = self.kyc1_country.data
+        app.postal_state = self.state.data
+#       app.postal_city = self.postal_city.data
+        app.postal_taluk = self.taluk.data
 #        app.postal_village = self.postal_village.data
 #        app.member_relationship_status = self.member_relationship_status.data
-#        app.telephone_number = self.telephone_number.data
+        app.telephone_number = self.member_husband_telephone.data
 #        app.mobile_number = self.mobile_number.data
-#        app.member_applied_loan = self.member_applied_loan.data
-#        app.religion = self.religion.data
-#        app.category = self.category.data
-#        app.cast = self.cast.data
-#        app.education = self.education.data
-#        app.type_of_residence = self.type_of_residence.data
+        app.member_applied_loan = self.applied_loan_amount.data
+        app.religion = self.select_member_religion.data
+        # app.category = self.select_member_caste_category.data
+        app.cast = self.select_member_caste_category.data
+        app.education = self.education_expenditure.data
+        app.type_of_residence = self.select_type_of_residence.data
 #        app.quality_of_house = self.quality_of_house.data
-#        app.drinking_water = self.drinking_water.data
-#        app.purpose_of_loan = self.purpose_of_loan.data
-#        app.family_size  = self.family_size.data
+        app.drinking_water = self.select_drinking_water.data
+        app.purpose_of_loan = self.purpose_of_loan.data
+        app.family_size  = self.family_size.data
 #        app.adult_count  = self.adult_count.data
-#        app.children_below18 = self.children_below18.data
+        app.children_below18 = self.child.data
 #        app.children_below12 = self.children_below12.data
-#        app.business_category = self.business_category.data
-#        app.business = self.business.data
-#        app.family_asset = self.family_asset.data
+        app.business_category = self.select_t_business_category.data
+        app.primary_business = self.select_p_business.data
+        app.secondary_business=self.select_s_business.data
+
+        app.family_asset = self.select_family_asset.data
 #        app.money_lenders_loan = self.money_lenders_loan.data
-#        app.money_lenders_loan_roi = self.money_lenders_loan_roi.data
-#        app.bank_loan = self.bank_loan.data
-#        app.bank_loan_roi = float(self.bank_loan_roi.data)
-#        app.branch_name = self.branch_name.data
+        app.money_lenders_loan_roi = float(self.moneylenders_roi.data)
+        if self.bankfi_roi.data == "":
+            self.bankfi_roi.data = "0"
+        app.bank_loan_roi =  float(self.bankfi_roi.data)
+        app.branch_name = self.branch.data
 #        app.branch_id  = self.applciation_branch_id.data
 #        app.state_id = self.state_id.data
 #        app.region_id = self.region_id.data
-#        app.cm_id = self.cm_id.data
-#        app.cm_cell_no = self.cm_cell_no.data
+        app.cm_id = self.cm_id.data
+        app.cm_cell_no = self.cm_cell_no.data
 #        app.repeat_client_id = self.repeat_client_id.data
 #        app.repayment_method = self.repayment_method.data
-#        app.applicant_name = self.member_name.data
+        app.applicant_name = self.member_fullname.data
 #        app.dob = self.member_dob.data
-#        app.address = self.postal_address.data
+        app.address = self.member_address1.data + self.member_address2.data
 #        app.primary_income =float(self.monthly_income.data)
 #        app.secondary_income = float(self.secondary_business_income.data)
 #        app.tertiary_income =float(self.tertiary_income.data)
 #
 #        app.gender =
-#        app.age =
+        app.age =self.member_age.data + self.member_husband_age.data
 #        app.other_income = 0
 #        app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #        app.business_expense =
-#        app.food_expense = float(self.food_expenditure.data)
-#        app.travel_expense =float(self.travel_expenditure.data)
-#        app.entertainment_expense =float(self.entertainment_expenditure.data)
-#        app.educational_expense = float(self.education_expenditure.data)
-        app.medical_expense =float(self.medical_expenditure.data)
+        app.food_expense = float(self.food_expenditure.data)
+        app.travel_expense =float(self.travel_expenditure.data)
+        app.entertainment_expense =float(self.entertainment_expenditure.data)
+        # app.educational_expense = float(self.education_expenditure.data)
+        # app.medical_expense =float(self.medical_expenditure.data)
+
 #        app.other_expense = float(self.house_hold_expenditure.data)
 #        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense
 #        app.total_liability =
@@ -132,11 +215,18 @@ class AddApplicationManual(Form):
 #        app.outstanding_3 =
 #        app.outstanding_4 =
 #        app.total_outstanding =
-#        app.other_outstanding_chit = float(self.chits.data)
-#        app.other_outstanding_insurance = float(self.insurance.data)
+        if self.fl_chits.data == "":
+            self.fl_chits.data = "0"
+        if self.chit_amount.data == "":
+            self.chit_amount.data = "0"
+        if self.chits_inclusion.data == "":
+            self.chits_inclusion.data = "0"
+
+        app.other_outstanding_chit = float(self.fl_chits.data)+float(self.chit_amount.data)
+        app.other_outstanding_insurance = float(self. fl_insurance.data)
 #        app.other_outstanding_emi =
 #        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance
-#        app.net_income = app.total_income - app.total_expenditure
+        app.net_income = float(self.p_income.data)+float(self.s_income.data)+float(self.t_income.data)
 #        app.total_running_loans =
 #        app.total_existing_outstanding_from =
 #        app.total_running_loans_from_mfi =
@@ -150,15 +240,54 @@ class AddApplicationManual(Form):
 #        app.pan_card =
 #        app.vid_card =
 #        app.save()
+        app.village_electricity=self.village_electricity.data
+        app.interested_in_other_fp=self.interested_in_other_fp.data
+        app.radio_member_disability=self.radio_member_disability.data
+        app.village_water=self.village_water.data
+        app.festival_expenditure=self.festival_expenditure.data
+        app.village_medical_facilities=self.village_medical_facilities.data
+        app.micropension_inclusion=self.micropension_inclusion.data
+        app.self_owned_land=self.self_owned_land.data
+        app.center_leader_cell=self.center_leader_cell.data
+        app.center_size=self.center_size.data
+        app.applicationtype=self.application_type.data
+        app.shared_land=self.shared_land.data
+        app.bankaccount_inclusion=self.bankaccount_inclusion.data
+        app.fl_loans=self.fl_loans.data
+        app.village_hospital_category=self.village_hospital_category.data
+        app.group_leader_cell=self.group_leader_cell.data
+        if self.bankfi_amount.data == "":
+            self.bankfi_amount.data = "0"
+        app.bank_loan=float(self.bankfi_amount.data)
+        app.patta_land=self.patta_land.data
+        app.group_size=self.group_size.data
+        app.select_house_type=self.select_house_type.data
+        app.village_road=self.village_road.data
+        app.fnf_inclusion=self.fnf_inclusion.data
+        app.member_f_or_h_name=self.member_f_or_h_name.data
+        app.member_pincode=self.member_pincode.data
+        app.repayment_mode=self.repayment_mode.data
+
+        app.moneylenders_amount=self.moneylenders_amount.data
+        if self.house_rent_expenditure.data == "":
+            self.house_rent_expenditure.data = "0"
+        app.house_rent_expenditure= float(self.house_rent_expenditure.data)
+        app.village_public_transport=self.village_public_transport.data
+        app.house_hold_expenditure=self.house_hold_expenditure.data
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        app.current_status_updated = datetime.datetime.now()
+        app.status = 5
+        app.save()
 
         return None
 
 class AddApplicationMobile(Form):
 
-
+    application_id=TextField( validators=[ v.Length(max=20)])
     application_postal_telephone = TextField( validators=[ v.Length(max=20)])
     application_postal_country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-
+    group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    center_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     application_member_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_family_size= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_adult_count= TextField( validators=[ v.Length(max=100)])
@@ -186,8 +315,8 @@ class AddApplicationMobile(Form):
     application_branch_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_postal_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_postal_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=9)])
-    application_postal_state = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_postal_city = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    application_postal_state = TextField( validators=[v.Length(max=100)])
+    application_postal_city = TextField( validators=[ v.Length(max=100)])
     application_postal_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_postal_village= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_member_dob= TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -221,13 +350,22 @@ class AddApplicationMobile(Form):
 
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    def save( self):
+
+    def save( self,user):
+
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
-#       app.center = self.application_
-#       app.organisation =
-#       app.application_id =
-#       app.upload_type =
-#       app.status =
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
+        app.organisation = user.organisation
+        app.center = center
+        app.group = group
+        app.owner = user
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        app.current_status_updated = datetime.datetime.now()
+        settings = EsthenosSettings.objects.all()[0]
+        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
+        app.upload_type = "AUTOMATIC_UPLOAD"
+        app.status = 0
         app.postal_telephone = self.application_postal_telephone.data
         app.postal_tele_code = self.application_postal_tele_code.data
         app.postal_country = self.application_postal_country.data
@@ -248,15 +386,15 @@ class AddApplicationMobile(Form):
         app.drinking_water = self.application_drinking_water.data
         app.purpose_of_loan = self.application_purpose_of_loan.data
         app.family_size  = self.application_family_size.data
-        app.adult_count  = self.application_adult_count.data
-        app.children_below18 = self.application_children_below18.data
-        app.children_below12 = self.application_children_below12.data
+        app.adult_count  = int(self.application_adult_count.data)
+#        app.children_below18 = int(self.application_children_below18.data)
+#        app.children_below12 = int(self.application_children_below12.data)
         app.business_category = self.application_business_category.data
         app.business = self.application_business.data
         app.family_asset = self.application_family_asset.data
-        app.money_lenders_loan = self.application_money_lenders_loan.data
-        app.money_lenders_loan_roi = self.application_money_lenders_loan_roi.data
-        app.bank_loan = self.application_bank_loan.data
+        app.money_lenders_loan = float(self.application_money_lenders_loan.data)
+        app.money_lenders_loan_roi = float(self.application_money_lenders_loan_roi.data)
+        app.bank_loan = float(self.application_bank_loan.data)
         app.bank_loan_roi = float(self.application_bank_loan_roi.data)
         app.branch_name = self.application_branch_name.data
         app.branch_id  = self.applciation_branch_id.data

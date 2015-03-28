@@ -13,7 +13,9 @@ from flask import  Blueprint
 import psutil
 import os
 from e_admin.models import EsthenosUser
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct,EsthenosOrgSettings
+from e_organisation.forms import AddApplicationManual
+from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct, EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplicationStatusType
 import urlparse
 from flask_sauth.models import authenticate,User
 from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
@@ -28,6 +30,8 @@ from blinker import signal
 from esthenos import mainapp
 import sys,traceback
 import boto
+from e_tokens.utils import login_or_key_required
+
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
@@ -186,6 +190,21 @@ def admin_organisation_dashboard(org_id):
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET"])
+@login_required
+def admin_organisation_settings(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    org = EsthenosOrg.objects.get(id=org_id)
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = EsthenosOrg.objects.get(id=org_id)
+    settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    print settings.loan_cycle_1_org
+    kwargs = locals()
+    return render_template("admin_org_settings.html", **kwargs)
+
 @admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
@@ -282,7 +301,7 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(status=1)
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
@@ -298,22 +317,28 @@ def admin_application_id(org_id,app_id):
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
     application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
-    for app_id in application.tag.app_file_pixuate_id:
-        app_urls.append(get_url_with_id(app_id))
+    for kyc_id in application.tag.app_file_pixuate_id:
+        app_urls.append(get_url_with_id(kyc_id))
 
     kyc_urls = list()
-    kyc_ids = application.tag.kyc_file_pixuate_id
-    for kyc_id in application.tag.kyc_file_pixuate_id:
+    kyc_ids = list()
+    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+        kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+        kyc_ids.append(kyc_id)
         kyc_urls.append(get_url_with_id(kyc_id))
 
     gkyc_urls = list()
-    gkyc_ids = application.tag.gkyc_file_pixuate_id
-    for gkyc_id in application.tag.gkyc_file_pixuate_id:
+    gkyc_ids = list()
+    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+        gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+        gkyc_ids.append(gkyc_id)
         gkyc_urls.append(get_url_with_id(gkyc_id))
+
     today= datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
@@ -327,10 +352,13 @@ def submit_application(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-
-    print request.form
-
-    return redirect("/admin/organisation/5512da35e77989097c031a66/application/SA0000007/")
+    form = AddApplicationManual(request.form)
+    if form.validate():
+        form.save()
+    print form.errors
+    new_num = int(app_id[-6:])+1
+    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
@@ -618,17 +646,30 @@ def login_admin():
 
 
 @admin_views.route('/admin/mobile/application',methods=['POST'])
+@login_or_key_required
 def mobile_application():
-    jsonlist= request.form
-    print jsonlist
-    request.files
-    app_form=AddApplicationMobile(jsonlist)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    form= request.form
+    print form
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    center = None
+    group = None
+    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+    elif center_name !=None and len(center_name)>0:
+        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
+    app_form=AddApplicationMobile(form)
     if(app_form.validate()):
         print "Form Validated"
         print "Saving Form"
-        app_form.save()
+        app_form.save(user)
+        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
     else:
-        flash_errors(app_form)
+        print app_form.errors
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)

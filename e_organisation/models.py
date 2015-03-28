@@ -76,8 +76,8 @@ class PixuateObjectUrlMap(db.Document):
 class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     file_id = db.IntField(required=True)
     app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
-    kyc_file_pixuate_id = db.ListField(db.StringField())
-    gkyc_file_pixuate_id = db.ListField(db.StringField())
+    kyc_file_pixuate_id = db.DictField()
+    gkyc_file_pixuate_id = db.DictField()
 
 class EsthenosOrgUserUploadSession(db.Document):
     unique_session_key = db.StringField(max_length=255, required=True)
@@ -86,9 +86,10 @@ class EsthenosOrgUserUploadSession(db.Document):
     session_center = db.ReferenceField('EsthenosOrgCenter', required=False)
     number_of_applications = db.IntField(default=0, required=False)
     number_of_kycs = db.IntField(default=0, required=False)
+    number_of_gkycs = db.IntField(default=0, required=False)
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
-    applications = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationMap), required=False)
+    applications = db.DictField()
     tagged = db.BooleanField(default=False)
 
 class EsthenosOrg(db.Document):
@@ -121,10 +122,15 @@ class EsthenosOrg(db.Document):
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
-    center_id = db.StringField(max_length=10,required=True)
+    center_id = db.StringField(max_length=10,required=False)
     center_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False)
+
+    def __unicode__(self):
+        return str(self.center_id) + "<" + self.center_name + ">"
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -133,29 +139,24 @@ class EsthenosOrgCenterResource(Resource):
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
-    group_id = db.StringField(max_length=10,required=True)
+    group_id = db.StringField(max_length=10,required=False)
     group_name = db.StringField(max_length=60,required=True)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False)
+
+    def __unicode__(self):
+        return str(self.group_id) + "<" + self.group_name + ">"
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
 
 
-class EsthenosOrgApplicationPanCard(db.EmbeddedDocument):
-    name_or_org_name = db.StringField(max_length=255, required=False,default="")
-    father_or_org_name = db.StringField(max_length=255, required=False,default="")
+class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
+    kyc_number = db.StringField(max_length=20, required=False,default="")
     dob = db.StringField(max_length=20, required=False,default="")
-    pan_number = db.StringField(max_length=20, required=False,default="")
-
-    def __unicode__(self):
-        return self.name_or_org_name + "<" + self.father_or_org_name + ">"
-
-
-class EsthenosOrgApplicationVID(db.EmbeddedDocument):
-    vid_number = db.StringField(max_length=20, required=False,default="")
-    dob = db.StringField(max_length=20, required=False,default="")
-    elector_name = db.StringField(max_length=255, required=False,default="")
+    name = db.StringField(max_length=255, required=False,default="")
     father_or_husband_name = db.StringField(max_length=255, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
     address1 = db.StringField(max_length=512, required=False,default="")
@@ -165,26 +166,13 @@ class EsthenosOrgApplicationVID(db.EmbeddedDocument):
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
+    raw = db.StringField(max_length=2048, required=False)
+    validation = db.StringField(max_length=20, required=True,default="PENDING")
 
     def __unicode__(self):
-        return self.elector_name + "<" + self.father_or_husband_name + ">"
+        return self.kyc_number + "<" + self.name + ">"
 
-class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
-    aadhaar_number = db.StringField(max_length=20, required=False,default="")
-    dob = db.StringField(max_length=20, required=False,default="")
-    name = db.StringField(max_length=255, required=False,default="")
-    care_of_name = db.StringField(max_length=255, required=False,default="")
-    gender = db.StringField(max_length=20, required=False,default="")
-    address1 = db.StringField(max_length=512, required=False,default="")
-    address2 = db.StringField(max_length=512, required=False,default="")
-    state = db.StringField(max_length=128, required=False,default="")
-    dist = db.StringField(max_length=128, required=False,default="")
-    taluk = db.StringField(max_length=128, required=False,default="")
-    pincode = db.StringField(max_length=20, required=False,default="")
-    date_created = db.DateTimeField(default=datetime.datetime.now)
 
-    def __unicode__(self):
-        return self.elector_name + "<" + self.father_or_husband_name + ">"
 
 
 class EsthenosOrgProduct(db.Document):
@@ -211,14 +199,18 @@ class EsthenosOrgProduct(db.Document):
 
 
 class EsthenosOrgSettings(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg')
     loan_cycle_1_org = db.FloatField(default=35000)
     loan_cycle_1_plus_org = db.FloatField(default=50000)
     one_year_tenure_limit_org = db.FloatField(default=15000)
     hh_annual_income_limit_rural_org = db.FloatField(default=60000)
-    hh_annual_income_limit_annual_org = db.FloatField(default=120000)
+    hh_annual_income_limit_urban_org = db.FloatField(default=120000)
     total_indebtness_org = db.FloatField(default=50000)
     max_existing_loan_count_org = db.IntField(default=2)
     applicatant_min_attendence_percentage = db.FloatField(default=0.0)
+    highmark_username = db.StringField(max_length=100, required=True,default="")
+    highmark_password = db.StringField(max_length=100, required=True,default="")
+
 
     def __unicode__(self):
         return "EsthenosOrgSetings"
@@ -230,17 +222,21 @@ class EsthenosOrgApplicationStatusType(db.Document):
     def __unicode__(self):
         return "EsthenosOrgApplicationStatusType"
 
-
+class EsthenosOrgApplicationStatus(db.Document):
+    status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    updated_on = db.DateTimeField(default=datetime.datetime.now)
+    def __unicode__(self):
+        return "EsthenosOrgApplicationStatusType"
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
     organisation = db.ReferenceField('EsthenosOrg')
     owner = db.ReferenceField('EsthenosUser')
-    tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap)
+    tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     application_id = db.StringField(max_length=255, required=False,default="")
     upload_type = db.StringField(max_length=20, required=False,default="")
-    status = db.StringField(max_length=45, required=False,default="")
+    status = db.IntField(default=0)
     applicant_name = db.StringField(max_length=45, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
     age = db.IntField(default=0)
@@ -269,8 +265,12 @@ class EsthenosOrgApplication(db.Document):
     adult_count =  db.IntField(default=0)
     children_below18 =  db.IntField(default=0)
     children_below12 =  db.IntField(default=0)
-    business_category = db.StringField(max_length=20, required=False,default="")
-    business = db.StringField(max_length=20, required=False,default="")
+    primary_business_category = db.StringField(max_length=20, required=False,default="")
+    primary_business = db.StringField(max_length=20, required=False,default="")
+    secondary_business_category = db.StringField(max_length=20, required=False,default="")
+    secondary_business = db.StringField(max_length=20, required=False,default="")
+    tertiary_business_category = db.StringField(max_length=20, required=False,default="")
+    tertiary_business = db.StringField(max_length=20, required=False,default="")
     family_assets = db.StringField(max_length=512, required=False,default="")
     money_lenders_loan = db.FloatField(default=0.0)
     money_lenders_loan_roi = db.FloatField(default=0.0)
@@ -320,13 +320,44 @@ class EsthenosOrgApplication(db.Document):
     attendence_percentage = db.FloatField(default=0.0)
     loan_eligibility_based_on_net_income = db.FloatField(default=0.0)
     loan_eligibility_based_on_company_policy = db.FloatField(default=0.0)
-    pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
-    vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
-    aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
+    kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
-    timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatusType'))
+    current_status_updated = db.DateTimeField(default=datetime.datetime.now)
+    timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
+    village_electricity=db.StringField(max_length=10, required=False,default="")
+    interested_in_other_fp=db.StringField(max_length=20, required=False,default="")
+    radio_member_disability=db.StringField(max_length=20, required=False,default="")
+    village_water=db.StringField(max_length=20, required=False,default="")
+    festival_expenditure=db.IntField(default=0)
+    excepted_disbursment_date=db.DateTimeField( required=False,default=datetime.datetime.now())
+    village_medical_facilities=db.StringField(max_length=20, required=False,default="")
+    micropension_inclusion=db.StringField(max_length=20, required=False,default="")
+    self_owned_land=db.StringField(max_length=20, required=False,default="")
+    center_leader_cell=db.StringField(max_length=20, required=False,default="")
+    center_size=db.IntField(default=0)
+    applicationtype=db.StringField(max_length=20, required=False,default="")
+    shared_land=db.StringField(max_length=20, required=False,default="")
+    bankaccount_inclusion=db.StringField(max_length=20, required=False,default="")
+    fl_loans=db.IntField(default=0)
+    village_hospital_category=db.StringField(max_length=20, required=False,default="")
+    group_leader_cell=db.StringField(max_length=20, required=False,default="")
+    bankfi_amount=db.IntField(default=0)
+    patta_land=db.StringField(max_length=20, required=False,default="")
+    group_size=db.IntField(default=0)
+    select_house_type=db.StringField(max_length=20, required=False,default="")
+    village_road=db.StringField(max_length=20, required=False,default="")
+    fnf_inclusion=db.IntField(default=0)
+    member_f_or_h_name=db.StringField(max_length=20, required=False,default="")
+    member_pincode=db.IntField(default=0)
+    repayment_mode=db.StringField(max_length=20, required=False,default="")
+    moneylenders_amount=db.IntField(default=0)
+    house_rent_expenditure=db.IntField(default=0)
+    village_public_transport=db.StringField(max_length=20, required=False,default="")
+    house_hold_expenditure=db.IntField(default=0)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"

@@ -35,12 +35,12 @@ def login_or_key_required(view_function):
             return view_function(*args, **kwargs)
     return decorated_function
 
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import JSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired,BadSignature
 
 def generate_auth_token(current_user, expiration = 3600):
     print app.config['SECRET_KEY']
-    s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
+    s = Serializer(app.config['SECRET_KEY'])
     return s.dumps({ 'id': str(current_user.unique_id) })
 
 
@@ -49,20 +49,11 @@ def verify_auth_token(token):
     tokenobj = None
     data = dict()
     try:
-        tokenobj = EsthenosOrgUserToken.objects.get(token = token)
+        tokenobj = EsthenosOrgUserToken.objects.filter(token = token)[0]
         print tokenobj.full_token
         data = s.loads(tokenobj.full_token)
         print "valid token"
     except SignatureExpired:
-        if tokenobj.expires_in is -1 :
-            full_token = generate_auth_token(tokenobj.user,360000)
-            token  = full_token.split(".")[2]
-            tokenobj.full_token= full_token
-            tokenobj.token = token
-            tokenobj.save()
-            data = s.loads(tokenobj.full_token)
-            print "token expired- regenerated"
-        else:
             print "token expired"
             return None
     except BadSignature:
@@ -75,6 +66,6 @@ def verify_auth_token(token):
 
     print data
 
-    user = EsthenosUser.objects.get(unique_id=data['id'])
+    user = EsthenosUser.objects.filter(unique_id=data['id'])[0]
     login_user(user)
     return user
