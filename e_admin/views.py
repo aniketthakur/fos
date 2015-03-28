@@ -316,7 +316,11 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+    applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    if len(applications)==0:
+        redirect("/admin/applications")
+
+    application = applications[0]
     for kyc_id in application.tag.app_file_pixuate_id:
         app_urls.append(get_url_with_id(kyc_id))
 
