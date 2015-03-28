@@ -346,6 +346,8 @@ def upload_documents():
         print unique_key
         session_obj.unique_session_key = str(unique_key)
         session_obj.save()
+        from esthenos.tasks import prefill_applications
+        prefill_applications()
         kwargs = locals()
         return render_template("upload_documents.html", **kwargs)
     elif request.method == "POST":
@@ -406,6 +408,8 @@ def upload_documents():
         session_obj.owner = user
         session_obj.unique_session_key = str(unique_key)
         session_obj.save()
+
+
         kwargs = locals()
         return render_template("upload_documents.html", **kwargs)
 
