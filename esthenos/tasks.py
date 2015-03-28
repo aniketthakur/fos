@@ -24,8 +24,7 @@ from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationS
 #from e_admin.models import EsthenosOrgApplication
 
 
-@periodic_task(run_every=datetime.timedelta(seconds=20))
-@celery.task
+@periodic_task(run_every=datetime.timedelta(minutes=2))
 def prefill_applications():
     with mainapp.app_context():
         print "in prefill applications"
@@ -186,8 +185,7 @@ def prefill_applications():
             application.status = 1
             application.save()
 
-@celery.task
-@periodic_task(run_every=datetime.timedelta(seconds=30))
+@periodic_task(run_every=datetime.timedelta(minutes=3))
 def all_tagged_applications():
     with mainapp.app_context():
         print "queue processor"
@@ -223,7 +221,7 @@ def all_tagged_applications():
 
 from utils import make_sample_highmark_request_for_application_id,add_sample_highmark_response
 @celery.task
-@periodic_task(run_every=datetime.timedelta(seconds=40))
+@periodic_task(run_every=datetime.timedelta(minutes=4))
 def cb_checkready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -243,8 +241,7 @@ def cb_checkready_applications():
         application.status = 8
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(seconds=50))
-@celery.task
+@periodic_task(run_every=datetime.timedelta(minutes=3))
 def cbcheck_statuscheck_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -268,7 +265,7 @@ def cbcheck_statuscheck_applications():
         application.status = 11
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(minutes=1))
+@periodic_task(run_every=datetime.timedelta(minutes=3))
 def cashflow_ready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -290,7 +287,7 @@ def cashflow_ready_applications():
 
 
 
-@periodic_task(run_every=datetime.timedelta(minutes=1))
+@periodic_task(run_every=datetime.timedelta(minutes=3))
 @celery.task
 def cgt_grt_success_applications():
     print "queue processor"

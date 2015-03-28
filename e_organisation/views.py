@@ -264,7 +264,7 @@ def uploads_indivijual_kyc():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications["1"] = application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
