@@ -200,6 +200,7 @@ def uploads_indivijual_app():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     file = request.files['file']
+    kyc_type = file.filename.split("_")[1][0]
     unique_key = request.form.get('unique_key')
     session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
     application = None
@@ -357,24 +358,27 @@ def upload_documents():
         center = None
         group = None
         if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
-            unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:03d}".format(user.organisation.center_count)
+            unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
             center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
             if status:
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
-            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:03d}".format(user.organisation.group_count)
+            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
             group,status = EsthenosOrgGroup.objects.get_or_create(center=center,group_id = unique_group_id,organisation=user.organisation,group_name=group_name)
             if status:
-                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
 
 
         elif center_name !=None and len(center_name)>0:
-            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:03d}".format(user.organisation.group_count)
+            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
             group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_id = unique_group_id,group_name=group_name)
+            if status:
+                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key,tagged=False)
-            inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count
+            inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
+            int_x = 0
             for appkey in session_obj.applications.keys():
                 app = session_obj.applications[appkey]
                 tagged_application =  EsthenosOrgApplication()
@@ -387,11 +391,12 @@ def upload_documents():
                 settings = EsthenosSettings.objects.all()[0]
                 tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"
-                tagged_application.status = "TAGGING_DONE"
+                tagged_application.status = 0
                 tagged_application.save()
                 inc_count = inc_count+1
+                int_x = int_x+1
 
-            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=inc_count)
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=int_x)
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True

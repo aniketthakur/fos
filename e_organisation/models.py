@@ -129,6 +129,8 @@ class EsthenosOrgCenter(db.Document):
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
+    def __unicode__(self):
+        return str(self.center_id) + "<" + self.center_name + ">"
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -144,24 +146,17 @@ class EsthenosOrgGroup(db.Document):
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
+    def __unicode__(self):
+        return str(self.group_id) + "<" + self.group_name + ">"
+
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
 
 
-class EsthenosOrgApplicationPanCard(db.EmbeddedDocument):
-    name_or_org_name = db.StringField(max_length=255, required=False,default="")
-    father_or_org_name = db.StringField(max_length=255, required=False,default="")
+class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
+    kyc_number = db.StringField(max_length=20, required=False,default="")
     dob = db.StringField(max_length=20, required=False,default="")
-    pan_number = db.StringField(max_length=20, required=False,default="")
-    validation = db.StringField(max_length=20, required=True,default="PENDING")
-    def __unicode__(self):
-        return self.name_or_org_name + "<" + self.father_or_org_name + ">"
-
-
-class EsthenosOrgApplicationVID(db.EmbeddedDocument):
-    vid_number = db.StringField(max_length=20, required=False,default="")
-    dob = db.StringField(max_length=20, required=False,default="")
-    elector_name = db.StringField(max_length=255, required=False,default="")
+    name = db.StringField(max_length=255, required=False,default="")
     father_or_husband_name = db.StringField(max_length=255, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
     address1 = db.StringField(max_length=512, required=False,default="")
@@ -171,38 +166,13 @@ class EsthenosOrgApplicationVID(db.EmbeddedDocument):
     taluk = db.StringField(max_length=128, required=False,default="")
     pincode = db.StringField(max_length=20, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
+    raw = db.StringField(max_length=2048, required=False)
     validation = db.StringField(max_length=20, required=True,default="PENDING")
 
     def __unicode__(self):
-        return self.elector_name + "<" + self.father_or_husband_name + ">"
+        return self.kyc_number + "<" + self.name + ">"
 
-class EsthenosOrgApplicationAadhaar(db.EmbeddedDocument):
-    aadhaar_number = db.StringField(max_length=20, required=False,default="")
-    dob = db.StringField(max_length=20, required=False,default="")
-    name = db.StringField(max_length=255, required=False,default="")
-    care_of_name = db.StringField(max_length=255, required=False,default="")
-    gender = db.StringField(max_length=20, required=False,default="")
-    address1 = db.StringField(max_length=512, required=False,default="")
-    address2 = db.StringField(max_length=512, required=False,default="")
-    state = db.StringField(max_length=128, required=False,default="")
-    dist = db.StringField(max_length=128, required=False,default="")
-    taluk = db.StringField(max_length=128, required=False,default="")
-    pincode = db.StringField(max_length=20, required=False,default="")
-    date_created = db.DateTimeField(default=datetime.datetime.now)
-    validation = db.StringField(max_length=20, required=True,default="PENDING")
 
-    def __unicode__(self):
-        return self.aadhaar_number + "<" + self.name + ">"
-
-class EsthenosOrgApplicationOther(db.EmbeddedDocument):
-    name_or_org_name = db.StringField(max_length=255, required=False,default="")
-    father_or_org_name = db.StringField(max_length=255, required=False,default="")
-    dob = db.StringField(max_length=20, required=False,default="")
-    kyc_number = db.StringField(max_length=20, required=False,default="")
-    validation = db.StringField(max_length=20, required=True,default="PENDING")
-    raw = db.StringField(max_length=1024, required=False)
-    def __unicode__(self):
-        return self.name_or_org_name + "<" + self.father_or_org_name + ">"
 
 
 class EsthenosOrgProduct(db.Document):
@@ -266,7 +236,7 @@ class EsthenosOrgApplication(db.Document):
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     application_id = db.StringField(max_length=255, required=False,default="")
     upload_type = db.StringField(max_length=20, required=False,default="")
-    status = db.StringField(max_length=45, required=False,default="")
+    status = db.IntField(default=0)
     applicant_name = db.StringField(max_length=45, required=False,default="")
     gender = db.StringField(max_length=20, required=False,default="")
     age = db.IntField(default=0)
@@ -350,28 +320,20 @@ class EsthenosOrgApplication(db.Document):
     attendence_percentage = db.FloatField(default=0.0)
     loan_eligibility_based_on_net_income = db.FloatField(default=0.0)
     loan_eligibility_based_on_company_policy = db.FloatField(default=0.0)
-    kyc_1_pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
-    kyc_1_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
-    kyc_1_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-    kyc_1_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
-    kyc_2_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
-    kyc_2_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-    kyc_2_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
-    gkyc_1_pan_card = db.EmbeddedDocumentField(EsthenosOrgApplicationPanCard)
-    gkyc_1_vid_card = db.EmbeddedDocumentField(EsthenosOrgApplicationVID)
-    gkyc_1_aadhaar_card = db.EmbeddedDocumentField(EsthenosOrgApplicationAadhaar)
-    gkyc_1_other = db.EmbeddedDocumentField(EsthenosOrgApplicationOther)
+    kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
-    village_electricity=db.IntField(default=0)
+    village_electricity=db.StringField(max_length=10, required=False,default="")
     interested_in_other_fp=db.StringField(max_length=20, required=False,default="")
     radio_member_disability=db.StringField(max_length=20, required=False,default="")
     village_water=db.StringField(max_length=20, required=False,default="")
     festival_expenditure=db.IntField(default=0)
-    excepted_disbursment_date=db.DateTimeField( required=False,default="")
+    excepted_disbursment_date=db.DateTimeField( required=False,default=datetime.datetime.now())
     village_medical_facilities=db.StringField(max_length=20, required=False,default="")
     micropension_inclusion=db.StringField(max_length=20, required=False,default="")
     self_owned_land=db.StringField(max_length=20, required=False,default="")

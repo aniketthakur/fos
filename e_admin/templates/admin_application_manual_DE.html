@@ -116,7 +116,7 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="kycid1" id="kycid1" value="{{ kyc_ids[0] }}">
-                    <select id="applicationtype" style="width: 100%;">
+                    <select id="application_type" style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
                         <option value="PANCARD">PANCARD</option>
@@ -126,40 +126,40 @@
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc1_kycid" id="kyc1_kycid" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="KYC ID"  required>
+                                   placeholder="KYC ID" value="{{ application.kyc_1.kyc_number }}"  required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc1_name" id="kyc1_name" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Name" required>
+                                   placeholder="Name" value="{{ application.kyc_1.name }}" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc1_f_or_h_name" id="kyc1_f_or_h_name" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name" required>
+                                   class="no-boarder form-control input-sm"  value="{{ application.kyc_1.father_or_husband_name }}" placeholder="Father's/husband's Name" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc1_dob" id="kyc1_dob" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Date of Birth" required>
+                                   placeholder="Date of Birth" value="{{ application.kyc_1.dob }}" required>
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="kyc1_address" id="kyc1_address" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_address" id="kyc1_address" type="text"  value="{{ application.kyc_1.address1 }}" class="no-boarder form-control input-sm"
                                    placeholder="Address">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-6">
-                            <input name="kyc1_city" id="kyc1_city" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_city" id="kyc1_city" type="text" value="" class="no-boarder form-control input-sm"
                                    placeholder="City">
                         </div>
                         <div class="col-md-6">
-                            <input name="kyc1_state" id="kyc1_state" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc1_state" id="kyc1_state" type="text" value="{{ application.kyc_1.state }}" class="no-boarder form-control input-sm"
                                    placeholder="State">
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="col-md-4">
                             <input name="kyc1_postal_code" id="kyc1_postal_code" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                                   class="no-boarder form-control input-sm" value="{{ application.kyc_1.pincode }}" placeholder="Postal Code">
                         </div>
                     </div>
                     <div class="row form-row">
@@ -202,7 +202,7 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="kycid2" id="kycid2" value="{{ kyc_ids[1] }}">
-                    <select id="applicationtype2"  style="width: 100%;">
+                    <select id="application_type2"  style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
                         <option value="OTHER">OTHER</option>
@@ -211,30 +211,30 @@
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc2_kycid" id="kyc2_kycid" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="KYC ID">
+                                   value="{{ application.kyc_2.kyc_number }}"  placeholder="KYC ID">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc2_name" id="kyc2_name" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Name">
+                                   value="{{ application.kyc_2.name }}"  placeholder="Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc2_f_or_h_name" id="kyc2_f_or_h_name" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
+                                   class="no-boarder form-control input-sm"  value="{{ application.kyc_2.father_or_husband_name }}" placeholder="Father's/husband's Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="kyc2_dob" id="kyc2_dob" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_dob" id="kyc2_dob" type="text" value="{{ application.kyc_2.dob }}" class="no-boarder form-control input-sm"
                                    placeholder="Date of Birth">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
-                            <input name="kyc2_address" id="kyc2_address" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_address" id="kyc2_address" value="{{ application.kyc_2.address1 }}" type="text" class="no-boarder form-control input-sm"
                                    placeholder="Address">
                         </div>
                     </div>
@@ -244,7 +244,7 @@
                                    placeholder="City">
                         </div>
                         <div class="col-md-6">
-                            <input name="kyc2_state" id="kyc2_state" type="text" class="no-boarder form-control input-sm"
+                            <input name="kyc2_state" id="kyc2_state" type="text" value="{{ application.kyc_2.state }}" class="no-boarder form-control input-sm"
                                    placeholder="State">
                         </div>
                     </div>
@@ -255,7 +255,7 @@
                         </div>
                         <div class="col-md-4">
                             <input name="kyc2_postal_code" id="kyc2_postal_code" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                                   class="no-boarder form-control input-sm" value="{{ application.kyc_2.pincode }}" placeholder="Postal Code">
                         </div>
                     </div>
                     <div class="row form-row">
@@ -289,7 +289,7 @@
             <div class="col-md-6">
                 <div class="grid simple">
                     <input type="hidden" name="gkycid1" id="gkycid1" value="{{ gkyc_ids[0] }}">
-                    <select id="applicationtype3" name="applicationtype"  style="width: 100%;">
+                    <select id="application_type3" name="application_type"  style="width: 100%;">
                         <option value="AADHAAR">AADHAAR</option>
                         <option value="VID">VOTERS ID</option>
                         <option value="PANCARD">PANCARD</option>
@@ -299,31 +299,31 @@
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc3_kycid" id="kyc3_kycid" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="KYC ID">
+                                   placeholder="KYC ID" value="{{ application.gkyc_1.kyc_number }}">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc3_name" id="kyc3_name" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Name">
+                                   placeholder="Name" value="{{ application.gkyc_1.name }}">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc3_f_or_h_name" id="kyc3_f_or_h_name" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Father's/husband's Name">
+                                   class="no-boarder form-control input-sm" value="{{ application.gkyc_1.father_or_husband_name }}" placeholder="Father's/husband's Name">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc3_dob" id="kyc3_dob" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Date of Birth/Year of birth">
+                                   placeholder="Date of Birth/Year of birth" value="{{ application.gkyc_1.dob }}">
                         </div>
                     </div>
                     <div class="row form-row">
                         <div class="col-md-12">
                             <input name="kyc3_address" id="kyc3_address" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="Address">
+                                   placeholder="Address" value="{{ application.gkyc_1.address1 }}">
                         </div>
                     </div>
                     <div class="row form-row">
@@ -333,7 +333,7 @@
                         </div>
                         <div class="col-md-6">
                             <input name="kyc3_state" id="kyc3_state" type="text" class="no-boarder form-control input-sm"
-                                   placeholder="State">
+                                   placeholder="State" value="{{ application.gkyc_1.state }}">
                         </div>
                     </div>
                     <div class="row form-row">
@@ -343,7 +343,7 @@
                         </div>
                         <div class="col-md-4">
                             <input name="kyc3_postal_code" id="kyc3_postal_code" type="text"
-                                   class="no-boarder form-control input-sm" placeholder="Postal Code">
+                                   class="no-boarder form-control input-sm" placeholder="Postal Code" value="{{ application.gkyc_1.pincode }}">
                         </div>
                     </div>
                     <div class="row form-row">
@@ -365,7 +365,7 @@
     <br>
 
     <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-6">
         {% for app in app_urls %}
 
             <img src="{{ app }}" width="100%" class=""/>
@@ -373,7 +373,7 @@
     </div>
 
 
-    <div class="col-md-7 col-fixed">
+    <div class="col-md-6 col-fixed">
     <br/>
     <br/>
     <div class="row form-row">
@@ -635,7 +635,7 @@
         <div class="col-md-7">
             <label>Member Address Proof</label>
             <div class="radio radio-success">
-                <input id="member_address_proof_aadhaar" type="radio" name="member_address_proof" value="" checked="">
+                <input id="member_address_proof_aadhaar" type="radio" name="member_address_proof" value="" checked="checked">
                 <label for="member_address_proof_aadhaar">Aadhaar</label>
                 <input id="member_address_proof_vid" type="radio" name="member_address_proof" value="">
                 <label for="member_address_proof_vid">Voter's ID</label>
@@ -703,9 +703,9 @@
         <div class="col-md-4">
             <label>Disability</label>
             <div class="radio radio-success">
-                <input id="disability_yes" type="radio" name="radio_member_disability" value="" checked="">
+                <input id="disability_yes" type="radio" name="radio_member_disability" value="yes" >
                 <label for="disability_yes">Yes</label>
-                <input id="disability_no" type="radio" name="radio_member_disability" value="">
+                <input id="disability_no" type="radio" name="radio_member_disability" value="no" checked="checked">
                 <label for="disability_no">no</label>
             </div>
         </div>
@@ -795,7 +795,7 @@
     <div class="row form-row">
         <div class="col-md-5">
             <label>Business Category </label>
-            <select id="selec_p_business_category" name="selec_p_business_category" class="select2" style="width: 100%;"
+            <select id="select_p_business_category" name="select_p_business_category" class="select2" style="width: 100%;"
                     >
                 <option value="TRADING">TRADING</option>
                 <option value="SERVICES">SERVICES</option>
@@ -809,7 +809,7 @@
 
         <div class="col-md-4">
             <label>Business </label>
-            <select id="selec_p_business" name="selec_p_business" class="select2" style="width: 100%;"
+            <select id="select_p_business" name="select_p_business" class="select2" style="width: 100%;"
                     >
                 <option value="ORCHARD">ORCHARD</option>
                 <option value="MANGO">MANGO</option>
@@ -1747,19 +1747,19 @@
         });
 
     });
-    $("#applicationtype").select2({
+    $("#application_type").select2({
         placeholder:"choose a document type",
         allowClear:true
     });
     /*
-     $("#applicationtype").on("select2-selecting", function(e) {
+     $("#application_type").on("select2-selecting", function(e) {
      // what you would like to happen
      console.log($(e.target).val());
-     console.log($("#applicationtype").val());
+     console.log($("#application_type").val());
 
      });
      */
-    $('#applicationtype').select2()
+    $('#application_type').select2()
             .on("change", function (e) {
                 // mostly used event, fired to the original element when the value changes
                 console.log("change val=" + e.val);
@@ -1767,8 +1767,8 @@
             .on("select2-close", function () {
                 // fired to the original element when the dropdown closes
                 console.log("close");
-                console.log($("#applicationtype").val());
-                var type = $("#applicationtype").val();
+                console.log($("#application_type").val());
+                var type = $("#application_type").val();
 
                 if (type == "AADHAAR") {
                     $.getJSON("/admin/read_aadhaar/" + $("#kycid1").val(), function (data) {
@@ -1785,16 +1785,16 @@
                         var kycid = data["scan_result"]["aadhaar_id"];
                         $("#kyc1_kycid").val(kycid);
                         var temp = data["scan_result"]
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('state')) {
                             $("#kyc1_state").val(data["scan_result"]['state']);
                         }
                         if (temp.hasOwnProperty('dist')) {
                             $("#kyc1_city").val(data["scan_result"]['dist']);
                         }
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('pc')) {
                             $("#kyc1_postal_code").val(data["scan_result"]['pc']);
                         }
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('house')) {
                             $("#kyc1_address").val(data["scan_result"]['house']);
                         }
 
@@ -1807,8 +1807,6 @@
                 } else if (type == "PANCARD") {
                     $.getJSON("/admin/read_pan/" + $("#kycid1").val(), function (data) {
                         console.log(data);
-
-
 
                         var name = data["scan_result"][0]["Name"];
                         $("#kyc1_name").val(name);
@@ -1848,12 +1846,12 @@
 
             });
 
-    $("#applicationtype2").select2({
+    $("#application_type2").select2({
         placeholder:"choose a document type",
         allowClear:true
     });
 
-    $('#applicationtype2').select2()
+    $('#application_type2').select2()
             .on("change", function (e) {
                 // mostly used event, fired to the original element when the value changes
                 console.log("change val=" + e.val);
@@ -1861,8 +1859,8 @@
             .on("select2-close", function () {
                 // fired to the original element when the dropdown closes
                 console.log("close");
-                console.log($("#applicationtype2").val());
-                var type = $("#applicationtype2").val();
+                console.log($("#application_type2").val());
+                var type = $("#application_type2").val();
 
                 if (type == "AADHAAR") {
                     $.getJSON("/admin/read_aadhaar/" + $("#kycid2").val(), function (data) {
@@ -1876,13 +1874,13 @@
                         var kycid = data["scan_result"]["aadhaar_id"];
                         $("#kyc2_kycid").val(kycid);
                         var temp = data["scan_result"]
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('state')) {
                             $("#kyc2_state").val(data["scan_result"]['state']);
                         }
                         if (temp.hasOwnProperty('dist')) {
                             $("#kyc2_city").val(data["scan_result"]['dist']);
                         }
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('pc')) {
                             $("#kyc2_postal_code").val(data["scan_result"]['pc']);
                         }
                         if (temp.hasOwnProperty('dist')) {
@@ -1925,7 +1923,7 @@
 
             });
 
-    $("#applicationtype3").select2({
+    $("#application_type3").select2({
         placeholder:"choose a document type",
         allowClear:true
     });
@@ -1961,7 +1959,7 @@
     });
 
 
-    $('#applicationtype3').select2()
+    $('#application_type3').select2()
             .on("change", function (e) {
                 // mostly used event, fired to the original element when the value changes
                 console.log("change val=" + e.val);
@@ -1969,8 +1967,8 @@
             .on("select2-close", function () {
                 // fired to the original element when the dropdown closes
                 console.log("close");
-                console.log($("#applicationtype3").val());
-                var type = $("#applicationtype3").val();
+                console.log($("#application_type3").val());
+                var type = $("#application_type3").val();
 
                 if (type == "AADHAAR") {
                     $.getJSON("/admin/read_aadhaar/" + $("#gkycid1").val(), function (data) {
@@ -1984,16 +1982,16 @@
                         var kycid = data["scan_result"]["aadhaar_id"];
                         $("#kyc3_kycid").val(kycid);
                         var temp = data["scan_result"]
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('state')) {
                             $("#kyc3_state").val(data["scan_result"]['state']);
                         }
                         if (temp.hasOwnProperty('dist')) {
                             $("#kyc3_city").val(data["scan_result"]['dist']);
                         }
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('pc')) {
                             $("#kyc3_postal_code").val(data["scan_result"]['pc']);
                         }
-                        if (temp.hasOwnProperty('dist')) {
+                        if (temp.hasOwnProperty('house')) {
                             $("#kyc3_address").val(data["scan_result"]['house']);
                         }
                         $("#guarantor_fullname").val(name);

@@ -301,7 +301,7 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(status=1)
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
@@ -321,22 +321,24 @@ def admin_application_id(org_id,app_id):
         app_urls.append(get_url_with_id(kyc_id))
 
     kyc_urls = list()
-    kyc_ids = application.tag.kyc_file_pixuate_id
+    kyc_ids = list()
     for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
         kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+        kyc_ids.append(kyc_id)
         kyc_urls.append(get_url_with_id(kyc_id))
 
     gkyc_urls = list()
-    gkyc_ids = application.tag.gkyc_file_pixuate_id
+    gkyc_ids = list()
     for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
         gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+        gkyc_ids.append(gkyc_id)
         gkyc_urls.append(get_url_with_id(gkyc_id))
 
     today= datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
-    kyc_urls = list()
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 

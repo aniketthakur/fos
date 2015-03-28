@@ -26,18 +26,18 @@ if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type.status_code = 0
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_PREFILLED"
+    status_type.status_message = "Application is prefilled first round of checking"
+    status_type.status_code = 1
+    status_type.save()
+    status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "BAD_DOCUMENT"
     status_type.status_message = "Cannot process current document"
-    status_type.status_code = 1
+    status_type.status_code = 2
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "DOCUMENT MISSING"
     status_type.status_message = "Some documents required for the processing are missing"
-    status_type.status_code = 2
-    status_type.save()
-    status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_ACCEPTED"
-    status_type.status_message = "Application is accepted in first round of checking"
     status_type.status_code = 3
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
