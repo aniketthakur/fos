@@ -8,9 +8,9 @@ storage_url='http://api.pixuate.com/rest/v1/bucket/55041de92a76201b0bf03602/obje
 object_url='http://api.pixuate.com/rest/v1/bucket_name/EsthenosCustomerEnrollmentForms/object/'
 headers={'InstanceToken' : 'YCb3sHjX0Bteg-0zrqynDf7Zp_ldhvVhDhq94XOoW78','Accept':'application/json'}
 
-def upload_images(path):
+def upload_images(path,filename):
     files = {'file': open(path, 'rb')}
-    data = {'name':'pancard'}
+    data = {'name':filename}
     response = requests.post(storage_url, files=files,data=data,headers=headers)
     print response.content
     return response.content

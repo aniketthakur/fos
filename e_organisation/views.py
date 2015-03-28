@@ -94,7 +94,7 @@ def uploads_group_app():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
         session_obj.applications[file_id]=application
         session_obj.number_of_applications = session_obj.number_of_applications + 1
@@ -138,7 +138,7 @@ def uploads_group_kyc():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications[file_id]=application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
@@ -180,7 +180,7 @@ def uploads_group_gkyc():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications[file_id]=application
         session_obj.number_of_kycs = session_obj.number_of_gkycs+ 1
@@ -222,7 +222,7 @@ def uploads_indivijual_app():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
         session_obj.applications["1"] = application
         session_obj.number_of_applications = 1
@@ -308,7 +308,7 @@ def uploads_indivijual_gkyc():
             os.remove(o_fname)
         print "saving to .."+o_fname
         file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname))
+        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
         application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
         session_obj.applications["1"] = application
         session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
@@ -346,8 +346,8 @@ def upload_documents():
         print unique_key
         session_obj.unique_session_key = str(unique_key)
         session_obj.save()
-        from esthenos.tasks import prefill_applications
-        prefill_applications()
+#        from esthenos.tasks import prefill_applications
+#        prefill_applications()
         kwargs = locals()
         return render_template("upload_documents.html", **kwargs)
     elif request.method == "POST":
