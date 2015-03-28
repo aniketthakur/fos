@@ -138,7 +138,7 @@ class AddApplicationManual(Form):
     select_t_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
 
     def save( self):
-        app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)
+        app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)[0]
         app.applicant_name=self.member_fullname.data
         app.member_telephone = self.member_telephone.data
 #       app.member_tele_code = self.postal_tele_code.data
@@ -266,9 +266,9 @@ class AddApplicationManual(Form):
         app.house_rent_expenditure= float(self.house_rent_expenditure.data)
         app.village_public_transport=self.village_public_transport.data
         app.house_hold_expenditure=self.house_hold_expenditure.data
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
         app.current_status_updated = datetime.datetime.now()
-        app.status = 5
+        app.status = 4
         app.save()
 
         return None
@@ -436,8 +436,9 @@ class AddApplicationMobile(Form):
 #       app.attendence_percentage =
 #       app.loan_eligibility_based_on_net_income =
 #       app.loan_eligibility_based_on_company_policy =
-#       app.pan_card =
-#       app.vid_card =
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
+        app.current_status_updated = datetime.datetime.now()
+        app.status = 4
         app.save()
 
         return None
