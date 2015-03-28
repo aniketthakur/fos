@@ -48,6 +48,7 @@ ImmutableMultiDict([('kyc1_teleno', u''), ('center_name', u'MUDDANAHALLI'), ('ky
 ('select_s_business_category', u'TRADING'), ('kyc3_state', u''), ('select_t_business_category', u'TRADING')])
     """
 class AddApplicationManual(Form):
+    application_id = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     center_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     group_name = TextField( validators=[v.DataRequired(), v.Length(max=20)])
     medical_expenditure= TextField( validators=[ v.Length(max=10)])
@@ -137,7 +138,8 @@ class AddApplicationManual(Form):
     select_t_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
 
     def save( self):
-        app=EsthenosOrgApplication(applicant_name=self.member_fullname.data)
+        app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)
+        app.applicant_name=self.member_fullname.data
         app.member_telephone = self.member_telephone.data
 #       app.member_tele_code = self.postal_tele_code.data
 #       app.member_country = self.kyc1_country.data

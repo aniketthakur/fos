@@ -377,6 +377,9 @@
     <br/>
     <br/>
     <div class="row form-row">
+
+        <input id="application_id" type="hidden"  name="application_id"
+               value="{{ application.application_id }}">
         <div class="col-md-6">
 
             <div class="input-with-icon  right">
@@ -1484,7 +1487,7 @@
                 },
                  cm_id: {
                     required: true,
-                    number:true
+                    number:false
                 },
                  cm_cell_no: {
                     required: true,
