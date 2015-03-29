@@ -318,7 +318,11 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    try:
+        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    except Exception as e:
+        print e.message
+
     if len(applications)==0:
         redirect("/admin/applications")
 
@@ -376,10 +380,41 @@ def admin_application_cashflow(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    except Exception as e:
+        print e.message
+
+    if len(applications)==0:
+        redirect("/admin/cbcheck")
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+    application = applications[0]
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
+
+from e_organisation.models import EsthenosOrgApplicationStatus
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["POST"])
+@login_required
+def cashflow_statusupdate(org_id,app_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
+        status.save()
+        application.timeline.append(status)
+
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0]
+        application.current_status_updated  = datetime.datetime.now()
+        application.status = 14
+    except Exception as e:
+        print e.message
+    new_num = int(app_id[-6:])+1
+    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
 
 from pixuate_storage import  *
 from pixuate import  *
