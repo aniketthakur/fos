@@ -123,7 +123,7 @@ def add_sample_highmark_response(app_id):
     hmresponse = EsthenosOrgApplicationHighMark()
     hmresponse.active_account="0"
     hmresponse.address="#81 MARIMUDDANAHALLI HUNSURE TO MYSOURE KARIMUDDANAHALLI 571189 KA"
-    hmresponse.age_as_on_dt=""
+    hmresponse.age_as_on_dt=20
     hmresponse.application_id=app_id
     hmresponse.branch="MYSORE3"
     hmresponse.closed_account="0"
@@ -144,7 +144,7 @@ def add_sample_highmark_response(app_id):
     hmresponse.other_id_val1=""
     hmresponse.own="false"
     hmresponse.own_disb_atm="0"
-    hmresponse.phone="'8693947846"
+    hmresponse.phone="8693947846"
     hmresponse.pri="5"
     hmresponse.ration_card=""
     hmresponse.rel_type1="(Father)"
