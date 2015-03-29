@@ -1,183 +1,240 @@
-{% extends "base_other.html" %}
-{% block css_sheets %}{{ super() }}
+    {% extends "base_other.html" %}
+    {% block css_sheets %}{{ super() }}
 
-{% endblock %}
+    {% endblock %}
 
-{% block action_bar %}
+    {% block action_bar %}
 
-{% endblock %}
-{% block maincontents %}
-
-
- <div class="row">
-        <div class="col-md-12">
-            <div class="grid simple">
-                <div class="grid-body no-border"><br>
-
-                    <div class="pull-left">
-                        <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
-                             height="50" alt="">
-                        <address>
-                            <strong></strong><br>
-                        </address>
-                    </div>
-                    <div class="pull-center">
-                        <h2>Schedule “A”</h2>
-                    </div>
-                    <div class="clearfix"></div>
-                        <h4>
-                            <div class="pull-left">This is the part and parcel of the loan agreement i.e. LOAN AND JOINT LIABILITY GUARANTEE AGREEMENT executed between the Lender
-and the Borrowers. The schedule “A” is hereby AGREED and SIGNED by the Borrowers and the Lender.
-                                <!--<span class="semi-bold">Group1</span>  Centre: <span class="semi-bold">Center1</span>-->
-                                <!--Region: <span class="semi-bold">Region1</span>.-->
-                            </div>
+    {% endblock %}
+    {% block maincontents %}
 
 
-                            <div class="clearfix"></div>
-                        </h4>
+        <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
+        <div class="pull-left">
+            <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
+                 height="50" alt="">
+            <address>
+                <strong>eSthenos Financial Services Limited</strong><br>
+            </address>
+        </div>
+        <div class="pull-center">
+            <h2> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Schedule “A”</h2>
+        </div>
 
-
-                    <div class="pull-left"> </div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-							<th style="width:5%"> No</th>
-
-                            <th style="width:15%" class="text-left"></th>
-
-							<th style="width:5%"class="text-left"></th>
-
-							<!--<th style="width:10%"class="text-center" colspan="2">KYC-Number</th>-->
-
-                            <!--<th style="width:15%">NAME OF GURRANTOR</th>-->
-
-                            <!--<th style="width:5%"class="text-left">AGE</th>-->
-
-                            <!--<th style="width:10%"style="width:100px" class="text-center" colspan="2">KYC-Number</th>-->
-
-                            <!--<th style="width:10%"class="text-left">LOAN ACCOUNT No</th>-->
-
-                            <!--<th style="width:5%"class="text-left">LOAN AMOUNT</th>-->
-
-                            <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
-
-                            <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--{% for n in range(1,15) %}-->
-                        <tr>
-							<td>1</td>
-                            <td class="text-left" class="text-right">Tenure/Term of the loan</td>
-                            <td class="text-left"></td>
-                            <!--<td class="text-right"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-                            <!--<td class="text-left"></td>-->
-
-
-                        </tr>
-                        <!--{% endfor %}-->
-
-                        </tbody>
-                    </table>
-
-
-                    <br>
-                    <br>
-                    <div class="pull-left">All below Borrowers are resident of above detailed (10) Village / Locality, (11) Census Village/ Town/City , (12) Taluk / Sub District, (13)
-District, (14) State & (15) Pin Code being borrowers from above detailed (16) Branch, (17) Region of Future Financial Servicess Ltd. and
-signing this agreement on above (03) Disbursal Date at the Branch Office of Future Financial Servicess Ltd.
-                                <!--<span class="semi-bold">Group1</span>  Centre: <span class="semi-bold">Center1</span>-->
-                                <!--Region: <span class="semi-bold">Region1</span>.-->
-                            </div>
-                    <div class="clearfix"></div>
-                        </h4>
-
-
-                    <div class="pull-left"> The details of payments are mentioned in the below Table.</div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-							<th style="width:15%"> No</th>
-
-                            <th style="width:25%" class="text-left">NAME OF BORROWER,GUARANTOR NAME, RELATIONSHIP wITH GUARANTOR</th>
-
-							<th style="width:20%"class="text-left">AGE AND VOTER ID & RATION ID</th>
-
-							<th style="width:20%"class="text-center" colspan="2">LMS MEMBER CODE &  ACCOUNT NO</th>
-
-                            <th style="width:15%">LOAN AMOUNT</th>
-
-                            <th style="width:15%"class="text-left">SIGNATURE</th>
-
-                            <!--<th style="width:10%"style="width:100px" class="text-center" colspan="2">KYC-Number</th>-->
-
-                            <!--<th style="width:10%"class="text-left">LOAN ACCOUNT No</th>-->
-
-                            <!--<th style="width:5%"class="text-left">LOAN AMOUNT</th>-->
-
-                            <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
-
-                            <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--{% for n in range(1,15) %}-->
-                        <tr>
-							<td></td>
-                            <td class="text-left" class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-
-
-                        </tr>
-                        <!--{% endfor %}-->
-
-                        </tbody>
-                    </table>
-
-
-                    <br>
-                    <br>
-
-                    <div class="col-md-3"><br>
-
-                        <div>
-                            <div class="pull-left"> DATE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div>
-                            <div class="pull-left"> PLACE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <br>
-                    </div>
-                    <h5 class="text-right text-black">For eSthenos Services Ltd</h5>
-                    <h5 class="text-right semi-bold text-black">Authorized Signatory</h5>
-                    <h5 class="text-right semi-bold text-black">[REGIONAL MANAGER]</h5>
-                    <br>
-                    <br>
+        <div class="clearfix">
+            <h4>
+                <div class="pull-left"> <span class="small">This is the part and parcel of the loan agreement i.e. LOAN AND JOINT LIABILITY GUARANTEE AGREEMENT executed between the Lender
+    and the Borrowers. The schedule “A” is hereby AGREED and SIGNED by the Borrowers and the Lender.
+                                </span>
                 </div>
+
+
+                <div class="clearfix"></div>
+            </h4>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width:10%"> </th>
+
+                        <th style="width:40%" class="text-left"></th>
+
+                        <th style="width:40%"class="text-left"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td class="text-left" class="text-right">Tenure/Term of the loan</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="text-left" class="text-right">Rate of Interest</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="text-left" class="text-right">Disbursal Date</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="text-left" class="text-right">Jurisdiction of agreement</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="text-left" class="text-right">Repayment frequency</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="text-left" class="text-right">Purpose of loan facility</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td class="text-left" class="text-right">Group Name | Code</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="text-left" class="text-right">Centre Name | Code</td>
+                        <td class="text-left"></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td class="text-left" class="text-right">Group Size</td>
+                        <td class="text-left"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width:10%"></th>
+
+                        <th style="width:40%" class="text-left"></th>
+
+                        <th style="width:40%"class="text-left"></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>10</td>
+                        <td class="text-left" class="text-right">Hamlet or Locality</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td class="text-left" class="text-right">Census Village or in Town/City</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td class="text-left" class="text-right">Taluk/Sub-District</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td class="text-left" class="text-right">District</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td class="text-left" class="text-right">State</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td class="text-left" class="text-right">Pin Code</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td class="text-left" class="text-right">Branch Name</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td class="text-left" class="text-right">Region Name</td>
+                        <td class="text-left"></td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
             </div>
         </div>
-     </div>
 
-{% endblock %}
+
+
+        <br>
+        <br>
+        <div class="pull-left">All below Borrowers are resident of above detailed (10) Village / Locality, (11) Census Village/ Town/City , (12) Taluk / Sub District, (13)
+            District, (14) State & (15) Pin Code being borrowers from above detailed (16) Branch, (17) Region of Future Financial Servicess Ltd. and
+            signing this agreement on above (03) Disbursal Date at the Branch Office of Future Financial Servicess Ltd.
+            <!--<span class="semi-bold">Group1</span>  Centre: <span class="semi-bold">Center1</span>-->
+            <!--Region: <span class="semi-bold">Region1</span>.-->
+        </div>
+        <div class="clearfix"></div>
+        </h4>
+
+
+        <div class="pull-left"> The details of payments are mentioned in the below Table.</div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width:15%"> No</th>
+
+                <th style="width:25%" class="text-center">NAME OF BORROWER,GUARANTOR NAME, RELATIONSHIP wITH GUARANTOR</th>
+
+                <th style="width:20%"class="text-center">AGE AND VOTER ID & RATION ID</th>
+
+                <th style="width:20%"class="text-center" >LMS MEMBER CODE &  ACCOUNT NO</th>
+
+                <th style="width:15%">LOAN AMOUNT</th>
+
+                <th style="width:15%"class="text-center">SIGNATURE</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <!--{% for n in range(1,15) %}-->
+                <tr>
+                    <td></td>
+                    <td class="text-left" class="text-right"></td>
+                    <td class="text-left"></td>
+                    <td class="text-right"></td>
+                    <td class="text-left"></td>
+                    <td class="text-left"></td>
+
+                </tr>
+                <!--{% endfor %}-->
+
+            </tbody>
+        </table>
+
+
+        <br>
+        <br>
+
+        <div class="col-md-3"><br>
+
+            <div>
+                <div class="pull-left"> DATE :</div>
+                <div class="pull-right"></div>
+                <div class="clearfix"></div>
+            </div>
+            <div>
+                <div class="pull-left"> PLACE :</div>
+                <div class="pull-right"></div>
+                <div class="clearfix"></div>
+            </div>
+            <br>
+        </div>
+        <h5 class="text-right text-black">For eSthenos Services Ltd</h5>
+        <h5 class="text-right semi-bold text-black">Authorized Signatory</h5>
+        <h5 class="text-right semi-bold text-black">[REGIONAL MANAGER]</h5>
+        <br>
+        <br>
+        </div>
+
+    {% endblock %}

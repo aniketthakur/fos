@@ -10,235 +10,207 @@
 {% block maincontents %}
 
 
-<div class="row">
-        <div class="col-md-12">
-            <div class="grid simple">
-                <div class="grid-body no-border"><br>
+<div class="row col-md-10 col-md-offset-1" style="background: #ffffff;">
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">SANCTION LETTER (GROUP COPY)</h2>
+            <div class="pull-left">
+                <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
+                     height="50" alt="">
+                <address>
+                    <strong>eSthenos Financial Services Limited</strong><br>
+                </address>
+            </div>
 
-                    <div class="pull-left">
-                        <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
-                             height="50" alt="">
-                        <address>
-                            <strong>eSthenos Financial Services Limited</strong><br>
-                        </address>
-                    </div>
-                    <div class="pull-center">
-                        <h2>SANCTION LETTER (GROUP COPY)</h2>
-                    </div>
-                    <div class="clearfix"></div>
-                        <h4>
-                            <div class="pull-left">
-
+            <div class="clearfix"></div>
+            <h4>
+                <div class="pull-left"><span class="small">
                                 We eSthenos Financial Servicess Ltd., hereby w ith reference to the loan application of the Group ________________________ Centre ___________________
 Branch ___________________________Region _______________________ dated_______________________ inform that the application has been sanctioned.
-                            </div>
+                            </span>
+                </div>
 
 
-                            <div class="clearfix"></div>
-                        </h4>
+                <div class="clearfix"></div>
+            </h4>
 
 
-                    <div class="pull-left"> The details of loan sanctions for the Group are mentioned in the below Table.
-</div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-							<th style="width:5%"> No</th>
+            <div class="pull-left"> The details of loan sanctions for the Group are mentioned in the below Table.
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="width:5%"> No</th>
 
-                            <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+                    <th style="width:15%" class="text-left">NAME OF BORROWER</th>
 
-							<th style="width:5%"class="text-left">AGE</th>
+                    <th style="width:5%"class="text-left">AGE</th>
 
-							<th style="width:10%"class="text-center" colspan="2">Voter ID or Ration
-Card Number</th>
+                    <th style="width:10%"class="text-center">Voter ID or Ration
+                        Card Number</th>
 
-                            <th style="width:15%">Loan Amount
-Applied</th>
+                    <th style="width:15%">Loan Amount
+                        Applied</th>
 
-                            <th style="width:5%"class="text-left">Loan
-Amount
-Sanctioned</th>
+                    <th style="width:5%"class="text-left">Loan
+                        Amount
+                        Sanctioned</th>
 
-                            <th style="width:10%"style="width:100px" class="text-center" colspan="2">Tenure
-of the
-Loan</th>
+                    <th style="width:10%"style="width:100px" class="text-center" colspan="2">Tenure
+                        of the
+                        Loan</th>
 
-                            <th style="width:10%"class="text-left">Rate of
-Interest</th>
+                    <th style="width:10%"class="text-left">Rate of
+                        Interest</th>
 
-                            <th style="width:5%"class="text-left">Loan Purpose</th>
+                    <th style="width:5%"class="text-left">Loan Purpose</th>
 
-                            <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+                    <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
 
-                            <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--{% for n in range(1,15) %}-->
-                        <tr>
-							<td></td>
-                            <td class="text-left" class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
+                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <!--{% for n in range(1,16) %}-->
+                    <tr>
+                        <td></td>
+                        <td class="text-left" class="text-right"></td>
+                        <td class="text-left"></td>
+                        <td class="text-right"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
 
+                    </tr>
+                    <!--{% endfor %}-->
 
-                        </tr>
-                        <!--{% endfor %}-->
-
-                        </tbody>
-                    </table>
+                </tbody>
+            </table>
 
 
-                    <br>
-                    <br>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-3"><br>
 
-                    <div class="col-md-3"><br>
+                    <h5 class="text-left text-black"> DATE :</h5>
+                    <h5 class="text-left text-black"> PLACE :</h5>
 
-                        <div>
-                            <div class="pull-left"> DATE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div>
-                            <div class="pull-left"> PLACE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <br>
-                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-4">
                     <h5 class="text-right text-black">For eSthenos Services Ltd</h5>
                     <h5 class="text-right semi-bold text-black">Authorized Signatory</h5>
                     <h5 class="text-right semi-bold text-black">[REGIONAL MANAGER]</h5>
-                    <br>
-                    <br>
                 </div>
             </div>
+
+
+            <br>
+            <br>
         </div>
+        <br/>
 
-    </div>
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">SANCTION LETTER ( OFFICE COPY)</h2>
+            <div class="pull-left">
+                <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
+                     height="50" alt="">
+                <address>
+                    <strong>eSthenos Financial Services Limited</strong><br>
+                </address>
+            </div>
 
-
-<div class="row">
-        <div class="col-md-12">
-            <div class="grid simple">
-                <div class="grid-body no-border"><br>
-
-                    <div class="pull-left">
-                        <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
-                             height="50" alt="">
-                        <address>
-                            <strong>eSthenos Financial Services Limited</strong><br>
-                        </address>
-                    </div>
-                    <div class="pull-center">
-                        <h2>SANCTION LETTER ( OFFICE COPY)</h2>
-                    </div>
-                    <div class="clearfix"></div>
-                        <h4>
-                            <div class="pull-left">
-
-                                We eSthenos Financial Servicess Ltd., hereby w ith reference to the loan application of the Group ________________________ Centre ___________________
+            <div class="clearfix"></div>
+            <h4>
+                <div class="pull-left">
+                                <span class="small">
+                                    We eSthenos Financial Servicess Ltd., hereby w ith reference to the loan application of the Group ________________________ Centre ___________________
 Branch ___________________________Region _______________________ dated_______________________ inform that the application has been sanctioned.
-                            </div>
+                                </span>
+
+                </div>
 
 
-                            <div class="clearfix"></div>
-                        </h4>
+                <div class="clearfix"></div>
+            </h4>
 
 
-                    <div class="pull-left"> The details of loan sanctions for the Group are mentioned in the below Table.
-</div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-							<th style="width:5%"> No</th>
+            <div class="pull-left"> The details of loan sanctions for the Group are mentioned in the below Table.
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="width:5%"> No</th>
 
-                            <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+                    <th style="width:15%" class="text-left">NAME OF BORROWER</th>
 
-							<th style="width:5%"class="text-left">AGE</th>
+                    <th style="width:5%"class="text-left">AGE</th>
 
-							<th style="width:10%"class="text-center" colspan="2">Voter ID or Ration
-Card Number</th>
+                    <th style="width:10%"class="text-center" colspan="2">Voter ID or Ration
+                        Card Number</th>
 
-                            <th style="width:15%">Loan Amount
-Applied</th>
+                    <th style="width:15%">Loan Amount
+                        Applied</th>
 
-                            <th style="width:5%"class="text-left">Loan
-Amount
-Sanctioned</th>
+                    <th style="width:5%"class="text-left">Loan
+                        Amount
+                        Sanctioned</th>
 
-                            <th style="width:10%"style="width:100px" class="text-center" colspan="2">Tenure
-of the
-Loan</th>
+                    <th style="width:10%"style="width:100px" class="text-center" >Tenure
+                        of the
+                        Loan</th>
 
-                            <th style="width:10%"class="text-left">Rate of
-Interest</th>
+                    <th style="width:10%"class="text-left">Rate of
+                        Interest</th>
 
-                            <th style="width:5%"class="text-left">Loan Purpose</th>
+                    <th style="width:5%"class="text-left">Loan Purpose</th>
 
-                            <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+                    <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
 
-                            <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--{% for n in range(1,15) %}-->
-                        <tr>
-							<td></td>
-                            <td class="text-left" class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-right"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
-                            <td class="text-left"></td>
+                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <!--{% for n in range(1,16) %}-->
+                    <tr>
+                        <td></td>
+                        <td class="text-left" class="text-right"></td>
+                        <td class="text-left"></td>
+                        <td class="text-right"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
+                        <td class="text-left"></td>
 
+                    </tr>
+                    <!--{% endfor %}-->
 
-                        </tr>
-                        <!--{% endfor %}-->
-
-                        </tbody>
-                    </table>
+                </tbody>
+            </table>
 
 
-                    <br>
-                    <br>
+            <br>
+            <br>
 
-                    <div class="col-md-3"><br>
+            <div class="row">
+                <div class="col-md-3"><br>
 
-                        <div>
-                            <div class="pull-left"> DATE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div>
-                            <div class="pull-left"> PLACE :</div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <br>
-                    </div>
+                    <h5 class="text-left text-black"> DATE :</h5>
+                    <h5 class="text-left text-black"> PLACE :</h5>
+
+                </div>
+                <div class="col-md-5 col-md-offset-4">
                     <h5 class="text-right text-black">For eSthenos Services Ltd</h5>
                     <h5 class="text-right semi-bold text-black">Authorized Signatory</h5>
                     <h5 class="text-right semi-bold text-black">[REGIONAL MANAGER]</h5>
-                    <br>
-                    <br>
                 </div>
             </div>
+            <br>
+            <br>
         </div>
 
     </div>
