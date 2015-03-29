@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-10 col-vlg-7">
             <ul class="cbp_tmtimeline">
-                {% appstatus in application.timeline %}
+                {% for appstatus in application.timeline %}
                 <li>
                     <time class="cbp_tmtime" datetime="2013-04-10 18:30">
                         <span class="date">{{ appstatus.updated_on|datetimeformat('%d-%m-%Y')  }}</span>

@@ -5,7 +5,7 @@ from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType
+from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
@@ -271,6 +271,11 @@ class AddApplicationManual(Form):
         app.house_rent_expenditure= float(self.house_rent_expenditure.data)
         app.village_public_transport=self.village_public_transport.data
         app.house_hold_expenditure=self.house_hold_expenditure.data
+
+        status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
+        status.save()
+        app.timeline.append(status)
+
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
         app.current_status_updated = datetime.datetime.now()
         app.status = 4
@@ -441,6 +446,11 @@ class AddApplicationMobile(Form):
 #       app.attendence_percentage =
 #       app.loan_eligibility_based_on_net_income =
 #       app.loan_eligibility_based_on_company_policy =
+
+        status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
+        status.save()
+        app.timeline.append(status)
+
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
         app.current_status_updated = datetime.datetime.now()
         app.status = 4
