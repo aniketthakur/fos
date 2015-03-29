@@ -114,7 +114,7 @@ def make_sample_highmark_request_for_application_id(app_id):
     hmrequest.member_spouse_name="DINESHBHAI"
     hmrequest.nominee_name=""
     hmrequest.segment_identifier="CRDRQINQR"
-    hmrequest.sent_status=""
+    hmrequest.sent_status=True
     print hmrequest
     hmrequest.save()
     add_sample_highmark_response(app_id)
