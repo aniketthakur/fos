@@ -293,6 +293,8 @@ def admin_disbursement():
     tagged_applications = EsthenosOrgApplication.objects.filter(status=19)
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
+
+from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -301,7 +303,7 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(status=1)
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 

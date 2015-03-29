@@ -40,8 +40,7 @@ def calculate_age(born):
 def prefill_applications():
     with mainapp.app_context():
         print "in prefill applications"
-        status_tagged = EsthenosOrgApplicationStatusType.objects.filter(status_code=0)[0]
-        uploaded_applications = EsthenosOrgApplication.objects.filter(current_status=status_tagged)
+        uploaded_applications = EsthenosOrgApplication.objects.filter(status=0)
         """
     {'query_url': u'http://api.pixuate.com/objects/55041d942a76201b0bf035ff/b48eead256efd179e211c141e82ede0a_p.jpg'}
     {"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
@@ -211,8 +210,7 @@ def all_tagged_applications():
         today = datetime.datetime.now()
         Year,WeekNum,DOW = today.isocalendar()
         # connect to another MongoDB server altogether
-        status_tagged = EsthenosOrgApplicationStatusType.objects.filter(status_code=4)[0]
-        all_tagged_applications = EsthenosOrgApplication.objects.filter(current_status=status_tagged)
+        all_tagged_applications = EsthenosOrgApplication.objects.filter(status=4)
 
         for application in all_tagged_applications:
             if application.kyc_1 != None:
@@ -246,8 +244,7 @@ def cb_checkready_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    status_cbcheckready = EsthenosOrgApplicationStatusType.objects.filter(status_code=7)[0]
-    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(current_status=status_cbcheckready)
+    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=7)
 
     for application in all_cbcheckready_applications:
         make_sample_highmark_request_for_application_id(application.application_id)
@@ -267,8 +264,7 @@ def cbcheck_statuscheck_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    status_cbchecksent = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
-    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(current_status=status_cbchecksent)
+    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=8)
 
     for application in cbcheck_statuscheck_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
@@ -291,8 +287,7 @@ def cashflow_ready_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    status_cashflow_ready = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
-    cashflow_ready_applications = EsthenosOrgApplication.objects.filter(current_status=status_cashflow_ready)
+    cashflow_ready_applications = EsthenosOrgApplication.objects.filter(status=12)
 
     for application in cashflow_ready_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
@@ -314,8 +309,7 @@ def cgt_grt_success_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    status_cgt_grt_success = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
-    cgt_grt_success_applications = EsthenosOrgApplication.objects.filter(current_status=status_cgt_grt_success)
+    cgt_grt_success_applications = EsthenosOrgApplication.objects.filter(status=17)
 
     for application in cgt_grt_success_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
