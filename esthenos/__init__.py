@@ -128,20 +128,38 @@ my_loader = jinja2.ChoiceLoader([
     ])
 mainapp.jinja_loader = my_loader
 import  dateutil
+
+from flask.ext.babel import Babel
+babel = Babel(app)
+# -*- coding: utf-8 -*-
+# ...
+# available languages
+LANGUAGES = {
+    'en': 'English'
+}
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys())
+
+import datetime
+from flask.ext.babel import gettext
+
 @mainapp.template_filter('dateformat')
 def _jinja2_filter_datetime(date, fmt=None):
-    date = dateutil.parser.parse(date)
-    native = date.replace(tzinfo=None)
-    format='%d-%m-%Y'
-    return native.strftime(format)
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime(gettext('%%d/%%m/%%Y'))
 
 
 @mainapp.template_filter('timeformat')
 def _jinja2_filter_datetime(date, fmt=None):
-    date = dateutil.parser.parse(date)
-    native = date.replace(tzinfo=None)
-    format='%H:%M'
-    return native.strftime(format)
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime(gettext('%%H:%%M'))
+
 
 ################ends ################
 from flask import render_template
