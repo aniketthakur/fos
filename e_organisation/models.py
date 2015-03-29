@@ -79,7 +79,7 @@ class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     kyc_file_pixuate_id = db.DictField()
     gkyc_file_pixuate_id = db.DictField()
 
-class EsthenosOrgUserUploadSession(db.Document):
+class EsthenosOrgUserUploadSession(db.DynamicDocument):
     unique_session_key = db.StringField(max_length=255, required=True)
     owner = db.ReferenceField('EsthenosUser')
     session_group = db.ReferenceField('EsthenosOrgGroup', required=False)
@@ -91,6 +91,7 @@ class EsthenosOrgUserUploadSession(db.Document):
     date_updated = db.DateTimeField(default=datetime.datetime.now)
     applications = db.DictField()
     tagged = db.BooleanField(default=False)
+
 
 class EsthenosOrg(db.Document):
     code = db.StringField(max_length=5, required=False)
