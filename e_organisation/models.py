@@ -255,7 +255,7 @@ class EsthenosOrgApplication(db.Document):
     applied_loan  = db.FloatField(default=0.0)
     religion = db.StringField(max_length=20, required=False,default="")
     category = db.StringField(max_length=20, required=False,default="")
-    cast = db.StringField(max_length=20, required=False,default="")
+    caste = db.StringField(max_length=20, required=False,default="")
     education = db.StringField(max_length=20, required=False,default="")
     type_of_residence = db.StringField(max_length=20, required=False,default="")
     quality_of_house = db.StringField(max_length=20, required=False,default="")

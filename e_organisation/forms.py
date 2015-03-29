@@ -5,7 +5,7 @@ from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
 from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType
+from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
@@ -57,7 +57,17 @@ class AddApplicationManual(Form):
     member_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
     state=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     interested_in_other_fp=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     select_t_business=TextField( validators=[v.DataRequired(), v.Length(max=30)])
+    select_s_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_p_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_p_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_s_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    select_t_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+    p_income=TextField( validators=[v.DataRequired(), v.Length(max=7)])
+    s_income=TextField( validators=[ v.Length(max=7)])
+    t_income=TextField( validators=[ v.Length(max=7)])
+
     radio_member_disability=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     village_water=TextField( validators=[v.DataRequired(), v.Length(max=30)])
     festival_expenditure=TextField( validators=[ v.Length(max=10)])
@@ -65,7 +75,7 @@ class AddApplicationManual(Form):
     excepted_disbursment_date=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     village_medical_facilities=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     micropension_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    p_income=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     self_owned_land=TextField( validators=[ v.Length(max=10)])
     member_address_proof=TextField( validators=[ v.Length(max=200)])
     center_leader_cell=TextField( validators=[ v.Length(max=10)])
@@ -80,7 +90,7 @@ class AddApplicationManual(Form):
     fl_loans=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     guarantor_id_proof_number=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     fl_chits=TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    select_p_business_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     village_hospital_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     chit_amount=TextField( validators=[ v.Length(max=10)])
     cm_id=TextField( validators=[v.DataRequired(), v.Length(max=20)])
@@ -103,7 +113,7 @@ class AddApplicationManual(Form):
     chit_roi=TextField( validators=[ v.Length(max=10)])
     family_size=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     member_address2=TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    select_s_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     member_address1=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     food_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     repeat_client_id=TextField( validators=[ v.Length(max=20)])
@@ -115,14 +125,14 @@ class AddApplicationManual(Form):
     applied_loan_amount=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     member_f_or_h_name=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     travel_expenditure=TextField( validators=[ v.Length(max=10)])
-    t_income=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     member_pincode=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     repayment_mode=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     taluk=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     group_leader=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     bankfi_roi=TextField( validators=[ v.Length(max=10)])
     member_husband_telephone=TextField( validators=[v.DataRequired(), v.Length(max=20)])
-    select_p_business=TextField( validators=[v.DataRequired(), v.Length(max=20)])
+
     select_member_religion=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     select_member_caste_category=TextField( validators=[v.DataRequired(), v.Length(max=20)])
     moneylenders_amount=TextField( validators=[ v.Length(max=10)])
@@ -153,7 +163,7 @@ class AddApplicationManual(Form):
         app.member_applied_loan = self.applied_loan_amount.data
         app.religion = self.select_member_religion.data
         # app.category = self.select_member_caste_category.data
-        app.cast = self.select_member_caste_category.data
+        app.caste = self.select_member_caste_category.data
         app.education = self.education_expenditure.data
         app.type_of_residence = self.select_type_of_residence.data
 #        app.quality_of_house = self.quality_of_house.data
@@ -163,9 +173,17 @@ class AddApplicationManual(Form):
 #        app.adult_count  = self.adult_count.data
         app.children_below18 = self.child.data
 #        app.children_below12 = self.children_below12.data
-        app.business_category = self.select_t_business_category.data
         app.primary_business = self.select_p_business.data
-        app.secondary_business=self.select_s_business.data
+        app.secondary_business = self.select_s_business.data
+        app.tertiary_business=self.select_t_business.data
+
+        app.primary_business_category = self.select_p_business_category.data
+        app.secondary_business_category = self.select_s_business_category.data
+        app.tertiary_business_category=self.select_s_business_category.data
+
+        app.primary_income =float(self.p_income.data)
+        app.secondary_income = float(self.s_income.data)
+        app.tertiary_income =float(self.t_income.data)
 
         app.family_asset = self.select_family_asset.data
 #        app.money_lenders_loan = self.money_lenders_loan.data
@@ -184,14 +202,10 @@ class AddApplicationManual(Form):
         app.applicant_name = self.member_fullname.data
 #        app.dob = self.member_dob.data
         app.address = self.member_address1.data + self.member_address2.data
-#        app.primary_income =float(self.monthly_income.data)
-#        app.secondary_income = float(self.secondary_business_income.data)
-#        app.tertiary_income =float(self.tertiary_income.data)
-#
 #        app.gender =
         app.age =self.member_age.data + self.member_husband_age.data
 #        app.other_income = 0
-#        app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
+        app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #        app.business_expense =
         app.food_expense = float(self.food_expenditure.data)
         app.travel_expense =float(self.travel_expenditure.data)
@@ -219,19 +233,10 @@ class AddApplicationManual(Form):
 #        app.other_outstanding_emi =
 #        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance
         app.net_income = float(self.p_income.data)+float(self.s_income.data)+float(self.t_income.data)
-#        app.total_running_loans =
-#        app.total_existing_outstanding_from =
-#        app.total_running_loans_from_mfi =
-#        app.total_existing_outstanding_from_mfi =
-#        app.existing_loan_cycle =
-#        app.eligible_loan_cycle =self.cycle.data
-#        app.defaults_with_no_mfis =
-#        app.attendence_percentage =
+
 #        app.loan_eligibility_based_on_net_income =
 #        app.loan_eligibility_based_on_company_policy =
-#        app.pan_card =
-#        app.vid_card =
-#        app.save()
+
         app.village_electricity=self.village_electricity.data
         app.interested_in_other_fp=self.interested_in_other_fp.data
         app.radio_member_disability=self.radio_member_disability.data
@@ -266,6 +271,11 @@ class AddApplicationManual(Form):
         app.house_rent_expenditure= float(self.house_rent_expenditure.data)
         app.village_public_transport=self.village_public_transport.data
         app.house_hold_expenditure=self.house_hold_expenditure.data
+
+        status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
+        status.save()
+        app.timeline.append(status)
+
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
         app.current_status_updated = datetime.datetime.now()
         app.status = 4
@@ -436,6 +446,11 @@ class AddApplicationMobile(Form):
 #       app.attendence_percentage =
 #       app.loan_eligibility_based_on_net_income =
 #       app.loan_eligibility_based_on_company_policy =
+
+        status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
+        status.save()
+        app.timeline.append(status)
+
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
         app.current_status_updated = datetime.datetime.now()
         app.status = 4
