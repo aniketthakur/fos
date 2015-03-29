@@ -140,7 +140,7 @@ LANGUAGES = {
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(LANGUAGES.keys())
+    return 'en'# request.accept_languages.best_match(LANGUAGES.keys())
 
 import datetime
 from flask.ext.babel import gettext

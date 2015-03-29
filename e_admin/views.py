@@ -278,7 +278,7 @@ def admin_cbcheck():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status=11)
+    tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
 # Added by Deepak
@@ -402,9 +402,10 @@ def cashflow_statusupdate(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     try:
-        application = EsthenosOrgApplication.objects(application_id = app_id,owner=user)[0]
+
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
         status.save()
+        application = EsthenosOrgApplication.objects(application_id = app_id,owner=user)[0]
         application.timeline.append(status)
 
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
