@@ -402,10 +402,9 @@ def cashflow_statusupdate(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     try:
-
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
         status.save()
-        application = EsthenosOrgApplication.objects(application_id = app_id,owner=user)[0]
         application.timeline.append(status)
 
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
@@ -525,55 +524,26 @@ def admin_ipnpfr():
     kwargs = locals()
     return render_template( "pdf_IPNPFR.html", **kwargs)
 
-#Added By Deepak
-
-@admin_views.route('/admin/ipnpfrtwo', methods=["GET"])
-@login_required
-def admin_ipnpfrtwo():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template( "pdf_IPNPFR_two.html", **kwargs)
 
 #Added By Deepak
 @admin_views.route('/admin/schedule', methods=["GET"])
-@login_required
 def admin_schedule():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
 #Added By Deepak
+import pdfkit
 @admin_views.route('/admin/dpn', methods=["GET"])
-@login_required
 def admin_dpn():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
-    return render_template( "pdf_DPN.html", **kwargs)
+    body = render_template( "pdf_DPN.html", **kwargs)
+    #pdfkit.from_string(body, 'dpn.pdf')
+    return body
 #Added By Deepak
 
 @admin_views.route('/admin/sanction', methods=["GET"])
-@login_required
 def admin_sanction():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_Sanction_Letter.html", **kwargs)
-
-
 
 
 @admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
