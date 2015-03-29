@@ -35,7 +35,7 @@ def calculate_age(born):
     else:
         return today.year - born.year
 
-@periodic_task(run_every=datetime.timedelta(seconds=20))
+@periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
 def prefill_applications():
     with mainapp.app_context():
@@ -124,7 +124,7 @@ def prefill_applications():
                         kyc.address1 = data["vtc"] + ", " +data["dist"]
                     if "year_of_birth" in data.keys():
                         kyc.dob = data["year_of_birth"]
-                        application.age = calculate_age(datetime.datetime(year=kyc.dob, month=1, day=1))
+                        application.age = calculate_age(datetime.datetime(year=int(kyc.dob), month=1, day=1))
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     if cur_index == 1:
@@ -203,7 +203,7 @@ def prefill_applications():
             application.save()
 
 @celery.task
-@periodic_task(run_every=datetime.timedelta(seconds=30))
+@periodic_task(run_every=datetime.timedelta(seconds=120))
 def all_tagged_applications():
     with mainapp.app_context():
         print "queue processor"
@@ -238,7 +238,7 @@ def all_tagged_applications():
 
 from utils import make_sample_highmark_request_for_application_id,add_sample_highmark_response
 @celery.task
-@periodic_task(run_every=datetime.timedelta(seconds=40))
+@periodic_task(run_every=datetime.timedelta(seconds=120))
 def cb_checkready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -257,7 +257,7 @@ def cb_checkready_applications():
         application.status = 8
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(seconds=50))
+@periodic_task(run_every=datetime.timedelta(seconds=120))
 @celery.task
 def cbcheck_statuscheck_applications():
     print "queue processor"
@@ -281,7 +281,7 @@ def cbcheck_statuscheck_applications():
         application.status = 11
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(minutes=1))
+@periodic_task(run_every=datetime.timedelta(minutes=2))
 def cashflow_ready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -302,7 +302,7 @@ def cashflow_ready_applications():
 
 
 
-@periodic_task(run_every=datetime.timedelta(minutes=1))
+@periodic_task(run_every=datetime.timedelta(minutes=2))
 @celery.task
 def cgt_grt_success_applications():
     print "queue processor"
