@@ -473,6 +473,7 @@ def applications_track(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    application = EsthenosOrgApplication.objects.filter(owner = user,application_id=app_id)
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 

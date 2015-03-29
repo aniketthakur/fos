@@ -278,7 +278,7 @@ def admin_cbcheck():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status=7)
+    tagged_applications = EsthenosOrgApplication.objects.filter(status=11)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
 # Added by Deepak

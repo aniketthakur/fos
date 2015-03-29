@@ -1997,12 +1997,13 @@
                         }
                         if (temp.hasOwnProperty('pc')) {
                             $("#kyc3_postal_code").val(data["scan_result"]['pc']);
+                            $("#member_pincode").val(data["scan_result"]['pc']);
                         }
                         if (temp.hasOwnProperty('house')) {
                             $("#kyc3_address").val(data["scan_result"]['house']);
                         }
                         $("#guarantor_fullname").val(name);
-                        $("#guarantor_id_proof_aadhaar").val(kycid);
+                        $("#guarantor_id_proof_number").val(kycid);
                         $('#member_id_proof_aadhaar').prop('checked', true);
 
                     });

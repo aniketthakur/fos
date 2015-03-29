@@ -120,6 +120,15 @@ def make_sample_highmark_request_for_application_id(app_id):
     add_sample_highmark_response(app_id)
 
 def add_sample_highmark_response(app_id):
+
+#        app.total_running_loans =
+#        app.total_existing_outstanding_from =
+#        app.total_running_loans_from_mfi =
+#        app.total_existing_outstanding_from_mfi =
+#        app.existing_loan_cycle =
+#        app.eligible_loan_cycle =self.cycle.data
+#        app.defaults_with_no_mfis =
+#        app.attendence_percentage =
     hmresponse = EsthenosOrgApplicationHighMark()
     hmresponse.active_account="0"
     hmresponse.address="#81 MARIMUDDANAHALLI HUNSURE TO MYSOURE KARIMUDDANAHALLI 571189 KA"
