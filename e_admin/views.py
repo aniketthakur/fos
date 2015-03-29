@@ -575,7 +575,7 @@ def admin_sanction():
 
 
 
-@admin_views.route('/admin/disbursement_pdf', methods=["GET"])
+@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
 @login_required
 def admin_disbursement_pdf():
     if session['role'] != "ADMIN":
@@ -583,6 +583,7 @@ def admin_disbursement_pdf():
     username = current_user.name
     c_user = current_user
     usr = EsthenosUser.objects.get(id=c_user.id)
+
     kwargs = locals()
     return render_template( "pdf_disbursement.html", **kwargs)
 
