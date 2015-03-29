@@ -579,11 +579,11 @@ def download_grt():
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
     if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center)
+        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
     elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group)
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
     else:
-        applications = EsthenosOrgApplication.objects.all()
+        applications = EsthenosOrgApplication.objects.all(status__gte=11)
     kwargs = locals()
     return render_template("download_grt.html", **kwargs)
 

@@ -402,19 +402,21 @@ def cashflow_statusupdate(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     try:
-        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+        application = EsthenosOrgApplication.objects(application_id = app_id,owner=user)[0]
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
         status.save()
         application.timeline.append(status)
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0]
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
         application.current_status_updated  = datetime.datetime.now()
-        application.status = 14
+        application.status = 12
+        application.save()
+        new_num = int(app_id[-6:])+1
+        new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
     except Exception as e:
         print e.message
-    new_num = int(app_id[-6:])+1
-    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
+    return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
 from pixuate_storage import  *
 from pixuate import  *
@@ -573,7 +575,7 @@ def admin_sanction():
 
 
 
-@admin_views.route('/admin/disbursement_pdf', methods=["GET"])
+@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
 @login_required
 def admin_disbursement_pdf():
     if session['role'] != "ADMIN":
@@ -581,6 +583,7 @@ def admin_disbursement_pdf():
     username = current_user.name
     c_user = current_user
     usr = EsthenosUser.objects.get(id=c_user.id)
+
     kwargs = locals()
     return render_template( "pdf_disbursement.html", **kwargs)
 

@@ -128,11 +128,20 @@ my_loader = jinja2.ChoiceLoader([
     ])
 mainapp.jinja_loader = my_loader
 import  dateutil
-@app.template_filter('datetimeformat')
+@mainapp.template_filter('dateformat')
 def _jinja2_filter_datetime(date, fmt=None):
     date = dateutil.parser.parse(date)
     native = date.replace(tzinfo=None)
-    return native.strftime(fmt)
+    format='%d-%m-%Y'
+    return native.strftime(format)
+
+
+@mainapp.template_filter('timeformat')
+def _jinja2_filter_datetime(date, fmt=None):
+    date = dateutil.parser.parse(date)
+    native = date.replace(tzinfo=None)
+    format='%H:%M'
+    return native.strftime(format)
 
 ################ends ################
 from flask import render_template
