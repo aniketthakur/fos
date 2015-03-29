@@ -437,7 +437,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     applicant_id_type1=db.StringField(max_length=255,required=False,default="")
     applicant_id1=db.StringField(max_length=255,required=True,default="")
     applicant_id_type2=db.StringField(max_length=255,required=False,default="")
-    applicant_id1=db.StringField(max_length=255,required=True,default="")
+    applicant_id2=db.StringField(max_length=255,required=True,default="")
     acct_open_date=db.StringField(max_length=255,required=False,default="")
     applicant_id__account_no=db.StringField(max_length=255,required=False,default="")
     branch_id=db.StringField(max_length=255,required=False,default="")
