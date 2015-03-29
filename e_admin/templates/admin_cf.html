@@ -817,22 +817,26 @@
 {% block js_scripts %}{{ super() }}
     <script type="text/javascript">
         $(document).ready(function(){
-           $(".cfa_failed_top").click(function(){
+           $(".cfa_failed_top").click(function(e){
+               e.preventDefault();
                $("#cf_action_top").append("<input type='hidden' name='status' value='false'>");
                 $("#cf_action_top").submit()
                return false;
            });
-            $(".cfa_failed_bottom").click(function(){
+            $(".cfa_failed_bottom").click(function(e){
+                e.preventDefault();
                 $("#cf_action_bottom").append("<input type='hidden' name='status' value='false'>");
                 $("#cf_action_bottom").submit()
                 return false;
             });
-            $(".cfa_success_top").click(function(){
+            $(".cfa_passed_top").click(function(e){
+                e.preventDefault();
                 $("#cf_action_top").append("<input type='hidden' name='status' value='true'>");
                 $("#cf_action_top").submit()
                 return false;
             });
-            $(".cfa_success_bottom").click(function(){
+            $(".cfa_passed_bottom").click(function(e){
+                e.preventDefault();
                 $("#cf_action_bottom").append("<input type='hidden' name='status' value='true'>");
                 $("#cf_action_bottom").submit()
                 return false;
