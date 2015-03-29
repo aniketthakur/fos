@@ -294,6 +294,7 @@ def cashflow_ready_applications():
         status.save()
         application.timeline.append(status)
         #here we generate pdf
+
         #update cgt_grt links
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0]
         application.current_status_updated  = datetime.datetime.now()

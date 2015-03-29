@@ -41,7 +41,7 @@ from itsdangerous import SignatureExpired,BadSignature
 def generate_auth_token(current_user, expiration = 3600):
     print app.config['SECRET_KEY']
     s = Serializer(app.config['SECRET_KEY'])
-    return s.dumps({ 'id': str(current_user.unique_id) })
+    return s.dumps({ 'id': str(current_user.id) })
 
 
 def verify_auth_token(token):
@@ -66,6 +66,6 @@ def verify_auth_token(token):
 
     print data
 
-    user = EsthenosUser.objects.filter(unique_id=data['id'])[0]
+    user = EsthenosUser.objects.filter(id=data['id'])[0]
     login_user(user)
     return user

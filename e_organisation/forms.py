@@ -353,8 +353,9 @@ class AddApplicationMobile(Form):
     application_repayment_method= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_tertiary_income= TextField( validators=[v.DataRequired(), v.Length(max=100)])
 
-    def save( self,user):
-
+    def save( self):
+        c_user = current_user
+        user = EsthenosUser.objects.get(id=c_user.id)
         app=EsthenosOrgApplication(applicant_name=self.application_member_name.data)
         center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
         group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
