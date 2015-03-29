@@ -18,34 +18,38 @@
     <div class="grid-body no-border invoice-body">
 
         <div class="row">
-            <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">
-                    Application ID
-                </label>
-                <div class="controls">
-                    <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
-                </div>
-            </div>
-            </div>
-            <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">
-                    Name of the Customer
-                </label>
-                <div class="controls">
-                    <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
-                </div>
-            </div>
-            </div>
-            <div class="col-md-3 pull-right">
+            <form id="cf_action_top" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
+                <div class="col-md-4">
+
                 <div class="form-group">
                     <label class="form-label">
-                        Cash Flow Verification Pending
+                        Application ID
                     </label>
-                <a class="btn btn-block btn-warning form-control" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CGT/GRT Ready</a></a>
+                    <div class="controls">
+                        <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
+                    </div>
                 </div>
-            </div>
+                </div>
+                <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">
+                        Name of the Customer
+                    </label>
+                    <div class="controls">
+                        <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Cash Flow Verification Pending
+                        </label>
+                        <a class="btn btn-block btn-warning form-control cfa_failed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
+                        <a class="btn btn-block btn-success form-control cfa_passed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
+                    </div>
+                </div>
+            </form>
         </div>
 
     <table class="table" cols=3>
@@ -619,14 +623,38 @@
     </tbody>
     </table>
         <div class="row">
-            <div class="col-md-3 pull-right">
-                <div class="form-group">
-                    <label class="form-label">
-                        Cash Flow Verification Pending
-                    </label>
-                    <a class="btn btn-block btn-warning form-control"  type="button" href="#"><i class="fa fa-check"></i>CGT/GRT Ready</a></a>
+            <form id="cf_action_bottom"  action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Application ID
+                        </label>
+                        <div class="controls">
+                            <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Name of the Customer
+                        </label>
+                        <div class="controls">
+                            <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Cash Flow Verification Pending
+                        </label>
+                        <a class="btn btn-block btn-warning form-control cfa_failed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
+                        <a class="btn btn-block btn-success form-control cfa_passed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
+                    </div>
+                </div>
+            </form>
         </div>
 
     <!--
@@ -787,5 +815,25 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".cfa_failed_top").click(function(){
+               $("#cf_action_top").append("<input type='hidden' name='status' value='false'>");
+                $("#cf_action_top").submit()
+           });
+            $(".cfa_failed_bottom").click(function(){
+                $("#cf_action_bottom").append("<input type='hidden' name='status' value='false'>");
+                $("#cf_action_bottom").submit()
 
+            });
+            $(".cfa_success_top").click(function(){
+                $("#cf_action_top").append("<input type='hidden' name='status' value='true'>");
+                $("#cf_action_top").submit()
+            });
+            $(".cfa_success_bottom").click(function(){
+                $("#cf_action_bottom").append("<input type='hidden' name='status' value='true'>");
+                $("#cf_action_bottom").submit()
+            });
+        });
+    </script>
 {% endblock %}

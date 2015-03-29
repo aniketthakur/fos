@@ -123,7 +123,7 @@ def prefill_applications():
                         kyc.address1 = data["vtc"] + ", " +data["dist"]
                     if "year_of_birth" in data.keys():
                         kyc.dob = data["year_of_birth"]
-                        application.age = calculate_age(datetime.datetime(year=int(kyc.dob), month=1, day=1))
+                        application.age = calculate_age(datetime.datetime(year=int(kyc.dob), month=1, day=1).date())
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     if cur_index == 1:
