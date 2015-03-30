@@ -10,51 +10,23 @@
     <div class="row">
         <div class="col-md-10 col-vlg-7">
             <ul class="cbp_tmtimeline">
+                {% for appstatus in application.timeline %}
                 <li>
                     <time class="cbp_tmtime" datetime="2013-04-10 18:30">
-                        <span class="date">yesterday</span>
-                        <span class="time">10:05 <span class="semi-bold">am</span></span>
+                        <span class="date">{{ appstatus.updated_on|dateformat  }}</span>
+                        <span class="time"><span class="semi-bold">{{ appstatus.updated_on|timeformat }}</span></span>
                     </time>
                     <div class="cbp_tmicon primary animated bounceIn"> <i class="fa fa-comments"></i> </div>
                     <div class="cbp_tmlabel">
                         <div class="p-t-10 p-l-30 p-r-20 p-b-20 xs-p-r-10 xs-p-l-10 xs-p-t-5">
-                            <h4 class="inline m-b-5"><span class="text-success semi-bold">Jane smith</span> </h4>
-                            <h5 class="inline muted semi-bold m-b-5">@esthenos.com</h5>
-                            <p class="m-t-5 dark-text"> Tagging Done </p>
+                            <h4 class="inline m-b-5"><span class="text-success semi-bold">{{ appstatus.status.status }}</span> </h4>
+                           <!-- <h5 class="inline muted semi-bold m-b-5">@esthenos.com</h5>-->
+                            <p class="m-t-5 dark-text">{{ appstatus.status.status_message }}</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                 </li>
-                <li>
-                    <time class="cbp_tmtime" datetime="2013-04-10 18:30">
-                        <span class="date">yesterday</span>
-                        <span class="time">8:45 <span class="semi-bold">pm</span></span>
-                    </time>
-                    <div class="cbp_tmicon success animated bounceIn"> <i class="fa fa-map-marker"></i> </div>
-                    <div class="cbp_tmlabel">
-                        <div class="p-t-10 p-l-30 p-r-20 p-b-20 xs-p-r-10 xs-p-l-10 xs-p-t-5">
-                            <h4 class="inline m-b-5"><span class="text-success semi-bold">Jane smith</span> </h4>
-                            <h5 class="inline muted semi-bold m-b-5">@esthenos.com</h5>
-                            <p class="m-t-5 dark-text"> Data Entry Done </p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
-                <li>
-                    <time class="cbp_tmtime" datetime="2013-04-10 18:30">
-                        <span class="date">yesterday</span>
-                        <span class="time">1:30 <span class="semi-bold">pm</span></span>
-                    </time>
-                    <div class="cbp_tmicon info animated bounceIn"> <i class="fa fa-quote-left"></i> </div>
-                    <div class="cbp_tmlabel">
-                        <div class="p-t-10 p-l-30 p-r-20 p-b-20 xs-p-r-10 xs-p-l-10 xs-p-t-5">
-                            <h4 class="inline m-b-5"><span class="text-success semi-bold">Jane smith</span> </h4>
-                            <h5 class="inline muted semi-bold m-b-5">@esthenos.com</h5>
-                            <p class="m-t-5 dark-text"> CB Check Done </p>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </li>
+                {% endfor %}
 
             </ul>
         </div>

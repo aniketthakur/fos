@@ -13,38 +13,38 @@ def get_pan_details(path):
     files = {'query': open(path, 'rb')}
     response = requests.post(pan_url, files=files,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 def get_pan_details_url(path):
     data = {'query_url': path}
     print data
     response = requests.post(pan_url, data=data,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 def get_vid_details(path):
     files = {'query': open(path, 'rb')}
     response = requests.post(vid_url, files=files,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 def get_vid_details_url(path):
     data = {'query_url': path}
     response = requests.post(vid_url, data=data,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 def get_aadhaar_details(path):
     files = {'query': open(path, 'rb')}
     response = requests.post(addhaar_url, files=files,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 def get_aadhaar_details_url(path):
     data = {'query_url': path}
     response = requests.post(addhaar_url, data=data,headers=headers)
     print response.content
-    return response.content
+    return json.loads(json.dumps(response.content))
 
 
 if  __name__== "__main__":

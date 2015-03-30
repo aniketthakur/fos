@@ -278,7 +278,7 @@ def admin_cbcheck():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
 # Added by Deepak
@@ -290,9 +290,11 @@ def admin_disbursement():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(status=19)
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
+
+from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -301,7 +303,7 @@ def admin_application():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
@@ -316,23 +318,37 @@ def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
-    for app_id in application.tag.app_file_pixuate_id:
-        app_urls.append(get_url_with_id(app_id))
+    try:
+        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    except Exception as e:
+        print e.message
+
+    if len(applications)==0:
+        redirect("/admin/applications")
+
+    application = applications[0]
+    for kyc_id in application.tag.app_file_pixuate_id:
+        app_urls.append(get_url_with_id(kyc_id))
 
     kyc_urls = list()
-    kyc_ids = application.tag.kyc_file_pixuate_id
-    for kyc_id in application.tag.kyc_file_pixuate_id:
+    kyc_ids = list()
+    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+        kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+        kyc_ids.append(kyc_id)
         kyc_urls.append(get_url_with_id(kyc_id))
 
     gkyc_urls = list()
-    gkyc_ids = application.tag.gkyc_file_pixuate_id
-    for gkyc_id in application.tag.gkyc_file_pixuate_id:
+    gkyc_ids = list()
+    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+        gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+        gkyc_ids.append(gkyc_id)
         gkyc_urls.append(get_url_with_id(gkyc_id))
+
     today= datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
+
     kwargs = locals()
     return render_template("admin_application_manual_DE.html", **kwargs)
 
@@ -346,11 +362,14 @@ def submit_application(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    application_id = request.form.get("application_id")
     form = AddApplicationManual(request.form)
     if form.validate():
         form.save()
     print form.errors
-    return redirect("/admin/applications")#/admin/organisation/5512da35e77989097c031a66/application/"+str(int(app_id[-6:])+1)+"/")
+    new_num = int(app_id[-6:])+1
+    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
@@ -361,10 +380,43 @@ def admin_application_cashflow(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    except Exception as e:
+        print e.message
+
+    if len(applications)==0:
+        redirect("/admin/cbcheck")
     app_urls = list()
-    application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+    application = applications[0]
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
+
+from e_organisation.models import EsthenosOrgApplicationStatus
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["POST"])
+@login_required
+def cashflow_statusupdate(org_id,app_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
+        status.save()
+        application.timeline.append(status)
+
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
+        application.current_status_updated  = datetime.datetime.now()
+        application.status = 12
+        application.save()
+        new_num = int(app_id[-6:])+1
+        new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
+    except Exception as e:
+        print e.message
+    return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
 from pixuate_storage import  *
 from pixuate import  *
@@ -472,58 +524,29 @@ def admin_ipnpfr():
     kwargs = locals()
     return render_template( "pdf_IPNPFR.html", **kwargs)
 
-#Added By Deepak
-
-@admin_views.route('/admin/ipnpfrtwo', methods=["GET"])
-@login_required
-def admin_ipnpfrtwo():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template( "pdf_IPNPFR_two.html", **kwargs)
 
 #Added By Deepak
 @admin_views.route('/admin/schedule', methods=["GET"])
-@login_required
 def admin_schedule():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
 #Added By Deepak
+import pdfkit
 @admin_views.route('/admin/dpn', methods=["GET"])
-@login_required
 def admin_dpn():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
-    return render_template( "pdf_DPN.html", **kwargs)
+    body = render_template( "pdf_DPN.html", **kwargs)
+    #pdfkit.from_string(body, 'dpn.pdf')
+    return body
 #Added By Deepak
 
 @admin_views.route('/admin/sanction', methods=["GET"])
-@login_required
 def admin_sanction():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_Sanction_Letter.html", **kwargs)
 
 
-
-
-@admin_views.route('/admin/disbursement_pdf', methods=["GET"])
+@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
 @login_required
 def admin_disbursement_pdf():
     if session['role'] != "ADMIN":
@@ -531,6 +554,7 @@ def admin_disbursement_pdf():
     username = current_user.name
     c_user = current_user
     usr = EsthenosUser.objects.get(id=c_user.id)
+
     kwargs = locals()
     return render_template( "pdf_disbursement.html", **kwargs)
 
@@ -656,23 +680,12 @@ def mobile_application():
         group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
     app_form=AddApplicationMobile(form)
     if(app_form.validate()):
-        tagged_application =  EsthenosOrgApplication()
-        tagged_application.organisation = user.organisation
-        tagged_application.center = center
-        tagged_application.group = group
-        tagged_application.owner = user
-        tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
-        settings = EsthenosSettings.objects.all()[0]
-        tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
-        tagged_application.upload_type = "MANUAL_UPLOAD"
-        tagged_application.status = "TAGGING_DONE"
-        tagged_application.save()
         print "Form Validated"
         print "Saving Form"
-        app_form.save()
-        return Response(json.dumps({'status':'sucess','application_id':tagged_application.application_id}), content_type="application/json", mimetype='application/json')
+        app_form.save(user)
+        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
     else:
-        flash_errors(app_form)
+        print app_form.errors
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)

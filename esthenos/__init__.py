@@ -27,6 +27,8 @@ mainapp.config.update(
         'PASSWORD':'Ofn2cXHkTMQ8LE',
         #'DB': 'pitaya_local',
         'DB': 'esthenos_test_v1',
+        "w":1,
+        "j":True,
         #'TZ_AWARE': True,
         #'replicaset':"rs0"
     },
@@ -57,8 +59,8 @@ mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/up
 mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/')
 
 mainapp.config.update(
-    CELERY_BROKER_URL='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',
-    CELERY_RESULT_BACKEND='amqp://pitaya-train:pitaya@console.digikyc.com:5672//esthenos-tasks',#train.pixuate.com
+    CELERY_BROKER_URL='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',
+    CELERY_RESULT_BACKEND='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',#train.pixuate.com
 )
 from boto.s3.connection import S3Connection
 connection = None
@@ -125,6 +127,40 @@ my_loader = jinja2.ChoiceLoader([
     jinja2.FileSystemLoader(template_dir),
     ])
 mainapp.jinja_loader = my_loader
+import  dateutil
+
+from flask.ext.babel import Babel
+babel = Babel(app)
+# -*- coding: utf-8 -*-
+# ...
+# available languages
+LANGUAGES = {
+    'en': 'English'
+}
+
+@babel.localeselector
+def get_locale():
+    return 'en'# request.accept_languages.best_match(LANGUAGES.keys())
+
+import datetime
+from flask.ext.babel import gettext
+
+@mainapp.template_filter('dateformat')
+def _jinja2_filter_datetime(date, fmt=None):
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime(gettext('%%d/%%m/%%Y'))
+
+
+@mainapp.template_filter('timeformat')
+def _jinja2_filter_datetime(date, fmt=None):
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime(gettext('%%H:%%M'))
+
+
 ################ends ################
 from flask import render_template
 @mainapp.errorhandler(404)
