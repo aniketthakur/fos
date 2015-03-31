@@ -424,7 +424,7 @@
 
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <label>Religion</label>
+                <label>Region</label>
                 <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
                        value="{{ application.owner.org_region.region_name }}" placeholder="Region"/>
             </div>
@@ -515,6 +515,67 @@
         </div>
 
     </div>
+        <div class="row form-row">
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Village</label>
+                <input type="text" class="no-boarder form-control input-sm" name="village" id="village"
+                       value="" placeholder="Village"/>
+            </div>
+                   </div>
+
+
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>JLG</label>
+                <input type="text" class="no-boarder form-control input-sm" name="JLG" id="JLG"
+                       value="" placeholder="JLG"/>
+            </div>
+                </div>
+                <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>SHG</label>
+                <input type="text" class="no-boarder form-control input-sm" name="SHG" id="SHG"
+                       value="" placeholder="SHG"/>
+            </div>
+                    </div>
+
+
+                 </div>
+        <div class="row form-row">
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Borroers Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="borroers cell" id="borroers cell"
+                       value="" placeholder="Borrors Cell"/>
+            </div>
+                   </div>
+
+
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="leader cell" id="leader cell"
+                       value="" placeholder="Leader Cell"/>
+            </div>
+                </div>
+                <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Leader Cell</label>
+                <input type="text" class="no-boarder form-control input-sm" name="leader cell" id="leader cell1"
+                       value="" placeholder="Leader Cell"/>
+            </div>
+                    </div>
+
+
+                 </div>
+
 
     <div class="row form-row">
 
@@ -677,6 +738,80 @@
                    value="{{ application.gkyc_1.kyc_number }}" placeholder="">
         </div>
     </div>
+        <div class="row form-row">
+        <div class="col-md-7">
+            <label>Guarantor Relationship With Borrower</label>
+            <div class="radio radio-success">
+                <input id="guarantor_relationship_with_father" type="radio" name="guarantor_relationship_with_borrower" value="" checked="">
+                <label for="guarantor_relationship_with_father">Father</label>
+                <input id="guarantor_relationship_with_spouse" type="radio" name="guarantor_relationship_with_borrower" value="">
+                <label for="guarantor_relationship_with_spouse">Spouse</label>
+                <input id="guarantor_relationship_with_son" type="radio" name="guarantor_relationship_with_borrower" value="">
+                <label for="guarantor_relationship_with_son">Son</label>
+                 <input id="guarantor_relationship_with_daughter" type="radio" name="guarantor_relationship_with_borrower" value="">
+                <label for="guarantor_relationship_with_daughter">Daughter</label>
+                 <input id="guarantor_relationship_with_sister" type="radio" name="guarantor_relationship_with_borrower" value="">
+                <label for="guarantor_relationship_with_sister">Sister</label>
+                 <input id="guarantor_relationship_with_others" type="radio" name="guarantor_relationship_with_borrower" value="">
+                <label for="guarantor_relationship_with_others">Others</label>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <label>Guarnteer/Borrowers Are Nominee</label>
+            <input id="guarantor_borrowers_are_nominee" type="text" class="no-boarder form-control input-sm" name="guarantor_borrowers_are_nominee"
+                   value="" placeholder="Guarnteer/Borrowers Are Nominee">
+        </div>
+    </div>
+
+         <div class="row form-row">
+             <h4>Insurance Nominee Information(In case borroers & guranteers are not nominee for each other)</h4>
+            <div class="col-md-7">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Borrower's</label>
+                <input type="text" class="no-boarder form-control input-sm" name="borrower's" id="borrower's"
+                       value="" placeholder="Borrower's"/>
+            </div>
+                   </div>
+
+
+            <div class="col-md-5">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Age</label>
+                <input type="text" class="no-boarder form-control input-sm" name="age" id="age"
+                       value="" placeholder="Age"/>
+            </div>
+                </div>
+
+
+
+                 </div>
+         <div class="row form-row">
+
+            <div class="col-md-7">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Guranteer's</label>
+                <input type="text" class="no-boarder form-control input-sm" name="guranteer's" id="guranteer's"
+                       value="" placeholder="Guranteer's"/>
+            </div>
+                   </div>
+
+
+            <div class="col-md-5">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Age</label>
+                <input type="text" class="no-boarder form-control input-sm" name="age" id="age1"
+                       value="" placeholder="Age"/>
+            </div>
+                </div>
+
+
+
+                 </div>
+
 
     <div class="row form-row">
         <div class="col-md-4">
@@ -785,6 +920,43 @@
                        id="child_above_18" value="1" placeholder="Child above 18"/>
             </div>
         </div>
+        <div class="row form-row">
+            <div class="col-md-6">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Education</label>
+            <select id="select_Education" name="select_education" style="width: 100%;"
+                    >
+                <option value="UPTO PRIMARY">UPTO PRIMARY</option>
+                <option value="SECONDARY/MATRIC">SECONDARY/MATRIC</option>
+                <option value="Hr.SECONDARY/PU">Hr.SECONDARY/PU</option>
+                <option value="GRADUATE">GRADUATE</option>
+                <option value="POST GRADUATE">POST GRADUATE</option>
+
+            </select>
+            </div>
+                   </div>
+
+
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Girl</label>
+                <input type="text" class="no-boarder form-control input-sm" name="girl" id="girl"
+                       value="" placeholder="Gurl"/>
+            </div>
+                </div>
+                <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Boy</label>
+                <input type="text" class="no-boarder form-control input-sm" name="boy" id="boy"
+                       value="" placeholder="Boy"/>
+            </div>
+                    </div>
+
+
+                 </div>
         <div class="col-md-12">
             <label>Purpose Of Loan</label>
             <div class="input-with-icon  right">
@@ -1385,7 +1557,8 @@
     </ul>
     </div>
     </div>
-    </div>
+
+
     </form>
     </div>
 
