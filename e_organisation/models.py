@@ -359,6 +359,20 @@ class EsthenosOrgApplication(db.Document):
     house_rent_expenditure=db.IntField(default=0)
     village_public_transport=db.StringField(max_length=40, required=False,default="")
     house_hold_expenditure=db.IntField(default=0)
+    village=db.StringField(max_length=40, required=False,default="")
+    JLG=db.StringField(max_length=40, required=False,default="")
+    SHG=db.StringField(max_length=40, required=False,default="")
+    borroers_cell=db.StringField(max_length=40, required=False,default="")
+    leader_cell=db.StringField(max_length=40, required=False,default="")
+    leader_cell1=db.StringField(max_length=40, required=False,default="")
+    guarantor_borrowers_are_nominee=db.StringField(max_length=40, required=False,default="")
+    borrower_s=db.StringField(max_length=40, required=False,default="")
+    age=db.IntField(default=0)
+    guranteer_s=db.StringField(max_length=40, required=False,default="")
+    age1=db.IntField(default=0)
+    select_education=db.StringField(max_length=40, required=False,default="")
+    girl=db.StringField(max_length=40, required=False,default="")
+    boy=db.StringField(max_length=40, required=False,default="")
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
