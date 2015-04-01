@@ -373,6 +373,11 @@ class EsthenosOrgApplication(db.Document):
     select_education=db.StringField(max_length=40, required=False,default="")
     girl=db.StringField(max_length=40, required=False,default="")
     boy=db.StringField(max_length=40, required=False,default="")
+    p_expense=db.FloatField(default=0.0)
+    s_expense=db.FloatField(default=0.0)
+    t_expense=db.FloatField(default=0.0)
+    i_total=db.FloatField(default=0.0)
+    e_total=db.FloatField(default=0.0)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
