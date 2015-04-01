@@ -160,6 +160,12 @@ class AddApplicationManual(Form):
     select_education=TextField( validators=[ v.Length(max=40)])
     girl=TextField( validators=[ v.Length(max=10)])
     boy=TextField( validators=[ v.Length(max=10)])
+    p_expense=TextField( validators=[ v.Length(max=40)])
+    s_expense=TextField( validators=[ v.Length(max=40)])
+    t_expense=TextField( validators=[ v.Length(max=40)])
+    i_total=TextField( validators=[ v.Length(max=40)])
+    e_total=TextField( validators=[ v.Length(max=40)])
+
 
     def save( self):
         app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)[0]
@@ -299,6 +305,13 @@ class AddApplicationManual(Form):
         app.select_education=self.select_education.data
         app.girl=self.girl.data
         app.boy=self.boy.data
+        app.p_expense=self.p_expense.data
+        app.s_expense=self.s_expense.data
+        app.t_expense=self.t_expense.data
+        app.i_total=self.i_total.data
+        app.e_total=self.e_total.data
+
+
 
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
