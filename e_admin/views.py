@@ -281,6 +281,21 @@ def admin_cbcheck():
     tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
+
+
+@admin_views.route('/admin/reports', methods=["GET"])
+@login_required
+def admin_reports():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    kwargs = locals()
+    return render_template("admin_applications.html", **kwargs)
+
+
 # Added by Deepak
 @admin_views.route('/admin/disbursement', methods=["GET"])
 @login_required
@@ -298,11 +313,16 @@ from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    permissions=user.permissions
+    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
+        if not permissions["data_entry"]=="yes":
+            abort(403)
+    if session['role'] != "ADMIN" and session['role'] !="EMP_EXECUTIVE":
+        abort(403)
+    username = current_user.name
+
     tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
@@ -689,6 +709,41 @@ def mobile_application():
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
+
+
+
+@admin_views.route('/admin/update_settings',methods=['POST'])
+def update_settings():
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("ex_data_entry")
+        permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("ex_view_reports")
+        print emp
+        print permissions
+        emp.update(in__permissions = permissions)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("manager_data_entry")
+        permissions['cash_flow']=request.form.get("manager_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("manager_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("vp_data_entry")
+        permissions['cash_flow']=request.form.get("vp_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("vp_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+
+    print emp
+#    kwargs=locals()
+    return redirect("/admin/settings")
+
 
 
 
