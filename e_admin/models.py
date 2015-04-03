@@ -49,6 +49,7 @@ class EsthenosUser(BaseUser):
     org_area =   db.ReferenceField('EsthenosOrgArea')
     org_region = db.ReferenceField('EsthenosOrgRegion')
     org_branch = db.ReferenceField('EsthenosOrgBranch')
+    permissions=db.DictField()
     owner = db.ReferenceField('EsthenosUser',required=False)
 
 

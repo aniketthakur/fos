@@ -575,6 +575,42 @@
 
 
                  </div>
+         <div class="row form-row">
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_name" id="center_name"
+                       value="MUDDANAHALLI" placeholder="Center Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Center Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="center_size" id="center_size" value="8"
+                       placeholder="Size"/>
+            </div>
+        </div>
+    </div>
+         <div class="row form-row">
+        <div class="col-md-9">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Name</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_name" id="group_name"
+                       value="DHANALAKSHMI" placeholder="Group Name"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Group Size</label>
+                <input type="text" class="no-boarder form-control input-sm" name="group_size" id="group_size" value="100"
+                       placeholder="Size"/>
+            </div>
+        </div>
+    </div>
 
 
     <div class="row form-row">
@@ -921,11 +957,11 @@
             </div>
         </div>
         <div class="row form-row">
-            <div class="col-md-6">
-                 <div class="input-with-icon  right">
-                <i class=""></i>
-                <label>Education</label>
-            <select id="select_education" name="select_education" style="width: 100%;"
+
+             <div class="col-md-6">
+
+                  <label>Education</label>
+            <select id="select_education" name="select_education" class="select2" style="width: 100%;"
                     >
                 <option value="UPTO PRIMARY">UPTO PRIMARY</option>
                 <option value="SECONDARY/MATRIC">SECONDARY/MATRIC</option>
@@ -934,8 +970,8 @@
                 <option value="POST GRADUATE">POST GRADUATE</option>
 
             </select>
-            </div>
-                   </div>
+
+             </div>
 
 
             <div class="col-md-3">
@@ -968,7 +1004,7 @@
     </div>
 
     <div class="row form-row">
-        <div class="col-md-5">
+        <div class="col-md-3">
             <label>Business Category </label>
             <select id="select_p_business_category" name="select_p_business_category" class="select2" style="width: 100%;"
                     >
@@ -982,7 +1018,7 @@
             </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Business </label>
             <select id="select_p_business" name="select_p_business" class="select2" style="width: 100%;"
                     >
@@ -1005,15 +1041,20 @@
             </select>
         </div>
         <div class="col-md-3">
-            <label>Income</label>
+            <label> Monthly Income</label>
             <input type="text" class="no-boarder form-control input-sm" name="p_income"
                    id="p_income"  value="3500" placeholder="Income"/>
 
         </div>
+       <div class="col-md-3">
+            <label>  Expense</label>
+            <input type="text" class="no-boarder form-control input-sm" name="p_expense"
+                   id="p_expense"  value="" placeholder="Expense"/>
 
+        </div>
     </div>
     <div class="row form-row">
-        <div class="col-md-5">
+        <div class="col-md-3">
             <label>Business Category </label>
 
             <select id="select_s_business_category" name="select_s_business_category" class="select2" style="width: 100%;"
@@ -1028,7 +1069,7 @@
             </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Business </label>
             <select id="select_s_business" name="select_s_business" class="select2" style="width: 100%;"
                     >
@@ -1055,10 +1096,16 @@
                    id="s_income" value="1500" placeholder="Income"/>
 
         </div>
+        <div class="col-md-3 form-group">
+            <label>Expense</label>
+            <input type="text" class="no-boarder form-control input-sm" name="s_expense"
+                   id="s_expense" value="" placeholder="Expense"/>
+
+        </div>
 
     </div>
     <div class="row form-row">
-        <div class="col-md-5">
+        <div class="col-md-3">
             <label>Business Category </label>
 
             <select id="select_t_business_category" name="select_t_business_category" class="select2" style="width: 100%;"
@@ -1073,7 +1120,7 @@
             </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Business </label>
             <select id="select_t_business" name="select_t_business" class="select2" style="width: 100%;"
                     >
@@ -1101,8 +1148,38 @@
                    id="t_income" value="1500" placeholder="Income"/>
 
         </div>
+        <div class="col-md-3 form-group">
+            <label>Expense</label>
+            <input type="text" class="no-boarder form-control input-sm" name="t_expense"
+                   id="t_expense" value="" placeholder="Expense"/>
+
+        </div>
 
     </div>
+
+         <div class="row form-row">
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Total</label>
+                <input type="text" class="no-boarder form-control input-sm" name="i_total" id="i_total"
+                       value="" placeholder="Total"/>
+            </div>
+                   </div>
+
+
+            <div class="col-md-3">
+                 <div class="input-with-icon  right">
+                <i class=""></i>
+                <label>Total</label>
+                <input type="text" class="no-boarder form-control input-sm" name="e_total" id="e_total"
+                       value="" placeholder="Total"/>
+            </div>
+                </div>
+
+
+
+                 </div>
     <div class="row form-row">
         <div class="col-md-12">
             <h4>Family Asset </h4>
@@ -1371,42 +1448,8 @@
             </table>
         </div>
     </div>
-    <div class="row form-row">
-        <div class="col-md-9">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <label>Center Name</label>
-                <input type="text" class="no-boarder form-control input-sm" name="center_name" id="center_name"
-                       value="MUDDANAHALLI" placeholder="Center Name"/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <label>Center Size</label>
-                <input type="text" class="no-boarder form-control input-sm" name="center_size" id="center_size" value="8"
-                       placeholder="Size"/>
-            </div>
-        </div>
-    </div>
-    <div class="row form-row">
-        <div class="col-md-9">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <label>Group Name</label>
-                <input type="text" class="no-boarder form-control input-sm" name="group_name" id="group_name"
-                       value="DHANALAKSHMI" placeholder="Group Name"/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="input-with-icon  right">
-                <i class=""></i>
-                <label>Group Size</label>
-                <input type="text" class="no-boarder form-control input-sm" name="group_size" id="group_size" value="100"
-                       placeholder="Size"/>
-            </div>
-        </div>
-    </div>
+
+
     <div class="row form-row">
         <div class="col-md-6">
             <div class="input-with-icon  right">
