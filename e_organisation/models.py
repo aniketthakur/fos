@@ -378,6 +378,7 @@ class EsthenosOrgApplication(db.Document):
     t_expense=db.FloatField(default=0.0)
     i_total=db.FloatField(default=0.0)
     e_total=db.FloatField(default=0.0)
+    member_id_proof_number=db.StringField(max_length=40, required=False,default="")
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
@@ -468,7 +469,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     key_person_relation=db.StringField(max_length=255,required=False,default="")
     nominee_name=db.StringField(max_length=255,required=False,default="")
     applicant_telephone_number_type1=db.StringField(required=False,default="")
-    applicant_telephone_number1=db.StringField(required=True,default="")
+    applicant_telephone_number1=db.StringField(required=False,default="")
     applicant_telephone_number_type2=db.StringField(required=False,default="")
     applicant_telephone_number2=db.StringField(required=False,default="")
     applicant_address_type1=db.StringField(max_length=255,required=False,default="")
