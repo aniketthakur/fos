@@ -1,0 +1,65 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+
+    <br xmlns="http://www.w3.org/1999/html"/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <h1>GRT Questions </h1>
+                <div class="grid-body no-border invoice-body"> <br>
+                    <table class="table table-bordered">
+                        {% for question in questions %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ question.question }}</td>
+                                <td><button class="btn btn-danger">Delete</button></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-body no-border invoice-body"> <br>
+
+                    <form class="" method="post" id="org_questions_form">
+                        <div class="row form-row">
+                            <div class="col-md-12 form-group">
+                                <input type="text" placeholder="enter new question here" class="form-control text-left" name="question" id="questions" />
+                            </div>
+                        </div>
+
+                        <input type="hidden" style="width: 80px;" value="{{ org.id }}" name="org_id" id="org_id" />
+                        <div class="form-actions">
+
+                            <div class="pull-right">
+                                <input class="btn btn-danger btn-cons" type="submit"/>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}

@@ -247,7 +247,7 @@ class AddOrganisationProductForm( Form):
 
 
 class AddOrgCGTTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=255)])
+    question=TextField( validators=[v.Length(max=2048)])
     org_id=TextField( validators=[ v.Length(max=255)])
 
     def save( self):
