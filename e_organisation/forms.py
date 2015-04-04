@@ -54,7 +54,7 @@ class AddApplicationManual(Form):
     medical_expenditure= TextField( validators=[ v.Length(max=10)])
     interested_in_nps= TextField( validators=[v.DataRequired(), v.Length(max=40)])
     centre_leader=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    member_fullname=TextField( validators=[ v.Length(max=100)])
     state=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     interested_in_other_fp=TextField( validators=[v.DataRequired(), v.Length(max=40)])
 
@@ -94,25 +94,25 @@ class AddApplicationManual(Form):
     village_hospital_category=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     chit_amount=TextField( validators=[ v.Length(max=10)])
     cm_id=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_telephone=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_telephone=TextField( validators=[ v.Length(max=40)])
     group_leader_cell=TextField( validators=[ v.Length(max=10)])
     bankfi_amount=TextField( validators=[ v.Length(max=10)])
     patta_land=TextField( validators=[ v.Length(max=10)])
     chits_inclusion=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     moneylenders_roi=TextField( validators=[ v.Length(max=10)])
     current_cycle=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_age=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_age=TextField( validators=[ v.Length(max=40)])
     select_family_asset=TextField( validators=[ v.Length(max=40)])
     guarantor_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
     purpose_of_loan=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     group_size=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     member_husband_age=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_id_proof_number=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_id_proof_number=TextField( validators=[ v.Length(max=40)])
     select_house_type=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     village_road=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     chit_roi=TextField( validators=[ v.Length(max=10)])
     family_size=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_address2=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_address2=TextField( validators=[ v.Length(max=40)])
 
     member_address1=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     food_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -123,15 +123,15 @@ class AddApplicationManual(Form):
     education_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     branch=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     applied_loan_amount=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_f_or_h_name=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_f_or_h_name=TextField( validators=[ v.Length(max=40)])
     travel_expenditure=TextField( validators=[ v.Length(max=10)])
 
-    member_pincode=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_pincode=TextField( validators=[ v.Length(max=40)])
     repayment_mode=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    taluk=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    taluk=TextField( validators=[ v.Length(max=40)])
     group_leader=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     bankfi_roi=TextField( validators=[ v.Length(max=10)])
-    member_husband_telephone=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_husband_telephone=TextField( validators=[ v.Length(max=40)])
 
     select_member_religion=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     select_member_caste_category=TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -310,6 +310,7 @@ class AddApplicationManual(Form):
         app.t_expense=self.t_expense.data
         app.i_total=self.i_total.data
         app.e_total=self.e_total.data
+        app.member_id_proof_number=self.member_id_proof_number.data
 
 
 
