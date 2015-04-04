@@ -305,11 +305,11 @@ class AddApplicationManual(Form):
         app.select_education=self.select_education.data
         app.girl=self.girl.data
         app.boy=self.boy.data
-        app.p_expense=self.p_expense.data
-        app.s_expense=self.s_expense.data
-        app.t_expense=self.t_expense.data
-        app.i_total=self.i_total.data
-        app.e_total=self.e_total.data
+        app.p_expense=float(self.p_expense.data)
+        app.s_expense=float(self.s_expense.data)
+        app.t_expense=float(self.t_expense.data)
+        app.i_total=float(self.i_total.data)
+        app.e_total=float(self.e_total.data)
         app.member_id_proof_number=self.member_id_proof_number.data
 
 

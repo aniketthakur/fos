@@ -5,7 +5,7 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
-from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState
+from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState,EsthenosOrgCGTTemplateQuestion
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
@@ -246,6 +246,16 @@ class AddOrganisationProductForm( Form):
 
 
 
+class AddOrgCGTTemplateQuestionsForm( Form):
+    question=TextField( validators=[v.Length(max=255)])
+    org_id=TextField( validators=[ v.Length(max=255)])
+
+    def save( self):
+        ques=EsthenosOrgCGTTemplateQuestion()
+        ques.question=self.question.data
+        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+        ques.save()
+        return ques
 
 
 

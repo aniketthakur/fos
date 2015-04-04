@@ -174,7 +174,27 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
+class EsthenosOrgCGTTemplateQuestion(db.Document):
+    product_name=db.StringField(max_length=128,required=True)
+    organisation = db.ReferenceField('EsthenosOrg')
+    loan_amount = db.FloatField(default=0.0)
+    life_insurance = db.FloatField(default=0.0)
+    eligible_cycle = db.IntField(default=0)
+    number_installments = db.IntField(default=0)
+    emi = db.FloatField(default=0)
+    last_emi = db.FloatField(default=0)
+    processing_fee = db.FloatField(default=0)
+    total_processing_fees = db.FloatField(default=0)
+    interest_rate = db.FloatField(default=0)
+    insurance_period = db.FloatField(default=0)
+    insurance_free_borrowers_only = db.FloatField(default=0.0)
+    total_processing_fees_borrowers_only = db.FloatField(default=0)
+    insurance_free_borrowers_n_guarnteer = db.FloatField(default=0.0)
+    total_processing_fees_borrowers_n_guarnteer = db.FloatField(default=0)
+    emi_repayment=db.StringField(max_length=128,required=False)
 
+    def __unicode__(self):
+        return "EsthenosOrgProduct"
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
