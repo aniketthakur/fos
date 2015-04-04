@@ -106,7 +106,7 @@ class AddApplicationManual(Form):
     guarantor_fullname=TextField( validators=[v.DataRequired(), v.Length(max=100)])
     purpose_of_loan=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     group_size=TextField( validators=[v.DataRequired(), v.Length(max=40)])
-    member_husband_age=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    member_husband_age=TextField( validators=[v.DataRequired(), v.Length(max=3)])
     member_id_proof_number=TextField( validators=[ v.Length(max=40)])
     select_house_type=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     village_road=TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -154,17 +154,14 @@ class AddApplicationManual(Form):
     leader_cell1=TextField( validators=[ v.Length(max=40)])
     guarantor_borrowers_are_nominee=TextField( validators=[ v.Length(max=40)])
     borrower_s=TextField( validators=[ v.Length(max=40)])
-    age=TextField( validators=[ v.Length(max=10)])
     guranteer_s=TextField( validators=[ v.Length(max=40)])
-    age1=TextField( validators=[ v.Length(max=10)])
     select_education=TextField( validators=[ v.Length(max=40)])
     girl=TextField( validators=[ v.Length(max=10)])
     boy=TextField( validators=[ v.Length(max=10)])
     p_expense=TextField( validators=[ v.Length(max=40)])
     s_expense=TextField( validators=[ v.Length(max=40)])
     t_expense=TextField( validators=[ v.Length(max=40)])
-    i_total=TextField( validators=[ v.Length(max=40)])
-    e_total=TextField( validators=[ v.Length(max=40)])
+
 
 
     def save( self):
@@ -200,7 +197,12 @@ class AddApplicationManual(Form):
         app.primary_business_category = self.select_p_business_category.data
         app.secondary_business_category = self.select_s_business_category.data
         app.tertiary_business_category=self.select_s_business_category.data
-
+        if self.p_income.data == "":
+            self.p_income.data = "0"
+        if self.s_income.data == "":
+            self.s_income.data = "0"
+        if self.t_income.data == "":
+            self.t_income.data = "0"
         app.primary_income =float(self.p_income.data)
         app.secondary_income = float(self.s_income.data)
         app.tertiary_income =float(self.t_income.data)
@@ -223,7 +225,8 @@ class AddApplicationManual(Form):
 #        app.dob = self.member_dob.data
         app.address = self.member_address1.data + self.member_address2.data
 #        app.gender =
-        app.age =self.member_age.data + self.member_husband_age.data
+        app.age =int(self.member_age.data)
+        app.member_f_or_h_age = int(self.member_husband_age.data)
 #        app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #        app.business_expense =
@@ -301,18 +304,22 @@ class AddApplicationManual(Form):
         app.borrower_s=self.borrower_s.data
         app.age=self.age.data
         app.guranteer_s=self.guranteer_s.data
-        app.age1=self.age1.data
+        app.member_f_or_h_age=self.age1.data
         app.select_education=self.select_education.data
         app.girl=self.girl.data
         app.boy=self.boy.data
+        if self.p_expense.data == "":
+            self.p_expense.data = "0"
+        if self.s_expense.data == "":
+            self.s_expense.data = "0"
+        if self.t_expense.data == "":
+            self.t_expense.data = "0"
         app.p_expense=float(self.p_expense.data)
         app.s_expense=float(self.s_expense.data)
         app.t_expense=float(self.t_expense.data)
-        app.i_total=float(self.i_total.data)
-        app.e_total=float(self.e_total.data)
+        app.i_total=app.primary_income+app.secondary_income+app.tertiary_income
+        app.e_total=app.p_expense+app.s_expense+app.t_expense
         app.member_id_proof_number=self.member_id_proof_number.data
-
-
 
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
