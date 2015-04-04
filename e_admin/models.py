@@ -31,6 +31,7 @@ class EsthenosUser(BaseUser):
     activation_code = db.StringField(max_length=50, required=False)
     active = db.BooleanField(default=False)
     staff = db.BooleanField(default=False)
+    permissions = db.DictField()
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     about = db.StringField(max_length=255, required=False)
@@ -48,6 +49,7 @@ class EsthenosUser(BaseUser):
     org_area =   db.ReferenceField('EsthenosOrgArea')
     org_region = db.ReferenceField('EsthenosOrgRegion')
     org_branch = db.ReferenceField('EsthenosOrgBranch')
+    permissions=db.DictField()
     owner = db.ReferenceField('EsthenosUser',required=False)
 
 

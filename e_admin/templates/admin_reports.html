@@ -13,23 +13,30 @@
         <p>Note: Results are loaded after selecting organisation </p>
         <br>
         <div class="col-md-6">
-            <select id="source" style="width:100%">
-            {% for org in  organisations %}
-                <option value="{{ org.id }}">{{ org.name }}</option>
-            {% endfor %}
-        </select>
-        </div>
-        <div class="col-md-3">
-            <select id="region" style="width:100%">
 
+            <select id="source" style="width:100%">
+                <option value="1">Samasta</option>
+                <option value="2">XYZ</option>
+                <option value="3">ABC</option>
+                <option value="4">MNO</option>
             </select>
         </div>
         <div class="col-md-3">
             <select id="branch" style="width:100%">
-
+                <option value="1">Branch1</option>
+                <option value="2">Branch2</option>
+                <option value="3">Branch3</option>
+                <option value="4">Branch4</option>
             </select>
         </div>
-
+        <div class="col-md-3">
+            <select id="region" style="width:100%">
+                <option value="1">Region1</option>
+                <option value="2">Region2</option>
+                <option value="3">Region3</option>
+                <option value="4">Region4</option>
+            </select>
+        </div>
     </div>
     <div class="row">
 
@@ -86,35 +93,32 @@
                                 </div>
                             </th>
                             <th style="width:10%">Application ID</th>
+                            <th style="width:10%">Applicant Name</th>
+                            <th style="width:10%">Source</th>
                             <th style="width:20%">Date</th>
-                            <th style="width:15%">Source</th>
-                            <th style="width:15%">Status</th>
-                            <th style="width:20%">Progress Status</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         {% for app in  tagged_applications %}
-                        <tr >
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox11" type="checkbox" value="{{ app.organisation.id }}">
-                                    <label for="checkbox11"></label>
-                                </div>
-                            </td>
-                            <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
-
-                            <td><span class="muted">{{ app.date_created }}</span>
-                            </td>
-                            <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
-                            </td>
-                            <td><span class="muted">{{ app.current_status.status }}</span>
-                            </td>
-                            <td class="v-align-middle">
-                                <div class="progress">
-                                    <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr >
+                                <td class="v-align-middle">
+                                    <div class="checkbox check-default">
+                                        <input id="checkbox11" type="checkbox" value="1">
+                                        <label for="checkbox11"></label>
+                                    </div>
+                                </td>
+                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
+                                <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
+                                </td>
+                                <td><span class="muted">{{ app.date_created }}</span>
+                                </td>
+                                <td class="v-align-middle">
+                                    <div class="progress">
+                                        <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
+                                    </div>
+                                </td>
+                            </tr>
                         {% endfor %}
 
                         </tbody>
@@ -131,51 +135,8 @@
                 placeholder: "Select a State",
                 allowClear: true
             });
-            $('#source').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/regions",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#region").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#region").select2();
-                        });
-                        $.getJSON("/admin/organisation/"+type+"/applications",function(data){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i])
-                            }
-                        })
-                    });
-
             $("#branch").select2();
-
             $("#region").select2();
-            $('#region').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/branches",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#branch").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#branch").select2();
-                        });
-                    });
-
             $("#applicationstatus").select2({
                 placeholder: "filter by application state",
                 allowClear: true

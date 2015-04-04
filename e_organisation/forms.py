@@ -146,6 +146,26 @@ class AddApplicationManual(Form):
     fl_insurance=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     select_drinking_water=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     select_t_business_category=TextField( validators=[v.DataRequired(), v.Length(max=40)])
+    village=TextField( validators=[ v.Length(max=40)])
+    JLG=TextField( validators=[ v.Length(max=10)])
+    SHG=TextField( validators=[ v.Length(max=10)])
+    borroers_cell=TextField( validators=[ v.Length(max=40)])
+    leader_cell=TextField( validators=[ v.Length(max=40)])
+    leader_cell1=TextField( validators=[ v.Length(max=40)])
+    guarantor_borrowers_are_nominee=TextField( validators=[ v.Length(max=40)])
+    borrower_s=TextField( validators=[ v.Length(max=40)])
+    age=TextField( validators=[ v.Length(max=10)])
+    guranteer_s=TextField( validators=[ v.Length(max=40)])
+    age1=TextField( validators=[ v.Length(max=10)])
+    select_education=TextField( validators=[ v.Length(max=40)])
+    girl=TextField( validators=[ v.Length(max=10)])
+    boy=TextField( validators=[ v.Length(max=10)])
+    p_expense=TextField( validators=[ v.Length(max=40)])
+    s_expense=TextField( validators=[ v.Length(max=40)])
+    t_expense=TextField( validators=[ v.Length(max=40)])
+    i_total=TextField( validators=[ v.Length(max=40)])
+    e_total=TextField( validators=[ v.Length(max=40)])
+
 
     def save( self):
         app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)[0]
@@ -271,6 +291,27 @@ class AddApplicationManual(Form):
         app.house_rent_expenditure= float(self.house_rent_expenditure.data)
         app.village_public_transport=self.village_public_transport.data
         app.house_hold_expenditure=self.house_hold_expenditure.data
+        app.village=self.village.data
+        app.JLG=self.JLG.data
+        app.SHG=self.SHG.data
+        app.borroers_cell=self.borroers_cell.data
+        app.leader_cell=self.leader_cell.data
+        app.leader_cell1=self.leader_cell1.data
+        app.guarantor_borrowers_are_nominee=self.guarantor_borrowers_are_nominee.data
+        app.borrower_s=self.borrower_s.data
+        app.age=self.age.data
+        app.guranteer_s=self.guranteer_s.data
+        app.age1=self.age1.data
+        app.select_education=self.select_education.data
+        app.girl=self.girl.data
+        app.boy=self.boy.data
+        app.p_expense=self.p_expense.data
+        app.s_expense=self.s_expense.data
+        app.t_expense=self.t_expense.data
+        app.i_total=self.i_total.data
+        app.e_total=self.e_total.data
+
+
 
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
@@ -283,6 +324,9 @@ class AddApplicationManual(Form):
 
         return None
 
+"""
+
+"""
 class AddApplicationMobile(Form):
 
     application_id=TextField( validators=[ v.Length(max=40)])

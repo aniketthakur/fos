@@ -281,6 +281,21 @@ def admin_cbcheck():
     tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
     kwargs = locals()
     return render_template("admin_cbcheck.html", **kwargs)
+
+
+@admin_views.route('/admin/reports', methods=["GET"])
+@login_required
+def admin_reports():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    kwargs = locals()
+    return render_template("admin_applications.html", **kwargs)
+
+
 # Added by Deepak
 @admin_views.route('/admin/disbursement', methods=["GET"])
 @login_required
@@ -298,14 +313,83 @@ from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
+    c_user = current_user
+    organisations = EsthenosOrg.objects.all()
+    user = EsthenosUser.objects.get(id=c_user.id)
+    permissions=user.permissions
+    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
+        if not permissions["data_entry"]=="yes":
+            abort(403)
+    if session['role'] != "ADMIN" and session['role'] !="EMP_EXECUTIVE":
+        abort(403)
+    username = current_user.name
+
+    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    kwargs = locals()
+    return render_template("admin_applications.html", **kwargs)
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/branches', methods=["GET"])
+@login_required
+def admin_org_branches(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
-    kwargs = locals()
-    return render_template("admin_applications.html", **kwargs)
+    organisations = EsthenosOrg.objects.get(id=org_id)
+    data = organisations.branches
+    print data
+    branches = []
+    for br in data:
+        branches.append({'id':str(br.id),'name':br.branch_name})
+    print branches
+    return Response(response=json.dumps(branches),
+        status=200,\
+        mimetype="application/json")
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/regions', methods=["GET"])
+@login_required
+def admin_org_regions(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.get(id=org_id)
+    data = organisations.regions
+    print data
+    regions = []
+    for br in data:
+        regions.append({'id':str(br.id),'name':br.region_name})
+    print regions
+    return Response(response=json.dumps(regions),
+        status=200,\
+        mimetype="application/json")
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
+@login_required
+def admin_org_regions(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = EsthenosOrg.objects.get(id=org_id)
+    applications = EsthenosOrgApplication.objects.filter(organisation=organisation)
+    applications_list = []
+    for app in applications:
+        applications_list.append({'id':str(app.id),
+                                      'date_created':app.date_created,
+                                      'upload_type':app.upload_type,
+                                      'current_status':app.current_status.status
+        })
+
+    return Response(response=json.dumps(applications_list),
+        status=200,\
+        mimetype="application/json")
 
 from datetime import date, timedelta
 from pixuate_storage import  *
@@ -689,6 +773,41 @@ def mobile_application():
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
+
+
+
+@admin_views.route('/admin/update_settings',methods=['POST'])
+def update_settings():
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("ex_data_entry")
+        permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("ex_view_reports")
+        print emp
+        print permissions
+        emp.update(in__permissions = permissions)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("manager_data_entry")
+        permissions['cash_flow']=request.form.get("manager_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("manager_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("vp_data_entry")
+        permissions['cash_flow']=request.form.get("vp_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("vp_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+
+    print emp
+#    kwargs=locals()
+    return redirect("/admin/settings")
+
 
 
 

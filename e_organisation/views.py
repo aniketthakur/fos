@@ -327,6 +327,20 @@ def uploads_indivijual_gkyc():
         mimetype="application/json")
 
 
+organisation_views.route('/organisation/centers_n_groups', methods=["POST"])
+@login_required
+def get_centers_n_groups(org_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = user.organisation
+    centers = EsthenosOrgCenter.objects.get(organisation=organisation)
+    groups = EsthenosOrgGroup.objects.get(organisation=organisation)
+    return Response('{"centers":'+json.dumps(centers)+',"groups":'+json.dumps(groups)+'}', content_type="application/json", mimetype='application/json')
+
+
 organisation_views.route('/organisation/<org_id>/application', methods=["POST"])
 @login_required
 def submit_application():
