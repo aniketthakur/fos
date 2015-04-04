@@ -325,6 +325,9 @@ class AddApplicationManual(Form):
 
         return None
 
+"""
+
+"""
 class AddApplicationMobile(Form):
 
     application_id=TextField( validators=[ v.Length(max=40)])

@@ -7,80 +7,58 @@
 
 {% endblock %}
 {% block maincontents %}
-
     <div class="row">
-        <h3>Loan <span class="semi-bold">Applications</span></h3>
-        <p>Note: Results are loaded after selecting organisation </p>
+        <h3>Admin <span class="semi-bold">Reports</span></h3>
         <br>
-        <div class="col-md-6">
-
-            <select id="source" style="width:100%">
-                <option value="1">Samasta</option>
-                <option value="2">XYZ</option>
-                <option value="3">ABC</option>
-                <option value="4">MNO</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select id="branch" style="width:100%">
-                <option value="1">Branch1</option>
-                <option value="2">Branch2</option>
-                <option value="3">Branch3</option>
-                <option value="4">Branch4</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select id="region" style="width:100%">
-                <option value="1">Region1</option>
-                <option value="2">Region2</option>
-                <option value="3">Region3</option>
-                <option value="4">Region4</option>
-            </select>
-        </div>
     </div>
     <div class="row">
 
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by center">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by group">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by center id">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by group id">
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by application id">
-        </div>
-
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by KYC id">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by applicant name">
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <select id="applicationstatus" multiple style="width:100%">
-                <option value="1">PROCESSING</option>
-                <option value="2">CB_CHECK_READY</option>
-                <option value="3">CB_REJECTED</option>
-                <option value="4">CB_ACCEPTED</option>
+                <option value="1">Report Type 1</option>
+                <option value="2">Report Type 2</option>
+                <option value="3">Report Type 3</option>
+                <option value="4">Report Type 4</option>
+            </select>
+        </div>
+        <div class="col-md-8">
+            <div class="input-daterange" id="datepicker" >
+                <input type="text" class="input-small" name="start-date" id="start-date" />
+                <span class="add-on" style="vertical-align: top;height:30px">to</span>
+                <input type="text" class="input-small" name="end" id="end-date" />
+                <a href="#" class="btn btn-sm btn-info" id="generate_button">Generate</a>
+                <a href="#" class="btn btn-sm btn-info" id="generate_button_as_of">Reports as on Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <select id="source" style="width:100%">
+                {% for org in  organisations %}
+                    <option value="{{ org.id }}">{{ org.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select id="region" style="width:100%">
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select id="branch" style="width:100%">
+
             </select>
         </div>
     </div>
+
+
     <div class="row-fluid">
 
         <div class="span12">
             <div class="grid simple ">
                 <div class="grid-title">
-                    <h4>Loan <span class="semi-bold">Application</span></h4>
-                    <div class="tools"> <a href="javascript:;" class="collapse"></a> <a href="#grid-config" data-toggle="modal" class="config"></a> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
+                    <h4>Application <span class="semi-bold">List</span></h4>
                 </div>
                 <div class="grid-body ">
                     <table class="table table-hover table-condensed" id="example">
@@ -129,22 +107,126 @@
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript">
+
         $(document).ready(function(){
             $("#source").select2({
                 placeholder: "Select a State",
                 allowClear: true
             });
+            $('#source').select2()
+                    .on("change", function (e) {
+                        // mostly used event, fired to the original element when the value changes
+                        console.log("change val=" + e.val);
+                    })
+                    .on("select2-close", function () {
+                        console.log($("#source").val());
+                        var type = $("#source").val();
+                        $.getJSON("/admin/organisation/"+type+"/regions",function( data ){
+                            console.log(data);
+                            for(i=0;i < data.length;i++){
+                                console.log(data[i]["name"])
+                                $("#region").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
+                            }
+                            $("#region").select2();
+                        });
+                        $.getJSON("/admin/organisation/"+type+"/applications",function(data){
+                            console.log(data);
+                            for(i=0;i < data.length;i++){
+                                console.log(data[i])
+                            }
+                        })
+                    });
+
             $("#branch").select2();
+
             $("#region").select2();
+            $('#region').select2()
+                    .on("change", function (e) {
+                        // mostly used event, fired to the original element when the value changes
+                        console.log("change val=" + e.val);
+                    })
+                    .on("select2-close", function () {
+                        console.log($("#source").val());
+                        var type = $("#source").val();
+                        $.getJSON("/admin/organisation/"+type+"/branches",function( data ){
+                            console.log(data);
+                            for(i=0;i < data.length;i++){
+                                console.log(data[i]["name"])
+                                $("#branch").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
+                            }
+                            $("#branch").select2();
+                        });
+                    });
             $("#applicationstatus").select2({
-                placeholder: "filter by application state",
+                placeholder: "choose report type",
                 allowClear: true
             });
 
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
+        });
+        $(document).ready(function () {
+
+            $('.input-daterange').datepicker({
+                todayBtn: "linked"
+            });
+            $("#generate_button").click(function() {
+                console.log($("#start-date").val());
+                console.log($("#end-date").val());
+                if(checkDateRange($("#start-date").val(),$("#end-date").val())){
+                    window.open("/reports/download?type");
+                }
+            });
+
+            function checkDateRange(start, end) {
+                // Parse the entries
+                var startDate = Date.parse(start);
+                var endDate = Date.parse(end);
+                var today = new Date();
+
+                // Make sure they are valid
+                if (isNaN(startDate)) {
+                    smoke.signal("The start date provided is not valid, please enter a valid date.", function(e){
+                    }, {
+                        duration: 2000,
+                        classname: "custom-class"
+                    })
+                    return false;
+                }
+                if (isNaN(endDate)) {
+                    smoke.signal("The end date provided is not valid, please enter a valid date.", function(e){
+                    }, {
+                        duration: 2000,
+                        classname: "custom-class"
+                    })
+                    return false;
+
+                }
+                // Check the date range, 86400000 is the number of milliseconds in one day
+                var difference = (endDate - startDate) / (86400000 * 7);
+                if (difference < 0) {
+                    smoke.signal("The start date must come before the end date!...", function(e){
+                    }, {
+                        duration: 2000,
+                        classname: "custom-class"
+                    });
+                    return false;
+
+                }
+                if (endDate - today > 0) {
+                    smoke.signal("End date cannot be greater than today!...", function(e){
+                    }, {
+                        duration: 2000,
+                        classname: "custom-class"
+                    });
+                    return false;
+                }
+                return true;
+            }
+
         });
     </script>
 {% endblock %}
