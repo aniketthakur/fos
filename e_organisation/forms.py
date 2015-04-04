@@ -307,7 +307,11 @@ class AddApplicationManual(Form):
         app.boy=self.boy.data
         app.p_expense=float(self.p_expense.data)
         app.s_expense=float(self.s_expense.data)
+<<<<<<< HEAD
         app.t_expense= float(self.t_expense.data)
+=======
+        app.t_expense=float(self.t_expense.data)
+>>>>>>> bf4bdb856925136a201a2bc328cd738559b502d1
         app.i_total=float(self.i_total.data)
         app.e_total=float(self.e_total.data)
         app.member_id_proof_number=self.member_id_proof_number.data

@@ -174,7 +174,13 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
+class EsthenosOrgCGTTemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    organisation = db.ReferenceField('EsthenosOrg')
 
+
+    def __unicode__(self):
+        return "EsthenosOrgCGTTemplateQuestion"
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
