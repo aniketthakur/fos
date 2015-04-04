@@ -131,7 +131,7 @@ class EsthenosOrgCenter(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.center_id) + "<" + self.center_name + ">"
+        return self.center_name
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -148,7 +148,7 @@ class EsthenosOrgGroup(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.group_id) + "<" + self.group_name + ">"
+        return self.group_name
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -227,13 +227,13 @@ class EsthenosOrgApplicationStatusType(db.Document):
     status_message =  db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -330,7 +330,7 @@ class EsthenosOrgApplication(db.Document):
     kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
