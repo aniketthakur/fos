@@ -270,17 +270,7 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 # Added by Deepak
-@admin_views.route('/admin/cbcheck', methods=["GET"])
-@login_required
-def admin_cbcheck():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
-    kwargs = locals()
-    return render_template("admin_cbcheck.html", **kwargs)
+
 
 
 @admin_views.route('/admin/reports', methods=["GET"])
@@ -291,23 +281,11 @@ def admin_reports():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
-    return render_template("admin_applications.html", **kwargs)
+    return render_template("admin_reports.html", **kwargs)
 
-
-# Added by Deepak
-@admin_views.route('/admin/disbursement', methods=["GET"])
-@login_required
-def admin_disbursement():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status=19)
-    kwargs = locals()
-    return render_template("admin_disbursement.html", **kwargs)
 
 from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
@@ -371,7 +349,7 @@ def admin_org_regions(org_id):
 from mongoengine import Q
 @admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
 @login_required
-def admin_org_regions(org_id):
+def admin_org_applications(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
@@ -382,9 +360,9 @@ def admin_org_regions(org_id):
     applications_list = []
     for app in applications:
         applications_list.append({'id':str(app.id),
-                                      'date_created':app.date_created,
+                                      'date_created':str(app.date_created),
                                       'upload_type':app.upload_type,
-                                      'current_status':app.current_status.status
+                                      'current_status':str(app.current_status.status)
         })
 
     return Response(response=json.dumps(applications_list),
@@ -766,7 +744,7 @@ def mobile_application():
     if(app_form.validate()):
         print "Form Validated"
         print "Saving Form"
-        app_form.save(user)
+        app_form.save()
         return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
     else:
         print app_form.errors
