@@ -270,7 +270,8 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
-
+from .forms import AddOrgCGTTemplateQuestionsForm
+from e_organisation.models import EsthenosOrgCGTTemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
 def grt_questions(org_id):
@@ -278,28 +279,25 @@ def grt_questions(org_id):
         username=current_user.name
         user=current_user
         org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGTTemplateQuestion.objects.all()
+        print questions
         kwargs = locals()
         if request.method=="GET":
             return render_template("admin_organisation_grt_questions.html", **kwargs)
         else:
-            product=AddOrganisationProductForm(request.form)
-            org_product=product
-            print request.form
-            #            org_product.save(org_id)
-            if(org_product.validate()):
+            question=AddOrgCGTTemplateQuestionsForm(request.form)
+            if(question.validate()):
                 print "Product Details Validated,Saving the form"
-                org_product.save(org_id)
+                question.save()
                 org = EsthenosOrg.objects.get(id=org_id)
                 c_user = current_user
                 user = EsthenosUser.objects.get(id=c_user.id)
-                organisation = EsthenosOrg.objects.get(id=org_id)
-                kwargs = locals()
-                return redirect("/admin/organisation/"+org_id)
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
             else:
                 print "Validation Error"
-                print flash_errors(org_product)
+                print flash_errors(question)
                 kwargs = locals()
-                return redirect("/admin/organisation/"+org_id+"/grt_questions")
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
     else:
         return abort(403)
 # Added by Deepak
