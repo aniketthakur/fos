@@ -302,9 +302,7 @@ class AddApplicationManual(Form):
         app.leader_cell1=self.leader_cell1.data
         app.guarantor_borrowers_are_nominee=self.guarantor_borrowers_are_nominee.data
         app.borrower_s=self.borrower_s.data
-        app.age=self.age.data
         app.guranteer_s=self.guranteer_s.data
-        app.member_f_or_h_age=self.age1.data
         app.select_education=self.select_education.data
         app.girl=self.girl.data
         app.boy=self.boy.data
