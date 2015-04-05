@@ -365,16 +365,16 @@ def get_application():
     center_name = request.form.get('center_name')
     group_name = request.form.get('group_name')
     if center_name != None and group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group__contains=group_name).only("id","date_created","upload_type","current_status","center","group")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
     elif center_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name).only("id","date_created","upload_type","current_status","center","group")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name).only("application_id","date_created","upload_type","current_status","center","group")
     elif group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group__contains=group_name).only("id","date_created","upload_type","current_status","center","group")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
     else:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("id","date_created","upload_type","current_status","center","group")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","date_created","upload_type","current_status","center","group")
     applications_list = []
     for app in applications:
-        applications_list.append({'id':str(app.id),
+        applications_list.append({'id':str(app.application_id),
                                   'date_created':str(app.date_created),
                                   'upload_type':app.upload_type,
                                   'current_status':str(app.current_status),

@@ -18,7 +18,16 @@ from celery.task import periodic_task
 from pixuate_storage import get_url_with_id
 from pixuate import get_aadhaar_details_url,get_pan_details_url,get_vid_details_url
 from job import make_celery
+from e_organisation.models import EsthenosOrg
+from e_admin.models import EsthenosUser
 celery = make_celery('esthenos.tasks',mainapp.config['CELERY_BROKER_URL'],mainapp.config['CELERY_RESULT_BACKEND'])
+
+import boto
+conn = boto.connect_ses(
+    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
+
+from esthenos import render_template,mainapp
 
 from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC
 #from e_admin.models import EsthenosOrgApplication
@@ -34,6 +43,53 @@ def calculate_age(born):
         return today.year - born.year - 1
     else:
         return today.year - born.year
+
+@celery.task
+def send_organisation_notification(org_id):
+    org = EsthenosOrg.objects.all()
+    app_submitted_total = 100
+    app_submitted_success = 80
+    app_submitted_fail = 20
+    data_entry_total = 0
+    data_entry_success = 0
+    data_entry_fail = 0
+    kyc_entry_total = 0
+    kyc_entry_success = 0
+    kyc_entry_fail = 0
+    kyc_validation_total = 200
+    kyc_validation_success = 198
+    kyc_validation_fail = 2
+    cb_check_total = 198
+    cb_check_success = 180
+    cb_check_fail = 18
+    cb_check_total = 198
+    cf_analysis_total  = 180
+    cf_analysis_success  = 160
+    cf_analysis_fail  = 20
+    cgt_ready_total  = 180
+    cgt_ready_success  = 160
+    cgt_ready_fail  = 20
+    cgt1_done_total  = 100
+    cgt1_done_success  = 90
+    cgt1_done_fail  = 10
+    cgt2_done_total  = 90
+    cgt2_done_success  = 80
+    cgt2_done_fail  = 10
+    grt_ready_total  = 80
+    grt_ready_success  = 70
+    grt_ready_fail  = 10
+    grt_done_total  = 70
+    grt_done_success  = 60
+    grt_done_fail  = 10
+    dd_done_total = 50
+    disbursed_total = 40
+    users = EsthenosUser.objects.filter(organisation=org)
+
+    for user in users:
+        kwargs = locals()
+        html_data = render_template("email/notification_today.html", **kwargs)
+        conn.send_email(mainapp.config["SERVER_EMAIL"], "Collections Stats",None,[user.email],format="html" ,html_body=html_data)
+
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
