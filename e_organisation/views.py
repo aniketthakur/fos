@@ -586,9 +586,9 @@ def download_disbusement():
     return render_template("download_disbusement.html", **kwargs)
 
 
-@organisation_views.route('/check_grt', methods=["GET"])
+@organisation_views.route('/check_cgt1', methods=["GET"])
 @login_required
-def check_grt():
+def check_cgt1():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
@@ -599,11 +599,13 @@ def check_grt():
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
     kwargs = locals()
-    return render_template("centers_n_groups_grt.html", **kwargs)
+    return render_template("centers_n_groups_cgt1.html", **kwargs)
 
-@organisation_views.route('/download_grt', methods=["GET"])
+
+
+@organisation_views.route('/check_cgt1_applicant', methods=["GET"])
 @login_required
-def download_grt():
+def check_cgt1_applicant():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
@@ -635,6 +637,90 @@ def download_grt():
     kwargs = locals()
     return render_template("download_grt.html", **kwargs)
 
+
+@organisation_views.route('/check_cgt2', methods=["GET"])
+@login_required
+def check_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_cgt2.html", **kwargs)
+
+
+@organisation_views.route('/check_cgt2_applicant', methods=["GET"])
+@login_required
+def check_cgt2_applicant():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None and center_id != '':
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None and group_id != '':
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
+    user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+    kwargs = locals()
+    return render_template("download_grt.html", **kwargs)
+
+
+@organisation_views.route('/check_grt', methods=["GET"])
+@login_required
+def check_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_grt.html", **kwargs)
+
+from e_organisation.models import EsthenosOrgCGTTemplateQuestion
+@organisation_views.route('/grt_question', methods=["GET"])
+@login_required
+def grt_question():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    group_id = request.args.get("group_id")
+
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org=user.organisation
+    questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+    kwargs = locals()
+    return render_template("centers_n_groups_grt_questions.html", **kwargs)
 
 from werkzeug.utils import secure_filename
 import os,io

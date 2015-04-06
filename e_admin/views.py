@@ -280,7 +280,6 @@ def grt_questions(org_id):
         user=current_user
         org=EsthenosOrg.objects.get(id=org_id)
         questions = EsthenosOrgCGTTemplateQuestion.objects.all()
-        print questions
         kwargs = locals()
         if request.method=="GET":
             return render_template("admin_organisation_grt_questions.html", **kwargs)
