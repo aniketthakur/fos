@@ -314,7 +314,7 @@ class AddApplicationManual(Form):
             self.t_expense.data = "0"
         app.p_expense=float(self.p_expense.data)
         app.s_expense=float(self.s_expense.data)
-        app.t_expense=float(self.t_expense.data)
+        app.t_expense= float(self.t_expense.data)
         app.i_total=app.primary_income+app.secondary_income+app.tertiary_income
         app.e_total=app.p_expense+app.s_expense+app.t_expense
         app.member_id_proof_number=self.member_id_proof_number.data

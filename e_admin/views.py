@@ -320,7 +320,7 @@ def admin_reports():
 
 @admin_views.route('/admin/reports/master/download', methods=["GET"])
 @login_required
-def admin_reports():
+def admin_reports_download():
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
