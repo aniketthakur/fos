@@ -318,6 +318,20 @@ def admin_reports():
     return render_template("admin_reports.html", **kwargs)
 
 
+
+@admin_views.route('/admin/reports/master/download', methods=["GET"])
+@login_required
+def admin_reports():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
+    kwargs = locals()
+    return render_template("admin_reports.html", **kwargs)
+
 from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
