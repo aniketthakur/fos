@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block css_sheets %}{{ super() }}
+<style type="text/css">
+    .rating {
+        float:left;
+    }
+
+        /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
+ follow these rules. Every browser that supports :checked also supports :not(), so
+ it doesn’t make the test unnecessarily selective */
+    .rating:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+        clip:rect(0,0,0,0);
+    }
+
+    .rating:not(:checked) > label {
+        float:right;
+        width:1em;
+        padding:.1em .1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:150%;
+        line-height:1.2;
+        color:#ddd;
+        text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+    }
+
+    .rating:not(:checked) > label:before {
+        content: '★ ';
+    }
+
+    .rating > input:checked ~ label {
+        color: #f70;
+        text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+    }
+
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: gold;
+        text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+    }
+
+    .rating > input:checked + label:hover,
+    .rating > input:checked + label:hover ~ label,
+    .rating > input:checked ~ label:hover,
+    .rating > input:checked ~ label:hover ~ label,
+    .rating > label:hover ~ input:checked ~ label {
+        color: #ea0;
+        text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+    }
+
+    .rating > label:active {
+        position:relative;
+        top:2px;
+        left:2px;
+    }
+</style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <h1>GRT Questions : {{ group.group_name }}</h1>
+                <div class="grid-body no-border invoice-body"> <br>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;"> # </th>
+                                <th style="width: 60%;">Questions </th>
+                                <th style="width: 40%;">Remarks </th>
+                            </tr>
+                        </thead>
+                        {% for question in questions %}
+                            <tr>
+                                <td><h4>{{ loop.index }}</h4></td>
+                                <td><h4>{{ question.question }}</h4></td>
+                                <td><fieldset class="rating">
+                                    <input type="radio" id="star5{{ loop.index }}" name="rating{{ loop.index }}" value="5" /><label for="star5{{ loop.index }}" title="Rocks!">5 stars</label>
+                                    <input type="radio" id="star4{{ loop.index }}" name="rating{{ loop.index }}" value="4" /><label for="star4{{ loop.index }}" title="Pretty good">4 stars</label>
+                                    <input type="radio" id="star3{{ loop.index }}" name="rating{{ loop.index }}" value="3" /><label for="star3{{ loop.index }}" title="Meh">3 stars</label>
+                                    <input type="radio" id="star2{{ loop.index }}" name="rating{{ loop.index }}" value="2" /><label for="star2{{ loop.index }}" title="Kinda bad">2 stars</label>
+                                    <input type="radio" id="star1{{ loop.index }}" name="rating{{ loop.index }}" value="1" /><label for="star1{{ loop.index }}" title="Sucks big time">1 star</label>
+                                </fieldset>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".clickable-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+{% endblock %}

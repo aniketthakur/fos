@@ -95,47 +95,84 @@ if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
     status_type.status_code = 13
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CGT_GRT_READY"
-    status_type.status_message = "Application is CGT-GRT Ready"
+    status_type.status = "APPLICATION_CGT1_READY"
+    status_type.status_message = "Application is CGT1 Ready"
     status_type.status_code = 14
     status_type.save()
 
     status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CGT_GRT_PENDING"
-    status_type.status_message = "Application is CGT-GRT Pending"
+    status_type.status = "APPLICATION_CGT1_PENDING"
+    status_type.status_message = "Application is CGT1 Pending"
     status_type.status_code = 15
     status_type.save()
 
     status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CGT_GRT_FAILED"
-    status_type.status_message = "Application has failed CGT-GRT"
+    status_type.status = "APPLICATION_CGT1_FAILED"
+    status_type.status_message = "Application has failed CGT1"
     status_type.status_code = 16
     status_type.save()
 
     status_type = EsthenosOrgApplicationStatusType()
-    status_type.status = "APPLICATION_CGT_GRT_PASSED"
-    status_type.status_message = "Application has passed CGT-GRT"
+    status_type.status = "APPLICATION_CGT2_READY"
+    status_type.status_message = "Application is CGT2 Ready"
     status_type.status_code = 17
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CGT2_PENDING"
+    status_type.status_message = "Application is CGT2 Pending"
+    status_type.status_code = 18
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_CGT2_FAILED"
+    status_type.status_message = "Application has failed CGT2"
+    status_type.status_code = 19
+    status_type.save()
+
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_GRT_READY"
+    status_type.status_message = "Application is GRT Ready"
+    status_type.status_code = 20
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_GRT_PENDING"
+    status_type.status_message = "Application is GRT Pending"
+    status_type.status_code = 21
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_GRT_FAILED"
+    status_type.status_message = "Application has failed GRT"
+    status_type.status_code = 22
+    status_type.save()
+
+    status_type = EsthenosOrgApplicationStatusType()
+    status_type.status = "APPLICATION_UNDERWRITING_READY"
+    status_type.status_message = "Application is under writing ready"
+    status_type.status_code = 23
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_UNDERWRITING_DONE"
     status_type.status_message = "Application Under writing done"
-    status_type.status_code = 18
+    status_type.status_code = 24
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_READY"
     status_type.status_message = "Application Disbursement ready"
-    status_type.status_code = 19
+    status_type.status_code = 25
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_CANCELLED"
     status_type.status_message = "Application Disbursement has been cancelled,possibly due to CGT-GRT failure"
-    status_type.status_code = 20
+    status_type.status_code = 26
     status_type.save()
     status_type = EsthenosOrgApplicationStatusType()
     status_type.status = "APPLICATION_DISBURSEMENT_PENDING"
     status_type.status_message = "Application Disbursement ready, waiting for disbursement over a week"
-    status_type.status_code = 21
+    status_type.status_code = 27
     status_type.save()
 
 
