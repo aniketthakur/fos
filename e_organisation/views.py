@@ -22,6 +22,7 @@ from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
 from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification
 import traceback
+from e_tokens.utils import login_or_key_required
 class RenderTemplateView(View):
     def __init__(self, template_name):
         self.template_name = template_name
@@ -198,7 +199,7 @@ def uploads_group_gkyc():
 @organisation_views.route('/uploads_indivijual_app', methods=["GET","POST"])
 @login_required
 def uploads_indivijual_app():
-    if not session['role'].startswith("ORG_"):
+    if not session['role'] or not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
     c_user = current_user
@@ -327,30 +328,63 @@ def uploads_indivijual_gkyc():
         mimetype="application/json")
 
 
-organisation_views.route('/organisation/centers_n_groups', methods=["POST"])
-@login_required
-def get_centers_n_groups(org_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
+@organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
+@login_or_key_required
+def get_centers_n_groups():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     organisation = user.organisation
-    centers = EsthenosOrgCenter.objects.get(organisation=organisation)
-    groups = EsthenosOrgGroup.objects.get(organisation=organisation)
-    return Response('{"centers":'+json.dumps(centers)+',"groups":'+json.dumps(groups)+'}', content_type="application/json", mimetype='application/json')
+    centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
+    centers_list = []
+    for cen in centers:
+        centers_list.append({'id':str(cen.center_id),
+                    'center_name':str(cen.center_name)
+        })
+
+    groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
+
+    groups_list = []
+    for grp in groups:
+        groups_list.append({'id':str(grp.group_id),
+                             'group_name':str(grp.group_name)
+        })
+    return Response('{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(groups_list)+'}', content_type="application/json", mimetype='application/json')
 
 
-organisation_views.route('/organisation/<org_id>/application', methods=["POST"])
-@login_required
-def submit_application():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
+@organisation_views.route('/api/organisation/applications', methods=["GET"])
+@login_or_key_required
+def get_application():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    if center_name != None and group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
+    elif center_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name).only("application_id","date_created","upload_type","current_status","center","group")
+    elif group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
+    else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","date_created","upload_type","current_status","center","group")
+    applications_list = []
+    for app in applications:
+        applications_list.append({'id':str(app.application_id),
+                                  'date_created':str(app.date_created),
+                                  'upload_type':app.upload_type,
+                                  'current_status':str(app.current_status),
+                                  'center':str(app.center),
+                                  'group':str(app.group),
+        })
 
-    pass
+    return Response(response=json.dumps(applications_list),
+        status=200,\
+        mimetype="application/json")
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required

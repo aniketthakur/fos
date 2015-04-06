@@ -19,3 +19,27 @@ from flask.ext import excel
 from flask import Flask, make_response
 
 
+@reports_views.route('/reports/download', methods=["GET"])
+@login_or_key_required
+def get_buckets_logs():
+    c_user = current_user
+    kwargs = locals()
+    from e_organisation.models import EsthenosOrgApplication
+    if request.method == 'GET':
+        user  = EsthenosUser.objects.get(id=c_user.id)
+        applications = EsthenosOrgApplication.objects(organisation=user.organisation)
+        application_data = list()
+        headers = list()
+        headers.append("Application ID")
+
+        application_data.append(headers)
+        for app in applications:
+            row_data = list()
+            row_data.append(app["application_id"])
+
+            application_data.append(row_data)
+
+        output = excel.make_response_from_array(application_data, 'csv')
+        output.headers["Content-Disposition"] = "attachment; filename=pan_reports.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output

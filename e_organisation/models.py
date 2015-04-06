@@ -131,7 +131,7 @@ class EsthenosOrgCenter(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.center_id) + "<" + self.center_name + ">"
+        return self.center_name
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -148,7 +148,7 @@ class EsthenosOrgGroup(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.group_id) + "<" + self.group_name + ">"
+        return self.group_name
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -227,13 +227,13 @@ class EsthenosOrgApplicationStatusType(db.Document):
     status_message =  db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -330,7 +330,7 @@ class EsthenosOrgApplication(db.Document):
     kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
@@ -373,9 +373,8 @@ class EsthenosOrgApplication(db.Document):
     leader_cell1=db.StringField(max_length=40, required=False,default="")
     guarantor_borrowers_are_nominee=db.StringField(max_length=40, required=False,default="")
     borrower_s=db.StringField(max_length=40, required=False,default="")
-    age=db.IntField(default=0)
     guranteer_s=db.StringField(max_length=40, required=False,default="")
-    age1=db.IntField(default=0)
+    member_f_or_h_age=db.IntField(default=0)
     select_education=db.StringField(max_length=40, required=False,default="")
     girl=db.StringField(max_length=40, required=False,default="")
     boy=db.StringField(max_length=40, required=False,default="")
