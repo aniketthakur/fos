@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from e_tokens.utils import login_or_key_required
 import json,hashlib
 from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMark
+from e_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
 from flask import  Blueprint
 import os,tempfile
 from esthenos.crossdomain import *
@@ -301,7 +301,7 @@ def get_application_rowdata(app):
     row_data.append(app["excepted_disbursment_date"])
     return row_data
 
-@reports_views.route('/reports/download', methods=["GET"])
+@reports_views.route('/reports/internal_main/download', methods=["GET"])
 @login_or_key_required
 def internal_main_reports():
     c_user = current_user
@@ -313,53 +313,52 @@ def internal_main_reports():
         application_data = list()
 
         app_headers = get_application_headers()
-        hm_request_headers = ()
-        hm_request_headers.append("Application Id")
-        hm_request_headers.append("Member Id")
-        hm_request_headers.append("Member Name")
-        hm_request_headers.append("Spouse Name")
-        hm_request_headers.append("Status")
-        hm_request_headers.append("Own")
-        hm_request_headers.append("Oth All")
-        hm_request_headers.append("Oth Active")
-        hm_request_headers.append("Pri")
-        hm_request_headers.append("Sec")
-        hm_request_headers.append("Closed Account")
-        hm_request_headers.append("Active Account")
-        hm_request_headers.append("Default Account")
-        hm_request_headers.append("Own Disb Amt")
-        hm_request_headers.append("Other Disb Amt")
-        hm_request_headers.append("Own Curr Amt")
-        hm_request_headers.append("Other Curr Amt")
-        hm_request_headers.append("Own Inst Amt")
-        hm_request_headers.append("Other Inst Amt")
-        hm_request_headers.append("Value")
-        hm_request_headers.append("Remark")
-        hm_request_headers.append("Error Descripton")
-        hm_request_headers.append("Address")
-        hm_request_headers.append("Dob Age")
-        hm_request_headers.append("Age As On Dt")
-        hm_request_headers.append("Father Name")
-        hm_request_headers.append("Ration Card")
-        hm_request_headers.append("Voter Id")
-        hm_request_headers.append("Phone")
-        hm_request_headers.append("Rel Type1")
-        hm_request_headers.append("Mbr Rel Name1")
-        hm_request_headers.append("Rel Type2")
-        hm_request_headers.append("Mbr Rel Name2")
-        hm_request_headers.append("Driving Lic")
-        hm_request_headers.append("Other Id Type1")
-        hm_request_headers.append("Other Id Val1")
-        hm_request_headers.append("Branch")
-        hm_request_headers.append("Kendra")
-        hm_request_headers.append("Report Id")
-        headers = app_headers
+        hm_response_headers = list()
+        hm_response_headers.append("Application Id")
+        hm_response_headers.append("Member Id")
+        hm_response_headers.append("Member Name")
+        hm_response_headers.append("Spouse Name")
+        hm_response_headers.append("Status")
+        hm_response_headers.append("Own")
+        hm_response_headers.append("Oth All")
+        hm_response_headers.append("Oth Active")
+        hm_response_headers.append("Pri")
+        hm_response_headers.append("Sec")
+        hm_response_headers.append("Closed Account")
+        hm_response_headers.append("Active Account")
+        hm_response_headers.append("Default Account")
+        hm_response_headers.append("Own Disb Amt")
+        hm_response_headers.append("Other Disb Amt")
+        hm_response_headers.append("Own Curr Amt")
+        hm_response_headers.append("Other Curr Amt")
+        hm_response_headers.append("Own Inst Amt")
+        hm_response_headers.append("Other Inst Amt")
+        hm_response_headers.append("Value")
+        hm_response_headers.append("Remark")
+        hm_response_headers.append("Error Descripton")
+        hm_response_headers.append("Address")
+        hm_response_headers.append("Dob Age")
+        hm_response_headers.append("Age As On Dt")
+        hm_response_headers.append("Father Name")
+        hm_response_headers.append("Ration Card")
+        hm_response_headers.append("Voter Id")
+        hm_response_headers.append("Phone")
+        hm_response_headers.append("Rel Type1")
+        hm_response_headers.append("Mbr Rel Name1")
+        hm_response_headers.append("Rel Type2")
+        hm_response_headers.append("Mbr Rel Name2")
+        hm_response_headers.append("Driving Lic")
+        hm_response_headers.append("Other Id Type1")
+        hm_response_headers.append("Other Id Val1")
+        hm_response_headers.append("Branch")
+        hm_response_headers.append("Kendra")
+        hm_response_headers.append("Report Id")
+        headers = app_headers + hm_response_headers
         application_data.append(headers)
         for app in applications:
             app_row_data= get_application_rowdata(app)
-
             hmresp = EsthenosOrgApplicationHighMark.objects.get(application_id=app.application_id)
-            row_data = app_row_data
+            row_data = list()
             row_data.append(hmresp["application_id"])
             row_data.append(hmresp["member_id"])
             row_data.append(hmresp["member_name"])
@@ -399,14 +398,15 @@ def internal_main_reports():
             row_data.append(hmresp["branch"])
             row_data.append(hmresp["kendra"])
             row_data.append(hmresp["report_id"])
-            application_data.append(row_data)
+            app_row_data = app_row_data+row_data
+            application_data.append(app_row_data)
 
         output = excel.make_response_from_array(application_data, 'csv')
-        output.headers["Content-Disposition"] = "attachment; filename=pan_reports.csv"
+        output.headers["Content-Disposition"] = "attachment; filename=internal_main_reports.csv"
         output.headers["Content-type"] = "text/csv"
         return output
 
-@reports_views.route('/reports/download', methods=["GET"])
+@reports_views.route('/reports/external_main/download', methods=["GET"])
 @login_or_key_required
 def external_main_reports():
     c_user = current_user
@@ -423,6 +423,37 @@ def external_main_reports():
             application_data.append(row_data)
 
         output = excel.make_response_from_array(application_data, 'csv')
-        output.headers["Content-Disposition"] = "attachment; filename=pan_reports.csv"
+        output.headers["Content-Disposition"] = "attachment; filename=external_main_reports.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+
+@reports_views.route('/reports/highmark_request/download', methods=["GET"])
+@login_or_key_required
+def himark_request_reports():
+    c_user = current_user
+    kwargs = locals()
+    from e_organisation.models import EsthenosOrgApplication
+    if request.method == 'GET':
+        user  = EsthenosUser.objects.get(id=c_user.id)
+
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
+
+        application_data = list()
+
+        hm_request_headers = list()
+        hm_request_headers.append("APPLICANT ID TYPE 1")
+
+        headers =  hm_request_headers
+        application_data.append(headers)
+        for app in applications:
+            hm_request = EsthenosOrgApplicationHighMarkRequest.objects.get(applications.application_id)
+            row_data = list()
+            row_data.append(hm_request["application_id"])
+
+            app_row_data = row_data
+            application_data.append(app_row_data)
+
+        output = excel.make_response_from_array(application_data, 'csv')
+        output.headers["Content-Disposition"] = "attachment; filename=himark_request_reports.csv"
         output.headers["Content-type"] = "text/csv"
         return output
