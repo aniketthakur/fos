@@ -130,6 +130,55 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
+            $(".center-fail").click(function(){
+                console.log("center fail "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/center/status/cgt2',
+                    data: "center_id="+$(this).attr("data-id")+"&status=fail",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                    }
+                });
+            });
+            $(".center-pass").click(function(){
+                console.log("center pass "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/center/status/cgt2',
+                    data: "center_id="+$(this).attr("data-id")+"&status=pass",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                    }
+                });
+            });
+            $(".group-fail").click(function(){
+                console.log("group fail "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/group/status/cgt2',
+                    data: "group_id="+$(this).attr("data-id")+"&status=fail",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                    }
+                });
+
+            });
+            $(".group-pass").click(function(){
+                console.log("group pass "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/group/status/cgt2',
+                    data: "group_id="+$(this).attr("data-id")+"&status=pass",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

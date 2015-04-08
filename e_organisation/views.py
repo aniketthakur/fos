@@ -20,7 +20,7 @@ from datetime import timedelta
 import uuid
 from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
-from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification
+from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification,EsthenosOrgApplicationStatus
 import traceback
 from e_tokens.utils import login_or_key_required
 class RenderTemplateView(View):
@@ -59,6 +59,189 @@ def admin_logout():
     logout_user()
     return redirect("/accounts/login")
 
+@organisation_views.route('/center/status/cgt1', methods=["PUT"])
+@login_required
+def center_cgt1():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14,status__lte=17)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 17
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 16
+        app.save()
+
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/center/status/cgt2', methods=["PUT"])
+@login_required
+def center_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17,status__lte=20)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 20
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 19
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/center/status/grt', methods=["PUT"])
+@login_required
+def center_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20,status__lte=23)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 23
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 22
+
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/cgt1', methods=["PUT"])
+@login_required
+def group_cgt1():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14,status__lte=17)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 17
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 16
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/cgt2', methods=["PUT"])
+@login_required
+def group_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17,status__lte=20)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 20
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 19
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/grt', methods=["PUT"])
+@login_required
+def group_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20,status__lte=23)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 23
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 22
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required
