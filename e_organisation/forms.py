@@ -370,7 +370,7 @@ class AddApplicationMobile(Form):
 
     application_branch_name= TextField( validators=[v.DataRequired(), v.Length(max=100)])
     application_member_address = TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    application_member_tele_code = TextField( validators=[v.DataRequired(), v.Length(max=9)])
+    application_member_tele_code = TextField( validators=[ v.Length(max=9)])
     application_member_state = TextField( validators=[v.Length(max=100)])
     application_member_city = TextField( validators=[ v.Length(max=100)])
     application_member_taluk= TextField( validators=[v.DataRequired(), v.Length(max=100)])

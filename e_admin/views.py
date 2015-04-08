@@ -702,7 +702,7 @@ def mobile_application():
     if(app_form.validate()):
         print "Form Validated"
         print "Saving Form"
-        app_form.save(user)
+        app_form.save()
         return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
     else:
         print app_form.errors
