@@ -739,7 +739,7 @@ def applications_track(app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     application = EsthenosOrgApplication.objects.filter(organisation = user.organisation,application_id=app_id)[0]
-    print application.timeline
+    #print application.timeline
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
