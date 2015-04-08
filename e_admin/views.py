@@ -269,18 +269,38 @@ def admin_organisation_product(org_id):
                 return redirect("/admin/organisation/"+org_id+"/add_product")
     else:
         return abort(403)
-# Added by Deepak
-@admin_views.route('/admin/cbcheck', methods=["GET"])
+
+from .forms import AddOrgCGTTemplateQuestionsForm
+from e_organisation.models import EsthenosOrgCGTTemplateQuestion
+@admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
-def admin_cbcheck():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status__gte=11)
-    kwargs = locals()
-    return render_template("admin_cbcheck.html", **kwargs)
+def grt_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_grt_questions.html", **kwargs)
+        else:
+            question=AddOrgCGTTemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
+    else:
+        return abort(403)
+# Added by Deepak
+
 
 
 @admin_views.route('/admin/reports', methods=["GET"])
@@ -291,29 +311,32 @@ def admin_reports():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
-    return render_template("admin_applications.html", **kwargs)
+    return render_template("admin_reports.html", **kwargs)
 
 
-# Added by Deepak
-@admin_views.route('/admin/disbursement', methods=["GET"])
+
+@admin_views.route('/admin/reports/master/download', methods=["GET"])
 @login_required
-def admin_disbursement():
+def admin_reports_download():
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    tagged_applications = EsthenosOrgApplication.objects.filter(status=19)
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
-    return render_template("admin_disbursement.html", **kwargs)
+    return render_template("admin_reports.html", **kwargs)
 
 from mongoengine import Q
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
     c_user = current_user
+    organisations = EsthenosOrg.objects.all()
     user = EsthenosUser.objects.get(id=c_user.id)
     permissions=user.permissions
     if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
@@ -323,9 +346,72 @@ def admin_application():
         abort(403)
     username = current_user.name
 
-    tagged_applications = EsthenosOrgApplication.objects.filter(upload_type="MANUAL_UPLOAD").filter(Q(status=1) |Q(status=0))
+    tagged_applications = EsthenosOrgApplication.objects.all() #filter(upload_type="MANUAL_UPLOAD")#.filter(Q(status=1) |Q(status=0))
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/branches', methods=["GET"])
+@login_required
+def admin_org_branches(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.get(id=org_id)
+    data = organisations.branches
+    print data
+    branches = []
+    for br in data:
+        branches.append({'id':str(br.id),'name':br.branch_name})
+    print branches
+    return Response(response=json.dumps(branches),
+        status=200,\
+        mimetype="application/json")
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/regions', methods=["GET"])
+@login_required
+def admin_org_regions(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.get(id=org_id)
+    data = organisations.regions
+    print data
+    regions = []
+    for br in data:
+        regions.append({'id':str(br.id),'name':br.region_name})
+    print regions
+    return Response(response=json.dumps(regions),
+        status=200,\
+        mimetype="application/json")
+
+from mongoengine import Q
+@admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
+@login_required
+def admin_org_applications(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = EsthenosOrg.objects.get(id=org_id)
+    applications = EsthenosOrgApplication.objects.filter(organisation=organisation)
+    applications_list = []
+    for app in applications:
+        applications_list.append({'id':str(app.id),
+                                      'date_created':str(app.date_created),
+                                      'upload_type':app.upload_type,
+                                      'current_status':str(app.current_status.status)
+        })
+
+    return Response(response=json.dumps(applications_list),
+        status=200,\
+        mimetype="application/json")
 
 from datetime import date, timedelta
 from pixuate_storage import  *
@@ -389,7 +475,11 @@ def submit_application(org_id,app_id):
     print form.errors
     new_num = int(app_id[-6:])+1
     new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
+    new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
+    if len(new_apps) >0:
+        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
+    else:
+        return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
@@ -422,18 +512,22 @@ def cashflow_statusupdate(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     try:
-        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
-        status.save()
-        application.timeline.append(status)
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)
+        if len(application) >= 0:
+            application = application[0]
+            status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
+            status.save()
+            application.timeline.append(status)
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 12
-        application.save()
-        new_num = int(app_id[-6:])+1
-        new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
+            application.current_status_updated  = datetime.datetime.now()
+            application.status = 12
+            application.save()
+            new_num = int(app_id[-6:])+1
+            new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+            new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
+            if len(new_apps) >0:
+                return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
     except Exception as e:
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
@@ -488,9 +582,9 @@ def read_aadhaar(object_id):
         status=200,\
         mimetype="application/json")
 
-@admin_views.route('/admin/application/<app_id>/track', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
 @login_required
-def admin_application_id_track(app_id):
+def admin_application_id_track(org_id,app_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name

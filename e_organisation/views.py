@@ -20,8 +20,9 @@ from datetime import timedelta
 import uuid
 from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
-from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification
+from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification,EsthenosOrgApplicationStatus
 import traceback
+from e_tokens.utils import login_or_key_required
 class RenderTemplateView(View):
     def __init__(self, template_name):
         self.template_name = template_name
@@ -58,6 +59,189 @@ def admin_logout():
     logout_user()
     return redirect("/accounts/login")
 
+@organisation_views.route('/center/status/cgt1', methods=["PUT"])
+@login_required
+def center_cgt1():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14,status__lte=17)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 17
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 16
+        app.save()
+
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/center/status/cgt2', methods=["PUT"])
+@login_required
+def center_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17,status__lte=20)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 20
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 19
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/center/status/grt', methods=["PUT"])
+@login_required
+def center_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    center_id = request.form.get('center_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20,status__lte=23)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 23
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 22
+
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/cgt1', methods=["PUT"])
+@login_required
+def group_cgt1():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14,status__lte=17)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 17
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 16
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/cgt2', methods=["PUT"])
+@login_required
+def group_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17,status__lte=20)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 20
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 19
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+@organisation_views.route('/group/status/grt', methods=["PUT"])
+@login_required
+def group_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.form.get('group_id')
+    status = request.form.get('status')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20,status__lte=23)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        if status == "pass":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 23
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 22
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required
@@ -198,7 +382,7 @@ def uploads_group_gkyc():
 @organisation_views.route('/uploads_indivijual_app', methods=["GET","POST"])
 @login_required
 def uploads_indivijual_app():
-    if not session['role'].startswith("ORG_"):
+    if not session['role'] or not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
     c_user = current_user
@@ -326,17 +510,90 @@ def uploads_indivijual_gkyc():
         status=200,\
         mimetype="application/json")
 
-
-organisation_views.route('/organisation/<org_id>/application', methods=["POST"])
-@login_required
-def submit_application():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
+@organisation_views.route('/api/organisation/centers_n_groups', methods=["POST"])
+@login_or_key_required
+def create_centers_n_groups():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = user.organisation
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    if center_name == None:
+        center_name = group_name
+    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
+        if status:
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
-    pass
+        unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,group_id = unique_group_id,organisation=user.organisation,group_name=group_name)
+        if status:
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+
+        return Response('{"success":True}', content_type="application/json", mimetype='application/json')
+    return Response('{"success":False}', content_type="application/json", mimetype='application/json')
+
+@organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
+@login_or_key_required
+def get_centers_n_groups():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
+    centers_list = []
+    for cen in centers:
+        groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = cen)
+        groups_list = []
+        for grp in groups:
+            groups_list.append({'id':str(grp.group_id),
+                                'group_name':str(grp.group_name)
+            })
+        centers_list.append(
+            {'id':str(cen.center_id),
+                    'center_name':str(cen.center_name),'groups':groups_list}
+        )
+
+    return Response('{"centers":'+json.dumps(centers_list)+'}', content_type="application/json", mimetype='application/json')
+
+
+@organisation_views.route('/api/organisation/applications', methods=["GET"])
+@login_or_key_required
+def get_application():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    if center_name != None and group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
+    elif center_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name).only("application_id","date_created","upload_type","current_status","center","group")
+    elif group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group__contains=group_name).only("application_id","date_created","upload_type","current_status","center","group")
+    else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","date_created","upload_type","current_status","center","group")
+    applications_list = []
+    for app in applications:
+        applications_list.append({'id':str(app.application_id),
+                                  'date_created':str(app.date_created),
+                                  'upload_type':app.upload_type,
+                                  'current_status':str(app.current_status),
+                                  'center':str(app.center),
+                                  'group':str(app.group),
+        })
+
+    return Response(response=json.dumps(applications_list),
+        status=200,\
+        mimetype="application/json")
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
@@ -367,6 +624,8 @@ def upload_documents():
 
         center = None
         group = None
+        if center_name == None:
+            center_name = group_name
         if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
             unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
             center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
@@ -379,11 +638,7 @@ def upload_documents():
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
 
 
-        elif center_name !=None and len(center_name)>0:
-            unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-            group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_id = unique_group_id,group_name=group_name)
-            if status:
-                EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+
         if center!=None or group != None:
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key,tagged=False)
@@ -483,7 +738,7 @@ def applications_track(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    application = EsthenosOrgApplication.objects.filter(owner = user,application_id=app_id)[0]
+    application = EsthenosOrgApplication.objects.filter(organisation = user.organisation,application_id=app_id)[0]
     print application.timeline
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
@@ -538,9 +793,9 @@ def download_disbusement():
     return render_template("download_disbusement.html", **kwargs)
 
 
-@organisation_views.route('/check_grt', methods=["GET"])
+@organisation_views.route('/check_cgt1', methods=["GET"])
 @login_required
-def check_grt():
+def check_cgt1():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
@@ -551,11 +806,13 @@ def check_grt():
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
     kwargs = locals()
-    return render_template("centers_n_groups_grt.html", **kwargs)
+    return render_template("centers_n_groups_cgt1.html", **kwargs)
 
-@organisation_views.route('/download_grt', methods=["GET"])
+
+
+@organisation_views.route('/check_cgt1_applicant', methods=["GET"])
 @login_required
-def download_grt():
+def check_cgt1_applicant():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
@@ -585,8 +842,127 @@ def download_grt():
     else:
         applications = EsthenosOrgApplication.objects.filter(status__gte=11)
     kwargs = locals()
-    return render_template("download_grt.html", **kwargs)
+    return render_template("update_cgt1_indivijual.html", **kwargs)
 
+
+@organisation_views.route('/check_cgt2', methods=["GET"])
+@login_required
+def check_cgt2():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_cgt2.html", **kwargs)
+
+
+@organisation_views.route('/check_cgt2_applicant', methods=["GET"])
+@login_required
+def check_cgt2_applicant():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None and center_id != '':
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None and group_id != '':
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
+    user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+    kwargs = locals()
+    return render_template("update_cgt2_indivijual.html", **kwargs)
+
+
+
+@organisation_views.route('/check_grt_applicant', methods=["GET"])
+@login_required
+def check_grt_applicant():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    center_id = request.args.get("center")
+    group_id = request.args.get("group")
+    print  center_id," ",group_id
+    center = None
+    if center_id is not None and center_id != '':
+        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        print center.center_name
+    else:
+        group_id = ''
+    group = None
+    if group_id is not None and group_id != '':
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        print group.group_name
+    else:
+        center_id = ''
+
+    user = EsthenosUser.objects.get(id=c_user.id)
+    applications = None
+    if center != None:
+        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
+    elif group != None:
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+    kwargs = locals()
+    return render_template("update_grt_indivijual.html", **kwargs)
+
+@organisation_views.route('/check_grt', methods=["GET"])
+@login_required
+def check_grt():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+
+    kwargs = locals()
+    return render_template("centers_n_groups_grt.html", **kwargs)
+
+from e_organisation.models import EsthenosOrgCGTTemplateQuestion
+@organisation_views.route('/grt_question', methods=["GET"])
+@login_required
+def grt_question():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    group_id = request.args.get("group_id")
+
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org=user.organisation
+    questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+    kwargs = locals()
+    return render_template("centers_n_groups_grt_questions.html", **kwargs)
 
 from werkzeug.utils import secure_filename
 import os,io

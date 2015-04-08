@@ -1,6 +1,7 @@
 __author__ = 'prathvi'
 from flask import   request,Response
 from flask_login import current_user, login_required,login_user
+from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask import  Blueprint
 import  json
 from e_admin.models import EsthenosUser
@@ -18,7 +19,19 @@ def generate_token_view():
     print login_form
     form = login_form
     if(form.validate()):
+
         user = EsthenosUser.objects.get( email=form.email.data)
+        if user.active == False:
+            flash(u'Your account has been deactivated', 'error')
+            kwargs = {"login_form": login_form}
+
+        if (form.role.data == "ADMIN"):
+            session['role'] = "ADMIN"
+        if (form.role.data == "ORG_CM"):
+            session['role'] = "ORG_CM"
+        if (form.role.data == "EMP_EXECUTIVE"):
+            session['role'] = "EMP_EXECUTIVE"
+
         if expires is -1:
             full_token = utils.generate_auth_token(user,expiration=360000)
         else:

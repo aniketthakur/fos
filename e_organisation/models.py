@@ -131,7 +131,7 @@ class EsthenosOrgCenter(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.center_id) + "<" + self.center_name + ">"
+        return self.center_name
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -148,7 +148,7 @@ class EsthenosOrgGroup(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return str(self.group_id) + "<" + self.group_name + ">"
+        return self.group_name
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -174,7 +174,13 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
+class EsthenosOrgCGTTemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    organisation = db.ReferenceField('EsthenosOrg')
 
+
+    def __unicode__(self):
+        return "EsthenosOrgCGTTemplateQuestion"
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
@@ -221,13 +227,13 @@ class EsthenosOrgApplicationStatusType(db.Document):
     status_message =  db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -324,7 +330,7 @@ class EsthenosOrgApplication(db.Document):
     kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    current_status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
@@ -367,9 +373,8 @@ class EsthenosOrgApplication(db.Document):
     leader_cell1=db.StringField(max_length=40, required=False,default="")
     guarantor_borrowers_are_nominee=db.StringField(max_length=40, required=False,default="")
     borrower_s=db.StringField(max_length=40, required=False,default="")
-    age=db.IntField(default=0)
     guranteer_s=db.StringField(max_length=40, required=False,default="")
-    age1=db.IntField(default=0)
+    member_f_or_h_age=db.IntField(default=0)
     select_education=db.StringField(max_length=40, required=False,default="")
     girl=db.StringField(max_length=40, required=False,default="")
     boy=db.StringField(max_length=40, required=False,default="")
@@ -378,6 +383,7 @@ class EsthenosOrgApplication(db.Document):
     t_expense=db.FloatField(default=0.0)
     i_total=db.FloatField(default=0.0)
     e_total=db.FloatField(default=0.0)
+    member_id_proof_number=db.StringField(max_length=40, required=False,default="")
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
@@ -398,8 +404,12 @@ class EsthenosOrgApplicationHighMark(db.Document):
     closed_account=db.IntField( required=True,default="")
     active_account=db.IntField( required=True,default="")
     default_account=db.IntField( required=True,default="")
-    own_disb_atm=db.IntField( required=True,default="")
-    other_disb_atm=db.IntField( required=True,default="")
+    own_disb_amt=db.IntField( required=True,default="")
+    other_disb_amt=db.IntField( required=True,default="")
+    own_curr_amt=db.IntField(required=True,default="")
+    other_curr_amt=db.IntField(required=True,default="")
+    own_inst_amt=db.IntField(required=True,default="")
+    other_inst_amt=db.IntField(required=True,default="")
     value=db.StringField(max_length=128, required=True,default="")
     remark=db.StringField(max_length=128, required=True,default="")
     error_descripton=db.StringField(max_length=128, required=True,default="")
@@ -468,7 +478,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     key_person_relation=db.StringField(max_length=255,required=False,default="")
     nominee_name=db.StringField(max_length=255,required=False,default="")
     applicant_telephone_number_type1=db.StringField(required=False,default="")
-    applicant_telephone_number1=db.StringField(required=True,default="")
+    applicant_telephone_number1=db.StringField(required=False,default="")
     applicant_telephone_number_type2=db.StringField(required=False,default="")
     applicant_telephone_number2=db.StringField(required=False,default="")
     applicant_address_type1=db.StringField(max_length=255,required=False,default="")
@@ -481,7 +491,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     applicant_address2_city=db.StringField(max_length=255,required=False,default="")
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
-
+    nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
