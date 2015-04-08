@@ -482,9 +482,9 @@ class AddApplicationMobile(Form):
         app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #       app.business_expense =
-#        app.food_expense = float(self.application_food_expenditure.data)
-#        app.travel_expense =float(self.application_travel_expenditure.data)
-#        app.entertainment_expense =float(self.application_entertainment_expenditure.data)
+        app.food_expense = float(self.application_food_expenditure.data)
+        app.travel_expense =float(self.application_travel_expenditure.data)
+        app.entertainment_expense =float(self.application_entertainment_expenditure.data)
         app.educational_expense = float(self.application_education_expenditure.data)
         app.medical_expense =float(self.application_medical_expenditure.data)
         app.other_expense = float(self.application_house_hold_expenditure.data)
