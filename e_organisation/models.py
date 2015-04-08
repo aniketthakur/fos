@@ -404,8 +404,12 @@ class EsthenosOrgApplicationHighMark(db.Document):
     closed_account=db.IntField( required=True,default="")
     active_account=db.IntField( required=True,default="")
     default_account=db.IntField( required=True,default="")
-    own_disb_atm=db.IntField( required=True,default="")
-    other_disb_atm=db.IntField( required=True,default="")
+    own_disb_amt=db.IntField( required=True,default="")
+    other_disb_amt=db.IntField( required=True,default="")
+    own_curr_amt=db.IntField(required=True,default="")
+    other_curr_amt=db.IntField(required=True,default="")
+    own_inst_amt=db.IntField(required=True,default="")
+    other_inst_amt=db.IntField(required=True,default="")
     value=db.StringField(max_length=128, required=True,default="")
     remark=db.StringField(max_length=128, required=True,default="")
     error_descripton=db.StringField(max_length=128, required=True,default="")
@@ -487,7 +491,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     applicant_address2_city=db.StringField(max_length=255,required=False,default="")
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
-
+    nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
