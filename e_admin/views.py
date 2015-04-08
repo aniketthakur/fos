@@ -475,7 +475,11 @@ def submit_application(org_id,app_id):
     print form.errors
     new_num = int(app_id[-6:])+1
     new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-    return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
+    new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
+    if len(new_apps) >0:
+        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
+    else:
+        return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
@@ -508,18 +512,22 @@ def cashflow_statusupdate(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     try:
-        application = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
-        status.save()
-        application.timeline.append(status)
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)
+        if len(application) >= 0:
+            application = application[0]
+            status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
+            status.save()
+            application.timeline.append(status)
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 12
-        application.save()
-        new_num = int(app_id[-6:])+1
-        new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
+            application.current_status_updated  = datetime.datetime.now()
+            application.status = 12
+            application.save()
+            new_num = int(app_id[-6:])+1
+            new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+            new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
+            if len(new_apps) >0:
+                return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
     except Exception as e:
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
