@@ -59,31 +59,8 @@
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-11">
-            <div class="grid simple">
-                <div class="grid-body no-border invoice-body"> <br>
-                    <img src="{{ url_for('static', filename='sample/cash_flow1.png')}}" width="100%"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="invoice-button-action-set">
-                <p>
-                    <button class="btn btn-primary" type="button"><i class="fa fa-print"></i></button>
-                </p>
-                <p>
-                    <button class="btn " type="button"><i class="fa fa-cloud-download"></i></button>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10 col-vlg-7">
-            <button type="button" class="btn btn-danger btn-cons">Cancel</button>
-            <button type="button" class="btn btn-success btn-cons">Proceed with CGT & GRT</button>
-        </div>
-    </div>
+
+
 
 {% endblock %}
 {% block js_scripts %}{{ super() }}

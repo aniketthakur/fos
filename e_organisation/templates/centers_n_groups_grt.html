@@ -50,12 +50,12 @@
                                                 <label for="checkbox11"></label>
                                             </div>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/grt_question?group_id={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
+                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
                                         <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                         </td>
                                         <td><span class="muted">3.5/5</span>
                                         </td>
-                                        <td><button class="btn btn-primary">Questions</button>
+                                        <td><a class="btn btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
                                         </td>
                                         <td>
                                             <button class="btn btn-small btn-danger btn-cons" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
