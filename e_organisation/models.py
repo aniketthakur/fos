@@ -491,7 +491,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     applicant_address2_city=db.StringField(max_length=255,required=False,default="")
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
-
+    nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
