@@ -85,11 +85,12 @@
                 console.log("group fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
-                    data: "group_id="+$(this).attr("data-id")+"&status=fail",
+                    data: "group_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
             });
@@ -97,11 +98,12 @@
                 console.log("group pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
-                    data: "group_id="+$(this).attr("data-id")+"&status=pass",
+                    data: "group_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
             });

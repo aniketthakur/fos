@@ -498,7 +498,7 @@ def himark_request_reports():
         headers =  hm_request_headers
         application_data.append(headers)
         for app in applications:
-            hm_request = EsthenosOrgApplicationHighMarkRequest.objects.get(applications.application_id)
+            hm_request = EsthenosOrgApplicationHighMarkRequest.objects.get(application_id=app.application_id)
             row_data = list()
             row_data.append(hm_request["application_id"])
             row_data.append(hm_request["segment_identifier"])
