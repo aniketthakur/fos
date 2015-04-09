@@ -429,8 +429,10 @@ class AddApplicationMobile(Form):
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
         app.current_status_updated = datetime.datetime.now()
         settings = EsthenosSettings.objects.all()[0]
-        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(user.organisation.application_count)
+        inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
+        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         app.upload_type = "AUTOMATIC_UPLOAD"
+        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=1)
         app.status = 0
         app.member_telephone = self.application_member_telephone.data
         app.member_tele_code = self.application_member_tele_code.data
