@@ -50,18 +50,18 @@
                                                 <label for="checkbox11"></label>
                                             </div>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/grt_question?group_id={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
+                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
                                         <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                         </td>
                                         <td><span class="muted">3.5/5</span>
                                         </td>
-                                        <td><button class="btn btn-primary">Questions</button>
+                                        <td><a class="btn btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-small btn-danger btn-cons" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                            <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                         </td>
                                         <td >
-                                            <button class="btn btn-small btn-primary btn-cons" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                            <button class="btn btn-small btn-primary btn-cons group-pass" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -80,6 +80,32 @@
         $(document).ready(function(){
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
+            });
+            $(".group-fail").click(function(){
+                console.log("group fail "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/group/status/grt',
+                    data: "group_id="+$(this).attr("data-id")+"&status=False",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
+                    }
+                });
+            });
+            $(".group-pass").click(function(){
+                console.log("group pass "+$(this).attr("data-id"))
+                $.ajax({
+                    url: '/group/status/grt',
+                    data: "group_id="+$(this).attr("data-id")+"&status=True",
+                    type: 'PUT',
+                    success: function(response) {
+                        //...
+                        console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
+                    }
+                });
             });
         });
     </script>
