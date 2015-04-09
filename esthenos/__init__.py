@@ -24,9 +24,9 @@ mainapp.config.update(
         'HOST': '128.199.156.24',#
         'PORT': 27017,
         'USERNAME':'esthenos',
-        'PASSWORD':'Ofn2cXHkTMQ8LE',
+        'PASSWORD':'0nrdgjhDFTF5kJ',
         #'DB': 'pitaya_local',
-        'DB': 'esthenos_dev_v1',
+        'DB': 'esthenos_test_v2',
         "w":1,
         "j":True,
         #'TZ_AWARE': True,
