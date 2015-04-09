@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
