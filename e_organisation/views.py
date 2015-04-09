@@ -76,7 +76,7 @@ def center_cgt1():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -107,7 +107,7 @@ def center_cgt2():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -138,7 +138,7 @@ def center_grt():
         status.save()
         app.timeline.append(status)
 
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
@@ -169,7 +169,7 @@ def group_cgt1():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -199,7 +199,7 @@ def group_cgt2():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -229,7 +229,7 @@ def group_grt():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status == "pass":
+        if status is "pass":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
