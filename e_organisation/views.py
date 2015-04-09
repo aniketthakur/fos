@@ -67,7 +67,7 @@ def center_cgt1():
     username = current_user.name
     c_user = current_user
     center_id = request.form.get('center_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
     applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14,status__lte=17)
@@ -76,7 +76,7 @@ def center_cgt1():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -98,7 +98,7 @@ def center_cgt2():
         abort(403)
     c_user = current_user
     center_id = request.form.get('center_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
     applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17,status__lte=20)
@@ -107,7 +107,7 @@ def center_cgt2():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -128,7 +128,7 @@ def center_grt():
         abort(403)
     c_user = current_user
     center_id = request.form.get('center_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
     applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20,status__lte=23)
@@ -138,7 +138,7 @@ def center_grt():
         status.save()
         app.timeline.append(status)
 
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
@@ -160,7 +160,7 @@ def group_cgt1():
         abort(403)
     c_user = current_user
     group_id = request.form.get('group_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
     applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14,status__lte=17)
@@ -169,7 +169,7 @@ def group_cgt1():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -190,7 +190,7 @@ def group_cgt2():
         abort(403)
     c_user = current_user
     group_id = request.form.get('group_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
     applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17,status__lte=20)
@@ -199,7 +199,7 @@ def group_cgt2():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -220,7 +220,7 @@ def group_grt():
         abort(403)
     c_user = current_user
     group_id = request.form.get('group_id')
-    status = request.form.get('status')
+    reqstatus = request.form.get('status')
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
     applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20,status__lte=23)
@@ -229,7 +229,7 @@ def group_grt():
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if status is "pass":
+        if reqstatus is "True":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
