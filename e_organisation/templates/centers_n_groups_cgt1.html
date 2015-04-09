@@ -134,11 +134,12 @@
                 console.log("center fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/center/status/cgt1',
-                    data: "center_id="+$(this).attr("data-id")+"&status=fail",
+                    data: "center_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for center id"+$(this).attr("data-id"));
                     }
                 });
             });
@@ -146,11 +147,12 @@
                 console.log("center pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/center/status/cgt1',
-                    data: "center_id="+$(this).attr("data-id")+"&status=pass",
+                    data: "center_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for center id"+$(this).attr("data-id"));
                     }
                 });
             });
@@ -158,11 +160,12 @@
                 console.log("group fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: "group_id="+$(this).attr("data-id")+"&status=fail",
+                    data: "group_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
 
@@ -171,11 +174,12 @@
                 console.log("group pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: "group_id="+$(this).attr("data-id")+"&status=pass",
+                    data: "group_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
                     success: function(response) {
                         //...
                         console.log(response);
+                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
             });
