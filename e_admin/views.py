@@ -590,7 +590,8 @@ def admin_application_id_track(org_id,app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    application = EsthenosOrgApplication.objects.filter(organisation = user.organisation,application_id=app_id)[0]
+    organisation = EsthenosOrg.objects.get(id = org_id)
+    application = EsthenosOrgApplication.objects.filter(organisation = organisation,application_id=app_id)[0]
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
