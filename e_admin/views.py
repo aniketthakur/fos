@@ -789,11 +789,22 @@ def mobile_application():
     group_name = request.form.get('group_name')
     center = None
     group = None
+    if center_name == None:
+        center_name = group_name
     if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
         center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        if status:
+            center.center_id = unique_center_id
+            center.save()
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+
+        unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
         group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
-    elif center_name !=None and len(center_name)>0:
-        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
+        if status:
+            group.group_id = unique_group_id
+            group.save()
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
     app_form=AddApplicationMobile(form)
     if(app_form.validate()):
         print "Form Validated"
