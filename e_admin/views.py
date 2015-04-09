@@ -306,8 +306,8 @@ def grt_questions(org_id):
 @admin_views.route('/admin/reports', methods=["GET"])
 @login_required
 def admin_reports():
-    if session['role'] != "ADMIN":
-        abort(403)
+#    if session['role'] != "ADMIN":
+#        abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
@@ -318,7 +318,7 @@ def admin_reports():
 
 
 
-@admin_views.route('/admin/reports/master/download', methods=["GET"])
+@admin_views.route('/admin/reportsreports/master/download', methods=["GET"])
 @login_required
 def admin_reports_download():
     if session['role'] != "ADMIN":
@@ -418,7 +418,10 @@ from pixuate_storage import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
-    if session['role'] != "ADMIN":
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    print user.roles[0]
+    if not session['role'] == "ADMIN":
         abort(403)
     username = current_user.name
     c_user = current_user
@@ -494,7 +497,6 @@ def admin_application_cashflow(org_id,app_id):
         applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
     except Exception as e:
         print e.message
-
     if len(applications)==0:
         redirect("/admin/cbcheck")
     app_urls = list()

@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 {% block css_sheets %}{{ super() }}
 
 {% endblock %}
@@ -89,11 +89,12 @@
                                         <label for="checkbox{{ loop.index }}"></label>
                                     </div>
                                 </td>
-                                {% if app.upload_type=='AUTOMATIC_UPLOAD' %}
-                                    <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>
-                                {% else %}
-                                    <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
-                                {% endif %}
+                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>
+
+{#                                {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}
+{#                                {% else %}#}
+{#                                    <td class="v-align-middle clickable-row" data-href='/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>#}
+{#                                {% endif %}#}
                                 <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
                                 </td>
                                 <td><span class="muted">{{ app.date_created }}</span>
