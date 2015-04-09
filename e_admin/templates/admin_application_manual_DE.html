@@ -76,6 +76,15 @@
             height: 1600px;
         }
 
+ .inputs {
+    height: 25px;
+    border: 3px solid #EBE6E2;
+    border-radius: 5px;
+
+    width: 68px;
+}
+
+
     </style>
 {% endblock %}
 
@@ -385,7 +394,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Search REPEAT ID/Customer Name/KYC ID</label>
-                <input type="text" class="no-boarder form-control input-sm" name="repeat_client_id"
+                <input type="text"  name="repeat_client_id" class="inputs"
                        id="repeat_client_id" value="" placeholder="REPEAT_ID"/>
             </div>
         </div>
@@ -407,7 +416,7 @@
             <label>State</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}" class="no-boarder form-control input-sm"
+                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}"  class="inputs"
                        placeholder="State"/>
             </div>
         </div>
@@ -416,7 +425,7 @@
             <label>Taluk</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control input-sm"
+                <input type="text" name="taluk" id="taluk" value="" class="inputs"
                        placeholder="Taluk"/>
             </div>
         </div>
@@ -425,7 +434,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Region</label>
-                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
+                <input type="text" class="inputs" name="region" id="region"
                        value="{{ application.owner.org_region.region_name }}" placeholder="Region"/>
             </div>
         </div>
@@ -433,7 +442,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Branch</label>
-                <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
+                <input type="text" class="inputs" name="branch" id="branch"
                        value="{{ application.owner.org_branch.branch_name }}" placeholder="Branch"/>
             </div>
         </div>
