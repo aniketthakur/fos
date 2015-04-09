@@ -1561,7 +1561,7 @@ i {
 }
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom:-3px ;//5px
 }
 label.inline {
   display: inline-block;
@@ -2753,7 +2753,7 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: 9px;      //14px
   font-weight: normal;
   line-height: 20px;
 }
@@ -3891,9 +3891,9 @@ form legend,
 .input-with-icon {
   position: relative;
 }
-.input-with-icon input {
-  padding-left: 32px !important;
-}
+/*.input-with-icon input {
+  padding-left: 32px !important;////changes done here
+}*/
 .input-with-icon i {
   color: #e5e9ec;
   display: block;
@@ -3904,10 +3904,10 @@ form legend,
   font-size: 16px;
   text-align: center;
 }
-.input-with-icon.right input {
-  padding-left: 12px !important;
+/*.input-with-icon.right input {
+  padding-left: 12px !important;   //changes done here
   padding-right: 33px !important;
-}
+}*/
 .input-with-icon.right i {
   right: 8px;
   float: right;

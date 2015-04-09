@@ -76,6 +76,18 @@
             height: 1600px;
         }
 
+ .inputs {
+    height: 25px;
+    border: 3px solid #EBE6E2;
+    border-radius: 5px;
+
+    width: 105px;
+}
+        .visible{
+         display: none;
+        }
+
+
     </style>
 {% endblock %}
 
@@ -364,7 +376,7 @@
     <h4 class="semi-bold">Step 4 - <span class="light">Application Form</span></h4>
     <br>
 
-    <div class="row">
+    <div class="row" >
     <div class="col-md-6">
         {% for app in app_urls %}
 
@@ -376,7 +388,10 @@
     <div class="col-md-6 col-fixed">
     <br/>
     <br/>
-    <div class="row form-row">
+        <div id="part1">
+            <button onclick="part1">Hide</button>
+            <button onclick="part2">Show</button>
+    <div class="row form-row" style="0px">
 
         <input id="application_id" type="hidden"  name="application_id"
                value="{{ application.application_id }}">
@@ -385,7 +400,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Search REPEAT ID/Customer Name/KYC ID</label>
-                <input type="text" class="no-boarder form-control input-sm" name="repeat_client_id"
+                <input type="text"  name="repeat_client_id" class="inputs"
                        id="repeat_client_id" value="" placeholder="REPEAT_ID"/>
             </div>
         </div>
@@ -402,12 +417,12 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-3">
             <label>State</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}" class="no-boarder form-control input-sm"
+                <input type="text" name="state" id="state" value="{{ application.owner.org_state.state_name }}"  class="inputs"
                        placeholder="State"/>
             </div>
         </div>
@@ -416,7 +431,7 @@
             <label>Taluk</label>
             <div class="input-with-icon  right">
                 <i class=""></i>
-                <input type="text" name="taluk" id="taluk" value="" class="no-boarder form-control input-sm"
+                <input type="text" name="taluk" id="taluk" value="" class="inputs"
                        placeholder="Taluk"/>
             </div>
         </div>
@@ -425,7 +440,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Region</label>
-                <input type="text" class="no-boarder form-control input-sm" name="region" id="region"
+                <input type="text" class="inputs" name="region" id="region"
                        value="{{ application.owner.org_region.region_name }}" placeholder="Region"/>
             </div>
         </div>
@@ -433,7 +448,7 @@
             <div class="input-with-icon  right">
                 <i class=""></i>
                 <label>Branch</label>
-                <input type="text" class="no-boarder form-control input-sm" name="branch" id="branch"
+                <input type="text" class="inputs" name="branch" id="branch"
                        value="{{ application.owner.org_branch.branch_name }}" placeholder="Branch"/>
             </div>
         </div>
@@ -474,7 +489,7 @@
 
     </div>
     <!--</div>-->
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
 
 
         <!--
@@ -545,7 +560,7 @@
 
 
                  </div>
-        <div class="row form-row">
+        <div class="row form-row" style="0px" >
             <div class="col-md-3">
                  <div class="input-with-icon  right">
                 <i class=""></i>
@@ -575,7 +590,7 @@
 
 
                  </div>
-         <div class="row form-row">
+         <div class="row form-row" style="0px">
         <div class="col-md-9">
             <div class="input-with-icon  right">
                 <i class=""></i>
@@ -593,7 +608,7 @@
             </div>
         </div>
     </div>
-         <div class="row form-row">
+         <div class="row form-row"  style="0px">
         <div class="col-md-9">
             <div class="input-with-icon  right">
                 <i class=""></i>
@@ -613,7 +628,7 @@
     </div>
 
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
 
         <div class="col-md-6">
             <div class="radio radio-success">
@@ -638,7 +653,9 @@
         </div>
 
     </div>
-    <div class="row form-row">
+        </div>
+        <div id="part2" class="visible">
+    <div class="row form-row" style="0px">
         <div class="col-md-6">
             <div class="radio radio-success">
                 <h5>Interested Buying NPS</h5>
@@ -661,7 +678,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
 
         <div class="col-md-10">
             <label>Member Full Name</label>
@@ -695,7 +712,7 @@
                    value="" placeholder="Address2">
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
 
         <div class="col-md-4">
             <label>Pin Code</label>
@@ -713,7 +730,7 @@
                    value="" placeholder="Husband Telephone">
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-7">
             <label>Member ID Proof</label>
             <div class="radio radio-success">
@@ -731,7 +748,7 @@
                    value="" placeholder="">
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-7">
             <label>Member Address Proof</label>
             <div class="radio radio-success">
@@ -749,14 +766,14 @@
                    value="" placeholder="">
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
 
         <div class="col-md-12">
             <input id="guarantor_fullname" type="text" class="no-boarder form-control input-sm" name="guarantor_fullname"
                    value="{{ application.gkyc_1.name }}" placeholder="Guarantor Full Name">
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-7">
             <label>Guarantor ID Proof</label>
             <div class="radio radio-success">
@@ -774,7 +791,7 @@
                    value="{{ application.gkyc_1.kyc_number }}" placeholder="">
         </div>
     </div>
-        <div class="row form-row">
+        <div class="row form-row" style="0px">
         <div class="col-md-7">
             <label>Guarantor Relationship With Borrower</label>
             <div class="radio radio-success">
@@ -799,7 +816,7 @@
         </div>
     </div>
 
-         <div class="row form-row">
+         <div class="row form-row" style="0px">
              <h4>Insurance Nominee Information(In case borroers & guranteers are not nominee for each other)</h4>
             <div class="col-md-7">
                  <div class="input-with-icon  right">
@@ -823,7 +840,7 @@
 
 
                  </div>
-         <div class="row form-row">
+         <div class="row form-row" style="0px">
 
             <div class="col-md-7">
                  <div class="input-with-icon  right">
@@ -849,7 +866,7 @@
                  </div>
 
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-4">
             <div class="grid simple">
                 <label>Caste</label>
@@ -884,7 +901,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-4">
             <label>Type Of House</label>
             <select id="select_type_of_residence" name="select_type_of_residence" style="width: 100%;"
@@ -922,7 +939,7 @@
             </select>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-4">
             <label>Applied Loan Amount</label>
             <div class="input-with-icon  right">
@@ -956,7 +973,7 @@
                        id="child_above_18" value="" placeholder="Child above 18"/>
             </div>
         </div>
-        <div class="row form-row">
+        <div class="row form-row" style="0px">
 
              <div class="col-md-6">
 
@@ -1003,7 +1020,7 @@
         </div>
     </div>
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-3">
             <label>Business Category </label>
             <select id="select_p_business_category" name="select_p_business_category" class="select2" style="width: 100%;"
@@ -1053,7 +1070,7 @@
 
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-3">
             <label>Business Category </label>
 
@@ -1104,7 +1121,7 @@
         </div>
 
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-3">
             <label>Business Category </label>
 
@@ -1157,7 +1174,7 @@
 
     </div>
 
-         <div class="row form-row">
+         <div class="row form-row" style="0px">
             <div class="col-md-3">
                  <div class="input-with-icon  right">
                 <i class=""></i>
@@ -1180,7 +1197,7 @@
 
 
                  </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px" >
         <div class="col-md-12">
             <h4>Family Asset </h4>
 
@@ -1200,7 +1217,7 @@
             </select>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <h4> Agriculture Land </h4>
 
@@ -1230,7 +1247,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <h4> Financial Liabilities </h4>
             <div class="col-md-3">
@@ -1271,7 +1288,7 @@
         </div>
     </div>
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <h4> Financial Inclusions </h4>
             <div class="col-md-3 radio radio-success">
@@ -1314,7 +1331,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <h4>Business Expenditure</h4>
 
@@ -1354,7 +1371,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <div class="col-md-3">
                 <label>Festival</label>
@@ -1394,7 +1411,7 @@
         </div>
     </div>
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-12">
             <table class="table">
                 <thead>
@@ -1450,7 +1467,7 @@
     </div>
 
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
@@ -1469,7 +1486,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-6">
             <div class="input-with-icon  right">
                 <i class=""></i>
@@ -1487,7 +1504,7 @@
             </div>
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-4 form-group">
             <label>Excepted Disbursment Date</label>
 
@@ -1500,7 +1517,7 @@
         </div>
     </div>
 
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <h4>Village Facilities</h4>
 
         <div class="col-md-4 form-group">
@@ -1544,7 +1561,7 @@
 
         </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" style="0px">
         <div class="col-md-4">
             <h5>Public Transport </h5>
 
@@ -1600,6 +1617,7 @@
     </ul>
     </div>
     </div>
+        </div>
 
 
     </form>
@@ -2290,6 +2308,16 @@
     //$('.form1Name').blur(function() {
     //    $input = null;
     //});
+
+    function part1(a)
+{
+    if(a==1)
+    document.getElementById("part2").style.display="none";
+    else
+    document.getElementById("part2").style.display="block";
+}
+
+
 
     </script>
 {% endblock %}
