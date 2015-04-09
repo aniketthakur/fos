@@ -525,13 +525,17 @@ def create_centers_n_groups():
         center_name = group_name
     if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
         unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
         if status:
+            center.center_id = unique_center_id
+            center.save()
             EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
         unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,group_id = unique_group_id,organisation=user.organisation,group_name=group_name)
+        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
         if status:
+            group.group_id = unique_group_id
+            group.save()
             EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
 
         return Response('{"success":True}', content_type="application/json", mimetype='application/json')
@@ -628,13 +632,17 @@ def upload_documents():
             center_name = group_name
         if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
             unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,center_id = unique_center_id,organisation=user.organisation)
+            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
             if status:
+                center.center_id = unique_center_id
+                center.save()
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
             unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,group_id = unique_group_id,organisation=user.organisation,group_name=group_name)
+            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
             if status:
+                group.group_id = unique_group_id
+                group.save()
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
 
 
