@@ -91,7 +91,9 @@
                             <th style="width:10%">Status</th>
 
                             <th style="width:15%">Progress Status</th>
+                            {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <th style="width:25%;">Action</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -103,8 +105,11 @@
                                     <label for="checkbox{{ loop.index }}"></label>
                                 </div>
                             </td>
-                            <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
-
+                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}
+                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>
+                            {% else %}
+                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
+                            {% endif %}
                             <td><span class="muted">{{ app.date_created }}</span>
                             </td>
                             <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
@@ -117,8 +122,10 @@
                                 </div>
                             </td>
                             <td>
+                                {% if user.roles[0]!="EMP_EXECUTIVE" %}
                                 <a class="btn btn-info" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/cashflow" >Cashflow</a>
                                 <a class="btn btn-info" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/track" >Status</a>
+                                {% endif %}
                             </td>
 
                         </tr>
