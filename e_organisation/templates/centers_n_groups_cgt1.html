@@ -130,7 +130,8 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
-            $(".center-fail").click(function(){
+            $(".center-fail").click(function(e){
+                e.preventDefault();
                 console.log("center fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/center/status/cgt1',
@@ -143,7 +144,8 @@
                     }
                 });
             });
-            $(".center-pass").click(function(){
+            $(".center-pass").click(function(e){
+                e.preventDefault();
                 console.log("center pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/center/status/cgt1',
@@ -156,7 +158,8 @@
                     }
                 });
             });
-            $(".group-fail").click(function(){
+            $(".group-fail").click(function(e){
+                e.preventDefault();
                 console.log("group fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/cgt1',
@@ -170,7 +173,8 @@
                 });
 
             });
-            $(".group-pass").click(function(){
+            $(".group-pass").click(function(e){
+                e.preventDefault();
                 console.log("group pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/cgt1',

@@ -81,7 +81,8 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
-            $(".group-fail").click(function(){
+            $(".group-fail").click(function(e){
+                e.preventDefault();
                 console.log("group fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
@@ -94,7 +95,8 @@
                     }
                 });
             });
-            $(".group-pass").click(function(){
+            $(".group-pass").click(function(e){
+                e.preventDefault();
                 console.log("group pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
