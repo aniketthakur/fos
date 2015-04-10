@@ -71,7 +71,7 @@ def center_cgt1():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14,status__lte=17)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
@@ -104,7 +104,7 @@ def center_cgt2():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17,status__lte=20)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
@@ -136,7 +136,7 @@ def center_grt():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20,status__lte=23)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
@@ -169,7 +169,7 @@ def group_cgt1():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14,status__lte=17)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
@@ -201,7 +201,7 @@ def group_cgt2():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17,status__lte=20)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
@@ -233,7 +233,7 @@ def group_grt():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20,status__lte=23)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
