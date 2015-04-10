@@ -433,22 +433,23 @@ def admin_application_id(org_id,app_id):
         redirect("/admin/applications")
 
     application = applications[0]
-    for kyc_id in application.tag.app_file_pixuate_id:
-        app_urls.append(get_url_with_id(kyc_id))
+    if application.tag is not None:
+        for kyc_id in application.tag.app_file_pixuate_id:
+            app_urls.append(get_url_with_id(kyc_id))
 
-    kyc_urls = list()
-    kyc_ids = list()
-    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
-        kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
-        kyc_ids.append(kyc_id)
-        kyc_urls.append(get_url_with_id(kyc_id))
+        kyc_urls = list()
+        kyc_ids = list()
+        for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+            kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+            kyc_ids.append(kyc_id)
+            kyc_urls.append(get_url_with_id(kyc_id))
 
-    gkyc_urls = list()
-    gkyc_ids = list()
-    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-        gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-        gkyc_ids.append(gkyc_id)
-        gkyc_urls.append(get_url_with_id(gkyc_id))
+        gkyc_urls = list()
+        gkyc_ids = list()
+        for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+            gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+            gkyc_ids.append(gkyc_id)
+            gkyc_urls.append(get_url_with_id(gkyc_id))
 
     today= datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
