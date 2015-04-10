@@ -132,10 +132,12 @@
             });
             $(".center-fail").click(function(e){
                 e.preventDefault();
-                console.log("center fail "+$(this).attr("data-id"))
+                console.log("center fail "+$(this).attr("data-id"));
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":False}'
                 $.ajax({
                     url: '/center/status/cgt1',
                     data: {center_id:'"+$(this).attr("data-id")+"','status':false},
+                    data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
@@ -147,10 +149,11 @@
             });
             $(".center-pass").click(function(e){
                 e.preventDefault();
-                console.log("center pass "+$(this).attr("data-id"))
+                console.log("center pass "+$(this).attr("data-id"));
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":True}'
                 $.ajax({
                     url: '/center/status/cgt1',
-                    ata: {center_id:'"+$(this).attr("data-id")+"','status':true},
+                    data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
@@ -162,10 +165,11 @@
             });
             $(".group-fail").click(function(e){
                 e.preventDefault();
-                console.log("group fail "+$(this).attr("data-id"))
+                console.log("group fail "+$(this).attr("data-id"));
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":False}'
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: {'group_id':'"+$(this).attr("data-id")+"','status':false},
+                    data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
@@ -178,10 +182,11 @@
             });
             $(".group-pass").click(function(e){
                 e.preventDefault();
-                console.log("group pass "+$(this).attr("data-id"))
+                console.log("group pass "+$(this).attr("data-id"));
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":True}'
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: {'group_id':'"+$(this).attr("data-id")+"','status':true},
+                    data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
