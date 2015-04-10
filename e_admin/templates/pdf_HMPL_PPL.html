@@ -1,0 +1,131 @@
+
+
+{% extends "base_other.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-body no-border"><br>
+                    <h2 class="text-center">   Credit Appraisal Score Report</h2>
+                    <div class="text-center">
+                        <!--<img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"-->
+                             <!--height="50" alt="">-->
+                        <!--<address>-->
+                            <!--<strong>Acknowledgement Receipt – Disbursement Kit</strong><br>-->
+                        <!--</address>-->
+                    </div>
+
+                   <!-- <div class="clearfix"></div>
+                        <h4>
+                            <div class="pull-left">
+                                Branch Name:  _____________________
+                                       Date:  _____________________
+                            </div>
+
+
+                            <div class="clearfix"></div>
+                        </h4>-->
+                     <div class="col-md-3"><br>
+
+                         <div>
+                            <div class="pull-left"> Applicant Name :</div>
+                            <div class="pull-right"></div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div>
+                            <div class="pull-left"> DATE :</div>
+                            <div class="pull-right"></div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <br>
+                    </div>
+<br>
+                    <br>
+                    <br>
+                    <br>
+                     <b>Total Score: ________ out of _50               Passing Marks: _25_                Location:</b>
+
+
+
+
+                    <div class="pull-left"> </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+							<th style="width:5%">Sr. No</th>
+
+                            <th style="width:15%" class="text-left">Parameter</th>
+
+							<th style="width:5%"class="text-left">Marks</th>
+
+							<th style="width:10%"class="text-center" colspan="2">Maximum Marks</th>
+
+                            <th style="width:15%">Marks Awarded</th>
+
+                            <!--<th style="width:5%"class="text-left">Loan Card</th>-->
+
+                            <!--<th style="width:10%"style="width:100px" class="text-center" colspan="2">RD Book</th>-->
+
+                            <!--<th style="width:10%"class="text-left">LOAN ACCOUNT No</th>-->
+
+                            <!--<th style="width:5%"class="text-left">LOAN AMOUNT</th>-->
+
+                            <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+
+                            <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+							<td></td>
+                            <td>
+                              <table>
+                                  <tr>
+                                      <td>
+                                          1 Number of Active Loans
+
+                                      </td>
+
+                                  </tr>
+                              </table>
+
+                            </td>
+
+
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+
+
+                    <br>
+                    <br>
+
+
+                    <h5 class="text-right text-black"> CPU Dept Signature/Stamp </h5>
+                    <h5 class="text-right semi-bold text-black">Receivers Signature/Stamp</h5>
+                    <!--<h5 class="text-right semi-bold text-black">[REGIONAL MANAGER]</h5>-->
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+
+
+
+{% endblock %}

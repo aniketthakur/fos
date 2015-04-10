@@ -661,6 +661,47 @@ def admin_sanction():
     kwargs = locals()
     return render_template( "pdf_Sanction_Letter.html", **kwargs)
 
+@admin_views.route('/admin/acknowledgement', methods=["GET"])
+def admin_acknowledgement():
+    kwargs = locals()
+    return render_template( "pdf_HMPLACK.html", **kwargs)
+
+@admin_views.route('/admin/acknowledgementother', methods=["GET"])
+def admin_acknowledgementother():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
+
+@admin_views.route('/admin/hmplcashflow', methods=["GET"])
+def admin_hmplcashflow():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
+
+@admin_views.route('/admin/hmplgrt', methods=["GET"])
+def admin_hmplgrt():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_GRT.html", **kwargs)
+
+@admin_views.route('/admin/hmplloanagreement', methods=["GET"])
+def admin_hmplloanagreement():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_LOANAGREEMENT.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplloancard', methods=["GET"])
+def admin_hmplloancard():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
+
+@admin_views.route('/admin/hmplppl', methods=["GET"])
+def admin_hmplppl():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_PPL.html", **kwargs)
+
+@admin_views.route('/admin/hmplsanction', methods=["GET"])
+def admin_hmplsanction():
+    kwargs = locals()
+    return render_template( "pdf_HMPL_Sanction_Jlg.html", **kwargs)
+
 
 @admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
 @login_required
