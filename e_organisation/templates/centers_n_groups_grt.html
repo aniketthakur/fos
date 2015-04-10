@@ -88,6 +88,7 @@
                     url: '/group/status/grt',
                     data: "group_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -102,6 +103,7 @@
                     url: '/group/status/grt',
                     data: "group_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);

@@ -137,6 +137,7 @@
                     url: '/center/status/cgt1',
                     data: "center_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -151,6 +152,7 @@
                     url: '/center/status/cgt1',
                     data: "center_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -165,6 +167,7 @@
                     url: '/group/status/cgt1',
                     data: "group_id="+$(this).attr("data-id")+"&status=False",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -180,6 +183,7 @@
                     url: '/group/status/cgt1',
                     data: "group_id="+$(this).attr("data-id")+"&status=True",
                     type: 'PUT',
+                    responseType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
