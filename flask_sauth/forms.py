@@ -43,6 +43,7 @@ class LoginForm( Form):
             print user.roles
             available_roles=list()
             available_roles.append("EMP_EXECUTIVE")
+            available_roles.append("ADMIN")
             available_roles.append("EMP_MANAGER")
             available_roles.append("EMP_VP")
             if(not user or not user.roles[0] in available_roles):
