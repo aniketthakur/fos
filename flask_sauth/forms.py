@@ -36,22 +36,22 @@ class LoginForm( Form):
             print "This email address is not registered."
             raise ValidationError( "This email address is not registered.")
 
-    def validate_role(self, field):
-        print self.email.data
-        try:
-            user = User.objects.get(email=self.email.data)
-            print user.roles
-            available_roles=list()
-            available_roles.append("EMP_EXECUTIVE")
-            available_roles.append("ADMIN")
-            available_roles.append("EMP_MANAGER")
-            available_roles.append("EMP_VP")
-            if(not user or not user.roles[0] in available_roles):
-                raise ValidationError("This email address is not registered for this role.")
-                print "This email address is not registered for this role."
-        except:
-            print "This email address is not registered for this role."
-            raise ValidationError("This email address is not registered for this role.")
+#    def validate_role(self, field):
+#        print self.email.data
+#        try:
+#            user = User.objects.get(email=self.email.data)
+#            print user.roles
+#            available_roles=list()
+#            available_roles.append("EMP_EXECUTIVE")
+#            available_roles.append("ADMIN")
+#            available_roles.append("EMP_MANAGER")
+#            available_roles.append("EMP_VP")
+#            if(not user or not user.roles[0] in available_roles):
+#                raise ValidationError("This email address is not registered for this role.")
+#                print "This email address is not registered for this role."
+#        except:
+#            print "This email address is not registered for this role."
+#            raise ValidationError("This email address is not registered for this role.")
 
     def validate_password( self, field):
         self.user_cache = authenticate(email=self.email.data, password=field.data)
