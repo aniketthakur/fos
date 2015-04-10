@@ -133,7 +133,7 @@
             $(".center-fail").click(function(e){
                 e.preventDefault();
                 console.log("center fail "+$(this).attr("data-id"));
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":False}'
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
                     url: '/center/status/cgt2',
                     data: JSON.stringify(data),
@@ -149,7 +149,7 @@
             $(".center-pass").click(function(e){
                 e.preventDefault();
                 console.log("center pass "+$(this).attr("data-id"))
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":True}'
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
                     url: '/center/status/cgt2',
                     data: JSON.stringify(data),
@@ -165,7 +165,7 @@
             $(".group-fail").click(function(e){
                 e.preventDefault();
                 console.log("group fail "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":False}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
                     url: '/group/status/cgt2',
                     data: JSON.stringify(data),
@@ -182,7 +182,7 @@
             $(".group-pass").click(function(e){
                 e.preventDefault();
                 console.log("group pass "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":True}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
                     url: '/group/status/cgt2',
                     data: JSON.stringify(data),
