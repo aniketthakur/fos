@@ -167,6 +167,7 @@ $(document).ready(function() {
 				}
 			]
 		},
+        "pageLength": 100,
 		"sPaginationType": "bootstrap",
 		 "aoColumnDefs": [
           { 'bSortable': false, 'aTargets': [ 0 ] }
@@ -235,6 +236,7 @@ $(document).ready(function() {
 			"sLengthMenu": "_MENU_ ",
 			"sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
 		},
+        "pageLength": 100,
     });
 	 var oTable3 = $('#example3').dataTable( {
 	   "sDom": "<'row'<'col-md-6'l <'toolbar'>><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",
@@ -255,6 +257,7 @@ $(document).ready(function() {
 			"sLengthMenu": "_MENU_ ",
 			"sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
 		},
+        "pageLength": 100,
     });
 	$("div.toolbar").html('<div class="table-tools-actions"><button class="btn btn-primary" style="margin-left:12px" id="test2">Add</button></div>');
 	

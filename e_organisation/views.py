@@ -14,12 +14,12 @@ from esthenos.mongo_encoder import encode_model
 from flask.views import View
 from esthenos.utils import random_with_N_digits
 import os,tempfile
-from pixuate_storage import upload_images
+from pixuate_storage import upload_images, get_url_with_id
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import uuid
 from e_admin.models import EsthenosSettings
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg, EsthenosOrgProduct
 from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification,EsthenosOrgApplicationStatus
 import traceback
 from e_tokens.utils import login_or_key_required
@@ -66,17 +66,19 @@ def center_cgt1():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.form.get('center_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    center_id = data['center_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14,status__lte=17)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -91,23 +93,38 @@ def center_cgt1():
         status=200,\
         mimetype="application/json")
 
+@organisation_views.route('/reports', methods=["GET"])
+@login_required
+def admin_reports():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
+    kwargs = locals()
+    return render_template("client_reports.html", **kwargs)
+
 @organisation_views.route('/center/status/cgt2', methods=["PUT"])
 @login_required
 def center_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
-    center_id = request.form.get('center_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    center_id = data['center_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17,status__lte=20)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -127,18 +144,19 @@ def center_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
-    center_id = request.form.get('center_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    center_id = data['center_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20,status__lte=23)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
@@ -159,17 +177,19 @@ def group_cgt1():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
-    group_id = request.form.get('group_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    group_id = data['group_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14,status__lte=17)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 17
@@ -189,17 +209,19 @@ def group_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
-    group_id = request.form.get('group_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    group_id = data['group_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17,status__lte=20)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 20
@@ -219,17 +241,19 @@ def group_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
-    group_id = request.form.get('group_id')
-    reqstatus = request.form.get('status')
+    data = json.loads(request.json)
+    group_id = data['group_id']
+    reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20,status__lte=23)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20)
     for app in applications:
         print app.application_id
         status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
-        if reqstatus is "True":
+        print reqstatus
+        if reqstatus ==  True:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 23
@@ -669,7 +693,7 @@ def upload_documents():
                 inc_count = inc_count+1
                 int_x = int_x+1
 
-            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=int_x)
+            EsthenosOrg.objects.get(id = user.organisation.id).update(a=int_x)
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True
@@ -972,7 +996,7 @@ def grt_question():
     kwargs = locals()
     return render_template("centers_n_groups_grt_questions.html", **kwargs)
 
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, redirect
 import os,io
 from esthenos  import  s3_bucket
 
@@ -1035,6 +1059,50 @@ def set_notif_read():
     c_user = current_user
     res = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False).update(set__read_state=True)
     return Response('{"message":"status updated"}', content_type="application/json", mimetype='application/json')
+
+@organisation_views.route('/organisation/<org_id>/application/<app_id>', methods=["GET"])
+@login_required
+def client_application_id(org_id,app_id):
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    print user.roles[0]
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    app_urls = list()
+    try:
+        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
+    except Exception as e:
+        print e.message
+
+    if len(applications)==0:
+        redirect("/reports")
+
+    application = applications[0]
+    for kyc_id in application.tag.app_file_pixuate_id:
+        app_urls.append(get_url_with_id(kyc_id))
+
+    kyc_urls = list()
+    kyc_ids = list()
+    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+        kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+        kyc_ids.append(kyc_id)
+        kyc_urls.append(get_url_with_id(kyc_id))
+
+    gkyc_urls = list()
+    gkyc_ids = list()
+    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+        gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+        gkyc_ids.append(gkyc_id)
+        gkyc_urls.append(get_url_with_id(gkyc_id))
+
+    today= datetime.datetime.today()
+    disbursement_date = datetime.datetime.today() + timedelta(days=1)
+    disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
+    products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
+
+    kwargs = locals()
+    return render_template("client_application_manual_DE.html", **kwargs)
 
 
 @organisation_views.route('/find_users', methods=["GET"])

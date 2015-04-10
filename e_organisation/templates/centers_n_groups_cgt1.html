@@ -130,12 +130,16 @@
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
             });
-            $(".center-fail").click(function(){
-                console.log("center fail "+$(this).attr("data-id"))
+            $(".center-fail").click(function(e){
+                e.preventDefault();
+                console.log("center fail "+$(this).attr("data-id"));
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
                     url: '/center/status/cgt1',
-                    data: "center_id="+$(this).attr("data-id")+"&status=False",
+                    data: {center_id:'"+$(this).attr("data-id")+"','status':false},
+                    data: JSON.stringify(data),
                     type: 'PUT',
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -143,12 +147,15 @@
                     }
                 });
             });
-            $(".center-pass").click(function(){
-                console.log("center pass "+$(this).attr("data-id"))
+            $(".center-pass").click(function(e){
+                e.preventDefault();
+                console.log("center pass "+$(this).attr("data-id"));
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
                     url: '/center/status/cgt1',
-                    data: "center_id="+$(this).attr("data-id")+"&status=True",
+                    data: JSON.stringify(data),
                     type: 'PUT',
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -156,12 +163,15 @@
                     }
                 });
             });
-            $(".group-fail").click(function(){
-                console.log("group fail "+$(this).attr("data-id"))
+            $(".group-fail").click(function(e){
+                e.preventDefault();
+                console.log("group fail "+$(this).attr("data-id"));
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: "group_id="+$(this).attr("data-id")+"&status=False",
+                    data: JSON.stringify(data),
                     type: 'PUT',
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -170,12 +180,15 @@
                 });
 
             });
-            $(".group-pass").click(function(){
-                console.log("group pass "+$(this).attr("data-id"))
+            $(".group-pass").click(function(e){
+                e.preventDefault();
+                console.log("group pass "+$(this).attr("data-id"));
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
                     url: '/group/status/cgt1',
-                    data: "group_id="+$(this).attr("data-id")+"&status=True",
+                    data: JSON.stringify(data),
                     type: 'PUT',
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);

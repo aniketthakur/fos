@@ -21,115 +21,987 @@
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> CM(Center Manager)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="cm_access_dash_y" type="radio" name="cm_access_dash" value="yes"  checked="checked">
+                                <label for="cm_access_dash_y">Yes</label>
+                                <input id="cm_access_dash_n" type="radio" name="cm_access_dash" value="no">
+                                <label for="cm_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="cm_access_organisation_y" type="radio" name="cm_access_organisation" value="yes"  checked="checked">
+                                <label for="cm_access_organisation_y">Yes</label>
+                                <input id="cm_access_organisation_n" type="radio" name="cm_access_organisation" value="no">
+                                <label for="cm_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="cm_access_applications_y" type="radio" name="cm_access_applications" value="yes"  checked="checked">
+                                <label for="cm_access_applications_y">Yes</label>
+                                <input id="cm_access_applications_n" type="radio" name="cm_access_applications" value="no">
+                                <label for="cm_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="cm_access_reports_y" type="radio" name="cm_access_reports" value="yes"  checked="checked">
+                                <label for="cm_access_reports_y">Yes</label>
+                                <input id="cm_access_reports_n" type="radio" name="cm_access_reports" value="no">
+                                <label for="cm_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="cm_noti_de_doney" type="radio" name="cm_noti_de_done" value="yes"  checked="checked">
+                                <label for="cm_noti_de_doney">Yes</label>
+                                <input id="cm_noti_de_donen" type="radio" name="cm_noti_de_done" value="no">
+                                <label for="cm_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="cm_noti_cbc_doney" type="radio" name="cm_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="cm_noti_cbc_doney">Yes</label>
+                                <input id="cm_noti_cbc_donen" type="radio" name="cm_noti_cbc_done" value="no">
+                                <label for="cm_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="cm_noti_cfa_doney" type="radio" name="cm_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="cm_noti_cfa_doney">Yes</label>
+                                <input id="cm_noti_cfa_donen" type="radio" name="cm_noti_cfa_done" value="no">
+                                <label for="cm_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="cm_noti_dd_doney" type="radio" name="cm_noti_dd_done" value="yes"  checked="checked">
+                                <label for="cm_noti_dd_doney">Yes</label>
+                                <input id="cm_noti_dd_donen" type="radio" name="cm_noti_dd_done" value="no">
+                                <label for="cm_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="cm_noti_db_doney" type="radio" name="cm_noti_db_done" value="yes"  checked="checked">
+                                <label for="cm_noti_db_doney">Yes</label>
+                                <input id="cm_noti_db_donen" type="radio" name="cm_noti_db_done" value="no">
+                                <label for="cm_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="cm_all_data_y"  type="radio" name="cm_all_data" value="yes"  checked="checked">
+                                <label for="cm_all_data_y">Yes</label>
+                                <input id="cm_all_data_n" type="radio" name="cm_all_data" value="no">
+                                <label for="cm_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="cm_de_doney" type="radio" name="cm_de_done" value="yes"  checked="checked">
+                                <label for="cm_de_doney">Yes</label>
+                                <input id="cm_de_donen" type="radio" name="cm_de_done" value="no">
+                                <label for="cm_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="cm_cbc_doney" type="radio" name="cm_cbc_done" value="yes"  checked="checked">
+                                <label for="cm_cbc_doney">Yes</label>
+                                <input id="cm_cbc_donen" type="radio" name="cm_cbc_done" value="no">
+                                <label for="cm_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="cm_cfa_doney" type="radio" name="cm_cfa_done" value="yes"  checked="checked">
+                                <label for="cm_cfa_doney">Yes</label>
+                                <input id="cm_cfa_donen" type="radio" name="cm_cfa_done" value="no">
+                                <label for="cm_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="cm_dd_doney" type="radio" name="cm_dd_done" value="yes"  checked="checked">
+                                <label for="cm_dd_doney">Yes</label>
+                                <input id="cm_dd_donen" type="radio" name="cm_dd_done" value="no">
+                                <label for="cm_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="cm_db_doney" type="radio" name="cm_db_done" value="yes"  checked="checked">
+                                <label for="cm_db_doney">Yes</label>
+                                <input id="cm_db_donen" type="radio" name="cm_db_done" value="no">
+                                <label for="cm_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
 
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> BM(Branch Manager)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="bm_access_dash_y" type="radio" name="bm_access_dash" value="yes"  checked="checked">
+                                <label for="bm_access_dash_y">Yes</label>
+                                <input id="bm_access_dash_n" type="radio" name="bm_access_dash" value="no">
+                                <label for="bm_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="bm_access_organisation_y" type="radio" name="bm_access_organisation" value="yes"  checked="checked">
+                                <label for="bm_access_organisation_y">Yes</label>
+                                <input id="bm_access_organisation_n" type="radio" name="bm_access_organisation" value="no">
+                                <label for="bm_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="bm_access_applications_y" type="radio" name="bm_access_applications" value="yes"  checked="checked">
+                                <label for="bm_access_applications_y">Yes</label>
+                                <input id="bm_access_applications_n" type="radio" name="bm_access_applications" value="no">
+                                <label for="bm_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="bm_access_reports_y" type="radio" name="bm_access_reports" value="yes"  checked="checked">
+                                <label for="bm_access_reports_y">Yes</label>
+                                <input id="bm_access_reports_n" type="radio" name="bm_access_reports" value="no">
+                                <label for="bm_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="bm_noti_de_doney" type="radio" name="bm_noti_de_done" value="yes"  checked="checked">
+                                <label for="bm_noti_de_doney">Yes</label>
+                                <input id="bm_noti_de_donen" type="radio" name="bm_noti_de_done" value="no">
+                                <label for="bm_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="bm_noti_cbc_doney" type="radio" name="bm_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="bm_noti_cbc_doney">Yes</label>
+                                <input id="bm_noti_cbc_donen" type="radio" name="bm_noti_cbc_done" value="no">
+                                <label for="bm_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="bm_noti_cfa_doney" type="radio" name="bm_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="bm_noti_cfa_doney">Yes</label>
+                                <input id="bm_noti_cfa_donen" type="radio" name="bm_noti_cfa_done" value="no">
+                                <label for="bm_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="bm_noti_dd_doney" type="radio" name="bm_noti_dd_done" value="yes"  checked="checked">
+                                <label for="bm_noti_dd_doney">Yes</label>
+                                <input id="bm_noti_dd_donen" type="radio" name="bm_noti_dd_done" value="no">
+                                <label for="bm_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="bm_noti_db_doney" type="radio" name="bm_noti_db_done" value="yes"  checked="checked">
+                                <label for="bm_noti_db_doney">Yes</label>
+                                <input id="bm_noti_db_donen" type="radio" name="bm_noti_db_done" value="no">
+                                <label for="bm_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="bm_all_data_y"  type="radio" name="bm_all_data" value="yes"  checked="checked">
+                                <label for="bm_all_data_y">Yes</label>
+                                <input id="bm_all_data_n" type="radio" name="bm_all_data" value="no">
+                                <label for="bm_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="bm_de_doney" type="radio" name="bm_de_done" value="yes"  checked="checked">
+                                <label for="bm_de_doney">Yes</label>
+                                <input id="bm_de_donen" type="radio" name="bm_de_done" value="no">
+                                <label for="bm_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="bm_cbc_doney" type="radio" name="bm_cbc_done" value="yes"  checked="checked">
+                                <label for="bm_cbc_doney">Yes</label>
+                                <input id="bm_cbc_donen" type="radio" name="bm_cbc_done" value="no">
+                                <label for="bm_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="bm_cfa_doney" type="radio" name="bm_cfa_done" value="yes"  checked="checked">
+                                <label for="bm_cfa_doney">Yes</label>
+                                <input id="bm_cfa_donen" type="radio" name="bm_cfa_done" value="no">
+                                <label for="bm_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="bm_dd_doney" type="radio" name="bm_dd_done" value="yes"  checked="checked">
+                                <label for="bm_dd_doney">Yes</label>
+                                <input id="bm_dd_donen" type="radio" name="bm_dd_done" value="no">
+                                <label for="bm_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="bm_db_doney" type="radio" name="bm_db_done" value="yes"  checked="checked">
+                                <label for="bm_db_doney">Yes</label>
+                                <input id="bm_db_donen" type="radio" name="bm_db_done" value="no">
+                                <label for="bm_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
 
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> AM(Area Manager)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="am_access_dash_y" type="radio" name="am_access_dash" value="yes"  checked="checked">
+                                <label for="am_access_dash_y">Yes</label>
+                                <input id="am_access_dash_n" type="radio" name="am_access_dash" value="no">
+                                <label for="am_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="am_access_organisation_y" type="radio" name="am_access_organisation" value="yes"  checked="checked">
+                                <label for="am_access_organisation_y">Yes</label>
+                                <input id="am_access_organisation_n" type="radio" name="am_access_organisation" value="no">
+                                <label for="am_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="am_access_applications_y" type="radio" name="am_access_applications" value="yes"  checked="checked">
+                                <label for="am_access_applications_y">Yes</label>
+                                <input id="am_access_applications_n" type="radio" name="am_access_applications" value="no">
+                                <label for="am_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="am_access_reports_y" type="radio" name="am_access_reports" value="yes"  checked="checked">
+                                <label for="am_access_reports_y">Yes</label>
+                                <input id="am_access_reports_n" type="radio" name="am_access_reports" value="no">
+                                <label for="am_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="am_noti_de_doney" type="radio" name="am_noti_de_done" value="yes"  checked="checked">
+                                <label for="am_noti_de_doney">Yes</label>
+                                <input id="am_noti_de_donen" type="radio" name="am_noti_de_done" value="no">
+                                <label for="am_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="am_noti_cbc_doney" type="radio" name="am_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="am_noti_cbc_doney">Yes</label>
+                                <input id="am_noti_cbc_donen" type="radio" name="am_noti_cbc_done" value="no">
+                                <label for="am_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="am_noti_cfa_doney" type="radio" name="am_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="am_noti_cfa_doney">Yes</label>
+                                <input id="am_noti_cfa_donen" type="radio" name="am_noti_cfa_done" value="no">
+                                <label for="am_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="am_noti_dd_doney" type="radio" name="am_noti_dd_done" value="yes"  checked="checked">
+                                <label for="am_noti_dd_doney">Yes</label>
+                                <input id="am_noti_dd_donen" type="radio" name="am_noti_dd_done" value="no">
+                                <label for="am_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="am_noti_db_doney" type="radio" name="am_noti_db_done" value="yes"  checked="checked">
+                                <label for="am_noti_db_doney">Yes</label>
+                                <input id="am_noti_db_donen" type="radio" name="am_noti_db_done" value="no">
+                                <label for="am_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="am_all_data_y"  type="radio" name="am_all_data" value="yes"  checked="checked">
+                                <label for="am_all_data_y">Yes</label>
+                                <input id="am_all_data_n" type="radio" name="am_all_data" value="no">
+                                <label for="am_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="am_de_doney" type="radio" name="am_de_done" value="yes"  checked="checked">
+                                <label for="am_de_doney">Yes</label>
+                                <input id="am_de_donen" type="radio" name="am_de_done" value="no">
+                                <label for="am_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="am_cbc_doney" type="radio" name="am_cbc_done" value="yes"  checked="checked">
+                                <label for="am_cbc_doney">Yes</label>
+                                <input id="am_cbc_donen" type="radio" name="am_cbc_done" value="no">
+                                <label for="am_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="am_cfa_doney" type="radio" name="am_cfa_done" value="yes"  checked="checked">
+                                <label for="am_cfa_doney">Yes</label>
+                                <input id="am_cfa_donen" type="radio" name="am_cfa_done" value="no">
+                                <label for="am_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="am_dd_doney" type="radio" name="am_dd_done" value="yes"  checked="checked">
+                                <label for="am_dd_doney">Yes</label>
+                                <input id="am_dd_donen" type="radio" name="am_dd_done" value="no">
+                                <label for="am_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="am_db_doney" type="radio" name="am_db_done" value="yes"  checked="checked">
+                                <label for="am_db_doney">Yes</label>
+                                <input id="am_db_donen" type="radio" name="am_db_done" value="no">
+                                <label for="am_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> RM(Regional Manager)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="rm_access_dash_y" type="radio" name="rm_access_dash" value="yes"  checked="checked">
+                                <label for="rm_access_dash_y">Yes</label>
+                                <input id="rm_access_dash_n" type="radio" name="rm_access_dash" value="no">
+                                <label for="rm_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="rm_access_organisation_y" type="radio" name="rm_access_organisation" value="yes"  checked="checked">
+                                <label for="rm_access_organisation_y">Yes</label>
+                                <input id="rm_access_organisation_n" type="radio" name="rm_access_organisation" value="no">
+                                <label for="rm_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="rm_access_applications_y" type="radio" name="rm_access_applications" value="yes"  checked="checked">
+                                <label for="rm_access_applications_y">Yes</label>
+                                <input id="rm_access_applications_n" type="radio" name="rm_access_applications" value="no">
+                                <label for="rm_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="rm_access_reports_y" type="radio" name="rm_access_reports" value="yes"  checked="checked">
+                                <label for="rm_access_reports_y">Yes</label>
+                                <input id="rm_access_reports_n" type="radio" name="rm_access_reports" value="no">
+                                <label for="rm_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="rm_noti_de_doney" type="radio" name="rm_noti_de_done" value="yes"  checked="checked">
+                                <label for="rm_noti_de_doney">Yes</label>
+                                <input id="rm_noti_de_donen" type="radio" name="rm_noti_de_done" value="no">
+                                <label for="rm_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="rm_noti_cbc_doney" type="radio" name="rm_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="rm_noti_cbc_doney">Yes</label>
+                                <input id="rm_noti_cbc_donen" type="radio" name="rm_noti_cbc_done" value="no">
+                                <label for="rm_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="rm_noti_cfa_doney" type="radio" name="rm_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="rm_noti_cfa_doney">Yes</label>
+                                <input id="rm_noti_cfa_donen" type="radio" name="rm_noti_cfa_done" value="no">
+                                <label for="rm_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="rm_noti_dd_doney" type="radio" name="rm_noti_dd_done" value="yes"  checked="checked">
+                                <label for="rm_noti_dd_doney">Yes</label>
+                                <input id="rm_noti_dd_donen" type="radio" name="rm_noti_dd_done" value="no">
+                                <label for="rm_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="rm_noti_db_doney" type="radio" name="rm_noti_db_done" value="yes"  checked="checked">
+                                <label for="rm_noti_db_doney">Yes</label>
+                                <input id="rm_noti_db_donen" type="radio" name="rm_noti_db_done" value="no">
+                                <label for="rm_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="rm_all_data_y"  type="radio" name="rm_all_data" value="yes"  checked="checked">
+                                <label for="rm_all_data_y">Yes</label>
+                                <input id="rm_all_data_n" type="radio" name="rm_all_data" value="no">
+                                <label for="rm_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="rm_de_doney" type="radio" name="rm_de_done" value="yes"  checked="checked">
+                                <label for="rm_de_doney">Yes</label>
+                                <input id="rm_de_donen" type="radio" name="rm_de_done" value="no">
+                                <label for="rm_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="rm_cbc_doney" type="radio" name="rm_cbc_done" value="yes"  checked="checked">
+                                <label for="rm_cbc_doney">Yes</label>
+                                <input id="rm_cbc_donen" type="radio" name="rm_cbc_done" value="no">
+                                <label for="rm_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="rm_cfa_doney" type="radio" name="rm_cfa_done" value="yes"  checked="checked">
+                                <label for="rm_cfa_doney">Yes</label>
+                                <input id="rm_cfa_donen" type="radio" name="rm_cfa_done" value="no">
+                                <label for="rm_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="rm_dd_doney" type="radio" name="rm_dd_done" value="yes"  checked="checked">
+                                <label for="rm_dd_doney">Yes</label>
+                                <input id="rm_dd_donen" type="radio" name="rm_dd_done" value="no">
+                                <label for="rm_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="rm_db_doney" type="radio" name="rm_db_done" value="yes"  checked="checked">
+                                <label for="rm_db_doney">Yes</label>
+                                <input id="rm_db_donen" type="radio" name="rm_db_done" value="no">
+                                <label for="rm_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> SH(State Head)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="sh_access_dash_y" type="radio" name="sh_access_dash" value="yes"  checked="checked">
+                                <label for="sh_access_dash_y">Yes</label>
+                                <input id="sh_access_dash_n" type="radio" name="sh_access_dash" value="no">
+                                <label for="sh_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="sh_access_organisation_y" type="radio" name="sh_access_organisation" value="yes"  checked="checked">
+                                <label for="sh_access_organisation_y">Yes</label>
+                                <input id="sh_access_organisation_n" type="radio" name="sh_access_organisation" value="no">
+                                <label for="sh_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="sh_access_applications_y" type="radio" name="sh_access_applications" value="yes"  checked="checked">
+                                <label for="sh_access_applications_y">Yes</label>
+                                <input id="sh_access_applications_n" type="radio" name="sh_access_applications" value="no">
+                                <label for="sh_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="sh_access_reports_y" type="radio" name="sh_access_reports" value="yes"  checked="checked">
+                                <label for="sh_access_reports_y">Yes</label>
+                                <input id="sh_access_reports_n" type="radio" name="sh_access_reports" value="no">
+                                <label for="sh_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="sh_noti_de_doney" type="radio" name="sh_noti_de_done" value="yes"  checked="checked">
+                                <label for="sh_noti_de_doney">Yes</label>
+                                <input id="sh_noti_de_donen" type="radio" name="sh_noti_de_done" value="no">
+                                <label for="sh_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="sh_noti_cbc_doney" type="radio" name="sh_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="sh_noti_cbc_doney">Yes</label>
+                                <input id="sh_noti_cbc_donen" type="radio" name="sh_noti_cbc_done" value="no">
+                                <label for="sh_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="sh_noti_cfa_doney" type="radio" name="sh_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="sh_noti_cfa_doney">Yes</label>
+                                <input id="sh_noti_cfa_donen" type="radio" name="sh_noti_cfa_done" value="no">
+                                <label for="sh_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="sh_noti_dd_doney" type="radio" name="sh_noti_dd_done" value="yes"  checked="checked">
+                                <label for="sh_noti_dd_doney">Yes</label>
+                                <input id="sh_noti_dd_donen" type="radio" name="sh_noti_dd_done" value="no">
+                                <label for="sh_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="sh_noti_db_doney" type="radio" name="sh_noti_db_done" value="yes"  checked="checked">
+                                <label for="sh_noti_db_doney">Yes</label>
+                                <input id="sh_noti_db_donen" type="radio" name="sh_noti_db_done" value="no">
+                                <label for="sh_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="sh_all_data_y"  type="radio" name="sh_all_data" value="yes"  checked="checked">
+                                <label for="sh_all_data_y">Yes</label>
+                                <input id="sh_all_data_n" type="radio" name="sh_all_data" value="no">
+                                <label for="sh_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="sh_de_doney" type="radio" name="sh_de_done" value="yes"  checked="checked">
+                                <label for="sh_de_doney">Yes</label>
+                                <input id="sh_de_donen" type="radio" name="sh_de_done" value="no">
+                                <label for="sh_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="sh_cbc_doney" type="radio" name="sh_cbc_done" value="yes"  checked="checked">
+                                <label for="sh_cbc_doney">Yes</label>
+                                <input id="sh_cbc_donen" type="radio" name="sh_cbc_done" value="no">
+                                <label for="sh_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="sh_cfa_doney" type="radio" name="sh_cfa_done" value="yes"  checked="checked">
+                                <label for="sh_cfa_doney">Yes</label>
+                                <input id="sh_cfa_donen" type="radio" name="sh_cfa_done" value="no">
+                                <label for="sh_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="sh_dd_doney" type="radio" name="sh_dd_done" value="yes"  checked="checked">
+                                <label for="sh_dd_doney">Yes</label>
+                                <input id="sh_dd_donen" type="radio" name="sh_dd_done" value="no">
+                                <label for="sh_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="sh_db_doney" type="radio" name="sh_db_done" value="yes"  checked="checked">
+                                <label for="sh_db_doney">Yes</label>
+                                <input id="sh_db_donen" type="radio" name="sh_db_done" value="no">
+                                <label for="sh_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> ZH(Zonal Head)</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="zh_access_dash_y" type="radio" name="zh_access_dash" value="yes"  checked="checked">
+                                <label for="zh_access_dash_y">Yes</label>
+                                <input id="zh_access_dash_n" type="radio" name="zh_access_dash" value="no">
+                                <label for="zh_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="zh_access_organisation_y" type="radio" name="zh_access_organisation" value="yes"  checked="checked">
+                                <label for="zh_access_organisation_y">Yes</label>
+                                <input id="zh_access_organisation_n" type="radio" name="zh_access_organisation" value="no">
+                                <label for="zh_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="zh_access_applications_y" type="radio" name="zh_access_applications" value="yes"  checked="checked">
+                                <label for="zh_access_applications_y">Yes</label>
+                                <input id="zh_access_applications_n" type="radio" name="zh_access_applications" value="no">
+                                <label for="zh_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="zh_access_reports_y" type="radio" name="zh_access_reports" value="yes"  checked="checked">
+                                <label for="zh_access_reports_y">Yes</label>
+                                <input id="zh_access_reports_n" type="radio" name="zh_access_reports" value="no">
+                                <label for="zh_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="zh_noti_de_doney" type="radio" name="zh_noti_de_done" value="yes"  checked="checked">
+                                <label for="zh_noti_de_doney">Yes</label>
+                                <input id="zh_noti_de_donen" type="radio" name="zh_noti_de_done" value="no">
+                                <label for="zh_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="zh_noti_cbc_doney" type="radio" name="zh_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="zh_noti_cbc_doney">Yes</label>
+                                <input id="zh_noti_cbc_donen" type="radio" name="zh_noti_cbc_done" value="no">
+                                <label for="zh_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="zh_noti_cfa_doney" type="radio" name="zh_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="zh_noti_cfa_doney">Yes</label>
+                                <input id="zh_noti_cfa_donen" type="radio" name="zh_noti_cfa_done" value="no">
+                                <label for="zh_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="zh_noti_dd_doney" type="radio" name="zh_noti_dd_done" value="yes"  checked="checked">
+                                <label for="zh_noti_dd_doney">Yes</label>
+                                <input id="zh_noti_dd_donen" type="radio" name="zh_noti_dd_done" value="no">
+                                <label for="zh_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="zh_noti_db_doney" type="radio" name="zh_noti_db_done" value="yes"  checked="checked">
+                                <label for="zh_noti_db_doney">Yes</label>
+                                <input id="zh_noti_db_donen" type="radio" name="zh_noti_db_done" value="no">
+                                <label for="zh_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="zh_all_data_y"  type="radio" name="zh_all_data" value="yes"  checked="checked">
+                                <label for="zh_all_data_y">Yes</label>
+                                <input id="zh_all_data_n" type="radio" name="zh_all_data" value="no">
+                                <label for="zh_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="zh_de_doney" type="radio" name="zh_de_done" value="yes"  checked="checked">
+                                <label for="zh_de_doney">Yes</label>
+                                <input id="zh_de_donen" type="radio" name="zh_de_done" value="no">
+                                <label for="zh_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="zh_cbc_doney" type="radio" name="zh_cbc_done" value="yes"  checked="checked">
+                                <label for="zh_cbc_doney">Yes</label>
+                                <input id="zh_cbc_donen" type="radio" name="zh_cbc_done" value="no">
+                                <label for="zh_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="zh_cfa_doney" type="radio" name="zh_cfa_done" value="yes"  checked="checked">
+                                <label for="zh_cfa_doney">Yes</label>
+                                <input id="zh_cfa_donen" type="radio" name="zh_cfa_done" value="no">
+                                <label for="zh_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="zh_dd_doney" type="radio" name="zh_dd_done" value="yes"  checked="checked">
+                                <label for="zh_dd_doney">Yes</label>
+                                <input id="zh_dd_donen" type="radio" name="zh_dd_done" value="no">
+                                <label for="zh_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="zh_db_doney" type="radio" name="zh_db_done" value="yes"  checked="checked">
+                                <label for="zh_db_doney">Yes</label>
+                                <input id="zh_db_donen" type="radio" name="zh_db_done" value="no">
+                                <label for="zh_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> VP</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="vp_access_dash_y" type="radio" name="vp_access_dash" value="yes"  checked="checked">
+                                <label for="vp_access_dash_y">Yes</label>
+                                <input id="vp_access_dash_n" type="radio" name="vp_access_dash" value="no">
+                                <label for="vp_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="vp_access_organisation_y" type="radio" name="vp_access_organisation" value="yes"  checked="checked">
+                                <label for="vp_access_organisation_y">Yes</label>
+                                <input id="vp_access_organisation_n" type="radio" name="vp_access_organisation" value="no">
+                                <label for="vp_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="vp_access_applications_y" type="radio" name="vp_access_applications" value="yes"  checked="checked">
+                                <label for="vp_access_applications_y">Yes</label>
+                                <input id="vp_access_applications_n" type="radio" name="vp_access_applications" value="no">
+                                <label for="vp_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="vp_access_reports_y" type="radio" name="vp_access_reports" value="yes"  checked="checked">
+                                <label for="vp_access_reports_y">Yes</label>
+                                <input id="vp_access_reports_n" type="radio" name="vp_access_reports" value="no">
+                                <label for="vp_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="vp_noti_de_doney" type="radio" name="vp_noti_de_done" value="yes"  checked="checked">
+                                <label for="vp_noti_de_doney">Yes</label>
+                                <input id="vp_noti_de_donen" type="radio" name="vp_noti_de_done" value="no">
+                                <label for="vp_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="vp_noti_cbc_doney" type="radio" name="vp_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="vp_noti_cbc_doney">Yes</label>
+                                <input id="vp_noti_cbc_donen" type="radio" name="vp_noti_cbc_done" value="no">
+                                <label for="vp_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="vp_noti_cfa_doney" type="radio" name="vp_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="vp_noti_cfa_doney">Yes</label>
+                                <input id="vp_noti_cfa_donen" type="radio" name="vp_noti_cfa_done" value="no">
+                                <label for="vp_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="vp_noti_dd_doney" type="radio" name="vp_noti_dd_done" value="yes"  checked="checked">
+                                <label for="vp_noti_dd_doney">Yes</label>
+                                <input id="vp_noti_dd_donen" type="radio" name="vp_noti_dd_done" value="no">
+                                <label for="vp_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="vp_noti_db_doney" type="radio" name="vp_noti_db_done" value="yes"  checked="checked">
+                                <label for="vp_noti_db_doney">Yes</label>
+                                <input id="vp_noti_db_donen" type="radio" name="vp_noti_db_done" value="no">
+                                <label for="vp_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="vp_all_data_y"  type="radio" name="vp_all_data" value="yes"  checked="checked">
+                                <label for="vp_all_data_y">Yes</label>
+                                <input id="vp_all_data_n" type="radio" name="vp_all_data" value="no">
+                                <label for="vp_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="vp_de_doney" type="radio" name="vp_de_done" value="yes"  checked="checked">
+                                <label for="vp_de_doney">Yes</label>
+                                <input id="vp_de_donen" type="radio" name="vp_de_done" value="no">
+                                <label for="vp_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="vp_cbc_doney" type="radio" name="vp_cbc_done" value="yes"  checked="checked">
+                                <label for="vp_cbc_doney">Yes</label>
+                                <input id="vp_cbc_donen" type="radio" name="vp_cbc_done" value="no">
+                                <label for="vp_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="vp_cfa_doney" type="radio" name="vp_cfa_done" value="yes"  checked="checked">
+                                <label for="vp_cfa_doney">Yes</label>
+                                <input id="vp_cfa_donen" type="radio" name="vp_cfa_done" value="no">
+                                <label for="vp_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="vp_dd_doney" type="radio" name="vp_dd_done" value="yes"  checked="checked">
+                                <label for="vp_dd_doney">Yes</label>
+                                <input id="vp_dd_donen" type="radio" name="vp_dd_done" value="no">
+                                <label for="vp_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="vp_db_doney" type="radio" name="vp_db_done" value="yes"  checked="checked">
+                                <label for="vp_db_doney">Yes</label>
+                                <input id="vp_db_donen" type="radio" name="vp_db_done" value="no">
+                                <label for="vp_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="row">
                         <h4>Access Settings <span class="semi-bold"> CXO</span></h4>
                         <div class="col-md-4">
-                            <h5>Access Settings</h5>
+                            <h4>Access Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Dashboard</h5>
+                                <input id="cxo_access_dash_y" type="radio" name="cxo_access_dash" value="yes"  checked="checked">
+                                <label for="cxo_access_dash_y">Yes</label>
+                                <input id="cxo_access_dash_n" type="radio" name="cxo_access_dash" value="no">
+                                <label for="cxo_access_dash_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Organisation</h5>
+                                <input id="cxo_access_organisation_y" type="radio" name="cxo_access_organisation" value="yes"  checked="checked">
+                                <label for="cxo_access_organisation_y">Yes</label>
+                                <input id="cxo_access_organisation_n" type="radio" name="cxo_access_organisation" value="no">
+                                <label for="cxo_access_organisation_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Application</h5>
+                                <input id="cxo_access_applications_y" type="radio" name="cxo_access_applications" value="yes"  checked="checked">
+                                <label for="cxo_access_applications_y">Yes</label>
+                                <input id="cxo_access_applications_n" type="radio" name="cxo_access_applications" value="no">
+                                <label for="cxo_access_applications_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Reports</h5>
+                                <input id="cxo_access_reports_y" type="radio" name="cxo_access_reports" value="yes"  checked="checked">
+                                <label for="cxo_access_reports_y">Yes</label>
+                                <input id="cxo_access_reports_n" type="radio" name="cxo_access_reports" value="no">
+                                <label for="cxo_access_reports_n">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Notification Settings</h5>
+                            <h4>Notification Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="cxo_noti_de_doney" type="radio" name="cxo_noti_de_done" value="yes"  checked="checked">
+                                <label for="cxo_noti_de_doney">Yes</label>
+                                <input id="cxo_noti_de_donen" type="radio" name="cxo_noti_de_done" value="no">
+                                <label for="cxo_noti_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="cxo_noti_cbc_doney" type="radio" name="cxo_noti_cbc_done" value="yes"  checked="checked">
+                                <label for="cxo_noti_cbc_doney">Yes</label>
+                                <input id="cxo_noti_cbc_donen" type="radio" name="cxo_noti_cbc_done" value="no">
+                                <label for="cxo_noti_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="cxo_noti_cfa_doney" type="radio" name="cxo_noti_cfa_done" value="yes"  checked="checked">
+                                <label for="cxo_noti_cfa_doney">Yes</label>
+                                <input id="cxo_noti_cfa_donen" type="radio" name="cxo_noti_cfa_done" value="no">
+                                <label for="cxo_noti_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="cxo_noti_dd_doney" type="radio" name="cxo_noti_dd_done" value="yes"  checked="checked">
+                                <label for="cxo_noti_dd_doney">Yes</label>
+                                <input id="cxo_noti_dd_donen" type="radio" name="cxo_noti_dd_done" value="no">
+                                <label for="cxo_noti_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="cxo_noti_db_doney" type="radio" name="cxo_noti_db_done" value="yes"  checked="checked">
+                                <label for="cxo_noti_db_doney">Yes</label>
+                                <input id="cxo_noti_db_donen" type="radio" name="cxo_noti_db_done" value="no">
+                                <label for="cxo_noti_db_donen">No</label>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
-                            <h5>Reports Settings</h5>
+                            <h4>Reports Settings</h4>
+                            <div class="radio radio-success">
+                                <h5>All data inputs captured by LA+KYC</h5>
+                                <input id="cxo_all_data_y"  type="radio" name="cxo_all_data" value="yes"  checked="checked">
+                                <label for="cxo_all_data_y">Yes</label>
+                                <input id="cxo_all_data_n" type="radio" name="cxo_all_data" value="no">
+                                <label for="cxo_all_data_n">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Data entry Done</h5>
+                                <input id="cxo_de_doney" type="radio" name="cxo_de_done" value="yes"  checked="checked">
+                                <label for="cxo_de_doney">Yes</label>
+                                <input id="cxo_de_donen" type="radio" name="cxo_de_done" value="no">
+                                <label for="cxo_de_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>CB check Done</h5>
+                                <input id="cxo_cbc_doney" type="radio" name="cxo_cbc_done" value="yes"  checked="checked">
+                                <label for="cxo_cbc_doney">Yes</label>
+                                <input id="cxo_cbc_donen" type="radio" name="cxo_cbc_done" value="no">
+                                <label for="cxo_cbc_donen">No</label>
+
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Cash flow Analysis Done</h5>
+                                <input id="cxo_cfa_doney" type="radio" name="cxo_cfa_done" value="yes"  checked="checked">
+                                <label for="cxo_cfa_doney">Yes</label>
+                                <input id="cxo_cfa_donen" type="radio" name="cxo_cfa_done" value="no">
+                                <label for="cxo_cfa_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursment Documentation Done</h5>
+                                <input id="cxo_dd_doney" type="radio" name="cxo_dd_done" value="yes"  checked="checked">
+                                <label for="cxo_dd_doney">Yes</label>
+                                <input id="cxo_dd_donen" type="radio" name="cxo_dd_done" value="no">
+                                <label for="cxo_dd_donen">No</label>
+                            </div>
+                            <div class="radio radio-success">
+                                <h5>Disbursed</h5>
+                                <input id="cxo_db_doney" type="radio" name="cxo_db_done" value="yes"  checked="checked">
+                                <label for="cxo_db_doney">Yes</label>
+                                <input id="cxo_db_donen" type="radio" name="cxo_db_done" value="no">
+                                <label for="cxo_db_donen">No</label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="form-actions">
