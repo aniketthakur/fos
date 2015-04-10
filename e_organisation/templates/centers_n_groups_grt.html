@@ -86,9 +86,9 @@
                 console.log("group fail "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
-                    data: "group_id="+$(this).attr("data-id")+"&status=False",
+                    data: "{group_id:"+$(this).attr("data-id")+",status:False}",
                     type: 'PUT',
-                    responseType: "application/json",
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
@@ -101,9 +101,9 @@
                 console.log("group pass "+$(this).attr("data-id"))
                 $.ajax({
                     url: '/group/status/grt',
-                    data: "group_id="+$(this).attr("data-id")+"&status=True",
+                    data: "{group_id:"+$(this).attr("data-id")+",status:True}",
                     type: 'PUT',
-                    responseType: "application/json",
+                    contentType: "application/json",
                     success: function(response) {
                         //...
                         console.log(response);
