@@ -64,10 +64,10 @@ def login():
             if (form.role.data == "ADMIN"):
                 session['role'] = "ADMIN"
                 return redirect("/admin/servers")
-            if (form.role.data == "ORG_CM"):
+            elif (form.role.data == "ORG_CM"):
                 session['role'] = "ORG_CM"
                 return redirect("/")
-            if (form.role.data == "EMP_EXECUTIVE"):
+            else:
                 session['role'] = "EMP_EXECUTIVE"
                 return redirect("/dashboard")
 

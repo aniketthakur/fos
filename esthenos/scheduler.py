@@ -24,8 +24,7 @@ def notification_2():
     send_organisation_notification_today.apply_async()
     print('This job is running at 17hrs 55 min.')
 
-
-@sched.scheduled_job('cron', day_of_week='mon-sat', hour=12,minute=30)
+@sched.scheduled_job('cron', day_of_week='mon-sat', hour=14,minute=45)
 def notification_3():
     send_organisation_notification_as_on.apply_async()
     print('This job is running at 18hrs 0 min.')
