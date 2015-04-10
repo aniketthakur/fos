@@ -85,7 +85,7 @@
             $(".group-fail").click(function(e){
                 e.preventDefault();
                 console.log("group fail "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":False}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
                     url: '/group/status/grt',
                     data: JSON.stringify(data),
@@ -101,7 +101,7 @@
             $(".group-pass").click(function(e){
                 e.preventDefault();
                 console.log("group pass "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":True}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
                     url: '/group/status/grt',
                     data: JSON.stringify(data),
