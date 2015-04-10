@@ -91,7 +91,9 @@
                             <th style="width:10%">Status</th>
 
                             <th style="width:15%">Progress Status</th>
+                            {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <th style="width:25%;">Action</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -120,8 +122,10 @@
                                 </div>
                             </td>
                             <td>
+                                {% if user.roles[0]!="EMP_EXECUTIVE" %}
                                 <a class="btn btn-info" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/cashflow" >Cashflow</a>
                                 <a class="btn btn-info" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/track" >Status</a>
+                                {% endif %}
                             </td>
 
                         </tr>

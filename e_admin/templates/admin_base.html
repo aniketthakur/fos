@@ -180,11 +180,20 @@
             <p class="menu-title">BROWSE <span class="pull-right"><a href="javascript:;"><i class="fa fa-refresh"></i></a></span></p>
             <ul>
                 {% block nav_bar %}
+                    {% if user.roles[0]=='EMP_EXECUTIVE' %}
+                    <li class="start active "> <a href="/admin/applications"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                    <li class="start active "> <a href="/admin/reports"> <i class="fa fa-group"></i> <span class="title">Reports</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                {% elif user.roles[0]=='EMP_MANAGER' %}
+                    <li class="start active "> <a href="/admin/dashboard"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                    <li class="start active "> <a href="/admin/applications"> <i class="icon-custom-home"></i> <span class="title">Applications</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                    <li class="start active "> <a href="/admin/reports"> <i class="fa fa-group"></i> <span class="title">Reports</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                {% else %}
                     <li class="start active "> <a href="/admin/dashboard"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
                     <li class="start active "> <a href="/admin/employees"> <i class="fa fa-group"></i> <span class="title">Employees</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
                     <li class="start active "> <a href="/admin/organisations"> <i class="fa fa-flag"></i> <span class="title">Organisations</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
                     <li class="start active "> <a href="/admin/applications"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
                     <li class="start active "> <a href="/admin/reports"> <i class="fa fa-thumbs-up"></i> <span class="title">Reports</span> <span class="selected"></span> <span class="badge badge-important pull-right">5</span></a> </li>
+                {% endif %}
                 {% endblock %}
 
             </ul>

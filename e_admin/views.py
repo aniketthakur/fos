@@ -756,7 +756,6 @@ def login_admin():
         login_form = LoginForm( request.form)
         form = login_form
         if(form.validate()):
-
             user = EsthenosUser.objects.get( email=form.email.data)
             login_user(user)
             confirm_login()
