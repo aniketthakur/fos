@@ -1,4 +1,4 @@
-    {% extends "base_other.html" %}
+    {% extends "base_pdf.html" %}
     {% block css_sheets %}{{ super() }}
 
     {% endblock %}
@@ -11,7 +11,7 @@
 
         <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
         <div class="pull-left">
-            <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}"
+            <img src="{{ url_for('static', filename='img/logo-icon.png')}}"
                  height="50" alt="">
             <address>
                 <strong>eSthenos Financial Services Limited</strong><br>
@@ -36,15 +36,6 @@
         <div class="col-md-12">
             <div class="col-md-6">
                 <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th style="width:10%"> </th>
-
-                        <th style="width:40%" class="text-left"></th>
-
-                        <th style="width:40%"class="text-left"></th>
-                    </tr>
-                    </thead>
                     <tbody>
 
                     <tr>
@@ -98,16 +89,6 @@
             </div>
             <div class="col-md-6">
                 <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th style="width:10%"></th>
-
-                        <th style="width:40%" class="text-left"></th>
-
-                        <th style="width:40%"class="text-left"></th>
-
-                    </tr>
-                    </thead>
                     <tbody>
 
                     <tr>
