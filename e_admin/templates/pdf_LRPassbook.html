@@ -1,4 +1,4 @@
-{% extends "base_other.html" %}
+{% extends "base_pdf.html" %}
 {% block css_sheets %}{{ super() }}
 
 {% endblock %}
@@ -7,25 +7,56 @@
 
 {% endblock %}
 {% block maincontents %}
+    <style type="text/css">
+        #repayment tr{
+            font-size:8px;
+        }
+        #repayment2 tr{
+            font-size:8px;
+        }
+
+        #repayment tr {
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+        }
+        #repayment2 tr {
+             line-height: 20px;
+             min-height: 20px;
+             height: 20px;
+         }
+        .font-small{
+            font-size:8px;
+        }
+        .font-vsmall{
+            font-size:7px;
+        }
+        .font-small tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:8px;
+        }
+
+    </style>
     <div class="row">
+
         <div class="col-md-12" style="background: #ffffff;">
             <h2 class="text-center">Passbook</h2>
             <div class="col-md-6">
-                <table border="1" style="width:100%" class="table">
-                    <thead>
-
-                    <tr style="width:140px" class="text-right"><CENTER>LOAD REPAYMENT SCHEDULE</CENTER></tr>
-                    </thead>
+                <h5>LOAN REPAYMENT SCHEDULE</h5>
+                <table  id="repayment" class="table table-bordered table-condensed">
                     <tr>
-                        <th style="width:60px" class="unseen text-center">Inst.No</th>
-                        <th  class="text-left">Date Due</th>
-                        <th style="width:140px" class="text-right">Interst Payment(in Rs.)</th>
-                        <th style="width:90px" class="text-right">Princial Payment(in Rs.)</th>
-                        <th style="width:90px" class="text-right">Total Installment(in Rs.)</th>
-                        <th >Loan c/f(in Rs.)</th>
+                        <th style="width:1%" class="unseen text-center">Inst #</th>
+                        <th  style="width:20%" class="text-left">Date Due</th>
+                        <th style="width:15%" class="text-right">Interst Payment(in Rs.)</th>
+                        <th style="width:10%" class="text-right">Princial Payment(in Rs.)</th>
+                        <th style="width:10%" class="text-right">Total Installment(in Rs.)</th>
+                        <th style="width:10%" >Loan c/f(in Rs.)</th>
                     </tr>
+
                     {% for n in range(1,25) %}
-                        <tr>
+                        <tr >
                             <td>{{ n }}</td>
                             <td></td>
                             <td></td>
@@ -37,101 +68,79 @@
 
 
                     <tr >
-                        <td>I<br/>U<br/>C<br/></td>
-                        <td>
-                            <table border="1" style="width:100%">
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td rowspan="3">I<br/>U<br/>C<br/></td>
+                        <td colspan="2">
+                            Date : {{ date }} <br/>
+                            Done By :  <br/>
+                            Result :  <br/>
                         </td>
-                        <td>Signature</td>
+                        <td rowspan="3">Signature</td>
                         <td>
-
                         </td>
-                        <td></td>
-                        <td>Signature</td>
+                        <td rowspan="3">Signature</td>
                     </tr>
+
+
 
                 </table>
             </div>
             <div class="col-md-6">
-                <table border="1" style="width:100%" class="table">
-                    <tr><CENTER>LOAD REPAYMENT STATEMENT</CENTER></tr>
+                <h5>LOAN REPAYMENT STATEMENT<h5>
+                <table id="repayment2"  class="table table-bordered  table-condensed">
+
                     <tr>
-                        <th style="width:60px" class="unseen text-center">Inst.No</th>
-                        <th class="text-left">Date Paid</th>
-                        <th style="width:140px" class="text-right">Total Amount Paid(in Rs.)</th>
-                        <th  style="width:90px" class="text-right">C.M/B.M Signature</th>
-                        <th>BM</th>
-                        <th>Attendance</th>
+                        <th style="width:1%" class="unseen text-center">Inst #</th>
+                        <th style="width:25%" class="text-left">Date Paid</th>
+                        <th style="width:25%" class="text-right">Total Amount Paid(in Rs.)</th>
+                        <th  style="width:15%" class="text-right">C.M/B.M Signature</th>
+                        <th style="width:5%">BM</th>
+                        <th style="width:15%">Attendance</th>
                     </tr>
                     {% for n in range(1,25) %}
-                        <tr>
+                        <tr >
                             <td>{{ n }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><input type="radio" name="sex" value="male"></td>
+                            <td><input class="input-small" style="margin: 0px;" type="radio" name="sex" value="male"></td>
                             <td></td>
                         </tr>
                     {% endfor %}
 
                     <tr>
-                        <td>I<br/>U<br/>C<br/></td>
-                        <td>
-                            <table border="2" style="width:100%">
-                                <tr>
-                                    <td>
-                                    </td>
-                                </tr>
+                        <td rowspan="3">I<br/>U<br/>C<br/></td>
+                        <td rowspan="3">
 
-                            </table>
                         </td>
-                        <td>Signature</td>
-                        <td></td>
-                        <td><input type="radio" name="sex" value="male"></td>
-                        <td>Signature</td>
+                        <td rowspan="3">Signature</td>
+                        <td rowspan="3" colspan="2"></td>
+                        <td rowspan="3">Signature</td>
                     </tr>
-
                 </table>
             </div>
         </div>
+
     </div>
+
     <div class="row">
         <div class="col-md-12" style="background: #ffffff;">
         <div class="col-md-6">
-            <center><h2>DECLARATION</h2></center>
-            FFSL is a registered NBFC–MFI with Reserve Bank of India (RBI) vide B-09.00311
+            <h3>DECLARATION</h3>
+            <div class="font-vsmall">
+            {{org_name}} is a registered NBFC–MFI with Reserve Bank of India (RBI) vide B-09.00311
             <br/>
             <br/>
             1.
-            FFSL offers microfinance loan facility for income generating activities to women members only under the Joint Liability Group model of
+            {{org_name}} offers microfinance loan facility for income generating activities to women members only under the Joint Liability Group model of
             operation.
             <br/>
             <br/>
             2.
-            FFSL provides collateral free loans without any commission for lending the loans.
+            {{org_name}} provides collateral free loans without any commission for lending the loans.
             <br/>
             <br/>
             3.
-            FFSL respects all the members, we never discriminate our members on basis of religion, caste, creed, colour or social status.
+            {{org_name}} respects all the members, we never discriminate our members on basis of religion, caste, creed, colour or social status.
             <br/>
             <br/>
             4. The details of the loan amount, interest charged installment payable weekly, fortnightly, monthly, insurance related information is made
@@ -139,19 +148,19 @@
             processing fee and insurance fee as per the insurance company in line with RBI guidelines.
             <br/>
             <br/>
-            5.FFSL charges an effective interest rate of 26% p.a on declining balance basis on the loans.
+            5.{{org_name}} charges an effective interest rate of 26% p.a on declining balance basis on the loans.
             <br/>
             <br/>
-            6.All disbursement and collections related activities are done by FFSL employers only. We do not hire any agents for this service.
+            6.All disbursement and collections related activities are done by {{org_name}} employers only. We do not hire any agents for this service.
             <br/>
             <br/>
-            7. FFSL charges an effective interest rate of 26% p.a on declining balance basis on the loans.
-            All disbursement and collections related activities are done by FFSL employers only. We do not hire any agents for this service.
-            FFSL collections are done at the designated centre meeting location and time as agreed by the group members and FFSL. We never visit the place
+            7. {{org_name}} charges an effective interest rate of 26% p.a on declining balance basis on the loans.
+            All disbursement and collections related activities are done by {{org_name}} employers only. We do not hire any agents for this service.
+            {{org_name}} collections are done at the designated centre meeting location and time as agreed by the group members and {{org_name}}. We never visit the place
             of residence/workplace of the borrower before 7 am and after 8 pm.
             <br/>
             <br/>
-            8.We request you to demand the receipts for all the installments or loan repayment remitted towards the loan accounts with FFSL as per your
+            8.We request you to demand the receipts for all the installments or loan repayment remitted towards the loan accounts with {{org_name}} as per your
             repayment schedule provided along with the passbook.
             <br/>
             <br/>
@@ -159,52 +168,38 @@
             <br/>
             <br/>
             10.Any documents and photographs submitted to avail the loan would not be returned to you after the closure of the loan and those loan
-            documents would be retained by FFSL.
+            documents would be retained by {{org_name}}.
             <br/>
             <br/>
-            11.FFSL would share the member related information to RBI approved credit bureaus for checking the credit worthiness and risk assessment of the
+            11.{{org_name}} would share the member related information to RBI approved credit bureaus for checking the credit worthiness and risk assessment of the
             member and only for the purposes as stipulated in the loan agreement but not for any other commercial purpose.
             <br/>
             <br/>
-            12.While FFSL always strives to provide the best of services to our members, in case of any inappropriate behavior or dissatisfaction with the
+            12.While {{org_name}} always strives to provide the best of services to our members, in case of any inappropriate behavior or dissatisfaction with the
             services, you could reach out to our Customer care number 080 - 67880000 by just giving a missed call. Our customer care representative would
             call you back and speak to you in a language that is understood by you and note down your query/grievance or complaint for Redressal.
             <br/>
             <br/>
 
 
-            13.The Grievance Redressal Officer at FFSL is Mr. Shashidhar S.
+            13.The Grievance Redressal Officer at {{org_name}} is Mr. Shashidhar S.
             <br/>
             <br/>
 
             In case the dispute you raised is not resolved within 30 days or you are not satisfied with the resolution you could further approach – RBI Local Office. The
             dispute can be addressed to The General Manager, Department
+                <br/>
+                <br/>
+                <div class="text-center">
+                    &nbsp &nbsp&nbsp&nbsp &nbsp&nbspDATE:&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp   BORROWER SIGNATURE/&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp     GUARANTOR SIGNATURE/&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp
+                </div>
+            </div>
 
-            <table border="1" style="width:100%" class="table">
-                <tr>
-                    <td>
-                        DATE:
-                    </td>
-                    <td>
-                        BORROWER SIGNATURE/
-                    </td>
-                    <td>
-                        GUARANTOR SIGNATURE/
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
 
-                    </td>
-                </tr>
-            </table>
-            <table border="1" style="width:100%" class="table">
+            <table border="1" style="width:100%" class="table font-small">
                 <thead>
 
-                <tr style="width:140px" class="text-right"><CENTER>VISITOR'S REMARK</CENTER></tr>
-                </thead>
+                <tr><th colspan="5" class="text-center">VISITOR'S REMARK</th></tr>
                 <tr>
                     <th style="width:60px" class="unseen text-center">Date</th>
                     <th  class="text-left">Visitors Name</th>
@@ -213,238 +208,177 @@
                     <th style="width:90px" class="text-right">Signature</th>
 
                 </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                </thead>
+                {% for n in range(1,7) %}
+                    <tr >
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
 
 
             </table>
         </div>
             <div class="col-md-6">
-            <table class="table-bordered"  >
-                <tbody>
+            <table class="table table-bordered font-small"  >
 
                 <tr>
-                    <td  style="width:300px" class="text-center"></td>
+                    <td  style="width:30%" class="text-center"></td>
 
-                    <td style="width: 600px " class="text-center " colspan="3"><h3>Address</h3></td>
+                    <td style="width:70%" class="text-center " colspan="3" rowspan="3">Address
+                    <br/>
+                        <br/>
+                        <br/></td>
 
+                </tr>
+            </table>
+            <table style="width: 100%;" class=" table-bordered font-small"  >
+                <tr><th colspan="2" class="text-center">Loan Passbook</th></tr>
+                <tr >
+                    <td  style="width:30%"  rowspan="1" class="text-center">
+                        <br/>
+                        Borrower Office Seal<br/>
+                    </td>
+                    <td style="width:70%"  rowspan="1" class="text-center">
+                        <br/><br/>Joint Photograph of borrower and Spouse/Gurrantor<br/><br/>
+                    </td>
+
+                </tr>
+            </table>
+            <table style="width: 100%;" class=" table-bordered font-small">
+                <tr><th colspan="6" class="text-center">BORROWER DETAILS</th></tr>
+                <tr>
+                    <td style="width: 30%;"  class="text-right">Borrower Code and Name</td>
+                    <td style="width: 15%;"></td>
+                    <td colspan="4"></td>
                 </tr>
 
                 <tr>
-                    <td  colspan="4" class="text-center">Loan Passbook</td>
-                </tr>
-
-                <tr>
-                    <td  style="width: 300px" class="text-center">Borrower Office Seal</td>
-                    <td   colspan="3" class="text-center">Joint Photograph of borrower and Spouse/Gurrantor</td>
-
+                    <td   class="text-right">Spouse/Gurrantor Name</td>
+                    <td colspan="5"></td>
                 </tr>
                 <tr>
-                    <td   class="text-center">Borrower Code and Name</td>
+                    <td   class="text-right">Village</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Group Code and Name</td>
                     <td></td>
-                    <td colspan="3"></td>
+                    <td style="width: 30%;"></td>
+                    <td></td>
+
+                    <td></td>
+                    <td></td>
+                    </td></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Center Code and Name</td>
+                    <td></td>
+                    <td colspan="4"></td>
                 </tr>
 
                 <tr>
-                    <td   class="text-center">Spouse/Gurrantor Name</td>
-                    <td></td>
-                    <td colspan="2"></td>
+                    <td   class="text-right">Branch Name</td>
+                    <td colspan="5"></td>
                 </tr>
-                <tr>
-                    <td   class="text-center">Village</td>
-                    <td colspan="3"></td>
-                </tr>
-                <tr>
-                    <td   class="text-center">Group Code and Name</td>
-                    <td></td>
-                    <td ><td></td></td>
+            </table>
+            <table style="width: 100%;" class="  table-bordered font-small">
+                <tr><th colspan="7" class="text-center">Loan Details</th></tr>
 
-                </tr>
-                <tr>
-                    <td   class="text-center">Center Code and Name</td>
-                    <td></td>
-                    <td colspan="2"></td>
-                </tr>
 
                 <tr>
-                    <td   class="text-center">Branch Name</td>
-                    <td></td>
-                    <td colspan="2"></td>
-                </tr>
-
-                <tr>
-                    <td  colspan="4" class="text-center">Loan Details</td>
-                </tr>
-
-                <tr>
-                    <td   class="text-center">Date of Dibursement</td>
-                    <td></td>
-                    <td class="text-right">LoanAmount:</td>
-                    <td></td>
+                    <td style="width: 30%;"  class="text-right">Date of Dibursement</td>
+                    <td colspan="4"></td>
+                    <td style="width: 20%;" class="text-right">LoanAmount:</td>
+                    <td style="width: 20%;"></td>
                 </tr>
                 <tr>
-                    <td   class="text-center">Loan Tenture</td>
-                    <td></td>
+                    <td   class="text-right">Loan Tenture</td>
+                    <td colspan="4" class="text-center">24 Months</td>
                     <td rowspan="2" class="text-right">Interst Rate:</td>
                     <td rowspan="2"></td>
                 </tr>
                 <tr>
-                    <td>Repayment Frequency</td>
-                    <td><input name="payment_frequency" type="radio" class="radio-inline text-center">Monthly<br><input name="payment_frequency" type="radio" class="radio-inline text-center">Weakly<br><input name="payment_frequency" type="radio" class="radio-inline text-center">Fortnight<br></td>
+                    <td class="text-right" >Repayment Frequency</td>
+                    <td colspan="4" class="text-center">Monthly</td>
 
                 </tr>
 
                 <tr>
-                    <td rowspan="2">Repayment Day</td>
-                    <td rowspan="2">
-                        <table class="table-bordered">
-
-                            <tr class="borderall">
-                                <td class="text-center" style="width: 75px">1</td>
-                                <td class="text-center" style="width: 75px">2</td>
-                                <td class="text-center" style="width: 75px">3</td>
-                                <td class="text-center" style="width: 75px">4</td>
-                            </tr>
-                            <tr class="borderall">
-                                <td class="text-center" style="width: 75px"></td>
-                                <td class="text-center" style="width: 75px"></td>
-                                <td class="text-center" style="width: 75px"></td>
-                                <td class="text-center" style="width: 75px"></td>
-                            </tr>
-                        </table>
-                    </td>
+                    <td rowspan="2" class="text-right">Repayment Day</td>
+                    <td class="text-center" style="width: 8%;">1</td>
+                    <td class="text-center" style="width: 8%;">2</td>
+                    <td class="text-center" style="width: 8%;">3</td>
+                    <td class="text-center" style="width: 8%;">4</td>
                     <td>Processing Fee</td>
                     <td>
 
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-center">Product</td>
+                    <td colspan="4"></td>
+                    <td colspan="2" class="text-center">Product Code</td>
                 </tr>
                 <tr>
-                    <td   class="text-center">Meeting Time</td>
-                    <td></td>
+                    <td   class="text-right">Meeting Time</td>
+                    <td colspan="4"></td>
                     <td colspan="2">MN27-02420</td>
                 </tr>
                 <tr>
-                    <td   class="text-center">LoanID</td>
-                    <td></td>
+                    <td   class="text-right">LoanID</td>
+                    <td colspan="4"></td>
                     <td class="text-right">Loan Cycle</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Loan Purpose</td>
-                    <td colspan="3">
+                    <td class="text-right">Loan Purpose</td>
+                    <td colspan="6">
 
                     </td>
                 </tr>
 
+            </table>
+                <table style="width: 100%;" class="  table-bordered font-small">
+                    <tr><th colspan="7" class="text-center">Insurance Details</th></tr>
+
 
                 <tr>
-                    <td  colspan="4" class="text-center">Insurance Details</td>
+                    <td style="width: 30%;" class="text-right">Insured Person</td>
+                    <td style="width: 30%;"><input type="radio" name="insuredPerson">Borrower <input type="radio" name="insuredPerson"> Gurantor</td>
+                    <td style="width: 20%;">Sum Assured</td>
+                    <td style="width: 20%;"></td>
                 </tr>
 
                 <tr>
-                    <td>Insured Person</td>
-                    <td><input type="radio" name="insuredPerson">Borrower <input type="radio" name="insuredPerson"> Gurantor</td>
-                    <td>Sum Assured</td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td>Total Premium Paid</td>
+                    <td class="text-right">Total Premium Paid</td>
                     <td></td>
                     <td>Cover Period</td>
                     <td></td>
                 </tr>
 
                 <tr>
-                    <td>Nominee (Borrower)</td>
+                    <td class="text-right">Nominee (Borrower)</td>
                     <td colspan="3"></td>
 
                 </tr>
 
 
                 <tr>
-                    <td>Nominee (Gurrantor)</td>
+                    <td class="text-right">Nominee (Gurrantor)</td>
                     <td colspan="3"></td>
 
                 </tr>
 
-                </tbody>
-            </table>
-            </div>
 
+            </table>
+
+                <div class="pull-right">_____________________________________</div>
+                <br/>
+                <div class="pull-right">BM/RM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
         </div>
     </div>
 

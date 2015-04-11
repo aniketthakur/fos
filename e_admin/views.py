@@ -794,6 +794,7 @@ def admin_lrpassbook():
         abort(403)
     username = current_user.name
     c_user = current_user
+    org_name = "Hindustan Microfinance"
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_LRPassbook.html", **kwargs)
