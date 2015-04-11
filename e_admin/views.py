@@ -2,7 +2,7 @@ from e_organisation.forms import AddApplicationMobile
 
 __author__ = 'prathvi'
 # Flask and Flask-SQLAlchemy initialization here
-from flask import render_template,session,request,Response, jsonify
+from flask import render_template,session,request,Response, jsonify,make_response
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required,confirm_login
 import json
@@ -713,8 +713,21 @@ import pdfkit
 def admin_dpn():
     kwargs = locals()
     body = render_template( "pdf_DPN.html", **kwargs)
-    pdfkit.from_string(body, 'dpn.pdf')
-    return body
+    try:
+        pdfkit.from_string(body, 'dpn.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
+
 #Added By Deepak
 
 @admin_views.route('/admin/sanction', methods=["GET"])
@@ -797,7 +810,21 @@ def admin_lrpassbook():
     org_name = "Hindustan Microfinance"
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
-    return render_template( "pdf_LRPassbook.html", **kwargs)
+    body = render_template( "pdf_LRPassbook.html", **kwargs)
+    try:
+        pdfkit.from_string(body, 'pass.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('pass.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'Passbook'
+    return body
 
 
 @admin_views.route('/admin/hindustanpassbook', methods=["GET"])
