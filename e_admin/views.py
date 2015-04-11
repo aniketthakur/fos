@@ -713,7 +713,7 @@ import pdfkit
 def admin_dpn():
     kwargs = locals()
     body = render_template( "pdf_DPN.html", **kwargs)
-    #pdfkit.from_string(body, 'dpn.pdf')
+    pdfkit.from_string(body, 'dpn.pdf')
     return body
 #Added By Deepak
 
@@ -800,6 +800,17 @@ def admin_lrpassbook():
     return render_template( "pdf_LRPassbook.html", **kwargs)
 
 
+@admin_views.route('/admin/hindustanpassbook', methods=["GET"])
+@login_required
+def admin_hindustanpassbook():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    org_name = "Hindustan Microfinance"
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template( "pdf_HindustanPassbook.html", **kwargs)
 
 @admin_views.route('/admin/signup', methods=["GET", "POST"])
 #@login_required

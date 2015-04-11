@@ -1,0 +1,292 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <style type="text/css">
+        #repayment tr{
+            font-size:8px;
+        }
+        #repayment2 tr{
+            font-size:8px;
+        }
+
+        #repayment tr {
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+        }
+        #repayment2 tr {
+             line-height: 20px;
+             min-height: 20px;
+             height: 20px;
+         }
+        .font-small{
+            font-size:8px;
+        }
+        .font-vsmall{
+            font-size:7px;
+        }
+        .font-small tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:8px;
+        }
+
+    </style>
+    <div class="row">
+
+        <div class="col-md-12" style="background: #ffffff;">
+            <h2 class="text-center">Passbook</h2>
+            <div class="col-md-6">
+                <h5>LOAN REPAYMENT SCHEDULE</h5>
+                <table  id="repayment" class="table table-bordered table-condensed">
+                    <tr>
+                        <th style="width:1%" class="unseen text-center">Inst #</th>
+                        <th  style="width:20%" class="text-left">Date Due</th>
+                        <th style="width:15%" class="text-right">Interst Payment(in Rs.)</th>
+                        <th style="width:10%" class="text-right">Princial Payment(in Rs.)</th>
+                        <th style="width:10%" class="text-right">Total Installment(in Rs.)</th>
+                        <th style="width:10%" >Loan c/f(in Rs.)</th>
+                    </tr>
+
+                    {% for n in range(1,25) %}
+                        <tr >
+                            <td>{{ n }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+
+                    <tr >
+                        <td rowspan="3">I<br/>U<br/>C<br/></td>
+                        <td colspan="2">
+                            Date : {{ date }} <br/>
+                            Done By :  <br/>
+                            Result :  <br/>
+                        </td>
+                        <td rowspan="3">Signature</td>
+                        <td>
+                        </td>
+                        <td rowspan="3">Signature</td>
+                    </tr>
+
+
+
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h5>LOAN REPAYMENT STATEMENT<h5>
+                <table id="repayment2"  class="table table-bordered  table-condensed">
+
+                    <tr>
+                        <th style="width:1%" class="unseen text-center">Inst #</th>
+                        <th style="width:25%" class="text-left">Date Paid</th>
+                        <th style="width:25%" class="text-right">Total Amount Paid(in Rs.)</th>
+                        <th  style="width:15%" class="text-right">C.M/B.M Signature</th>
+                        <th style="width:5%">BM</th>
+                        <th style="width:15%">Attendance</th>
+                    </tr>
+                    {% for n in range(1,25) %}
+                        <tr >
+                            <td>{{ n }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input class="input-small" style="margin: 0px;" type="radio" name="sex" value="male"></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td rowspan="3">I<br/>U<br/>C<br/></td>
+                        <td rowspan="3">
+
+                        </td>
+                        <td rowspan="3">Signature</td>
+                        <td rowspan="3" colspan="2"></td>
+                        <td rowspan="3">Signature</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="background: #ffffff;">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='img/pdf_images/hindustan_passbook1.png')}}"
+                 style="width: 100%;" alt="">
+        </div>
+            <div class="col-md-6">
+            <table class="table table-bordered font-small"  >
+
+                <tr>
+                    <td  style="width:30%" class="text-center"></td>
+
+                    <td style="width:70%" class="text-center " colspan="3" rowspan="3">Address
+                    <br/>
+                        <br/>
+                        <br/></td>
+
+                </tr>
+            </table>
+            <table style="width: 100%;" class=" table-bordered font-small"  >
+                <tr><th colspan="2" class="text-center">Loan Passbook</th></tr>
+                <tr >
+                    <td  style="width:30%"  rowspan="1" class="text-center">
+                        <br/>
+                        Borrower Office Seal<br/>
+                    </td>
+                    <td style="width:70%"  rowspan="1" class="text-center">
+                        <br/><br/>Joint Photograph of borrower and Spouse/Gurrantor<br/><br/>
+                    </td>
+
+                </tr>
+            </table>
+            <table style="width: 100%;" class=" table-bordered font-small">
+                <tr><th colspan="6" class="text-center">BORROWER DETAILS</th></tr>
+                <tr>
+                    <td style="width: 30%;"  class="text-right">Borrower Code and Name</td>
+                    <td style="width: 15%;"></td>
+                    <td colspan="4"></td>
+                </tr>
+
+                <tr>
+                    <td   class="text-right">Spouse/Gurrantor Name</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Village</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Group Code and Name</td>
+                    <td></td>
+                    <td style="width: 30%;"></td>
+                    <td></td>
+
+                    <td></td>
+                    <td></td>
+                    </td></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Center Code and Name</td>
+                    <td></td>
+                    <td colspan="4"></td>
+                </tr>
+
+                <tr>
+                    <td   class="text-right">Branch Name</td>
+                    <td colspan="5"></td>
+                </tr>
+            </table>
+            <table style="width: 100%;" class="  table-bordered font-small">
+                <tr><th colspan="7" class="text-center">Loan Details</th></tr>
+
+
+                <tr>
+                    <td style="width: 30%;"  class="text-right">Date of Dibursement</td>
+                    <td colspan="4"></td>
+                    <td style="width: 20%;" class="text-right">LoanAmount:</td>
+                    <td style="width: 20%;"></td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Loan Tenture</td>
+                    <td colspan="4" class="text-center">24 Months</td>
+                    <td rowspan="2" class="text-right">Interst Rate:</td>
+                    <td rowspan="2"></td>
+                </tr>
+                <tr>
+                    <td class="text-right" >Repayment Frequency</td>
+                    <td colspan="4" class="text-center">Monthly</td>
+
+                </tr>
+
+                <tr>
+                    <td rowspan="2" class="text-right">Repayment Day</td>
+                    <td class="text-center" style="width: 8%;">1</td>
+                    <td class="text-center" style="width: 8%;">2</td>
+                    <td class="text-center" style="width: 8%;">3</td>
+                    <td class="text-center" style="width: 8%;">4</td>
+                    <td>Processing Fee</td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="2" class="text-center">Product Code</td>
+                </tr>
+                <tr>
+                    <td   class="text-right">Meeting Time</td>
+                    <td colspan="4"></td>
+                    <td colspan="2">MN27-02420</td>
+                </tr>
+                <tr>
+                    <td   class="text-right">LoanID</td>
+                    <td colspan="4"></td>
+                    <td class="text-right">Loan Cycle</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right">Loan Purpose</td>
+                    <td colspan="6">
+
+                    </td>
+                </tr>
+
+            </table>
+                <table style="width: 100%;" class="  table-bordered font-small">
+                    <tr><th colspan="7" class="text-center">Insurance Details</th></tr>
+
+
+                <tr>
+                    <td style="width: 30%;" class="text-right">Insured Person</td>
+                    <td style="width: 30%;"><input type="radio" name="insuredPerson">Borrower <input type="radio" name="insuredPerson"> Gurantor</td>
+                    <td style="width: 20%;">Sum Assured</td>
+                    <td style="width: 20%;"></td>
+                </tr>
+
+                <tr>
+                    <td class="text-right">Total Premium Paid</td>
+                    <td></td>
+                    <td>Cover Period</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td class="text-right">Nominee (Borrower)</td>
+                    <td colspan="3"></td>
+
+                </tr>
+
+
+                <tr>
+                    <td class="text-right">Nominee (Gurrantor)</td>
+                    <td colspan="3"></td>
+
+                </tr>
+
+
+            </table>
+
+                <div class="pull-right">_____________________________________</div>
+                <br/>
+                <div class="pull-right">BM/RM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}
