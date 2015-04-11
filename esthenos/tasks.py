@@ -303,7 +303,7 @@ def prefill_applications():
             application.status = 1
             application.save()
 
-@periodic_task(run_every=datetime.timedelta(seconds=120))
+@periodic_task(run_every=datetime.timedelta(seconds=20))
 def all_tagged_applications():
     with mainapp.app_context():
         print "queue processor"
@@ -337,7 +337,7 @@ def all_tagged_applications():
             application.save()
 
 from utils import make_sample_highmark_request_for_application_id,add_sample_highmark_response
-@periodic_task(run_every=datetime.timedelta(seconds=120))
+@periodic_task(run_every=datetime.timedelta(seconds=20))
 def cb_checkready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -356,7 +356,7 @@ def cb_checkready_applications():
         application.status = 8
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(seconds=120))
+@periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -379,7 +379,7 @@ def cbcheck_statuscheck_applications():
         application.status = 11
         application.save()
 
-@periodic_task(run_every=datetime.timedelta(minutes=2))
+@periodic_task(run_every=datetime.timedelta(minutes=1))
 def cashflow_ready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -401,7 +401,7 @@ def cashflow_ready_applications():
 
 
 
-@periodic_task(run_every=datetime.timedelta(minutes=2))
+@periodic_task(run_every=datetime.timedelta(minutes=1))
 def cgt_grt_success_applications():
     print "queue processor"
     today = datetime.datetime.now()
