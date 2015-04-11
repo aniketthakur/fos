@@ -104,17 +104,23 @@
                 </div>
                 <div class="grid-body ">
                     <div class="row">
-                        <div class="col-md-3">
-                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add {{ organisation.name }} Employee</a></a>
+                        <div class="col-md-4">
+                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add Employee</a></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_product">{{ organisation.name }} Add Products</a></a>
+                        <div class="col-md-4">
+                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_product">Add Products</a></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">{{ organisation.name }} Settings</a></a>
+                        <div class="col-md-4">
+                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a></a>
                         </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">{{ organisation.name }} GRT Q</a></a>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="btn btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-block btn-success" type="button" href="/admin/update_org/{{ org.id }}">Update Info</a></a>
                         </div>
                      </div>
                 </div>

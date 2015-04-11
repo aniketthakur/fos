@@ -33,10 +33,11 @@
                                     <label for="checkbox10"></label>
                                 </div>
                             </th>
-                            <th style="width:20%">ORG ID</th>
-                            <th style="width:23%">NAME</th>
-                            <th style="width:25%">EMAIL</th>
-                            <th style="width:22%">PHONE NUMBER</th>
+                            <th style="width:10%">ORG ID</th>
+                            <th style="width:13%">NAME</th>
+                            <th style="width:15%">EMAIL</th>
+                            <th style="width:12%">PHONE NUMBER</th>
+                            <th style="width:12%">ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,8 @@
                                 <td><span class="muted">{{ org.email }}</span>
                                 </td>
                                 <td><span class="muted">{{ org.postal_tele_code }}{{ org.postal_telephone }}</span>
+                                </td>
+                                <td><a href="/admin/update_org/{{ org.id }}" class="update_org btn btn-info" >Update</a>
                                 </td>
                             </tr>
                            {% else %}
