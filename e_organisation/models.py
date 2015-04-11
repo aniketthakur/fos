@@ -32,6 +32,8 @@ class EsthenosOrgStateResource(Resource):
 
 
 class EsthenosOrgArea(db.Document):
+    region = db.ReferenceField('EsthenosOrgRegion')
+    state = db.ReferenceField('EsthenosOrgState')
     organisation = db.ReferenceField('EsthenosOrg')
     area_name = db.StringField(max_length=60,required=True)
 
@@ -39,6 +41,7 @@ class EsthenosOrgAreaResource(Resource):
     document= EsthenosOrgArea
 
 class EsthenosOrgRegion(db.Document):
+    state = db.ReferenceField('EsthenosOrgState')
     organisation = db.ReferenceField('EsthenosOrg')
     region_name = db.StringField(max_length=60,required=True)
 
@@ -47,6 +50,9 @@ class EsthenosOrgRegionResource(Resource):
 
 
 class EsthenosOrgBranch(db.Document):
+    region = db.ReferenceField('EsthenosOrgRegion')
+    state = db.ReferenceField('EsthenosOrgState')
+    area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
 
@@ -98,9 +104,7 @@ class EsthenosOrg(db.Document):
     logo_url = db.StringField(max_length=255, required=False)
     domain = db.StringField(max_length=128, required=False)
     states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
-    areas = db.ListField(db.ReferenceField('EsthenosOrgArea'), required=False)
-    regions = db.ListField(db.ReferenceField('EsthenosOrgRegion'), required=False)
-    branches = db.ListField(db.ReferenceField('EsthenosOrgBranch'), required=False)
+
     name = db.StringField(max_length=512, required=True)
     profile_pic = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now)

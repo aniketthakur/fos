@@ -68,14 +68,8 @@ def login():
                 session['role'] = "ORG_CM"
                 return redirect("/")
             else:
-                session['role'] = "EMP_EXECUTIVE"
+                session['role'] = user.roles[0]
                 return redirect("/dashboard")
-
-            token =  request.args.get('token',None)
-            if token is not None:
-                req_token = DevRequestToken.objects.get(token=token)
-                req_token.delete()
-            return do_redirect()
         else:
             flash_errors(login_form)
             kwargs = {"login_form": login_form}

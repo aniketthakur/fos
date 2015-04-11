@@ -11,10 +11,10 @@ from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
 class AddOrganisationForm( Form):
     org_name =TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    branches =TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    branches =TextField()
     states =TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    areas =TextField( validators=[v.DataRequired(), v.Length(max=512)])
-    regions =TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    areas =TextField( )
+    regions =TextField( )
     postal_address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     postal_telephone =TextField( validators=[v.DataRequired(), v.Length(max=20)])
     postal_tele_code =TextField( validators=[v.DataRequired(), v.Length(max=5)])
@@ -46,12 +46,7 @@ class AddOrganisationForm( Form):
         org.email =self.email.data
         org.save()
         org = EsthenosOrg.objects.get(name=self.org_name.data)
-        my_branches = []
-        for branch in self.branches.data.split(","):
-            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
-            br.save()
-            my_branches.append(br)
-        org.branches =my_branches
+
 
         my_states = []
         for state in self.states.data.split(","):
@@ -59,6 +54,13 @@ class AddOrganisationForm( Form):
             st.save()
             my_states.append(st)
         org.states =my_states
+        """
+        my_branches = []
+        for branch in self.branches.data.split(","):
+            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
+            br.save()
+            my_branches.append(br)
+        org.branches =my_branches
 
         my_areas = []
         for area in self.areas.data.split(","):
@@ -76,7 +78,9 @@ class AddOrganisationForm( Form):
             reg = EsthenosOrgRegion.objects.get(region_name=region,organisation=org)
             my_regions.append(reg)
         org.regions =my_regions
+
         print my_regions
+        """
         org.save()
         return org
 
@@ -183,12 +187,12 @@ class AddOrganizationEmployeeForm(Form):
         emp.email=self.email_add_organisation.data
         if self.state.data !=None or self.state.data !='':
             emp.org_state = EsthenosOrgState.objects.get(organisation=emp.organisation,state_name = self.state.data)
-        if self.area.data !=None or self.area.data !='':
-            emp.org_area = EsthenosOrgArea.objects.get(organisation=emp.organisation,area_name = self.area.data)
-        if self.region.data !=None or self.region.data !='':
-            emp.org_region = EsthenosOrgRegion.objects.get(organisation=emp.organisation,region_name = self.region.data)
-        if self.branch.data !=None or self.branch.data !='':
-            emp.org_branch = EsthenosOrgBranch.objects.get(organisation=emp.organisation,branch_name = self.branch.data)
+        #if self.area.data !=None or self.area.data !='':
+        #    emp.org_area = EsthenosOrgArea.objects.get(organisation=emp.organisation,area_name = self.area.data)
+        #if self.region.data !=None or self.region.data !='':
+        #    emp.org_region = EsthenosOrgRegion.objects.get(organisation=emp.organisation,region_name = self.region.data)
+        #if self.branch.data !=None or self.branch.data !='':
+        #    emp.org_branch = EsthenosOrgBranch.objects.get(organisation=emp.organisation,branch_name = self.branch.data)
 
         emp.save()
         org = EsthenosOrg.objects.get(id = emp.organisation.id)
