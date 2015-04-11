@@ -758,7 +758,7 @@ def admin_hmplgrt():
 @admin_views.route('/admin/hmplloanagreement', methods=["GET"])
 def admin_hmplloanagreement():
     kwargs = locals()
-    return render_template( "pdf_HMPL_LOANAGREEMENT.html", **kwargs)
+    return render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
 
 
 @admin_views.route('/admin/hmplloancard', methods=["GET"])
@@ -824,7 +824,7 @@ def admin_lrpassbook():
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'Passbook'
-    return body
+    return response
 
 
 @admin_views.route('/admin/hindustanpassbook', methods=["GET"])

@@ -2,6 +2,9 @@
 {% block css_sheets %}{{ super() }}
 
 {% endblock %}
+{% block meta %}
+    <meta name="pdfkit-orientation" content="Landscape"/>
+{% endblock %}
 
 {% block action_bar %}
 
@@ -41,9 +44,10 @@
     </style>
     <div class="row-fluid">
 
-        <div class="col-md-12" style="background: #ffffff;">
+        <table style="width: 100%;">
             <h2 class="text-center">Passbook</h2>
-            <div class="col-md-6">
+            <tr>
+            <td style="width: 50%;">
                 <h5>LOAN REPAYMENT SCHEDULE</h5>
                 <table  id="repayment" class="table table-bordered table-condensed">
                     <tr>
@@ -83,8 +87,8 @@
 
 
                 </table>
-            </div>
-            <div class="col-md-6">
+            </td>
+            <td style="width: 50%;">
                 <h5>LOAN REPAYMENT STATEMENT<h5>
                 <table id="repayment2"  class="table table-bordered  table-condensed">
 
@@ -117,8 +121,9 @@
                         <td rowspan="3">Signature</td>
                     </tr>
                 </table>
-            </div>
-        </div>
+            </td>
+            </tr>
+        </table>
 
     </div>
 
