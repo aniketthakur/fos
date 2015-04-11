@@ -70,6 +70,22 @@ def admin_settings():
     kwargs = locals()
     return render_template("admin_settings.html", **kwargs)
 
+
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["POST"])
+@login_required
+def admin_settings():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org_settings = EsthenosOrg.objects.get(id = user.organisation)
+    org_settings.cm_settings.access_dash = request.form.get("cm_access_dash")
+    org_settings.bm_settings.access_dash = request.form.get("bm_access_dash")
+    org_settings.save()
+    kwargs = locals()
+    return render_template("admin_settings.html", **kwargs)
+
 # @admin_views.route('/admin/organisation/products', methods=["GET"])
 # @login_required
 # def admin_org_add_product():

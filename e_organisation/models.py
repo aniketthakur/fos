@@ -99,6 +99,10 @@ class EsthenosOrgUserUploadSession(db.DynamicDocument):
     tagged = db.BooleanField(default=False)
 
 
+class EsthenosOrgRoleSettings(db.Document):
+    access_dash = db.BooleanField(default=False)
+    access_enroll_customer = db.BooleanField(default=False)
+
 class EsthenosOrg(db.Document):
     code = db.StringField(max_length=5, required=False)
     logo_url = db.StringField(max_length=255, required=False)
@@ -123,7 +127,8 @@ class EsthenosOrg(db.Document):
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
     employee_count = db.IntField(default=1)
-
+    cm_settings = db.ReferenceField('EsthenosOrgRoleSettings',required=False)
+    bm_settings = db.ReferenceField('EsthenosOrgRoleSettings',required=False)
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
