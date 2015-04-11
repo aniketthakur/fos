@@ -14,12 +14,7 @@ mainapp = Flask(__name__)
 mainapp.config['MAX_CONTENT_LENGTH'] = 5024000
 from werkzeug.contrib.fixers import ProxyFix
 mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
-
-mainapp.url_map.strict_slashes = False
-mainapp.config['DEBUG'] = True
-mainapp.config.update(
-    DEBUG = True,
-    TESTING = False,
+"""
     MONGODB_SETTINGS = {
         'HOST': '128.199.156.24',#
         'PORT': 27017,
@@ -32,6 +27,21 @@ mainapp.config.update(
         #'TZ_AWARE': True,
         #'replicaset':"rs0"
     },
+    """
+mainapp.url_map.strict_slashes = False
+mainapp.config['DEBUG'] = True
+mainapp.config.update(
+    DEBUG = True,
+    TESTING = False,
+
+    MONGODB_SETTINGS = {
+                           'HOST': '127.0.0.1',#
+                           'PORT': 27017,
+
+                           'DB': 'test',
+                           #'TZ_AWARE': True,
+                           #'replicaset':"rs0"
+                       },
 )
 
 #mongoengine as session store
