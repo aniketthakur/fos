@@ -354,7 +354,7 @@ def admin_reports():
 
 
 
-@admin_views.route('/admin/reportsreports/master/download', methods=["GET"])
+@admin_views.route('/admin/reports/master/download', methods=["GET"])
 @login_required
 def admin_reports_download():
     if session['role'] != "ADMIN":
