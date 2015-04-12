@@ -329,6 +329,10 @@ class AddApplicationManual(Form):
         app.save()
 
         return None
+
+
+
+"""
 {'application_member_village': [u'This field is required.'], 'application_cast': [u'This field is required.'],
  'application_cm_id': [u'This field is required.'], 'application_category': [u'This field is required.'],
  'application_self_owned': [u'This field is required.'], 'applciation_branch_id': [u'This field is required.'],
@@ -340,10 +344,6 @@ class AddApplicationManual(Form):
  'application_money_lenders_loan_roi': [u'This field is required.'], 'application_entertainment_expenditure': [u'This field is required.'],
  'application_cycle': [u'This field is required.'], 'application_branch_name': [u'This field is required.'],
  'application_friends_family_loan_roi': [u'This field is required.'], 'application_state_id': [u'This field is required.']}
-
-
-
-"""
 
 """
 class AddApplicationMobile(Form):
