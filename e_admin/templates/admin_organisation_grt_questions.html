@@ -1,6 +1,17 @@
 {% extends "admin_base.html" %}
 {% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        @font-face {
+            font-family: kruti dev ;
+            src: url( '{{ url_for('static', filename='fonts/AYOGNI_N.TTF')}}' );
+        }
 
+        .hinditext {
+            font-family: kruti dev;
+            font-size:14px;
+        }
+
+    </style>
 {% endblock %}
 
 {% block action_bar %}
@@ -19,9 +30,10 @@
                     <table class="table table-bordered">
                         {% for question in questions %}
                             <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ question.question }}</td>
-                                <td><button class="btn btn-danger">Delete</button></td>
+                                <td style="width: 5%;">{{ loop.index }}</td>
+                                <td style="width: 45%;">{{ question.question }}</td>
+                                <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
+                                <td style="width: 5%;"><button class="btn btn-danger">Delete</button></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -37,6 +49,7 @@
                         <div class="row form-row">
                             <div class="col-md-12 form-group">
                                 <input type="text" placeholder="enter new question here" class="form-control text-left" name="question" id="questions" />
+                                <input type="text" placeholder="enter new question in regional language" class="form-control text-left hinditext" name="question_hindi" id="questions_hindi" />
                             </div>
                         </div>
 

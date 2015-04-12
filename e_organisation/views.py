@@ -17,6 +17,7 @@ import os,tempfile
 from pixuate_storage import upload_images, get_url_with_id
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
+import datetime
 import uuid
 from e_admin.models import EsthenosSettings
 from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg, EsthenosOrgProduct
@@ -92,6 +93,37 @@ def center_cgt1():
     return Response(response=content,
         status=200,\
         mimetype="application/json")
+
+@organisation_views.route('/api/organisation/products', methods=["GET"])
+@login_or_key_required
+def org_products():
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisations = EsthenosOrg.objects.all()
+    products = EsthenosOrgProduct.objects.all()
+    content = list()
+    for product in products:
+        pr = dict()
+        pr["product_name"] = product["product_name"]
+        pr["loan_amount"] = product["loan_amount"]
+        pr["life_insurance"] = product["life_insurance"]
+        pr["eligible_cycle"] = product["eligible_cycle"]
+        pr["number_installments"] = product["number_installments"]
+        pr["emi"] = product["emi"]
+        pr["last_emi"] = product["last_emi"]
+        pr["processing_fee"] = product["processing_fee"]
+        pr["total_processing_fees"] = product["total_processing_fees"]
+        pr["interest_rate"] = product["interest_rate"]
+        pr["insurance_period"] = product["insurance_period"]
+        pr["insurance_free_borrowers_only"] = product["insurance_free_borrowers_only"]
+        pr["total_processing_fees_borrowers_only"] = product["total_processing_fees_borrowers_only"]
+        pr["insurance_free_borrowers_n_guarnteer"] = product["insurance_free_borrowers_n_guarnteer"]
+        pr["total_processing_fees_borrowers_n_guarnteer"] = product["total_processing_fees_borrowers_n_guarnteer"]
+        pr["emi_repayment"] = product["emi_repayment"]
+        content.append(pr)
+    kwargs = locals()
+    return Response(json.dumps({'products':content}), content_type="application/json", mimetype='application/json')
 
 @organisation_views.route('/reports', methods=["GET"])
 @login_required

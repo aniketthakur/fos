@@ -354,7 +354,7 @@ def admin_reports():
 
 
 
-@admin_views.route('/admin/reportsreports/master/download', methods=["GET"])
+@admin_views.route('/admin/reports/master/download', methods=["GET"])
 @login_required
 def admin_reports_download():
     if session['role'] != "ADMIN":
@@ -758,7 +758,22 @@ def admin_hmplgrt():
 @admin_views.route('/admin/hmplloanagreement', methods=["GET"])
 def admin_hmplloanagreement():
     kwargs = locals()
-    return render_template( "pdf_HMPL_LOANAGREEMENT.html", **kwargs)
+    path = '/Users/prathvi/Current/esthenos/esthenos/static/fonts/AYOGNI_N.TTF'
+    body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
+    try:
+        pdfkit.from_string(body, 'dpn.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
 
 
 @admin_views.route('/admin/hmplloancard', methods=["GET"])
@@ -811,19 +826,19 @@ def admin_lrpassbook():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
-    try:
-        pdfkit.from_string(body, 'pass.pdf')
-    except Exception as e:
-        print e.message
-
-    raw_bytes = ""
-    with open('pass.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'Passbook'
+#    try:
+#        pdfkit.from_string(body, 'pass.pdf')
+#    except Exception as e:
+#        print e.message
+#
+#    raw_bytes = ""
+#    with open('pass.pdf', 'rb') as r:
+#        for line in r:
+#            raw_bytes = raw_bytes + line
+#    response = make_response(raw_bytes)
+#    response.headers['Content-Type'] = 'application/pdf'
+#    response.headers['Content-Disposition'] =\
+#    'inline; filename=%s.pdf' % 'Passbook'
     return body
 
 
