@@ -14,20 +14,7 @@ mainapp = Flask(__name__)
 mainapp.config['MAX_CONTENT_LENGTH'] = 5024000
 from werkzeug.contrib.fixers import ProxyFix
 mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
-"""
-    MONGODB_SETTINGS = {
-        'HOST': '128.199.156.24',#
-        'PORT': 27017,
-        'USERNAME':'esthenos',
-        'PASSWORD':'0nrdgjhDFTF5kJ',
-        #'DB': 'pitaya_local',
-        'DB': 'esthenos_test_v2',
-        "w":1,
-        "j":True,
-        #'TZ_AWARE': True,
-        #'replicaset':"rs0"
-    },
-    """
+
 mainapp.url_map.strict_slashes = False
 mainapp.config['DEBUG'] = True
 mainapp.config.update(
@@ -35,13 +22,18 @@ mainapp.config.update(
     TESTING = False,
 
     MONGODB_SETTINGS = {
-                           'HOST': '127.0.0.1',#
-                           'PORT': 27017,
-
-                           'DB': 'test',
-                           #'TZ_AWARE': True,
-                           #'replicaset':"rs0"
-                       },
+        'HOST': '128.199.156.24',#
+        'PORT': 27017,
+        'USERNAME':'esthenos',
+        'PASSWORD':'Ofn2cXHkTMQ8LE',
+        #'DB': 'pitaya_local',
+        'DB': 'esthenos_test_v1',
+        #'DB': 'esthenos_dev_v2',
+        "w":1,
+        "j":True,
+        'TZ_AWARE': True,
+        #'replicaset':"rs0"
+    },
 )
 
 #mongoengine as session store
@@ -176,3 +168,4 @@ from flask import render_template
 @mainapp.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
