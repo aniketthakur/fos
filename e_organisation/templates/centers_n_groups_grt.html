@@ -36,8 +36,7 @@
                                     <th style="width:25%">Group ID</th>
                                     <th style="width:25%">Group Name</th>
                                     <th style="width:25%">Questions</th>
-                                    <th style="width:10%" class="text-center">Fail</th>
-                                    <th style="width:10%" class="text-center" >Pass</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,12 +53,7 @@
                                         </td>
                                         <td><a class="btn btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
                                         </td>
-                                        <td>
-                                            <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
-                                        </td>
-                                        <td >
-                                            <button class="btn btn-small btn-primary btn-cons group-pass" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
-                                        </td>
+
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -84,7 +78,6 @@
                                     <th style="width:25%">Group ID</th>
                                     <th style="width:25%">Group Name</th>
                                     <th style="width:25%">GRT Rating</th>
-                                    <th style="width:25%">Questions</th>
                                     <th style="width:10%" class="text-center">Fail</th>
                                     <th style="width:10%" class="text-center" >Pass</th>
                                 </tr>
@@ -103,8 +96,7 @@
                                         </td>
                                         <td><span class="muted">{{'%0.2f' %  grt_session.score|float}}/5</span>
                                         </td>
-                                        <td><a class="btn btn-primary " href="/grt_question?group_id={{ grt_session.group.group_id }}" >Questions</a>
-                                        </td>
+
                                         <td>
                                             <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                         </td>
