@@ -757,7 +757,7 @@ def admin_hmplgrt():
 
 
 @admin_views.route('/admin/hmpdpn', methods=["GET"])
-def admin_dpn():
+def admin_hmpdpn():
     kwargs = locals()
     body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
     try:
