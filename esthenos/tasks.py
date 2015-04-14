@@ -261,7 +261,7 @@ def all_tagged_applications():
             application.status = 7
             application.save()
 
-from utils import make_sample_highmark_request_for_application_id,add_sample_highmark_response
+from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
 @celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=120))
 def cb_checkready_applications():
@@ -272,15 +272,16 @@ def cb_checkready_applications():
     all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=7)
 
     for application in all_cbcheckready_applications:
-        make_sample_highmark_request_for_application_id(application.application_id)
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
-
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 8
-        application.save()
+        make_equifax_request_entry_application_id(application.application_id)
+        make_highmark_request_for_application_id(application.application_id)
+#        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
+#        status.save()
+#        application.timeline.append(status)
+#
+#        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
+#        application.current_status_updated  = datetime.datetime.now()
+#        application.status = 8
+#        application.save()
 
 @periodic_task(run_every=datetime.timedelta(seconds=120))
 @celery.task
@@ -289,7 +290,7 @@ def cbcheck_statuscheck_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=8)
+    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=9)
 
     for application in cbcheck_statuscheck_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)

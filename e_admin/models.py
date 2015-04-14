@@ -97,37 +97,6 @@ class EsthenosUserBiliing(db.Document):
     billing_month = db.StringField(max_length=255, required=False,default="")
     billing_days = db.StringField(max_length=255, required=False,default="")
 
-class EsthenosOrgApplicationEqifax(db.Document):
-    application_id = db.StringField(max_length=255, required=True,default="")
-    reference_number=db.IntField(default=0)
-    member_id_unique_accountnumber=db.IntField(default=0)
-    inquiry_purpose=db.StringField(max_length=255, required=True,default="")
-    transaction_amount=db.IntField(default=0)
-    consumer_name=db.StringField(max_length=255, required=True,default="")
-    additional_type1=db.StringField(max_length=255, required=True,default="")
-    additional_name1=db.StringField(max_length=255, required=True,default="")
-    additional_type2=db.StringField(max_length=255, required=True,default="")
-    additional_name2=db.StringField(max_length=255, required=True,default="")
-    address_city=db.StringField(max_length=255, required=True,default="")
-    state_union_territory=db.StringField(max_length=255, required=True,default="")
-    postal_pin=db.IntField(default=0)
-    ration_card=db.StringField(max_length=255, required=True,default="")
-    voter_id=db.StringField(max_length=255, required=True,default="")
-    additional_id1=db.StringField(max_length=255, required=True,default="")
-    additional_id2=db.StringField(max_length=255, required=True,default="")
-    national_id_card=db.StringField(max_length=255, required=True,default="")
-    tax_id_pan=db.StringField(max_length=255, required=True,default="")
-    phone_home=db.IntField(default=0)
-    phone_mobile=db.IntField(default=0)
-    dob=db.StringField(max_length=255, required=True,default="")
-    gender=db.StringField(max_length=255, required=True,default="")
-    branch_id=db.StringField(max_length=255, required=True,default="")
-    kendra_id=db.StringField(max_length=255, required=True,default="")
-
-
-    def __unicode__(self):
-        return self.user.name +" ---Requests"
-
 
 
 

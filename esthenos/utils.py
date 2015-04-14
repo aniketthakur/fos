@@ -59,9 +59,9 @@ def request_wants_json():
            request.accept_mimetypes['text/html']
 
 
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplication
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplication,EsthenosOrgApplicationEqifax
 #Added by Deepak
-def make_sample_highmark_request_for_application_id(app_id):
+def make_highmark_request_for_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)
     hmrequest = EsthenosOrgApplicationHighMarkRequest()
     hmrequest.applicant_id1=app.application_id
@@ -77,7 +77,7 @@ def make_sample_highmark_request_for_application_id(app_id):
     hmrequest.applicant_address_type1="D12"
     hmrequest.applicant_address_type2=""
     hmrequest.applicant_age=app.age
-    hmrequest.applicant_age_as_on_date="05/03/2015 16:32:00"
+    hmrequest.applicant_age_as_on_date=""
     hmrequest.applicant_birth_date=app.dob
     hmrequest.applicant_id__account_no=""
     hmrequest.applicant_id_type1=app.application_id
@@ -98,27 +98,58 @@ def make_sample_highmark_request_for_application_id(app_id):
     hmrequest.credit_report_transaction_id=""
     hmrequest.credit_request_type="JOIN"
     hmrequest.kendra_id=app.center
-    hmrequest.key_person_name=app.guranteer_s
+    hmrequest.key_person_name=app.member_f_or_h_name
     hmrequest.key_person_relation=""
-    hmrequest.member_father_name="UPGSINH"
-    hmrequest.member_id="GJ8509005"
+    hmrequest.member_father_name=app.member_f_or_h_name
+    hmrequest.member_id=app.application_id
     hmrequest.member_mother_name=""
-    hmrequest.member_relationship_name1="PARMAR DINESHBHAI"
-    hmrequest.member_relationship_name2="PARMAR DINESHBHAI"
+    hmrequest.member_relationship_name1=""
+    hmrequest.member_relationship_name2=""
     hmrequest.member_relationship_name3=""
     hmrequest.member_relationship_name4=""
-    hmrequest.member_relationship_type1="K02"
-    hmrequest.member_relationship_type2="K01"
+    hmrequest.member_relationship_type1=""
+    hmrequest.member_relationship_type2=""
     hmrequest.member_relationship_type3=""
     hmrequest.member_relationship_type4=""
     hmrequest.member_mother_name=""
-    hmrequest.member_spouse_name="DINESHBHAI"
-    hmrequest.nominee_name=""
-    hmrequest.segment_identifier="CRDRQINQR"
+    hmrequest.member_spouse_name=""
+    hmrequest.nominee_name=app.member_f_or_h_name
+    hmrequest.segment_identifier=""
     hmrequest.sent_status=True
     print hmrequest
     hmrequest.save()
-    add_sample_highmark_response(app_id)
+
+from e_organisation.models import EsthenosOrgApplicationEqifax
+
+def make_equifax_request_entry_application_id(app_id):
+    app = EsthenosOrgApplication.objects.get(application_id = app_id)
+    eqrequest = EsthenosOrgApplicationEqifax()
+    eqrequest.reference_number=app.application_id
+    eqrequest.member_id_unique_accountnumber=app.application_id
+    eqrequest.inquiry_purpose=6
+    eqrequest.transaction_amount=app.applied_loan
+    eqrequest.consumer_name=app.applicant_name
+    eqrequest.additional_type1="K02"
+    eqrequest.additional_name1=""
+    eqrequest.additional_type2=""
+    eqrequest.additional_name2=""
+    eqrequest.address_city=app.member_city
+    eqrequest.state_union_territory=app.member_state
+    eqrequest.postal_pin=app.member_pincode
+    eqrequest.ration_card=""
+    eqrequest.voter_id=""
+    eqrequest.additional_id1=app.kyc_1.kyc_number
+    eqrequest.additional_id2=""
+    eqrequest.national_id_card=app.kyc_1.kyc_number
+    eqrequest.tax_id_pan=""
+    eqrequest.phone_home=""
+    eqrequest.phone_mobile=app.member_telephone
+    eqrequest.dob=app.dob
+    eqrequest.gender=app.gender
+    eqrequest.branch_id=""
+    eqrequest.kendra_id=""
+    eqrequest.save()
+
 
 def add_sample_highmark_response(app_id):
 

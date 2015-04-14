@@ -1,0 +1,21 @@
+{% extends "admin_base.html" %}
+{% block css_sheets %}{{ super() }}
+
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3"><a href="/admin/cbcheck/equifax/download" class="btn btn-success">Download Pending Equifax Reports</a></div>
+            <div class="col-md-3"><a href="/admin/cbcheck/highmark/download" class="btn btn-success">Download Pending CbCheck Reports</a></div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+
+{% endblock %}
