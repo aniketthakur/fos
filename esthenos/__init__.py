@@ -38,7 +38,13 @@ mainapp.config.update(
 #mongoengine as session store
 db = MongoEngine(mainapp)
 #mainapp.session_interface = MongoEngineSessionInterface(db)
+mainapp.config['MAX_CONTENT_LENGTH'] = 5024000
+from werkzeug.contrib.fixers import ProxyFix
+mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
+"""
 
+    """
+mainapp.url_map.strict_slashes = False
 mainapp.config['SERVER_EMAIL'] = "support@esthenos.com"
 mainapp.config['MIN_IMAGE_DIMENSION'] = 300
 mainapp.config["region_list"] = ['us-east-1','us-west-1','us-west-2']

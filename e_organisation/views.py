@@ -1006,27 +1006,55 @@ def check_grt():
     org  = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    grt_sessions = EsthenosOrgGroupGRTSession.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("centers_n_groups_grt.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgCGTTemplateQuestion
-@organisation_views.route('/grt_question', methods=["GET"])
+from e_organisation.models import EsthenosOrgCGTTemplateQuestion,EsthenosOrgGroupGRTSession
+@organisation_views.route('/grt_question', methods=["GET","POST"])
 @login_required
 def grt_question():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
     c_user = current_user
-    group_id = request.args.get("group_id")
-
     user = EsthenosUser.objects.get(id=c_user.id)
     org=user.organisation
-    questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
-    group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
-    kwargs = locals()
-    return render_template("centers_n_groups_grt_questions.html", **kwargs)
+    if request.method == "GET":
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        kwargs = locals()
+        return render_template("centers_n_groups_grt_questions.html", **kwargs)
+    elif request.method == "POST":
+        print request.form
+        i = 0
+        total_score= 0.0
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+
+        grt_session,status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
+        question_dict = dict()
+
+        for v in request.form:
+            i = i+1
+            (k,v) = (v,request.form[v])
+            if k.startswith("rating"):
+                key =  k.split("rating")[1]
+                question_dict[key] = str(v)
+                total_score = total_score+ int(v)
+        print total_score/i
+        print questions
+        grt_session.questions = question_dict
+        grt_session.score = float(total_score/i)
+        grt_session.save()
+        kwargs = locals()
+        return redirect("/check_grt")
+
 
 from werkzeug.utils import secure_filename, redirect
 import os,io

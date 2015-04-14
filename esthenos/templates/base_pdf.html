@@ -9,7 +9,12 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css">
     <!-- END CSS TEMPLATE -->
-
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="pdfkit-margin-top" content="0mm"/>
+    <meta name="pdfkit-margin-bottom" content="0mm"/>
+    <meta name="pdfkit-margin-right" content="0mm"/>
+    <meta name="pdfkit-margin-left" content="0mm"/>
+    <meta name="print_media_type" content="true"/>
     {% block css_sheets %}
 
     {% endblock %}
@@ -20,7 +25,7 @@
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="error-body no-top">
+<body >
 <div class="container">
     {% block maincontents %}
     {% endblock %}

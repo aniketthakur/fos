@@ -1,32 +1,23 @@
 {% extends "base_pdf.html" %}
 {% block css_sheets %}{{ super() }}
-
-{% endblock %}
-{% block meta %}
-    <meta name="pdfkit-orientation" content="Landscape"/>
-{% endblock %}
-{% block action_bar %}
-
-{% endblock %}
-{% block maincontents %}
     <style type="text/css">
-        #repayment tr{
-            font-size:8px;
-        }
-        #repayment2 tr{
-            font-size:8px;
+        @font-face {
+            font-family: kruti dev ;
+            src: url('/Users/prathvi/Current/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
         }
 
-        #repayment tr {
-            line-height: 20px;
-            min-height: 20px;
-            height: 20px;
+        .hinditext {
+            font-family: kruti dev;
+            font-size:12px;
         }
-        #repayment2 tr {
-             line-height: 20px;
-             min-height: 20px;
-             height: 20px;
-         }
+
+        .condensed tr{
+            font-size:8px;
+            line-height: 15px;
+            min-height: 15px;
+            height: 15px;
+        }
+
         .font-small{
             font-size:8px;
         }
@@ -41,111 +32,109 @@
         }
 
     </style>
-    <div class="row">
+{% endblock %}
+{% block meta %}
+    <meta name="pdfkit-orientation" content="Landscape"/>
+{% endblock %}
+{% block action_bar %}
 
-        <table style="width: 100%;">
-            <h2 class="text-center">Passbook</h2>
-            <tr>
-                <td style="width: 50%;">
-                    <h5>LOAN REPAYMENT SCHEDULE</h5>
-                    <table  id="repayment" class="table table-bordered table-condensed">
-                        <tr>
-                            <th style="width:1%" class="unseen text-center">Inst #</th>
-                            <th  style="width:20%" class="text-left">Date Due</th>
-                            <th style="width:15%" class="text-right">Interst Payment(in Rs.)</th>
-                            <th style="width:10%" class="text-right">Princial Payment(in Rs.)</th>
-                            <th style="width:10%" class="text-right">Total Installment(in Rs.)</th>
-                            <th style="width:10%" >Loan c/f(in Rs.)</th>
-                        </tr>
+{% endblock %}
+{% block maincontents %}
 
-                        {% for n in range(1,25) %}
-                            <tr >
-                                <td>{{ n }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        {% endfor %}
+    <h4 class="text-center">Passbook</h4>
+    <table style="width: 100%;padding: 10px;">
+    <tr style="padding: 10px;">
+        <td style="width: 50%;padding: 10px">
+            <table  id="repayment" class="table table-bordered table-condensed condensed">
+                <caption>LOAN REPAYMENT SCHEDULE</caption>
+                <tr>
+                    <th style="width:1%" class="unseen text-center hinditext">nHlee keÀ.</th>
+                    <th  style="width:20%" class="text-left hinditext">nHl³ee®eer leejerKe</th>
+                    <th style="width:15%" class="text-right hinditext">J³eepe</th>
+                    <th style="width:10%" class="text-right hinditext">मुद्दल</th>
+                    <th style="width:10%" class="text-right hinditext">SkegÀCe nHlee</th>
+                    <th style="width:10%" class="hinditext" >keÀpe& efMeuuekeÀ</th>
+                </tr>
 
-
-                        <tr >
-                            <td rowspan="3">I<br/>U<br/>C<br/></td>
-                            <td colspan="2">
-                                Date : {{ date }} <br/>
-                                Done By :  <br/>
-                                Result :  <br/>
-                            </td>
-                            <td rowspan="3">Signature</td>
-                            <td>
-                            </td>
-                            <td rowspan="3">Signature</td>
-                        </tr>
+                {% for n in range(1,25) %}
+                    <tr >
+                        <td>{{ n }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
 
 
+                <tr >
+                    <td rowspan="3">I<br/>U<br/>C<br/></td>
+                    <td colspan="2">
+                        Date : {{ date }} <br/>
+                        Done By :  <br/>
+                        Result :  <br/>
+                    </td>
+                    <td rowspan="3" colspan="3">Signature</td>
 
-                    </table>
-                </td>
-                <td style="width: 50%;">
-                    <h5>LOAN REPAYMENT STATEMENT<h5>
-                    <table id="repayment2"  class="table table-bordered  table-condensed">
+                </tr>
 
-                        <tr>
-                            <th style="width:1%" class="unseen text-center">Inst #</th>
-                            <th style="width:25%" class="text-left">Date Paid</th>
-                            <th style="width:25%" class="text-right">Total Amount Paid(in Rs.)</th>
-                            <th  style="width:15%" class="text-right">C.M/B.M Signature</th>
-                            <th style="width:5%">BM</th>
-                            <th style="width:15%">Attendance</th>
-                        </tr>
-                        {% for n in range(1,25) %}
-                            <tr >
-                                <td>{{ n }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input class="input-small" style="margin: 0px;" type="radio" name="sex" value="male"></td>
-                                <td></td>
-                            </tr>
-                        {% endfor %}
 
-                        <tr>
-                            <td rowspan="3">I<br/>U<br/>C<br/></td>
-                            <td rowspan="3">
 
-                            </td>
-                            <td rowspan="3">Signature</td>
-                            <td rowspan="3" colspan="2"></td>
-                            <td rowspan="3">Signature</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+            </table>
+        </td>
+        <td style="width: 50%;padding: 10px">
+            <table id="repayment2"  class="table table-bordered  table-condensed condensed">
+                <caption>LOAN REPAYMENT STATEMENT</caption>
+                <tr>
+                    <th style="width:1%" class="unseen text-center hinditext">nHlee keÀ.</th>
+                    <th style="width:25%" class="text-left hinditext">nHlee Yejuesueer leejerKe</th>
+                    <th style="width:25%" class="text-right hinditext">SkegÀCe Yejuesueer jkeÀkeÀce</th>
+                    <th  style="width:15%" class="text-right hinditext">CSP mener</th>
+                    <th style="width:5%" class="hinditext">MeeKeeefOekeÀejer mener</th>
+                    <th style="width:15%" class="hinditext">leHeemeCeer keÀjCeeN³ee®eer mener</th>
+                </tr>
+                {% for n in range(1,25) %}
+                    <tr >
+                        <td>{{ n }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
 
-    </div>
+                <tr>
+                    <td rowspan="3">I<br/>U<br/>C<br/></td>
+                    <td rowspan="3">
 
-    <div class="row">
-        <div class="col-md-12" style="background: #ffffff;">
-        <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/pdf_images/hindustan_passbook1.png')}}"
+                    </td>
+                    <td rowspan="3" colspan="4">Signature</td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 50%;padding: 10px">
+            <img src="/Users/prathvi/Current/esthenos/esthenos/static/img/pdf_images/hindustan_passbook1.png"
                  style="width: 100%;" alt="">
-        </div>
-            <div class="col-md-6">
-            <table class="table table-bordered font-small"  >
+        </td>
+        <td style="width: 50%;">
+            <table class="table table-bordered font-small condensed"  >
 
                 <tr>
                     <td  style="width:30%" class="text-center"></td>
 
                     <td style="width:70%" class="text-center " colspan="3" rowspan="3">Address
-                    <br/>
+                        <br/>
                         <br/>
                         <br/></td>
 
                 </tr>
             </table>
-            <table style="width: 100%;" class=" table-bordered font-small"  >
+            <table style="width: 100%;padding: 10px" class=" table-bordered font-small condensed"  >
                 <tr><th colspan="2" class="text-center">Loan Passbook</th></tr>
                 <tr >
                     <td  style="width:30%"  rowspan="1" class="text-center">
@@ -158,7 +147,7 @@
 
                 </tr>
             </table>
-            <table style="width: 100%;" class=" table-bordered font-small">
+            <table style="width: 100%;" class=" table-bordered font-small condensed">
                 <tr><th colspan="6" class="text-center">BORROWER DETAILS</th></tr>
                 <tr>
                     <td style="width: 30%;"  class="text-right">Borrower Code and Name</td>
@@ -195,7 +184,7 @@
                     <td colspan="5"></td>
                 </tr>
             </table>
-            <table style="width: 100%;" class="  table-bordered font-small">
+            <table style="width: 100%;" class="  table-bordered font-small condensed">
                 <tr><th colspan="7" class="text-center">Loan Details</th></tr>
 
 
@@ -251,8 +240,8 @@
                 </tr>
 
             </table>
-                <table style="width: 100%;" class="  table-bordered font-small">
-                    <tr><th colspan="7" class="text-center">Insurance Details</th></tr>
+            <table style="width: 100%;" class="  table-bordered font-small condensed">
+                <tr><th colspan="7" class="text-center">Insurance Details</th></tr>
 
 
                 <tr>
@@ -285,12 +274,11 @@
 
             </table>
 
-                <div class="pull-right">_____________________________________</div>
-                <br/>
-                <div class="pull-right">BM/RM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
-            </div>
-        </div>
-    </div>
+            <div class="pull-right">_____________________________________</div>
+            <br/>
+            <div class="pull-right">BM/RM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+        </td>
+    </tr>
+    </table>
 
-    </div>
 {% endblock %}

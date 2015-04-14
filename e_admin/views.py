@@ -755,13 +755,53 @@ def admin_hmplgrt():
     kwargs = locals()
     return render_template( "pdf_HMPL_GRT.html", **kwargs)
 
+
+@admin_views.route('/admin/hmpdpn', methods=["GET"])
+def admin_dpn():
+    kwargs = locals()
+    body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.50in',
+            'margin-right': '0.50in',
+            'margin-bottom': '0.50in',
+            'margin-left': '0.50in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Portrait'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
+
+
 @admin_views.route('/admin/hmplloanagreement', methods=["GET"])
 def admin_hmplloanagreement():
     kwargs = locals()
-    path = '/Users/prathvi/Current/esthenos/esthenos/static/fonts/AYOGNI_N.TTF'
     body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
     try:
-        pdfkit.from_string(body, 'dpn.pdf')
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.75in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.75in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Portrait'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
     except Exception as e:
         print e.message
 
@@ -826,20 +866,20 @@ def admin_lrpassbook():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
-#    try:
-#        pdfkit.from_string(body, 'pass.pdf')
-#    except Exception as e:
-#        print e.message
-#
-#    raw_bytes = ""
-#    with open('pass.pdf', 'rb') as r:
-#        for line in r:
-#            raw_bytes = raw_bytes + line
-#    response = make_response(raw_bytes)
-#    response.headers['Content-Type'] = 'application/pdf'
-#    response.headers['Content-Disposition'] =\
-#    'inline; filename=%s.pdf' % 'Passbook'
-    return body
+    try:
+        pdfkit.from_string(body, 'pass.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('pass.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'Passbook'
+    return response
 
 
 @admin_views.route('/admin/hindustanpassbook', methods=["GET"])
@@ -852,7 +892,33 @@ def admin_hindustanpassbook():
     org_name = "Hindustan Microfinance"
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
-    return render_template( "pdf_HindustanPassbook.html", **kwargs)
+
+    body = render_template( "pdf_HindustanPassbook.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.15in',
+            'margin-right': '0.0in',
+            'margin-bottom': '0.15in',
+            'margin-left': '0.0in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        pdfkit.from_string(body, 'tmp.pdf',options=options)
+    except Exception as e:
+        print "in exception"
+        print e.message
+
+    raw_bytes = ""
+    with open('tmp.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'Passbook'
+    return response
 
 @admin_views.route('/admin/signup', methods=["GET", "POST"])
 #@login_required
