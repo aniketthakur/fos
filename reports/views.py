@@ -554,3 +554,85 @@ def himark_request_reports():
         output.headers["Content-Disposition"] = "attachment; filename=himark_request_reports.csv"
         output.headers["Content-type"] = "text/csv"
         return output
+
+@reports_views.route('/reports/eqifax_request/download', methods=["GET"])
+@login_or_key_required
+
+def eqifax_request_reports():
+    c_user = current_user
+    kwargs = locals()
+    from e_admin.models import EsthenosOrgApplicationEqifax
+    if request.method == 'GET':
+        user  = EsthenosUser.objects.get(id=c_user.id)
+
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
+
+        application_data = list()
+
+        eq_request_headers = list()
+        eq_request_headers.append("APPLICANT ID TYPE")
+        eq_request_headers.append("Reference Number")
+        eq_request_headers.append("Member ID/ Unique Account Number")
+        eq_request_headers.append("Inquiry Purpose (Required)")
+        eq_request_headers.append("Transaction Amount")
+        eq_request_headers.append("ConsumerName (Required)")
+        eq_request_headers.append("Additional Type1 (Relationship)")
+        eq_request_headers.append("Additional Name1")
+        eq_request_headers.append("Additional Type2")
+        eq_request_headers.append("Additional Name2")
+        eq_request_headers.append("Address & City (Required)")
+        eq_request_headers.append("State/Union Territory (Required)")
+        eq_request_headers.append("Postal Pin (Required)")
+        eq_request_headers.append("Ration Card")
+        eq_request_headers.append("Voter ID")
+        eq_request_headers.append("Additional Id 1")
+        eq_request_headers.append("Additional Id 2")
+        eq_request_headers.append("National ID Card (UIN)")
+        eq_request_headers.append("Tax ID / PAN ")
+        eq_request_headers.append("Phone (Home)")
+        eq_request_headers.append("Phone (Mobile)")
+        eq_request_headers.append("DOB(Required)")
+        eq_request_headers.append("Gender")
+        eq_request_headers.append("Branch ID")
+        eq_request_headers.append("Kendra ID")
+
+        headers =  eq_request_headers
+        application_data.append(headers)
+        for app in applications:
+            eq_request = EsthenosOrgApplicationEqifax.objects.get(application_id=app.application_id)
+            row_data = list()
+
+            row_data.append(eq_request["application_id"])
+            row_data.append(eq_request["reference_number"])
+            row_data.append(eq_request["member_id_unique_accountnumber"])
+            row_data.append(eq_request["inquiry_purpose"])
+            row_data.append(eq_request["transaction_amount"])
+            row_data.append(eq_request["consumer_name"])
+            row_data.append(eq_request["additional_type1"])
+            row_data.append(eq_request["additional_name1"])
+            row_data.append(eq_request["additional_type2"])
+            row_data.append(eq_request["additional_name2"])
+            row_data.append(eq_request["address_city"])
+            row_data.append(eq_request["state_union_territory"])
+            row_data.append(eq_request["postal_pin"])
+            row_data.append(eq_request["ration_card"])
+            row_data.append(eq_request["voter_id"])
+            row_data.append(eq_request["additional_id1"])
+            row_data.append(eq_request["additional_id2"])
+            row_data.append(eq_request["national_id_card"])
+            row_data.append(eq_request["tax_id_pan"])
+            row_data.append(eq_request["phone_home"])
+            row_data.append(eq_request["phone_mobile"])
+            row_data.append(eq_request["dob"])
+            row_data.append(eq_request["gender"])
+            row_data.append(eq_request["branch_id"])
+            row_data.append(eq_request["kendra_id"])
+
+
+            app_row_data = row_data
+            application_data.append(app_row_data)
+
+        output = excel.make_response_from_array(application_data, 'csv')
+        output.headers["Content-Disposition"] = "attachment; filename=eqifax_request_reports.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
