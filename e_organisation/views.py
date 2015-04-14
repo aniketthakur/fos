@@ -771,13 +771,13 @@ def applications():
     print  center_id," ",group_id
     center = None
     if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+        center = EsthenosOrgCenter.objects.filter(center_id=center_id)[0]
         print center.center_name
     else:
         group_id = ''
     group = None
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
         print group.group_name
     else:
         center_id = ''

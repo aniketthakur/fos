@@ -275,7 +275,7 @@ class EsthenosOrgApplication(db.Document):
     education = db.StringField(max_length=40, required=False,default="")
     type_of_residence = db.StringField(max_length=40, required=False,default="")
     quality_of_house = db.StringField(max_length=40, required=False,default="")
-    drinking_water = db.StringField(max_length=40, required=False,default="")
+    drinking_water = db.StringField(max_length=512, required=False,default="")
     purpose_of_loan = db.StringField(max_length=512, required=False,default="")
     family_size =  db.IntField(default=0)
     adult_count =  db.IntField(default=0)
