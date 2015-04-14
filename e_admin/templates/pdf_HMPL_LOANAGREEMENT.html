@@ -1,6 +1,28 @@
 {% extends "base_pdf.html" %}
 {% block css_sheets %}{{ super() }}
+<style type="text/css">
+    @font-face {
+        font-family: kruti dev ;
+        src: url('/Users/prathvi/Current/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
+    }
 
+    .hinditext {
+        font-family: kruti dev;
+        font-size:10px;
+    }
+    .font-small{
+        font-size:8px;
+    }
+    .font-vsmall{
+        font-size:7px;
+    }
+    .font-small tr{
+        line-height: 20px;
+        min-height: 20px;
+        height: 20px;
+        font-size:8px;
+    }
+</style>
 {% endblock %}
 
 {% block action_bar %}
