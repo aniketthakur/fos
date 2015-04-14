@@ -18,11 +18,83 @@
     <script type="text/javascript">
         function initialize() {
             var mapOptions = {
-                center: { lat: 18.96, lng: 72.82},
-                zoom: 8
+                center: { lat: 19.876165, lng: 75.343314},
+                zoom: 7,
+                minZoom: 5, maxZoom: 10
             };
+
             var map = new google.maps.Map(document.getElementById('map-canvas'),
                     mapOptions);
+            //
+            var image = '{{ url_for('static', filename='img/hindusthan-new_06.png' )}}';
+            var myLatLng = new google.maps.LatLng(21.152344, 79.093101);
+            var beachMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng2 = new google.maps.LatLng(21.120143, 79.112513);
+            var beachMarker2 = new google.maps.Marker({
+                position: myLatLng2,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng3 = new google.maps.LatLng(19.055848, 72.928159);
+            var beachMarker3 = new google.maps.Marker({
+                position: myLatLng3,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng4 = new google.maps.LatLng(21.120143, 79.112513);
+            var beachMarker4 = new google.maps.Marker({
+                position: myLatLng4,
+                map: map,
+                icon: image
+            });
+            var myLatLng5 = new google.maps.LatLng(19.040208, 72.85085);
+            var beachMarker5 = new google.maps.Marker({
+                position: myLatLng5,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng6 = new google.maps.LatLng(19.182517, 73.192602);
+            var beachMarker6 = new google.maps.Marker({
+                position: myLatLng6,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng7 = new google.maps.LatLng(19.417821, 72.810854);
+            var beachMarker7 = new google.maps.Marker({
+                position: myLatLng7,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng8 = new google.maps.LatLng(18.635255, 73.566774);
+            var beachMarker8 = new google.maps.Marker({
+                position: myLatLng8,
+                map: map,
+                icon: image
+            });
+            var myLatLng9 = new google.maps.LatLng(18.563551, 73.932555);
+            var beachMarker9 = new google.maps.Marker({
+                position: myLatLng9,
+                map: map,
+                icon: image
+            });
+
+            var myLatLng10 = new google.maps.LatLng(18.629781, 73.799709);
+            var beachMarker10 = new google.maps.Marker({
+                position: myLatLng10,
+                map: map,
+                icon: image
+            });
+
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -32,25 +104,29 @@
         <div class="col-md-5">
 
             <div class="grid simple">
-                <div class="grid-title no-border">
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
+
+                <div class="grid-body no-border" style="background: #ffffff;height: 230px;" >
                     <h5>Summary</h5>
-                </div>
-                <div class="grid-body no-border">
-                    <h4>Monthly Target <span class="semi-bold text-info">480</span></h4>
-                    <h4>Loan Disbursed <span class="semi-bold text-info">576</span></h4>
-                    <h3>Achivement <span class="bold text-success">120%</span></h3>
-                    <h4>Amount Disbursed <span class="bold text-primary">1.27 Cr</span></h4>
+                    <div class="col-md-7">
+                        <h4>Monthly Target <span class="semi-bold text-info">480</span></h4>
+                        <h4>Loan Disbursed <span class="semi-bold text-info">576</span></h4>
+                        <h4>Amount Disbursed <span class="bold text-primary">1.27 Cr</span></h4>
+                    </div>
+                    <div class="col-md-5">
+                        <h3 class="pull-right">Achivement <span class="bold text-success">120%</span></h3>
+                        <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                            <div class="progress-bar progress-bar-red animate-progress-bar" data-percentage="50%" style="width: 64.8%;"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Daily <span class="semi-bold">TAT Graph</span></h4>
-                    <div class="tools"> <a href="javascript:;" class="reload"></a></div>
-                </div>
+            <div class="grid simple" style="background: #ffffff;height: 150px;">
+
                 <div class="grid-body no-border">
+                    <h4>Daily <span class="semi-bold">TAT Graph</span></h4>
                     <h3>Avg TAT <span class="semi-bold">3.9</span></h3>
                     <!--
                     <p>Sparkline line charts using <code>HTML</code> attributes. This method allows for all options </p>
@@ -73,14 +149,14 @@
     </div>
     <div class="row">
         <div class="grid simple">
-            <div class="col-md-12 no-padding">
+            <div class="col-md-12">
                 <div id="map-canvas" style="height:450px"></div>
             </div>
         </div>
     </div>
-    <br/>
+    <!--
     <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles green added-margin  m-b-20">
                 <div class="tiles-body">
                     <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
@@ -114,7 +190,7 @@
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example" style="height:250px"> </div>
+                    <div id="line-example-2" style="height:180px"> </div>
                 </div>
 
             </div>
@@ -150,33 +226,6 @@
             </div>
         </div>
         <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles purple added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Date Entry </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-vlg-3 col-sm-6">
             <div class="tiles red added-margin  m-b-20">
                 <div class="tiles-body">
                     <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
@@ -203,6 +252,34 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles purple added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">CB Check </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -218,18 +295,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Data Entry  <span class="semi-bold">Feb 2015</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                    <p>97% Accepted</p>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="donut-example2" style="height:200px;" ></div>
-                </div>
-            </div>
-        </div>
+
         <div class="col-md-4">
             <div class="grid simple">
                 <div class="grid-title no-border">
@@ -242,90 +308,140 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>CB Check  <span class="semi-bold">Feb 2015</span></h4>
+                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
+                    <p>95% Accepted</p>
+                </div>
+                <div class="grid-body no-border">
+                    <div id="donut-example2" style="height:200px;" ></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-yellow added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
+                </div>
+                <div class="grid-body no-border">
+                    <div id="line-example" style="height:180px"> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-red added-margin  m-b-20">
+                <div class="tiles-body">
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
+                </div>
+                <div class="grid-body no-border">
+                    <div id="line-example" style="height:180px"> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles gray added-margin  m-b-20">
                 <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">Ready for CGT/GRT </div>
+                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
+                    <div class="tiles-title text-black">Applications Submitted </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
-                    </div>
+                    </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
-                    </div>
+                    </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
                     </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles blue added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">CGT/GRT </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles green added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">Credit underwirting </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                <div class="grid-body no-border">
+                    <div id="line-example" style="height:180px"> </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -364,12 +480,13 @@
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example2" style="height:250px"> </div>
+                    <div id="line-example2" style="height:180px"> </div>
                 </div>
 
             </div>
         </div>
     </div>
+    -->
 {% endblock %}
 {% block js_scripts_pre %}{{ super() }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
