@@ -29,7 +29,7 @@ conn = boto.connect_ses(
 
 from esthenos import render_template,mainapp
 
-from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC
+from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC,EsthenosOrgStats
 #from e_admin.models import EsthenosOrgApplication
 from datetime import date
 
@@ -44,98 +44,21 @@ def calculate_age(born):
     else:
         return today.year - born.year
 
-@celery.task
-def send_organisation_notification_as_on():
-    orgs = EsthenosOrg.objects.all()
-    for org in orgs:
-        app_submitted_total = 1000
-        app_submitted_success = 800
-        app_submitted_fail = 200
-        data_entry_total = 00
-        data_entry_success = 00
-        data_entry_fail = 00
-        kyc_entry_total = 00
-        kyc_entry_success = 00
-        kyc_entry_fail = 00
-        kyc_validation_total = 2000
-        kyc_validation_success = 1980
-        kyc_validation_fail = 20
-        cb_check_total = 1980
-        cb_check_success = 1800
-        cb_check_fail = 180
-        cb_check_total = 1980
-        cf_analysis_total  = 1800
-        cf_analysis_success  = 1600
-        cf_analysis_fail  = 200
-        cgt_ready_total  = 1800
-        cgt_ready_success  = 1600
-        cgt_ready_fail  = 200
-        cgt1_done_total  = 1000
-        cgt1_done_success  = 900
-        cgt1_done_fail  = 100
-        cgt2_done_total  = 900
-        cgt2_done_success  = 800
-        cgt2_done_fail  = 100
-        grt_ready_total  = 800
-        grt_ready_success  = 700
-        grt_ready_fail  = 100
-        grt_done_total  = 700
-        grt_done_success  = 600
-        grt_done_fail  = 100
-        dd_done_total = 500
-        disbursed_total = 400
-        users = EsthenosUser.objects.filter(organisation=org)
-        for user in users:
-            kwargs = locals()
-            html_data = render_template("email/notification_today.html", **kwargs)
-            conn.send_email(mainapp.config["SERVER_EMAIL"], "Collections Stats",None,[user.email],format="html" ,html_body=html_data)
 
 
+@periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
-def send_organisation_notification_today():
-    orgs = EsthenosOrg.objects.all()
-    for org in orgs:
-        app_submitted_total = 100
-        app_submitted_success = 80
-        app_submitted_fail = 20
-        data_entry_total = 0
-        data_entry_success = 0
-        data_entry_fail = 0
-        kyc_entry_total = 0
-        kyc_entry_success = 0
-        kyc_entry_fail = 0
-        kyc_validation_total = 200
-        kyc_validation_success = 198
-        kyc_validation_fail = 2
-        cb_check_total = 198
-        cb_check_success = 180
-        cb_check_fail = 18
-        cb_check_total = 198
-        cf_analysis_total  = 180
-        cf_analysis_success  = 160
-        cf_analysis_fail  = 20
-        cgt_ready_total  = 180
-        cgt_ready_success  = 160
-        cgt_ready_fail  = 20
-        cgt1_done_total  = 100
-        cgt1_done_success  = 90
-        cgt1_done_fail  = 10
-        cgt2_done_total  = 90
-        cgt2_done_success  = 80
-        cgt2_done_fail  = 10
-        grt_ready_total  = 80
-        grt_ready_success  = 70
-        grt_ready_fail  = 10
-        grt_done_total  = 70
-        grt_done_success  = 60
-        grt_done_fail  = 10
-        dd_done_total = 50
-        disbursed_total = 40
-        users = EsthenosUser.objects.filter(organisation=org)
-        for user in users:
-            kwargs = locals()
-            html_data = render_template("email/notification_today.html", **kwargs)
-            conn.send_email(mainapp.config["SERVER_EMAIL"], "Collections Stats",None,[user.email],format="html" ,html_body=html_data)
+def org_applications_stats_update():
+    organisations = EsthenosOrg.objects.all()
+    for org in organisations:
+        date_obj =  datetime.datetime.now()
+        date_obj.day
+        stat = EsthenosOrgStats.objects.get_or_create(organisation=org)
+
+        stat.stat_type = ""
+
+    pass
+
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
 def prefill_applications():
@@ -336,8 +259,9 @@ def all_tagged_applications():
             application.status = 7
             application.save()
 
-from utils import make_sample_highmark_request_for_application_id,add_sample_highmark_response
-@periodic_task(run_every=datetime.timedelta(seconds=20))
+from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
+@celery.task
+@periodic_task(run_every=datetime.timedelta(seconds=120))
 def cb_checkready_applications():
     print "queue processor"
     today = datetime.datetime.now()
@@ -346,15 +270,16 @@ def cb_checkready_applications():
     all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=7)
 
     for application in all_cbcheckready_applications:
-        make_sample_highmark_request_for_application_id(application.application_id)
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
-
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 8
-        application.save()
+        make_equifax_request_entry_application_id(application.application_id)
+        make_highmark_request_for_application_id(application.application_id)
+#        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
+#        status.save()
+#        application.timeline.append(status)
+#
+#        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
+#        application.current_status_updated  = datetime.datetime.now()
+#        application.status = 8
+#        application.save()
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
@@ -362,7 +287,7 @@ def cbcheck_statuscheck_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=8)
+    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=9)
 
     for application in cbcheck_statuscheck_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)

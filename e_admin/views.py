@@ -657,16 +657,16 @@ def admin_application_id_track(org_id,app_id):
     return render_template("admin_application_tracking.html", **kwargs)
 
 
-# @admin_views.route('/admin/cbcheck', methods=["GET"])
-# @login_required
-# def admin_cbcheck():
-#     if session['role'] != "ADMIN":
-#         abort(403)
-#     username = current_user.name
-#     c_user = current_user
-#     user = EsthenosUser.objects.get(id=c_user.id)
-#     kwargs = locals()
-#     return render_template("admin_cbcheck.html", **kwargs)
+@admin_views.route('/admin/cbcheck', methods=["GET"])
+@login_required
+def admin_cbcheck():
+     if session['role'] != "ADMIN":
+         abort(403)
+     username = current_user.name
+     c_user = current_user
+     user = EsthenosUser.objects.get(id=c_user.id)
+     kwargs = locals()
+     return render_template("admin_cbcheck.html", **kwargs)
 
 
 # @admin_views.route('/admin/disbursement', methods=["GET"])

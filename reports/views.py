@@ -563,7 +563,7 @@ def himark_request_reports():
 def eqifax_request_reports():
     c_user = current_user
     kwargs = locals()
-    from e_admin.models import EsthenosOrgApplicationEqifax
+    from e_organisation.models import EsthenosOrgApplicationEqifax
     if request.method == 'GET':
         user  = EsthenosUser.objects.get(id=c_user.id)
 
