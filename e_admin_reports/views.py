@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from e_tokens.utils import login_or_key_required
 import json,hashlib
 from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse
 from flask import  Blueprint
 import os,tempfile
 from esthenos.crossdomain import *

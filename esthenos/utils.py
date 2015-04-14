@@ -59,16 +59,17 @@ def request_wants_json():
            request.accept_mimetypes['text/html']
 
 
-from e_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplication
 #Added by Deepak
 def make_sample_highmark_request_for_application_id(app_id):
+    app = EsthenosOrgApplication.objects.get(application_id = app_id)
     hmrequest = EsthenosOrgApplicationHighMarkRequest()
-    hmrequest.applicant_id1=app_id
-    hmrequest.acct_open_date=""
-    hmrequest.applicant_address1="44 MACHHLEL TA MATAR DIST KHEDA"
-    hmrequest.applicant_address1_city="MACHEL"
-    hmrequest.applicant_address1_pincode="387530"
-    hmrequest.applicant_address1_state="GJ"
+    hmrequest.applicant_id1=app.application_id
+    hmrequest.acct_open_date=app.created_on
+    hmrequest.applicant_address1=app.address+" "
+    hmrequest.applicant_address1_city=app.member_city
+    hmrequest.applicant_address1_pincode=app.member_pincode
+    hmrequest.applicant_address1_state=app.state
     hmrequest.applicant_address2=""
     hmrequest.applicant_address2_city=""
     hmrequest.applicant_address2_pincode=""
@@ -79,9 +80,9 @@ def make_sample_highmark_request_for_application_id(app_id):
     hmrequest.applicant_age_as_on_date="05/03/2015 16:32:00"
     hmrequest.applicant_birth_date="05/03/2015 16:32:00"
     hmrequest.applicant_id__account_no=""
-    hmrequest.applicant_id_type1="ID02"
-    hmrequest.applicant_id_type2="ID05"
-    hmrequest.applicant_name1="PARMAR BHEEKHEEBEN"
+    hmrequest.applicant_id_type1=app.application_id
+    hmrequest.applicant_id_type2=""
+    hmrequest.applicant_name1=app.applicant_name
     hmrequest.applicant_name2=""
     hmrequest.applicant_name3=""
     hmrequest.applicant_name4=""
@@ -129,7 +130,7 @@ def add_sample_highmark_response(app_id):
 #        app.eligible_loan_cycle =self.cycle.data
 #        app.defaults_with_no_mfis =
 #        app.attendence_percentage =
-    hmresponse = EsthenosOrgApplicationHighMark()
+    hmresponse = EsthenosOrgApplicationHighMarkResponse()
     hmresponse.active_account="0"
     hmresponse.address="#81 MARIMUDDANAHALLI HUNSURE TO MYSOURE KARIMUDDANAHALLI 571189 KA"
     hmresponse.age_as_on_dt=20

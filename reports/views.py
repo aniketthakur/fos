@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from e_tokens.utils import login_or_key_required
 import json,hashlib
 from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMark,EsthenosOrgApplicationHighMarkRequest
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse
 from flask import  Blueprint
 import os,tempfile
 from esthenos.crossdomain import *
@@ -347,7 +347,7 @@ def internal_main_reports():
         application_data.append(headers)
         for app in applications:
             app_row_data= get_application_rowdata(app)
-            hmresp = EsthenosOrgApplicationHighMark.objects.get(application_id=app.application_id)
+            hmresp = EsthenosOrgApplicationHighMarkRequest.objects.get(application_id=app.application_id)
             row_data = list()
             row_data.append(hmresp["application_id"])
             row_data.append(hmresp["member_id"])
@@ -417,12 +417,14 @@ def external_main_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
+from e_organisation.models import EsthenosOrgApplication
+
 @reports_views.route('/reports/highmark_request/download', methods=["GET"])
 @login_or_key_required
 def himark_request_reports():
     c_user = current_user
     kwargs = locals()
-    from e_organisation.models import EsthenosOrgApplication
+
     if request.method == 'GET':
         user  = EsthenosUser.objects.get(id=c_user.id)
 
@@ -488,7 +490,7 @@ def himark_request_reports():
         headers =  hm_request_headers
         application_data.append(headers)
         for app in applications:
-            hm_request = EsthenosOrgApplicationHighMarkRequest.objects.get(application_id=app.application_id)
+            hm_request = EsthenosOrgApplicationHighMarkResponse.objects.get(application_id=app.application_id)
             row_data = list()
             row_data.append(hm_request["application_id"])
             row_data.append(hm_request["segment_identifier"])
@@ -570,7 +572,6 @@ def eqifax_request_reports():
         application_data = list()
 
         eq_request_headers = list()
-        eq_request_headers.append("APPLICANT ID TYPE")
         eq_request_headers.append("Reference Number")
         eq_request_headers.append("Member ID/ Unique Account Number")
         eq_request_headers.append("Inquiry Purpose (Required)")
@@ -601,8 +602,6 @@ def eqifax_request_reports():
         for app in applications:
             eq_request = EsthenosOrgApplicationEqifax.objects.get(application_id=app.application_id)
             row_data = list()
-
-            row_data.append(eq_request["application_id"])
             row_data.append(eq_request["reference_number"])
             row_data.append(eq_request["member_id_unique_accountnumber"])
             row_data.append(eq_request["inquiry_purpose"])

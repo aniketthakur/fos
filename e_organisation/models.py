@@ -396,13 +396,15 @@ class EsthenosOrgApplication(db.Document):
     i_total=db.FloatField(default=0.0)
     e_total=db.FloatField(default=0.0)
     member_id_proof_number=db.StringField(max_length=40, required=False,default="")
+    updated_on = db.DateTimeField(default=datetime.datetime.now)
+    created_on = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
 
 
 
-class EsthenosOrgApplicationHighMark(db.Document):
+class EsthenosOrgApplicationHighMarkRequest(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
     member_id=db.StringField(max_length=128, required=True,default="")
     member_name=db.StringField(max_length=128, required=True,default="")
@@ -447,7 +449,7 @@ class EsthenosOrgApplicationHighMark(db.Document):
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
-class EsthenosOrgApplicationHighMarkRequest(db.Document):
+class EsthenosOrgApplicationHighMarkResponse(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
     sent_status = db.BooleanField(default=False)
     segment_identifier = db.StringField(max_length=255, required=False,default="")
