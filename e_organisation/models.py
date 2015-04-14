@@ -108,7 +108,9 @@ class EsthenosOrg(db.Document):
     logo_url = db.StringField(max_length=255, required=False)
     domain = db.StringField(max_length=128, required=False)
     states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
-
+    monthly_target = db.IntField(default=0)
+    monthly_disbursed = db.IntField(default=0)
+    monthly_amount_disbursed = db.IntField(default=0)
     name = db.StringField(max_length=512, required=True)
     profile_pic = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now)

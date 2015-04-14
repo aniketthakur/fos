@@ -2,10 +2,30 @@
 {% block css_sheets %}{{ super() }}
     <link href="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/css/rickshaw.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-morris-chart/css/morris.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
+    <style type="text/css">
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
 {% endblock %}
 
 {% block action_bar %}
 
+{% endblock %}
+{% block top_js_scripts %}
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww">
+    </script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+                center: { lat: 18.96, lng: 72.82},
+                zoom: 8
+            };
+            var map = new google.maps.Map(document.getElementById('map-canvas'),
+                    mapOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 {% endblock %}
 {% block maincontents %}
     <div class="row">
@@ -54,7 +74,7 @@
     <div class="row">
         <div class="grid simple">
             <div class="col-md-12 no-padding">
-                <div id="world-map" style="height:450px"></div>
+                <div id="map-canvas" style="height:450px"></div>
             </div>
         </div>
     </div>
