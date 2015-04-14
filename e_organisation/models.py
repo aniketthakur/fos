@@ -550,6 +550,70 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
+
+class  EsthenosOrgApplicationEqifaxResponse(db.Document):
+    report_id=db.IntField(default="0")
+    reference_number=db.IntField(default="0")
+    unique_account_number=db.IntField(default="0")
+    date_of_issue=db.StringField(max_length=255,required=False,default="")
+    member_name=db.StringField(max_length=255,required=False,default="")
+    date_of_birth=db.StringField(max_length=255,required=False,default="")
+    addl_name_type1=db.StringField(max_length=255,required=False,default="")
+    addl_name1=db.StringField(max_length=255,required=False,default="")
+    addl_name_type2=db.StringField(max_length=255,required=False,default="")
+    addl_name2=db.StringField(max_length=255,required=False,default="")
+    national_id_card=db.StringField(max_length=255,required=False,default="")
+    passport=db.StringField(max_length=255,required=False,default="")
+    ration_card=db.StringField(max_length=255,required=False,default="")
+    voter_id=db.StringField(max_length=255,required=False,default="")
+    pan_card=db.StringField(max_length=255,required=False,default="")
+    additional_id1=db.StringField(max_length=255,required=False,default="")
+    additional_id2=db.StringField(max_length=255,required=False,default="")
+    address=db.StringField(max_length=255,required=False,default="")
+    state=db.StringField(max_length=255,required=False,default="")
+    postal=db.StringField(max_length=255,required=False,default="")
+    branch_id=db.StringField(max_length=255,required=False,default="")
+    kendra_or_centre_id=db.StringField(max_length=255,required=False,default="")
+    own_mfi_indicator=db.IntField(default="0")
+    total_responses=db.IntField(default="0")
+    total_responses_own=db.IntField(default="0")
+    total_responses_others=db.IntField(default="0")
+    num_of_other_mfis=db.IntField(default="0")
+    num_active_account=db.IntField(default="0")
+    num_active_account_own=db.IntField(default="0")
+    num_active_account_other=db.IntField(default="0")
+    num_closed_account=db.IntField(default="0")
+    num_closed_account_own=db.IntField(default="0")
+    num_closed_account_other=db.IntField(default="0")
+    num_past_due_account=db.IntField(default="0")
+    num_past_due_account_own=db.IntField(default="0")
+    num_past_due_account_other=db.IntField(default="0")
+    sum_current_balance=db.IntField(default="0")
+    sum_current_balance_own=db.IntField(default="0")
+    sum_current_balance_other=db.IntField(default="0")
+    sum_disbursed=db.IntField(default="0")
+    sum_disbursed_own=db.IntField(default="0")
+    sum_disbursed_other=db.IntField(default="0")
+    sum_installment_amount=db.IntField(default="0")
+    sum_installment_amount_own=db.IntField(default="0")
+    sum_installment_amount_other=db.IntField(default="0")
+    sum_overdue_amount=db.IntField(default="0")
+    sum_overdue_amount_own=db.IntField(default="0")
+    sum_overdue_amount_other=db.IntField(default="0")
+    sum_writtenoff_amount=db.IntField(default="0")
+    sum_writtenoff_amount_own=db.IntField(default="0")
+    sum_writtenoff_amount_other=db.IntField(default="0")
+    num_writtenoff_account=db.IntField(default="0")
+    num_writtenoff_account_own=db.IntField(default="0")
+    num_writtenoff_accountnon_own=db.IntField(default="0")
+
+
+
+
+
+
+
+
 sauth_user_registered = signal('user-registered')
 
 @sauth_user_registered.connect
