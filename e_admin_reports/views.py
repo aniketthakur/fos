@@ -76,6 +76,71 @@ def himark_request_reports_import():
         sheet = pyexcel.load_from_memory(extension, request.files['file'].read())
         # then use it as usual
         data = pyexcel.to_dict(sheet)
+        for k,v in data.items():
+            if k != "Series_1":
+                print k,v[0]
+                hm_resp=EsthenosOrgApplicationHighMarkResponse()
+                hm_resp.application_id=v[0]
+                hm_resp.sent_status=v[1]
+                hm_resp.segment_identifier=v[2]
+                hm_resp.credit_request_type=v[3]
+                hm_resp.credit_report_transaction_id=v[4]
+                hm_resp.credit_inquiry_purpose_type=v[5]
+                hm_resp.credit_inquiry_purpose_type_description=v[6]
+                hm_resp.credit_inquiry_stage=v[7]
+                hm_resp.credit_report_transaction_date_time=v[8]
+                hm_resp.applicant_name1=v[9]
+                hm_resp.applicant_name2=v[10]
+                hm_resp.applicant_name3=v[11]
+                hm_resp.applicant_name4=v[12]
+                hm_resp.applicant_name5=v[13]
+                hm_resp.member_father_name=v[14]
+                hm_resp.member_mother_name=v[15]
+                hm_resp.member_spouse_name=v[16]
+                hm_resp.member_relationship_type1=v[17]
+                hm_resp.member_relationship_name1=v[18]
+                hm_resp.member_relationship_type2=v[19]
+                hm_resp.member_relationship_name2=v[20]
+                hm_resp.member_relationship_type3=v[21]
+                hm_resp.member_relationship_name3=v[22]
+                hm_resp.member_relationship_type4=v[23]
+                hm_resp.member_relationship_name4=v[24]
+                hm_resp.applicant_birth_date=v[25]
+                if not is_number(v[26]):
+                    v[26] = 0
+                hm_resp.applicant_age=v[26]
+                hm_resp.applicant_age_as_on_date=v[27]
+                hm_resp.applicant_id_type1=v[28]
+                hm_resp.applicant_id1=v[29]
+                hm_resp.applicant_id_type2=v[30]
+                hm_resp.applicant_id2=v[31]
+                hm_resp.acct_open_date=v[32]
+                hm_resp.applicant_id__account_no=v[33]
+                hm_resp.branch_id=v[34]
+                hm_resp.member_id=v[35]
+                hm_resp.kendra_id=v[36]
+                if not is_number(v[37]):
+                    v[37] = 0
+                hm_resp.applied_for_amount__current_balance=v[37]
+                hm_resp.key_person_name=v[38]
+                hm_resp.key_person_relation=v[39]
+                hm_resp.nominee_name=v[40]
+                hm_resp.applicant_telephone_number_type1=v[41]
+                hm_resp.applicant_telephone_number1=v[42]
+                hm_resp.applicant_telephone_number_type2=v[43]
+                hm_resp.applicant_telephone_number2=v[44]
+                hm_resp.applicant_address_type1=v[45]
+                hm_resp.applicant_address1=v[46]
+                hm_resp.applicant_address1_city=v[47]
+                hm_resp.applicant_address1_state=v[48]
+                hm_resp.applicant_address1_pincode=v[49]
+                hm_resp.applicant_address_type2=v[50]
+                hm_resp.applicant_address2=v[51]
+                hm_resp.applicant_address2_city=v[52]
+                hm_resp.applicant_address2_state=v[53]
+                hm_resp.applicant_address2_pincode=v[54]
+                hm_resp.nominee_relationship_type=v[55]
+
 
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
 
