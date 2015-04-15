@@ -68,7 +68,11 @@ status_type.status = "APPLICATION_TAGGED"
 status_type.status_message = "Application is tagged and ready of data entry"
 status_type.status_code = 4
 status_type.save()
-
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CRITERIA_FAILED"
+status_type.status_message = "Some organisation criteria failed required for the processing are missing"
+status_type.status_code = -1
+status_type.save()
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_KYC_VALIDATION_PASSED"
 status_type.status_message = "Application KYC has completed, validation successfulh"
