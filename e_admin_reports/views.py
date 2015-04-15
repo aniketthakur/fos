@@ -149,7 +149,7 @@ def himark_request_reports():
             applications = EsthenosOrgApplication.objects.filter(organisation=org,status_code=7)
             for app in applications:
                 try:
-                    hm_request = EsthenosOrgApplicationHighMarkResponse.objects.get(application_id=app.application_id)
+                    hm_request = EsthenosOrgApplicationHighMarkResponse.objects.filter(application_id=app.application_id)[0]
                     row_data = list()
                     row_data.append(hm_request["application_id"])
                     row_data.append(hm_request["segment_identifier"])
@@ -403,7 +403,7 @@ def eqifax_request_reports():
 
             for app in applications:
                 try:
-                    eq_request = EsthenosOrgApplicationEqifax.objects.get(application_id=app.application_id)
+                    eq_request = EsthenosOrgApplicationEqifax.objects.filter(application_id=app.application_id)[0]
                     row_data = list()
                     row_data.append(eq_request["reference_number"])
                     row_data.append(eq_request["member_id_unique_accountnumber"])

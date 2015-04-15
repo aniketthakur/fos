@@ -655,6 +655,8 @@ def get_application():
         status=200,\
         mimetype="application/json")
 
+
+from e_organisation.models import EsthenosOrgSettings
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
 def upload_documents():
@@ -725,7 +727,8 @@ def upload_documents():
                 inc_count = inc_count+1
                 int_x = int_x+1
 
-            EsthenosOrg.objects.get(id = user.organisation.id).update(a=int_x)
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=int_x)
+
             session_obj.center = center
             session_obj.group = group
             session_obj.tagged = True

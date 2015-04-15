@@ -164,7 +164,7 @@ class EsthenosOrg(db.Document):
     postal_city = db.StringField(max_length=100, required=False)
     postal_code = db.StringField(max_length=10, required=False)
     email = db.StringField( unique=True)
-    application_count = db.IntField(default=1)
+    application_count = db.IntField(default=0)
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
     employee_count = db.IntField(default=1)
