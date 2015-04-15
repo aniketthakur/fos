@@ -42,11 +42,11 @@
                                     </th>
                                     <th style="width:10%">Application ID</th>
                                     <th style="width:19%">Applicant Name</th>
-                                    <th style="width:10%">Group Name</th>
-                                    <th style="width:10%">Center Name</th>
-                                    <th style="width:16%">Date</th>
-                                    <th style="width:15%">Progress</th>
-
+                                    <th style="width:8%">Group Name</th>
+                                    <th style="width:8%">Center Name</th>
+                                    <th style="width:15%">Date</th>
+                                    <th style="width:10%">Progress</th>
+                                    <th style="width:10%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -69,7 +69,9 @@
                                                 <div data-percentage="80%"  class="progress-bar progress-bar-info animate-progress-bar"></div>
                                             </div>
                                         </td>
-
+                                        <td class="v-align-middle">
+                                            <a class="btn btn-info" href="/disbursement/download/{{ app.application_id }}">Download</a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
 
