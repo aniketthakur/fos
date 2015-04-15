@@ -8,7 +8,7 @@
 
         .hinditext {
             font-family: kruti dev;
-            font-size:12px;
+            font-size:10px;
         }
         .hinditext-large {
             font-family: kruti dev;
@@ -62,19 +62,19 @@
 {% endblock %}
 {% block maincontents %}
 
-    <h4 class="text-center hinditext-vlarge">HeemeyegkeÀ</h4>
+    <h4 class="text-center ">Passbook/ <span class="hinditext-vlarge">HeemeyegkeÀ</span></h4>
     <table style="width: 100%;padding: 10px;">
     <tr style="padding: 10px;">
         <td style="width: 50%;padding: 10px">
             <table  id="repayment" class="table table-bordered table-condensed condensed">
-                <caption class="hinditext-large">keÀpe& HejledHesÀæ[ JesUeHe$ekeÀ</caption>
+                <caption>LOAN REPAYMENT SCHEDULE/ <span class="hinditext-large">keÀpe& HejledHesÀæ[ JesUeHe$ekeÀ</span></caption>
                 <tr>
-                    <th style="width:1%" class="unseen text-center hinditext">nHlee keÀ.</th>
-                    <th  style="width:20%" class="text-left hinditext">nHl³ee®eer leejerKe</th>
-                    <th style="width:15%" class="text-right hinditext">J³eepe</th>
-                    <th style="width:10%" class="text-right hinditext">मुद्दल</th>
-                    <th style="width:10%" class="text-right hinditext">SkegÀCe nHlee</th>
-                    <th style="width:10%" class="hinditext" >keÀpe& efMeuuekeÀ</th>
+                    <th style="width:1%" class="unseen text-center ">Inst #  /&nbsp<span class="hinditext">nHlee keÀ.</span></th>
+                    <th  style="width:20%" class="text-left ">Date Due  /&nbsp<span class="hinditext">nHl³ee®eer leejerKe</span></th>
+                    <th style="width:15%" class="text-right ">Interest Payment  /&nbsp<span class="hinditext">J³eepe</span></th>
+                    <th style="width:10%" class="text-right ">Principal Payment  /&nbsp<span class="hinditext">मुद्दल </span></th>
+                    <th style="width:10%" class="text-right ">Total Installment  /&nbsp<span class="hinditext">SkegÀCe nHlee</span></th>
+                    <th style="width:10%" class="">Loan C/F  /&nbsp<span class="hinditext">keÀpe& efMeuuekeÀ</span></th>
                 </tr>
 
                 {% for n in range(1,25) %}
@@ -108,12 +108,12 @@
             <table id="repayment2"  class="table table-bordered  table-condensed condensed">
                 <caption class="hinditext-large">keÀpe& HejledHesÀæ[ DenJeeue</caption>
                 <tr>
-                    <th style="width:1%" class="unseen text-center hinditext">nHlee keÀ.</th>
-                    <th style="width:25%" class="text-left hinditext">nHlee Yejuesueer leejerKe</th>
-                    <th style="width:25%" class="text-right hinditext">SkegÀCe Yejuesueer jkeÀkeÀce</th>
-                    <th  style="width:15%" class="text-right hinditext">CSP mener</th>
-                    <th style="width:5%" class="hinditext">MeeKeeefOekeÀejer mener</th>
-                    <th style="width:15%" class="hinditext">leHeemeCeer keÀjCeeN³ee®eer mener</th>
+                    <th style="width:1%" class="unseen text-center ">Inst #  /&nbsp<span class="hinditext">nHlee keÀ.</span></th>
+                    <th style="width:25%" class="text-left">Date Paid  /&nbsp<span class="hinditext">nHlee Yejuesueer leejerKe</span></th>
+                    <th style="width:25%" class="text-right">Total Amount Paid  /&nbsp<span class="hinditext">SkegÀCe Yejuesueer jkeÀkeÀce</span></th>
+                    <th  style="width:15%" class="text-right">CM Signature  /&nbsp<span class="hinditext">CSP mener</span></th>
+                    <th style="width:5%" class="">BM Signature   /&nbsp<span class="hinditext">MeeKeeefOekeÀejer mener</span></th>
+                    <th style="width:15%" class="">Attendence  /&nbsp<span class="hinditext">leHeemeCeer keÀjCeeN³ee®eer mener</span></th>
                 </tr>
                 {% for n in range(1,25) %}
                     <tr >
@@ -148,23 +148,23 @@
                 <img width="100%" src="/Users/prathvi/Current/esthenos/esthenos/static/img/pdf_images/passbook_top.jpg"/>
             </table>
             <table style="width: 100%;" class=" table-bordered font-small condensed">
-                <tr><th colspan="6" class="text-center">BORROWER DETAILS/<span class="hinditext-large"> menkeÀpe&oeje®eer ceenerleer</span></th></tr>
+                <tr><th colspan="6" class="text-center">BORROWER DETAILS  /&nbsp<span class="hinditext"> menkeÀpe&oeje®eer ceenerleer</span></th></tr>
                 <tr>
-                    <td style="width: 30%;"  class="text-right">Borrower Code and Name/<span class="hinditext"> menkeÀpe&oeje®es veeJe DeeefCe keÀæes[ veb.</span></td>
+                    <td style="width: 30%;"  class="text-right">Borrower Code and Name  /&nbsp<span class="hinditext"> menkeÀpe&oeje®es veeJe DeeefCe keÀæes[ veb.</span></td>
                     <td style="width: 15%;"></td>
                     <td colspan="4"></td>
                 </tr>
 
                 <tr>
-                    <td   class="text-right">Spouse/Gurrantor Name/<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
+                    <td   class="text-right">Spouse/Gurrantor Name  /&nbsp<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
                     <td colspan="5"></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Village/<span class="hinditext">ieeJe </span></td>
+                    <td   class="text-right">Village  /&nbsp<span class="hinditext">ieeJe </span></td>
                     <td colspan="5"></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Group Code and Name/<span class="hinditext">ieìe®es keÀes[ veb. Je veeJe        </span></td>
+                    <td   class="text-right">Group Code & Name /&nbsp<span class="hinditext"> ieìe®es keÀes[ veb. Je veeJe </span></td>
                     <td></td>
                     <td style="width: 30%;"></td>
                     <td></td>
@@ -174,66 +174,66 @@
                     </td></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Center Code and Name/<span class="hinditext">meWìj®ee keÀes[ efkeÀbJee veeJe</span></td>
+                    <td  class="text-right">Center Code & Name /&nbsp<span class="hinditext"> meWìj®ee keÀes[ efkeÀbJee veeJe</span></td>
                     <td></td>
                     <td colspan="4"></td>
                 </tr>
 
                 <tr>
-                    <td   class="text-right">Branch Name/<span class="hinditext">MeeKes®es veeJe </span></td>
+                    <td   class="text-right">Branch Name  /&nbsp<span class="hinditext">MeeKes®es veeJe </span></td>
                     <td colspan="5"></td>
                 </tr>
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">
-                <tr><th colspan="7" class="text-center">Loan Details/<span class="hinditext">ueesve®eer ceenerlee</span></th></tr>
+                <tr><th colspan="7" class="text-center">Loan Details  /&nbsp<span class="hinditext">ueesve®eer ceenerlee</span></th></tr>
 
 
                 <tr>
-                    <td style="width: 30%;"  class="text-right">Date of Dibursement/<span class="hinditext">keÀpe& efJelejCee®eer leejerKe</span></td>
+                    <td style="width: 30%;"  class="text-right">Date of Dibursement  /&nbsp<span class="hinditext">keÀpe& efJelejCee®eer leejerKe</span></td>
                     <td colspan="4"></td>
-                    <td style="width: 20%;" class="text-right">Loan Amount:/<span class="hinditext">ueesve jkeÀkeÀce</span></td>
+                    <td style="width: 20%;" class="text-right">Loan Amount:  /&nbsp<span class="hinditext">ueesve jkeÀkeÀce</span></td>
                     <td style="width: 20%;"></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Loan Tenture/<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
-                    <td colspan="4" class="text-center">24 Months/<span class="hinditext">24 cenerves</span></td>
-                    <td rowspan="2" class="text-right">Interst Rate:/<span class="hinditext">Jîeepeoj</span></td>
+                    <td   class="text-right">Loan Tenture  /&nbsp<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
+                    <td colspan="4" class="text-center">24 Months  /&nbsp<span class="hinditext">24 cenerves</span></td>
+                    <td rowspan="2" class="text-right">Interst Rate:  /&nbsp<span class="hinditext">Jîeepeoj</span></td>
                     <td rowspan="2"></td>
                 </tr>
                 <tr>
-                    <td class="text-right" >Repayment Frequency/<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
-                    <td colspan="4" class="text-center">Monthly/<span class="hinditext">ceeefmekeÀ</span></td>
+                    <td class="text-right" >Repayment Frequency  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
+                    <td colspan="4" class="text-center">Monthly  /&nbsp<span class="hinditext">ceeefmekeÀ</span></td>
 
                 </tr>
 
                 <tr>
-                    <td rowspan="2" class="text-right">Repayment Day/<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
+                    <td rowspan="2" class="text-right">Repayment Day  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
                     <td class="text-center" style="width: 8%;">1</td>
                     <td class="text-center" style="width: 8%;">2</td>
                     <td class="text-center" style="width: 8%;">3</td>
                     <td class="text-center" style="width: 8%;">4</td>
-                    <td>Processing Fee/<span class="hinditext"></span></td>
+                    <td>Processing Fee  /&nbsp<span class="hinditext"></span></td>
                     <td>
 
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4"></td>
-                    <td colspan="2" class="text-center">Product Code/<span class="hinditext">GlHeeove vebyej</span></td>
+                    <td colspan="2" class="text-center">Product Code  /&nbsp<span class="hinditext">GlHeeove vebyej</span></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Meeting Time/<span class="hinditext">efceìeRie®eer JesU</span></td>
+                    <td   class="text-right">Meeting Time  /&nbsp<span class="hinditext">efceìeRie®eer JesU</span></td>
                     <td colspan="4"></td>
                     <td colspan="2"><span class="hinditext"></span></td>
                 </tr>
                 <tr>
-                    <td   class="text-right">LoanID/<span class="hinditext">ueesve ®es Dee æ[er</span></td>
+                    <td   class="text-right">LoanID  /&nbsp<span class="hinditext">ueesve ®es Dee æ[er</span></td>
                     <td colspan="4"></td>
-                    <td class="text-right">Loan Cycle/<span class="hinditext">keÀpee&®ee ìHHee</span></td>
+                    <td class="text-right">Loan Cycle  /&nbsp<span class="hinditext">keÀpee&®ee ìHHee</span></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td class="text-right">Loan Purpose/<span class="hinditext">ueesve IesC³ee®es keÀejCe</span></td>
+                    <td class="text-right">Loan Purpose  /&nbsp<span class="hinditext">ueesve IesC³ee®es keÀejCe</span></td>
                     <td colspan="6">
 
                     </td>
@@ -241,32 +241,32 @@
 
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">
-                <tr><th colspan="7" class="text-center">Insurance Details/<span class="hinditext">efJecee®eer ceeefnleer</span></th></tr>
+                <tr><th colspan="7" class="text-center">Insurance Details  /&nbsp<span class="hinditext">efJecee®eer ceeefnleer</span></th></tr>
 
 
                 <tr>
-                    <td style="width: 30%;" class="text-right">Insured Person/<span class="hinditext">efJeceeOeejkeÀ J³ekeÀleer</span></td>
-                    <td style="width: 30%;"><input type="radio" name="insuredPerson">Borrower/<span class="hinditext">menkeÀpe&oej</span> <input type="radio" name="insuredPerson"> Gurantor/<span class="hinditext">necceeroej</span></td>
-                    <td style="width: 20%;">Sum Assured/<span class="hinditext">efJecee jkeÀkeÀce</span></td>
+                    <td style="width: 30%;" class="text-right">Insured Person  /&nbsp<span class="hinditext">efJeceeOeejkeÀ J³ekeÀleer</span></td>
+                    <td style="width: 30%;"><input type="checkbox" name="insuredPerson">Borrower  /&nbsp<span class="hinditext">menkeÀpe&oej</span> <input type="checkbox" name="insuredPerson"> Gurantor  /&nbsp<span class="hinditext">necceeroej</span></td>
+                    <td style="width: 20%;">Sum Assured  /&nbsp<span class="hinditext">efJecee jkeÀkeÀce</span></td>
                     <td style="width: 20%;"></td>
                 </tr>
 
                 <tr>
-                    <td class="text-right">Total Premium Paid/<span class="hinditext">Yejuesueer SsketÀCe efJecee nHlee jkeÀkeÀce</span></td>
+                    <td class="text-right">Total Premium Paid  /&nbsp<span class="hinditext">Yejuesueer SsketÀCe efJecee nHlee jkeÀkeÀce</span></td>
                     <td></td>
-                    <td>Cover Period/<span class="hinditext">efJecee®ee keÀeueeJeeOeer</span></td>
+                    <td>Cover Period  /&nbsp<span class="hinditext">efJecee®ee keÀeueeJeeOeer</span></td>
                     <td></td>
                 </tr>
 
                 <tr>
-                    <td class="text-right">Nominee (Borrower)/<span class="hinditext"></span></td>
+                    <td class="text-right">Nominee (Borrower)  /&nbsp<span class="hinditext"></span></td>
                     <td colspan="3"></td>
 
                 </tr>
 
 
                 <tr>
-                    <td class="text-right">Nominee (Gurrantor)/<span class="hinditext"></span></td>
+                    <td class="text-right">Nominee (Gurrantor)  /&nbsp<span class="hinditext"></span></td>
                     <td colspan="3"></td>
 
                 </tr>

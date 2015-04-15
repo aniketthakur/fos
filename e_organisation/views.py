@@ -1062,7 +1062,49 @@ def grt_question():
 from werkzeug.utils import secure_filename, redirect
 import os,io
 from esthenos  import  s3_bucket
+from flask import make_response
+import os
+import zipfile
+import StringIO
+@organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])
+@login_required
+def grt_question(app_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org=user.organisation
+    filenames = ["dpn.pdf", "tmp.pdf","pass.pdf"]
 
+    # Folder name in ZIP archive which contains the above files
+    # E.g [thearchive.zip]/somefiles/file2.txt
+    # FIXME: Set this to something better
+    zip_subdir = app_id
+    zip_filename = "%s.zip" % zip_subdir
+
+    # Open StringIO to grab in-memory ZIP contents
+    s = StringIO.StringIO()
+
+    # The zip compressor
+    zf = zipfile.ZipFile(s, "w")
+
+    for fpath in filenames:
+        # Calculate path for file in zip
+        fdir, fname = os.path.split(fpath)
+        zip_path = os.path.join(zip_subdir, fname)
+
+        # Add file, at correct path
+        zf.write(fpath, zip_path)
+
+    # Must close zip for all contents to be written
+    zf.close()
+
+    # Grab ZIP file from in-memory, make response with correct MIME-type
+    output = make_response(s.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s" %zip_filename
+    output.headers["Content-type"] = "application/zip"
+    return output
 
 @organisation_views.route('/profile', methods=["GET","POST"])
 @login_required

@@ -209,9 +209,9 @@ def himark_request_reports():
         hm_request_headers.append("APPLICANT ADDRESS 2 STATE")
         hm_request_headers.append("APPLICANT ADDRESS 2 PIN CODE")
         headers =  hm_request_headers
-        application_data.append(headers)
+        #application_data.append(headers)
         for org in organisations:
-            applications = EsthenosOrgApplication.objects.filter(organisation=org,status_code=7)
+            applications = EsthenosOrgApplication.objects.filter(organisation=org,status=7)
             for app in applications:
                 try:
                     hm_request = EsthenosOrgApplicationHighMarkResponse.objects.filter(application_id=app.application_id)[0]
@@ -440,7 +440,6 @@ def eqifax_request_reports():
         eq_request_headers.append("Transaction Amount")
         eq_request_headers.append("ConsumerName (Required)")
         eq_request_headers.append("Additional Type1 (Relationship)")
-        eq_request_headers.append("Additional Name1")
         eq_request_headers.append("Additional Type2")
         eq_request_headers.append("Additional Name2")
         eq_request_headers.append("Address & City (Required)")
@@ -476,11 +475,11 @@ def eqifax_request_reports():
                     row_data.append(eq_request["transaction_amount"])
                     row_data.append(eq_request["consumer_name"])
                     row_data.append(eq_request["additional_type1"])
-                    row_data.append(eq_request["additional_name1"])
+                    #row_data.append(eq_request["additional_name1"])
                     row_data.append(eq_request["additional_type2"])
                     row_data.append(eq_request["additional_name2"])
                     row_data.append(eq_request["address_city"])
-                    row_data.append(eq_request["state_union_territory"])
+                    row_data.append("MH") #eq_request["state_union_territory"]
                     row_data.append(eq_request["postal_pin"])
                     row_data.append(eq_request["ration_card"])
                     row_data.append(eq_request["voter_id"])
