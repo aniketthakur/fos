@@ -122,7 +122,7 @@ def make_highmark_request_for_application_id(app_id):
 from e_organisation.models import EsthenosOrgApplicationEqifax
 
 def make_equifax_request_entry_application_id(app_id):
-    app = EsthenosOrgApplication.objects.get(application_id = app_id)
+    app = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
     eqrequest = EsthenosOrgApplicationEqifax()
     eqrequest.reference_number=app.application_id
     eqrequest.member_id_unique_accountnumber=app.application_id
@@ -138,9 +138,12 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.postal_pin=app.member_pincode
     eqrequest.ration_card=""
     eqrequest.voter_id=""
-    eqrequest.additional_id1=app.kyc_1.kyc_number
+    if app.kyc_1 != None:
+        eqrequest.additional_id1=app.kyc_1.kyc_number
+    
     eqrequest.additional_id2=""
-    eqrequest.national_id_card=app.kyc_1.kyc_number
+    if app.kyc_1 != None:
+        eqrequest.national_id_card=app.kyc_1.kyc_number
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
     eqrequest.phone_mobile=app.member_telephone
