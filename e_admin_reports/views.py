@@ -216,7 +216,8 @@ def himark_request_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
-
+from e_organisation.models import EsthenosOrgApplicationStatus,EsthenosOrgApplicationStatusType
+import datetime
 @admin_reports_views.route('/admin/cbcheck/equifax/', methods=["POST"])
 @login_or_key_required
 def equifax_request_reports_import():
@@ -235,126 +236,140 @@ def equifax_request_reports_import():
         for k,v in data.items():
             if k != "Series_1":
                 print k,v[0]
-                eq_resp = EsthenosOrgApplicationEqifaxResponse()
-                eq_resp.report_id=v[0]   #IntField(default=0)
-                eq_resp.reference_number=v[1]   #IntField(default=0)
-                eq_resp.unique_account_number=str(v[2])   #IntField(default=0)
-                eq_resp.date_of_issue=v[3]   #StringField(max_length=255,required=False,default="")
-                eq_resp.member_name=v[4]   #StringField(max_length=255,required=False,default="")
-                eq_resp.date_of_birth=v[5]   #StringField(max_length=255,required=False,default="")
-                eq_resp.addl_name_type1=v[6]   #StringField(max_length=255,required=False,default="")
-                eq_resp.addl_name1=v[7]   #StringField(max_length=255,required=False,default="")
-                eq_resp.addl_name_type2=v[8]   #StringField(max_length=255,required=False,default="")
-                eq_resp.addl_name2=v[9]   #StringField(max_length=255,required=False,default="")
-                eq_resp.national_id_card=v[10]   #StringField(max_length=255,required=False,default="")
-                eq_resp.passport=v[11]   #StringField(max_length=255,required=False,default="")
-                eq_resp.ration_card=v[12]   #StringField(max_length=255,required=False,default="")
-                eq_resp.voter_id=v[13]   #StringField(max_length=255,required=False,default="")
-                eq_resp.pan_card=v[14]   #StringField(max_length=255,required=False,default="")
-                eq_resp.additional_id1=v[15]   #StringField(max_length=255,required=False,default="")
-                eq_resp.additional_id2=v[16]   #StringField(max_length=255,required=False,default="")
-                eq_resp.address=v[17]   #StringField(max_length=255,required=False,default="")
-                eq_resp.state=v[18]   #StringField(max_length=255,required=False,default="")
-                eq_resp.postal=v[19]   #StringField(max_length=255,required=False,default="")
-                eq_resp.branch_id=v[20]   #StringField(max_length=255,required=False,default="")
-                eq_resp.kendra_or_centre_id=v[21]   #StringField(max_length=255,required=False,default="")
-                if not is_number(v[22]):
-                    v[22] = 0
-                eq_resp.own_mfi_indicator=v[22]   #IntField(default=0)
-                if not is_number(v[23]):
-                    v[23] = 0
-                eq_resp.total_responses=v[23]   #IntField(default=0)
-                if not is_number(v[24] ):
-                    v[24] = 0
-                eq_resp.total_responses_own=v[24]   #IntField(default=0)
-                if not is_number(v[25] ):
-                    v[25] = 0
-                eq_resp.total_responses_others=v[25]   #IntField(default=0)
-                if not is_number(v[26] ):
-                    v[26] = 0
-                eq_resp.num_of_other_mfis=v[26]   #IntField(default=0)
-                if not is_number(v[27] ):
-                    v[27] = 0
-                eq_resp.num_active_account=v[27]   #IntField(default=0)
-                if not is_number(v[28] ):
-                    v[28] = 0
-                eq_resp.num_active_account_own=v[28]   #IntField(default=0)
-                if not is_number(v[29] ):
-                    v[29] = 0
-                eq_resp.num_active_account_other=v[29]   #IntField(default=0)
-                if not is_number(v[30] ):
-                    v[30] = 0
-                eq_resp.num_closed_account=v[30]   #IntField(default=0)
-                if not is_number(v[31] ):
-                    v[31] = 0
-                eq_resp.num_closed_account_own=v[31]   #IntField(default=0)
-                if not is_number(v[32] ):
-                    v[32] = 0
-                eq_resp.num_closed_account_other=v[32]   #IntField(default=0)
-                if not is_number(v[33] ):
-                    v[33] = 0
-                eq_resp.num_past_due_account=v[33]   #IntField(default=0)
-                if not is_number(v[34] ):
-                    v[34] = 0
-                eq_resp.num_past_due_account_own=v[34]   #IntField(default=0)
-                if not is_number(v[35] ):
-                    v[35] = 0
-                eq_resp.num_past_due_account_other=v[35]   #IntField(default=0)
-                if not is_number(v[36] ):
-                    v[36] = 0
-                eq_resp.sum_current_balance=float(v[36])   #IntField(default=0)
-                if not is_number(v[37] ):
-                    v[37] = 0
-                eq_resp.sum_current_balance_own=float(v[37])   #IntField(default=0)
-                if not is_number(v[38] ):
-                    v[38] = 0
-                eq_resp.sum_current_balance_other=float(v[38])   #IntField(default=0)
-                if not is_number(v[39] ):
-                    v[39] = 0
-                eq_resp.sum_disbursed=float(v[39])   #IntField(default=0)
-                if not is_number(v[40] ):
-                    v[40] = 0
-                eq_resp.sum_disbursed_own=float(v[40])   #IntField(default=0)
-                if not is_number(v[41] ):
-                    v[41] = 0
-                eq_resp.sum_disbursed_other=float(v[41])   #IntField(default=0)
-                if not is_number(v[42] ):
-                    v[42] = 0
-                eq_resp.sum_installment_amount=float(v[42])   #IntField(default=0)
-                if not is_number(v[43] ):
-                    v[43] = 0
-                eq_resp.sum_installment_amount_own=float(v[43])   #IntField(default=0)
-                if not is_number(v[44] ):
-                    v[44] = 0
-                eq_resp.sum_installment_amount_other=float(v[44])   #IntField(default=0)
-                if not is_number(v[45] ):
-                    v[45] = 0
-                eq_resp.sum_overdue_amount=float(v[45])   #IntField(default=0)
-                if not is_number(v[46] ):
-                    v[46] = 0
-                eq_resp.sum_overdue_amount_own=float(v[46])   #IntField(default=0)
-                if not is_number(v[47] ):
-                    v[47] = 0
-                eq_resp.sum_overdue_amount_other=float(v[47])   #IntField(default=0)
-                if not is_number(v[48] ):
-                    v[48] = 0
-                eq_resp.sum_writtenoff_amount=float(v[48])   #IntField(default=0)
-                if not is_number(v[49] ):
-                    v[49] = 0
-                eq_resp.sum_writtenoff_amount_own=float(v[49])   #IntField(default=0)
-                if not is_number(v[50] ):
-                    v[50] = 0
-                eq_resp.sum_writtenoff_amount_other=float(v[50])   #IntField(default=0)
-                if not is_number(v[51] ):
-                    v[51] = 0
-                eq_resp.num_writtenoff_account=float(v[51])   #IntField(default=0)
-                if not is_number(v[52] ):
-                    v[52] = 0
-                eq_resp.num_writtenoff_account_own=float(v[52])   #IntField(default=0)
-                if not is_number(v[53] ):
-                    v[53] = 0
-                eq_resp.num_writtenoff_accountnon_own=float(v[53])   #IntField(default=0)
-                eq_resp.save()
+
+                applications = EsthenosOrgApplication.objects.filter(application_id=v[1])
+                if len(applications)>0:
+                    application = applications[0]
+                    print application
+                    status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
+                    status.save()
+                    application.timeline.append(status)
+
+                    application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=9)[0]
+                    application.current_status_updated  = datetime.datetime.now()
+                    application.status = 9
+                    application.save()
+
+                    eq_resp = EsthenosOrgApplicationEqifaxResponse()
+                    eq_resp.report_id=v[0]   #IntField(default=0)
+                    eq_resp.reference_number=v[1]   #IntField(default=0)
+                    eq_resp.unique_account_number=str(v[2])   #IntField(default=0)
+                    eq_resp.date_of_issue=v[3]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.member_name=v[4]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.date_of_birth=v[5]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.addl_name_type1=v[6]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.addl_name1=v[7]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.addl_name_type2=v[8]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.addl_name2=v[9]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.national_id_card=v[10]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.passport=v[11]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.ration_card=v[12]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.voter_id=v[13]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.pan_card=v[14]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.additional_id1=v[15]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.additional_id2=v[16]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.address=v[17]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.state=v[18]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.postal=v[19]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.branch_id=v[20]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.kendra_or_centre_id=v[21]   #StringField(max_length=255,required=False,default="")
+                    if not is_number(v[22]):
+                        v[22] = 0
+                    eq_resp.own_mfi_indicator=v[22]   #IntField(default=0)
+                    if not is_number(v[23]):
+                        v[23] = 0
+                    eq_resp.total_responses=v[23]   #IntField(default=0)
+                    if not is_number(v[24] ):
+                        v[24] = 0
+                    eq_resp.total_responses_own=v[24]   #IntField(default=0)
+                    if not is_number(v[25] ):
+                        v[25] = 0
+                    eq_resp.total_responses_others=v[25]   #IntField(default=0)
+                    if not is_number(v[26] ):
+                        v[26] = 0
+                    eq_resp.num_of_other_mfis=v[26]   #IntField(default=0)
+                    if not is_number(v[27] ):
+                        v[27] = 0
+                    eq_resp.num_active_account=v[27]   #IntField(default=0)
+                    if not is_number(v[28] ):
+                        v[28] = 0
+                    eq_resp.num_active_account_own=v[28]   #IntField(default=0)
+                    if not is_number(v[29] ):
+                        v[29] = 0
+                    eq_resp.num_active_account_other=v[29]   #IntField(default=0)
+                    if not is_number(v[30] ):
+                        v[30] = 0
+                    eq_resp.num_closed_account=v[30]   #IntField(default=0)
+                    if not is_number(v[31] ):
+                        v[31] = 0
+                    eq_resp.num_closed_account_own=v[31]   #IntField(default=0)
+                    if not is_number(v[32] ):
+                        v[32] = 0
+                    eq_resp.num_closed_account_other=v[32]   #IntField(default=0)
+                    if not is_number(v[33] ):
+                        v[33] = 0
+                    eq_resp.num_past_due_account=v[33]   #IntField(default=0)
+                    if not is_number(v[34] ):
+                        v[34] = 0
+                    eq_resp.num_past_due_account_own=v[34]   #IntField(default=0)
+                    if not is_number(v[35] ):
+                        v[35] = 0
+                    eq_resp.num_past_due_account_other=v[35]   #IntField(default=0)
+                    if not is_number(v[36] ):
+                        v[36] = 0
+                    eq_resp.sum_current_balance=float(v[36])   #IntField(default=0)
+                    if not is_number(v[37] ):
+                        v[37] = 0
+                    eq_resp.sum_current_balance_own=float(v[37])   #IntField(default=0)
+                    if not is_number(v[38] ):
+                        v[38] = 0
+                    eq_resp.sum_current_balance_other=float(v[38])   #IntField(default=0)
+                    if not is_number(v[39] ):
+                        v[39] = 0
+                    eq_resp.sum_disbursed=float(v[39])   #IntField(default=0)
+                    if not is_number(v[40] ):
+                        v[40] = 0
+                    eq_resp.sum_disbursed_own=float(v[40])   #IntField(default=0)
+                    if not is_number(v[41] ):
+                        v[41] = 0
+                    eq_resp.sum_disbursed_other=float(v[41])   #IntField(default=0)
+                    if not is_number(v[42] ):
+                        v[42] = 0
+                    eq_resp.sum_installment_amount=float(v[42])   #IntField(default=0)
+                    if not is_number(v[43] ):
+                        v[43] = 0
+                    eq_resp.sum_installment_amount_own=float(v[43])   #IntField(default=0)
+                    if not is_number(v[44] ):
+                        v[44] = 0
+                    eq_resp.sum_installment_amount_other=float(v[44])   #IntField(default=0)
+                    if not is_number(v[45] ):
+                        v[45] = 0
+                    eq_resp.sum_overdue_amount=float(v[45])   #IntField(default=0)
+                    if not is_number(v[46] ):
+                        v[46] = 0
+                    eq_resp.sum_overdue_amount_own=float(v[46])   #IntField(default=0)
+                    if not is_number(v[47] ):
+                        v[47] = 0
+                    eq_resp.sum_overdue_amount_other=float(v[47])   #IntField(default=0)
+                    if not is_number(v[48] ):
+                        v[48] = 0
+                    eq_resp.sum_writtenoff_amount=float(v[48])   #IntField(default=0)
+                    if not is_number(v[49] ):
+                        v[49] = 0
+                    eq_resp.sum_writtenoff_amount_own=float(v[49])   #IntField(default=0)
+                    if not is_number(v[50] ):
+                        v[50] = 0
+                    eq_resp.sum_writtenoff_amount_other=float(v[50])   #IntField(default=0)
+                    if not is_number(v[51] ):
+                        v[51] = 0
+                    eq_resp.num_writtenoff_account=float(v[51])   #IntField(default=0)
+                    if not is_number(v[52] ):
+                        v[52] = 0
+                    eq_resp.num_writtenoff_account_own=float(v[52])   #IntField(default=0)
+                    if not is_number(v[53] ):
+                        v[53] = 0
+                    eq_resp.num_writtenoff_accountnon_own=float(v[53])   #IntField(default=0)
+                    eq_resp.save()
 
 
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
