@@ -149,7 +149,7 @@ def himark_request_reports():
             applications = EsthenosOrgApplication.objects.filter(organisation=org,status_code=7)
             for app in applications:
                 try:
-                    hm_request = EsthenosOrgApplicationHighMarkResponse.objects.get(application_id=app.application_id)
+                    hm_request = EsthenosOrgApplicationHighMarkResponse.objects.filter(application_id=app.application_id)[0]
                     row_data = list()
                     row_data.append(hm_request["application_id"])
                     row_data.append(hm_request["segment_identifier"])
@@ -314,7 +314,7 @@ def equifax_request_reports_import():
                 eq_resp.sum_disbursed=float(v[39])   #IntField(default=0)
                 if not is_number(v[40] ):
                     v[40] = 0
-                eq_resp.sum_disbursed_own=v[40]   #IntField(default=0)
+                eq_resp.sum_disbursed_own=float(v[40])   #IntField(default=0)
                 if not is_number(v[41] ):
                     v[41] = 0
                 eq_resp.sum_disbursed_other=float(v[41])   #IntField(default=0)
@@ -323,7 +323,7 @@ def equifax_request_reports_import():
                 eq_resp.sum_installment_amount=float(v[42])   #IntField(default=0)
                 if not is_number(v[43] ):
                     v[43] = 0
-                eq_resp.sum_installment_amount_own=v[43]   #IntField(default=0)
+                eq_resp.sum_installment_amount_own=float(v[43])   #IntField(default=0)
                 if not is_number(v[44] ):
                     v[44] = 0
                 eq_resp.sum_installment_amount_other=float(v[44])   #IntField(default=0)
@@ -399,11 +399,11 @@ def eqifax_request_reports():
 
         for org in organisations:
 
-            applications = EsthenosOrgApplication.objects.filter(organisation=org,status_code=7)
+            applications = EsthenosOrgApplication.objects.filter(organisation=org,status=7)
 
             for app in applications:
                 try:
-                    eq_request = EsthenosOrgApplicationEqifax.objects.get(application_id=app.application_id)
+                    eq_request = EsthenosOrgApplicationEqifax.objects.filter(application_id=app.application_id)[0]
                     row_data = list()
                     row_data.append(eq_request["reference_number"])
                     row_data.append(eq_request["member_id_unique_accountnumber"])

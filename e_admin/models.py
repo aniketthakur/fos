@@ -99,7 +99,6 @@ class EsthenosUserBiliing(db.Document):
 
 
 
-
 sauth_user_registered = signal('user-registered')
 
 @sauth_user_registered.connect

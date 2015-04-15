@@ -427,6 +427,11 @@ class AddApplicationMobile(Form):
         c_user = current_user
         user = EsthenosUser.objects.get(id=c_user.id)
         app=EsthenosOrgApplication(applicant_name=self.name.data)
+        settings = EsthenosSettings.objects.all()[0]
+        inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
+        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
+        EsthenosOrg.objects.get(id = user.organisation).update(inc__application_count=1)
+
         center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
         group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
@@ -449,11 +454,7 @@ class AddApplicationMobile(Form):
         app.village_road = self.village_information_road_quality.data
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
         app.current_status_updated = datetime.datetime.now()
-        settings = EsthenosSettings.objects.all()[0]
-        inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
-        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         app.upload_type = "AUTOMATIC_UPLOAD"
-        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__application_count=1)
         app.status = 0
         app.member_telephone = self.phone_number.data
         app.member_tele_code = "+91"
