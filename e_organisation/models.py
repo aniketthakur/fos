@@ -553,7 +553,7 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
 
 class  EsthenosOrgApplicationEqifaxResponse(db.Document):
     report_id=db.IntField(default=0)
-    reference_number=db.IntField(default=0)
+    reference_number=db.StringField(max_length=255,required=False,default="")
     unique_account_number=db.StringField(max_length=255,required=False,default="")
     date_of_issue=db.StringField(max_length=255,required=False,default="")
     member_name=db.StringField(max_length=255,required=False,default="")

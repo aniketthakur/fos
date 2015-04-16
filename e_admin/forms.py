@@ -239,10 +239,6 @@ class AddOrganisationProductForm( Form):
         prod.total_processing_fees=float(self.total_processing_fees.data)
         prod.interest_rate=float(self.interest_rate.data)
         prod.insurance_period=float(self.insurance_period.data)
-        prod.insurance_free_borrowers_only=float(self.insurance_free_borrowers_only.data)
-        prod.insurance_free_borrowers_n_guarnteer=float(self.insurance_free_borrowers_n_guarnteer.data)
-        prod.total_processing_fees_borrowers_n_guarnteer=float(self.total_processing_fees_borrowers_n_guarnteer.data)
-        prod.total_processing_fees_borrowers_only=float(self.total_processing_fees_borrowers_only.data)
         prod.emi_repayment=self.emi_repayment.data
         prod.organisation=EsthenosOrg.objects.get(id=org_id)
         prod.save()
