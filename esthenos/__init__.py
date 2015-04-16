@@ -23,11 +23,11 @@ mainapp.config.update(
     MONGODB_SETTINGS = {
         'HOST': '128.199.156.24',#
         'PORT': 27017,
-        'USERNAME':'esthenos',
-        'PASSWORD':'od9tBCBKB7JhQM',
+        'USERNAME':'hindustan',
+        'PASSWORD':'Ofn2cXHkTMQ8LE',
         #'DB': 'pitaya_local',
         #'DB': 'esthenos_test_v1',
-        'DB': 'esthenos_test_v3',
+        'DB': 'hindustan_v1',
         "w":1,
         "j":True,
         #'TZ_AWARE': True,
