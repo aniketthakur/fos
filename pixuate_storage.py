@@ -4,7 +4,7 @@ import sys
 import requests
 import json
 
-storage_url='http://api.pixuate.com/rest/v1/bucket/55041de92a76201b0bf03602/object'
+storage_url='http://api.pixuate.com/rest/v1/bucket/552e9c2e2a762065ac21cc31/object'
 object_url='http://api.pixuate.com/rest/v1/bucket_name/EsthenosCustomerEnrollmentForms/object/'
 headers={'InstanceToken' : 'YCb3sHjX0Bteg-0zrqynDf7Zp_ldhvVhDhq94XOoW78','Accept':'application/json'}
 
