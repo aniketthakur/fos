@@ -327,6 +327,7 @@ class EsthenosOrgApplication(db.Document):
     purpose_of_loan = db.StringField(max_length=512, required=False,default="")
     family_size =  db.IntField(default=0)
     adult_count =  db.IntField(default=0)
+    total_earning_members =  db.IntField(default=0)
     children_above18 =  db.IntField(default=0)
     children_below18 =  db.IntField(default=0)
     primary_business_category = db.StringField(max_length=40, required=False,default="")
@@ -437,8 +438,12 @@ class EsthenosOrgApplication(db.Document):
     i_total=db.FloatField(default=0.0)
     e_total=db.FloatField(default=0.0)
     member_id_proof_number=db.StringField(max_length=40, required=False,default="")
+    house_stay_duration = db.FloatField(default=0.0)
+    gurranter_s_sex= db.StringField(max_length=40, required=False,default="")
+
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     created_on = db.DateTimeField(default=datetime.datetime.now)
+
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"

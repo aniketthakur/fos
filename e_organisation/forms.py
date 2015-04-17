@@ -137,7 +137,6 @@ class AddApplicationManual(Form):
     select_member_caste_category=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     moneylenders_amount=TextField( validators=[ v.Length(max=10)])
     house_rent_expenditure=TextField( validators=[ v.Length(max=10)])
-    s_income=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     village_public_transport=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     house_hold_expenditure=TextField( validators=[v.DataRequired(), v.Length(max=40)])
     village_electricity=TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -333,9 +332,30 @@ class AddApplicationManual(Form):
 
 
 """
-('source_of_drinking_water', u'Borewell, Open Well'), ('gurranter_s_sex', u''), ('total_earning_members', u''), ('pincode', u'581334'), ('secondary_business_expenses(monthly)', u'1000'), ('required_loan_amount', u'25000'), ('financial_liabilities-chits', u''), ('financial_liabilities-insurance', u''), ('members_less_than_18', u'6'), ('village_information-road_quality', u'Kaccha'), ('village_information-public_transportaion', u'Train, Auto'), ('tertiary_business_category', u''), ('family_assets-number_of_sheeps', u'10'), ('district', u'Uttara Kannada'), ('state', u'Karnataka'), ('ifsc_code', u''), ('kyc', u'{"kyc":[{"kyc_b":"552a5d552a762065ac21cbe4","kyc_f":"552a5d472a762065ac21cbe3","kyc_type":"aadhar"},{"kyc_type":"pancard"},{"kyc_type":"votercard"},{"kyc_type":"gurrantors"}]}'), ('financial_liabilities-bank_loans', u''), ('village_information-medical_category', u'Allopathy, None'), ('gurranter_s_name', u'Habib'), ('bank_name', u''), ('leader_cell', u'8197997788'), ('financial_liabilities-friends_&_family(hand_loans)', u''), ('family_assets-number_of_cows', u'20'), ('secondary_business_category', u'Services'), ('family_entertainment_expenditure_(monthly)', u'1000'), ('gurranter_s_age', u'55'), ('name', u'Swaraj Mahesh Palekar'), ('other_family_asset_s', u'Bike, Gas'), ('gender', u'Male'), ('family_other_expenditure(monthly)', u'1000'), ('members_above_18', u'6'), ('village_information-financial_institutions', u'Post Office'), ('how_long_are_you_staying_in_house_(in_years)', u'25'), ('secondary_business_activities', u'New something '), ('country', u'India'), ('quality_of_house', u'Kaccha/Mud'), ('phone_number', u''), ('relationship_status', u'Unmarried'), ('village_information-water_bodies', u'Sea, Pond'), ('primary_business_activities', u'something here'), ('village_information-medical_facility', u'Public Hospital, None'), ('repayment_option', u'Monthly'), ('education', u'Secondary/Matric'), ('category', u'General'), ('village_information-sanitation', u'Public'), ('primary_business_income(monthly)', u'8000'), ('family_festival_expenditure(monthly)', u'1000'), ('religion', u'Hindu'), ('center_size', u'20'), ('gurantor_s_relationship_with_borrower', u'Father'), ('village_information-education_institutes', u'Government School'), ('family_travel_expenditure_(monthly)', u'1000'), ('gurantors-borrowers_are_nominee_for_each_other_?.', u'Yes'), ('purpose_of_the_loan', u'cattle rearing'), ('taluk', u'Honavar'), ('primary_business_category', u'Services'), ('father_s__husband_s_name', u'S/O Mahesh Palekar'), ('interested_in_buying_other_products', u'None'), ('family_education_expenditure(monthly)', u''), ('dob_yob', u'1991'), ('male_count', u'6'), ('family_assets-orchard_(acres)', u'1'), ('family_assets-land(acres)', u'1'), ('address', u'Tonka'), ('female_count', u'6'), ('secondary_business_income(monthly)', u'3000'), ('family_medical_expenditure(monthly)', u''), ('primary_business_expenses(monthly)', u'2000'), ('total_number_of_family_members', u'12'), ('village_information-electricity_hours', u'6-15'), ('family_food_expenditure_(monthly)', u'2000'), ('age', u''), ('physical_disability(member)', u'None'), ('type_of_house', u'Self Owned'), ('account_number', u'')])
-{'center_name': [u'This field is required.'], 'application_member_dob': [u'This field is required.'], 'application_repayment_method': [u'This field is required.'], 'group_name': [u'This field is required.'], 'application_bank_loan': [u'This field is required.'], 'application_monthly_income': [u'This field is required.'], 'application_member_country': [u'This field is required.'], 'application_cm_cell_no': [u'This field is required.'], 'application_family_size': [u'This field is required.'], 'application_member_name': [u'This field is required.'], 'application_purpose_of_loan': [u'This field is required.'], 'application_business': [u'This field is required.'], 'application_tertiary_income': [u'This field is required.'], 'application_friends_family_loans': [u'This field is required.'], 'application_religion': [u'This field is required.'], 'application_agricultural_land': [u'This field is required.'], 'application_secondary_business_income': [u'This field is required.'], 'application_member_taluk': [u'This field is required.'], 'application_branch_name': [u'This field is required.'], 'application_medical_expenditure': [u'This field is required.'], 'application_member_address': [u'This field is required.'], 'application_festival_expenditure': [u'This field is required.'], 'application_type_of_residence': [u'This field is required.'], 'application_quality_of_house': [u'This field is required.'], 'application_member_co_name': [u'This field is required.'], 'application_member_applied_loan': [u'This field is required.'], 'application_business_category': [u'This field is required.']}
-Could Not validate
+ ('gurantors_borrowers_are_nominee_for_each_other_', u'Yes'),
+ ('village_information_sanitation', u'Private'),
+  ('primary_business_expenses_monthly', u'1000'),
+
+    ('ifsc_code', u'558455665'),
+   ('bank_name', u'Hdfc'),
+    ('village_information_medical_category', u'Allopathy'), ('family_assets_number_of_cows', u'20'),
+  ('group_leader_cell', u'8188358568'),
+     ('dob_yob', u'1991'), ('model_type', u'JLG'),
+      ('group_size', u'20'), ('family_assets_land_acres', u''),
+('kyc', u'{"kyc":[{"kyc_type":"aadhar"},{"kyc_type":"pancard"},{"kyc_type":"votercard"},{"kyc_type":"gurrantors"}]}'),
+ ('family_assets_number_of_sheeps', u'20'), ('primary_business_income_monthly', u'5000'),
+ ('village_information_medical_facility', u'PHC'), ('family_entertainment_expenditure__monthly', u'200'),
+ ('family_travel_expenditure__monthly', u'200'), ('village_information_financial_institutions', u'Bank'),
+ ('repayment_option', u'Monthly'), ('gurranter_s_name', u'Prathvu'), ('education', u'Secondary/Matric'),
+ ('category', u'General'), ('financial_liabilities_friends__family_hand_loans', u'0'), ('religion', u'Hindu'),
+ ('state', u'Karnataka'), ('taluk', u'Honavar'), ('gurantor_s_relationship_with_borrower', u'Others'), ('product_name', u''),
+  ('phone_number', u''), ('purpose_of_the_loan', u'Buy Tailoring Machine'), ('financial_liabilities_chits', u''),
+  ('family_assets_orchard__acres', u''), ('father_s__husband_s_name', u'S/O Mahesh Palekar'),
+  ('interested_in_buying_other_products', u''), ('financial_liabilities_bank_loans', u''),
+   ('family_education_expenditure_monthly', u''), ('male_count', u'2'),
+   ('village_information_public_transportaion', u'Train'), ('village_information_education_institutes', u'Government School'),
+    ('female_count', u'3'), ('total_number_of_family_members', u'5'), ('country', u'India'), ('age', u''),
+    ('type_of_house', u'Self Owned'), ('account_number', u'558455665'), ('family_food_expenditure__monthly', u'1500'
 
 """
 class AddApplicationMobile(Form):
@@ -395,12 +415,14 @@ class AddApplicationMobile(Form):
 
     tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
     secondary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
+    tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
     secondary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
     primary_business_activities = TextField( validators=[ v.Length(max=512)]) #something here
     primary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #8000
     primary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
     secondary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #1000
     secondary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
+    tertiary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
     primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
     village_information_water_bodies = TextField( validators=[ v.Length(max=512)]) #Sea, Pond
     village_information_medical_facility = TextField( validators=[ v.Length(max=512)]) #Public Hospital, None
@@ -430,7 +452,7 @@ class AddApplicationMobile(Form):
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
-        EsthenosOrg.objects.get(id = user.organisation).update(inc__application_count=1)
+        user.organisation.update(inc__application_count=1)
 
         center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
         group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
@@ -441,10 +463,40 @@ class AddApplicationMobile(Form):
         app.center = center
         app.group = group
         app.owner = user
-        app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
-        app.other_outstanding_familynfriends = float(self.financial_liabilities_friends__family_hand_loans.data)
-        app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
-        app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
+
+
+        app.member_pincode=self.pincode.data
+
+        if self.how_long_are_you_staying_in_house__in_years.data == "":
+            app.house_stay_duration = 0.0
+        else:
+            app.house_stay_duration  = self.how_long_are_you_staying_in_house__in_years.data
+
+
+
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
+
+        if self.financial_liabilities_friends__family_hand_loans.data == "":
+            app.financial_liabilities_chits = 0.0
+        else:
+            app.other_outstanding_familynfriends = float(self.financial_liabilities_friends__family_hand_loans.data)
+
+        if self.financial_liabilities_insurance.data == "":
+            app.other_outstanding_insurance = 0.0
+        else:
+            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
+
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_emi = 0.0
+        else:
+            app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
+
+        self.gurranter_s_sex = self.gurranter_s_sex.data
+
+
         app.member_disability = self.physical_disability_member.data
         app.village_electricity = self.village_information_electricity_hours.data
         app.village_hospital_category = self.village_information_medical_category.data
@@ -474,7 +526,7 @@ class AddApplicationMobile(Form):
         app.drinking_water = self.source_of_drinking_water.data
         app.purpose_of_loan = self.purpose_of_the_loan.data
         app.family_size  = int(self.total_number_of_family_members.data)
-        app.adult_count  = int(self.total_earning_members.data)
+        app.total_earning_members  = int(self.total_earning_members.data)
         app.children_above18 = int(self.members_above_18.data)
         app.children_below18 = int(self.members_less_than_18.data)
         app.family_asset = self.other_family_asset_s.data
@@ -507,19 +559,43 @@ class AddApplicationMobile(Form):
             self.secondary_business_income_monthly.data = "0"
 #        if self.t_income.data == "":
 #            self.t_income.data = "0"
-        app.primary_income =float(self.primary_business_income_monthly.data)
-        app.secondary_income = float(self.secondary_business_income_monthly.data)
+        if self.primary_business_income_monthly.data == "":
+            app.primary_income = 0.0
+        else:
+            app.primary_income =float(self.primary_business_income_monthly.data)
+        if self.secondary_business_income_monthly.data == "":
+            app.secondary_income = 0.0
+        else:
+            app.secondary_income = float(self.secondary_business_income_monthly.data)
 #        app.tertiary_income =float(self.t_income.data)
         app.gender = self.gender.data
         app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #       app.business_expense =
-        app.food_expense = float(self.family_food_expenditure__monthly.data)
-        app.travel_expense =float(self.family_travel_expenditure__monthly.data)
-        app.entertainment_expense =float(self.family_entertainment_expenditure__monthly.data)
-        app.educational_expense = float(self.family_education_expenditure_monthly.data)
-        app.medical_expense =float(self.family_medical_expenditure_monthly.data)
-        app.other_expense = float(self.family_other_expenditure_monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.food_expense = float(self.family_food_expenditure__monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.travel_expense =float(self.family_travel_expenditure__monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.entertainment_expense =float(self.family_entertainment_expenditure__monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.educational_expense = float(self.family_education_expenditure_monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.medical_expense =float(self.family_medical_expenditure_monthly.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.other_expense = float(self.family_other_expenditure_monthly.data)
         app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense
 #       app.total_liability =
 #       app.outstanding_1 =
@@ -527,8 +603,14 @@ class AddApplicationMobile(Form):
 #       app.outstanding_3 =
 #       app.outstanding_4 =
 #       app.total_outstanding =
-        app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
-        app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
+        if self.financial_liabilities_chits.data == "":
+            app.other_outstanding_chit = 0.0
+        else:
+            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
 #       app.other_outstanding_emi =
         app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance
         app.net_income = app.total_income - app.total_expenditure

@@ -1068,7 +1068,7 @@ import zipfile
 import StringIO
 @organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])
 @login_required
-def grt_question(app_id):
+def disbursement(app_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
