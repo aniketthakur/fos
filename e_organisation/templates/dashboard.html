@@ -190,7 +190,7 @@
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example-2" style="height:180px"> </div>
+                    <div id="line-example" style="height:180px"> </div>
                 </div>
 
             </div>
@@ -322,12 +322,13 @@
         </div>
     </div>
 
+
     <div class="row">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-yellow added-margin  m-b-20">
+            <div class="tiles bg-red added-margin  m-b-20">
                 <div class="tiles-body">
                     <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="tiles-title text-black">Applications CGT1 Ready </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
                             <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
@@ -353,11 +354,11 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <h4>Applications <span class="semi-bold">CGT1 Ready</span></h4>
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example" style="height:180px"> </div>
+                    <div id="line-example-1" style="height:180px"> </div>
                 </div>
 
             </div>
@@ -365,10 +366,10 @@
     </div>
     <div class="row">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-red added-margin  m-b-20">
+            <div class="tiles bg-yellow added-margin  m-b-20">
                 <div class="tiles-body">
                     <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="tiles-title text-black">Applications CGT2 Ready </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
                             <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
@@ -394,11 +395,11 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <h4>Applications <span class="semi-bold">CGT2 Ready</span></h4>
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example" style="height:180px"> </div>
+                    <div id="line-example-2" style="height:180px"> </div>
                 </div>
 
             </div>
@@ -409,7 +410,7 @@
             <div class="tiles gray added-margin  m-b-20">
                 <div class="tiles-body">
                     <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications Submitted </div>
+                    <div class="tiles-title text-black">Applications GRT Ready </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
                             <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
@@ -435,11 +436,11 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
+                    <h4>Applications <span class="semi-bold">GRT Ready</span></h4>
                     <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
                 </div>
                 <div class="grid-body no-border">
-                    <div id="line-example" style="height:180px"> </div>
+                    <div id="line-example-3" style="height:180px"> </div>
                 </div>
 
             </div>
@@ -577,7 +578,54 @@
             labels: ['Loan Applications', 'KYC'],
             lineColors:['#0aa699','#6666ff'],
         });
-
+        Morris.Line({
+            element: 'line-example-1',
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'CGT1'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: 'line-example-2',
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'CGT2'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: 'line-example-3',
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'GRT'],
+            lineColors:['#0aa699','#6666ff'],
+        });
         Morris.Line({
             element: 'line-example2',
             data: [
