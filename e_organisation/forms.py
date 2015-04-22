@@ -470,7 +470,7 @@ class AddApplicationMobile(Form):
         if self.how_long_are_you_staying_in_house__in_years.data == "":
             app.house_stay_duration = 0.0
         else:
-            app.house_stay_duration  = self.how_long_are_you_staying_in_house__in_years.data
+            app.house_stay_duration  = int(self.how_long_are_you_staying_in_house__in_years.data)
 
 
 
@@ -525,9 +525,17 @@ class AddApplicationMobile(Form):
         app.quality_of_house = self.quality_of_house.data
         app.drinking_water = self.source_of_drinking_water.data
         app.purpose_of_loan = self.purpose_of_the_loan.data
+        if self.total_number_of_family_members == '':
+            app.family_size  = 0
         app.family_size  = int(self.total_number_of_family_members.data)
+        if self.total_earning_members == '':
+            app.total_earning_members  = 0
         app.total_earning_members  = int(self.total_earning_members.data)
+        if self.members_above_18 == '':
+            app.children_above18 = 0
         app.children_above18 = int(self.members_above_18.data)
+        if self.members_less_than_18 == '':
+            app.children_below18 = 0
         app.children_below18 = int(self.members_less_than_18.data)
         app.family_asset = self.other_family_asset_s.data
 #        app.money_lenders_loan = float(self.application_money_lenders_loan.data)
