@@ -240,6 +240,18 @@ class EsthenosOrgCGTTemplateQuestion(db.Document):
     def __unicode__(self):
         return "EsthenosOrgCGTTemplateQuestion"
 
+
+
+class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
+
+    def __unicode__(self):
+        return "EsthenosOrgTeleCallingTemplateQuestion"
+
+
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
     organisation = db.ReferenceField('EsthenosOrg')

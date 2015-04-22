@@ -4,6 +4,7 @@ import sys
 import requests
 import json
 
+
 pan_url='http://console.digikyc.com/api/services/read_pan'
 vid_url='http://console.digikyc.com/api/services/read_voters_id'
 addhaar_url='http://console.digikyc.com/api/services/read_aadhaar_id'

@@ -336,7 +336,35 @@ def grt_questions(org_id):
     else:
         return abort(403)
 # Added by Deepak
-
+from .forms import AddOrgTeleCallingTemplateQuestionsForm
+from e_organisation.models import EsthenosOrgTeleCallingTemplateQuestion
+@admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
+@login_required
+def telecalling_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_tele_questions.html", **kwargs)
+        else:
+            question=AddOrgTeleCallingTemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_tele_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_tele_questions.html", **kwargs)
+    else:
+        return abort(403)
 
 
 @admin_views.route('/admin/reports', methods=["GET"])
@@ -472,7 +500,7 @@ def admin_org_applications(org_id):
         mimetype="application/json")
 
 from datetime import date, timedelta
-from pixuate_storage import  *
+from pixuate_storage_digikyc import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
@@ -593,7 +621,6 @@ def cashflow_statusupdate(org_id,app_id):
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
-from pixuate_storage import  *
 from pixuate import  *
 @admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
 @login_required

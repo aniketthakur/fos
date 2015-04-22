@@ -14,7 +14,7 @@ from esthenos.mongo_encoder import encode_model
 from flask.views import View
 from esthenos.utils import random_with_N_digits
 import os,tempfile
-from pixuate_storage import upload_images, get_url_with_id
+from pixuate_storage_digikyc import upload_images, get_url_with_id
 from flask_login import current_user, login_user, logout_user, login_required
 from datetime import timedelta
 import datetime
@@ -334,6 +334,7 @@ def uploads_group_app():
         if application == None:
             application =  EsthenosOrgApplicationMap()
             application.file_id = int(file_id)
+        print uploaded_resp
         application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
         session_obj.applications[file_id]=application
         session_obj.number_of_applications = session_obj.number_of_applications + 1
