@@ -17,7 +17,7 @@ mainapp.config.update(
    MONGODB_SETTINGS = {
         'HOST': '127.0.0.1',#
         'PORT': 27017,
-        'DB': 'test',
+        'DB': 'test_v1',
         'TZ_AWARE': True,
         #'replicaset':"rs0"
     },

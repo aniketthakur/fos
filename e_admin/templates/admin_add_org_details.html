@@ -12,14 +12,14 @@
             <h4>Update <span class="semi-bold">Organisation</span></h4>
             <div class="row ">
 
-                <div class="col-md-5 col-md-offset-1">
-                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}" method="post">
+                <div class="col-md-4">
+                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_regions" method="post">
                         <div class="row form-row">
 
                             <div class="col-md-12">
                                 <h3>Select <span class="semi-bold" >States</span></h3>
                                 <br>
-                                <select id="states" name="states" style="width:100%" class="select2 form-control" multiple>
+                                <select id="org_state" name="org_state" style="width:100%" class="select2 form-control">
                                     {% for state in states %}
                                         <option value='{{ state.id }}'>{{ state.state_name }}</option>
                                     {% endfor %}
@@ -34,7 +34,7 @@
                                 <br>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input class="span12 tagsinput" name="regions" id="regions" type="text" value="" data-role="tagsinput" />
+                                    <input class="span12 tagsinput" name="org_regions" id="org_regions" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
 
@@ -48,28 +48,18 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-5 col-md-offset-1">
-                    <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}" method="post">
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >States</span></h3>
-                                <br>
-                                <select id="states_2" name="states" style="width:100%" class="select2 form-control" multiple>
-                                    {% for state in states %}
-                                        <option value='{{ state.id }}'>{{ state.state_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
+                <div class="col-md-4">
+                    <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_areas" method="post">
                         <div class="row form-row">
 
                             <div class="col-md-12">
                                 <h3>Select <span class="semi-bold" >Regions</span></h3>
                                 <br>
-                                <select id="regions_2" name="regions" style="width:100%" class="select2 form-control" multiple>
+                                <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for region in regions %}
-                                        <option value='{{ region.id }}'>{{ region.region_name }}</option>
+                                        <option value='{{ region.state.id }},{{ region.id }}'>{{ region.state.state_name }}-{{ region.region_name }}</option>
                                     {% endfor %}
+
                                 </select>
                             </div>
                         </div>
@@ -80,7 +70,7 @@
                                 <br>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input class="span12 tagsinput" name="areas" id="areas" type="text" value="" data-role="tagsinput" />
+                                    <input class="span12 tagsinput" name="org_areas" id="areas" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
 
@@ -94,45 +84,21 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="row column-seperation">
-                <div class="col-md-5 col-md-offset-1">
-                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}" method="post">
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >States</span></h3>
-                                <br>
-                                <select id="states_3" name="states" style="width:100%" class="select2 form-control" multiple>
-                                    {% for state in states %}
-                                        <option value='{{ state.id }}'>{{ state.state_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-row">
 
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >Regions</span></h3>
-                                <br>
-                                <select id="regions_3" name="regions" style="width:100%" class="select2 form-control" multiple>
-                                    {% for region in regions %}
-                                        <option value='{{ region.id }}'>{{ region.region_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
+                <div class="col-md-4">
+                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_branches" method="post">
                         <div class="row form-row">
-
                             <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >Areas</span></h3>
+                                <h3>Select <span class="semi-bold" >States-Regions-Areas</span></h3>
                                 <br>
-                                <select id="areas_2" name="areas" style="width:100%" class="select2 form-control" multiple>
+                                <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for area in areas %}
-                                        <option value='{{ area.id }}'>{{ area.area_name }}</option>
+                                        <option value='{{ area.state.id }},{{ area.region.id }},{{ area.id }}'>{{ area.state.state_name }}--{{ area.region.region_name }}--{{ area.area_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
+
                         <div class="row form-row">
 
                             <div class="col-md-12">
@@ -140,7 +106,7 @@
                                 <br>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input class="span12 tagsinput" name="branches" id="branches" type="text" value="" data-role="tagsinput" />
+                                    <input class="span12 tagsinput" name="org_branch_data" id="org_branches" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
 
@@ -163,14 +129,14 @@
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#states").select2();
+            $(".select2").select2();
             $("#states_2").select2();
             $("#states_3").select2();
             $("#regions_2").select2();
             $("#regions_3").select2();
             $("#areas_2").select2();
             $("#areas_3").select2();
-            $("#branches").select2();
+
             $(".org-submit").click(function(){
                 $("#form-organisation").submit();
             });
@@ -178,74 +144,7 @@
 
 
         });
-        $('#form-organisation').validate({
-            errorElement: 'span',
-            errorClass: 'error',
-            focusInvalid: false,
-            ignore: "",
-            rules: {
-                org_name: {
-                    minlength: 2,
-                    required: true
-                },
-                postal_address:{
-                    minlength:2,
-                    required: true
-                },
-                postal_code:{
-                    minlength:2,
-                    required:true
-                },
-                postal_city:{
-                    minlength:2,
-                    required:true
-                },
-                postal_tele_code:{
-                    minlength:2,
-                    required:true
-                },
-                postal_telephone:{
-                    minlength:2,
-                    required:true
-                },
-                email:{
-                    email:true,
-                    required:true
-                }
-            },
 
-            invalidHandler: function (event, validator) {
-                //display error alert on form submit
-            },
-
-            errorPlacement: function (error, element) { // render error placement for each input type
-                var icon = $(element).parent('.input-with-icon').children('i');
-                var parent = $(element).parent('.input-with-icon');
-                icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
-                parent.removeClass('success-control').addClass('error-control');
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                var parent = $(element).parent();
-                parent.removeClass('success-control').addClass('error-control');
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-
-            },
-
-            success: function (label, element) {
-                var icon = $(element).parent('.input-with-icon').children('i');
-                var parent = $(element).parent('.input-with-icon');
-                icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
-                parent.removeClass('error-control').addClass('success-control');
-            },
-
-            submitHandler: function (form) {
-                form.submit();
-                console.log("Success");
-            }
-        });
 
     </script>
 

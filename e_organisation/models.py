@@ -190,8 +190,10 @@ class EsthenosOrgCenterResource(Resource):
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
-    group_id = db.StringField(max_length=10,required=False)
-    group_name = db.StringField(max_length=60,required=True)
+    branch = db.ReferenceField('EsthenosOrgBranch',required=False)
+    group_id = db.StringField(max_length=20,required=False)
+    group_name = db.StringField(max_length=120,required=True)
+    location_name = db.StringField(max_length=120,required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
@@ -199,6 +201,9 @@ class EsthenosOrgGroup(db.Document):
 
     def __unicode__(self):
         return self.group_name
+
+
+
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgGroup
@@ -251,6 +256,13 @@ class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
     def __unicode__(self):
         return "EsthenosOrgTeleCallingTemplateQuestion"
 
+
+class EsthenosOrgIndivijualTeleCallingSession(db.Document):
+    application = db.ReferenceField('EsthenosOrgApplication',required=True)
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
