@@ -75,7 +75,7 @@ status_type.status_code = -1
 status_type.save()
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_KYC_VALIDATION_PASSED"
-status_type.status_message = "Application KYC has completed, validation successfulh"
+status_type.status_message = "Application KYC has completed, validation successful"
 status_type.status_code = 5
 status_type.save()
 status_type = EsthenosOrgApplicationStatusType()

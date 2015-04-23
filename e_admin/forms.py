@@ -54,33 +54,7 @@ class AddOrganisationForm( Form):
             st.save()
             my_states.append(st)
         org.states =my_states
-        """
-        my_branches = []
-        for branch in self.branches.data.split(","):
-            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
-            br.save()
-            my_branches.append(br)
-        org.branches =my_branches
 
-        my_areas = []
-        for area in self.areas.data.split(","):
-            ar = EsthenosOrgArea.objects.create(area_name=area,organisation=org)
-            ar.save()
-            ar = EsthenosOrgArea.objects.get(area_name=area,organisation=org)
-            my_areas.append(ar)
-        print my_areas
-        org.areas =my_areas
-
-        my_regions = []
-        for region in self.regions.data.split(","):
-            reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org)
-            reg.save()
-            reg = EsthenosOrgRegion.objects.get(region_name=region,organisation=org)
-            my_regions.append(reg)
-        org.regions =my_regions
-
-        print my_regions
-        """
         org.save()
         return org
 
