@@ -666,7 +666,7 @@ class EsthenosOrgApplicationEqifax(db.Document):
 
 
     def __unicode__(self):
-        return self.application_id.name +" ---Requests"
+        return self.reference_number +" ---Requests"
 
 
 
