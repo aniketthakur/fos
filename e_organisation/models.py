@@ -639,8 +639,7 @@ class  EsthenosOrgApplicationEqifaxResponse(db.Document):
 
 
 class EsthenosOrgApplicationEqifax(db.Document):
-    application_id = db.StringField(max_length=255, required=True,default="")
-    reference_number=db.StringField(default="", required=False)
+    reference_number=db.StringField(default="", required=True)
     member_id_unique_accountnumber=db.StringField(default="", required=False)
     inquiry_purpose=db.StringField(max_length=255, required=False,default="")
     transaction_amount=db.FloatField(default=0, required=False)
@@ -667,7 +666,7 @@ class EsthenosOrgApplicationEqifax(db.Document):
 
 
     def __unicode__(self):
-        return self.user.name +" ---Requests"
+        return self.application_id.name +" ---Requests"
 
 
 
