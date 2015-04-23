@@ -259,8 +259,7 @@ def all_tagged_applications():
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=7)[0]
             application.current_status_updated  = datetime.datetime.now()
             application.status = 7
-            make_equifax_request_entry_application_id(application.application_id)
-            make_highmark_request_for_application_id(application.application_id)
+
             application.save()
 
 from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
@@ -274,7 +273,8 @@ def cb_checkready_applications():
     all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=7)
 
     for application in all_cbcheckready_applications:
-        pass
+        make_equifax_request_entry_application_id(application.application_id)
+        make_highmark_request_for_application_id(application.application_id)
 #        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
 #        status.save()
 #        application.timeline.append(status)
