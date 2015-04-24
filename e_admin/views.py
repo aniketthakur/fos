@@ -427,8 +427,8 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
-from .forms import AddOrgCGTTemplateQuestionsForm
-from e_organisation.models import EsthenosOrgCGTTemplateQuestion
+from .forms import AddOrgGRTTemplateQuestionsForm,AddOrgCGT1TemplateQuestionsForm,AddOrgCGT2TemplateQuestionsForm
+from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
 def grt_questions(org_id):
@@ -436,12 +436,12 @@ def grt_questions(org_id):
         username=current_user.name
         user=current_user
         org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation=org)
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
         kwargs = locals()
         if request.method=="GET":
             return render_template("admin_organisation_grt_questions.html", **kwargs)
         else:
-            question=AddOrgCGTTemplateQuestionsForm(request.form)
+            question=AddOrgGRTTemplateQuestionsForm(request.form)
             if(question.validate()):
                 print "Product Details Validated,Saving the form"
                 question.save()
@@ -456,7 +456,65 @@ def grt_questions(org_id):
                 return render_template("admin_organisation_grt_questions.html", **kwargs)
     else:
         return abort(403)
-# Added by Deepak
+
+
+@admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
+@login_required
+def cgt1_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+        else:
+            question=AddOrgCGT1TemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+    else:
+        return abort(403)
+
+@admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
+@login_required
+def cgt2_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+        else:
+            question=AddOrgCGT2TemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+    else:
+        return abort(403)
+
+
 from .forms import AddOrgTeleCallingTemplateQuestionsForm
 from e_organisation.models import EsthenosOrgTeleCallingTemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])

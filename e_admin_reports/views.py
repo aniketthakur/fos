@@ -482,7 +482,7 @@ def eqifax_request_reports():
 
             for app in applications:
                 try:
-                    eq_request = EsthenosOrgApplicationEqifax.objects.filter(application_id=app.application_id)[0]
+                    eq_request = EsthenosOrgApplicationEqifax.objects.filter(reference_number=app.application_id)[0]
                     row_data = list()
                     row_data.append(eq_request["reference_number"])
                     row_data.append(eq_request["member_id_unique_accountnumber"])

@@ -33,9 +33,9 @@
     </div>
 {%- endmacro -%}
 
-{%- macro action_buttons(submit_title, cancel_markup=None, submit_class="btn-primary") -%}
+{%- macro action_buttons(submit_title, cancel_markup=None, submit_class="btn btn-small-primary") -%}
 <div class="actions">
-    <input type="submit" class="btn {{submit_class}}" value="{{submit_title|safe}}">
+    <input type="submit" class="btn btn-small {{submit_class}}" value="{{submit_title|safe}}">
     {% if cancel_markup %} &nbsp; {{cancel_markup|safe}} {% endif %}
 </div>
 {%- endmacro -%}
@@ -78,7 +78,7 @@
   </fieldset>
 {%- endmacro -%}
 
-{%- macro vertical_form( form, class=None, legend=None, method="POST", action=None, submit_title="Submit", submit_class="btn-primary", cancel_markup=None) -%}
+{%- macro vertical_form( form, class=None, legend=None, method="POST", action=None, submit_title="Submit", submit_class="btn btn-small-primary", cancel_markup=None) -%}
     <form method={{method}} {% if action %}action="{{action}}"{% endif %} class="panel-body {% if class %}{{class}}{% endif %}" enctype="multipart/form-data">
         {{ form_fields( form) }}
 

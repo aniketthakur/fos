@@ -275,14 +275,14 @@ def cb_checkready_applications():
     for application in all_cbcheckready_applications:
         make_equifax_request_entry_application_id(application.application_id)
         make_highmark_request_for_application_id(application.application_id)
-#        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-#        status.save()
-#        application.timeline.append(status)
-#
-#        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
-#        application.current_status_updated  = datetime.datetime.now()
-#        application.status = 8
-#        application.save()
+        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
+        status.save()
+        application.timeline.append(status)
+
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
+        application.current_status_updated  = datetime.datetime.now()
+        application.status = 8
+        application.save()
 
 @periodic_task(run_every=datetime.timedelta(seconds=120))
 @celery.task

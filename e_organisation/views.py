@@ -1120,7 +1120,7 @@ def check_grt():
     kwargs = locals()
     return render_template("centers_n_groups_grt.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgCGTTemplateQuestion,EsthenosOrgGroupGRTSession
+from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgGroupGRTSession
 @organisation_views.route('/grt_question', methods=["GET","POST"])
 @login_required
 def grt_question():
@@ -1132,7 +1132,7 @@ def grt_question():
     org=user.organisation
     if request.method == "GET":
         group_id = request.args.get("group_id")
-        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
         kwargs = locals()
@@ -1142,7 +1142,7 @@ def grt_question():
         i = 0
         total_score= 0.0
         group_id = request.args.get("group_id")
-        questions = EsthenosOrgCGTTemplateQuestion.objects.filter(organisation = org)
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
 
