@@ -25,42 +25,6 @@
                             <h3>Search   <span class="semi-bold">Applications</span></h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input name="centerName" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
-                                    <table class="table no-more-tables ">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:1%" >
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                                                    <label for="checkbox10"></label>
-                                                </div>
-                                            </th>
-                                            <th style="width:33%">Center ID</th>
-                                            <th style="width:33%">Center Name</th>
-                                            <th style="width:33%">Added Date</th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for center in centers[0:10] %}
-                                        <tr >
-                                            <td class="v-align-middle">
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                    <label for="checkbox{{ loop.index }}"></label>
-                                                </div>
-                                            </td>
-                                            <td class="v-align-middle clickable-row" data-href='/applications/?center={{ center.center_id }}'><ins>{{ center.center_id }}</ins></td>
-                                            <td class="v-align-middle"><span class="muted">{{ center.center_name }}</span>
-                                            </td>
-                                            <td><span class="muted">{{ center.created_at }}</span>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                 </div>
-                                <div class="col-md-6">
                                     <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
                                     <table class="table no-more-tables ">
                                         <thead>

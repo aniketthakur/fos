@@ -966,6 +966,7 @@ def check_tele_applicant_questions():
         kwargs = locals()
         return redirect("/check_tele_applicant?group="+group_id)
 
+from e_organisation.models import EsthenosOrgGroupCGT1Session,EsthenosOrgGroupCGT2Session
 @organisation_views.route('/check_cgt1', methods=["GET"])
 @login_required
 def check_cgt1():
@@ -977,11 +978,52 @@ def check_cgt1():
     org  = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
-
+    cgt1_sessions = EsthenosOrgGroupCGT1Session.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups_cgt1.html", **kwargs)
 
+from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgGroupGRTSession,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
+@organisation_views.route('/cgt1_question', methods=["GET","POST"])
+@login_required
+def cgt1_question():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org=user.organisation
+    if request.method == "GET":
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        kwargs = locals()
+        return render_template("centers_n_groups_grt_questions.html", **kwargs)
+    elif request.method == "POST":
+        print request.form
+        i = 0
+        total_score= 0.0
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        grt_session,status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group,organisation=org)
+        question_dict = dict()
 
+        for v in request.form:
+            i = i+1
+            (k,v) = (v,request.form[v])
+            if k.startswith("rating"):
+                key =  k.split("rating")[1]
+                question_dict[key] = str(v)
+                total_score = total_score+ int(v)
+        print total_score/i
+        print questions
+        grt_session.questions = question_dict
+        grt_session.score = float(total_score/i)
+        grt_session.save()
+        kwargs = locals()
+        return redirect("/check_cgt1")
 
 @organisation_views.route('/check_cgt1_applicant', methods=["GET"])
 @login_required
@@ -1029,10 +1071,51 @@ def check_cgt2():
     org  = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
-
+    cgt2_sessions = EsthenosOrgGroupCGT2Session.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups_cgt2.html", **kwargs)
 
+@organisation_views.route('/cgt2_question', methods=["GET","POST"])
+@login_required
+def cgt2_question():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org=user.organisation
+    if request.method == "GET":
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        kwargs = locals()
+        return render_template("centers_n_groups_grt_questions.html", **kwargs)
+    elif request.method == "POST":
+        print request.form
+        i = 0
+        total_score= 0.0
+        group_id = request.args.get("group_id")
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation = org)
+        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        grt_session,status = EsthenosOrgGroupCGT2Session.objects.get_or_create(group=group,organisation=org)
+        question_dict = dict()
+
+        for v in request.form:
+            i = i+1
+            (k,v) = (v,request.form[v])
+            if k.startswith("rating"):
+                key =  k.split("rating")[1]
+                question_dict[key] = str(v)
+                total_score = total_score+ int(v)
+        print total_score/i
+        print questions
+        grt_session.questions = question_dict
+        grt_session.score = float(total_score/i)
+        grt_session.save()
+        kwargs = locals()
+        return redirect("/check_cgt2")
 
 @organisation_views.route('/check_cgt2_applicant', methods=["GET"])
 @login_required

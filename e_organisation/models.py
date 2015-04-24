@@ -235,6 +235,17 @@ class EsthenosOrgGroupGRTSession(db.Document):
     questions=db.DictField(required=False)
     score = db.FloatField(default=0,required=False)
 
+class EsthenosOrgGroupCGT1Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
+
+class EsthenosOrgGroupCGT2Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
 
 class EsthenosOrgGRTTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)
@@ -285,21 +296,23 @@ class EsthenosOrgIndivijualTeleCallingSession(db.Document):
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
+    loan_type=db.StringField(max_length=128,required=False)
     organisation = db.ReferenceField('EsthenosOrg')
     loan_amount = db.FloatField(default=0.0)
     life_insurance = db.FloatField(default=0.0)
     eligible_cycle = db.IntField(default=0)
     number_installments = db.IntField(default=0)
     emi = db.FloatField(default=0)
+    service_tax = db.FloatField(default=0)
+    insurance_service_tax = db.FloatField(default=0)
     last_emi = db.FloatField(default=0)
     processing_fee = db.FloatField(default=0)
     total_processing_fees = db.FloatField(default=0)
     interest_rate = db.FloatField(default=0)
     insurance_period = db.FloatField(default=0)
-    insurance_free_borrowers_only = db.FloatField(default=0.0)
-    total_processing_fees_borrowers_only = db.FloatField(default=0)
-    insurance_free_borrowers_n_guarnteer = db.FloatField(default=0.0)
-    total_processing_fees_borrowers_n_guarnteer = db.FloatField(default=0)
+    insurance_free = db.FloatField(default=0.0)
+    total_insurance_fees = db.FloatField(default=0)
+    rd_free = db.FloatField(default=0)
     emi_repayment=db.StringField(max_length=128,required=False)
 
     def __unicode__(self):
