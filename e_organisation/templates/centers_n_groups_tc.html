@@ -81,8 +81,8 @@
                                                 </div>
                                             </th>
                                             <th style="width:25%">Group ID</th>
-                                            <th style="width:25%">Group Name</th>
-                                            <th style="width:25%">GRT Rating</th>
+                                            <th style="width:25%">App #[Name]</th>
+                                            <th style="width:25%">Call Score</th>
                                             <th style="width:10%" class="text-center">Fail</th>
                                             <th style="width:10%" class="text-center" >Pass</th>
                                         </tr>
@@ -97,16 +97,16 @@
                                                     </div>
                                                 </td>
                                                 <td class="v-align-middle clickable-row" data-href='/check_tele_applicant?group={{ grt_session.group.group_id }}'><ins>{{ grt_session.group.group_id }}</ins></td>
-                                                <td class="v-align-middle"><span class="muted">{{ grt_session.group.group_name }}</span>
+                                                <td class="v-align-middle"><span class="muted">{{ grt_session.application.application_id }}[{{ grt_session.application.applicant_name }}]</span>
                                                 </td>
                                                 <td><span class="muted">{{'%0.2f' %  grt_session.score|float}}/5</span>
                                                 </td>
 
                                                 <td>
-                                                    <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                                    <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                                 </td>
                                                 <td >
-                                                    <button class="btn btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                                    <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                                 </td>
                                             </tr>
                                         {% endfor %}

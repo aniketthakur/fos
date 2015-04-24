@@ -600,7 +600,8 @@ def eqifax_request_reports():
         headers =  eq_request_headers
         application_data.append(headers)
         for app in applications:
-            eq_request = EsthenosOrgApplicationEqifax.objects.get(reference_number=app.application_id)
+            print app.application_id
+            eq_request = EsthenosOrgApplicationEqifax.objects.filter(reference_number=app.application_id)[0]
             row_data = list()
             row_data.append(eq_request["reference_number"])
             row_data.append(eq_request["member_id_unique_accountnumber"])

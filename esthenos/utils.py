@@ -124,8 +124,8 @@ from e_organisation.models import EsthenosOrgApplicationEqifax
 def make_equifax_request_entry_application_id(app_id):
     app = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
     eqrequest = EsthenosOrgApplicationEqifax()
-    eqrequest.reference_number=app.application_id
-    eqrequest.member_id_unique_accountnumber=app.application_id
+    eqrequest.reference_number=app_id
+    eqrequest.member_id_unique_accountnumber=app_id
     eqrequest.inquiry_purpose="6"
     eqrequest.transaction_amount=app.applied_loan
     eqrequest.consumer_name=app.applicant_name

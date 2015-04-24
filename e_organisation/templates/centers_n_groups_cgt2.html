@@ -10,118 +10,109 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="grid simple ">
-                        <div class="grid-title no-border">
-                            <h4>CGT 2  <span class="semi-bold">Applications</span></h4>
-                            <div class="tools">	<a href="javascript:;" class="collapse"></a>
-                                <a href="#grid-config" data-toggle="modal" class="config"></a>
-                                <a href="javascript:;" class="reload"></a>
-                                <a href="javascript:;" class="remove"></a>
-                            </div>
-                        </div>
-                        <div class="grid-body no-border">
-                            <h3>Search   <span class="semi-bold">Applications</span></h3>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input name="centerName" id="i_centerName" type="text"  class="form-control" placeholder="Center Name">
-                                    <table class="table no-more-tables ">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:1%" >
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox00009" type="checkbox" value="1" class="checkall">
-                                                    <label for="checkbox00009"></label>
-                                                </div>
-                                            </th>
-                                            <th style="width:25%">Center ID</th>
-                                            <th style="width:25%">Center Name</th>
-                                            <th style="width:25%">Added Date</th>
+            <div class="grid simple ">
+                <div class="grid-title no-border">
+                    <h4>CGT2  <span class="semi-bold">Applications</span></h4>
+                    <div class="tools">	<a href="javascript:;" class="collapse"></a>
+                        <a href="#grid-config" data-toggle="modal" class="config"></a>
+                        <a href="javascript:;" class="reload"></a>
+                        <a href="javascript:;" class="remove"></a>
+                    </div>
+                </div>
+                <div class="grid-body no-border">
+                    <h3>Search   <span class="semi-bold">Applications</span></h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input name="groupName" id="i_groupNameNew" type="text"  class="form-control" placeholder="Group Name">
+                            <table class="table no-more-tables ">
+                                <thead>
+                                <tr>
+                                    <th style="width:1%" >
+                                        <div class="checkbox check-default">
+                                            <input id="checkbox-1" type="checkbox" value="1" class="checkall">
+                                            <label for="checkbox-1"></label>
+                                        </div>
+                                    </th>
+                                    <th style="width:25%">Group ID</th>
+                                    <th style="width:25%">Group Name</th>
+                                    <th style="width:25%">Questions</th>
 
-                                            <th style="width:10%" class="text-center">Fail</th>
-                                            <th style="width:10%" class="text-center" >Pass</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for center in centers[0:10] %}
-                                        <tr>
-                                            <td class="v-align-middle">
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                    <label for="checkbox{{ loop.index }}"></label>
-                                                </div>
-                                            </td>
-                                            <td class="v-align-middle clickable-row" data-href='/check_cgt2_applicant/?center={{ center.center_id }}'><ins>{{ center.center_id }}</ins></td>
-                                            <td class="v-align-middle"><span class="muted">{{ center.center_name }}</span>
-                                            </td>
-                                            <td><span class="muted">{{ center.created_at }}</span>
-                                            </td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for group in groups[0:10] %}
+                                    <tr>
+                                        <td class="v-align-middle">
+                                            <div class="checkbox check-default">
+                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
+                                                <label for="checkbox{{ loop.index }}"></label>
+                                            </div>
+                                        </td>
+                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
+                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
+                                        </td>
+                                        <td><a class="btn btn-small btn-primary " href="/cgt2_question?group_id={{ group.group_id }}" >Questions</a>
+                                        </td>
 
-                                            <td>
-                                                <button class="btn btn-small btn-danger btn-cons center-fail" data-id="{{ center.center_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
-                                            </td>
-                                            <td >
-                                                <button class="btn btn-small btn-primary btn-cons center-pass" data-id="{{ center.center_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
-                                    <table class="table no-more-tables ">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:1%" >
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox1000001" type="checkbox" value="1" class="checkall">
-                                                    <label for="checkbox1000001"></label>
-                                                </div>
-                                            </th>
-                                            <th style="width:25%">Group ID</th>
-                                            <th style="width:25%">Group Name</th>
-                                            <th style="width:25%">Added Date</th>
-                                            <th style="width:10%" class="text-center">Fail</th>
-                                            <th style="width:10%" class="text-center" >Pass</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for group in groups[0:10] %}
-                                            <tr>
-                                                <td class="v-align-middle">
-                                                    <div class="checkbox check-default">
-                                                        <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                        <label for="checkbox{{ loop.index }}"></label>
-                                                    </div>
-                                                </td>
-                                                <td class="v-align-middle clickable-row" data-href='/check_cgt2_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
-                                                <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
-                                                </td>
-                                                <td><span class="muted">{{ group.created_at }}</span>
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
-                                                </td>
-                                                <td >
-                                                    <button class="btn btn-small btn-primary btn-cons group-pass" data-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+                <div class="grid-body no-border">
+                    <h3>Search   <span class="semi-bold">Applications</span></h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                            <table class="table no-more-tables ">
+                                <thead>
+                                <tr>
+                                    <th style="width:1%" >
+                                        <div class="checkbox check-default">
+                                            <input id="checkbox-1" type="checkbox" value="1" class="checkall">
+                                            <label for="checkbox-1"></label>
+                                        </div>
+                                    </th>
+                                    <th style="width:25%">Group ID</th>
+                                    <th style="width:25%">Group Name</th>
+                                    <th style="width:25%">GRT Rating</th>
+                                    <th style="width:10%" class="text-center">Fail</th>
+                                    <th style="width:10%" class="text-center" >Pass</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for grt_session in cgt2_sessions[0:10] %}
+                                    <tr>
+                                        <td class="v-align-middle">
+                                            <div class="checkbox check-default">
+                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
+                                                <label for="checkbox{{ loop.index }}"></label>
+                                            </div>
+                                        </td>
+                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ grt_session.group.group_id }}'><ins>{{ grt_session.group.group_id }}</ins></td>
+                                        <td class="v-align-middle"><span class="muted">{{ grt_session.group.group_name }}</span>
+                                        </td>
+                                        <td><span class="muted">{{'%0.2f' %  grt_session.score|float}}/5</span>
+                                        </td>
 
+                                        <td>
+                                            <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                        </td>
+                                        <td >
+                                            <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
@@ -135,7 +126,8 @@
                 console.log("center fail "+$(this).attr("data-id"));
                 data = '{"center_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
-                    url: '/center/status/cgt2',
+                    url: '/center/status/cgt1',
+                    data: {center_id:'"+$(this).attr("data-id")+"','status':false},
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -148,10 +140,10 @@
             });
             $(".center-pass").click(function(e){
                 e.preventDefault();
-                console.log("center pass "+$(this).attr("data-id"))
+                console.log("center pass "+$(this).attr("data-id"));
                 data = '{"center_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
-                    url: '/center/status/cgt2',
+                    url: '/center/status/cgt1',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -167,7 +159,7 @@
                 console.log("group fail "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":false}'
                 $.ajax({
-                    url: '/group/status/cgt2',
+                    url: '/group/status/cgt1',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -184,7 +176,7 @@
                 console.log("group pass "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":true}'
                 $.ajax({
-                    url: '/group/status/cgt2',
+                    url: '/group/status/cgt1',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",

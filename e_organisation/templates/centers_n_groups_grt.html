@@ -51,7 +51,7 @@
                                         <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
                                         <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                         </td>
-                                        <td><a class="btn btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
+                                        <td><a class="btn btn-small btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
                                         </td>
 
                                     </tr>
@@ -98,10 +98,10 @@
                                         </td>
 
                                         <td>
-                                            <button class="btn btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                            <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                         </td>
                                         <td >
-                                            <button class="btn btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                            <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                         </td>
                                     </tr>
                                 {% endfor %}

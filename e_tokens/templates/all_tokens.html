@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block action_bar %}
-    <li><div class="m-t-small"><a class="btn btn-sm btn-info" data-toggle="modal" href="#generate_token"><i class="icon-plus"></i> Generate Token</a></div></li>
+    <li><div class="m-t-small"><a class="btn btn-small btn-sm btn-info" data-toggle="modal" href="#generate_token"><i class="icon-plus"></i> Generate Token</a></div></li>
 {% endblock %}
 {% block maincontents %}
     <div class="row">
@@ -65,8 +65,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="button_create"  >Generate</button>
+                                <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-small btn-primary" id="button_create"  >Generate</button>
                             </div>
 
                     </div><!-- /.modal-content -->
@@ -93,7 +93,7 @@
                         '</div>'+
                         '<div><code>'+tokens[i].token+'</code></div>'+
                         '<small class="block"><a href="/instance_buckets#'+tokens[i].id+'" class="">'+tokens[i].instance_buckets+'</a>,'+tokens[i].perms+','+tokens[i].services+' ,expires in '+tokens[i].expires_in+' mins from date created</small>'+
-                        '<button class="btn-sm btn btn-danger delete_token_button" data="'+tokens[i].token+'">Delete Token</button></div>'+
+                        '<button class="btn btn-small-sm btn btn-danger delete_token_button" data="'+tokens[i].token+'">Delete Token</button></div>'+
                         '</article>'+
                         '<div class="line pull-in"></div>';
             }

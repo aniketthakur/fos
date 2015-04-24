@@ -235,8 +235,19 @@ class EsthenosOrgGroupGRTSession(db.Document):
     questions=db.DictField(required=False)
     score = db.FloatField(default=0,required=False)
 
+class EsthenosOrgGroupCGT1Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
 
-class EsthenosOrgCGTTemplateQuestion(db.Document):
+class EsthenosOrgGroupCGT2Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
+
+class EsthenosOrgGRTTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
@@ -245,6 +256,25 @@ class EsthenosOrgCGTTemplateQuestion(db.Document):
     def __unicode__(self):
         return "EsthenosOrgCGTTemplateQuestion"
 
+
+class EsthenosOrgCGT1TemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
+
+    def __unicode__(self):
+        return "EsthenosOrgCGT1TemplateQuestion"
+
+
+class EsthenosOrgCGT2TemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
+
+    def __unicode__(self):
+        return "EsthenosOrgCGT2TemplateQuestion"
 
 
 class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
@@ -266,21 +296,23 @@ class EsthenosOrgIndivijualTeleCallingSession(db.Document):
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
+    loan_type=db.StringField(max_length=128,required=False)
     organisation = db.ReferenceField('EsthenosOrg')
     loan_amount = db.FloatField(default=0.0)
     life_insurance = db.FloatField(default=0.0)
     eligible_cycle = db.IntField(default=0)
     number_installments = db.IntField(default=0)
     emi = db.FloatField(default=0)
+    service_tax = db.FloatField(default=0)
+    insurance_service_tax = db.FloatField(default=0)
     last_emi = db.FloatField(default=0)
     processing_fee = db.FloatField(default=0)
     total_processing_fees = db.FloatField(default=0)
     interest_rate = db.FloatField(default=0)
     insurance_period = db.FloatField(default=0)
-    insurance_free_borrowers_only = db.FloatField(default=0.0)
-    total_processing_fees_borrowers_only = db.FloatField(default=0)
-    insurance_free_borrowers_n_guarnteer = db.FloatField(default=0.0)
-    total_processing_fees_borrowers_n_guarnteer = db.FloatField(default=0)
+    insurance_free = db.FloatField(default=0.0)
+    total_insurance_fees = db.FloatField(default=0)
+    rd_free = db.FloatField(default=0)
     emi_repayment=db.StringField(max_length=128,required=False)
 
     def __unicode__(self):
@@ -639,7 +671,7 @@ class  EsthenosOrgApplicationEqifaxResponse(db.Document):
 
 
 class EsthenosOrgApplicationEqifax(db.Document):
-    reference_number=db.StringField(default="", required=True)
+    reference_number=db.StringField(required=True)
     member_id_unique_accountnumber=db.StringField(default="", required=False)
     inquiry_purpose=db.StringField(max_length=255, required=False,default="")
     transaction_amount=db.FloatField(default=0, required=False)
