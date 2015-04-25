@@ -175,13 +175,14 @@ class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center_id = db.StringField(max_length=10,required=False)
     center_name = db.StringField(max_length=60,required=True)
+    size = db.IntField(default=0)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return self.center_name
+        return self.center_id
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -193,6 +194,9 @@ class EsthenosOrgGroup(db.Document):
     branch = db.ReferenceField('EsthenosOrgBranch',required=False)
     group_id = db.StringField(max_length=20,required=False)
     group_name = db.StringField(max_length=120,required=True)
+    leader_name = db.StringField(max_length=120,required=False)
+    leader_number = db.StringField(max_length=120,required=False)
+    size = db.IntField(default=0)
     location_name = db.StringField(max_length=120,required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
@@ -200,7 +204,7 @@ class EsthenosOrgGroup(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return self.group_name
+        return self.group_id
 
 
 
