@@ -332,31 +332,43 @@ class AddApplicationManual(Form):
 
 
 """
- ('gurantors_borrowers_are_nominee_for_each_other_', u'Yes'),
- ('village_information_sanitation', u'Private'),
-  ('primary_business_expenses_monthly', u'1000'),
-
-    ('ifsc_code', u'558455665'),
-   ('bank_name', u'Hdfc'),
-    ('village_information_medical_category', u'Allopathy'), ('family_assets_number_of_cows', u'20'),
-  ('group_leader_cell', u'8188358568'),
-     ('dob_yob', u'1991'), ('model_type', u'JLG'),
-      ('group_size', u'20'), ('family_assets_land_acres', u''),
-('kyc', u'{"kyc":[{"kyc_type":"aadhar"},{"kyc_type":"pancard"},{"kyc_type":"votercard"},{"kyc_type":"gurrantors"}]}'),
- ('family_assets_number_of_sheeps', u'20'), ('primary_business_income_monthly', u'5000'),
- ('village_information_medical_facility', u'PHC'), ('family_entertainment_expenditure__monthly', u'200'),
- ('family_travel_expenditure__monthly', u'200'), ('village_information_financial_institutions', u'Bank'),
- ('repayment_option', u'Monthly'), ('gurranter_s_name', u'Prathvu'), ('education', u'Secondary/Matric'),
- ('category', u'General'), ('financial_liabilities_friends__family_hand_loans', u'0'), ('religion', u'Hindu'),
- ('state', u'Karnataka'), ('taluk', u'Honavar'), ('gurantor_s_relationship_with_borrower', u'Others'), ('product_name', u''),
-  ('phone_number', u''), ('purpose_of_the_loan', u'Buy Tailoring Machine'), ('financial_liabilities_chits', u''),
-  ('family_assets_orchard__acres', u''), ('father_s__husband_s_name', u'S/O Mahesh Palekar'),
-  ('interested_in_buying_other_products', u''), ('financial_liabilities_bank_loans', u''),
-   ('family_education_expenditure_monthly', u''), ('male_count', u'2'),
-   ('village_information_public_transportaion', u'Train'), ('village_information_education_institutes', u'Government School'),
-    ('female_count', u'3'), ('total_number_of_family_members', u'5'), ('country', u'India'), ('age', u''),
-    ('type_of_house', u'Self Owned'), ('account_number', u'558455665'), ('family_food_expenditure__monthly', u'1500'
-
+ImmutableMultiDict([('how_long_are_you_staying_in_house__in_years', u'5'),
+ ('financial_liabilities_bank_loans', u'300'), ('gurranter_s_sex', u''), ('address', u' NEAR JERI MERI MANDIR'),
+  ('total_earning_members', u'3'), ('pincode', u'421306'), ('group_name', u'test1'), ('required_loan_amount', u'60000'),
+  ('tertiary_business_category', u'Allied Agriculture'), ('village_information_sanitation', u'Private'),
+  ('village_information_water_bodies', u'Sea, Pond, Hand Pump'), ('primary_business_expenses_monthly', u'1000'),
+  ('district', u'Thane'), ('financial_liabilities_insurance', u'300'), ('village_information_road_quality', u'Pakka'),
+  ('physical_disability_member', u'None'), ('family_medical_expenditure_monthly', u'300'),
+  ('family_other_expenditure_monthly', u'300'), ('ifsc_code', u'0218101073456'), ('gurantors_nominee_name', u'Rajeshwari'),
+   ('secondary_business_income_monthly', u'15000'), ('tertiary_business_activities', u'Cattle Farming'),
+   ('gurantors_nominee_gender', u'Female'), ('gurranter_s_name', u'Raju'), ('bank_name', u'State Bank Of India'),
+   ('village_information_electricity_hours', u'24'), ('primary_business_category', u'Services'),
+    ('village_information_medical_category', u'Allopathy, Homeopathy'), ('family_assets_number_of_cows', u'5'),
+     ('borrowers_nominee_age', u'27'), ('tertiary_business_expenses_monthly', u'5000'), ('gurantors_nominee_age', u'26'),
+      ('gurantors_borrowers_are_nominee_for_each_other_', u'No'), ('secondary_business_category', u'Agriculture'),
+       ('borrowers_nominee_name', u'Gayathri'), ('gurranter_s_age', u'28'), ('name', u'Nitin Gopalakrishnan'),
+        ('other_family_asset_s', u'Bike, Tv, Gas'), ('members_less_than_18', u'0'), ('family_festival_expenditure_monthly', u'300'),
+('members_above_18', u'5'), ('family_education_expenditure_monthly', u'300'), ('gender', u'Male'),
+ ('secondary_business_activities', u'Paddy'), ('quality_of_house', u'Semi/Pakka'), ('relationship_status', u'Divorced'),
+  ('family_assets_land_acres', u'2'), ('kyc', u'{"kyc":[{"kyc_type":"aadhar"},{"kyc_type":"pancard"},
+  {"kyc_type":"votercard"},{"kyc_type":"gurrantors"}]}'),
+   ('family_assets_number_of_sheeps', u'3'), ('primary_business_income_monthly', u'32000'), ('financial_liabilities_chits', u'300'),
+    ('family_entertainment_expenditure__monthly', u'300'), ('family_travel_expenditure__monthly', u'300'),
+     ('repayment_option', u'Monthly'),
+     ('village_information_financial_institutions', u'Bank, Post Office'), ('education', u'Higher Secondary/PU'), ('category', u'Others'),
+     ('financial_liabilities_friends__family_hand_loans', u'300'), ('religion', u'Jain'), ('state', u'Maharashtra'),
+     ('village_information_medical_facility', u'PHC, Private Hospital'), ('gurantor_s_relationship_with_borrower', u'Others'), ('product_name', u''),
+      ('primary_business_activities', u'Railway'), ('phone_number', u'8898506602'), ('purpose_of_the_loan', u'Buy Cattle'),
+      ('taluk', u'KALYAN EAST'), ('account_holder_name', u''), ('family_assets_orchard__acres', u'2'),
+       ('father_s__husband_s_name', u'Gopalakrishnan'),
+       ('interested_in_buying_other_products', u'NPS, Insurance'), ('dob_yob', u'1988'), ('male_count', u'3'), ('model_type', u'JLG'),
+       ('village_information_public_transportaion', u'Train, Auto'),
+       ('village_information_education_institutes', u'Private School, Government School'),
+        ('female_count', u'2'), ('borrowers_nominee_gender', u'Female'),
+        ('source_of_drinking_water', u'Borewell, Shared Borewell, Open Well'),
+        ('total_number_of_family_members', u'5'), ('country', u'India'), ('age', u''), ('specify_category', u'Thiya'),
+        ('type_of_house', u'Rented/Leased'), ('account_number', u'0218101073456'), ('secondary_business_expenses_monthly', u'5000'),
+         ('tertiary_business_income_monthly', u'16000'), ('family_food_expenditure__monthly', u'3000')])
 """
 class AddApplicationMobile(Form):
     group_leader_cell = TextField( validators=[ v.Length(max=512)]) #8197997788
@@ -388,9 +400,12 @@ class AddApplicationMobile(Form):
     members_less_than_18 = TextField( validators=[ v.Length(max=512)]) #6
     members_above_18 = TextField( validators=[ v.Length(max=512)]) #6
     other_family_asset_s = TextField( validators=[ v.Length(max=512)]) #Bike, Gas
-    gurranter_s_name = TextField( validators=[ v.Length(max=512)]) #Habib
-    gurranter_s_sex = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_age = TextField( validators=[ v.Length(max=512)]) #55
+    gurantors_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
+    gurantors_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
+    gurantors_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
+    borrowers_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
+    borrowers_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
+    borrowers_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
     gurantor_s_relationship_with_borrower = TextField( validators=[ v.Length(max=512)]) #Father
     gurantors_borrowers_are_nominee_for_each_other_ = TextField( validators=[ v.Length(max=512)]) #Yes
     quality_of_house = TextField( validators=[ v.Length(max=512)]) #Kaccha/Mud
@@ -423,6 +438,7 @@ class AddApplicationMobile(Form):
     secondary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #1000
     secondary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
     tertiary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
+    tertiary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #3000
     primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
     village_information_water_bodies = TextField( validators=[ v.Length(max=512)]) #Sea, Pond
     village_information_medical_facility = TextField( validators=[ v.Length(max=512)]) #Public Hospital, None
@@ -464,7 +480,17 @@ class AddApplicationMobile(Form):
         app.group = group
         app.owner = user
 
-
+        if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
+            app.guarantor_borrowers_are_nominee = "NO"
+            app.gurantors_nominee_name = self.gurantors_nominee_name.data
+            app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
+            app.gurantors_nominee_age = self.gurantors_nominee_age.data
+            app.borrowers_nominee_age = self.borrowers_nominee_age.data
+            app.borrowers_nominee_gender = self.borrowers_nominee_gender.data
+            app.borrowers_nominee_name = self.borrowers_nominee_name.data
+            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
+        else:
+            app.guarantor_borrowers_are_nominee = "YES"
         app.member_pincode=self.pincode.data
 
         if self.how_long_are_you_staying_in_house__in_years.data == "":
@@ -552,21 +578,17 @@ class AddApplicationMobile(Form):
 
         app.repayment_method = self.repayment_option.data
         app.applicant_name = self.name.data
-        app.dob = self.age.data
+        app.dob = self.dob_yob.data
+
         app.address = self.address.data
         app.primary_business = self.primary_business_activities.data
         app.secondary_business = self.secondary_business_activities.data
-#        app.tertiary_business=self.tertiary_business_activities.data
+        app.tertiary_business=self.tertiary_business_activities.data
 
         app.primary_business_category = self.primary_business_category.data
         app.secondary_business_category = self.secondary_business_category.data
         app.tertiary_business_category=self.tertiary_business_category.data
-        if self.primary_business_income_monthly.data == "":
-            self.primary_business_income_monthly.data = "0"
-        if self.secondary_business_income_monthly.data == "":
-            self.secondary_business_income_monthly.data = "0"
-#        if self.t_income.data == "":
-#            self.t_income.data = "0"
+
         if self.primary_business_income_monthly.data == "":
             app.primary_income = 0.0
         else:
@@ -575,7 +597,28 @@ class AddApplicationMobile(Form):
             app.secondary_income = 0.0
         else:
             app.secondary_income = float(self.secondary_business_income_monthly.data)
-#        app.tertiary_income =float(self.t_income.data)
+
+        if self.tertiary_business_income_monthly.data == "":
+            app.tertiary_income =0.0
+        else:
+            app.tertiary_income =float(self.tertiary_business_income_monthly.data)
+
+        if self.primary_business_expenses_monthly.data == "":
+            app.primary_expenses = 0.0
+        else:
+            app.primary_expenses =float(self.primary_business_expenses_monthly.data)
+
+        if self.secondary_business_expenses_monthly.data == "":
+            app.secondary_expenses = 0.0
+        else:
+            app.secondary_expenses = float(self.secondary_business_expenses_monthly.data)
+
+        if self.tertiary_business_expenses_monthly.data == "":
+            app.tertiary_expenses =0.0
+        else:
+            app.tertiary_expenses =float(self.tertiary_business_expenses_monthly.data)
+
+
         app.gender = self.gender.data
         app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
