@@ -26,7 +26,8 @@
                         </div>
 
                         <div class="grid-body no-border">
-                            <h3>{% if center_id == '' %} Group: {{ group.group_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>
+{#                            <h3>{% if center_id == '' %} Group: {{ group.group_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>#}
+                            <h3> Group: {{ group.group_name }}  <span class="semi-bold">Application</span></h3>
                             <div class="col-md-6">
                                 <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>
@@ -42,9 +43,10 @@
                                     <th style="width:19%">Application ID</th>
                                     <th style="width:19%">Applicant Name</th>
                                     <th style="width:20%">Group Name</th>
-                                    <th style="width:20%">Center Name</th>
+{#                                    <th style="width:20%">Center Name</th>#}
                                     <th style="width:16%">Date</th>
                                     <th style="width:20%">Progress Status</th>
+                                    <th style="width:20%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -59,14 +61,11 @@
                                     <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track' ><ins>{{ app.application_id }}</ins></td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
                                     <td class="v-align-middle">{{ app.group.group_name }}</td>
-                                    <td class="v-align-middle">{{ app.center.center_name }}</td>
+{#                                    <td class="v-align-middle">{{ app.center.center_name }}</td>#}
                                     <td><span class="muted">{{ app.date_created }}</span>
                                     </td>
-                                    <td class="v-align-middle">
-                                        <div class="progress">
-                                            <div data-percentage="80%"  class="progress-bar progress-bar-info animate-progress-bar"></div>
-                                        </div>
-                                    </td>
+                                    <td><span class="muted">{{ app.current_status.status_message }}</span>
+                                    <td><a class="btn btn-small btn-primary " href="/application/{{ app.application_id }}/cashflow" >Cashflow</a>
 
 
                                 </tr>

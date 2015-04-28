@@ -100,8 +100,29 @@ class EsthenosOrgUserUploadSession(db.DynamicDocument):
 
 
 class EsthenosOrgRoleSettings(db.Document):
-    access_dash = db.BooleanField(default=False)
-    access_enroll_customer = db.BooleanField(default=False)
+    organisation = db.ReferenceField('EsthenosOrg')
+    role = db.StringField(max_length=25, required=True)
+    access_dash = db.StringField(max_length=10, required=True,default="no")
+    access_enroll_customer = db.StringField(max_length=10, required=True,default="no")
+    access_cgt = db.StringField(max_length=10, required=True,default="no")
+    access_grt = db.StringField(max_length=10, required=True,default="no")
+    access_disburse = db.StringField(max_length=10, required=True,default="no")
+    access_reports = db.StringField(max_length=10, required=True,default="no")
+    access_maker = db.StringField(max_length=10, required=True,default="no")
+    access_checker = db.StringField(max_length=10, required=True,default="no")
+    noti_de_done = db.StringField(max_length=10, required=True,default="no")
+    noti_cbc_done = db.StringField(max_length=10, required=True,default="no")
+    noti_cfa_done = db.StringField(max_length=10, required=True,default="no")
+    noti_dd_done = db.StringField(max_length=10, required=True,default="no")
+    noti_db_done = db.StringField(max_length=10, required=True,default="no")
+    reports_all_data = db.StringField(max_length=10, required=True,default="no")
+    reports_de_done = db.StringField(max_length=10, required=True,default="no")
+    reports_cbc_done = db.StringField(max_length=10, required=True,default="no")
+    reports_cfa_done = db.StringField(max_length=10, required=True,default="no")
+    reports_dd_done = db.StringField(max_length=10, required=True,default="no")
+    reports_db_done = db.StringField(max_length=10, required=True,default="no")
+    def __unicode__(self):
+        return "EsthenosOrgRoleSettings"
 
 class EsthenosOrgStats(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -168,8 +189,6 @@ class EsthenosOrg(db.Document):
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
     employee_count = db.IntField(default=1)
-    cm_settings = db.ReferenceField('EsthenosOrgRoleSettings',required=False)
-    bm_settings = db.ReferenceField('EsthenosOrgRoleSettings',required=False)
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -333,6 +352,14 @@ class EsthenosOrgSettings(db.Document):
     total_indebtness_org = db.FloatField(default=50000)
     max_existing_loan_count_org = db.IntField(default=2)
     applicatant_min_attendence_percentage = db.FloatField(default=0.0)
+    product_cycle_1_group_min = db.IntField(default=5)
+    product_cycle_1_group_max = db.IntField(default=20)
+    product_cycle_2_group_min = db.IntField(default=5)
+    product_cycle_2_group_max = db.IntField(default=20)
+    product_cycle_3_group_min = db.IntField(default=5)
+    product_cycle_3_group_max = db.IntField(default=20)
+    product_cycle_4_group_min = db.IntField(default=5)
+    product_cycle_4_group_max = db.IntField(default=20)
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
 

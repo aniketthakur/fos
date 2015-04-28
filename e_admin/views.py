@@ -68,21 +68,6 @@ def admin_settings():
     return render_template("admin_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/settings', methods=["POST"])
-@login_required
-def admin_org_settings():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org_settings = EsthenosOrg.objects.get(id = user.organisation)
-    org_settings.cm_settings.access_dash = request.form.get("cm_access_dash")
-    org_settings.bm_settings.access_dash = request.form.get("bm_access_dash")
-    org_settings.save()
-    kwargs = locals()
-    return render_template("admin_settings.html", **kwargs)
-
 # @admin_views.route('/admin/organisation/products', methods=["GET"])
 # @login_required
 # def admin_org_add_product():
@@ -349,20 +334,121 @@ def admin_organisation_dashboard(org_id):
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
-@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET"])
+from e_organisation.models import EsthenosOrgRoleSettings
+@admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
 @login_required
-def admin_organisation_settings(org_id):
+def admin_organisation_settings_role(org_id,role_type):
     if session['role'] != "ADMIN":
         abort(403)
+
     username = current_user.name
+    print role_type
+    org = EsthenosOrg.objects.get(id=org_id)
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation,role=role_type)
+    resp = dict()
+    resp["access_dash"] = org_settings.access_dash
+    resp["access_enroll_customer"]= org_settings.access_enroll_customer
+    resp["access_cgt"]= org_settings.access_cgt
+    resp["access_grt"]= org_settings.access_grt
+    resp["access_disburse"]= org_settings.access_disburse
+    resp["access_reports"]= org_settings.access_reports
+    resp["access_maker"]= org_settings.access_maker
+    resp["access_checker"]= org_settings.access_checker
+    resp["noti_de_done"]= org_settings.noti_de_done
+    resp["noti_cbc_done"]= org_settings.noti_cbc_done
+    resp["noti_cfa_done"]= org_settings.noti_cfa_done
+    resp["noti_dd_done"]= org_settings.noti_dd_done
+    resp["noti_db_done"]= org_settings.noti_db_done
+    resp["reports_all_data"]= org_settings.reports_all_data
+    resp["reports_de_done"]= org_settings.reports_de_done
+    resp["reports_cbc_done"]= org_settings.reports_cbc_done
+    resp["reports_cfa_done"]= org_settings.reports_cfa_done
+    resp["reports_dd_done"]= org_settings.reports_dd_done
+    resp["reports_db_done"]= org_settings.reports_db_done
+
+    return Response(response=json.dumps(resp),
+        status=200,\
+        mimetype="application/json")
+
+@admin_views.route('/admin/organisation/<org_id>/settings/other', methods=["POST"])
+@login_required
+def admin_organisation_settings_rbi(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    username = current_user.name
+
     org = EsthenosOrg.objects.get(id=org_id)
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
     settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
-    print settings.loan_cycle_1_org
-    kwargs = locals()
-    return render_template("admin_org_settings.html", **kwargs)
+    if request.method == "POST":
+        print request.form
+        settings.loan_cycle_1_org = float(request.form.get("loan_cycle_1_org"))
+        settings.loan_cycle_1_plus_org = float(request.form.get("loan_cycle_1_plus_org"))
+        settings.one_year_tenure_limit_org = float(request.form.get("one_year_tenure_limit_org"))
+        settings.hh_annual_income_limit_rural_org = float(request.form.get("hh_annual_income_limit_rural_org"))
+        settings.hh_annual_income_limit_urban_org = float(request.form.get("hh_annual_income_limit_urban_org"))
+        settings.total_indebtness_org = float(request.form.get("total_indebtness_org"))
+        settings.max_existing_loan_count_org = int(request.form.get("max_existing_loan_count_org"))
+        settings.product_cycle_1_group_min = int(request.form.get("product_cycle_1_group_min"))
+        settings.product_cycle_1_group_max = int(request.form.get("product_cycle_1_group_max"))
+        settings.product_cycle_2_group_min = int(request.form.get("product_cycle_2_group_min"))
+        settings.product_cycle_2_group_max = int(request.form.get("product_cycle_2_group_max"))
+        settings.product_cycle_3_group_min = int(request.form.get("product_cycle_3_group_min"))
+        settings.product_cycle_3_group_max = int(request.form.get("product_cycle_3_group_max"))
+        settings.product_cycle_4_group_min = int(request.form.get("product_cycle_4_group_min"))
+        settings.product_cycle_4_group_max = int(request.form.get("product_cycle_4_group_max"))
+        settings.save()
+        return redirect("/admin/organisation/"+org_id+"/settings")
+
+
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET","POST"])
+@login_required
+def admin_organisation_settings(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    username = current_user.name
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    organisation = EsthenosOrg.objects.get(id=org_id)
+    settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    if request.method == "POST":
+        print request.form
+        role = request.form.get("role")
+        org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation,role=role)
+        org_settings.access_dash = request.form.get("access_dash")
+        org_settings.access_enroll_customer = request.form.get("access_enroll_customer")
+        org_settings.access_cgt = request.form.get("access_cgt")
+        org_settings.access_grt = request.form.get("access_grt")
+        org_settings.access_disburse = request.form.get("access_disburse")
+        org_settings.access_reports = request.form.get("access_reports")
+        org_settings.access_maker = request.form.get("access_maker")
+        org_settings.access_checker = request.form.get("access_checker")
+        org_settings.noti_de_done = request.form.get("noti_de_done")
+        org_settings.noti_cbc_done = request.form.get("noti_cbc_done")
+        org_settings.noti_cfa_done = request.form.get("noti_cfa_done")
+        org_settings.noti_dd_done = request.form.get("noti_dd_done")
+        org_settings.noti_db_done = request.form.get("noti_db_done")
+        org_settings.reports_all_data = request.form.get("reports_all_data")
+        org_settings.reports_de_done = request.form.get("reports_de_done")
+        org_settings.reports_cbc_done = request.form.get("reports_cbc_done")
+        org_settings.reports_cfa_done = request.form.get("reports_cfa_done")
+        org_settings.reports_dd_done = request.form.get("reports_dd_done")
+        org_settings.reports_db_done = request.form.get("reports_db_done")
+        org_settings.save()
+        kwargs = locals()
+        return render_template("admin_org_settings.html", **kwargs)
+    else :
+        print settings.loan_cycle_1_org
+        kwargs = locals()
+        return render_template("admin_org_settings.html", **kwargs)
 
 @admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
