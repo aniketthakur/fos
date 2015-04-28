@@ -44,6 +44,8 @@ def generate_token_view():
         return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
     return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
 
+
+
 @token_views.route('/api/app_token/<token>', methods=["DELETE"])
 @login_required
 def delete_token(token):

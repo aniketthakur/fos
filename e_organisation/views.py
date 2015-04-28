@@ -698,6 +698,7 @@ def get_application():
         mimetype="application/json")
 
 
+
 from e_organisation.models import EsthenosOrgSettings
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
@@ -1262,6 +1263,69 @@ def check_grt():
     kwargs = locals()
     return render_template("centers_n_groups_grt.html", **kwargs)
 
+@organisation_views.route('/application/<app_id>/cashflow', methods=["GET"])
+@login_required
+def admin_application_cashflow(app_id):
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,application_id = app_id)
+    except Exception as e:
+        print e.message
+    if len(applications)==0:
+        redirect("/application_status")
+    app_urls = list()
+    application = applications[0]
+    kwargs = locals()
+    return render_template("org_cf.html", **kwargs)
+
+
+@organisation_views.route('/users', methods=["GET"])
+@login_required
+def all_users():
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        employees = EsthenosUser.objects.filter(organisation=user.organisation)
+    except Exception as e:
+        print e.message
+    kwargs = locals()
+    return render_template("org_employees.html", **kwargs)
+
+from e_admin.forms import AddOrganizationEmployeeForm
+
+@organisation_views.route('/users/add', methods=["GET","POST"])
+@login_required
+def admin_organisation_add_emp():
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    print "reached here"
+    if request.method == "POST":
+        print request.form
+        org_emp  = AddOrganizationEmployeeForm(request.form)
+        form=org_emp
+        print user.organisation.id
+        form.save(user.organisation.id)
+        if (form.validate()):
+            form.save(user.organisation.id)
+            print "formValidated"
+            return redirect("/users")
+        else:
+            print "some Error"
+            flash_errors(form)
+            print form.errors
+            org = EsthenosOrg.objects.get(id=user.organisation.id)
+            kwargs = locals()
+            return render_template("org_add_emp.html", **kwargs)
+    else:
+
+        org = EsthenosOrg.objects.get(id=user.organisation.id)
+        kwargs = locals()
+        return render_template("org_add_emp.html", **kwargs)
+
 from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgGroupGRTSession
 @organisation_views.route('/grt_question', methods=["GET","POST"])
 @login_required
@@ -1306,6 +1370,33 @@ def grt_question():
         kwargs = locals()
         return redirect("/check_grt")
 
+from e_organisation.models import EsthenosOrgApplicationStatus
+@organisation_views.route('/application/<app_id>/cashflow', methods=["POST"])
+@login_required
+def cashflow_statusupdate(app_id):
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    try:
+        application = EsthenosOrgApplication.objects.filter(application_id = app_id)
+        if len(application) >= 0:
+            application = application[0]
+            status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
+            status.save()
+            application.timeline.append(status)
+
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
+            application.current_status_updated  = datetime.datetime.now()
+            application.status = 12
+            application.save()
+            new_num = int(app_id[-6:])+1
+            new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
+            new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
+            if len(new_apps) >0:
+                return redirect("/application/"+new_id+"/cashflow")
+    except Exception as e:
+        print e.message
+    return redirect("/application/"+app_id+"/cashflow")
 
 from werkzeug.utils import secure_filename, redirect
 import os,io
