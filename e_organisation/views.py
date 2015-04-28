@@ -821,15 +821,16 @@ def applications():
     #        print center.center_name
     #    else:
     #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     applications = None
     #    if center != None:
     #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
@@ -887,15 +888,15 @@ def download_disbusement():
     #        print center.center_name
     #    else:
     #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
     #    if center != None:
     #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=272)
@@ -940,15 +941,15 @@ def check_tele_applicant():
 #        print center.center_name
 #    else:
 #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
 #    if center != None:
 #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
@@ -1092,15 +1093,15 @@ def check_cgt1_applicant():
     #        print center.center_name
     #    else:
     #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
     #    if center != None:
     #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=190)
@@ -1187,15 +1188,15 @@ def check_cgt2_applicant():
     #        print center.center_name
     #    else:
     #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
     #    if center != None:
     #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=220)
@@ -1226,15 +1227,15 @@ def check_grt_applicant():
     #        print center.center_name
     #    else:
     #        group_id = ''
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
     print  "filter "+ group.group_name
-    user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
     #    if center != None:
     #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=250)
