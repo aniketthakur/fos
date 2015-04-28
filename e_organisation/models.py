@@ -204,7 +204,7 @@ class EsthenosOrgGroup(db.Document):
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
     def __unicode__(self):
-        return self.group_id
+        return self.group_name
 
 
 
@@ -344,14 +344,16 @@ class EsthenosOrgApplicationStatusType(db.Document):
     status =  db.StringField(max_length=100, required=True,default="")
     status_message =  db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
+    sub_status_code = db.IntField(default=0)
+    sub_status_message =  db.StringField(max_length=512, required=True,default="")
     def __unicode__(self):
-        return self.status
+        return "EsthenosOrgApplicationStatusType"
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     def __unicode__(self):
-        return self.status
+        return self.updated_on
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -515,8 +517,9 @@ class EsthenosOrgApplication(db.Document):
     e_total=db.FloatField(default=0.0)
     member_id_proof_number=db.StringField(max_length=80, required=False,default="")
     house_stay_duration = db.FloatField(default=0.0)
-    gurranter_s_sex= db.StringField(max_length=80, required=False,default="")
-
+    gurranter_s_sex= db.StringField(max_length=10, required=False,default="")
+    gurranter_s_name = db.StringField(max_length=80, required=False,default="")
+    gurranter_s_age = db.FloatField(default=0.0)
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     created_on = db.DateTimeField(default=datetime.datetime.now)
 

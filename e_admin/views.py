@@ -169,8 +169,10 @@ def admin_update_org_group(org_id):
         group_name = request.form.get('group_name')
         unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
         branch = EsthenosOrgBranch.objects.get(id=data[3])
-        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=org,group_name=group_name,location_name=loc_name,branch=branch)
+        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=org,group_name=group_name)
         if status:
+            group.location_name=loc_name
+            group.branch=branch
             group.group_id = unique_group_id
             group.save()
             EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
@@ -858,7 +860,7 @@ def admin_application_id_track(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     organisation = EsthenosOrg.objects.get(id = org_id)
-    application = EsthenosOrgApplication.objects.filter(organisation = organisation,application_id=app_id)[0]
+    application = EsthenosOrgApplication.objects.get(organisation = organisation,application_id=app_id)
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
@@ -1226,12 +1228,8 @@ def mobile_application():
             center.save()
             EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
-        unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
-        if status:
-            group.group_id = unique_group_id
-            group.save()
-            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
+        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
     app_form=AddApplicationMobile(form)
     if(app_form.validate()):
         print "Form Validated"

@@ -72,21 +72,21 @@ def center_cgt1():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=14)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=190)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 17
+            app.status = 220
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 16
+            app.status = 210
         app.save()
 
     content = {'response': 'OK'}
@@ -145,21 +145,21 @@ def center_cgt2():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=17)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=220)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 20
+            app.status = 250
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=240)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 19
+            app.status = 240
         app.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -177,21 +177,21 @@ def center_grt():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=20)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=250)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 23
+            app.status = 272
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=270)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 22
+            app.status = 270
 
         app.save()
     content = {'response': 'OK'}
@@ -210,21 +210,21 @@ def group_cgt1():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=14)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 17
+            app.status = 220
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=16)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 16
+            app.status = 210
         app.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -242,21 +242,21 @@ def group_cgt2():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=17)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=220)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=17)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 20
+            app.status = 250
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=240)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 19
+            app.status = 240
         app.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -274,21 +274,21 @@ def group_grt():
     reqstatus = data['status']
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=20)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
     for app in applications:
         print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0],updated_on=datetime.datetime.now())
         status.save()
         app.timeline.append(status)
         print reqstatus
         if reqstatus ==  True:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=23)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 23
+            app.status = 272
         else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=22)[0]
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=270)[0]
             app.current_status_updated  = datetime.datetime.now()
-            app.status = 22
+            app.status = 270
         app.save()
     content = {'response': 'OK'}
     return Response(response=content,
@@ -739,7 +739,7 @@ def upload_documents():
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
             unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-            group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+            group,status = EsthenosOrgGroup.objects.get_or_create(organisation=user.organisation,group_name=group_name)
             if status:
                 group.group_id = unique_group_id
                 group.save()
@@ -811,30 +811,33 @@ def applications():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+    #    print  center_id," ",group_id
+    #    center = None
+    #    if center_id is not None and center_id != '':
+    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+    #        print center.center_name
+    #    else:
+    #        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group)
+    #    if center != None:
+    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
+    #    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=110)
     else:
-        applications = EsthenosOrgApplication.objects.all()
+        applications = EsthenosOrgApplication.objects.filter(status__gte=110)
 
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
@@ -847,8 +850,8 @@ def applications_track(app_id):
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    application = EsthenosOrgApplication.objects.filter(organisation = user.organisation,application_id=app_id)[0]
-    print application.timeline
+    application = EsthenosOrgApplication.objects.get(organisation = user.organisation,application_id=app_id)
+    #print application.timeline
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
@@ -874,30 +877,33 @@ def download_disbusement():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+    #    print  center_id," ",group_id
+    #    center = None
+    #    if center_id is not None and center_id != '':
+    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+    #        print center.center_name
+    #    else:
+    #        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group)
+    #    if center != None:
+    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=272)
+    #    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=272)
     else:
-        applications = EsthenosOrgApplication.objects.all()
+        applications = EsthenosOrgApplication.objects.filter(status__gte=272)
     kwargs = locals()
     return render_template("download_disbusement.html", **kwargs)
 
@@ -924,30 +930,33 @@ def check_tele_applicant():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+#    print  center_id," ",group_id
+#    center = None
+#    if center_id is not None and center_id != '':
+#        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+#        print center.center_name
+#    else:
+#        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+#    if center != None:
+#        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
+#    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=272)
     else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+        applications = EsthenosOrgApplication.objects.filter(status__gte=272)
     kwargs = locals()
     return render_template("update_tele_indivijual.html", **kwargs)
 
@@ -1073,30 +1082,33 @@ def check_cgt1_applicant():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+    #    print  center_id," ",group_id
+    #    center = None
+    #    if center_id is not None and center_id != '':
+    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+    #        print center.center_name
+    #    else:
+    #        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    #    if center != None:
+    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=190)
+    #    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
     else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+        applications = EsthenosOrgApplication.objects.filter(status__gte=190)
     kwargs = locals()
     return render_template("update_cgt1_indivijual.html", **kwargs)
 
@@ -1165,30 +1177,33 @@ def check_cgt2_applicant():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+    #    print  center_id," ",group_id
+    #    center = None
+    #    if center_id is not None and center_id != '':
+    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+    #        print center.center_name
+    #    else:
+    #        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    #    if center != None:
+    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=220)
+    #    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=220)
     else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+        applications = EsthenosOrgApplication.objects.filter(status__gte=220)
     kwargs = locals()
     return render_template("update_cgt2_indivijual.html", **kwargs)
 
@@ -1201,30 +1216,33 @@ def check_grt_applicant():
         abort(403)
     username = current_user.name
     c_user = current_user
-    center_id = request.args.get("center")
+    #center_id = request.args.get("center")
     group_id = request.args.get("group")
-    print  center_id," ",group_id
-    center = None
-    if center_id is not None and center_id != '':
-        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-        print center.center_name
-    else:
-        group_id = ''
+    #    print  center_id," ",group_id
+    #    center = None
+    #    if center_id is not None and center_id != '':
+    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
+    #        print center.center_name
+    #    else:
+    #        group_id = ''
     group = None
+    print group_id
     if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id.strip(" "))
         print group.group_name
     else:
         center_id = ''
-
+    print  "filter "+ group.group_name
     user = EsthenosUser.objects.get(id=c_user.id)
     applications = None
-    if center != None:
-        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
-    elif group != None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=11)
+    #    if center != None:
+    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=250)
+    #    el
+    if group != None:
+        print  "filter "+ group.group_name
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
     else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=11)
+        applications = EsthenosOrgApplication.objects.filter(status__gte=250)
     kwargs = locals()
     return render_template("update_grt_indivijual.html", **kwargs)
 

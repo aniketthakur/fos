@@ -164,7 +164,7 @@ class AddApplicationManual(Form):
 
 
     def save( self):
-        app = EsthenosOrgApplication.objects.filter(application_id=self.application_id.data)[0]
+        app = EsthenosOrgApplication.objects.get(application_id=self.application_id.data)
         app.applicant_name=self.member_fullname.data
         app.member_telephone = self.member_telephone.data
 #       app.member_tele_code = self.postal_tele_code.data
@@ -427,7 +427,9 @@ class AddApplicationMobile(Form):
     financial_liabilities_chits = TextField( validators=[ v.Length(max=512)]) #
     financial_liabilities_insurance = TextField( validators=[ v.Length(max=512)]) #
     financial_liabilities_bank_loans = TextField( validators=[ v.Length(max=512)]) #
-
+    gurranter_s_sex = TextField( validators=[ v.Length(max=512)]) #
+    gurranter_s_name = TextField( validators=[ v.Length(max=512)]) #
+    gurranter_s_age = TextField( validators=[ v.Length(max=512)]) #
     tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
     secondary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
     tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
@@ -470,8 +472,8 @@ class AddApplicationMobile(Form):
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         user.organisation.update(inc__application_count=1)
 
-        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=self.center_name.data,organisation=user.organisation)
-        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=self.group_name.data)
+        center = EsthenosOrgCenter.objects.get(center_name=self.center_name.data,organisation=user.organisation)
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=self.group_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         app.organisation = user.organisation
         if len(products) > 0:
@@ -520,9 +522,9 @@ class AddApplicationMobile(Form):
         else:
             app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
 
-        self.gurranter_s_sex = self.gurranter_s_sex.data
-
-
+        app.gurranter_s_sex = self.gurranter_s_sex.data
+        app.gurranter_s_name = self.gurranter_s_name.data
+        app.gurranter_s_age = float(self.gurranter_s_age.data)
         app.member_disability = self.physical_disability_member.data
         app.village_electricity = self.village_information_electricity_hours.data
         app.village_hospital_category = self.village_information_medical_category.data
@@ -530,7 +532,7 @@ class AddApplicationMobile(Form):
         app.village_public_transport = self.village_information_public_transportaion.data
         app.village_water= self.village_information_water_bodies.data
         app.village_road = self.village_information_road_quality.data
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=5)
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
         app.current_status_updated = datetime.datetime.now()
         app.upload_type = "AUTOMATIC_UPLOAD"
         app.status = 0
@@ -669,9 +671,9 @@ class AddApplicationMobile(Form):
         status.save()
         app.timeline.append(status)
 
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=4)
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
         app.current_status_updated = datetime.datetime.now()
-        app.status = 4
+        app.status = 110
         app.save()
 
         return None

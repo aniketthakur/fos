@@ -211,7 +211,7 @@ def himark_request_reports():
         headers =  hm_request_headers
         #application_data.append(headers)
         for org in organisations:
-            applications = EsthenosOrgApplication.objects.filter(organisation=org,status=7)
+            applications = EsthenosOrgApplication.objects.filter(organisation=org,status__gte=100,status__lte=150)
             for app in applications:
                 try:
                     hm_request = EsthenosOrgApplicationHighMarkResponse.objects.filter(application_id=app.application_id)[0]
@@ -475,12 +475,13 @@ def eqifax_request_reports():
 
         headers =  eq_request_headers
         application_data.append(headers)
-
+        print organisations
         for org in organisations:
 
-            applications = EsthenosOrgApplication.objects.filter(organisation=org,status=7)
+            applications = EsthenosOrgApplication.objects.filter(organisation=org,status__gte=100,status__lte=150)
 
             for app in applications:
+                print app.applicant_name
                 try:
                     eq_request = EsthenosOrgApplicationEqifax.objects.filter(reference_number=app.application_id)[0]
                     row_data = list()
