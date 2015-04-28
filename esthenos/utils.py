@@ -122,7 +122,7 @@ def make_highmark_request_for_application_id(app_id):
 from e_organisation.models import EsthenosOrgApplicationEqifax
 
 def make_equifax_request_entry_application_id(app_id):
-    app = EsthenosOrgApplication.objects.filter(application_id = app_id)[0]
+    app = EsthenosOrgApplication.objects.get(application_id = app_id)
     eqrequest = EsthenosOrgApplicationEqifax()
     eqrequest.reference_number=app_id
     eqrequest.member_id_unique_accountnumber=app_id

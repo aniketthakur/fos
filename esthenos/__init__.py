@@ -30,7 +30,6 @@ mainapp.config.update(
         'DB': 'hindustan_v1',
         "w":1,
         "j":True,
-        #'TZ_AWARE': True,
         #'replicaset':"rs0"
     },
 )

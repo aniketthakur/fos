@@ -61,10 +61,11 @@ def org_applications_stats_update():
 
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
-def prefill_applications():
+@celery.task
+def tagged_applications():
     with mainapp.app_context():
         print "in prefill applications"
-        uploaded_applications = EsthenosOrgApplication.objects.filter(status=0)
+        uploaded_applications = EsthenosOrgApplication.objects.filter(status=110)
         """
     {'query_url': u'http://api.pixuate.com/objects/55041d942a76201b0bf035ff/b48eead256efd179e211c141e82ede0a_p.jpg'}
     {"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
@@ -221,19 +222,20 @@ def prefill_applications():
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     application.gkyc_1 = kyc
 
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=1)[0]
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=120)[0]
             application.current_status_updated  = datetime.datetime.now()
-            application.status = 1
+            application.status = 120
             application.save()
 
+@celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=20))
-def all_tagged_applications():
+def all_prefilled_applications():
     with mainapp.app_context():
         print "queue processor"
         today = datetime.datetime.now()
         Year,WeekNum,DOW = today.isocalendar()
         # connect to another MongoDB server altogether
-        all_tagged_applications = EsthenosOrgApplication.objects.filter(status=4)
+        all_tagged_applications = EsthenosOrgApplication.objects.filter(status=120)
 
         for application in all_tagged_applications:
             if application.kyc_1 != None:
@@ -250,13 +252,13 @@ def all_tagged_applications():
             status.save()
             application.timeline.append(status)
 
-            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=5)[0],updated_on=datetime.datetime.now())
+            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=125)[0],updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
 
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=7)[0]
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=130)[0]
             application.current_status_updated  = datetime.datetime.now()
-            application.status = 7
+            application.status = 130
 
             application.save()
 
@@ -268,7 +270,7 @@ def cb_checkready_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=7)
+    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=130)
 
     for application in all_cbcheckready_applications:
         make_equifax_request_entry_application_id(application.application_id)
@@ -277,9 +279,9 @@ def cb_checkready_applications():
         status.save()
         application.timeline.append(status)
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=8)[0]
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=140)[0]
         application.current_status_updated  = datetime.datetime.now()
-        application.status = 8
+        application.status = 140
         application.save()
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
@@ -288,21 +290,21 @@ def cbcheck_statuscheck_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=9)
+    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=145)
 
     for application in cbcheck_statuscheck_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
         status.save()
         application.timeline.append(status)
 
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=9)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=150)[0],updated_on=datetime.datetime.now())
         status.save()
         application.timeline.append(status)
 
         #below line will change according to status and validation done for highmark
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=11)[0]
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=160)[0]
         application.current_status_updated  = datetime.datetime.now()
-        application.status = 11
+        application.status = 160
         application.save()
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
@@ -311,18 +313,22 @@ def cashflow_ready_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    cashflow_ready_applications = EsthenosOrgApplication.objects.filter(status=12)
+    cashflow_ready_applications = EsthenosOrgApplication.objects.filter(status=160)
 
     for application in cashflow_ready_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
         status.save()
         application.timeline.append(status)
-        #here we generate pdf
+
+
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0],updated_on=datetime.datetime.now())
+        status.save()
+        application.timeline.append(status)
 
         #update cgt_grt links
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=14)[0]
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0]
         application.current_status_updated  = datetime.datetime.now()
-        application.status = 14
+        application.status = 190
         application.save()
 
 
@@ -333,7 +339,7 @@ def cgt_grt_success_applications():
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
-    cgt_grt_success_applications = EsthenosOrgApplication.objects.filter(status=17)
+    cgt_grt_success_applications = EsthenosOrgApplication.objects.filter(status=280)
 
     for application in cgt_grt_success_applications:
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
@@ -341,9 +347,9 @@ def cgt_grt_success_applications():
         application.timeline.append(status)
         #here we generate pdf for disbursement
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=19)[0]
+        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=300)[0]
         application.current_status_updated  = datetime.datetime.now()
-        application.status = 19
+        application.status = 300
         application.save()
 
 if __name__ == '__main__':

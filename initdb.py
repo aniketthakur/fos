@@ -43,163 +43,232 @@ settings.save()
 
 
 #if len(EsthenosOrgApplicationStatusType.objects.all()) == 0:
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CHECK_FAILED"
+status_type.status_message = "Quality Check Failed"
+status_type.status_code = 10
+status_type.sub_status_code = 5
+status_type.sub_status = "CRITERIA_FAILED_BAD_DOCUMENT"
+status_type.save()
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CHECK_FAILED"
+status_type.status_message = "Quality Check Failed"
+status_type.status_code = 10
+status_type.sub_status_code = 11
+status_type.sub_status = "CRITERIA_FAILED_MISSING_DOCUMENTS"
+status_type.save()
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_KYC_CRITERIA_FAILED"
+status_type.status_message = "Invalid/Fake Pancard"
+status_type.status_code = 15
+status_type.sub_status_code = 1
+status_type.sub_status = "CRITERIA_FAILED_KYC_PAN_INVALID"
+status_type.save()
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_KYC_CRITERIA_FAILED"
+status_type.status_message = "Invalid/Fake Aadhaar card"
+status_type.status_code = 15
+status_type.sub_status_code = 2
+status_type.sub_status = "CRITERIA_FAILED_KYC_AADHAAR_INVALID"
+status_type.save()
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_KYC_CRITERIA_FAILED"
+status_type.status_message = "Invalid/Fake Voter's Id"
+status_type.status_code = 15
+status_type.sub_status_code = 3
+status_type.sub_status = "CRITERIA_FAILED_KYC_VOTERSID_INVALID"
+status_type.save()
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CF_CRITERIA_FAILED"
+status_type.status_message = "Borrower defaulted in 1 or more previous MFI's"
+status_type.status_code = 20
+status_type.sub_status_code = 1
+status_type.sub_status = "CRITERIA_FAILED_CF_DEFAULTS"
+status_type.save()
+
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UPLOADED"
 status_type.status_message = "Your application is uploaded to system"
-status_type.status_code = 0
+status_type.status_code = 100
 status_type.save()
-status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "APPLICATION_PREFILLED"
-status_type.status_message = "Application is prefilled first round of checking"
-status_type.status_code = 1
-status_type.save()
-status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "BAD_DOCUMENT"
-status_type.status_message = "Cannot process current document"
-status_type.status_code = 2
-status_type.save()
-status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "DOCUMENT MISSING"
-status_type.status_message = "Some documents required for the processing are missing"
-status_type.status_code = 3
-status_type.save()
+
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_TAGGED"
 status_type.status_message = "Application is tagged and ready of data entry"
-status_type.status_code = 4
+status_type.status_code = 110
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "APPLICATION_CRITERIA_FAILED"
-status_type.status_message = "Some organisation criteria failed required for the processing are missing"
-status_type.status_code = -1
+status_type.status = "APPLICATION_PREFILLED"
+status_type.status_message = "Application is prefilled first round of checking"
+status_type.status_code = 120
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_KYC_VALIDATION_PASSED"
 status_type.status_message = "Application KYC has completed, validation successful"
-status_type.status_code = 5
+status_type.status_code = 125
 status_type.save()
-status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "APPLICATION_KYC_VALIDATION_FAILED"
-status_type.status_message = "Application KYC has completed, failed in one or multiple criteria match"
-status_type.status_code = 6
-status_type.save()
+
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CBCHECK_READY"
 status_type.status_message = "Application data entry done and ready for CB Check"
-status_type.status_code = 7
+status_type.status_code = 130
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CBCHECK_SUBMITED"
 status_type.status_message = "Application CB Check has completed, waiting for results"
-status_type.status_code = 8
+status_type.status_code = 140
 status_type.save()
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CBCHECK_RETURNED"
+status_type.status_message = "Application CB Check results arrived"
+status_type.status_code = 145
+status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CBCHECK_SUCCESS"
 status_type.status_message = "Application CB Check has completed, validation cashflow analysis"
-status_type.status_code = 9
+status_type.status_code = 150
 status_type.save()
-status_type = EsthenosOrgApplicationStatusType()
-status_type.status = "APPLICATION_CBCHECK_FAILED"
-status_type.status_message = "Application CB Check has completed, failed in one or multiple criteria match"
-status_type.status_code = 10
-status_type.save()
+
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CASH_FLOW_READY"
 status_type.status_message = "Application is Cash Flow Ready"
-status_type.status_code = 11
+status_type.status_code = 160
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CASH_FLOW_PASSED"
 status_type.status_message = "Application  Cash Flow has Passed"
-status_type.status_code = 12
+status_type.status_code = 170
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CASH_FLOW_FAILED"
 status_type.status_message = "Application  Cash Flow has Failed, failed in one or multiple criteria match"
-status_type.status_code = 13
+status_type.status_code = 180
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT1_READY"
 status_type.status_message = "Application is CGT1 Ready"
-status_type.status_code = 14
+status_type.status_code = 190
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT1_PENDING"
 status_type.status_message = "Application is CGT1 Pending"
-status_type.status_code = 15
+status_type.status_code = 200
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT1_FAILED"
 status_type.status_message = "Application has failed CGT1"
-status_type.status_code = 16
+status_type.status_code = 210
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT2_READY"
 status_type.status_message = "Application is CGT2 Ready"
-status_type.status_code = 17
+status_type.status_code = 220
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT2_PENDING"
 status_type.status_message = "Application is CGT2 Pending"
-status_type.status_code = 18
+status_type.status_code = 230
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CGT2_FAILED"
 status_type.status_message = "Application has failed CGT2"
-status_type.status_code = 19
+status_type.status_code = 240
 status_type.save()
 
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_GRT_READY"
 status_type.status_message = "Application is GRT Ready"
-status_type.status_code = 20
+status_type.status_code = 250
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_GRT_PENDING"
 status_type.status_message = "Application is GRT Pending"
-status_type.status_code = 21
+status_type.status_code = 260
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_GRT_FAILED"
 status_type.status_message = "Application has failed GRT"
-status_type.status_code = 22
+status_type.status_code = 270
+status_type.save()
+
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_GRT_DONE"
+status_type.status_message = "Application has failed GRT"
+status_type.status_code = 272
+status_type.save()
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_TELECALLING_PASSED"
+status_type.status_message = "Application has failed GRT"
+status_type.status_code = 276
+status_type.save()
+
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_TELECALLING_FAILED"
+status_type.status_message = "Application has failed GRT"
+status_type.status_code = 278
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UNDERWRITING_READY"
 status_type.status_message = "Application is under writing ready"
-status_type.status_code = 23
+status_type.status_code = 280
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UNDERWRITING_DONE"
 status_type.status_message = "Application Under writing done"
-status_type.status_code = 24
+status_type.status_code = 290
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_DISBURSEMENT_READY"
 status_type.status_message = "Application Disbursement ready"
-status_type.status_code = 25
+status_type.status_code = 300
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_DISBURSEMENT_CANCELLED"
 status_type.status_message = "Application Disbursement has been cancelled,possibly due to CGT-GRT failure"
-status_type.status_code = 26
+status_type.status_code = 310
 status_type.save()
+
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_DISBURSEMENT_PENDING"
 status_type.status_message = "Application Disbursement ready, waiting for disbursement over a week"
-status_type.status_code = 27
+status_type.status_code = 320
 status_type.save()
 
 
