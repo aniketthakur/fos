@@ -63,6 +63,9 @@ from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,Esthenos
 #Added by Deepak
 def make_highmark_request_for_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)
+    if app.highmark_submitted == True:
+        return
+    app.highmark_submitted = True
     hmrequest = EsthenosOrgApplicationHighMarkRequest()
     hmrequest.applicant_id1=app.application_id
     hmrequest.acct_open_date=app.created_on
@@ -116,13 +119,16 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.nominee_name=app.member_f_or_h_name
     hmrequest.segment_identifier=""
     hmrequest.sent_status=True
-    print hmrequest
     hmrequest.save()
+    app.save()
 
 from e_organisation.models import EsthenosOrgApplicationEqifax
 
 def make_equifax_request_entry_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)
+    if app.equifax_submitted == True:
+        return
+    app.equifax_submitted = True
     eqrequest = EsthenosOrgApplicationEqifax()
     eqrequest.reference_number=app_id
     eqrequest.member_id_unique_accountnumber=app_id
@@ -152,6 +158,7 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.branch_id=""
     eqrequest.kendra_id=""
     eqrequest.save()
+    app.save()
 
 
 def add_sample_highmark_response(app_id):

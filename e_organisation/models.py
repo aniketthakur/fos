@@ -549,7 +549,8 @@ class EsthenosOrgApplication(db.Document):
     gurranter_s_age = db.FloatField(default=0.0)
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     created_on = db.DateTimeField(default=datetime.datetime.now)
-
+    equifax_submitted = db.BooleanField(default=False)
+    highmark_submitted = db.BooleanField(default=False)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
