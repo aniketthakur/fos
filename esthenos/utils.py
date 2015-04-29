@@ -72,7 +72,7 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.applicant_address1=app.address+" "
     hmrequest.applicant_address1_city=app.member_city
     hmrequest.applicant_address1_pincode=app.member_pincode
-    hmrequest.applicant_address1_state=app.state
+    hmrequest.applicant_address1_state=app.member_state
     hmrequest.applicant_address2=""
     hmrequest.applicant_address2_city=""
     hmrequest.applicant_address2_pincode=""

@@ -31,11 +31,12 @@
                                                     <label for="checkbox-1"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:25%">Group ID</th>
-                                            <th style="width:25%">Group Name</th>
-                                            <th style="width:25%">Added Date</th>
-                                            <th style="width:25%">Action</th>
-                                            <th style="width:33%" class="text-center">Disbursement Done</th>
+                                            <th style="width:15%">Group ID</th>
+                                            <th style="width:20%">Group Name</th>
+                                            <th style="width:30%">Created Date</th>
+                                            <th style="width:15%" class="text-center">Disbursement</th>
+                                            <th style="width:33%">Action</th>
+
 
                                         </tr>
                                         </thead>
@@ -53,12 +54,14 @@
                                                 </td>
                                                 <td><span class="muted">{{ group.created_at }}</span>
                                                 </td>
-                                                <td class="v-align-middle">
-                                                    <button class="btn btn-small btn-small btn-success btn-cons" type="button">Download</button>
-                                                </td>
                                                 <td >
-                                                    <button class="btn btn-small btn-small btn-primary btn-cons" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                                    <button class="btn btn-small btn-small btn-info btn-cons" type="button"><span aria-hidden="true" class="fa fa-check">Disburse Group</span></button>
                                                 </td>
+                                                <td class="v-align-middle">
+                                                    <button class="btn btn-small btn-small btn-info" type="button">Download</button>
+                                                    <button class="btn btn-small btn-small btn-success" type="button"><span aria-hidden="true" class="fa fa-check">Done</span></button>
+                                                </td>
+
                                             </tr>
                                         {% endfor %}
                                         </tbody>

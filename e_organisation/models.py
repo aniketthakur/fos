@@ -233,6 +233,9 @@ class EsthenosOrgBranchResource(Resource):
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
+    image_id_f = db.StringField(max_length=512, required=False,default="")
+    image_id_b = db.StringField(max_length=512, required=False,default="")
+    kyc_type = db.StringField(max_length=80, required=False,default="")
     kyc_number = db.StringField(max_length=80, required=False,default="")
     dob = db.StringField(max_length=80, required=False,default="")
     name = db.StringField(max_length=255, required=False,default="")
@@ -483,6 +486,7 @@ class EsthenosOrgApplication(db.Document):
     kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
     timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
@@ -551,6 +555,8 @@ class EsthenosOrgApplication(db.Document):
     created_on = db.DateTimeField(default=datetime.datetime.now)
     equifax_submitted = db.BooleanField(default=False)
     highmark_submitted = db.BooleanField(default=False)
+    generate_disbursement = db.BooleanField(default=False)
+    generate_disbursement_done = db.BooleanField(default=False)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
