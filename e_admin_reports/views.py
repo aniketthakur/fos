@@ -326,7 +326,7 @@ def equifax_request_reports_import():
                     eq_resp.addl_name1=v[7]   #StringField(max_length=255,required=False,default="")
                     eq_resp.addl_name_type2=v[8]   #StringField(max_length=255,required=False,default="")
                     eq_resp.addl_name2=v[9]   #StringField(max_length=255,required=False,default="")
-                    eq_resp.national_id_card=v[10]   #StringField(max_length=255,required=False,default="")
+                    eq_resp.national_id_card=str(v[10])   #StringField(max_length=255,required=False,default="")
                     eq_resp.passport=v[11]   #StringField(max_length=255,required=False,default="")
                     eq_resp.ration_card=v[12]   #StringField(max_length=255,required=False,default="")
                     eq_resp.voter_id=v[13]   #StringField(max_length=255,required=False,default="")
