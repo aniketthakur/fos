@@ -472,13 +472,13 @@ class AddApplicationMobile(Form):
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         user.organisation.update(inc__application_count=1)
 
-        center = EsthenosOrgCenter.objects.get(center_name=self.center_name.data,organisation=user.organisation)
+        #center = EsthenosOrgCenter.objects.get(center_name=self.center_name.data,organisation=user.organisation)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=self.group_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         app.organisation = user.organisation
         if len(products) > 0:
             app.product = products[0]
-        app.center = center
+        #app.center = center
         app.group = group
         app.owner = user
 
@@ -716,9 +716,9 @@ class AddApplicationMobile(Form):
             kyc_obj.image_id_b = kyc_json["kyc"][4]["ration_b"]
             app.other_documents.append(kyc_obj)
 
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
         app.current_status_updated = datetime.datetime.now()
-        app.status = 110
+        app.status = 120
         app.save()
 
         return None
