@@ -64,7 +64,7 @@
                     <h4>Application <span class="semi-bold">List</span></h4>
                 </div>
                 <div class="grid-body ">
-                    <table class="table table-hover table-condensed" id="example">
+                    <table class="table table-hover table-condensed" id="admin-reports-table">
                         <thead>
                         <tr>
                             <th style="width:1%" >
@@ -89,20 +89,18 @@
                                         <label for="checkbox{{ loop.index }}"></label>
                                     </div>
                                 </td>
+
                                 {% if app.upload_type=='AUTOMATIC_UPLOAD' %}
                                     <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>
                                 {% else %}
                                     <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
                                 {% endif %}
+                                <td class="v-align-middle"><span class="muted">{{ app.applicant_name }}</span>
                                 <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
                                 </td>
                                 <td><span class="muted">{{ app.date_created }}</span>
                                 </td>
-                                <td class="v-align-middle">
-                                    <div class="progress">
-                                        <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
-                                    </div>
-                                </td>
+
                             </tr>
                         {% endfor %}
 
@@ -233,6 +231,46 @@
                 }
                 return true;
             }
+
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                tablet: 1024,
+                phone : 480
+            };
+
+            var tableElement = $('#admin-reports-table');
+
+            tableElement.dataTable( {
+                {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
+                "pageLength": 100,
+                "sPaginationType": "bootstrap",
+                "aoColumnDefs": [
+                    { 'bSortable': false, 'aTargets': [ 0 ] }
+                ],
+                "aaSorting": [[ 1, "asc" ]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ ",
+                    "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+                },
+                bAutoWidth     : false,
+                fnPreDrawCallback: function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper) {
+                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
+                    }
+                },
+                fnRowCallback  : function (nRow) {
+                    responsiveHelper.createExpandIcon(nRow);
+                },
+                fnDrawCallback : function (oSettings) {
+                    responsiveHelper.respond();
+                }
+            });
+
+            {#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
+            $('#admin-reports-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
+
+            $(".select2 ").select2();
 
         });
     </script>

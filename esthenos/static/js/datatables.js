@@ -193,7 +193,7 @@ $(document).ready(function() {
 	});
 	
 	$('#example_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input
-    $('#example_wrapper .dataTables_length select').addClass("select2-wrapper span12"); // modify table per page dropdown
+    $('#example_wrapper .dataTables_length select').addClass("select2 select2-wrapper span12"); // modify table per page dropdown
 
 	
 	

@@ -6,7 +6,7 @@ from wtforms import validators as v
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus
-from e_organisation.models import EsthenosOrg, EsthenosOrgProduct
+from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgApplicationKYC
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
@@ -329,7 +329,7 @@ class AddApplicationManual(Form):
 
         return None
 
-
+import json
 
 """
 ImmutableMultiDict([('how_long_are_you_staying_in_house__in_years', u'5'),
@@ -462,7 +462,7 @@ class AddApplicationMobile(Form):
     family_travel_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
     family_medical_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
     family_food_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #2000
-
+    kyc = TextField( validators=[ v.Length(max=2048)]) #2000
     def save( self):
         c_user = current_user
         user = EsthenosUser.objects.get(id=c_user.id)
@@ -670,6 +670,51 @@ class AddApplicationMobile(Form):
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
         app.timeline.append(status)
+        print
+        kyc_json = json.loads(self.kyc.data)
+
+        if len(kyc_json["kyc"][0]["aadhar_f"])>0:
+            kyc_obj = EsthenosOrgApplicationKYC()
+            kyc_obj.kyc_type = "AADHAAR"
+            kyc_obj.image_id_f = kyc_json["kyc"][0]["aadhar_f"]
+            kyc_obj.image_id_b = kyc_json["kyc"][0]["aadhar_b"]
+            app.kyc_1 = kyc_obj
+        if (kyc_json["kyc"][2].has_key("votercard_f") and len(kyc_json["kyc"][2]["votercard_f"])>0) or  (kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0):
+            kyc_obj = EsthenosOrgApplicationKYC()
+            if kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0:
+                kyc_obj.kyc_type = "PAN"
+                kyc_obj.image_id_f = kyc_json["kyc"][2]["pancard_f"]
+            elif kyc_json["kyc"][2].has_key("votercard_f") and  len(kyc_json["kyc"][2]["votercard_f"])>0:
+                kyc_obj.kyc_type = "VOTERS"
+                kyc_obj.image_id_f = kyc_json["kyc"][2]["votercard_f"]
+                kyc_obj.image_id_b = kyc_json["kyc"][2]["votercard_b"]
+
+            app.kyc_2 = kyc_obj
+        if len(kyc_json["kyc"][3]["gurrantors_f"])>0:
+            kyc_obj = EsthenosOrgApplicationKYC()
+            kyc_obj.type ="UNKNOWN"
+            kyc_obj.image_id_f = kyc_json["kyc"][3]["gurrantors_f"]
+            kyc_obj.image_id_b = kyc_json["kyc"][3]["gurrantors_b"]
+            app.gkyc_1 = kyc_obj
+
+        if kyc_json["kyc"][5]["other"] > 0:
+            kyc_obj = EsthenosOrgApplicationKYC()
+            kyc_obj.type ="OTHER"
+            kyc_obj.image_id_f = kyc_json["kyc"][5]["other"]
+            app.other_documents.append(kyc_obj)
+
+        if kyc_json["kyc"][6]["bank_account_statement"] > 0:
+            kyc_obj = EsthenosOrgApplicationKYC()
+            kyc_obj.type ="BANK_STATEMENT"
+            kyc_obj.image_id_f = kyc_json["kyc"][6]["bank_account_statement"]
+            app.other_documents.append(kyc_obj)
+
+        if kyc_json["kyc"][4]["ration_f"] > 0:
+            kyc_obj = EsthenosOrgApplicationKYC()
+            kyc_obj.type ="RATION"
+            kyc_obj.image_id_f = kyc_json["kyc"][4]["ration_f"]
+            kyc_obj.image_id_b = kyc_json["kyc"][4]["ration_b"]
+            app.other_documents.append(kyc_obj)
 
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
         app.current_status_updated = datetime.datetime.now()
