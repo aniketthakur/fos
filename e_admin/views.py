@@ -984,7 +984,7 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
-@admin_views.route('/admin/ipnpfr', methods=["GET"])
+@admin_views.route('/admin/insurance_fees', methods=["GET"])
 @login_required
 def admin_ipnpfr():
     if session['role'] != "ADMIN":
@@ -992,9 +992,68 @@ def admin_ipnpfr():
     username = current_user.name
     c_user = current_user
     usr = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template( "pdf_IPNPFR.html", **kwargs)
 
+    org_name = "Hindustan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_InsuranceFees.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
+@admin_views.route('/admin/processing_fees', methods=["GET"])
+@login_required
+def admin_processing_fees():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    usr = EsthenosUser.objects.get(id=c_user.id)
+
+    org_name = "Hindustan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_Processing_Fees.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
 
 #Added By Deepak
 @admin_views.route('/admin/schedule', methods=["GET"])
@@ -1026,8 +1085,33 @@ def admin_dpn():
 
 @admin_views.route('/admin/sanction', methods=["GET"])
 def admin_sanction():
+    org_name = "Hindustan Microfinance"
     kwargs = locals()
-    return render_template( "pdf_Sanction_Letter.html", **kwargs)
+    body = render_template( "pdf_Sanction_Letter.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'dpn'
+    return response
 
 @admin_views.route('/admin/acknowledgement', methods=["GET"])
 def admin_acknowledgement():

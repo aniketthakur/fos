@@ -872,6 +872,27 @@ def check_disbusement():
     kwargs = locals()
     return render_template("centers_n_groups_disbussment.html", **kwargs)
 
+from esthenos.tasks import generate_post_grt_applications
+@organisation_views.route('/disburse_group', methods=["PUT"])
+@login_required
+def disburse_document():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org  = user.organisation
+    group = EsthenosOrgGroup.object.get(group_id=request.form.get("group_id"))
+    apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
+    print request.form.get("group_id")
+    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id")))
+    for app in apps:
+        app.generate_disbursement = True
+
+        app.save()
+    kwargs = locals()
+    return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
+
 @organisation_views.route('/download_disbusement', methods=["GET"])
 @login_required
 def download_disbusement():

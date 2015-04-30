@@ -130,33 +130,33 @@ def make_equifax_request_entry_application_id(app_id):
         return
     app.equifax_submitted = True
     eqrequest = EsthenosOrgApplicationEqifax()
-    eqrequest.reference_number=app_id
-    eqrequest.member_id_unique_accountnumber=app_id
-    eqrequest.inquiry_purpose="6"
+    eqrequest.reference_number=""
+    eqrequest.member_id_unique_accountnumber=""
+    eqrequest.inquiry_purpose="0E"
     eqrequest.transaction_amount=app.applied_loan
     eqrequest.consumer_name=app.applicant_name
-    eqrequest.additional_type1="K02"
+    eqrequest.additional_type1=""
     eqrequest.additional_name1=""
-    eqrequest.additional_type2=""
-    eqrequest.additional_name2=""
+    eqrequest.additional_type2="K02"
+    eqrequest.additional_name2=app.member_f_or_h_name
     eqrequest.address_city=app.member_city
     eqrequest.state_union_territory=app.member_state
     eqrequest.postal_pin=app.member_pincode
     eqrequest.ration_card=""
     eqrequest.voter_id=""
     if app.kyc_1 != None:
-        eqrequest.additional_id1=app.kyc_1.kyc_number
+        eqrequest.national_id_card=app.kyc_1.kyc_number
     
     eqrequest.additional_id2=""
-    if app.kyc_1 != None:
-        eqrequest.national_id_card=app.kyc_1.kyc_number
+    if app.kyc_2 != None:
+        eqrequest.voter_id=app.kyc_2.kyc_number
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
     eqrequest.phone_mobile=app.member_telephone
     eqrequest.dob=app.dob
     eqrequest.gender=app.gender
-    eqrequest.branch_id=""
-    eqrequest.kendra_id=""
+    eqrequest.branch_id=app.group.group_name
+    eqrequest.kendra_id=app_id
     eqrequest.save()
     app.save()
 

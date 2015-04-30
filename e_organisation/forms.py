@@ -176,7 +176,7 @@ class AddApplicationManual(Form):
 #        app.member_relationship_status = self.member_relationship_status.data
         app.telephone_number = self.member_husband_telephone.data
 #        app.mobile_number = self.mobile_number.data
-        app.member_applied_loan = self.applied_loan_amount.data
+        app.applied_loan = self.applied_loan_amount.data
         app.religion = self.select_member_religion.data
         # app.category = self.select_member_caste_category.data
         app.caste = self.select_member_caste_category.data
