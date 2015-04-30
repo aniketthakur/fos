@@ -97,6 +97,14 @@ status_type.sub_status_code = 1
 status_type.sub_status = "CRITERIA_FAILED_CF_DEFAULTS"
 status_type.save()
 
+status_type = EsthenosOrgApplicationStatusType()
+status_type.status = "APPLICATION_CF_CRITERIA_FAILED"
+status_type.status_message = "Borrower's AADHAAR is submitted previously"
+status_type.status_code = 25
+status_type.sub_status_code = 2
+status_type.sub_status = "CRITERIA_FAILED_DUPLICATE_AADHAAR"
+status_type.save()
+
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UPLOADED"

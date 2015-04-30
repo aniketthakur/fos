@@ -381,6 +381,7 @@ class EsthenosOrgApplicationStatusType(db.Document):
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
+    status_message =  db.StringField(max_length=512, required=True,default="")
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     def __unicode__(self):
         return self.updated_on
