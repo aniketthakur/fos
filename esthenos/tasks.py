@@ -363,6 +363,158 @@ def cashflow_ready_applications():
         application.status = 190
         application.save()
 
+import os
+import zipfile
+import StringIO
+import pdfkit
+from e_organisation.models import EsthenosOrgGroup
+@celery.task
+def generate_post_grt_applications(org_id,group_id):
+    print "generate_post_grt_applications"
+    group = EsthenosOrgGroup.object.get(group_id=group_id)
+    org = EsthenosOrg.objects.get(id=org_id)
+    apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
+    for app in apps:
+
+        #generate dpn here
+        kwargs = locals()
+        body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.50in',
+                'margin-right': '0.50in',
+                'margin-bottom': '0.50in',
+                'margin-left': '0.50in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Portrait'
+            }
+            pdfkit.from_string(body, 'dpn.pdf',options=options)
+        except Exception as e:
+            print e.message
+
+        #generate agreement here
+        kwargs = locals()
+        body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.75in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.75in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Portrait'
+            }
+            pdfkit.from_string(body, 'dpn.pdf',options=options)
+        except Exception as e:
+            print e.message
+
+        #generate passbook here
+        kwargs = locals()
+        body = render_template( "pdf_HindustanPassbook.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.15in',
+                'margin-right': '0.0in',
+                'margin-bottom': '0.15in',
+                'margin-left': '0.0in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Landscape'
+            }
+            pdfkit.from_string(body, 'tmp.pdf',options=options)
+        except Exception as e:
+            print "in exception"
+            print e.message
+
+
+        #generate sanction letter
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "pdf_Sanction_Letter.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Landscape'
+            }
+            pdfkit.from_string(body, 'dpn.pdf',options=options)
+        except Exception as e:
+            print e.message
+
+        #generate processing fees
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "pdf_Processing_Fees.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Landscape'
+            }
+            pdfkit.from_string(body, 'dpn.pdf',options=options)
+        except Exception as e:
+            print e.message
+
+
+        #generate insurance fees
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "pdf_InsuranceFees.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'no-outline': None,
+                'orientation' : 'Landscape'
+            }
+            pdfkit.from_string(body, 'dpn.pdf',options=options)
+        except Exception as e:
+            print e.message
+
+        filenames = ["dpn.pdf", "tmp.pdf","pass.pdf"]
+
+        # Folder name in ZIP archive which contains the above files
+        # E.g [thearchive.zip]/somefiles/file2.txt
+        # FIXME: Set this to something better
+        zip_subdir = app.application_id
+        zip_filename = "%s.zip" % zip_subdir
+
+        # Open StringIO to grab in-memory ZIP contents
+        s = StringIO.StringIO()
+
+        # The zip compressor
+        zf = zipfile.ZipFile(s, "w")
+
+        for fpath in filenames:
+            # Calculate path for file in zip
+            fdir, fname = os.path.split(fpath)
+            zip_path = os.path.join(zip_subdir, fname)
+
+            # Add file, at correct path
+            zf.write(fpath, zip_path)
+
+        # Must close zip for all contents to be written
+        zf.close()
+
 
 
 @periodic_task(run_every=datetime.timedelta(minutes=2))

@@ -55,7 +55,7 @@
                                                 <td><span class="muted">{{ group.created_at }}</span>
                                                 </td>
                                                 <td >
-                                                    <button class="btn btn-small btn-small btn-info btn-cons" type="button"><span aria-hidden="true" class="fa fa-check">Disburse Group</span></button>
+                                                    <button class="btn btn-small btn-small btn-info btn-disburse" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse Group</span></button>
                                                 </td>
                                                 <td class="v-align-middle">
                                                     <button class="btn btn-small btn-small btn-info" type="button">Download</button>
@@ -82,6 +82,20 @@
         $(document).ready(function(){
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
+            });
+
+            $(".btn-disburse").click(function() {
+                console.log( $(this).attr("group-id"));
+                var data = "group_id="+$(this).attr("group-id")
+                $.ajax({
+                    url: '/disburse_group',
+                    type: 'PUT',
+                    data: data,
+                    success: function(result) {
+                        console.log(result);
+                        Messenger().post(result["result"]);
+                    }
+                });
             });
         });
     </script>
