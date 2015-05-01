@@ -298,7 +298,7 @@ def cbcheck_statuscheck_applications():
         status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
         status.save()
         application.timeline.append(status)
-        resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(report_id=application.application_id)[0]
+        resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(kendra_or_centre_id=application.application_id)[0]
         apps_with_same_aadhaar =  EsthenosOrgApplication.objects.filter(kyc_1__kyc_number=resp.national_id_card)
         is_failed = False
         if len(apps_with_same_aadhaar)>1:
