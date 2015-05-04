@@ -393,9 +393,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "dpn.pdf"
         print tf
         #generate dpn here
-        kwargs = locals()
-        body = create_pdf( "pdf_HMPL_DPN_HINDI.html", **kwargs)
         try:
+            kwargs = locals()
+            body = create_pdf( "pdf_HMPL_DPN_HINDI.html", **kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.50in',
@@ -414,9 +414,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        kwargs = locals()
-        body = create_pdf( "pdf_HMPL_LA_Hindi.html", **kwargs)
         try:
+            kwargs = locals()
+            body = create_pdf( "pdf_HMPL_LA_Hindi.html", **kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.75in',
@@ -475,9 +475,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
 
             tf = dir+ app.application_id+"passbook.pdf"
-            kwargs = locals()
-            body = create_pdf( "pdf_HindustanPassbook.html", **kwargs)
             try:
+                kwargs = locals()
+                body = create_pdf( "pdf_HindustanPassbook.html", **kwargs)
                 options = {
                     'page-size': 'A4',
                     'margin-top': '0.15in',
@@ -498,9 +498,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
         org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = create_pdf( "pdf_Sanction_Letter.html", **kwargs)
         try:
+            kwargs = locals()
+            body = create_pdf( "pdf_Sanction_Letter.html", **kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -519,9 +519,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate processing fees
         tf = dir+"processing_fees.pdf"
         org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = create_pdf( "pdf_Processing_Fees.html", **kwargs)
         try:
+            kwargs = locals()
+            body = create_pdf( "pdf_Processing_Fees.html", **kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -541,9 +541,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
         org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = create_pdf( "pdf_InsuranceFees.html", **kwargs)
         try:
+            kwargs = locals()
+            body = create_pdf( "pdf_InsuranceFees.html", **kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
