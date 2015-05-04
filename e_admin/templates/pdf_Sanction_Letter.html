@@ -12,13 +12,13 @@
             line-height: 20px;
             min-height: 20px;
             height: 20px;
-            font-size:7px;
+            font-size:9px;
         }
         .font-lsmall h2{
             font-size:12px;
         }
         .font-msmall{
-            font-size:8px;
+            font-size:10px;
         }
         tr{
 
@@ -47,13 +47,13 @@
             </div>
 
             <div class="pull-left font-msmall">
-                We {{ org_name }}, hereby with reference to the loan application of the Group ________________________ Center ___________________
-                Branch ___________________________Region _______________________ dated_______________________ inform that the application has been sanctioned.
+                We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
+                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
             <br/><br/>
              The details of loan sanctions for the Group are mentioned in the below table.
             </div>
 
-            <table class="table table-bordered font-small">
+            <table class="table table-bordered table-condensed ">
                 <thead>
                 <tr>
                     <th style="width:5%"> No</th>
@@ -65,21 +65,21 @@
                     <th style="width:10%"class="text-center">Voter ID or Ration
                         Card Number</th>
 
-                    <th style="width:15%">Loan Amount
+                    <th style="width:10%">Loan Amount
                         Applied</th>
 
-                    <th style="width:5%"class="text-left">Loan
+                    <th style="width:10%"class="text-left">Loan
                         Amount
                         Sanctioned</th>
 
-                    <th style="width:10%"style="width:100px" class="text-center" colspan="2">Tenure
+                    <th style="width:10%"style="width:100px" class="text-center" >Tenure
                         of the
                         Loan</th>
 
                     <th style="width:10%"class="text-left">Rate of
                         Interest</th>
 
-                    <th style="width:5%"class="text-left">Loan Purpose</th>
+                    <th style="width:20%"class="text-left">Loan Purpose</th>
 
                     <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
 
@@ -87,18 +87,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--{% for n in range(1,20) %}-->
+                <!--{% for app in apps %}-->
                     <tr>
-                        <td></td>
-                        <td class="text-left" class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
+                        <td>{{ loop.index }}</td>
+                        <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
+                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                        <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                        {#                        <td class="text-left"></td>#}
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.product.number_installments }}</td>
+                        <td class="text-left">{{ app.product.interest_rate }}</td>
+                        <td class="text-left">{{ app.purpose_of_loan }}</td>
+
 
                     </tr>
                     <!--{% endfor %}-->
@@ -138,13 +139,13 @@
         </div>
 
         <div class="pull-left font-msmall">
-            We {{ org_name }}, hereby with reference to the loan application of the Group ________________________ Center ___________________
-            Branch ___________________________Region _______________________ dated_______________________ inform that the application has been sanctioned.
+            We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
+            Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
             <br/><br/>
             The details of loan sanctions for the Group are mentioned in the below table.
         </div>
 
-        <table class="table table-bordered font-small">
+        <table class="table table-bordered table-condensed ">
             <thead>
             <tr>
                 <th style="width:5%"> No</th>
@@ -156,21 +157,21 @@
                 <th style="width:10%"class="text-center">Voter ID or Ration
                     Card Number</th>
 
-                <th style="width:15%">Loan Amount
+                <th style="width:10%">Loan Amount
                     Applied</th>
 
-                <th style="width:5%"class="text-left">Loan
+                <th style="width:10%"class="text-left">Loan
                     Amount
                     Sanctioned</th>
 
-                <th style="width:10%"style="width:100px" class="text-center" colspan="2">Tenure
+                <th style="width:10%"style="width:100px" class="text-center" >Tenure
                     of the
                     Loan</th>
 
                 <th style="width:10%"class="text-left">Rate of
                     Interest</th>
 
-                <th style="width:5%"class="text-left">Loan Purpose</th>
+                <th style="width:20%"class="text-left">Loan Purpose</th>
 
                 <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
 
@@ -178,18 +179,19 @@
             </tr>
             </thead>
             <tbody>
-            <!--{% for n in range(1,20) %}-->
+            <!--{% for app in apps %}-->
                 <tr>
-                    <td></td>
-                    <td class="text-left" class="text-right"></td>
-                    <td class="text-left"></td>
-                    <td class="text-right"></td>
-                    <td class="text-left"></td>
-                    <td class="text-left"></td>
-                    <td class="text-left"></td>
-                    <td class="text-left"></td>
-                    <td class="text-left"></td>
-                    <td class="text-left"></td>
+                    <td>{{ loop.index }}</td>
+                    <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
+                    <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                    <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                    {#                        <td class="text-left"></td>#}
+                    <td class="text-left">{{ app.applied_loan }}</td>
+                    <td class="text-left">{{ app.applied_loan }}</td>
+                    <td class="text-left">{{ app.product.number_installments }}</td>
+                    <td class="text-left">{{ app.product.interest_rate }}</td>
+                    <td class="text-left">{{ app.purpose_of_loan }}</td>
+
 
                 </tr>
                 <!--{% endfor %}-->

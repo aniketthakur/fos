@@ -220,7 +220,7 @@ class EsthenosOrgGroup(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
-    disbursement_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
 
     def __unicode__(self):
         return self.group_name

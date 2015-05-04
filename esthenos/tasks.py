@@ -27,6 +27,10 @@ conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 
+
+conn_s3 = boto.connect_s3(
+    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 from esthenos import render_template,mainapp
 
 from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC,EsthenosOrgStats
@@ -366,53 +370,107 @@ def cashflow_ready_applications():
 import os
 import zipfile
 import StringIO
+from dateutil.relativedelta import relativedelta
 import pdfkit
+import tempfile
 from e_organisation.models import EsthenosOrgGroup
 @celery.task
-def generate_post_grt_applications(org_id,group_id):
+def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     print "generate_post_grt_applications"
-    group = EsthenosOrgGroup.object.get(group_id=group_id)
-    org = EsthenosOrg.objects.get(id=org_id)
-    apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
+    #org = EsthenosOrg.objects.get(id=org_id)
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    product = apps[0].product
+    tmp_files = list()
+    dir = tempfile.mkdtemp( prefix='pdf_')
+    dir = dir+"/"
+    tf = dir+ "dpn.pdf"
+    print tf
+    #generate dpn here
+    kwargs = locals()
+    body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.50in',
+            'margin-right': '0.50in',
+            'margin-bottom': '0.50in',
+            'margin-left': '0.50in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Portrait'
+        }
+        open(tf, 'w').close()
+        pdfkit.from_string(body, tf,options=options)
+        tmp_files.append(tf)
+
+    except Exception as e:
+        print e.message
+
+    #generate agreement here
+    tf = dir+ "agreement.pdf"
+    kwargs = locals()
+    body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.75in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.75in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Portrait'
+        }
+        open(tf, 'w').close()
+        pdfkit.from_string(body, tf,options=options)
+        tmp_files.append(tf)
+    except Exception as e:
+        print e.message
+
+    loan_amount = 20000.0
+
+    second_collection_after_indays = 30
+    first_emi = 1100
+    rate_of_interest= .260/12.0
+    current_principal = loan_amount
+    passbook_rows = list()
+    for i in range(1,25):
+        row= dict()
+        interest = 0.0
+        if(i==1):
+            interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
+        else:
+            interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
+        date_after_month = disbursement_date.today()+ relativedelta(months=i)
+        import math
+        interest = math.ceil(interest * 1000)/1000.0
+        frac, whole = math.modf(interest)
+        if frac>0.5:
+            interest = whole+1
+        else:
+            interest = whole
+
+        row["date"] = str(disbursement_date.day)+"/"+date_after_month.strftime("%b")+"/"+str(date_after_month.year)
+        row["interest"] = interest
+        row["prev_os"] = current_principal
+        current_principal = current_principal-(first_emi - interest)
+        row["principal"] = (first_emi - interest)
+
+        if i==24:
+            row["emi"] = first_emi+current_principal
+            current_principal= 0
+        else:
+            row["emi"] = first_emi
+        row["next_os"] = current_principal
+
+        passbook_rows.append(row)
+
+    #generate passbook here
     for app in apps:
 
-        #generate dpn here
-        kwargs = locals()
-        body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
-        try:
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.50in',
-                'margin-right': '0.50in',
-                'margin-bottom': '0.50in',
-                'margin-left': '0.50in',
-                'encoding': "UTF-8",
-                'no-outline': None,
-                'orientation' : 'Portrait'
-            }
-            pdfkit.from_string(body, 'dpn.pdf',options=options)
-        except Exception as e:
-            print e.message
 
-        #generate agreement here
-        kwargs = locals()
-        body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
-        try:
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.75in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.75in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'no-outline': None,
-                'orientation' : 'Portrait'
-            }
-            pdfkit.from_string(body, 'dpn.pdf',options=options)
-        except Exception as e:
-            print e.message
-
-        #generate passbook here
+        tf = dir+ app.application_id+"passbook.pdf"
         kwargs = locals()
         body = render_template( "pdf_HindustanPassbook.html", **kwargs)
         try:
@@ -426,96 +484,118 @@ def generate_post_grt_applications(org_id,group_id):
                 'no-outline': None,
                 'orientation' : 'Landscape'
             }
-            pdfkit.from_string(body, 'tmp.pdf',options=options)
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
         except Exception as e:
             print "in exception"
             print e.message
 
 
-        #generate sanction letter
-        org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = render_template( "pdf_Sanction_Letter.html", **kwargs)
-        try:
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'no-outline': None,
-                'orientation' : 'Landscape'
-            }
-            pdfkit.from_string(body, 'dpn.pdf',options=options)
-        except Exception as e:
-            print e.message
+    #generate sanction letter
+    tf = dir+"sanction_letter.pdf"
+    org_name = "Hindustan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_Sanction_Letter.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        open(tf, 'w').close()
+        pdfkit.from_string(body, tf,options=options)
+        tmp_files.append(tf)
+    except Exception as e:
+        print e.message
 
-        #generate processing fees
-        org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = render_template( "pdf_Processing_Fees.html", **kwargs)
-        try:
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'no-outline': None,
-                'orientation' : 'Landscape'
-            }
-            pdfkit.from_string(body, 'dpn.pdf',options=options)
-        except Exception as e:
-            print e.message
-
-
-        #generate insurance fees
-        org_name = "Hindustan Microfinance"
-        kwargs = locals()
-        body = render_template( "pdf_InsuranceFees.html", **kwargs)
-        try:
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'no-outline': None,
-                'orientation' : 'Landscape'
-            }
-            pdfkit.from_string(body, 'dpn.pdf',options=options)
-        except Exception as e:
-            print e.message
-
-        filenames = ["dpn.pdf", "tmp.pdf","pass.pdf"]
-
-        # Folder name in ZIP archive which contains the above files
-        # E.g [thearchive.zip]/somefiles/file2.txt
-        # FIXME: Set this to something better
-        zip_subdir = app.application_id
-        zip_filename = "%s.zip" % zip_subdir
-
-        # Open StringIO to grab in-memory ZIP contents
-        s = StringIO.StringIO()
-
-        # The zip compressor
-        zf = zipfile.ZipFile(s, "w")
-
-        for fpath in filenames:
-            # Calculate path for file in zip
-            fdir, fname = os.path.split(fpath)
-            zip_path = os.path.join(zip_subdir, fname)
-
-            # Add file, at correct path
-            zf.write(fpath, zip_path)
-
-        # Must close zip for all contents to be written
-        zf.close()
+    #generate processing fees
+    tf = dir+"processing_fees.pdf"
+    org_name = "Hindustan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_Processing_Fees.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        open(tf, 'w').close()
+        pdfkit.from_string(body, tf,options=options)
+        tmp_files.append(tf)
+    except Exception as e:
+        print e.message
 
 
+    #generate insurance fees
+    tf = dir+"insurance_fees.pdf"
+    org_name = "Hindustan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_InsuranceFees.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'orientation' : 'Landscape'
+        }
+        open(tf, 'w').close()
+        pdfkit.from_string(body, tf,options=options)
+        tmp_files.append(tf)
+    except Exception as e:
+        print e.message
+
+    print tmp_files
+    filenames = tmp_files
+
+    # Folder name in ZIP archive which contains the above files
+    # E.g [thearchive.zip]/somefiles/file2.txt
+    # FIXME: Set this to something better
+
+    zdir = tempfile.mkdtemp( prefix='zip_')
+    zdir = zdir+"/"
+    # The zip compressor
+    tf = zdir+group_id
+    zip(dir, tf)
+    from boto.s3.key import Key
+    bucket = conn_s3.get_bucket("hindusthanarchives")
+    k = Key(bucket)
+    k.key = tf+".zip"
+    k.set_contents_from_filename(tf+".zip")
+    k.make_public()
+    os.remove(tf+".zip")
+    group.disbursement_pdf_link = k.key
+    group.save()
+
+
+import os
+import zipfile
+
+def zip(src, dst):
+    zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
+    abs_src = os.path.abspath(src)
+    for dirname, subdirs, files in os.walk(src):
+        for filename in files:
+            absname = os.path.abspath(os.path.join(dirname, filename))
+            arcname = absname[len(abs_src) + 1:]
+            print 'zipping %s as %s' % (os.path.join(dirname, filename),
+                                        arcname)
+            zf.write(absname, arcname)
+    zf.close()
 
 @periodic_task(run_every=datetime.timedelta(minutes=2))
 @celery.task

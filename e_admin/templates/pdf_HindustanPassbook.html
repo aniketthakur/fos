@@ -52,6 +52,13 @@
             font-size:8px;
         }
 
+        .font-msmall tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:9px;
+        }
+
     </style>
 {% endblock %}
 {% block meta %}
@@ -66,7 +73,7 @@
     <table style="width: 100%;padding: 10px;">
     <tr style="padding: 10px;">
         <td style="width: 50%;padding: 10px">
-            <table  id="repayment" class="table table-bordered table-condensed condensed">
+            <table  id="repayment" class="table table-bordered table-condensed condensed font-small">
                 <caption>LOAN REPAYMENT SCHEDULE/ <span class="hinditext-large">keÀpe& HejledHesÀæ[ JesUeHe$ekeÀ</span></caption>
                 <tr>
                     <th style="width:1%" class="unseen text-center ">Inst #  /&nbsp<span class="hinditext">nHlee keÀ.</span></th>
@@ -77,14 +84,15 @@
                     <th style="width:10%" class="">Loan C/F  /&nbsp<span class="hinditext">keÀpe& efMeuuekeÀ</span></th>
                 </tr>
 
-                {% for n in range(1,25) %}
+                {% for row in passbook_rows %}
                     <tr >
-                        <td>{{ n }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-left">{{ loop.index }}</td>
+                        <td class="text-center">{{ row["date"] }}</td>
+
+                        <td class="text-center">{{ row["interest"]|round(1) }}</td>
+                        <td class="text-center">{{ row["principal"]|round(1) }}</td>
+                        <td class="text-center">{{ row["emi"]|round(1)  }}</td>
+                        <td class="text-center">{{ row["next_os"]|round(1) }}</td>
                     </tr>
                 {% endfor %}
 
@@ -126,12 +134,15 @@
                     </tr>
                 {% endfor %}
 
-                <tr>
-                    <td rowspan="3">I<br/>U<br/>C<br/></td>
-                    <td rowspan="3">
 
+                <tr >
+                    <td rowspan="3">I<br/>U<br/>C<br/></td>
+                    <td colspan="2">
+                        Date : {{ date }} <br/>
+                        Done By :  <br/>
+                        Result :  <br/>
                     </td>
-                    <td rowspan="3" colspan="4">Signature</td>
+                    <td rowspan="3" colspan="3">Signature</td>
 
                 </tr>
             </table>
@@ -151,37 +162,28 @@
                 <tr><th colspan="6" class="text-center">BORROWER DETAILS  /&nbsp<span class="hinditext"> menkeÀpe&oeje®eer ceenerleer</span></th></tr>
                 <tr>
                     <td style="width: 30%;"  class="text-right">Borrower Code and Name  /&nbsp<span class="hinditext"> menkeÀpe&oeje®es veeJe DeeefCe keÀæes[ veb.</span></td>
-                    <td style="width: 15%;"></td>
-                    <td colspan="4"></td>
+                    <td style="width: 15%;">{{ app.application_id }}</td>
+                    <td colspan="4">{{ app.applicant_name}}</td>
                 </tr>
 
                 <tr>
                     <td   class="text-right">Spouse/Gurrantor Name  /&nbsp<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
-                    <td colspan="5"></td>
+                    <td colspan="5">{{ app.member_f_or_h_name}}</td>
                 </tr>
                 <tr>
                     <td   class="text-right">Village  /&nbsp<span class="hinditext">ieeJe </span></td>
-                    <td colspan="5"></td>
+                    <td colspan="5">{{ app.member_village}}</td>
                 </tr>
-                <tr>
-                    <td   class="text-right">Group Code & Name /&nbsp<span class="hinditext"> ieìe®es keÀes[ veb. Je veeJe </span></td>
-                    <td></td>
-                    <td style="width: 30%;"></td>
-                    <td></td>
 
-                    <td></td>
-                    <td></td>
-                    </td></td>
-                </tr>
                 <tr>
-                    <td  class="text-right">Center Code & Name /&nbsp<span class="hinditext"> meWìj®ee keÀes[ efkeÀbJee veeJe</span></td>
-                    <td></td>
-                    <td colspan="4"></td>
+                    <td  class="text-right">Group Code & Name /&nbsp<span class="hinditext"> meWìj®ee keÀes[ efkeÀbJee veeJe</span></td>
+                    <td>{{ app.group.group_id }}</td>
+                    <td colspan="4">{{ app.group.group_name }}</td>
                 </tr>
 
                 <tr>
                     <td   class="text-right">Branch Name  /&nbsp<span class="hinditext">MeeKes®es veeJe </span></td>
-                    <td colspan="5"></td>
+                    <td colspan="5">{{ app.group.branch.branch_name }}</td>
                 </tr>
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">
@@ -190,9 +192,9 @@
 
                 <tr>
                     <td style="width: 30%;"  class="text-right">Date of Dibursement  /&nbsp<span class="hinditext">keÀpe& efJelejCee®eer leejerKe</span></td>
-                    <td colspan="4"></td>
+                    <td colspan="4">{{ disbursement_date|dateformat }}</td>
                     <td style="width: 20%;" class="text-right">Loan Amount:  /&nbsp<span class="hinditext">ueesve jkeÀkeÀce</span></td>
-                    <td style="width: 20%;"></td>
+                    <td style="width: 20%;">{{ app.applied_amount }}</td>
                 </tr>
                 <tr>
                     <td   class="text-right">Loan Tenture  /&nbsp<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
