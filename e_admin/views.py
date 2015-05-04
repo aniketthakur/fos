@@ -984,7 +984,7 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
-@admin_views.route('/internal/if', methods=["GET"])
+@admin_views.route('/internal/pdf_if', methods=["GET"])
 def admin_ipnpfr():
     group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
     apps = EsthenosOrgApplication.objects.filter(group=group)
@@ -1018,7 +1018,7 @@ def admin_ipnpfr():
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'if'
     return response
-@admin_views.route('/internal/pf', methods=["GET"])
+@admin_views.route('/internal/pdf_pf', methods=["GET"])
 def admin_processing_fees():
     group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
     apps = EsthenosOrgApplication.objects.filter(group=group)
