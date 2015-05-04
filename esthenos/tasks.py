@@ -388,7 +388,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         print tf
         #generate dpn here
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_DPN_HINDI.html", **kwargs)
+        body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
@@ -409,7 +409,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate agreement here
         tf = dir+ "agreement.pdf"
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_LA_Hindi.html", **kwargs)
+        body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
@@ -470,7 +470,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
             tf = dir+ app.application_id+"passbook.pdf"
             kwargs = locals()
-            body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HindustanPassbook.html", **kwargs)
+            body = render_template( "pdf_HindustanPassbook.html", **kwargs)
             try:
                 options = {
                     'page-size': 'A4',
@@ -493,7 +493,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+"sanction_letter.pdf"
         org_name = "Hindustan Microfinance"
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Sanction_Letter.html", **kwargs)
+        body = render_template( "pdf_Sanction_Letter.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
@@ -514,7 +514,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+"processing_fees.pdf"
         org_name = "Hindustan Microfinance"
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Processing_Fees.html", **kwargs)
+        body = render_template( "pdf_Processing_Fees.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
@@ -536,7 +536,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+"insurance_fees.pdf"
         org_name = "Hindustan Microfinance"
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_InsuranceFees.html", **kwargs)
+        body = render_template( "pdf_InsuranceFees.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
