@@ -324,7 +324,7 @@ class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
     loan_type=db.StringField(max_length=128,required=False)
     organisation = db.ReferenceField('EsthenosOrg')
-    loan_amount = db.FloatField(default=0.0)
+    loan_amount = db.FloatField(default=25000)
     life_insurance = db.FloatField(default=0.0)
     eligible_cycle = db.IntField(default=0)
     number_installments = db.IntField(default=0)

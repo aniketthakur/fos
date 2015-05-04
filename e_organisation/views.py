@@ -889,7 +889,7 @@ def disburse_document():
     col_date_str =request.form.get("collection_date")
     dis_date =    datetime.datetime.strptime(dis_date_str, "%d/%m/%Y").date()
     col_date =   datetime.datetime.strptime(col_date_str, "%d/%m/%Y").date()
-    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date,(col_date-dis_date).days))
+    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date_str,(col_date-dis_date).days))
     for app in apps:
         app.generate_disbursement = True
         app.save()
