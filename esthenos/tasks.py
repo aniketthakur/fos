@@ -386,7 +386,8 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         group = EsthenosOrgGroup.objects.get(group_id=group_id)
         #org = EsthenosOrg.objects.get(id=org_id)
         apps = EsthenosOrgApplication.objects.filter(group=group)
-        app = apps[0]
+        print disbursement_date
+        print first_collection_after_indays
         product = apps[0].product
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
