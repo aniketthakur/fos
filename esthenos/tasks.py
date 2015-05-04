@@ -381,6 +381,7 @@ import sys
 import time
 
 def downloadFile(url, outfile) :
+    print url
     with open(outfile, 'wb') as f:
         start = time.clock()
         r = requests.get(url, stream=True)
