@@ -424,11 +424,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id,tf)
         tmp_files.append(tf)
 
-        for app in apps:
-            tf = dir+ app.application_id+"passbook.pdf"
-            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
-            tmp_files.append(tf)
-
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id,tf)
@@ -443,6 +438,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+"insurance_fees.pdf"
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf)
         tmp_files.append(tf)
+
+        for app in apps:
+            tf = dir+ app.application_id+"passbook.pdf"
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
+            tmp_files.append(tf)
 
 
         print tmp_files
