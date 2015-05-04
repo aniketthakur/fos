@@ -374,7 +374,7 @@ import StringIO
 from dateutil.relativedelta import relativedelta
 import pdfkit
 import tempfile
-from e_organisation.models import EsthenosOrgGroup
+from e_organisation.models import EsthenosOrgGroup,EsthenosOrgProduct
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
@@ -385,7 +385,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         apps = EsthenosOrgApplication.objects.filter(group=group)
         print disbursement_date
         print first_collection_after_indays
-        product = apps[0].product
+        product = EsthenosOrgProduct.objects.all()[0]
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
