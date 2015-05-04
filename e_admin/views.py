@@ -984,9 +984,9 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
-@admin_views.route('/internal/pdf_if', methods=["GET"])
-def admin_ipnpfr():
-    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+@admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
+def admin_ipnpfr(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
     username = current_user.name
@@ -1018,9 +1018,9 @@ def admin_ipnpfr():
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'if'
     return response
-@admin_views.route('/internal/pdf_pf', methods=["GET"])
-def admin_processing_fees():
-    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+@admin_views.route('/internal/pdf_pf/<group_id>', methods=["GET"])
+def admin_processing_fees(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
     username = current_user.name
