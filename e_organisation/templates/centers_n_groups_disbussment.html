@@ -81,7 +81,7 @@
                                         {% if group.disbursement_pdf_link == "#" %}
                                             <a class="btn btn-small btn-small btn-disabled" type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
                                         {% else %}
-                                            <a class="btn btn-small btn-small btn-info" type="button" href="/download_disbursement?group_id={{ group.group_id }}&file_id={{ group.disbursement_pdf_link }}" >Download</a>
+                                            <a class="btn btn-small btn-small btn-info" type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
                                         {% endif %}
                                     </td>
                                     <td>

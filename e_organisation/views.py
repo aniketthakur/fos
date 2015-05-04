@@ -904,7 +904,7 @@ import tempfile
 temp_dir = tempfile.mkdtemp( prefix='zip_out_')
 temp_dir = temp_dir+"/"
 
-@organisation_views.route('/download_disbusement', methods=["GET"])
+@organisation_views.route('/download_disbursement', methods=["GET"])
 @login_required
 def download_disbusement():
     if not session['role'].startswith("ORG_"):
@@ -913,7 +913,7 @@ def download_disbusement():
     c_user = current_user
     #center_id = request.args.get("center")
     group_id = request.args.get("group_id")
-    file_id = request.args.get("file_id")
+
     user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
@@ -923,7 +923,7 @@ def download_disbusement():
         bucket_list = bucket.list()
 
         for l in bucket_list:
-            if file_id == l:
+            if group.disbursement_pdf_link == l:
                 keyString = str(l.key)
                 # check if file exists locally, if not: download it
                 if not os.path.exists(temp_dir+keyString):
