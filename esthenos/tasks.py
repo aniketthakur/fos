@@ -407,9 +407,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'encoding': "UTF-8",
                 'orientation' : 'Portrait'
             }
+            print body
             open(tf, 'w').close()
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
+            print tf
 
         except Exception as e:
             print e.message
@@ -428,9 +430,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'encoding': "UTF-8",
                 'orientation' : 'Portrait'
             }
+            print body
             open(tf, 'w').close()
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
+            print tf
         except Exception as e:
             print e.message
 
@@ -480,6 +484,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             try:
                 kwargs = locals()
                 body = create_pdf( "pdf_HindustanPassbook.html",kwargs)
+
                 options = {
                     'page-size': 'A4',
                     'margin-top': '0.15in',
@@ -489,9 +494,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                     'encoding': "UTF-8",
                     'orientation' : 'Landscape'
                 }
+                print body
                 open(tf, 'w').close()
                 pdfkit.from_string(body, tf,options=options)
                 tmp_files.append(tf)
+                print tf
             except Exception as e:
                 print "in exception"
                 print e.message
@@ -512,9 +519,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'encoding': "UTF-8",
                 'orientation' : 'Landscape'
             }
+            print body
             open(tf, 'w').close()
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
+            print tf
         except Exception as e:
             print e.message
 
@@ -533,9 +542,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'encoding': "UTF-8",
                 'orientation' : 'Landscape'
             }
+            print body
             open(tf, 'w').close()
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
+            print tf
         except Exception as e:
             print e.message
 
@@ -555,9 +566,11 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'encoding': "UTF-8",
                 'orientation' : 'Landscape'
             }
+            print body
             open(tf, 'w').close()
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
+            print tf
         except Exception as e:
             print e.message
 
