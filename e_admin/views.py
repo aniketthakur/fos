@@ -1278,7 +1278,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     second_collection_after_indays = 30
     first_emi = float(emi)
     rate_of_interest= .260/12.0
-    current_principal = loan_amount
+    current_principal = float(loan_amount)
     passbook_rows = list()
     for i in range(1,25):
         row= dict()
