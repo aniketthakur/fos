@@ -1269,7 +1269,6 @@ def admin_lrpassbook():
 from dateutil.relativedelta import relativedelta
 
 @admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
-@login_required
 def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_collection_after_indays):
     username = current_user.name
     c_user = current_user
