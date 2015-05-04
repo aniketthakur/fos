@@ -367,30 +367,6 @@ def cashflow_ready_applications():
         application.status = 190
         application.save()
 
-from flask import render_template
-def create_pdf_dpn(kwargs):
-    with mainapp.test_request_context('/internal/pdf_dpn'):
-        return render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
-
-def create_pdf_la(kwargs):
-    with mainapp.test_request_context('/internal/pdf_la'):
-        return render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
-
-def create_pdf_hp(kwargs):
-    with mainapp.test_request_context('/internal/pdf_hp'):
-        return render_template( "pdf_HindustanPassbook.html", **kwargs)
-
-def create_pdf_sl(kwargs):
-    with mainapp.test_request_context('/internal/pdf_sl'):
-        return render_template( "pdf_Sanction_Letter.html", **kwargs)
-
-def create_pdf_pf(kwargs):
-    with mainapp.test_request_context('/internal/pdf_pf'):
-        return render_template( "pdf_Processing_Fees.html", **kwargs)
-
-def create_pdf_if(kwargs):
-    with mainapp.test_request_context('/internal/pdf_if'):
-        return render_template( "pdf_InsuranceFees.html", **kwargs)
 
 import os
 import zipfile
@@ -416,199 +392,36 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "dpn.pdf"
         print tf
         #generate dpn here
-        try:
-            kwargs = locals()
-            body = create_pdf_dpn(kwargs)
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.50in',
-                'margin-right': '0.50in',
-                'margin-bottom': '0.50in',
-                'margin-left': '0.50in',
-                'encoding': "UTF-8",
-                'orientation' : 'Portrait'
-            }
-            print body
-            open(tf, 'w').close()
-            pdfkit.from_string(body, tf,options=options)
-            tmp_files.append(tf)
-            print tf
-
-        except Exception as e:
-            print e.message
+        import urllib
+        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/dpn/"+group_id, tf)
+        tmp_files.append(tf)
 
         #generate agreement here
-        org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+ "agreement.pdf"
-        try:
-            kwargs = locals()
-            body = create_pdf_la(kwargs)
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.75in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.75in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'orientation' : 'Portrait'
-            }
-            print body
-            open(tf, 'w').close()
-            pdfkit.from_string(body, tf,options=options)
-            tmp_files.append(tf)
-            print tf
-        except Exception as e:
-            print e.message
+        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/la/"+group_id, tf)
+        tmp_files.append(tf)
 
-        loan_amount = 20000.0
-
-        second_collection_after_indays = 30
-        first_emi = 1100
-        rate_of_interest= .260/12.0
-        current_principal = loan_amount
-        passbook_rows = list()
-        for i in range(1,25):
-            row= dict()
-            interest = 0.0
-            if(i==1):
-                interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
-            else:
-                interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
-            date_after_month = disbursement_date.today()+ relativedelta(months=i)
-            import math
-            interest = math.ceil(interest * 1000)/1000.0
-            frac, whole = math.modf(interest)
-            if frac>0.5:
-                interest = whole+1
-            else:
-                interest = whole
-
-            row["date"] = str(disbursement_date.day)+"/"+date_after_month.strftime("%b")+"/"+str(date_after_month.year)
-            row["interest"] = interest
-            row["prev_os"] = current_principal
-            current_principal = current_principal-(first_emi - interest)
-            row["principal"] = (first_emi - interest)
-
-            if i==24:
-                row["emi"] = first_emi+current_principal
-                current_principal= 0
-            else:
-                row["emi"] = first_emi
-            row["next_os"] = current_principal
-
-            passbook_rows.append(row)
-
-        #generate passbook here
-        org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
         for app in apps:
 
-
             tf = dir+ app.application_id+"passbook.pdf"
-            try:
-                kwargs = locals()
-                body = create_pdf_hp( kwargs)
-
-                options = {
-                    'page-size': 'A4',
-                    'margin-top': '0.15in',
-                    'margin-right': '0.0in',
-                    'margin-bottom': '0.15in',
-                    'margin-left': '0.0in',
-                    'encoding': "UTF-8",
-                    'orientation' : 'Landscape'
-                }
-                print body
-                open(tf, 'w').close()
-                pdfkit.from_string(body, tf,options=options)
-                tmp_files.append(tf)
-                print tf
-            except Exception as e:
-                print "in exception"
-                print e.message
-
+            urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+product.loan_amount+"/"+first_collection_after_indays, tf)
+            tmp_files.append(tf)
 
         #generate sanction letter
-        org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"sanction_letter.pdf"
-        org_name = "Hindustan Microfinance"
-        try:
-            kwargs = locals()
-            body = create_pdf_sl(kwargs)
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'orientation' : 'Landscape'
-            }
-            print body
-            open(tf, 'w').close()
-            pdfkit.from_string(body, tf,options=options)
-            tmp_files.append(tf)
-            print tf
-        except Exception as e:
-            print e.message
+        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/sl/"+group_id, tf)
+        tmp_files.append(tf)
 
         #generate processing fees
-        org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"processing_fees.pdf"
-        org_name = "Hindustan Microfinance"
-        try:
-            kwargs = locals()
-            body = create_pdf_pf( kwargs)
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'orientation' : 'Landscape'
-            }
-            print body
-            open(tf, 'w').close()
-            pdfkit.from_string(body, tf,options=options)
-            tmp_files.append(tf)
-            print tf
-        except Exception as e:
-            print e.message
-
+        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pf/"+group_id, tf)
+        tmp_files.append(tf)
 
         #generate insurance fees
-        org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"insurance_fees.pdf"
-        org_name = "Hindustan Microfinance"
-        try:
-            kwargs = locals()
-            body = create_pdf_if( kwargs)
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0.35in',
-                'margin-right': '0.25in',
-                'margin-bottom': '0.35in',
-                'margin-left': '0.25in',
-                'encoding': "UTF-8",
-                'orientation' : 'Landscape'
-            }
-            print body
-            open(tf, 'w').close()
-            pdfkit.from_string(body, tf,options=options)
-            tmp_files.append(tf)
-            print tf
-        except Exception as e:
-            print e.message
+        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/if/"+group_id, tf)
+        tmp_files.append(tf)
+
 
         print tmp_files
         filenames = tmp_files

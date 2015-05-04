@@ -984,7 +984,7 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
-@admin_views.route('/admin/insurance_fees', methods=["GET"])
+@admin_views.route('/internal/if', methods=["GET"])
 def admin_ipnpfr():
     group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
     apps = EsthenosOrgApplication.objects.filter(group=group)
@@ -1016,9 +1016,9 @@ def admin_ipnpfr():
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
+    'inline; filename=%s.pdf' % 'if'
     return response
-@admin_views.route('/admin/processing_fees', methods=["GET"])
+@admin_views.route('/internal/pf', methods=["GET"])
 def admin_processing_fees():
     group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
     apps = EsthenosOrgApplication.objects.filter(group=group)
@@ -1047,7 +1047,7 @@ def admin_processing_fees():
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
+    'inline; filename=%s.pdf' % 'pf'
     return response
 
 #Added By Deepak
@@ -1057,7 +1057,7 @@ def admin_schedule():
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
 #Added By Deepak
 import pdfkit
-@admin_views.route('/admin/dpn', methods=["GET"])
+@admin_views.route('/admin/pdf_dpn', methods=["GET"])
 def admin_dpn():
     kwargs = locals()
     body = render_template( "pdf_DPN.html", **kwargs)
@@ -1078,9 +1078,9 @@ def admin_dpn():
 
 #Added By Deepak
 
-@admin_views.route('/admin/sanction', methods=["GET"])
-def admin_sanction():
-    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+@admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
+def admin_sanction(grp_id):
+    group = EsthenosOrgGroup.objects.get(group_id=grp_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
 
     product = apps[0].product
@@ -1111,7 +1111,7 @@ def admin_sanction():
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
+    'inline; filename=%s.pdf' % 'sanction'
     return response
 
 @admin_views.route('/admin/acknowledgement', methods=["GET"])
@@ -1135,10 +1135,9 @@ def admin_hmplgrt():
     return render_template( "pdf_HMPL_GRT.html", **kwargs)
 
 
-@admin_views.route('/admin/hmpdpn', methods=["GET"])
-def admin_hmpdpn():
-
-    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+@admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
+def admin_hmpdpn(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
@@ -1169,9 +1168,9 @@ def admin_hmpdpn():
     return response
 
 
-@admin_views.route('/admin/hmplloanagreement', methods=["GET"])
-def admin_hmplloanagreement():
-    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+@admin_views.route('/internal/pdf_la/<group_id>', methods=["GET"])
+def admin_hmplloanagreement(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
@@ -1198,7 +1197,7 @@ def admin_hmplloanagreement():
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
+    'inline; filename=%s.pdf' % 'la'
     return response
 
 
@@ -1269,15 +1268,13 @@ def admin_lrpassbook():
 
 from dateutil.relativedelta import relativedelta
 
-@admin_views.route('/admin/hindustanpassbook', methods=["GET"])
+@admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<first_collection_after_indays>', methods=["GET"])
 @login_required
-def admin_hindustanpassbook():
+def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,first_collection_after_indays):
     username = current_user.name
     c_user = current_user
-    app = EsthenosOrgApplication.objects.get(application_id="HI1000009")
+    app = EsthenosOrgApplication.objects.get(application_id=application_id)
     disbursement_date = datetime.datetime.now()
-    loan_amount = 35000.0
-    first_collection_after_indays = 90
     second_collection_after_indays = 30
     first_emi = 1900
     rate_of_interest= .260/12.0
@@ -1341,7 +1338,7 @@ def admin_hindustanpassbook():
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'Passbook'
+    'inline; filename=%s.pdf' % 'hp'
     return response
 
 @admin_views.route('/admin/signup', methods=["GET", "POST"])
