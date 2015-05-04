@@ -317,7 +317,7 @@ def cbcheck_statuscheck_applications():
                     break
         if resp.num_active_account > 2:
             is_failed = True
-            print "number of active loans 2+"+app.application_id
+            print "number of active loans 2+"+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of active loans 2+"
             status.save()
@@ -325,7 +325,7 @@ def cbcheck_statuscheck_applications():
             break
         if resp.sum_overdue_amount > 0:
             is_failed = True
-            print "number of defaults 1+"+app.application_id
+            print "number of defaults 1+"+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of defaults 1+"
             status.save()
