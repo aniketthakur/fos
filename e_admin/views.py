@@ -1268,15 +1268,15 @@ def admin_lrpassbook():
 
 from dateutil.relativedelta import relativedelta
 
-@admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<first_collection_after_indays>', methods=["GET"])
+@admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
 @login_required
-def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,first_collection_after_indays):
+def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_collection_after_indays):
     username = current_user.name
     c_user = current_user
     app = EsthenosOrgApplication.objects.get(application_id=application_id)
     disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d/%m/%Y").date()
     second_collection_after_indays = 30
-    first_emi = app.product.emi
+    first_emi = float(emi)
     rate_of_interest= .260/12.0
     current_principal = loan_amount
     passbook_rows = list()
@@ -1284,7 +1284,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,first_collec
         row= dict()
         interest = 0.0
         if(i==1):
-            interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
+            interest = float(first_collection_after_indays)/30.0 * rate_of_interest  * current_principal
         else:
             interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
         date_after_month = disbursement_date.today()+ relativedelta(months=i)

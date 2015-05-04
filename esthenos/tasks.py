@@ -404,7 +404,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         for app in apps:
 
             tf = dir+ app.application_id+"passbook.pdf"
-            urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+product.loan_amount+"/"+first_collection_after_indays, tf)
+            urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays), tf)
             tmp_files.append(tf)
 
         #generate sanction letter
