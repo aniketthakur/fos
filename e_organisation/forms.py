@@ -680,7 +680,7 @@ class AddApplicationMobile(Form):
             kyc_obj = EsthenosOrgApplicationKYC()
             if kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0:
                 kyc_obj.kyc_type = "PAN"
-                kyc_obj.image_id_f = kyc_json["kyc"][2]["pancard_f"]
+                kyc_obj.image_id_f = kyc_json["kyc"][1]["pancard_f"]
             elif kyc_json["kyc"][2].has_key("votercard_f") and  len(kyc_json["kyc"][2]["votercard_f"])>0:
                 kyc_obj.kyc_type = "VOTERS"
                 kyc_obj.image_id_f = kyc_json["kyc"][2]["votercard_f"]
