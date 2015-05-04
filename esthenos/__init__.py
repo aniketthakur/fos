@@ -51,9 +51,9 @@ mainapp.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 
 mainapp.config['AWS_S3_BUCKET_DIRECT'] = 'esthenos'
 
-mainapp.config["AWS_ACCESS_KEY_ID"] = 'AKIAJWYBSUVAFKXF665A'
+mainapp.config["AWS_ACCESS_KEY_ID"] = 'AKIAITWBEHC2SAGDFQSA'
 
-mainapp.config["AWS_SECRET_ACCESS_KEY"] = '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'
+mainapp.config["AWS_SECRET_ACCESS_KEY"] = 'WvhXR8jSfDagYtiV8XebGEjMmRdT7HTEm5UtVFzX'
 
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
 

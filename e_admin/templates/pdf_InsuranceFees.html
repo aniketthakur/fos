@@ -18,10 +18,12 @@
             font-size:12px;
         }
         .font-msmall{
-            font-size:8px;
+            font-size:10px;
         }
         tr{
-
+            padding-top: 0px;
+            padding-bottom: 0px;
+            margin: 0px;
         }
     </style>
 {% endblock %}
@@ -48,16 +50,15 @@
 
             <div class="pull-left font-msmall">
                 <p>
-                We {{ org_name }}, hereby acknowledge the receipt of Rs.  ________________________ towards Insurance Premium for the Borrowers and their Guarantors
-                of the Group ___________________ Centre ______________________
-                Branch ___________________________Region _______________________ The details of payments are mentioned in the below Table.
+                We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u>{{ apps[0].product.insurance_free }} /-</u> towards Insurance Premium for the Borrowers and their Guarantors
+                of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
 
                 </p>
 
             </div>
             <div class="clearfix"><br/></div>
             <div class="clearfix"><br/></div>
-            <table class="table table-bordered font-small">
+            <table class="table table-bordered table-condensed font-msmall">
                 <thead>
                 <tr>
                     <th style="width:5%"> No</th>
@@ -72,7 +73,7 @@
 
                     <th style="width:5%"class="text-left">Member Code</th>
 
-                    <th style="width:10%"style="width:100px" class="text-center" >Loan Account No.</th>
+{#                    <th style="width:10%"style="width:100px" class="text-center" >Loan Account No.</th>#}
 
                     <th style="width:10%"class="text-left">Loan Amount</th>
 
@@ -84,21 +85,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--{% for n in range(1,20) %}-->
+                {% for app in apps %}
                     <tr>
-                        <td></td>
-                        <td class="text-left" class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
+                        <td>{{ loop.index }}</td>
+                        <td class="text-left" class="text-center">{{ app.applicant_name }}</td>
+                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                        <td class="text-right">{{ app.member_f_or_h_name }}</td>
+                        <td class="text-left">{{ app.kyc_1.kyc_number }}</td>
+                        <td class="text-left">{{ app.application_id }}</td>
+                        {#                        <td class="text-left"></td>#}
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.product.insurance_free }}</td>
 
                     </tr>
-                    <!--{% endfor %}-->
+                {% endfor %}
 
                 </tbody>
             </table>
@@ -134,16 +135,15 @@
 
             <div class="pull-left font-msmall">
                 <p>
-                    We {{ org_name }}, hereby acknowledge the receipt of Rs.  ________________________ towards Insurance Premium for the Borrowers and their Guarantors
-                    of the Group ___________________ Centre ______________________
-                    Branch ___________________________Region _______________________ The details of payments are mentioned in the below Table.
+                    We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u>{{ apps[0].product.insurance_free }} /-</u> towards Insurance Premium for the Borrowers and their Guarantors
+                    of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
 
                 </p>
 
             </div>
             <div class="clearfix"><br/></div>
             <div class="clearfix"><br/></div>
-            <table class="table table-bordered font-small">
+            <table class="table table-bordered table-condensed font-msmall">
                 <thead>
                 <tr>
                     <th style="width:5%"> No</th>
@@ -154,11 +154,11 @@
 
                     <th style="width:10%"class="text-center" >Name of the additional family if insured</th>
 
-                    <th style="width:15%">Voter ID or Ration Card Number</th>
+                    <th style="width:15%">Voter ID or Aadhaar Number</th>
 
                     <th style="width:5%"class="text-left">Member Code</th>
 
-                    <th style="width:10%"style="width:100px" class="text-center" >Loan Account No.</th>
+{#                    <th style="width:10%"style="width:100px" class="text-center" >Loan Account No.</th>#}
 
                     <th style="width:10%"class="text-left">Loan Amount</th>
 
@@ -170,21 +170,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--{% for n in range(1,20) %}-->
+                {% for app in apps %}
                     <tr>
-                        <td></td>
-                        <td class="text-left" class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-right"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
-                        <td class="text-left"></td>
+                        <td>{{ loop.index }}</td>
+                        <td class="text-left" class="text-center">{{ app.applicant_name }}</td>
+                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                        <td class="text-right">{{ app.member_f_or_h_name }}</td>
+                        <td class="text-left">{{ app.kyc_1.kyc_number }}</td>
+                        <td class="text-left">{{ app.application_id }}</td>
+{#                        <td class="text-left"></td>#}
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.product.insurance_free }}</td>
 
                     </tr>
-                    <!--{% endfor %}-->
+                 {% endfor %}
 
                 </tbody>
             </table>

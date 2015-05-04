@@ -985,10 +985,10 @@ def admin_logout():
     return redirect( "/admin/login")
 
 @admin_views.route('/admin/insurance_fees', methods=["GET"])
-@login_required
 def admin_ipnpfr():
-    if session['role'] != "ADMIN":
-        abort(403)
+    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    disbursement_date = datetime.datetime.now()
     username = current_user.name
     c_user = current_user
     usr = EsthenosUser.objects.get(id=c_user.id)
@@ -1001,7 +1001,7 @@ def admin_ipnpfr():
             'page-size': 'A4',
             'margin-top': '0.35in',
             'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
+            'margin-bottom': '0.25in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
             'no-outline': None,
@@ -1020,14 +1020,11 @@ def admin_ipnpfr():
     'inline; filename=%s.pdf' % 'dpn'
     return response
 @admin_views.route('/admin/processing_fees', methods=["GET"])
-@login_required
 def admin_processing_fees():
-    if session['role'] != "ADMIN":
-        abort(403)
+    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    disbursement_date = datetime.datetime.now()
     username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
-
     org_name = "Hindustan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Processing_Fees.html", **kwargs)
@@ -1036,7 +1033,7 @@ def admin_processing_fees():
             'page-size': 'A4',
             'margin-top': '0.35in',
             'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
+            'margin-bottom': '0.25in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
             'no-outline': None,
@@ -1085,6 +1082,13 @@ def admin_dpn():
 
 @admin_views.route('/admin/sanction', methods=["GET"])
 def admin_sanction():
+    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+
+    product = apps[0].product
+    print product
+    disbursement_date = datetime.datetime.now()
+    username = current_user.name
     org_name = "Hindustan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Sanction_Letter.html", **kwargs)
@@ -1136,6 +1140,11 @@ def admin_hmplgrt():
 
 @admin_views.route('/admin/hmpdpn', methods=["GET"])
 def admin_hmpdpn():
+
+    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    disbursement_date = datetime.datetime.now()
+    interest_rate = 26.0
     kwargs = locals()
     body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
     try:
@@ -1166,6 +1175,10 @@ def admin_hmpdpn():
 
 @admin_views.route('/admin/hmplloanagreement', methods=["GET"])
 def admin_hmplloanagreement():
+    group = EsthenosOrgGroup.objects.get(group_id="HIG000001")
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    disbursement_date = datetime.datetime.now()
+    interest_rate = 26.0
     kwargs = locals()
     body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
     try:
@@ -1259,14 +1272,53 @@ def admin_lrpassbook():
     'inline; filename=%s.pdf' % 'Passbook'
     return response
 
+from dateutil.relativedelta import relativedelta
 
 @admin_views.route('/admin/hindustanpassbook', methods=["GET"])
 @login_required
 def admin_hindustanpassbook():
-    if session['role'] != "ADMIN":
-        abort(403)
     username = current_user.name
     c_user = current_user
+    app = EsthenosOrgApplication.objects.get(application_id="HI1000009")
+    disbursement_date = datetime.datetime.now()
+    loan_amount = 35000.0
+    first_collection_after_indays = 90
+    second_collection_after_indays = 30
+    first_emi = 1900
+    rate_of_interest= .260/12.0
+    current_principal = loan_amount
+    passbook_rows = list()
+    for i in range(1,25):
+        row= dict()
+        interest = 0.0
+        if(i==1):
+            interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
+        else:
+            interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
+        date_after_month = disbursement_date.today()+ relativedelta(months=i)
+        import math
+        interest = math.ceil(interest * 1000)/1000.0
+        frac, whole = math.modf(interest)
+        if frac>0.5:
+            interest = whole+1
+        else:
+            interest = whole
+
+        row["date"] = str(disbursement_date.day)+"/"+date_after_month.strftime("%b")+"/"+str(date_after_month.year)
+        row["interest"] = interest
+        row["prev_os"] = current_principal
+        current_principal = current_principal-(first_emi - interest)
+        row["principal"] = (first_emi - interest)
+
+        if i==24:
+            row["emi"] = first_emi+current_principal
+            current_principal= 0
+        else:
+            row["emi"] = first_emi
+        row["next_os"] = current_principal
+
+        passbook_rows.append(row)
+
     org_name = "Hindustan Microfinance"
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()

@@ -882,16 +882,27 @@ def disburse_document():
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     org  = user.organisation
-    group = EsthenosOrgGroup.object.get(group_id=request.form.get("group_id"))
+    group = EsthenosOrgGroup.objects.get(group_id=request.form.get("group_id"))
     apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
     print request.form.get("group_id")
-    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id")))
+    dis_date_str =request.form.get("disbursement_date")
+    col_date_str =request.form.get("collection_date")
+    dis_date =    datetime.datetime.strptime(dis_date_str, "%d/%m/%Y").date()
+    col_date =   datetime.datetime.strptime(col_date_str, "%d/%m/%Y").date()
+    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date,(dis_date-col_date).days))
     for app in apps:
         app.generate_disbursement = True
-
         app.save()
     kwargs = locals()
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
+
+import boto
+conn_s3 = boto.connect_s3(
+    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
+import tempfile
+temp_dir = tempfile.mkdtemp( prefix='zip_out_')
+temp_dir = temp_dir+"/"
 
 @organisation_views.route('/download_disbusement', methods=["GET"])
 @login_required
@@ -901,34 +912,33 @@ def download_disbusement():
     username = current_user.name
     c_user = current_user
     #center_id = request.args.get("center")
-    group_id = request.args.get("group")
-    #    print  center_id," ",group_id
-    #    center = None
-    #    if center_id is not None and center_id != '':
-    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-    #        print center.center_name
-    #    else:
-    #        group_id = ''
+    group_id = request.args.get("group_id")
+    file_id = request.args.get("file_id")
     user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print group_id
     if group_id is not None and group_id != '':
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
+        bucket = conn_s3.get_bucket("hindusthanarchives")
+        bucket_list = bucket.list()
+
+        for l in bucket_list:
+            if file_id == l:
+                keyString = str(l.key)
+                # check if file exists locally, if not: download it
+                if not os.path.exists(temp_dir+keyString):
+                    l.get_contents_to_filename(temp_dir+keyString)
+                filehandle = open(temp_dir+keyString, 'rb')
+                zfile = zipfile.ZipFile(filehandle)
+                data = StringIO.StringIO(zfile.read())
+                output = make_response(data.getvalue())
+                output.headers["Content-Disposition"] = "attachment; filename=%s" %keyString
+                output.headers["Content-type"] = "application/zip"
+                return output
         print group.group_name
-    else:
-        center_id = ''
-    print  "filter "+ group.group_name
-    applications = None
-    #    if center != None:
-    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=272)
-    #    el
-    if group != None:
-        print  "filter "+ group.group_name
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=272)
-    else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=272)
-    kwargs = locals()
-    return render_template("download_disbusement.html", **kwargs)
+    return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
+    # Grab ZIP file from in-memory, make response with correct MIME-type
+
 
 
 @organisation_views.route('/telecalling', methods=["GET"])
@@ -999,13 +1009,14 @@ def check_tele_applicant_questions():
         center = EsthenosOrgCenter.objects.get(center_id=center_id)
         print center.center_name
 
+    user = EsthenosUser.objects.get(id=c_user.id)
     group = None
     print  group_id
     if group_id is not None :
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         print group.group_name
 
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     app_id = request.args.get("app_id")
 
     if request.method == "GET":
@@ -1069,7 +1080,7 @@ def cgt1_question():
         group_id = request.args.get("group_id")
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         kwargs = locals()
         return render_template("centers_n_groups_grt_questions.html", **kwargs)
     elif request.method == "POST":
@@ -1079,7 +1090,7 @@ def cgt1_question():
         group_id = request.args.get("group_id")
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         grt_session,status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group,organisation=org)
         question_dict = dict()
 
@@ -1174,7 +1185,7 @@ def cgt2_question():
         group_id = request.args.get("group_id")
         questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         grt_session,status = EsthenosOrgGroupCGT2Session.objects.get_or_create(group=group,organisation=org)
         question_dict = dict()
 
@@ -1362,7 +1373,7 @@ def grt_question():
         group_id = request.args.get("group_id")
         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         kwargs = locals()
         return render_template("centers_n_groups_grt_questions.html", **kwargs)
     elif request.method == "POST":
@@ -1372,7 +1383,7 @@ def grt_question():
         group_id = request.args.get("group_id")
         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
 
         grt_session,status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
         question_dict = dict()
