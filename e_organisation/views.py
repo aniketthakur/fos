@@ -923,6 +923,8 @@ def download_disbusement():
         bucket_list = bucket.list()
 
         for l in bucket_list:
+            print l
+            print group.disbursement_pdf_link
             if group.disbursement_pdf_link == l:
                 keyString = str(l.key)
                 # check if file exists locally, if not: download it
