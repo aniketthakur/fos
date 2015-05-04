@@ -368,6 +368,8 @@ def cashflow_ready_applications():
         application.save()
 
 
+
+
 import os
 import zipfile
 import StringIO
@@ -375,6 +377,26 @@ from dateutil.relativedelta import relativedelta
 import pdfkit
 import tempfile
 import requests
+import sys
+import time
+
+def downloadFile(url, outfile) :
+    with open(outfile, 'wb') as f:
+        start = time.clock()
+        r = requests.get(url, stream=True)
+        total_length = r.headers.get('content-length')
+        dl = 0
+        if total_length is None: # no content length header
+            f.write(r.content)
+        else:
+            for chunk in r.iter_content(1024):
+                dl += len(chunk)
+                f.write(chunk)
+                done = int(50 * dl / total_length)
+                sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
+                print ''
+    return (time.clock() - start)
+
 from e_organisation.models import EsthenosOrgGroup,EsthenosOrgProduct
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
@@ -394,44 +416,32 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         print tf
         #generate dpn here
         import urllib
-        r = requests.get("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id)
-        with open(tf, "wb") as code:
-            code.write(r.content)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        r = requests.get("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id)
-        with open(tf, "wb") as code:
-            code.write(r.content)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id,tf)
         tmp_files.append(tf)
 
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
-            r = requests.get("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays))
-            with open(tf, "wb") as code:
-                code.write(r.content)
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
             tmp_files.append(tf)
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        r = requests.get("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id)
-        with open(tf, "wb") as code:
-            code.write(r.content)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        r = requests.get("http://hindusthan.esthenos.com/internal/pdf_pf/"+group_id)
-        with open(tf, "wb") as code:
-            code.write(r.content)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_pf/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        r = requests.get("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id)
-        with open(tf, "wb") as code:
-            code.write(r.content)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf)
         tmp_files.append(tf)
 
 
