@@ -335,7 +335,7 @@ def cbcheck_statuscheck_applications():
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=150)[0],updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
-
+        else:
             #below line will change according to status and validation done for highmark
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=160)[0]
             application.current_status_updated  = datetime.datetime.now()
