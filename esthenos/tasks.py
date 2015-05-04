@@ -396,7 +396,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             'margin-bottom': '0.50in',
             'margin-left': '0.50in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Portrait'
         }
         open(tf, 'w').close()
@@ -418,7 +417,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             'margin-bottom': '0.75in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Portrait'
         }
         open(tf, 'w').close()
@@ -480,7 +478,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
                 'margin-bottom': '0.15in',
                 'margin-left': '0.0in',
                 'encoding': "UTF-8",
-                'no-outline': None,
                 'orientation' : 'Landscape'
             }
             open(tf, 'w').close()
@@ -504,7 +501,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             'margin-bottom': '0.35in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         open(tf, 'w').close()
@@ -526,7 +522,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             'margin-bottom': '0.35in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         open(tf, 'w').close()
@@ -549,7 +544,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             'margin-bottom': '0.35in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         open(tf, 'w').close()

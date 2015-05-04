@@ -1004,7 +1004,6 @@ def admin_ipnpfr():
             'margin-bottom': '0.25in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
@@ -1036,7 +1035,6 @@ def admin_processing_fees():
             'margin-bottom': '0.25in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
@@ -1100,7 +1098,6 @@ def admin_sanction():
             'margin-bottom': '0.35in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
@@ -1155,7 +1152,6 @@ def admin_hmpdpn():
             'margin-bottom': '0.50in',
             'margin-left': '0.50in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Portrait'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
@@ -1189,7 +1185,6 @@ def admin_hmplloanagreement():
             'margin-bottom': '0.75in',
             'margin-left': '0.25in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Portrait'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
@@ -1332,7 +1327,6 @@ def admin_hindustanpassbook():
             'margin-bottom': '0.15in',
             'margin-left': '0.0in',
             'encoding': "UTF-8",
-            'no-outline': None,
             'orientation' : 'Landscape'
         }
         pdfkit.from_string(body, 'tmp.pdf',options=options)
