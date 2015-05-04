@@ -383,8 +383,9 @@ from e_organisation.models import EsthenosOrgGroup
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
         print "generate_post_grt_applications"
-        group = EsthenosOrgGroup.objects.get(group_id=group_id)
-        #org = EsthenosOrg.objects.get(id=org_id)
+
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
         apps = EsthenosOrgApplication.objects.filter(group=group)
         print disbursement_date
         print first_collection_after_indays
@@ -417,6 +418,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             print e.message
 
         #generate agreement here
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+ "agreement.pdf"
         try:
             kwargs = locals()
@@ -477,6 +481,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             passbook_rows.append(row)
 
         #generate passbook here
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
         for app in apps:
 
 
@@ -505,6 +512,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
 
         #generate sanction letter
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"sanction_letter.pdf"
         org_name = "Hindustan Microfinance"
         try:
@@ -528,6 +538,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             print e.message
 
         #generate processing fees
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"processing_fees.pdf"
         org_name = "Hindustan Microfinance"
         try:
@@ -552,6 +565,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
 
         #generate insurance fees
+        org = EsthenosOrg.objects.get(id=org_id)
+        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
         tf = dir+"insurance_fees.pdf"
         org_name = "Hindustan Microfinance"
         try:
