@@ -374,6 +374,7 @@ import StringIO
 from dateutil.relativedelta import relativedelta
 import pdfkit
 import tempfile
+import requests
 from e_organisation.models import EsthenosOrgGroup,EsthenosOrgProduct
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
@@ -393,9 +394,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         print tf
         #generate dpn here
         import urllib
-        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/dpn/"+group_id)
+        r = requests.get("http://hindusthan.esthenos.com/internal/dpn/"+group_id)
         with open(tf, "wb") as code:
-            code.write(f.read())
+            code.write(r.content)
         tmp_files.append(tf)
 
         #generate agreement here
