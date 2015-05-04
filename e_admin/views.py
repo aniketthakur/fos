@@ -989,10 +989,6 @@ def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
-
     org_name = "Hindustan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_InsuranceFees.html", **kwargs)
@@ -1023,7 +1019,6 @@ def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
-    username = current_user.name
     org_name = "Hindustan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Processing_Fees.html", **kwargs)
@@ -1086,7 +1081,6 @@ def admin_sanction(grp_id):
     product = apps[0].product
     print product
     disbursement_date = datetime.datetime.now()
-    username = current_user.name
     org_name = "Hindustan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Sanction_Letter.html", **kwargs)
@@ -1270,8 +1264,6 @@ from dateutil.relativedelta import relativedelta
 
 @admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
 def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_collection_after_indays):
-    username = current_user.name
-    c_user = current_user
     app = EsthenosOrgApplication.objects.get(application_id=application_id)
     disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     second_collection_after_indays = 30
@@ -1311,7 +1303,6 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
         passbook_rows.append(row)
 
     org_name = "Hindustan Microfinance"
-    usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
 
     body = render_template( "pdf_HindustanPassbook.html", **kwargs)
