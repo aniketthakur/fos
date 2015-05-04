@@ -393,33 +393,44 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         print tf
         #generate dpn here
         import urllib
-        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/dpn/"+group_id, tf)
+        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/dpn/"+group_id)
+        with open(tf, "wb") as code:
+            code.write(f.read())
         tmp_files.append(tf)
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/la/"+group_id, tf)
+        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/la/"+group_id)
+        with open(tf, "wb") as code:
+            code.write(f.read())
         tmp_files.append(tf)
 
         for app in apps:
-
             tf = dir+ app.application_id+"passbook.pdf"
-            urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays), tf)
+            f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays))
+            with open(tf, "wb") as code:
+                code.write(f.read())
             tmp_files.append(tf)
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/sl/"+group_id, tf)
+        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/sl/"+group_id)
+        with open(tf, "wb") as code:
+            code.write(f.read())
         tmp_files.append(tf)
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/pf/"+group_id, tf)
+        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/pf/"+group_id)
+        with open(tf, "wb") as code:
+            code.write(f.read())
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        urllib.urlretrieve ("http://hindusthan.esthenos.com/internal/if/"+group_id, tf)
+        f = urllib2.urlopen("http://hindusthan.esthenos.com/internal/if/"+group_id)
+        with open(tf, "wb") as code:
+            code.write(f.read())
         tmp_files.append(tf)
 
 
