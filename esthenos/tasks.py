@@ -368,9 +368,29 @@ def cashflow_ready_applications():
         application.save()
 
 from flask import render_template
-def create_pdf(template_name,kwargs):
-    with mainapp.test_request_context('/internal/pdf_creater'):
-        render_template( template_name, **kwargs)
+def create_pdf_dpn(kwargs):
+    with mainapp.test_request_context('/internal/pdf_dpn'):
+        return render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+
+def create_pdf_la(kwargs):
+    with mainapp.test_request_context('/internal/pdf_la'):
+        return render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
+
+def create_pdf_hp(kwargs):
+    with mainapp.test_request_context('/internal/pdf_hp'):
+        return render_template( "pdf_HindustanPassbook.html", **kwargs)
+
+def create_pdf_sl(kwargs):
+    with mainapp.test_request_context('/internal/pdf_sl'):
+        return render_template( "pdf_Sanction_Letter.html", **kwargs)
+
+def create_pdf_pf(kwargs):
+    with mainapp.test_request_context('/internal/pdf_pf'):
+        return render_template( "pdf_Processing_Fees.html", **kwargs)
+
+def create_pdf_if(kwargs):
+    with mainapp.test_request_context('/internal/pdf_if'):
+        return render_template( "pdf_InsuranceFees.html", **kwargs)
 
 import os
 import zipfile
@@ -398,7 +418,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate dpn here
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_HMPL_DPN_HINDI.html",kwargs)
+            body = create_pdf_dpn(kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.50in',
@@ -424,7 +444,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "agreement.pdf"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_HMPL_LA_Hindi.html",kwargs)
+            body = create_pdf_la(kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.75in',
@@ -490,7 +510,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             tf = dir+ app.application_id+"passbook.pdf"
             try:
                 kwargs = locals()
-                body = create_pdf( "pdf_HindustanPassbook.html",kwargs)
+                body = create_pdf_hp( kwargs)
 
                 options = {
                     'page-size': 'A4',
@@ -519,7 +539,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_Sanction_Letter.html",kwargs)
+            body = create_pdf_sl(kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -545,7 +565,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_Processing_Fees.html",kwargs)
+            body = create_pdf_pf( kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -572,7 +592,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_InsuranceFees.html",kwargs)
+            body = create_pdf_if( kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
