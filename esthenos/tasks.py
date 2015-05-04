@@ -396,7 +396,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         #generate dpn here
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+            body = create_pdf( "pdf_HMPL_DPN_HINDI.html",kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.50in',
@@ -417,7 +417,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "agreement.pdf"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_HMPL_LA_Hindi.html", **kwargs)
+            body = create_pdf( "pdf_HMPL_LA_Hindi.html",kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.75in',
@@ -478,7 +478,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             tf = dir+ app.application_id+"passbook.pdf"
             try:
                 kwargs = locals()
-                body = create_pdf( "pdf_HindustanPassbook.html", **kwargs)
+                body = create_pdf( "pdf_HindustanPassbook.html",kwargs)
                 options = {
                     'page-size': 'A4',
                     'margin-top': '0.15in',
@@ -501,7 +501,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_Sanction_Letter.html", **kwargs)
+            body = create_pdf( "pdf_Sanction_Letter.html",kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -522,7 +522,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_Processing_Fees.html", **kwargs)
+            body = create_pdf( "pdf_Processing_Fees.html",kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
@@ -544,7 +544,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         org_name = "Hindustan Microfinance"
         try:
             kwargs = locals()
-            body = create_pdf( "pdf_InsuranceFees.html", **kwargs)
+            body = create_pdf( "pdf_InsuranceFees.html",kwargs)
             options = {
                 'page-size': 'A4',
                 'margin-top': '0.35in',
