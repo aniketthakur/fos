@@ -368,8 +368,6 @@ def cashflow_ready_applications():
         application.save()
 
 
-
-
 import os
 import zipfile
 import StringIO
@@ -410,41 +408,154 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         print disbursement_date
         print first_collection_after_indays
         product = EsthenosOrgProduct.objects.all()[0]
+        
+
+        print "generate_post_grt_applications"
+        print disbursement_date
+        print first_collection_after_indays
+
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
         tf = dir+ "dpn.pdf"
         print tf
         #generate dpn here
-        import urllib
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id,tf)
-        tmp_files.append(tf)
+        try:
+
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id,tf+".html")
+            f = open(tf+".html", 'r+')
+            body = f.read()
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.50in',
+                'margin-right': '0.50in',
+                'margin-bottom': '0.50in',
+                'margin-left': '0.50in',
+                'encoding': "UTF-8",
+                'orientation' : 'Portrait'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+
+        except Exception as e:
+            print e.message
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id,tf)
-        tmp_files.append(tf)
+        try:
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id,tf+".html")
+            f = open(tf+".html", 'r+')
+            body = f.read()
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.75in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.75in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Portrait'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
+            print e.message
+
+
+
+        #generate passbook here
+        for app in apps:
+
+
+            tf = dir+ app.application_id+"passbook.pdf"
+            try:
+                downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf+".html")
+                f = open(tf+".html", 'r+')
+                body = f.read()
+                options = {
+                    'page-size': 'A4',
+                    'margin-top': '0.15in',
+                    'margin-right': '0.0in',
+                    'margin-bottom': '0.15in',
+                    'margin-left': '0.0in',
+                    'encoding': "UTF-8",
+                    'orientation' : 'Landscape'
+                }
+                open(tf, 'w').close()
+                pdfkit.from_string(body, tf,options=options)
+                tmp_files.append(tf)
+            except Exception as e:
+                print "in exception"
+                print e.message
+
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id,tf)
-        tmp_files.append(tf)
+        org_name = "Hindustan Microfinance"
+        try:
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id,tf+".html")
+            f = open(tf+".html", 'r+')
+            body = f.read()
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Landscape'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
+            print e.message
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_pf/"+group_id,tf)
-        tmp_files.append(tf)
+        org_name = "Hindustan Microfinance"
+        try:
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_pf/"+group_id,tf+".html")
+            f = open(tf+".html", 'r+')
+            body = f.read()
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Landscape'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
+            print e.message
+
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf)
-        tmp_files.append(tf)
-
-        for app in apps:
-            tf = dir+ app.application_id+"passbook.pdf"
-            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
+        org_name = "Hindustan Microfinance"
+        try:
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf+".html")
+            f = open(tf+".html", 'r+')
+            body = f.read()
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Landscape'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
-
+        except Exception as e:
+            print e.message
 
         print tmp_files
         filenames = tmp_files
