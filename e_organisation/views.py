@@ -929,8 +929,7 @@ def download_disbusement():
                 if not os.path.exists(group.disbursement_pdf_link):
                     l.get_contents_to_filename(group.disbursement_pdf_link)
                 filehandle = open(group.disbursement_pdf_link, 'rb')
-                zfile = zipfile.ZipFile(filehandle)
-                data = StringIO.StringIO(zfile.read())
+                data = StringIO.StringIO(filehandle.read())
                 output = make_response(data.getvalue())
                 output.headers["Content-Disposition"] = "attachment; filename=%s" %keyString
                 output.headers["Content-type"] = "application/zip"
