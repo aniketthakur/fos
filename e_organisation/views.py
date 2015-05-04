@@ -901,8 +901,6 @@ conn_s3 = boto.connect_s3(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 import tempfile
-temp_dir = tempfile.mkdtemp( prefix='zip_out_')
-temp_dir = temp_dir+"/"
 
 @organisation_views.route('/download_disbursement', methods=["GET"])
 @login_required
@@ -925,12 +923,12 @@ def download_disbusement():
         for l in bucket_list:
             print l
             print group.disbursement_pdf_link
-            if group.disbursement_pdf_link == l:
+            if group.disbursement_pdf_link[1:] == l.key:
                 keyString = str(l.key)
                 # check if file exists locally, if not: download it
-                if not os.path.exists(temp_dir+keyString):
-                    l.get_contents_to_filename(temp_dir+keyString)
-                filehandle = open(temp_dir+keyString, 'rb')
+                if not os.path.exists(group.disbursement_pdf_link):
+                    l.get_contents_to_filename(group.disbursement_pdf_link)
+                filehandle = open(group.disbursement_pdf_link, 'rb')
                 zfile = zipfile.ZipFile(filehandle)
                 data = StringIO.StringIO(zfile.read())
                 output = make_response(data.getvalue())
