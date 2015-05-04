@@ -375,108 +375,132 @@ import tempfile
 from e_organisation.models import EsthenosOrgGroup
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
-    print "generate_post_grt_applications"
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    #org = EsthenosOrg.objects.get(id=org_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
-    product = apps[0].product
-    tmp_files = list()
-    dir = tempfile.mkdtemp( prefix='pdf_')
-    dir = dir+"/"
-    tf = dir+ "dpn.pdf"
-    print tf
-    #generate dpn here
-    kwargs = locals()
-    body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_DPN_HINDI.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.50in',
-            'margin-right': '0.50in',
-            'margin-bottom': '0.50in',
-            'margin-left': '0.50in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        open(tf, 'w').close()
-        pdfkit.from_string(body, tf,options=options)
-        tmp_files.append(tf)
-
-    except Exception as e:
-        print e.message
-
-    #generate agreement here
-    tf = dir+ "agreement.pdf"
-    kwargs = locals()
-    body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_LA_Hindi.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.75in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.75in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        open(tf, 'w').close()
-        pdfkit.from_string(body, tf,options=options)
-        tmp_files.append(tf)
-    except Exception as e:
-        print e.message
-
-    loan_amount = 20000.0
-
-    second_collection_after_indays = 30
-    first_emi = 1100
-    rate_of_interest= .260/12.0
-    current_principal = loan_amount
-    passbook_rows = list()
-    for i in range(1,25):
-        row= dict()
-        interest = 0.0
-        if(i==1):
-            interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
-        else:
-            interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
-        date_after_month = disbursement_date.today()+ relativedelta(months=i)
-        import math
-        interest = math.ceil(interest * 1000)/1000.0
-        frac, whole = math.modf(interest)
-        if frac>0.5:
-            interest = whole+1
-        else:
-            interest = whole
-
-        row["date"] = str(disbursement_date.day)+"/"+date_after_month.strftime("%b")+"/"+str(date_after_month.year)
-        row["interest"] = interest
-        row["prev_os"] = current_principal
-        current_principal = current_principal-(first_emi - interest)
-        row["principal"] = (first_emi - interest)
-
-        if i==24:
-            row["emi"] = first_emi+current_principal
-            current_principal= 0
-        else:
-            row["emi"] = first_emi
-        row["next_os"] = current_principal
-
-        passbook_rows.append(row)
-
-    #generate passbook here
-    for app in apps:
-
-
-        tf = dir+ app.application_id+"passbook.pdf"
+    with mainapp.app_context():
+        print "generate_post_grt_applications"
+        group = EsthenosOrgGroup.objects.get(group_id=group_id)
+        #org = EsthenosOrg.objects.get(id=org_id)
+        apps = EsthenosOrgApplication.objects.filter(group=group)
+        product = apps[0].product
+        tmp_files = list()
+        dir = tempfile.mkdtemp( prefix='pdf_')
+        dir = dir+"/"
+        tf = dir+ "dpn.pdf"
+        print tf
+        #generate dpn here
         kwargs = locals()
-        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HindustanPassbook.html", **kwargs)
+        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_DPN_HINDI.html", **kwargs)
         try:
             options = {
                 'page-size': 'A4',
-                'margin-top': '0.15in',
-                'margin-right': '0.0in',
-                'margin-bottom': '0.15in',
-                'margin-left': '0.0in',
+                'margin-top': '0.50in',
+                'margin-right': '0.50in',
+                'margin-bottom': '0.50in',
+                'margin-left': '0.50in',
+                'encoding': "UTF-8",
+                'orientation' : 'Portrait'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+
+        except Exception as e:
+            print e.message
+
+        #generate agreement here
+        tf = dir+ "agreement.pdf"
+        kwargs = locals()
+        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HMPL_LA_Hindi.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.75in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.75in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Portrait'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
+            print e.message
+
+        loan_amount = 20000.0
+
+        second_collection_after_indays = 30
+        first_emi = 1100
+        rate_of_interest= .260/12.0
+        current_principal = loan_amount
+        passbook_rows = list()
+        for i in range(1,25):
+            row= dict()
+            interest = 0.0
+            if(i==1):
+                interest = first_collection_after_indays/30.0 * rate_of_interest  * current_principal
+            else:
+                interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
+            date_after_month = disbursement_date.today()+ relativedelta(months=i)
+            import math
+            interest = math.ceil(interest * 1000)/1000.0
+            frac, whole = math.modf(interest)
+            if frac>0.5:
+                interest = whole+1
+            else:
+                interest = whole
+
+            row["date"] = str(disbursement_date.day)+"/"+date_after_month.strftime("%b")+"/"+str(date_after_month.year)
+            row["interest"] = interest
+            row["prev_os"] = current_principal
+            current_principal = current_principal-(first_emi - interest)
+            row["principal"] = (first_emi - interest)
+
+            if i==24:
+                row["emi"] = first_emi+current_principal
+                current_principal= 0
+            else:
+                row["emi"] = first_emi
+            row["next_os"] = current_principal
+
+            passbook_rows.append(row)
+
+        #generate passbook here
+        for app in apps:
+
+
+            tf = dir+ app.application_id+"passbook.pdf"
+            kwargs = locals()
+            body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_HindustanPassbook.html", **kwargs)
+            try:
+                options = {
+                    'page-size': 'A4',
+                    'margin-top': '0.15in',
+                    'margin-right': '0.0in',
+                    'margin-bottom': '0.15in',
+                    'margin-left': '0.0in',
+                    'encoding': "UTF-8",
+                    'orientation' : 'Landscape'
+                }
+                open(tf, 'w').close()
+                pdfkit.from_string(body, tf,options=options)
+                tmp_files.append(tf)
+            except Exception as e:
+                print "in exception"
+                print e.message
+
+
+        #generate sanction letter
+        tf = dir+"sanction_letter.pdf"
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Sanction_Letter.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
                 'encoding': "UTF-8",
                 'orientation' : 'Landscape'
             }
@@ -484,95 +508,72 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
             pdfkit.from_string(body, tf,options=options)
             tmp_files.append(tf)
         except Exception as e:
-            print "in exception"
+            print e.message
+
+        #generate processing fees
+        tf = dir+"processing_fees.pdf"
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Processing_Fees.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Landscape'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
             print e.message
 
 
-    #generate sanction letter
-    tf = dir+"sanction_letter.pdf"
-    org_name = "Hindustan Microfinance"
-    kwargs = locals()
-    body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Sanction_Letter.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        open(tf, 'w').close()
-        pdfkit.from_string(body, tf,options=options)
-        tmp_files.append(tf)
-    except Exception as e:
-        print e.message
+        #generate insurance fees
+        tf = dir+"insurance_fees.pdf"
+        org_name = "Hindustan Microfinance"
+        kwargs = locals()
+        body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_InsuranceFees.html", **kwargs)
+        try:
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0.35in',
+                'margin-right': '0.25in',
+                'margin-bottom': '0.35in',
+                'margin-left': '0.25in',
+                'encoding': "UTF-8",
+                'orientation' : 'Landscape'
+            }
+            open(tf, 'w').close()
+            pdfkit.from_string(body, tf,options=options)
+            tmp_files.append(tf)
+        except Exception as e:
+            print e.message
 
-    #generate processing fees
-    tf = dir+"processing_fees.pdf"
-    org_name = "Hindustan Microfinance"
-    kwargs = locals()
-    body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_Processing_Fees.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        open(tf, 'w').close()
-        pdfkit.from_string(body, tf,options=options)
-        tmp_files.append(tf)
-    except Exception as e:
-        print e.message
+        print tmp_files
+        filenames = tmp_files
 
+        # Folder name in ZIP archive which contains the above files
+        # E.g [thearchive.zip]/somefiles/file2.txt
+        # FIXME: Set this to something better
 
-    #generate insurance fees
-    tf = dir+"insurance_fees.pdf"
-    org_name = "Hindustan Microfinance"
-    kwargs = locals()
-    body = render_template( "/home/esthenos/esthenos_cust_enrollment/e_admin/templates/pdf_InsuranceFees.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        open(tf, 'w').close()
-        pdfkit.from_string(body, tf,options=options)
-        tmp_files.append(tf)
-    except Exception as e:
-        print e.message
-
-    print tmp_files
-    filenames = tmp_files
-
-    # Folder name in ZIP archive which contains the above files
-    # E.g [thearchive.zip]/somefiles/file2.txt
-    # FIXME: Set this to something better
-
-    zdir = tempfile.mkdtemp( prefix='zip_')
-    zdir = zdir+"/"
-    # The zip compressor
-    tf = zdir+group_id
-    zip(dir, tf)
-    from boto.s3.key import Key
-    bucket = conn_s3.get_bucket("hindusthanarchives")
-    k = Key(bucket)
-    k.key = tf+".zip"
-    k.set_contents_from_filename(tf+".zip")
-    k.make_public()
-    os.remove(tf+".zip")
-    group.disbursement_pdf_link = k.key
-    group.save()
+        zdir = tempfile.mkdtemp( prefix='zip_')
+        zdir = zdir+"/"
+        # The zip compressor
+        tf = zdir+group_id
+        zip(dir, tf)
+        from boto.s3.key import Key
+        bucket = conn_s3.get_bucket("hindusthanarchives")
+        k = Key(bucket)
+        k.key = tf+".zip"
+        k.set_contents_from_filename(tf+".zip")
+        k.make_public()
+        os.remove(tf+".zip")
+        group.disbursement_pdf_link = k.key
+        group.save()
 
 
 import os
