@@ -1274,7 +1274,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     username = current_user.name
     c_user = current_user
     app = EsthenosOrgApplication.objects.get(application_id=application_id)
-    disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d/%m/%Y").date()
+    disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     second_collection_after_indays = 30
     first_emi = float(emi)
     rate_of_interest= .260/12.0

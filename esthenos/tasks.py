@@ -392,7 +392,7 @@ def downloadFile(url, outfile) :
             for chunk in r.iter_content(1024):
                 dl += len(chunk)
                 f.write(chunk)
-                done = int(50 * dl / total_length)
+                done = int(50 * int(dl) / int(total_length))
                 sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
                 print ''
     return (time.clock() - start)
