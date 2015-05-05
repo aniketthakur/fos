@@ -1169,7 +1169,7 @@ def admin_hmplloanagreement(group_id):
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
     kwargs = locals()
-    body = render_template( "pdf_HMPL_LA_Hindi.html", **kwargs)
+    body = render_template( "pdf_HMPL_LA_New_Hindi.html", **kwargs)
     try:
         options = {
             'page-size': 'A4',
