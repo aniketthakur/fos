@@ -138,8 +138,8 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.additional_type1=""
     eqrequest.additional_name1=""
     eqrequest.additional_type2="K02"
-    eqrequest.additional_name2=app.member_f_or_h_name
-    eqrequest.address_city=app.member_city
+    eqrequest.additional_name2=app.gurranter_s_name
+    eqrequest.address_city=app.address+" "+app.member_city
     eqrequest.state_union_territory=app.member_state
     eqrequest.postal_pin=app.member_pincode
     eqrequest.ration_card=""

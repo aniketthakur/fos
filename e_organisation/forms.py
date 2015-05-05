@@ -514,11 +514,12 @@ class AddApplicationMobile(Form):
         else:
             app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
 
-        if self.financial_liabilities_chits.data == "":
+        if self.financial_liabilities_bank_loans.data == "":
             app.other_outstanding_emi = 0.0
         else:
             app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
 
+        app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
         app.gurranter_s_age = float(self.gurranter_s_age.data)
@@ -541,7 +542,7 @@ class AddApplicationMobile(Form):
         app.member_taluk = self.taluk.data
         app.member_village = ""
         app.member_relationship_status = self.relationship_status.data
-        app.member_applied_loan = self.required_loan_amount.data
+        app.applied_loan = self.required_loan_amount.data
         app.religion = self.religion.data
         app.category = self.category.data
         app.cast = ""
@@ -622,31 +623,31 @@ class AddApplicationMobile(Form):
         app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
 #       app.business_expense =
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_food_expenditure__monthly.data == "":
+            app.food_expense = 0.0
         else:
             app.food_expense = float(self.family_food_expenditure__monthly.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_travel_expenditure__monthly.data == "":
+            app.travel_expense = 0.0
         else:
             app.travel_expense =float(self.family_travel_expenditure__monthly.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_entertainment_expenditure__monthly.data == "":
+            app.entertainment_expense = 0.0
         else:
             app.entertainment_expense =float(self.family_entertainment_expenditure__monthly.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_education_expenditure_monthly.data == "":
+            app.educational_expense = 0.0
         else:
             app.educational_expense = float(self.family_education_expenditure_monthly.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_medical_expenditure_monthly.data == "":
+            app.medical_expense = 0.0
         else:
             app.medical_expense =float(self.family_medical_expenditure_monthly.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.family_other_expenditure_monthly.data == "":
+            app.other_expense = 0.0
         else:
             app.other_expense = float(self.family_other_expenditure_monthly.data)
-        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense
+        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense+app.tertiary_business_expenses_monthly+app.secondary_business_expenses_monthly+app.primary_business_expenses_monthly
 #       app.total_liability =
 #       app.outstanding_1 =
 #       app.outstanding_2 =
@@ -662,7 +663,7 @@ class AddApplicationMobile(Form):
         else:
             app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
 #       app.other_outstanding_emi =
-        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance
+        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance+app.other_outstanding_emi
         app.net_income = app.total_income - app.total_expenditure
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
