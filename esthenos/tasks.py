@@ -315,33 +315,41 @@ def cbcheck_statuscheck_applications():
                     status.status_message = "duplicate aadhaar found in "+app.application_id
                     status.save()
                     application.timeline.append(status)
+                    application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+                    application.current_status_updated  = datetime.datetime.now()
+                    application.status = 20
+
                     break
-        if resp.num_active_account > 2:
+        if not is_failed and resp.num_active_account > 2:
             is_failed = True
             print "number of active loans 2+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of active loans 2+"
             status.save()
             application.timeline.append(status)
-            break
-        if resp.sum_overdue_amount > 0:
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0]
+            application.current_status_updated  = datetime.datetime.now()
+            application.status = 25
+
+        if not is_failed and resp.sum_overdue_amount > 0:
             is_failed = True
             print "number of defaults 1+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of defaults 1+"
             status.save()
             application.timeline.append(status)
-            break
+            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
+            application.current_status_updated  = datetime.datetime.now()
+            application.status = 20
+
         if not is_failed:
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=150)[0],updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
-        else:
-            #below line will change according to status and validation done for highmark
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=160)[0]
             application.current_status_updated  = datetime.datetime.now()
             application.status = 160
-            application.save()
+        application.save()
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def cashflow_ready_applications():
