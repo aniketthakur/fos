@@ -302,7 +302,7 @@ def equifax_request_reports_import():
             if k != "Series_1":
                 print k,v[0]
 
-                applications = EsthenosOrgApplication.objects.filter(application_id=v[1])
+                applications = EsthenosOrgApplication.objects.filter(application_id=v[21])
                 if len(applications)>0:
                     application = applications[0]
                     print application

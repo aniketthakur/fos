@@ -11,6 +11,10 @@ apps = EsthenosOrgApplication.objects.all()
 for app in apps:
     app.delete()
 
+groups = EsthenosOrgGroup.objects.all()
+for grp in groups:
+    grp.delete()
+
 
 prods = EsthenosOrgProduct.objects.all()
 for prod in prods:

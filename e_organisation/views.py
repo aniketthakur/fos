@@ -931,7 +931,7 @@ def download_disbusement():
                 filehandle = open(group.disbursement_pdf_link, 'rb')
                 data = StringIO.StringIO(filehandle.read())
                 output = make_response(data.getvalue())
-                output.headers["Content-Disposition"] = "attachment; filename=%s" %keyString
+                output.headers["Content-Disposition"] = "attachment; filename=%s" %group_id
                 output.headers["Content-type"] = "application/zip"
                 return output
         print group.group_name
