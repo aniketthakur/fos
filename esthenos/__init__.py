@@ -158,6 +158,13 @@ def _jinja2_filter_datetime(date, fmt=None):
     else:
         return date.strftime(gettext('%%d/%%m/%%Y'))
 
+@mainapp.template_filter('fulldayformat')
+def _jinja2_filter_datetime(date, fmt=None):
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime(gettext('%A'))
+
 
 @mainapp.template_filter('timeformat')
 def _jinja2_filter_datetime(date, fmt=None):

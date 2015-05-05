@@ -427,7 +427,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id,tf)
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
         tmp_files.append(tf)
 
         #generate sanction letter

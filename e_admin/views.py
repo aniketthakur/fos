@@ -1162,11 +1162,11 @@ def admin_hmpdpn(group_id):
     return response
 
 
-@admin_views.route('/internal/pdf_la/<group_id>', methods=["GET"])
-def admin_hmplloanagreement(group_id):
+@admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
+def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
-    disbursement_date = datetime.datetime.now()
+    disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
     kwargs = locals()
     body = render_template( "pdf_HMPL_LA_New_Hindi.html", **kwargs)
