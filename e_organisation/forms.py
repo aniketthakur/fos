@@ -647,7 +647,7 @@ class AddApplicationMobile(Form):
             app.other_expense = 0.0
         else:
             app.other_expense = float(self.family_other_expenditure_monthly.data)
-        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense+app.tertiary_business_expenses_monthly+app.secondary_business_expenses_monthly+app.primary_business_expenses_monthly
+        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense+app.tertiary_expenses+app.secondary_expenses+app.primary_expenses
 #       app.total_liability =
 #       app.outstanding_1 =
 #       app.outstanding_2 =
