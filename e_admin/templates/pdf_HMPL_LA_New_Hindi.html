@@ -50,7 +50,7 @@
 <div class="col-md-12">
     <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
     <div class="hinditext">
-        <p>ne keÀpe& keÀjej Je neceer yee@C[ Deepe efoveebkeÀ&nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspjespeer &nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  n³ee efþkeÀeCeer efuentve þsJeC³eele Deeues.</p>
+        <p>ne keÀpe& keÀjej Je neceer yee@C[ Deepe efoveebkeÀ {{ disbursement_date|dateformat }} jespeer {{ disbursement_date|fulldayformat }}  n³ee efþkeÀeCeer efuentve þsJeC³eele Deeues.</p>
         <table  id="repayment" style="width: 60%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,21,2) %}
                 <tr >
@@ -64,22 +64,22 @@
             {% endfor %}
         </table>
         <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page1.jpg"
-             style="width: 100%;" alt="">
+             style="width: 80%;" alt="">
 
         <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page2.jpg"
-             style="width: 100%;" alt="">
+             style="width: 80%;" alt="">
 
-       <table  id="repayment2" style="width: 60%;" class="table table-bordered table-condensed font-small">
+       <table  id="repayment2" style="width: 100%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,21,2) %}
                 <tr >
-                    <td>{{ n }}</td>
-                    <td>{{ n + 1 }}</td>
+                    <td style="width: 50%;">{{ n }}</td>
+                    <td style="width: 50%;">{{ n + 1 }}</td>
                 </tr>
             {% endfor %}
         </table>
 
         <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page2_b.jpg"
-             style="width: 100%;" alt="">
+             style="width: 80%;" alt="">
     </div>
 </div>
 
