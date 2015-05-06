@@ -356,12 +356,14 @@ def equifax_request_reports_import():
                     if not is_number(v[27] ):
                         v[27] = 0
                     eq_resp.num_active_account=v[27]   #IntField(default=0)
+                    application.total_running_loans = eq_resp.num_active_account
                     if not is_number(v[28] ):
                         v[28] = 0
                     eq_resp.num_active_account_own=v[28]   #IntField(default=0)
                     if not is_number(v[29] ):
                         v[29] = 0
                     eq_resp.num_active_account_other=v[29]   #IntField(default=0)
+                    application.total_running_loans_from_mfi = eq_resp.num_active_account_other
                     if not is_number(v[30] ):
                         v[30] = 0
                     eq_resp.num_closed_account=v[30]   #IntField(default=0)
@@ -374,6 +376,7 @@ def equifax_request_reports_import():
                     if not is_number(v[33] ):
                         v[33] = 0
                     eq_resp.num_past_due_account=v[33]   #IntField(default=0)
+                    application.defaults_with_no_mfis=int(v[33])   #IntField(default=0)
                     if not is_number(v[34] ):
                         v[34] = 0
                     eq_resp.num_past_due_account_own=v[34]   #IntField(default=0)
@@ -383,12 +386,15 @@ def equifax_request_reports_import():
                     if not is_number(v[36] ):
                         v[36] = 0
                     eq_resp.sum_current_balance=float(v[36])   #IntField(default=0)
+                    application.total_existing_outstanding_from = eq_resp.sum_current_balance
+                    application.loan_eligibility_based_on_company_policy= 50000-application.total_existing_outstanding_from
                     if not is_number(v[37] ):
                         v[37] = 0
                     eq_resp.sum_current_balance_own=float(v[37])   #IntField(default=0)
                     if not is_number(v[38] ):
                         v[38] = 0
                     eq_resp.sum_current_balance_other=float(v[38])   #IntField(default=0)
+                    application.total_existing_outstanding_from_mfi = eq_resp.sum_current_balance_other
                     if not is_number(v[39] ):
                         v[39] = 0
                     eq_resp.sum_disbursed=float(v[39])   #IntField(default=0)
@@ -428,6 +434,7 @@ def equifax_request_reports_import():
                     if not is_number(v[51] ):
                         v[51] = 0
                     eq_resp.num_writtenoff_account=float(v[51])   #IntField(default=0)
+
                     if not is_number(v[52] ):
                         v[52] = 0
                     eq_resp.num_writtenoff_account_own=float(v[52])   #IntField(default=0)
@@ -435,6 +442,7 @@ def equifax_request_reports_import():
                         v[53] = 0
                     eq_resp.num_writtenoff_accountnon_own=float(v[53])   #IntField(default=0)
                     eq_resp.save()
+                    application.save()
 
 
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')

@@ -41,8 +41,7 @@ mainapp.config['MAX_CONTENT_LENGTH'] = 5024000
 from werkzeug.contrib.fixers import ProxyFix
 mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
 """
-
-    """
+"""
 mainapp.url_map.strict_slashes = False
 mainapp.config['SERVER_EMAIL'] = "support@esthenos.com"
 mainapp.config['MIN_IMAGE_DIMENSION'] = 300
@@ -164,6 +163,11 @@ def _jinja2_filter_datetime(date, fmt=None):
         return date.strftime(fmt)
     else:
         return date.strftime(gettext('%%A'))
+
+@mainapp.template_filter('num2words')
+def _jinja2_filter_datetime(num):
+    from num2words import num2words
+    return num2words(num).upper()
 
 
 @mainapp.template_filter('timeformat')

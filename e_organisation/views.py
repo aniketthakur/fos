@@ -665,16 +665,24 @@ def get_application():
     group_name = request.args['group_name']
     print  group_name
     group = EsthenosOrgGroup.objects.filter(organisation=user.organisation,group_name=group_name)[0]
-    if center_name != None and group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group=group).only("application_id","date_created","upload_type","current_status")
-    elif center_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__center_name__contains=center_name).only("application_id","date_created","upload_type","current_status")
-    elif group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group).only("application_id","date_created","upload_type","current_status")
-    else:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","date_created","upload_type","current_status")
 
-    print applications
+    if center_name != None and group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group=group).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+    elif center_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__center_name__contains=center_name).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+    elif group_name != None:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+    else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+    resp = list()
+    for app in applications:
+        item = dict()
+        item["id"] = app["application_id"]
+        item["applicant_name"] = app["applicant_name"]
+        item["date_created"] = app["date_created"]
+        item["current_status"] = app["current_status"].status_message
+        item["loan_eligibility_based_on_net_income"] = app["loan_eligibility_based_on_net_income"]
+        item["loan_eligibility_based_on_company_policy"] = app["loan_eligibility_based_on_company_policy"]
     #center = EsthenosOrgCenter.objects.filter(center_name=center_name)[0]
 
     resp = dict()

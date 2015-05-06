@@ -2,6 +2,7 @@
 
 from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError, DateField
 from wtforms import validators as v
+from wtforms import SelectMultipleField, Form
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
@@ -13,7 +14,7 @@ from e_admin.models import EsthenosUser,EsthenosSettings
 class AddOrganisationForm( Form):
     org_name =TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches =TextField()
-    states =TextField( validators=[v.DataRequired(), v.Length(max=512)])
+    states =TextField( )
     areas =TextField( )
     regions =TextField( )
     postal_address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
@@ -46,17 +47,6 @@ class AddOrganisationForm( Form):
 
         org.email =self.email.data
         org.save()
-        org = EsthenosOrg.objects.get(name=self.org_name.data)
-
-
-        my_states = []
-        for state in self.states.data.split(","):
-            st = EsthenosOrgState.objects.create(state_name=state,organisation=org)
-            st.save()
-            my_states.append(st)
-        org.states =my_states
-
-        org.save()
         return org
 
 
@@ -81,7 +71,6 @@ class AddEmployeeForm( Form):
         #set fields
         emp.first_name =self.FirstName.data
         emp.last_name =self.LastName.data
-        emp.roles=list()
         emp.roles.append(self.role.data)
         emp.active =True
         emp.date_of_birth =self.DateOfBirth.data
