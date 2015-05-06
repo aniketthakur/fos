@@ -18,11 +18,18 @@ mainapp.wsgi_app = ProxyFix(mainapp.wsgi_app)
 mainapp.url_map.strict_slashes = False
 mainapp.config['DEBUG'] = True
 mainapp.config.update(
+    DEBUG = True,
+    TESTING = False,
     MONGODB_SETTINGS = {
-        'HOST': '127.0.0.1',#
+        'HOST': '128.199.156.24',#
         'PORT': 27017,
-        'DB': 'test_v2',
-        'TZ_AWARE': True,
+        'USERNAME':'hindustan',
+        'PASSWORD':'Ofn2cXHkTMQ8LE',
+        #'DB': 'pitaya_local',
+        #'DB': 'esthenos_test_v1',
+        'DB': 'hindustan_v1',
+        "w":1,
+        "j":True,
         #'replicaset':"rs0"
     },
 )
