@@ -403,6 +403,7 @@ def downloadFile(url, outfile) :
                 print ''
     return (time.clock() - start)
 
+from mongoengine import  Q
 from e_organisation.models import EsthenosOrgGroup,EsthenosOrgProduct
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
@@ -411,7 +412,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
         org = EsthenosOrg.objects.get(id=org_id)
         group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group)
+        apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
         print disbursement_date
         print first_collection_after_indays
         product = EsthenosOrgProduct.objects.all()[0]

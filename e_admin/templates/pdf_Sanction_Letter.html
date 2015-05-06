@@ -65,18 +65,18 @@
                     <th style="width:10%"class="text-center">Voter ID or Ration
                         Card Number</th>
 
-                    <th style="width:10%">Loan Amount
+                    <th style="width:8%">Loan Amount
                         Applied</th>
 
-                    <th style="width:10%"class="text-left">Loan
+                    <th style="width:8%"class="text-left">Loan
                         Amount
                         Sanctioned</th>
 
-                    <th style="width:10%"style="width:100px" class="text-center" >Tenure
+                    <th style="width:5%"style="width:100px" class="text-center" >Tenure
                         of the
                         Loan</th>
 
-                    <th style="width:10%"class="text-left">Rate of
+                    <th style="width:5%"class="text-left">Rate of
                         Interest</th>
 
                     <th style="width:20%"class="text-left">Loan Purpose</th>
@@ -99,10 +99,13 @@
                         <td class="text-left">{{ app.product.number_installments }}</td>
                         <td class="text-left">{{ app.product.interest_rate }}</td>
                         <td class="text-left">{{ app.purpose_of_loan }}</td>
-
-
                     </tr>
-                    <!--{% endfor %}-->
+
+                <!--{% endfor %}-->
+                {% for i in range(1,20-apps|length) %}
+                    <tr>
+                    </tr>
+                {% endfor %}
 
                 </tbody>
             </table>
@@ -157,18 +160,18 @@
                 <th style="width:10%"class="text-center">Voter ID or Ration
                     Card Number</th>
 
-                <th style="width:10%">Loan Amount
+                <th style="width:8%">Loan Amount
                     Applied</th>
 
-                <th style="width:10%"class="text-left">Loan
+                <th style="width:8%"class="text-left">Loan
                     Amount
                     Sanctioned</th>
 
-                <th style="width:10%"style="width:100px" class="text-center" >Tenure
+                <th style="width:5%"style="width:100px" class="text-center" >Tenure
                     of the
                     Loan</th>
 
-                <th style="width:10%"class="text-left">Rate of
+                <th style="width:5%"class="text-left">Rate of
                     Interest</th>
 
                 <th style="width:20%"class="text-left">Loan Purpose</th>
@@ -195,6 +198,10 @@
 
                 </tr>
                 <!--{% endfor %}-->
+            {% for i in range(1,20-apps|length) %}
+                <tr>
+                </tr>
+            {% endfor %}
 
             </tbody>
         </table>

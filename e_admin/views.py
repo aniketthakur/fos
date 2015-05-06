@@ -200,6 +200,42 @@ def admin_update_org_regions(org_id):
         return render_template("admin_add_org_details.html", **kwargs)
 
 
+@admin_views.route('/admin/update_org/<org_id>/update_states', methods=["POST"] )
+@login_required
+def admin_update_states(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    org = EsthenosOrg.objects.get(id=org_id)
+
+    if request.method == "POST":
+        print request.form
+        print request.form.get('org_states')
+        for state in request.form.get('org_states').split(","):
+            st,status = EsthenosOrgState.objects.get_or_create(state_name=state,organisation=org)
+            org.states.append(st)
+
+        org.save()
+        """
+        my_branches = []
+        for branch in self.branches.data.split(","):
+            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
+            br.save()
+            my_branches.append(br)
+        org.branches =my_branches
+
+        """
+        return redirect("/admin/organisations")
+
+    else:
+        states = EsthenosOrgState.objects.filter(organisation=org)
+        regions = EsthenosOrgRegion.objects.filter(organisation=org)
+        print regions
+        kwargs = locals()
+        return render_template("admin_add_org_details.html", **kwargs)
+
 
 @admin_views.route('/admin/update_org/<org_id>/update_areas', methods=["POST"] )
 @login_required

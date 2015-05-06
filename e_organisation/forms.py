@@ -665,6 +665,7 @@ class AddApplicationMobile(Form):
 #       app.other_outstanding_emi =
         app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance+app.other_outstanding_emi
         app.net_income = app.total_income - app.total_expenditure
+        app.loan_eligibility_based_on_net_income = app.net_income * app.product.number_installments
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
         app.timeline.append(status)

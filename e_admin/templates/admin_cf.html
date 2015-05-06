@@ -479,7 +479,7 @@
             </h6>
         </td>
         <td>
-            <div class="controls">
+            <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
                 <input type="text"  class="form-control text-right" value="{{ application.net_income }}" data-a-sep="," data-a-dec=".">
             </div>
         </td>
@@ -489,7 +489,7 @@
     <tr>
         <td colspan="2" >
             <h6 class="semi-bold">
-                Total Existing Running no of Loans
+                Total Existing Running number of Loans
             </h6>
         </td>
         <td>
@@ -517,7 +517,7 @@
     <tr>
         <td colspan="2" >
             <h6 class="semi-bold">
-                Total Existing Running no of Loans from MFIs
+                Total Existing Running number of Loans from MFIs
             </h6>
         </td>
         <td>
@@ -542,32 +542,32 @@
     </tr>
 
 
-    <tr>
-        <td colspan="2" >
-            <h6 class="semi-bold">
-                Existing Loan Cycle
-            </h6>
-        </td>
-        <td>
-            <div class="controls">
-                <input type="text"  class="form-control text-right" value="{{ application.existing_loan_cycle }}" data-a-sep="," data-a-dec=".">
-            </div>
-        </td>
-    </tr>
-
-
-    <tr>
-        <td colspan="2" >
-            <h6 class="semi-bold">
-                Eligible Loan Cycle
-            </h6>
-        </td>
-        <td>
-            <div class="controls">
-                <input type="text"  class="form-control text-right" value="{{ application.eligible_loan_cycle }}" data-a-sep="," data-a-dec=".">
-            </div>
-        </td>
-    </tr>
+{#    <tr>#}
+{#        <td colspan="2" >#}
+{#            <h6 class="semi-bold">#}
+{#                Existing Loan Cycle#}
+{#            </h6>#}
+{#        </td>#}
+{#        <td>#}
+{#            <div class="controls">#}
+{#                <input type="text"  class="form-control text-right" value="{{ application.existing_loan_cycle }}" data-a-sep="," data-a-dec=".">#}
+{#            </div>#}
+{#        </td>#}
+{#    </tr>#}
+{##}
+{##}
+{#    <tr>#}
+{#        <td colspan="2" >#}
+{#            <h6 class="semi-bold">#}
+{#                Eligible Loan Cycle#}
+{#            </h6>#}
+{#        </td>#}
+{#        <td>#}
+{#            <div class="controls">#}
+{#                <input type="text"  class="form-control text-right" value="{{ application.eligible_loan_cycle }}" data-a-sep="," data-a-dec=".">#}
+{#            </div>#}
+{#        </td>#}
+{#    </tr>#}
 
     <tr>
         <td colspan="2" >
@@ -602,7 +602,7 @@
             </h6>
         </td>
         <td>
-            <div class="controls">
+            <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
                 <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" data-a-sep="," data-a-dec=".">
             </div>
         </td>
@@ -615,7 +615,7 @@
             </h6>
         </td>
         <td>
-            <div class="controls">
+            <div class="controls  {% if application.loan_eligibility_based_on_company_policy < application.applied_loan %}has-error{% endif %}">
                 <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" data-a-sep="," data-a-dec=".">
             </div>
         </td>
