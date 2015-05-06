@@ -163,7 +163,7 @@ def _jinja2_filter_datetime(date, fmt=None):
     if fmt:
         return date.strftime(fmt)
     else:
-        return date.strftime(gettext('%A'))
+        return date.strftime(gettext('%%A'))
 
 
 @mainapp.template_filter('timeformat')
