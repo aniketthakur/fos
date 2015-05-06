@@ -674,7 +674,7 @@ def get_application():
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
     else:
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
-    resp = list()
+    myapps = list()
     for app in applications:
         item = dict()
         item["id"] = app["application_id"]
@@ -683,6 +683,7 @@ def get_application():
         item["current_status"] = app["current_status"].status_message
         item["loan_eligibility_based_on_net_income"] = app["loan_eligibility_based_on_net_income"]
         item["loan_eligibility_based_on_company_policy"] = app["loan_eligibility_based_on_company_policy"]
+        myapps.append(item)
     #center = EsthenosOrgCenter.objects.filter(center_name=center_name)[0]
 
     resp = dict()
@@ -691,15 +692,9 @@ def get_application():
     #resp['center_size'] = center.size
     if group!=None:
         resp['group'] =  group.group_name
-        resp['group_size'] = group.size
-    for app in applications:
-        applications_list.append({'id':str(app.application_id),
-              'date_created':str(app.date_created),
-              'upload_type':app.upload_type,
-              'current_status':str(app.current_status),
-    })
+        resp['group_size'] = group.size 
 
-    resp["applications"] = applications_list
+    resp["applications"] = myapps
 
     return Response(response=json.dumps(resp),
         status=200,\
