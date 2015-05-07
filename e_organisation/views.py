@@ -692,7 +692,7 @@ def get_application():
     #resp['center_size'] = center.size
     if group!=None:
         resp['group'] =  group.group_name
-        resp['group_size'] = group.size 
+        resp['group_size'] = group.size
 
     resp["applications"] = myapps
 
@@ -890,11 +890,13 @@ def disburse_document():
     print request.form.get("group_id")
     dis_date_str =request.form.get("disbursement_date")
     col_date_str =request.form.get("collection_date")
+    cheque_no = request.form.get("cheque_no")
     dis_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     col_date =   datetime.datetime.strptime(col_date_str, "%d-%m-%Y").date()
     generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date_str,(col_date-dis_date).days))
     for app in apps:
         app.generate_disbursement = True
+        app.cheque_no= cheque_no
         app.save()
     kwargs = locals()
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')

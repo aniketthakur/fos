@@ -519,6 +519,7 @@ class AddApplicationMobile(Form):
         else:
             app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
 
+        app.bank_name = self.bank_name.data
         app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
