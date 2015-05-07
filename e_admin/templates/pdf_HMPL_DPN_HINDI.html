@@ -8,13 +8,13 @@
 
         .hinditext {
             font-family: kruti dev;
-            font-size:12px;
+            font-size:14px;
         }
         .font-small{
-            font-size:8px;
+            font-size:10px;
         }
         .font-msmall{
-            font-size:10px;
+            font-size:12px;
         }
         .font-vsmall{
             font-size:7px;
@@ -53,7 +53,7 @@
                     <td style="width: 85%;">
                         <p>
                             {% set number = 1000 + loop.index %}
-                            <span style="border: 1px solid;border-radius: 10px;padding-left: 10px;padding-right:10px ;"> keÀpe& ¬eÀ.: <u> <span class="english font-msmall">{{ number }}</span></u></span> ceer/Deecne <u><span class="english font-small">{{ app.applicant_name }}</span> </u> mener keÀjCeej Jew³eefkeÌlekeÀefjl³ee efkebÀJee
+                            <span style="border: 1px solid;border-radius: 10px;padding-left: 10px;padding-right:10px ;"> keÀpe& ¬eÀ.: <u> <span class="english font-msmall">{{app.application_id }}</span></u></span> ceer/Deecne <u><span class="english font-msmall">{{ app.applicant_name }}</span> </u> mener keÀjCeej Jew³eefkeÌlekeÀefjl³ee efkebÀJee
 
                             me³egkeÌleefjl³ee efnbomgLeeve cee³e¬eÀesHeÀe³eveevme Òee. efue. ³ee kebÀHeveer keÀ[tve jkeÌkeÀce ©He³e
                             <u> <span class="english font-msmall">{{ app.product.loan_amount }}</span> </u> De#ejer ªHe³ <u><span class="english font-msmall"> {{ app.product.loan_amount|num2words }}</span> </u>
@@ -70,8 +70,11 @@
 
             </table>
         </div>
-        <br/>
         <div class="clearfix text-center">---------------------------------------------------------------------------------------------</div>
+	{%if loop.index %5 == 0 %}
+          <br/>
+          <br/>
+        {%endif%}
     {% endfor %}
 
 </div>

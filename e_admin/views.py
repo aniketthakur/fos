@@ -1321,8 +1321,8 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
             interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
         date_after_month = disbursement_date.today()+ relativedelta(months=i)
 
-        collection_date = disbursement_date.today()+ relativedelta(days=first_collection_after_indays)
-        collection_day = ordinals[collection_date.day]
+        collection_date = disbursement_date.today()+ relativedelta(days=int(first_collection_after_indays))
+        collection_day = ordinals[int(collection_date.day)]
         import math
         interest = math.ceil(interest * 1000)/1000.0
         frac, whole = math.modf(interest)
