@@ -1023,7 +1023,7 @@ def admin_logout():
 @admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
     disbursement_date = datetime.datetime.now()
     org_name = "Hindustan Microfinance"
     kwargs = locals()
@@ -1053,7 +1053,7 @@ def admin_ipnpfr(group_id):
 @admin_views.route('/internal/pdf_pf/<group_id>', methods=["GET"])
 def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
     disbursement_date = datetime.datetime.now()
     org_name = "Hindustan Microfinance"
     kwargs = locals()
@@ -1112,7 +1112,7 @@ def admin_dpn():
 @admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
 def admin_sanction(grp_id):
     group = EsthenosOrgGroup.objects.get(group_id=grp_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
 
     product = apps[0].product
     print product
@@ -1168,7 +1168,7 @@ def admin_hmplgrt():
 @admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
 def admin_hmpdpn(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
     kwargs = locals()
@@ -1201,7 +1201,7 @@ def admin_hmpdpn(group_id):
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status_code=272)or Q(status_code=276))
     disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
     kwargs = locals()

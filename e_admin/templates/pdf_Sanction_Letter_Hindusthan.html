@@ -1,0 +1,287 @@
+
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        @font-face {
+            font-family: kruti dev ;
+            src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+        }
+        .english{
+            font-family: Tahoma;
+        }
+        .hinditext {
+            font-family: kruti dev;
+            font-size:14px;
+        }
+
+        .font-small{
+            font-size:8px;
+        }
+        .font-vsmall{
+            font-size:7px;
+        }
+        .font-small tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:9px;
+        }
+        .font-lsmall h2{
+            font-size:12px;
+        }
+        .font-msmall{
+            font-size:10px;
+        }
+        tr{
+
+        }
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block meta %}
+    <meta name="pdfkit-orientation" content="Landscape"/>
+{% endblock %}
+{% block maincontents %}
+
+
+<div class="row col-md-10 col-md-offset-1 font-small" style="background: #ffffff;">
+        <div class="col-md-10 col-md-offset-1">
+            <h5 class="text-center font-lsmall">SANCTION LETTER (GROUP COPY)</h5>
+            <div class="pull-left">
+                <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
+                     height="50" alt="">
+                <address>
+                    <strong>{{ org_name }}</strong><br>
+                </address>
+            </div>
+
+            <div class="pull-left font-msmall">
+                We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
+                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
+            <br/><br/>
+             The details of loan sanctions for the Group are mentioned in the below table.
+            </div>
+
+            <table class="table table-bordered table-condensed ">
+                <thead>
+                <tr>
+                    <th style="width:5%"> No</th>
+
+                    <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+
+                    <th style="width:5%"class="text-left">AGE</th>
+
+                    <th style="width:10%"class="text-center">Voter ID or Ration
+                        Card Number</th>
+
+                    <th style="width:8%">Loan Amount
+                        Applied</th>
+
+                    <th style="width:8%"class="text-left">Loan
+                        Amount
+                        Sanctioned</th>
+
+                    <th style="width:5%"style="width:100px" class="text-center" >Tenure
+                        of the
+                        Loan</th>
+
+                    <th style="width:5%"class="text-left">Rate of
+                        Interest</th>
+
+                    <th style="width:20%"class="text-left">Loan Purpose</th>
+
+                    <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+
+                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <!--{% for app in apps %}-->
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
+                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                        <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                        {#                        <td class="text-left"></td>#}
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.applied_loan }}</td>
+                        <td class="text-left">{{ app.product.number_installments }}</td>
+                        <td class="text-left">{{ app.product.interest_rate }}</td>
+                        <td class="text-left">{{ app.purpose_of_loan }}</td>
+                    </tr>
+
+                <!--{% endfor %}-->
+                {% for i in range(1,20-apps|length) %}
+                    <tr>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <div class="hinditext">
+                <ul>
+                    <li>
+                        1)	keÀpe& nHlee jkeÌkeÀces Hes#ee peemle jkeÌkeÀce YejeJe³ee®eer Demesue efkebÀJee keÀpe& HetCe&HeCes YejeJe³ee®es Demesue lej leer jkeÌkeÀce p³ee MeeKesletve keÀpe& Iesleues Deens l³ee®e MeeKesle mJele: Je ûegHe efue[j peeTve YejeJeer Je l³ee®eer HeeJeleer I³eeJeer.
+
+                    </li>
+                    <li>
+                        2)	meYeemeoebveer Iesleuesues keÀpe& ns efouesu³ee keÀejCeekeÀjerlee®e JeeHejCes yebOevekeÀejekeÀ Deens.
+                    </li>
+                    <li>
+                        3)	keÀpe&oej meYeemeoebveer mebmLes®³ee <span class="english">(HMPL)</span>  keÀce&®eeN³ee yejesyej keÀpe& Òeef¬eÀ³ee HeÀer, FbMegjsvme ke keÀpe& nHlee keÀpe& keÀe[& Jej efou³ee ÒeceeCes YejeJes.
+                    </li>
+                    <li>
+                        4)	keÀpe&oej meYeemeoeb®es mebmLesyejesyej®es <span class="english">(HMPL)</span> meJe& DeefLe&keÀ J³eJenej ns ûegHe efceìeRie efkebÀJee mebsìj efceìeRie ceO³es®e Peeues Heeefnpesle.
+
+                    </li>
+                    <li>
+                        5)	Jej GuuesKe kesÀuesu³ee Je ueesve keÀæe[& DeeefCe keÀpe& keÀjej He$e Jejerue efve³ece Je Deìer Decneuee ceev³e Deensle. lemes®e keÀpe& cepbetj He$e Òele, keÀpe& keÀjej He$e efkeÀbJee nceer He$e, ueevse keÀæe[&®eer Òele Deecneuee efceUeuesueer Deens.
+
+                    </li>
+                </ul>
+            </div>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 50%;">
+                        <div class="col-md-3"><br>
+                            <p class="text-left text-black"> DATE :<br/>
+                                PLACE :</p>
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <p class="text-right text-black">For {{ org_name }}<br/><br/>
+                            Authorized Signatory<br/>
+                            [REGIONAL MANAGER]</p>
+                    </td>
+                </tr>
+
+            </table>
+            <div class="clearfix"></div>
+            <div class="clearfix"><br/></div>
+            <br>
+        </div>
+
+
+    <div class="col-md-10 col-md-offset-1">
+        <h5 class="text-center font-lsmall">SANCTION LETTER (OFFICE COPY)</h5>
+        <div class="pull-left">
+            <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
+                 height="50" alt="">
+            <address>
+                <strong>{{ org_name }}</strong><br>
+            </address>
+        </div>
+
+        <div class="pull-left font-msmall">
+            We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
+            Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
+            <br/><br/>
+            The details of loan sanctions for the Group are mentioned in the below table.
+        </div>
+
+        <table class="table table-bordered table-condensed ">
+            <thead>
+            <tr>
+                <th style="width:5%"> No</th>
+
+                <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+
+                <th style="width:5%"class="text-left">AGE</th>
+
+                <th style="width:10%"class="text-center">Voter ID or Ration
+                    Card Number</th>
+
+                <th style="width:8%">Loan Amount
+                    Applied</th>
+
+                <th style="width:8%"class="text-left">Loan
+                    Amount
+                    Sanctioned</th>
+
+                <th style="width:5%"style="width:100px" class="text-center" >Tenure
+                    of the
+                    Loan</th>
+
+                <th style="width:5%"class="text-left">Rate of
+                    Interest</th>
+
+                <th style="width:20%"class="text-left">Loan Purpose</th>
+
+                <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+
+                <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <!--{% for app in apps %}-->
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
+                    <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                    <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                    {#                        <td class="text-left"></td>#}
+                    <td class="text-left">{{ app.applied_loan }}</td>
+                    <td class="text-left">{{ app.applied_loan }}</td>
+                    <td class="text-left">{{ app.product.number_installments }}</td>
+                    <td class="text-left">{{ app.product.interest_rate }}</td>
+                    <td class="text-left">{{ app.purpose_of_loan }}</td>
+
+
+                </tr>
+                <!--{% endfor %}-->
+            {% for i in range(1,20-apps|length) %}
+                <tr>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <div class="hinditext">
+            <ul>
+                <li>
+                    1)	keÀpe& nHlee jkeÌkeÀces Hes#ee peemle jkeÌkeÀce YejeJe³ee®eer Demesue efkebÀJee keÀpe& HetCe&HeCes YejeJe³ee®es Demesue lej leer jkeÌkeÀce p³ee MeeKesletve keÀpe& Iesleues Deens l³ee®e MeeKesle mJele: Je ûegHe efue[j peeTve YejeJeer Je l³ee®eer HeeJeleer I³eeJeer.
+
+                </li>
+                <li>
+                    2)	meYeemeoebveer Iesleuesues keÀpe& ns efouesu³ee keÀejCeekeÀjerlee®e JeeHejCes yebOevekeÀejekeÀ Deens.
+                </li>
+                <li>
+                    3)	keÀpe&oej meYeemeoebveer mebmLes®³ee <span class="english">(HMPL)</span>  keÀce&®eeN³ee yejesyej keÀpe& Òeef¬eÀ³ee HeÀer, FbMegjsvme ke keÀpe& nHlee keÀpe& keÀe[& Jej efou³ee ÒeceeCes YejeJes.
+                </li>
+                <li>
+                    4)	keÀpe&oej meYeemeoeb®es mebmLesyejesyej®es <span class="english">(HMPL)</span> meJe& DeefLe&keÀ J³eJenej ns ûegHe efceìeRie efkebÀJee mebsìj efceìeRie ceO³es®e Peeues Heeefnpesle.
+
+                </li>
+                <li>
+                    5)	Jej GuuesKe kesÀuesu³ee Je ueesve keÀæe[& DeeefCe keÀpe& keÀjej He$e Jejerue efve³ece Je Deìer Decneuee ceev³e Deensle. lemes®e keÀpe& cepbetj He$e Òele, keÀpe& keÀjej He$e efkeÀbJee nceer He$e, ueevse keÀæe[&®eer Òele Deecneuee efceUeuesueer Deens.
+
+                </li>
+            </ul>
+        </div>
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%;">
+                    <div class="col-md-3"><br>
+                        <p class="text-left text-black"> DATE :<br/>
+                            PLACE :</p>
+                    </div>
+                </td>
+                <td style="width: 50%;">
+                    <p class="text-right text-black">For {{ org_name }}<br/><br/>
+                        Authorized Signatory<br/>
+                        [REGIONAL MANAGER]</p>
+                </td>
+            </tr>
+
+        </table>
+        <div class="clearfix"></div>
+        <div class="clearfix"><br/></div>
+        <br>
+    </div>
+
+ </div>
+
+{% endblock %}
