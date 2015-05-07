@@ -1119,7 +1119,7 @@ def admin_sanction(grp_id):
     disbursement_date = datetime.datetime.now()
     org_name = "Hindustan Microfinance"
     kwargs = locals()
-    body = render_template( "pdf_Sanction_Letter.html", **kwargs)
+    body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
     try:
         options = {
             'page-size': 'A4',
