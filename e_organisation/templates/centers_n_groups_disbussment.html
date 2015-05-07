@@ -36,10 +36,10 @@
                                 <th style="width:10%">Created Date</th>
                                 <th style="width:15%">Disbursement Date</th>
                                 <th style="width:15%">1st Collection Date</th>
-                                <th style="width:10%">Cheque #</th>
-                                <th style="width:10%">Disbursement</th>
-                                <th style="width:10%">Action</th>
-                                <th style="width:10%"></th>
+                                <th style="width:15%">Cheque #</th>
+                                <th style="width:8%">Disbursement</th>
+                                <th style="width:8%">Action</th>
+                                <th style="width:8%"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -76,14 +76,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="input-with-icon  right">
-
-                                            <div class="input-append success date col-md-11">
-                                                <input type="text" class="form-control cheque_no {{ group.group_id }}"  id="{{ group.group_id }}cheque_no" >
-                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
-                                            </div>
-
-                                        </div>
+                                        <input type="text" class="form-control cheque_no {{ group.group_id }}"  id="{{ group.group_id }}cheque_no" >
                                     </td>
                                     <td >
                                         <a class="btn btn-small btn-small btn-success btn-disburse" data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a>

@@ -1298,6 +1298,11 @@ def admin_lrpassbook():
 
 from dateutil.relativedelta import relativedelta
 
+ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
+ '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
+ '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
+
+
 @admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
 def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_collection_after_indays):
     app = EsthenosOrgApplication.objects.get(application_id=application_id)
@@ -1315,6 +1320,9 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
         else:
             interest = second_collection_after_indays/30.0 * rate_of_interest * current_principal
         date_after_month = disbursement_date.today()+ relativedelta(months=i)
+
+        collection_date = disbursement_date.today()+ relativedelta(days=first_collection_after_indays)
+        collection_day = ordinals[collection_date.day]
         import math
         interest = math.ceil(interest * 1000)/1000.0
         frac, whole = math.modf(interest)
