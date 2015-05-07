@@ -471,7 +471,8 @@ class AddApplicationMobile(Form):
 
         #center = EsthenosOrgCenter.objects.get(center_name=self.center_name.data,organisation=user.organisation)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=self.group_name.data)
-        products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
+        #products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
+        products = EsthenosOrgProduct.objects.all() #fiilter(product_name=self.product_name.data)
         app.organisation = user.organisation
         if len(products) > 0:
             app.product = products[0]

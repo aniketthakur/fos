@@ -679,7 +679,7 @@ def get_application():
         item = dict()
         item["id"] = app["application_id"]
         item["applicant_name"] = app["applicant_name"]
-        item["date_created"] = app["date_created"]
+        item["date_created"] = str(app["date_created"])
         item["current_status"] = app["current_status"].status_message
         item["loan_eligibility_based_on_net_income"] = app["loan_eligibility_based_on_net_income"]
         item["loan_eligibility_based_on_company_policy"] = app["loan_eligibility_based_on_company_policy"]
