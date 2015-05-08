@@ -1,0 +1,28 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        p{
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <table>
+        <tr>
+            <td>
+               <label class="name">Name:</label>
+                <label class="value">{{ app.applicant_name }}</label>
+            </td>
+            <td>
+                <label class="name">Group:</label>
+                <label class="value">{{ app.group.group_name }}</label>
+            </td>
+        </tr>
+
+    </table>
+
+{% endblock %}
