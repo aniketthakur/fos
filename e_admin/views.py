@@ -1165,6 +1165,71 @@ def admin_hmplgrt():
     return render_template( "pdf_HMPL_GRT.html", **kwargs)
 
 
+@admin_views.route('/internal/pdf_application/<app_id>', methods=["GET"])
+def admin_pdf_application(app_id):
+    app = EsthenosOrgApplication.objects.get(application_id=app_id)
+    disbursement_date = datetime.datetime.now()
+    interest_rate = 26.0
+    kwargs = locals()
+    body = render_template( "pdf_HApplication.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.50in',
+            'margin-right': '0.50in',
+            'margin-bottom': '0.50in',
+            'margin-left': '0.50in',
+            'encoding': "UTF-8",
+            'orientation' : 'Portrait'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=application_%s.pdf' % app_id
+    return response
+
+
+@admin_views.route('/internal/pdf_hccs_reciept/<group_id>', methods=["GET"])
+def adminpdf_hccs_reciept(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
+    apps = EsthenosOrgApplication.objects.filter(group=group)
+    disbursement_date = datetime.datetime.now()
+    interest_rate = 26.0
+    kwargs = locals()
+    body = render_template( "pdf_HCCS_Receipt.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.50in',
+            'margin-right': '0.50in',
+            'margin-bottom': '0.50in',
+            'margin-left': '0.50in',
+            'encoding': "UTF-8",
+            'orientation' : 'Portrait'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'RdReceipt'
+    return response
+
+
 @admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
 def admin_hmpdpn(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1196,6 +1261,8 @@ def admin_hmpdpn(group_id):
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'dpn'
     return response
+
+
 
 
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])

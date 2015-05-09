@@ -1,8 +1,16 @@
 {% extends "base_pdf.html" %}
 {% block css_sheets %}{{ super() }}
     <style type="text/css">
-        p{
-            font-size: 12px;
+        table tr{
+            font-size: 8px;
+            padding-left: 5px;
+        }
+        td{
+            padding: 2px;
+        }
+        .value{
+            font-size: 10px;
+            font-family: Courier;
         }
     </style>
 {% endblock %}
@@ -11,7 +19,7 @@
 
 {% endblock %}
 {% block maincontents %}
-    <table>
+    <table border="1">
         <tr>
             <td>
                <label class="name">Name:</label>
@@ -22,7 +30,842 @@
                 <label class="value">{{ app.group.group_name }}</label>
             </td>
         </tr>
+        <tr>
+            <td>
+               <label class="center">Center:</label>
+                <label class="value">{{ app.center.group_name}}</label>
+            </td>
+            <td>
+                <label class="organisation">Organisation:</label>
+                <label class="value">{{ app.organisation.group_name }}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+               <label class="owner">Sourced By:</label>
+                <label class="value">{{ app.owner.name}}</label>
+            </td>
+            <td>
+                <label class="product">Product:</label>
+                <label class="value">{{ app.product.product_id}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="application_id">Application id</label>
+                <label class="value">{{app.application_id}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="upload_type">Upload Type:</label>
+                <label class="value">{{app.upload_type}}</label>
+            </td>
+            <td>
+                <label class="status">Status:</label>
+                <label class="value">{{app.status}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="applicant_name"> Applicant Name:</label>
+                <label class="value">{{app.applicant_name}}</label>
+            </td>
+            <td>
+                <label class="gender">Gender:</label>
+                <label class="value">{{app.gender}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="age">Age:</label>
+                <label class="value">{{app.age}}</label>
+            </td>
+            <td>
+                <label class=" dob">DOB:</label>
+                <label class="value">{{app.dob}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="address">Address:</label>
+                <label class="value">{{app.address}}</label>
+            </td>
+            <td>
+                <label class="member_telephone">Member Telephone:</label>
+                <label class="value">{{app.member_telephone}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class=" member_tele_code"> Member Tele Code:</label>
+                <label class="value">{{app.member_tele_code}}</label>
+            </td>
+            <td>
+                <label class="member_country">Member Country:</label>
+                <label class="value">{{app.member_country}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="member_state">Member State:</label>
+                <label class="value">{{app.member_state}}</label>
+            </td>
+            <td>
+                <label class="member_city">Member City:</label>
+                <label class="value">{{app.member_city}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="member_taluk">Member Taluk:</label>
+                <label class="value">{{app.member_taluk}}</label>
+            </td>
+            <td>
+                <label class="member_village">Member Village</label>
+                <label class="value">{{app.member_village}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class=" member_relationship_status"> Member Relationship Status:</label>
+                <label class="value">{{app.member_relationship_status}}</label>
+            </td>
+            <td>
+                <label class="applied_loan ">Applied Loan: </label>
+                <label class="applied_loan ">{{app.applied_loan }}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="religion">Religion:</label>
+                <label class="value">{{app.religion}}</label>
+            </td>
+            <td>
+                <label class="category">Category:</label>
+                <label class="value">{{app.category}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="caste">Caste:</label>
+                <label class="value">{{app.caste}}</label>
+            </td>
+            <td>
+                <label class=" education"> Education:</label>
+                <label class="value">{{app.education}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="type_of_residence">Type of Residence:</label>
+                <label class="value">{{app.type_of_residence}}</label>
+            </td>
+            <td>
+                <label class=" quality_of_house "> Quality of House :</label>
+                <label class="value">{{app.quality_of_house }}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class=" drinking_water"> Drinking Water:</label>
+                <label class="value">{{app.drinking_water}}</label>
+            </td>
+            <td>
+                <label class="purpose_of_loan">Purpose of Loan:</label>
+                <label class="value">{{app.purpose_of_loan}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="family_size">Family Size:</label>
+                <label class="value">{{app.family_size}}</label>
+            </td>
+            <td>
+                <label class="adult_count">Adult Count:</label>
+                <label class="value">{{app.adult_count}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class=" total_earning_members"> Total Earning Members:</label>
+                <label class="value">{{app.total_earning_members}}</label>
+            </td>
+            <td>
+                <label class="children_above18">Children Above_18:</label>
+                <label class="value">{{app.children_above18}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="children_below18">Children Below_18:</label>
+                <label class="value">{{app.children_below18}}</label>
+            </td>
+            <td>
+                <label class=" primary_business_category"> Primary Business Category:</label>
+                <label class="value">{{app.primary_business_category}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="primary_business">Primary Business:</label>
+                <label class="value">{{app.primary_business}}</label>
+            </td>
+            <td>
+                <label class="secondary_business_category">Secondary Business Category:</label>
+                <label class="value">{{app.secondary_business_category}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="secondary_business">Secondary Business:</label>
+                <label class="value">{{app.secondary_business}}</label>
+            </td>
+            <td>
+                <label class="tertiary_business_category">Tertiary Business Category:</label>
+                <label class="value">{{app.tertiary_business_category}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="tertiary_business">Tertiary Business:</label>
+                <label class="value">{{app.tertiary_business}}</label>
+            </td>
+            <td>
+                <label class="family_assets">Family Assets:</label>
+                <label class="value">{{app.family_assets}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="money_lenders_loan">Money Lenders Loan:</label>
+                <label class="value">{{app.money_lenders_loan}}</label>
+            </td>
+            <td>
+                <label class="money_lenders_loan_roi">Money Lenders Loan Roi:</label>
+                <label class="value">{{app.money_lenders_loan_roi}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="bank_loan">Bank Loan:</label>
+                <label class="value">{{app.bank_loan}}</label>
+            </td>
+            <td>
+                <label class="bank_loan_roi">Bank Loan Roi:</label>
+                <label class="value">{{app.bank_loan_roi}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="branch_name">Branch Name:</label>
+                <label class="value">{{app.branch_name}}</label>
+            </td>
+            <td>
+                <label class="branch_id">Branch Id</label>
+                <label class="value">{{app.branch_id}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="state_name">State Name:</label>
+                <label class="value">{{app.state_name}}</label>
+            </td>
+            <td>
+                <label class="state_id">State Id:</label>
+                <label class="value">{{app.state_id}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="region_name">Region Name:</label>
+                <label class="value">{{app.region_name}}</label>
+            </td>
+            <td>
+                <label class="region_id">Region Id:</label>
+                <label class="value">{{app.region_id}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="cm_id">Cm Id:</label>
+                <label class="value">{{app.cm_id}}</label>
+            </td>
+            <td>
+                <label class="cm_cell_no">Cm Cell No:</label>
+                <label class="value">{{app.cm_cell_no}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="repeat_application_id">Repeat Application Id:</label>
+                <label class="value">{{app.repeat_application_id}}</label>
+            </td>
+            <td>
+                <label class="repayment_method">Repayment Method:</label>
+                <label class="value">{{app.repayment_method}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="primary_income">Primary Income:</label>
+                <label class="value">{{app.primary_income}}</label>
+            </td>
+            <td>
+                <label class="secondary_income">Secondary Income:</label>
+                <label class="value">{{app.secondary_income}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="tertiary_income">Tertiary Income:</label>
+                <label class="value">{{app.tertiary_income}}</label>
+            </td>
+            <td>
+                <label class="primary_expenses">Primary Expenses:</label>
+                <label class="value">{{app.primary_expenses}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="secondary_expenses">Secondary Expenses:</label>
+                <label class="value">{{app.secondary_expenses}}</label>
+            </td>
+            <td>
+                <label class="tertiary_expenses">Tertiary Expenses:</label>
+                <label class="value">{{app.tertiary_expenses}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="other_income">Other Income:</label>
+                <label class="value">{{app.other_income}}</label>
+            </td>
+            <td>
+                <label class="total_income">Total Income:</label>
+                <label class="value">{{app.total_income}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="business_expense">Business Expense:</label>
+                <label class="value">{{app.business_expense}}</label>
+            </td>
+            <td>
+                <label class="food_expense">Food Expense:</label>
+                <label class="value">{{app.food_expense}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="travel_expense">Travel Expense:</label>
+                <label class="value">{{app.travel_expense}}</label>
+            </td>
+            <td>
+                <label class="entertainment_expense">Entertainment Expense:</label>
+                <label class="value">{{app.entertainment_expense}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="educational_expense">Educational Expense:</label>
+                <label class="value">{{app.educational_expense}}</label>
+            </td>
+            <td>
+                <label class="medical_expense">Medical Expense:</label>
+                <label class="value">{{app.medical_expense}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="other_expense">Other Expense:</label>
+                <label class="value">{{app.other_expense}}</label>
+            </td>
+            <td>
+                <label class="total_expenditure">Total Expenditure:</label>
+                <label class="value">{{app.total_expenditure}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="total_liability">Total Liability:</label>
+                <label class="value">{{app.total_liability}}</label>
+            </td>
+            <td>
+                <label class="outstanding_1">Outstanding_1:</label>
+                <label class="value">{{app.outstanding_1}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="outstanding_2">Outstanding_2:</label>
+                <label class="value">{{app.outstanding_2}}</label>
+            </td>
+            <td>
+                <label class="outstanding_3">Outstanding_3:</label>
+                <label class="value">{{app.outstanding_3}}</label>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <label class="outstanding_4">Outstanding_4:</label>
+                <label class="value">{{app.outstanding_4}}</label>
+
+            </td>
+            <td>
+                <label class="total_outstanding">Total Outstanding:</label>
+                <label class="value">{{app.total_outstanding}}</label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="other_outstanding_familynfriends">Other Outstanding Familynfriends:</label>
+                <label class="value">{{app.other_outstanding_familynfriends}}</label>
+            </td>
+            <td>
+                <label class="other_outstanding_chit">Other Outstanding Chit:</label>
+                <label class="value">{{app.other_outstanding_chit}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="other_outstanding_insurance">Other Outstanding Insurance:</label>
+                <label class="value">{{app.other_outstanding_insurance}}</label>
+            </td>
+            <td>
+                <label class="other_outstanding_emi">Other Outstanding emi:</label>
+                <label class="value">{{app.other_outstanding_emi}}</label>
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label class="total_other_outstanding">Total Other Outstanding:</label>
+                <label class="value">{{app.total_other_outstanding}}</label>
+            </td>
+            <td>
+                <label class="net_income">Net Income:</label>
+                <label class="value">{{app.net_income}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="total_running_loans">Total Running Loans:</label>
+                <label class="value">{{app.total_running_loans}}</label>
+            </td>
+            <td>
+                <label class="total_existing_outstanding_from">Total Existing Outstanding From:</label>
+                <label class="value">{{app.total_existing_outstanding_from}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="total_running_loans_from_mfi">Total Running Loans From mfi:</label>
+                <label class="value">{{app.total_running_loans_from_mfi}}</label>
+            </td>
+            <td>
+                <label class="total_existing_outstanding_from_mfi">Total Existing Outstanding From mfi:</label>
+                <label class="value">{{app.total_existing_outstanding_from_mfi}}</label>
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label class="existing_loan_cycle">Existing Loan Cycle:</label>
+                <label class="value">{{app.existing_loan_cycle}}</label>
+            </td>
+            <td>
+                <label class="eligible_loan_cycle">Eligible Loan Cycle:</label>
+                <label class="value">{{app.eligible_loan_cycle}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="defaults_with_no_mfis"> Defaults With No mfis:</label>
+                <label class="value">{{app.defaults_with_no_mfis}}</label>
+            </td>
+            <td>
+                <label class="attendence_percentage">Attendence Percentage:</label>
+                <label class="value">{{app.attendence_percentage}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="loan_eligibility_based_on_net_income"> Loan Eligibility Based on Net Income:</label>
+                <label class="value">{{app.loan_eligibility_based_on_net_income}}</label>
+            </td>
+            <td>
+                <label class="loan_eligibility_based_on_company_policy">Loan Eligibility Based on Company Policy:</label>
+                <label class="value">{{app.loan_eligibility_based_on_company_policy}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="kyc_1">kyc_1:</label>
+                <label class="value">{{app.kyc_1}}</label>
+            </td>
+            <td>
+                <label class="kyc_2">kyc_2:</label>
+                <label class="value">{{app.kyc_2}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="gkyc_1">gkyc_1:</label>
+                <label class="value">{{app.gkyc_1}}</label>
+            </td>
+            <td>
+                <label class="other_documents">Other Documents:</label>
+                <label class="value">{{app.other_documents}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="current_status">Current Status:</label>
+                <label class="value">{{app.current_status}}</label>
+            </td>
+            <td>
+                <label class="current_status_updated">Current Status Updated:</label>
+                <label class="value">{{app.current_status_updated}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="date_created">Date Created:</label>
+                <label class="value">{{app.date_created}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="date_updated">Date Updated:</label>
+                <label class="value">{{app.date_updated}}</label>
+            </td>
+            <td>
+                <label class="village_electricity">Village Electricity:</label>
+                <label class="value">{{app.village_electricity}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="interested_in_other_fp">Interested in Other_fp:</label>
+                <label class="value">{{app.interested_in_other_fp}}</label>
+            </td>
+            <td>
+                <label class="member_disability"> Member Disability:</label>
+                <label class="value">{{app.member_disability}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="village_water">Village Water:</label>
+                <label class="value">{{app.village_water}}</label>
+            </td>
+            <td>
+                <label class="festival_expenditure"> Festival Expenditure:</label>
+                <label class="value">{{app.festival_expenditure}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="excepted_disbursment_date">Excepted Disbursment Date:</label>
+                <label class="value">{{app.excepted_disbursment_date}}</label>
+            </td>
+            <td>
+                <label class="village_medical_facilities"> Village Medical Facilities:</label>
+                <label class="value">{{app.village_medical_facilities}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="micropension_inclusion">Micropension Inclusion:</label>
+                <label class="value">{{app.micropension_inclusion}}</label>
+            </td>
+            <td>
+                <label class="self_owned_land"> Self Owned Land:</label>
+                <label class="value">{{app.self_owned_land}}</label>
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label class="center_leader_cell">Center Leader Cell:</label>
+                <label class="value">{{app.center_leader_cell}}</label>
+            </td>
+            <td>
+                <label class="center_size"> Center Size:</label>
+                <label class="value">{{app.center_size}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="applicationtype">Applicationtype:</label>
+                <label class="value">{{app.applicationtype}}</label>
+            </td>
+            <td>
+                <label class="shared_land"> Shared Land:</label>
+                <label class="value">{{app.shared_land}}</label>
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label class="bankaccount_inclusion">Bankaccount Inclusion:</label>
+                <label class="value">{{app.bankaccount_inclusion}}</label>
+            </td>
+            <td>
+                <label class="fl_loans"> Fl Loans:</label>
+                <label class="value">{{app.fl_loans}}</label>
+            </td>
+        </tr>
+
+
+         <tr>
+            <td>
+                <label class="village_hospital_category">Village Hospital Category:</label>
+                <label class="value">{{app.village_hospital_category}}</label>
+            </td>
+            <td>
+                <label class="group_leader_cell"> Group Leader Cell:</label>
+                <label class="value">{{app.group_leader_cell}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="bank_name">Bank Name:</label>
+                <label class="value">{{app.bank_name}}</label>
+            </td>
+            <td>
+                <label class="bankfi_amount"> Bankfi Amount:</label>
+                <label class="value">{{app.bankfi_amount}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="patta_land">Patta Land:</label>
+                <label class="value">{{app.patta_land}}</label>
+            </td>
+            <td>
+                <label class="cheque_no"> Cheque No:</label>
+                <label class="value">{{app.cheque_no}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="group_size">Group Size:</label>
+                <label class="value">{{app.group_size}}</label>
+            </td>
+            <td>
+                <label class="select_house_type"> Select House Type:</label>
+                <label class="value">{{app.select_house_type}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="village_road">Village Road:</label>
+                <label class="value">{{app.village_road}}</label>
+            </td>
+            <td>
+                <label class="fnf_inclusion"> fnf Inclusion:</label>
+                <label class="value">{{app.fnf_inclusion}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="member_f_or_h_name">Member for_h_Name:</label>
+                <label class="value">{{app.member_f_or_h_name}}</label>
+            </td>
+            <td>
+                <label class="member_pincode"> member_pincode:</label>
+                <label class="value">{{app.member_pincode}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="repayment_mode">Repayment Mode:</label>
+                <label class="value">{{app.repayment_mode}}</label>
+            </td>
+            <td>
+                <label class="moneylenders_amount"> Moneylenders Amount:</label>
+                <label class="value">{{app.moneylenders_amount}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="house_rent_expenditure">House Rent Expenditure:</label>
+                <label class="value">{{app.house_rent_expenditure}}</label>
+            </td>
+            <td>
+                <label class="village_public_transport">Village Public Transport:</label>
+                <label class="value">{{app.village_public_transport}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="house_hold_expenditure">House Hold Expenditure:</label>
+                <label class="value">{{app.house_hold_expenditure}}</label>
+            </td>
+            <td>
+                <label class="village">Village :</label>
+                <label class="value">{{app.village}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="leader_cell">Leader Cell:</label>
+                <label class="value">{{app.leader_cell}}</label>
+            </td>
+            <td>
+                <label class="guarantor_borrowers_are_nominee">Guarantor Borrowers Are Nominee :</label>
+                <label class="value">{{app.guarantor_borrowers_are_nominee}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="gurantors_nominee_name">Gurantor Nominee Name:</label>
+                <label class="value">{{app.gurantors_nominee_name}}</label>
+            </td>
+            <td>
+                <label class="gurantors_nominee_gender">Gurantors Nominee Gender :</label>
+                <label class="value">{{app.gurantors_nominee_gender}}</label>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                <label class="gurantors_nominee_age">Gurantors Nominee Age:</label>
+                <label class="value">{{app.gurantors_nominee_age}}</label>
+            </td>
+            <td>
+                <label class="borrowers_nominee_age">Borrowers Nominee Age :</label>
+                <label class="value">{{app.borrowers_nominee_age}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="borrowers_nominee_gender">Borrowers Nominee Gender:</label>
+                <label class="value">{{app.borrowers_nominee_gender}}</label>
+            </td>
+            <td>
+                <label class="borrowers_nominee_name">Borrowers Nominee Name :</label>
+                <label class="value">{{app.borrowers_nominee_name}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="gurantor_s_relationship_with_borrower">Gurantor_s_Relationship With Borrower:</label>
+                <label class="value">{{app.gurantor_s_relationship_with_borrower}}</label>
+            </td>
+            <td>
+                <label class="gurantors_borrowers_are_nominee_for_each_other_">Gurantors Borrowers Are Nominee for Each Other_:</label>
+                <label class="value">{{app.gurantors_borrowers_are_nominee_for_each_other_}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="member_f_or_h_age">Member_f_or_h_age:</label>
+                <label class="value">{{app.member_f_or_h_age}}</label>
+            </td>
+            <td>
+                <label class="girl">Girl:</label>
+                <label class="value">{{app.girl}}</label>
+            </td>
+        </tr>
+
+
+         <tr>
+            <td>
+                <label class="boy">Boy:</label>
+                <label class="value">{{app.boy}}</label>
+            </td>
+            <td>
+                <label class="p_expense">P_Expense:</label>
+                <label class="value">{{app.p_expense}}</label>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label class="s_expense">S_Expense:</label>
+                <label class="value">{{app.s_expense}}</label>
+            </td>
+            <td>
+                <label class="t_expense">T_Expense:</label>
+                <label class="value">{{app.t_expense}}</label>
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label class="i_total">I_Total:</label>
+                <label class="value">{{app.i_total}}</label>
+            </td>
+            <td>
+                <label class="e_total">E_Total:</label>
+                <label class="value">{{app.e_total}}</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label class="member_id_proof_number">Member_id Proof Number:</label>
+                <label class="value">{{app.member_id_proof_number}}</label>
+            </td>
+            <td>
+                <label class="house_stay_duration">House Stay Duration:</label>
+                <label class="value">{{app.house_stay_duration}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="gurranter_s_sex">Gurranter_s_Sex:</label>
+                <label class="value">{{app.gurranter_s_sex}}</label>
+            </td>
+            <td>
+                <label class="gurranter_s_name">Gurranter_s_Name:</label>
+                <label class="value">{{app.gurranter_s_name}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="gurranter_s_age">Gurranter_s_Age:</label>
+                <label class="value">{{app.gurranter_s_age}}</label>
+            </td>
+            <td>
+                <label class="equifax_submitted">Equifax Submitted:</label>
+                <label class="value">{{app.equifax_submitted}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="highmark_submitted">Highmark Submitted:</label>
+                <label class="value">{{app.highmark_submitted}}</label>
+            </td>
+            <td>
+                <label class="generate_disbursement">Generate Disbursement:</label>
+                <label class="value">{{app.generate_disbursement}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="generate_disbursement_done">Generate Disbursement Done:</label>
+                <label class="value">{{app.generate_disbursement_done}}</label>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+
 
     </table>
 
 {% endblock %}
+>>>>>>> master

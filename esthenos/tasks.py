@@ -448,10 +448,19 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf)
         tmp_files.append(tf)
 
+        #generate insurance fees
+        tf = dir+"hccs_receipt.pdf"
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_hccs_reciept/"+group_id,tf)
+        tmp_files.append(tf)
+
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
             print "http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays)
             downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
+            tmp_files.append(tf)
+
+            tf = dir+ app.application_id+"_application.pdf"
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/"+app.application_id,tf)
             tmp_files.append(tf)
 
 

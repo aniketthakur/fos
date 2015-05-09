@@ -1,0 +1,121 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+<style type="text/css">
+    @font-face {
+        font-family: kruti dev ;
+        src: url('/Users/prathvi/Current/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
+    }
+{#    /home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/#}
+    .hinditext-large {
+        font-family: kruti dev;
+        font-size:25px;
+    }
+    .hinditext-medium {
+        font-family: kruti dev;
+        font-size:16px;
+    }
+    .english{
+        font-family: Tahoma;
+    }
+    .hinditext {
+        font-family: kruti dev;
+        font-size:12px;
+    }
+    .font-small{
+        font-size:8px;
+    }
+    .font-vsmall{
+        font-size:7px;
+    }
+    .font-small tr{
+        line-height: 15px;
+        min-height: 15px;
+        height: 15px;
+    }
+    .p{
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+</style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+
+<div class="col-md-12">
+
+    <div class="hinditext-large">
+        {% for app in apps %}
+        <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
+
+        <table  border="1" style="width: 100%;" class="table table-bordered table-condensed hinditext-medium">
+
+                <tr >
+                    <td>
+                        <img width="100px" src="/Users/prathvi/Current/esthenos/esthenos/static/img/pdf_images/HCC.png">
+                    </td>
+                    <td colspan="2">
+                        <b>efnbogmLeeve</b><br/>
+                        keÀes. Dee@He.¬esÀef[ì meesmee3eìer efue.<br/>
+                        jefpe. veb.: yeer. Dees. Sce./ [yu3et. Sve./Deej. Sme. Deej/meer. Deej. 1041 meve 1987<br/>
+                        7/8, efnbo m g Leeve YeJeve, kesÀ. S. jesæ[, pejercejer, kegÀuee& ( He.) cegbyeF& - 72. HeÀesve. 28518136 /28593800.<br/>
+                    </td>
+
+
+                </tr>
+            <tr>
+                <td colspan="2">HeeJeleer ¬eÀ.</td>
+                <td> efoveebkeÀ:</td>
+            </tr>
+            <tr>
+                <td colspan="2">Þeer. meew.</td>
+                <td> MeeKee :</td>
+            </tr>
+            <tr>
+                <td>leHeMeerue</td>
+                <td>Keeles</td>
+                <td>jkeÌkeÀce</td>
+            </tr>
+            <tr>
+                <td rowspan="1">veececee$e meYeemeo HeÀer ( ye Jeie&)
+                    <br/>
+                    <br/>
+
+
+                </td>
+                <td rowspan="1">
+                    <br/><br/>
+                    <br/>
+                </td>
+                <td rowspan="1">
+                    <br/><br/><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>jesKe / ì^ebmeHeÀj / ®eskeÀ veb.</td>
+                <td>
+                    SketÀCe
+                </td>
+                <td>10/-</td>
+            </tr>
+            <tr>
+                <td>
+                    De#ejer ©He3es: one cee$e<br/>
+                    efueefHekeÀ</td>
+                <td><br/>jesKeHeeue </td>
+                <td><br/>J3eJemLeeHekeÀ</td>
+            </tr>
+
+        </table>
+            <div class="text-center">----------------------------------------------</div>
+    {% endfor %}
+
+    </div>
+</div>
+
+
+{% endblock %}
