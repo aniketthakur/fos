@@ -43,7 +43,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for group in groups[0:10] %}
+                                        {% for group in groups %}
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -131,7 +131,7 @@
             $(".center-fail").click(function(e){
                 e.preventDefault();
                 console.log("center fail "+$(this).attr("data-id"));
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":false}'
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
                     url: '/center/status/cgt1',
                     data: {center_id:'"+$(this).attr("data-id")+"','status':false},
@@ -148,7 +148,7 @@
             $(".center-pass").click(function(e){
                 e.preventDefault();
                 console.log("center pass "+$(this).attr("data-id"));
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":true}'
+                data = '{"center_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
                     url: '/center/status/cgt1',
                     data: JSON.stringify(data),
@@ -164,7 +164,7 @@
             $(".group-fail").click(function(e){
                 e.preventDefault();
                 console.log("group fail "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":false}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
                     url: '/group/status/cgt1',
                     data: JSON.stringify(data),
@@ -181,7 +181,7 @@
             $(".group-pass").click(function(e){
                 e.preventDefault();
                 console.log("group pass "+$(this).attr("data-id"));
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":true}'
+                data = '{"group_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
                     url: '/group/status/cgt1',
                     data: JSON.stringify(data),
