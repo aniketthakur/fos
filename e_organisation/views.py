@@ -79,7 +79,7 @@ def center_cgt1():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 220
@@ -152,7 +152,7 @@ def center_cgt2():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 250
@@ -184,7 +184,7 @@ def center_grt():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 272
@@ -217,7 +217,7 @@ def group_cgt1():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 220
@@ -249,7 +249,7 @@ def group_cgt2():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 250
@@ -281,7 +281,7 @@ def group_grt():
         status.save()
         app.timeline.append(status)
         print reqstatus
-        if reqstatus ==  True:
+        if reqstatus ==  "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
             app.current_status_updated  = datetime.datetime.now()
             app.status = 272
