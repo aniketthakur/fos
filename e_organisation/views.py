@@ -129,6 +129,7 @@ def admin_reports():
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
+    org = user.organisation
     organisations = EsthenosOrg.objects.all()
     tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
@@ -764,11 +765,11 @@ def upload_documents():
                 tagged_application.group = group
                 tagged_application.tag  = app
                 tagged_application.owner = user
-                tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=0)
+                tagged_application.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=100)
                 settings = EsthenosSettings.objects.all()[0]
                 tagged_application.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
                 tagged_application.upload_type = "MANUAL_UPLOAD"
-                tagged_application.status = 0
+                tagged_application.status = 100
                 tagged_application.save()
                 inc_count = inc_count+1
                 int_x = int_x+1
@@ -1421,10 +1422,14 @@ def cashflow_statusupdate(app_id):
             status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
-
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=12)[0]
-            application.current_status_updated  = datetime.datetime.now()
-            application.status = 12
+            if request.form.get("status") == "true":
+                application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
+                application.current_status_updated  = datetime.datetime.now()
+                application.status = 170
+            else:
+                application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=180)[0]
+                application.current_status_updated  = datetime.datetime.now()
+                application.status = 170
             application.save()
             new_num = int(app_id[-6:])+1
             new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)

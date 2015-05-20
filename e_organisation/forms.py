@@ -677,8 +677,29 @@ class AddApplicationMobile(Form):
         if len(kyc_json["kyc"][0]["aadhar_f"])>0:
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.kyc_type = "AADHAAR"
+            """
+            {"uid":"454919121002","lm":"NEAR JERI MERI MANDIR",
+    "aadhar_f":"55449ee2207ffc05ff24e863","aadhar_b":"55449eee207ffc05ff24e864","pc":"421306","name":"Nitin Gopalakrishnan",
+    "state":"Maharashtra","yob":"1988","loc":"TISGAON","gender":"M","house":"ROOM NO 2, RAGAM APARTMENT","vtc":"KALYAN EAST",
+    "dist":"Thane"}
+
+            """
             kyc_obj.image_id_f = kyc_json["kyc"][0]["aadhar_f"]
             kyc_obj.image_id_b = kyc_json["kyc"][0]["aadhar_b"]
+            kyc_obj.kyc_number = kyc_json["kyc"][0]["uid"]
+            kyc_obj.dob = kyc_json["kyc"][0]["yob"]
+            kyc_obj.name = kyc_json["kyc"][0]["name"]
+            kyc_obj.gender = kyc_json["kyc"][0]["gender"]
+            if kyc_json["kyc"][0].has_key("house"):
+                kyc_obj.address1 = kyc_json["kyc"][0]["house"]
+            if kyc_json["kyc"][0].has_key("lm"):
+                kyc_obj.address1 = kyc_json["kyc"][0]["lm"]
+            kyc_obj.state = kyc_json["kyc"][0]["state"]
+            kyc_obj.dist = kyc_json["kyc"][0]["dist"]
+            if kyc_json["kyc"][0].has_key("vtc"):
+                kyc_obj.taluk = kyc_json["kyc"][0]["vtc"]
+            kyc_obj.pincode = kyc_json["kyc"][0]["pc"]
+            kyc_obj.raw = kyc_json["kyc"][0]
             app.kyc_1 = kyc_obj
         if (kyc_json["kyc"][2].has_key("votercard_f") and len(kyc_json["kyc"][2]["votercard_f"])>0) or  (kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0):
             kyc_obj = EsthenosOrgApplicationKYC()

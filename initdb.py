@@ -169,7 +169,7 @@ status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CASH_FLOW_PASSED"
-status_type.status_message = "Application  Cash Flow has Passed"
+status_type.status_message = "Application Cash Flow has Passed"
 status_type.status_code = 170
 status_type.save()
 

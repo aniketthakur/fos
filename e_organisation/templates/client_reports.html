@@ -35,14 +35,8 @@
         </div>
     </div>
     <div class="row">
+        <input type="hidden" id="source" name="source" value="{{ org.id }}">
 
-        <div class="col-md-4">
-            <select id="source" style="width:100%">
-                {% for org in  organisations %}
-                    <option value="{{ org.id }}">{{ org.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
         <div class="col-md-4">
             <select id="region" style="width:100%">
 

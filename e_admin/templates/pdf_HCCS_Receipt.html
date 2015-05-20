@@ -16,6 +16,7 @@
     }
     .english{
         font-family: Tahoma;
+        font-size:25px;
     }
     .hinditext {
         font-family: kruti dev;
@@ -69,11 +70,11 @@
                 </tr>
             <tr>
                 <td colspan="2">HeeJeleer ¬eÀ. </td>
-                <td> efoveebkeÀ : {{ disbursement_date }}</td>
+                <td> efoveebkeÀ : <span class="english">{{ disbursement_date|strftime }}</span></td>
             </tr>
             <tr>
-                <td colspan="2">Þeer. meew. {{ app.applicant_name }}</td>
-                <td> MeeKee : {{ app.group.branch.branch_name }}</td>
+                <td colspan="2">Þeer. meew. <span class="english">{{ app.applicant_name }}</span></td>
+                <td> MeeKee : <span class="english">{{ app.group.branch.branch_name }}</span></td>
             </tr>
             <tr>
                 <td>leHeMeerue</td>
