@@ -86,7 +86,7 @@
                             </th>
                             <th style="width:15%">Application ID</th>
                             <th style="width:10%">Date</th>
-                            <th style="width:10%">Source</th>
+                            <th style="width:10%">Group</th>
                             <th style="width:15%">Status</th>
 
                             <th style="width:10% ">Progress Status</th>
@@ -111,7 +111,7 @@
 {#                            {% endif %}#}
                             <td><span class="muted">{{ app.date_created }}</span>
                             </td>
-                            <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
+                            <td class="v-align-middle"><span class="muted">{{ app.group.group_name }}</span>
                             </td>
                             <td><span class="muted">{{ app.current_status.status }}</span>
                             </td>
