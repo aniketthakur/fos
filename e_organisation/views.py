@@ -841,9 +841,9 @@ def applications():
     #    el
     if group != None:
         print  "filter "+ group.group_name
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=110)
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=0)
     else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=110)
+        applications = EsthenosOrgApplication.objects.filter(status__gte=0)
 
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
