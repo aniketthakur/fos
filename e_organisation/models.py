@@ -377,7 +377,7 @@ class EsthenosOrgApplicationStatusType(db.Document):
     sub_status_code = db.IntField(default=0)
     sub_status_message =  db.StringField(max_length=512, required=True,default="")
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatusType"
+        return self.status
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')

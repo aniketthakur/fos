@@ -133,7 +133,7 @@
                 console.log("center fail "+$(this).attr("data-id"));
                 data = '{"center_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
-                    url: '/center/status/cgt1',
+                    url: '/center/status/tele',
                     data: {center_id:'"+$(this).attr("data-id")+"','status':false},
                     data: JSON.stringify(data),
                     type: 'PUT',
@@ -150,7 +150,7 @@
                 console.log("center pass "+$(this).attr("data-id"));
                 data = '{"center_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
-                    url: '/center/status/cgt1',
+                    url: '/center/status/tele',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -166,7 +166,7 @@
                 console.log("group fail "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
-                    url: '/group/status/cgt1',
+                    url: '/group/status/tele',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -183,7 +183,7 @@
                 console.log("group pass "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
-                    url: '/group/status/cgt1',
+                    url: '/group/status/tele',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",

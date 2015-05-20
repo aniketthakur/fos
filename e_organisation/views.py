@@ -200,6 +200,41 @@ def center_grt():
         status=200,\
         mimetype="application/json")
 
+@organisation_views.route('/center/status/tele', methods=["PUT"])
+@login_required
+def center_tele():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    data = json.loads(request.json)
+    center_id = data['center_id']
+    reqstatus = data['status']
+    user = EsthenosUser.objects.get(id=c_user.id)
+    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
+    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=272)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        print reqstatus
+        if reqstatus ==  "true":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=276)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 276
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=278)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 278
+        app.save()
+
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+
 @organisation_views.route('/group/status/cgt1', methods=["PUT"])
 @login_required
 def group_cgt1():
@@ -295,6 +330,40 @@ def group_grt():
     return Response(response=content,
         status=200,\
         mimetype="application/json")
+
+
+@organisation_views.route('/group/status/tele', methods=["PUT"])
+@login_required
+def group_tele():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    data = json.loads(request.json)
+    group_id = data['group_id']
+    reqstatus = data['status']
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=272)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        print reqstatus
+        if reqstatus ==  "true":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=276)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 276
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=278)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 278
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required

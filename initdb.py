@@ -7,14 +7,6 @@ organisation = EsthenosOrg.objects.all()
 for org in organisation:
     org.delete()
 
-apps = EsthenosOrgApplication.objects.all()
-for app in apps:
-    app.delete()
-
-groups = EsthenosOrgGroup.objects.all()
-for grp in groups:
-    grp.delete()
-
 
 prods = EsthenosOrgProduct.objects.all()
 for prod in prods:
@@ -25,9 +17,6 @@ apps = EsthenosUser.objects.all()
 for app in apps:
     app.delete()
 
-status = EsthenosOrgApplicationStatusType.objects.all()
-for sta in status:
-    sta.delete()
 
 user = EsthenosUser.create_user("admin","admin@esthenos.com","Admin312",True)
 user.add_role("ADMIN")
@@ -43,6 +32,33 @@ if len(EsthenosSettings.objects.all()) ==1:
 settings = EsthenosSettings()
 print settings
 settings.save()
+
+apps = EsthenosOrgApplication.objects.all()
+for app in apps:
+    app.delete()
+
+groups = EsthenosOrgGroup.objects.all()
+for grp in groups:
+    grp.delete()
+
+groups = EsthenosOrgGroupGRTSession.objects.all()
+for grp in groups:
+    grp.delete()
+
+groups = EsthenosOrgGroupCGT1Session.objects.all()
+for grp in groups:
+    grp.delete()
+
+groups = EsthenosOrgGroupCGT2Session.objects.all()
+for grp in groups:
+    grp.delete()
+groups = EsthenosOrgIndivijualTeleCallingSession.objects.all()
+for grp in groups:
+    grp.delete()
+
+status = EsthenosOrgApplicationStatusType.objects.all()
+for sta in status:
+    sta.delete()
 
 
 
@@ -237,31 +253,31 @@ status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_GRT_DONE"
-status_type.status_message = "Application has failed GRT"
+status_type.status_message = "Application GRT Done"
 status_type.status_code = 272
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_TELECALLING_PASSED"
-status_type.status_message = "Application has failed GRT"
+status_type.status_message = "Application tele calling has passed."
 status_type.status_code = 276
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_TELECALLING_FAILED"
-status_type.status_message = "Application has failed GRT"
+status_type.status_message = "Application tele calling has failed."
 status_type.status_code = 278
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UNDERWRITING_READY"
-status_type.status_message = "Application is under writing ready"
+status_type.status_message = "Application is under-writing ready."
 status_type.status_code = 280
 status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_UNDERWRITING_DONE"
-status_type.status_message = "Application Under writing done"
+status_type.status_message = "Application Under-writing done."
 status_type.status_code = 290
 status_type.save()
 
