@@ -52,6 +52,7 @@ for grp in groups:
 groups = EsthenosOrgGroupCGT2Session.objects.all()
 for grp in groups:
     grp.delete()
+
 groups = EsthenosOrgIndivijualTeleCallingSession.objects.all()
 for grp in groups:
     grp.delete()

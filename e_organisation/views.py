@@ -1402,7 +1402,7 @@ def all_users():
     return render_template("org_employees.html", **kwargs)
 
 from e_admin.forms import AddOrganizationEmployeeForm
-
+from e_organisation.models import EsthenosOrgBranch
 @organisation_views.route('/users/add', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp():
@@ -1430,6 +1430,7 @@ def admin_organisation_add_emp():
     else:
 
         org = EsthenosOrg.objects.get(id=user.organisation.id)
+        branches = EsthenosOrgBranch.objects.get(organisation = org)
         kwargs = locals()
         return render_template("org_add_emp.html", **kwargs)
 

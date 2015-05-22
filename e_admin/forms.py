@@ -120,9 +120,7 @@ class AddOrganizationEmployeeForm(Form):
     tele_code_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     teleno_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branch =TextField( validators=[ v.Length(max=512)])
-    state =TextField( validators=[ v.Length(max=512)])
-    area =TextField( validators=[v.Length(max=512)])
-    region =TextField( validators=[ v.Length(max=512)])
+
 
     def validate_email_add_organisation( form,field):
         email_add_organisation =field.data.lower().strip()
@@ -149,14 +147,14 @@ class AddOrganizationEmployeeForm(Form):
         emp.owner =EsthenosUser.objects.get(id=current_user.id)
         emp.name=self.first_name_add_organisation.data
         emp.email=self.email_add_organisation.data
-        if self.state.data !=None or self.state.data !='':
-            emp.org_state = EsthenosOrgState.objects.get(organisation=emp.organisation,state_name = self.state.data)
+        #if self.state.data !=None or self.state.data !='':
+        #    emp.org_state = EsthenosOrgState.objects.get(organisation=emp.organisation,state_name = self.state.data)
         #if self.area.data !=None or self.area.data !='':
         #    emp.org_area = EsthenosOrgArea.objects.get(organisation=emp.organisation,area_name = self.area.data)
         #if self.region.data !=None or self.region.data !='':
         #    emp.org_region = EsthenosOrgRegion.objects.get(organisation=emp.organisation,region_name = self.region.data)
-        #if self.branch.data !=None or self.branch.data !='':
-        #    emp.org_branch = EsthenosOrgBranch.objects.get(organisation=emp.organisation,branch_name = self.branch.data)
+        if self.branch.data !=None or self.branch.data !='':
+            emp.org_branch = EsthenosOrgBranch.objects.get(id = self.branch.data)
 
         emp.save()
         org = EsthenosOrg.objects.get(id = emp.organisation.id)
