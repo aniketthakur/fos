@@ -770,7 +770,79 @@ def get_application():
         status=200,\
         mimetype="application/json")
 
+from e_organisation.forms import AddApplicationMobile
+@organisation_views.route('/mobile/application',methods=['POST'])
+@login_or_key_required
+def mobile_application():
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    form= request.form
+    print form
+    center_name = request.form.get('center_name')
+    group_name = request.form.get('group_name')
+    center = None
+    group = None
+    if center_name == None:
+        center_name = group_name
+    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        if status:
+            center.center_id = unique_center_id
+            center.save()
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
+        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+    app_form=AddApplicationMobile(form)
+    if(app_form.validate()):
+        print "Form Validated"
+        print "Saving Form"
+        app_form.save()
+        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+    else:
+        print app_form.errors
+        print "Could Not validate"
+    kwargs = locals()
+    return render_template("auth/login_admin.html", **kwargs)
+
+
+@organisation_views.route('/mobile/application/json',methods=['POST'])
+@login_or_key_required
+def mobile_application_json():
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    form= request.get_json(force=True)
+    print form
+    center_name = request.json.get('center_name')
+    group_name = request.json.get('group_name')
+    center = None
+    group = None
+    if center_name == None:
+        center_name = group_name
+    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
+        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        if status:
+            center.center_id = unique_center_id
+            center.save()
+            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
+        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+    app_form=AddApplicationMobile(form)
+    if(app_form.validate()):
+        print "Form Validated"
+        print "Saving Form"
+        app_form.save()
+        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+    else:
+        print app_form.errors
+        print "Could Not validate"
+    kwargs = locals()
+    return render_template("auth/login_admin.html", **kwargs)
 
 from e_organisation.models import EsthenosOrgSettings
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
