@@ -29,8 +29,6 @@ class RenderTemplateView(View):
         self.template_name = template_name
     def dispatch_request(self):
         return render_template(self.template_name)
-import wtforms_json
-wtforms_json.init()
 from flask import  Blueprint
 organisation_views = Blueprint('organisation_views', __name__,
                         template_folder='templates')
@@ -267,6 +265,50 @@ def group_cgt1():
     return Response(response=content,
         status=200,\
         mimetype="application/json")
+
+
+import os
+import zipfile
+import StringIO
+from dateutil.relativedelta import relativedelta
+import pdfkit
+import tempfile
+import requests
+import sys
+import time
+
+
+from esthenos.tasks import downloadFile
+@organisation_views.route('/cgt1_application_download', methods=["GET"])
+@login_required
+def cgt1_application_download():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.args.get('group_id')
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
+    dir = tempfile.mkdtemp( prefix='pdf_')
+    dir = dir+"/"
+    tmp_files = list()
+    for app in applications:
+        print app.application_id
+        tf = dir+ app.application_id+"_application.pdf"
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/"+app.application_id,tf)
+        tmp_files.append(tf)
+
+    zdir = tempfile.mkdtemp( prefix='zip_')
+    zdir = zdir+"/"
+    # The zip compressor
+    tf = zdir+group_id+".zip"
+    zip(dir, tf)
+    filehandle = open(tf, 'rb')
+    data = StringIO.StringIO(filehandle.read())
+    output = make_response(data.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s.zip" %group_id
+    output.headers["Content-type"] = "application/zip"
+    return output
 
 @organisation_views.route('/group/status/cgt2', methods=["PUT"])
 @login_required
@@ -777,6 +819,8 @@ from e_organisation.forms import AddApplicationMobile
 def mobile_application():
     username = current_user.name
     c_user = current_user
+    import wtforms_json
+    wtforms_json.init()
     user = EsthenosUser.objects.get(id=c_user.id)
     form= request.form
     print form

@@ -31,7 +31,6 @@
         </div>
     </div>
     <div class="row">
-        <input type="hidden" id="source" name="source" value="{{ org.id }}">
 
         <div class="col-md-4">
             <select id="region" style="width:100%">
@@ -108,33 +107,7 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-            $("#source").select2({
-                placeholder: "Select a State",
-                allowClear: true
-            });
-            $('#source').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/regions",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#region").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#region").select2();
-                        });
-                        $.getJSON("/admin/organisation/"+type+"/applications",function(data){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i])
-                            }
-                        })
-                    });
+
 
             $("#branch").select2();
 
