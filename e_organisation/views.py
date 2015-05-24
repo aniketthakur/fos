@@ -120,6 +120,9 @@ def org_products():
     kwargs = locals()
     return Response(json.dumps({'products':content}), content_type="application/json", mimetype='application/json')
 
+
+
+
 @organisation_views.route('/reports', methods=["GET"])
 @login_required
 def admin_reports():
@@ -233,6 +236,8 @@ def center_tele():
         status=200,\
         mimetype="application/json")
 
+
+#http://127.0.0.1:8080/reports/download?all=true&type=2
 
 @organisation_views.route('/group/status/cgt1', methods=["PUT"])
 @login_required

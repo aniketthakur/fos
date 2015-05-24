@@ -14,7 +14,7 @@
     <div class="row">
 
         <div class="col-md-4">
-            <select id="applicationstatus"  style="width:100%">
+            <select id="application_type"  style="width:100%">
                 <option value="1">Master</option>
                 <option value="2">Cheque Prefilled</option>
                 <option value="7">Disbursed</option>
@@ -30,19 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
 
-        <div class="col-md-4">
-            <select id="region" style="width:100%">
-
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select id="branch" style="width:100%">
-
-            </select>
-        </div>
-    </div>
 
 
     <div class="row-fluid">
@@ -107,29 +95,7 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
-
-
-            $("#branch").select2();
-
-            $("#region").select2();
-            $('#region').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/branches",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#branch").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#branch").select2();
-                        });
-                    });
-            $("#applicationstatus").select2({
+            $("#application_type").select2({
                 placeholder: "choose report type",
                 allowClear: true
             });
@@ -147,8 +113,13 @@
                 console.log($("#start-date").val());
                 console.log($("#end-date").val());
                 if(checkDateRange($("#start-date").val(),$("#end-date").val())){
-                    window.open("/reports/download?type");
+                    window.open("/reports/download?all=false&type="+$("#application_type").val()+"&start_date="+$("#start-date").val()+"&end_date="+$("#end-date").val());
                 }
+            });
+            $("#generate_button_as_of").click(function() {
+                console.log($("#start-date").val());
+                console.log($("#end-date").val());
+                window.open("/reports/download?all=true&type="+$("#application_type").val());
             });
 
             function checkDateRange(start, end) {
@@ -159,39 +130,25 @@
 
                 // Make sure they are valid
                 if (isNaN(startDate)) {
-                    smoke.signal("The start date provided is not valid, please enter a valid date.", function(e){
-                    }, {
-                        duration: 2000,
-                        classname: "custom-class"
-                    })
+                    Messenger().post("The start date provided is not valid, please enter a valid date !");
+
                     return false;
                 }
                 if (isNaN(endDate)) {
-                    smoke.signal("The end date provided is not valid, please enter a valid date.", function(e){
-                    }, {
-                        duration: 2000,
-                        classname: "custom-class"
-                    })
+                    Messenger().post("The end date provided is not valid, please enter a valid date.");
+
                     return false;
 
                 }
                 // Check the date range, 86400000 is the number of milliseconds in one day
                 var difference = (endDate - startDate) / (86400000 * 7);
                 if (difference < 0) {
-                    smoke.signal("The start date must come before the end date!...", function(e){
-                    }, {
-                        duration: 2000,
-                        classname: "custom-class"
-                    });
+                    Messenger().post("The start date must come before the end date!...");
                     return false;
 
                 }
                 if (endDate - today > 0) {
-                    smoke.signal("End date cannot be greater than today!...", function(e){
-                    }, {
-                        duration: 2000,
-                        classname: "custom-class"
-                    });
+                    Messenger().post("End date cannot be greater than today!...");
                     return false;
                 }
                 return true;
