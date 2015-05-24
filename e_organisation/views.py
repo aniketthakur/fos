@@ -278,7 +278,7 @@ import sys
 import time
 
 
-from esthenos.tasks import downloadFile
+from esthenos.tasks import downloadFile,zip_custom
 @organisation_views.route('/cgt1_application_download', methods=["GET"])
 @login_required
 def cgt1_application_download():
@@ -288,7 +288,7 @@ def cgt1_application_download():
     group_id = request.args.get('group_id')
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=100)
     dir = tempfile.mkdtemp( prefix='pdf_')
     dir = dir+"/"
     tmp_files = list()
@@ -302,7 +302,7 @@ def cgt1_application_download():
     zdir = zdir+"/"
     # The zip compressor
     tf = zdir+group_id+".zip"
-    zip(dir, tf)
+    zip_custom(dir, tf)
     filehandle = open(tf, 'rb')
     data = StringIO.StringIO(filehandle.read())
     output = make_response(data.getvalue())

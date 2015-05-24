@@ -475,7 +475,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         zdir = zdir+"/"
         # The zip compressor
         tf = zdir+group_id
-        zip(dir, tf)
+        zip_custom(dir, tf)
         from boto.s3.key import Key
         bucket = conn_s3.get_bucket("hindusthanarchives")
         k = Key(bucket)
@@ -490,7 +490,7 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 import os
 import zipfile
 
-def zip(src, dst):
+def zip_custom(src, dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
