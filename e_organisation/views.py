@@ -29,7 +29,8 @@ class RenderTemplateView(View):
         self.template_name = template_name
     def dispatch_request(self):
         return render_template(self.template_name)
-
+import wtforms_json
+wtforms_json.init()
 from flask import  Blueprint
 organisation_views = Blueprint('organisation_views', __name__,
                         template_folder='templates')
@@ -771,7 +772,7 @@ def get_application():
         mimetype="application/json")
 
 from e_organisation.forms import AddApplicationMobile
-@organisation_views.route('/mobile/application',methods=['POST'])
+@organisation_views.route('/admin/mobile/application',methods=['POST'])
 @login_or_key_required
 def mobile_application():
     username = current_user.name
@@ -832,7 +833,8 @@ def mobile_application_json():
 
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
         EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-    app_form=AddApplicationMobile(form)
+    app_form=AddApplicationMobile.from_json(form)
+    #app_form=AddApplicationMobile(form)
     if(app_form.validate()):
         print "Form Validated"
         print "Saving Form"

@@ -524,6 +524,8 @@ class AddApplicationMobile(Form):
         app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
+        if self.gurranter_s_age.data == "":
+            self.gurranter_s_age.data = 0.0
         app.gurranter_s_age = float(self.gurranter_s_age.data)
         app.member_disability = self.physical_disability_member.data
         app.village_electricity = self.village_information_electricity_hours.data
@@ -554,7 +556,7 @@ class AddApplicationMobile(Form):
         app.drinking_water = self.source_of_drinking_water.data
         app.purpose_of_loan = self.purpose_of_the_loan.data
         if self.total_number_of_family_members == '':
-            app.family_size  = 0
+            self.total_number_of_family_members.data  = 0
         app.family_size  = int(self.total_number_of_family_members.data)
         if self.total_earning_members == '':
             app.total_earning_members  = 0
