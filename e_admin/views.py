@@ -515,7 +515,7 @@ def admin_organisation_add_emp(org_id):
     else:
 
         org = EsthenosOrg.objects.get(id=org_id)
-        branches = EsthenosOrgBranch.objects.get(organisation = org)
+        branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 

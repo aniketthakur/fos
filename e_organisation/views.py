@@ -29,7 +29,8 @@ class RenderTemplateView(View):
         self.template_name = template_name
     def dispatch_request(self):
         return render_template(self.template_name)
-
+import wtforms_json
+wtforms_json.init()
 from flask import  Blueprint
 organisation_views = Blueprint('organisation_views', __name__,
                         template_folder='templates')
@@ -1502,7 +1503,7 @@ def admin_organisation_add_emp():
     else:
 
         org = EsthenosOrg.objects.get(id=user.organisation.id)
-        branches = EsthenosOrgBranch.objects.get(organisation = org)
+        branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
         return render_template("org_add_emp.html", **kwargs)
 
