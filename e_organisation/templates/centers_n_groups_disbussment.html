@@ -44,58 +44,59 @@
                             </thead>
                             <tbody>
                             {% for group in groups %}
-                                <form action="#" name="">
+                                <form action="#" name="{{ group.group_id }}form" id="{{ group.group_id }}form">
+                                    <tr>
+                                        <input type="hidden">
+                                        <td class="v-align-middle">
+                                            <div class="checkbox check-default">
+                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
+                                                <label for="checkbox{{ loop.index }}"></label>
+                                            </div>
+                                        </td>
+                                        <td class="v-align-middle clickable-row" data-href='/download_disbusement?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
+                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
+                                        </td>
+                                        <td><span class="muted">{{ group.created_at|dateformat }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="input-with-icon  right">
 
+                                                <div class="input-append success date col-md-11">
+                                                    <input type="text" class="form-control disbursement_date" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}disbursement_date" >
+                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-with-icon  right">
+
+                                                <div class="input-append success date col-md-11">
+                                                    <input type="text" class="form-control collection_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}collection_date" >
+                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="file" class="form-control cheque_no {{ group.group_id }} file" name="cheque_no_{{ group.group_id }}"  id="{{ group.group_id }}cheque_no" >
+                                        </td>
+                                        <td >
+                                            <a class="btn btn-small btn-small btn-success btn-disburse" data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a>
+                                        </td>
+                                        <td class="v-align-middle">
+                                            {% if group.disbursement_pdf_link == "#" %}
+                                                <a class="btn btn-small btn-small btn-disabled" type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
+                                            {% else %}
+                                                <a class="btn btn-small btn-small btn-info" type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-small btn-small btn-success" type="button"><span aria-hidden="true" class="fa fa-check">Done</span></button>
+                                        </td>
+
+                                    </tr>
                                 </form>
-                                <tr>
-                                    <td class="v-align-middle">
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                            <label for="checkbox{{ loop.index }}"></label>
-                                        </div>
-                                    </td>
-                                    <td class="v-align-middle clickable-row" data-href='/download_disbusement?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
-                                    <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
-                                    </td>
-                                    <td><span class="muted">{{ group.created_at|dateformat }}</span>
-                                    </td>
-                                    <td>
-                                        <div class="input-with-icon  right">
 
-                                            <div class="input-append success date col-md-11">
-                                                <input type="text" class="form-control disbursement_date" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}disbursement_date" >
-                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input-with-icon  right">
-
-                                            <div class="input-append success date col-md-11">
-                                                <input type="text" class="form-control collection_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}collection_date" >
-                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="file" class="form-control cheque_no {{ group.group_id }} file" name="cheque_no_{{ group.group_id }}"  id="{{ group.group_id }}cheque_no" >
-                                    </td>
-                                    <td >
-                                        <a class="btn btn-small btn-small btn-success btn-disburse" data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        {% if group.disbursement_pdf_link == "#" %}
-                                            <a class="btn btn-small btn-small btn-disabled" type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
-                                        {% else %}
-                                            <a class="btn btn-small btn-small btn-info" type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-small btn-small btn-success" type="button"><span aria-hidden="true" class="fa fa-check">Done</span></button>
-                                    </td>
-
-                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
@@ -135,12 +136,14 @@
                 fd.append("disbursement_date", disbursement_date);
                 fd.append("collection_date", collection_date);
                 fd.append("cheque_no", cheque_no);
+                var form = $($(this).attr("group-id")+'form')[0]; // You need to use standart javascript object here
+                var formData = new FormData(form);
                 console.log(disbursement_date)
                 console.log(collection_date)
                 $.ajax({
                     url: '/disburse_group',
                     type: 'PUT',
-                    data: fd,
+                    data: form,
                     success: function(result) {
                         console.log(result);
                         Messenger().post(result["result"]);
