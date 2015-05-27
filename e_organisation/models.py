@@ -511,6 +511,7 @@ class EsthenosOrgApplication(db.Document):
     village_hospital_category=db.StringField(max_length=80, required=False,default="")
     group_leader_cell=db.StringField(max_length=80, required=False,default="")
     bank_name=db.StringField(max_length=200, required=False,default="")
+    bank_ifsc_code=db.StringField(max_length=20, required=False,default="")
     bankfi_amount=db.IntField(default=0)
     patta_land=db.StringField(max_length=80, required=False,default="")
     cheque_no=db.StringField(max_length=80, required=False,default="")

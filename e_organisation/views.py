@@ -856,15 +856,19 @@ def mobile_application():
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
+import wtforms_json
 
+wtforms_json.init()
 
+from flask import render_template,session,request,Response,abort
 @organisation_views.route('/mobile/application/json',methods=['POST'])
 @login_or_key_required
 def mobile_application_json():
     username = current_user.name
     c_user = current_user
+    print request.json
     user = EsthenosUser.objects.get(id=c_user.id)
-    form= request.get_json(force=True)
+    form= request.json #get_json(force=True)
     print form
     center_name = request.json.get('center_name')
     group_name = request.json.get('group_name')
@@ -887,7 +891,7 @@ def mobile_application_json():
         print "Form Validated"
         print "Saving Form"
         app_form.save()
-        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+        return Response(json.dumps({'status':'success'}), content_type="application/json", mimetype='application/json')
     else:
         print app_form.errors
         print "Could Not validate"

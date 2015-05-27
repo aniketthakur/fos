@@ -521,6 +521,7 @@ class AddApplicationMobile(Form):
             app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
 
         app.bank_name = self.bank_name.data
+        app.bank_ifsc_code = self.ifsc_code.data
         app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
@@ -662,10 +663,10 @@ class AddApplicationMobile(Form):
             app.other_outstanding_chit = 0.0
         else:
             app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
+        if self.financial_liabilities_insurance.data == "":
+            app.other_outstanding_insurance = 0.0
         else:
-            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
+            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data.strip())
 #       app.other_outstanding_emi =
         app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance+app.other_outstanding_emi
         app.net_income = app.total_income - app.total_expenditure - app.total_other_outstanding
@@ -673,10 +674,9 @@ class AddApplicationMobile(Form):
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
         app.timeline.append(status)
-        print
-        kyc_json = json.loads(self.kyc.data)
-
-        if len(kyc_json["kyc"][0]["aadhar_f"])>0:
+        data_kyc=  self.kyc.data.replace("'", '"')
+        kyc_json = json.loads(data_kyc)
+        if kyc_json.has_key("aadhaar"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.kyc_type = "AADHAAR"
             """
@@ -685,59 +685,63 @@ class AddApplicationMobile(Form):
     "state":"Maharashtra","yob":"1988","loc":"TISGAON","gender":"M","house":"ROOM NO 2, RAGAM APARTMENT","vtc":"KALYAN EAST",
     "dist":"Thane"}
 
-            """
-            kyc_obj.image_id_f = kyc_json["kyc"][0]["aadhar_f"]
-            kyc_obj.image_id_b = kyc_json["kyc"][0]["aadhar_b"]
-            kyc_obj.kyc_number = kyc_json["kyc"][0]["uid"]
-            kyc_obj.dob = kyc_json["kyc"][0]["yob"]
-            kyc_obj.name = kyc_json["kyc"][0]["name"]
-            kyc_obj.gender = kyc_json["kyc"][0]["gender"]
-            if kyc_json["kyc"][0].has_key("house"):
-                kyc_obj.address1 = kyc_json["kyc"][0]["house"]
-            if kyc_json["kyc"][0].has_key("lm"):
-                kyc_obj.address1 = kyc_json["kyc"][0]["lm"]
-            kyc_obj.state = kyc_json["kyc"][0]["state"]
-            kyc_obj.dist = kyc_json["kyc"][0]["dist"]
-            if kyc_json["kyc"][0].has_key("vtc"):
-                kyc_obj.taluk = kyc_json["kyc"][0]["vtc"]
-            kyc_obj.pincode = kyc_json["kyc"][0]["pc"]
-            #kyc_obj.raw = kyc_json["kyc"][0]
-            app.kyc_1 = kyc_obj
-        if (kyc_json["kyc"][2].has_key("votercard_f") and len(kyc_json["kyc"][2]["votercard_f"])>0) or  (kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            if kyc_json["kyc"][1].has_key("pancard_f") and len(kyc_json["kyc"][1]["pancard_f"])>0:
-                kyc_obj.kyc_type = "PAN"
-                kyc_obj.image_id_f = kyc_json["kyc"][1]["pancard_f"]
-            elif kyc_json["kyc"][2].has_key("votercard_f") and  len(kyc_json["kyc"][2]["votercard_f"])>0:
-                kyc_obj.kyc_type = "VOTERS"
-                kyc_obj.image_id_f = kyc_json["kyc"][2]["votercard_f"]
-                kyc_obj.image_id_b = kyc_json["kyc"][2]["votercard_b"]
+            {'kyc': {'aadhaar': {'vtc': 'Honavar', 'co': 'S/O Mahesh Palekar', 'uid': '428417881417', 'gender': 'M', 'lm': 'Kasarkod', 'yob': '1991', 'pc': '581334', 'state': 'Karnataka', 'street': 'Tonka', 'house': '#379', 'dist': 'Uttara Kannada', 'name': 'Swaraj Mahesh Palekar'}, 'gurrantor': {}}}
 
-            app.kyc_2 = kyc_obj
-        if len(kyc_json["kyc"][3]["gurrantors_f"])>0:
+            """
+            kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
+            kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
+            kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
+            kyc_obj.dob = kyc_json["aadhaar"]["yob"]
+            kyc_obj.name = kyc_json["aadhaar"]["name"]
+            kyc_obj.gender = kyc_json["aadhaar"]["gender"]
+            if kyc_json["aadhaar"].has_key("house"):
+                kyc_obj.address1 = kyc_json["aadhaar"]["house"]
+            if kyc_json["aadhaar"].has_key("lm"):
+                kyc_obj.address1 = kyc_json["aadhaar"]["lm"]
+            kyc_obj.state = kyc_json["aadhaar"]["state"]
+            kyc_obj.dist = kyc_json["aadhaar"]["dist"]
+            if kyc_json["aadhaar"].has_key("vtc"):
+                kyc_obj.taluk = kyc_json["aadhaar"]["vtc"]
+            kyc_obj.pincode = kyc_json["aadhaar"]["pc"]
+            #kyc_obj.raw = kyc_json[0]
+            app.kyc_1 = kyc_obj
+
+
+        kyc_obj = EsthenosOrgApplicationKYC()
+        if kyc_json.has_key("pan") :
+            kyc_obj.kyc_type = "PAN"
+            kyc_obj.image_id_f = kyc_json["pan"]["pancard_f"]
+        elif kyc_json.has_key("voters"):
+            kyc_obj.kyc_type = "VOTERS"
+            kyc_obj.image_id_f = kyc_json["voters"]["votercard_f"]
+            kyc_obj.image_id_b = kyc_json["voters"]["votercard_b"]
+
+        app.kyc_2 = kyc_obj
+
+        if kyc_json.has_key("gurrantor") and kyc_json["gurrantor"].has_key("gurrantors_f")and kyc_json["gurrantor"].has_key("gurrantors_b"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.type ="UNKNOWN"
-            kyc_obj.image_id_f = kyc_json["kyc"][3]["gurrantors_f"]
-            kyc_obj.image_id_b = kyc_json["kyc"][3]["gurrantors_b"]
+            kyc_obj.image_id_f = kyc_json["gurrantor"]["gurrantors_f"]
+            kyc_obj.image_id_b = kyc_json["gurrantor"]["gurrantors_b"]
             app.gkyc_1 = kyc_obj
 
-        if kyc_json["kyc"][5]["other"] > 0:
+        if kyc_json.has_key("other"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.type ="OTHER"
-            kyc_obj.image_id_f = kyc_json["kyc"][5]["other"]
+            kyc_obj.image_id_f = kyc_json["other"]["other"]
             app.other_documents.append(kyc_obj)
 
-        if kyc_json["kyc"][6]["bank_account_statement"] > 0:
+        if kyc_json.has_key("bank"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.type ="BANK_STATEMENT"
-            kyc_obj.image_id_f = kyc_json["kyc"][6]["bank_account_statement"]
+            kyc_obj.image_id_f = kyc_json["bank"]["bank_account_statement"]
             app.other_documents.append(kyc_obj)
 
-        if kyc_json["kyc"][4]["ration_f"] > 0:
+        if kyc_json.has_key("ration"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.type ="RATION"
-            kyc_obj.image_id_f = kyc_json["kyc"][4]["ration_f"]
-            kyc_obj.image_id_b = kyc_json["kyc"][4]["ration_b"]
+            kyc_obj.image_id_f = kyc_json["ration"]["ration_f"]
+            kyc_obj.image_id_b = kyc_json["ration"]["ration_b"]
             app.other_documents.append(kyc_obj)
 
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
