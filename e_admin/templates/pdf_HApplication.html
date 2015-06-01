@@ -17,6 +17,7 @@
 {% endblock %}
 {% block maincontents %}
     <table border="1" style="width:100%;margin: 10px;">
+        <tr><td width="100%"> <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/></td></tr>
         <tr>
             <td style="width:50%">
                 <label class="bank_name">Bank Name:</label>
@@ -24,17 +25,17 @@
             </td>
              <td style="width:50%">
                 <label class="bankaccount_inclusion">A/C Number:</label>
-                <label class="value">{{app.bankaccount_inclusion}}</label>
+                <label class="value">{{app.bank_account_number}}</label>
             </td>
         </tr>
         <tr>
              <td style="width:50%">
                 <label class="bankaccountholder_name">Account Holder Name:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.bank_account_holder_name}}</label>
             </td>
              <td style="width:50%">
                 <label class="bank_ifsccode">Ifsc Code:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.bank_ifsc_code}}</label>
             </td>
 
         </tr>
@@ -57,7 +58,7 @@
             </td>
              <td style="width:50%">
                 <label class="product">Product Name:</label>
-                <label class="value">{{ app.product. EsthenosOrgProduct}}</label>
+                <label class="value">{{ app.product.product_name}}</label>
             </td>
         </tr>
         <tr>
@@ -85,8 +86,8 @@
                 <label class="value">{{ app.applicant_name }}</label>
             </td>
              <td style="width:50%">
-                <label class="gkyc_1">Aadhar</label>
-                <label class="value">{{}}</label>
+                <label class="kyc_1">Aadhar</label>
+                <label class="value">{{app.kyc_1.kyc_number}}</label>
             </td>
         </tr>
         <tr>
@@ -104,15 +105,12 @@
                 <label class="member_relationship_status">Relationship Satatus:</label>
                 <label class="value">{{app.member_relationship_status}}</label>
             </td>
-             <td style="width:50%">
-                <label class="gkyc_1"></label>
-                <label class="value">{{}}</label>
-            </td>
+
         </tr>
         <tr>
              <td style="width:50%">
                 <label class=" education"> Education:</label>
-                <label class="value">{{app. education}}</label>
+                <label class="value">{{app.education}}</label>
             </td>
              <td style="width:50%">
                 <label class="member_disability">Physcial Disability:</label>
@@ -122,7 +120,7 @@
         <tr>
              <td style="width:50%">
                 <label class="">Father's/Husband Name</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.member_f_or_h_name}}</label>
             </td>
              <td style="width:50%">
                 <label class="other_documents">Others:</label>
@@ -238,10 +236,7 @@
                 <label class="gurranter_s_age">Age:</label>
                 <label class="value">{{app.gurranter_s_age}}</label>
             </td>
-             <td style="width:50%">
-                <label class="gkyc_1"></label>
-                <label class="value">{{}}</label>
-            </td>
+
         </tr>
     </table>
     <table border="1" style="width:100%;margin: 10px;">
@@ -268,7 +263,7 @@
         <tr>
              <td style="width:50%">
                 <label class="">No of Cows:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.num_cows}}</label>
 
             </td>
              <td style="width:50%">
@@ -280,11 +275,11 @@
         <tr>
              <td style="width:50%">
                 <label class="">No of Sheeps:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.num_sheeps}}</label>
             </td>
              <td style="width:50%">
                 <label class="">Orchard:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.orchard_acre}}</label>
             </td>
         </tr>
         <tr>
@@ -399,7 +394,7 @@
         <tr>
              <td style="width:50%">
                 <label class="">Education Institutes:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.village_edu_facilities}}</label>
             </td>
              <td style="width:50%">
                 <label class="fnf_inclusion">Financial  institutions:</label>
@@ -430,7 +425,7 @@
         <tr>
              <td style="width:50%">
                 <label class="">Sanitation:</label>
-                <label class="value">{{}}</label>
+                <label class="value">{{app.village_information_sanitation}}</label>
             </td>
              <td style="width:50%">
                 <label class="interested_in_other_fp">Intersted In Buying opther Produces:</label>

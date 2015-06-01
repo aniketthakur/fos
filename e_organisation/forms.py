@@ -414,6 +414,7 @@ class AddApplicationMobile(Form):
     required_loan_amount = TextField( validators=[ v.Length(max=512)]) #25000
     repayment_option = TextField( validators=[ v.Length(max=512)]) #Monthly
     bank_name = TextField( validators=[ v.Length(max=512)]) #
+    account_holder_name = TextField( validators=[ v.Length(max=512)]) #')])
     account_number = TextField( validators=[ v.Length(max=512)]) #')])
     ifsc_code = TextField( validators=[ v.Length(max=512)]) #
 
@@ -522,6 +523,8 @@ class AddApplicationMobile(Form):
 
         app.bank_name = self.bank_name.data
         app.bank_ifsc_code = self.ifsc_code.data
+        app.bank_account_holder_name = self.account_holder_name.data
+        app.bank_account_number = self.account_number.data
         app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
@@ -535,6 +538,10 @@ class AddApplicationMobile(Form):
         app.village_public_transport = self.village_information_public_transportaion.data
         app.village_water= self.village_information_water_bodies.data
         app.village_road = self.village_information_road_quality.data
+        app.village_edu_facilities =self.village_information_education_institutes.data
+        app.village_financial_institution = self.village_information_financial_institutions.data
+        app.village_information_sanitation = self.village_information_sanitation.data
+
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
         app.current_status_updated = datetime.datetime.now()
         app.upload_type = "AUTOMATIC_UPLOAD"
@@ -551,6 +558,7 @@ class AddApplicationMobile(Form):
         app.religion = self.religion.data
         app.category = self.category.data
         app.cast = ""
+
         app.education = self.education.data
         app.type_of_residence = self.type_of_house.data
         app.quality_of_house = self.quality_of_house.data
@@ -659,6 +667,8 @@ class AddApplicationMobile(Form):
 #       app.outstanding_3 =
 #       app.outstanding_4 =
 #       app.total_outstanding =
+        app.num_cows = self.family_assets_number_of_cows.data
+        app.num_sheeps = self.family_assets_number_of_sheeps.data
         if self.financial_liabilities_chits.data == "":
             app.other_outstanding_chit = 0.0
         else:
