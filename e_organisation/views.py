@@ -1106,10 +1106,13 @@ from esthenos.tasks import generate_post_grt_applications
 def disburse_document():
     if not session['role'].startswith("ORG_"):
         abort(403)
+
+    print request.form.get("group_id")
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     org  = user.organisation
+
     group = EsthenosOrgGroup.objects.get(group_id=request.form.get("group_id"))
     apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
     print request.form.get("group_id")

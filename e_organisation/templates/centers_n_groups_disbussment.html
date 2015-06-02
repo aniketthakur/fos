@@ -154,25 +154,27 @@
 
                 var disbursement_date = $("#"+$(this).attr("group-id")+"disbursement_date").val();
                 var collection_date = $("#"+$(this).attr("group-id")+"collection_date").val();
-                var cheque_no = $("#"+$(this).attr("group-id")+"cheque_no").val();
-                var fd = new FormData(document.getElementById($(this).attr("group-id")+"cheque_no"));
+
+                var formInput = document.getElementById($(this).attr("group-id")+"form");
+                var fd = new FormData(formInput);
                 fd.append("group_id", $(this).attr("group-id"));
                 fd.append("disbursement_date", disbursement_date);
                 fd.append("collection_date", collection_date);
-                fd.append("cheque_no", cheque_no);
-                var form = $($(this).attr("group-id")+'form')[0]; // You need to use standart javascript object here
-                var formData = new FormData(form);
-                console.log(disbursement_date)
-                console.log(collection_date)
-                $.ajax({
-                    url: '/disburse_group',
-                    type: 'PUT',
-                    data: form,
-                    success: function(result) {
+                console.log(formInput)
+                console.log(fd)
+                var request = new XMLHttpRequest();
+                request.open("PUT", "/disburse_group");
+                request.onload = function(oEvent) {
+                    if (oReq.status == 200) {
                         console.log(result);
                         Messenger().post(result["result"]);
+                    } else {
+
                     }
-                });
+                };
+
+                request.send(fd);
+
             });
         });
     </script>
