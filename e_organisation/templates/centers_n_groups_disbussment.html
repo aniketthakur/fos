@@ -165,7 +165,7 @@
                 var request = new XMLHttpRequest();
                 request.open("PUT", "/disburse_group");
                 request.onload = function(oEvent) {
-                    if (oReq.status == 200) {
+                    if (request.status == 200) {
                         console.log(result);
                         Messenger().post(result["result"]);
                     } else {
