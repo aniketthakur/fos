@@ -592,6 +592,35 @@ def uploads_indivijual_app():
         status=200,\
         mimetype="application/json")
 
+import pyexcel
+from flask.ext import excel
+
+@organisation_views.route('/organisation/cheque_info/<group_id>', methods=["POST"])
+@login_required
+def cheque_info_import(group_id):
+    c_user = current_user
+    print request.form
+    print request.files
+    if request.method == 'POST' and 'file' in request.files:
+        # handle file upload
+        filename = request.files['file'].filename
+        extension = filename.split(".")[1]
+        # Obtain the file extension and content
+        # pass a tuple instead of a file name
+        sheet = pyexcel.load_from_memory(extension, request.files['file'].read())
+        # then use it as usual
+        data = pyexcel.to_dict(sheet)
+        for k,v in data.items():
+            if k != "Series_1":
+                print k,v[0],v[1],v[2],v[3],v[4],v[5]
+                app = EsthenosOrgApplication.objects.filter(application_id=v[0])[0]
+                app.cheque_no = v[4]
+                app.cheque_bank_name = v[5]
+                app.save()
+
+    return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+
+
 @organisation_views.route('/uploads_indivijual_kyc', methods=["GET","POST"])
 @login_required
 def uploads_indivijual_kyc():

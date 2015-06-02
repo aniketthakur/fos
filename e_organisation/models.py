@@ -520,6 +520,7 @@ class EsthenosOrgApplication(db.Document):
     bankfi_amount=db.IntField(default=0)
     patta_land=db.StringField(max_length=512, required=False,default="")
     cheque_no=db.StringField(max_length=512, required=False,default="")
+    cheque_bank_name=db.StringField(max_length=512, required=False,default="")
     group_size=db.IntField(default=0)
     select_house_type=db.StringField(max_length=512, required=False,default="")
     village_road=db.StringField(max_length=512, required=False,default="")

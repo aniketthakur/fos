@@ -36,10 +36,9 @@
                                 <th style="width:10%">Created Date</th>
                                 <th style="width:15%">Disbursement Date</th>
                                 <th style="width:15%">1st Collection Date</th>
-                                <th style="width:15%">Cheque #</th>
-                                <th style="width:8%">Disbursement</th>
-                                <th style="width:8%">Action</th>
-                                <th style="width:8%"></th>
+                                <th style="width:25%">Cheque #</th>
+                                <th style="width:12%">Action</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -78,22 +77,26 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="file" class="form-control cheque_no {{ group.group_id }} file" name="cheque_no_{{ group.group_id }}"  id="{{ group.group_id }}cheque_no" >
-                                        </td>
-                                        <td >
-                                            <a class="btn btn-small btn-small btn-success btn-disburse" data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a>
-                                        </td>
-                                        <td class="v-align-middle">
-                                            {% if group.disbursement_pdf_link == "#" %}
-                                                <a class="btn btn-small btn-small btn-disabled" type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
-                                            {% else %}
-                                                <a class="btn btn-small btn-small btn-info" type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-small btn-small btn-success" type="button"><span aria-hidden="true" class="fa fa-check">Done</span></button>
+                                            <input type="file" class="form-control cheque_no  file" data-id="{{ group.group_id }}" name="cheque_no_file"  id="{{ group.group_id }}cheque_no" >
                                         </td>
 
+
+                                        <td class="v-align-middle">
+                                            <div class="btn-group">
+                                                <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a></li>
+                                                    <li>
+                                                        {% if group.disbursement_pdf_link == "#" %}
+                                                            <a  type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
+                                                        {% else %}
+                                                            <a  type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li><a  type="button"><span aria-hidden="true" class="fa fa-check">Disbursement Done</span></a></li>
+                                                </ul>
+                                            </div><!-- /btn-group -->
+                                        </td>
                                     </tr>
                                 </form>
 
@@ -123,6 +126,27 @@
                 autoclose: true,
                 todayHighlight: true,
                 format:'dd-mm-yyyy'
+            });
+            // select the file input (using a id would be faster)
+            $('.cheque_no').change(function() {
+                // select the form and submit
+                console.log( $(this).attr("data-id"));
+                var form = $("#"+$(this).attr("data-id")+"form"); // You need to use standart javascript object here
+                console.log(form);
+                var formData = new FormData();
+                formData.append('file', $('#'+$(this).attr("data-id")+"cheque_no")[0].files[0]);
+                Messenger().post("Submitting Cheque Info.");
+
+                $.ajax( {
+                    url: '/organisation/cheque_info/'+$(this).attr("data-id"),
+                    type: 'POST',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        Messenger().post("Cheque Info Updated");
+                    }
+                } );
             });
 
             $(".btn-disburse").click(function() {
