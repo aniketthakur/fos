@@ -1124,7 +1124,7 @@ def disburse_document():
     generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date_str,(col_date-dis_date).days))
     for app in apps:
         app.generate_disbursement = True
-        
+
         app.save()
     kwargs = locals()
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
