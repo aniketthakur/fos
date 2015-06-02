@@ -417,7 +417,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
         print disbursement_date
         print first_collection_after_indays
-        product = EsthenosOrgProduct.objects.all()[0]
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
@@ -455,8 +454,8 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
-            print "http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays)
-            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(product.loan_amount)+"/"+str(product.emi)+"/"+str(first_collection_after_indays),tf)
+            print "http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
+            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
             tmp_files.append(tf)
 
             tf = dir+ app.application_id+"_application.pdf"
