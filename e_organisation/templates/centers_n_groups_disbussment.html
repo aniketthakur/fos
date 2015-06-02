@@ -85,15 +85,15 @@
                                             <div class="btn-group">
                                                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a data-toggle="modal" href="#myModal" group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check">Disburse</span></a></li>
+                                                    <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
                                                     <li>
                                                         {% if group.disbursement_pdf_link == "#" %}
-                                                            <a  type="button" href="{{ group.disbursement_pdf_link }}" >Download</a>
+                                                            <a class="clickable-row"  href="{{ group.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a  type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
+                                                            <a class="clickable-row"  type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
                                                         {% endif %}
                                                     </li>
-                                                    <li><a  type="button"><span aria-hidden="true" class="fa fa-check">Disbursement Done</span></a></li>
+                                                    <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                         </td>
