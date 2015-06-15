@@ -1029,7 +1029,7 @@ def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.now()
-    org_name = "Hindustan Microfinance"
+    org_name = "Hindusthan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_InsuranceFees.html", **kwargs)
     try:
@@ -1059,7 +1059,7 @@ def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.now()
-    org_name = "Hindustan Microfinance"
+    org_name = "Hindusthan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Processing_Fees.html", **kwargs)
     try:
@@ -1121,7 +1121,7 @@ def admin_sanction(grp_id):
     product = apps[0].product
     print product
     disbursement_date = datetime.datetime.now()
-    org_name = "Hindustan Microfinance"
+    org_name = "Hindusthan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
     try:
@@ -1348,7 +1348,7 @@ def admin_lrpassbook():
         abort(403)
     username = current_user.name
     c_user = current_user
-    org_name = "Hindustan Microfinance"
+    org_name = "Hindusthan Microfinance"
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
@@ -1417,7 +1417,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
 
         passbook_rows.append(row)
 
-    org_name = "Hindustan Microfinance"
+    org_name = "Hindusthan Microfinance"
     kwargs = locals()
 
     body = render_template( "pdf_HindustanPassbook.html", **kwargs)

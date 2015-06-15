@@ -8,7 +8,7 @@
 
         .hinditext {
             font-family: kruti dev;
-            font-size:14px;
+            font-size:12px;
         }
         .font-small{
             font-size:10px;
@@ -37,7 +37,7 @@
 {% endblock %}
 {% block maincontents %}
 
-
+    <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
 <div class="row-fluid">
     {% for app in apps %}
         <div class="col-md-12 hinditext">
@@ -56,7 +56,7 @@
                             <span style="border: 1px solid;border-radius: 10px;padding-left: 10px;padding-right:10px ;"> keÀpe& ¬eÀ.: <u> <span class="english font-msmall">{{app.application_id }}</span></u></span> ceer/Deecne <u><span class="english font-msmall">{{ app.applicant_name }}</span> </u> mener keÀjCeej Jew³eefkeÌlekeÀefjl³ee efkebÀJee
 
                             me³egkeÌleefjl³ee efnbomgLeeve cee³e¬eÀesHeÀe³eveevme Òee. efue. ³ee kebÀHeveer keÀ[tve jkeÌkeÀce ©He³e
-                            <u> <span class="english font-msmall">{{ app.product.loan_amount }}</span> </u> De#ejer ªHe³ <u><span class="english font-msmall"> {{ app.product.loan_amount|num2words }}</span> </u>
+                            <u> <span class="english font-msmall">{{ app.product.loan_amount }}</span> </u> De#ejer  ©He³e <u><span class="english font-msmall"> {{ app.product.loan_amount|num2words }}</span> </u>
                             jesKe /OeveeosMe ¬eÀ. <u> <span class="english font-msmall">{{ app.cheque_no }}</span></u> yeBkeÀ <u><span class="english font-msmall">{{ app.cheque_bank_name }}</span></u>
                             MeeKee <u><span class="english font-msmall">{{ app.branch_name }}</span></u> keÀpe& Iesleues Demetve meoj keÀpee&®ee J³eepe oj <u><span class="english font-msmall">{{ interest_rate }}%</span></u>
                             Ieìl³ee ojeves  o.mee.o.Mes. Deens. meoj jkeÌkeÀce J³eepee menerle ceeieCeer keÀjlee®e HejleHesÀ[ keÀjC³ee®es Je®eve osles.

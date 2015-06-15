@@ -50,7 +50,7 @@
 <div class="col-md-12">
     <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
     <div class="hinditext">
-        <p>ne keÀpe& keÀjej Je neceer yee@C[ Deepe efoveebkeÀ <spam class="english">{{ disbursement_date|dateformat }}</spam> jespeer  <spam class="english">{{ disbursement_date|fulldayformat }}</spam>  n³ee efþkeÀeCeer efuentve þsJeC³eele Deeues.</p>
+        <p>ne keÀpe& keÀjej Je neceer yee@C[ Deepe efoveebkeÀ <spam class="english">{{ disbursement_date|dateformat }}</spam> jespeer  <spam class="english">{{ apps[0].group.branch.branch_name }}</spam>  n³ee efþkeÀeCeer efuentve þsJeC³eele Deeues.</p>
         <table  id="repayment" style="width: 60%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,21,2) %}
                 <tr >
@@ -77,8 +77,8 @@
        <table  id="repayment2" style="width: 100%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,21,2) %}
                 <tr >
-                    <td style="width: 50%;">{{ n }}</td>
-                    <td style="width: 50%;">{{ n + 1 }}</td>
+                    <td style="width: 50%;height: 60px;">{{ n }}</td>
+                    <td style="width: 50%;height: 60px;">{{ n + 1 }}</td>
                 </tr>
             {% endfor %}
         </table>

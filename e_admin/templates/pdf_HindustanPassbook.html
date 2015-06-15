@@ -70,6 +70,8 @@
 {% block maincontents %}
 
     <h4 class="text-center ">Passbook/ <span class="hinditext-vlarge">HeemeyegkeÀ</span></h4>
+    <span>CSP Name: {{ app.owner.first_name }} {{ app.owner.last_name }}</span><br/>
+    <span>Mobile No: {{ app.owner.postal_telephone }}</span><br/>
     <table style="width: 100%;padding: 10px;">
     <tr style="padding: 10px;">
         <td style="width: 50%;padding: 10px">
@@ -167,7 +169,7 @@
                 </tr>
 
                 <tr>
-                    <td   class="text-right">Spouse/Gurrantor Name  /&nbsp<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
+                    <td   class="text-right">Spouse/Guarantor Name  /&nbsp<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
                     <td colspan="5">{{ app.member_f_or_h_name}}</td>
                 </tr>
                 <tr>
@@ -197,10 +199,10 @@
                     <td style="width: 20%;">{{ app.product.loan_amount }}</td>
                 </tr>
                 <tr>
-                    <td   class="text-right">Loan Tenture  /&nbsp<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
+                    <td   class="text-right">Loan Tenure  /&nbsp<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
                     <td colspan="4" class="text-center">24 Months  /&nbsp<span class="hinditext">24 cenerves</span></td>
-                    <td rowspan="2" class="text-right">Interst Rate:  /&nbsp<span class="hinditext">Jîeepeoj</span></td>
-                    <td rowspan="2">{{ app.product.interest_rate }}</td>
+                    <td rowspan="2" class="text-right">Rate of Interst on Reducing Balance:  /&nbsp<span class="hinditext">Jîeepeoj</span></td>
+                    <td rowspan="2">{{ app.product.interest_rate }}%</td>
                 </tr>
                 <tr>
                     <td class="text-right" >Repayment Frequency  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
@@ -211,7 +213,7 @@
                 <tr>
                     <td  class="text-right">Repayment Day  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
                     <td class="text-center" colspan="4">{{ collection_day }} of the month</td>
-                    <td>Processing Fee  /&nbsp<span class="hinditext"></span></td>
+                    <td>Processing Fee (including 14% service tax)  /&nbsp<span class="hinditext"></span></td>
                     <td>
                         {{ app.product.processing_fee }}
                     </td>
@@ -264,7 +266,7 @@
 
 
                 <tr>
-                    <td class="text-right">Nominee (Gurrantor)  /&nbsp<span class="hinditext"></span></td>
+                    <td class="text-right">Nominee (Guarantor)  /&nbsp<span class="hinditext"></span></td>
                     {% if app.guarantor_borrowers_are_nominee == "YES" %}
                         <td colspan="3">{{ app.applicant_name }}</td>
                     {% else %}
@@ -272,13 +274,17 @@
                     {% endif %}
 
                 </tr>
+                <tr>
+                    <td class="text-right">Emi Amount:-</td>
+                    <td colspan="3">{{ app.product.emi }}</td>
+                </tr>
 
 
             </table>
 
             <div class="pull-right">_____________________________________</div>
             <br/>
-            <div class="pull-right">BM/RM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+            <div class="pull-right">BM/ABM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
         </td>
     </tr>
     </table>
