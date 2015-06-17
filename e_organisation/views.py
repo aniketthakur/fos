@@ -330,14 +330,14 @@ def grt_application_download():
     dir = tempfile.mkdtemp( prefix='pdf_')
     dir = dir+"/"
     tmp_files = list()
-    tf = dir+ group_id+"_agreement.pdf"
-    downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
-    tmp_files.append(tf)
+    tfa = dir+ group_id+"_agreement.pdf"
+    downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tfa)
+    tmp_files.append(tfa)
 
     zdir = tempfile.mkdtemp( prefix='zip_')
     zdir = zdir+"/"
     # The zip compressor
-    tf = zdir+group_id+".zip"
+    tf = zdir+group_id
     zip_custom(dir, tf)
     filehandle = open(tf, 'rb')
     data = StringIO.StringIO(filehandle.read())
