@@ -54,7 +54,16 @@
                                         </td>
                                         <td><a class="btn btn-small btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
                                         </td>
-                                        <td><input type="text" class="form-control grt_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}grt_date">
+
+                                        <td>
+                                            <div class="input-with-icon  right">
+
+                                                <div class="input-append success date col-md-11">
+                                                    <input type="text" class="form-control grt_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}grt_date" >
+                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                                </div>
+
+                                            </div>
                                         </td>
                                         <td><a class="btn btn-small btn-info " href="/grt_agreement_download?group_id={{ group.group_id }}" >Download Agreement</a>
                                         </td>
