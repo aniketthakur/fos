@@ -36,7 +36,8 @@
                                     <th style="width:25%">Group ID</th>
                                     <th style="width:25%">Group Name</th>
                                     <th style="width:25%">Questions</th>
-
+                                    <th style="width:15%">GRT Date</th>
+                                    <th style="width:25%">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -52,6 +53,10 @@
                                         <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
                                         </td>
                                         <td><a class="btn btn-small btn-primary " href="/grt_question?group_id={{ group.group_id }}" >Questions</a>
+                                        </td>
+                                        <td><input type="text" class="form-control grt_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}grt_date">
+                                        </td>
+                                        <td><a class="btn btn-small btn-info " href="/grt_agreement_download?group_id={{ group.group_id }}" >Download Agreement</a>
                                         </td>
 
                                     </tr>

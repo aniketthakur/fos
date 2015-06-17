@@ -291,6 +291,7 @@ def cgt1_application_download():
         abort(403)
     c_user = current_user
     group_id = request.args.get('group_id')
+
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
     applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=100)
@@ -302,6 +303,36 @@ def cgt1_application_download():
         tf = dir+ app.application_id+"_application.pdf"
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/"+app.application_id,tf)
         tmp_files.append(tf)
+
+    zdir = tempfile.mkdtemp( prefix='zip_')
+    zdir = zdir+"/"
+    # The zip compressor
+    tf = zdir+group_id+".zip"
+    zip_custom(dir, tf)
+    filehandle = open(tf, 'rb')
+    data = StringIO.StringIO(filehandle.read())
+    output = make_response(data.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s.zip" %group_id
+    output.headers["Content-type"] = "application/zip"
+    return output
+
+
+@organisation_views.route('/grt_agreement_download', methods=["GET"])
+@login_required
+def grt_application_download():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    group_id = request.args.get('group_id')
+    disbursement_date =request.form.get("disbursement_date")
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    dir = tempfile.mkdtemp( prefix='pdf_')
+    dir = dir+"/"
+    tmp_files = list()
+    tf = dir+ app.application_id+"_agreement.pdf"
+    downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
+    tmp_files.append(tf)
 
     zdir = tempfile.mkdtemp( prefix='zip_')
     zdir = zdir+"/"
