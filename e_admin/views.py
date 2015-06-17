@@ -1272,7 +1272,7 @@ def admin_hmpdpn(group_id):
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=250) or Q(status=272)or Q(status=276))
     disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
     kwargs = locals()
