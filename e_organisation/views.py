@@ -307,9 +307,9 @@ def cgt1_application_download():
     zdir = tempfile.mkdtemp( prefix='zip_')
     zdir = zdir+"/"
     # The zip compressor
-    tf = zdir+group_id+".zip"
+    tf = zdir+group_id
     zip_custom(dir, tf)
-    filehandle = open(tf, 'rb')
+    filehandle = open(tf+".zip", 'rb')
     data = StringIO.StringIO(filehandle.read())
     output = make_response(data.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=%s.zip" %group_id
@@ -339,7 +339,7 @@ def grt_application_download():
     # The zip compressor
     tf = zdir+group_id
     zip_custom(dir, tf)
-    filehandle = open(tf, 'rb')
+    filehandle = open(tf+".zip", 'rb')
     data = StringIO.StringIO(filehandle.read())
     output = make_response(data.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=%s.zip" %group_id
