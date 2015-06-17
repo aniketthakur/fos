@@ -330,7 +330,7 @@ def grt_application_download():
     dir = tempfile.mkdtemp( prefix='pdf_')
     dir = dir+"/"
     tmp_files = list()
-    tf = dir+ app.application_id+"_agreement.pdf"
+    tf = dir+ group_id+"_agreement.pdf"
     downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
     tmp_files.append(tf)
 
