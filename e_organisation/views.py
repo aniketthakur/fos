@@ -324,7 +324,7 @@ def grt_application_download():
         abort(403)
     c_user = current_user
     group_id = request.args.get('group_id')
-    disbursement_date =request.form.get("disbursement_date")
+    disbursement_date =request.args.get("disbursement_date")
     user = EsthenosUser.objects.get(id=c_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
     dir = tempfile.mkdtemp( prefix='pdf_')

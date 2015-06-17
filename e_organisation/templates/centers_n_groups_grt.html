@@ -65,7 +65,7 @@
 
                                             </div>
                                         </td>
-                                        <td><a class="btn btn-small btn-info " href="/grt_agreement_download?group_id={{ group.group_id }}" >Download Agreement</a>
+                                        <td><a class="btn btn-small btn-info btn-download-la" data-id="{{ group.group_id }}" href="#" >Download Agreement</a>
                                         </td>
 
                                     </tr>
@@ -168,6 +168,22 @@
                     }
                 });
             });
+
+            //Date Pickers
+            $('.input-append.date').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format:'dd-mm-yyyy'
+            });
+
+            $(".btn-download-la").click(function(e){
+                e.preventDefault();
+                url = "/grt_agreement_download?group_id="+$(this).attr("data-id")+"&disbursement_date="+$("#"+$(this).attr("data-id")+"grt_date").val();
+                console.log(url);
+                var redirectWindow = window.open(url, '_blank');
+                redirectWindow.location;
+            });
+
         });
     </script>
 {% endblock %}
