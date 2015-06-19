@@ -88,7 +88,7 @@
 {% endblock %}
 {% block maincontents %}
     <span class="pull-right">{{ disbursement_date|dateformat }}</span>
-    <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
+    <img width="100%" style="margin-left: 6px;" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
 
     <table border="1" style="width:100%;margin: 10px;">
         <tr><td width="100%" colspan="2"></td></tr>
@@ -145,7 +145,7 @@
     </table>
     <table border="1" style="width:100%;margin: 10px;">
         <tr>
-             <td >
+             <td  style="width:50%">
                 Name: 
                 {{ app.applicant_name }}
             </td>
@@ -162,7 +162,7 @@
             </td>
         </tr>
         <tr>
-             <td style="width:100%" colspan="2">
+             <td  colspan="2">
                 Relationship Status:{{app.member_relationship_status}}
             </td>
 
@@ -352,6 +352,9 @@
 
 
     </table>
+    <br/>
+    <br/>
+    <br/>
     <table border="0" style="width:100%;margin: 10px;">
         <tr><td style="width: 50%;">Date:</td><td>CSP Name:{{ app.owner.first_name }} {{ app.owner.last_name }}</td></tr>
         <tr><td></td><td ><br/>CSP Signature:</td></tr>
@@ -365,8 +368,9 @@
 
 
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <p class="text-center">----------------------------------------------------------------------------</p>
+    <br/><br/><br/><br/>
     <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/app_pg1_bottom.png">
 {#    <table border="1" style="width:100%;margin: 10px;">#}
 {#        <tr>#}
