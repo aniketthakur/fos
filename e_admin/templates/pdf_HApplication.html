@@ -88,7 +88,7 @@
 {% endblock %}
 {% block maincontents %}
     <span class="pull-right">{{ disbursement_date|dateformat }}</span>
-    <img width="100%" style="margin-left: 6px;" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
+    <img width="100%" style="margin-left: 8px;" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
 
     <table border="1" style="width:100%;margin: 10px;">
         <tr><td width="100%" colspan="2"></td></tr>
@@ -260,9 +260,10 @@
         <p class="pull-right">mLeU:<br/>
             efoveebkeÀ: <span class="english_font">{{ disbursement_date|dateformat }}</span></p>
     </div>
-    <br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/>
     <br/><br/>
     <p class="text-center">---------------------------------------------------------------------------------------------</p>
+    <br/><br/><br/>
     <div style="width: 100%;">
         <span class="text-center hinditext-large">ûeenkeÀ Hees®eHeeJeleer</span>
         <br/>
@@ -281,7 +282,7 @@
     <br/><br/><br/><br/>
     <table border="1" style="width:100%;margin: 10px;">
         <tr>
-             <td >
+             <td style="width: 50%;">
                 Gurantor's Relationship with Borroweer:{{app.gurantor_s_relationship_with_borrower}}
             </td>
              <td >
@@ -369,8 +370,9 @@
 
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <p class="text-center">----------------------------------------------------------------------------</p>
     <br/><br/><br/><br/>
+    <p class="text-center">----------------------------------------------------------------------------</p>
+
     <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/app_pg1_bottom.png">
 {#    <table border="1" style="width:100%;margin: 10px;">#}
 {#        <tr>#}
