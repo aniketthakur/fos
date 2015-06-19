@@ -9,6 +9,75 @@
             font-size: 12px;
             font-family: "Courier New";
         }
+
+        .english_font{
+            font-size: 12px;
+            font-family: "Courier New";
+        }
+    </style>
+{% endblock %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        @font-face {
+            font-family: kruti dev ;
+            src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+        }
+
+        .hinditext {
+            font-family: kruti dev;
+            font-size:10px;
+        }
+        .hinditext-large {
+            font-family: kruti dev;
+            font-size:16px;
+        }
+        .hinditext-vlarge {
+            font-family: kruti dev;
+            font-size:22px;
+        }
+
+        .hinditext {
+            font-family: kruti dev;
+            font-size:12px;
+        }
+        .hinditext-large {
+            font-family: kruti dev;
+            font-size:16px;
+        }
+        .hinditext-vlarge {
+            font-family: kruti dev;
+            font-size:22px;
+        }
+
+        .condensed tr{
+            font-size:8px;
+            line-height: 15px;
+            min-height: 15px;
+            height: 15px;
+        }
+        .font-large{
+            font-size:22px;
+        }
+        .font-small{
+            font-size:8px;
+        }
+        .font-vsmall{
+            font-size:7px;
+        }
+        .font-small tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:8px;
+        }
+
+        .font-msmall tr{
+            line-height: 20px;
+            min-height: 20px;
+            height: 20px;
+            font-size:9px;
+        }
+
     </style>
 {% endblock %}
 
@@ -16,9 +85,21 @@
 
 {% endblock %}
 {% block maincontents %}
+    <span class="pull-right">{{ disbursement_date|dateformat }}</span>
+    <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
+    <div class="hinditext">
+        <span class="text-center">Jeejmeoej peenerjveecee </span>
+        <p>ceer    <span class="english_font">{{ app.applicant_name }}</span>      Depe&oej ³eeb®ee Heefle / cegueiee, meemeje
+            <span class="english_font">_____________________________</span>                           Demegve Depe&oej cnCepes®e ceePeer
+            <span class="english_font">_____________________________</span>     (veeles efueneJes) ner  <span class="english_font">{{ app.group.group_name }}</span>
+            J.L.G ieìe®eer meYeemeo Demetve, leer efnbogmLeeve cee³e¬eÀesHeÀe³eveevme Òee.efue. ³eeb®eskeÀ[tve keÀpe& Iesle Deens ³ee®es ceuee HegCe& keÀuHevee Deens. meojerue  keÀpee&efJe<e³eer®es meJe& efve³ece Je Deìer ceuee mecepeeJetve meebefieleuesu³ee Deensle Je les ceuee ceev³e Deensle ³ee keÀpee&®³ee HejleHesÀ[er®eer peyeeyeoejer Jeejmeoej ³ee veel³eeves ceePeer osKeerue Deens, ³ee®es ceuee HegCe& keÀuHevee Deens.</p>
+        <p class="pull-left">Jeejmeoeje®eer mener: <br/>Jeejmeoeje®es veeJe:  <span class="english_font">{{ app.applicant_name }}</span>
+        <p class="pull-right">mLeU:<br/>
+            efoveebkeÀ: <span class="english_font">{{ disbursement_date|dateformat }}</span></p>
+    </div>
     <table border="1" style="width:100%;margin: 10px;">
-        <tr><td width="100%" colspan="2"><span class="pull-right">{{ disbursement_date|dateformat }}</span></td></tr>
-        <tr><td width="100%" colspan="2"> <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/></td></tr>
+        <tr><td width="100%" colspan="2"></td></tr>
+        <tr><td width="100%" colspan="2"> </td></tr>
         <tr>
             <td style="width:50%">
                 <label class="bank_name">Bank Name:</label>
@@ -87,7 +168,7 @@
                 <label class="value">{{ app.applicant_name }}</label>
             </td>
              <td style="width:50%">
-                <label class="kyc_1">Aadhar</label>
+                <label class="kyc_1">Aadhaar No:</label>
                 <label class="value">{{app.kyc_1.kyc_number}}</label>
             </td>
         </tr>
@@ -103,7 +184,7 @@
         </tr>
         <tr>
              <td style="width:100%" colspan="2">
-                <label class="member_relationship_status">Relationship Satatus:</label>
+                <label class="member_relationship_status">Relationship Status:</label>
                 <label class="value">{{app.member_relationship_status}}</label>
             </td>
 
@@ -114,13 +195,13 @@
                 <label class="value">{{app.education}}</label>
             </td>
              <td style="width:50%">
-                <label class="member_disability">Physcial Disability:</label>
+                <label class="member_disability">Physical Disability:</label>
                 <label class="value">{{app.member_disability}}</label>
             </td>
         </tr>
         <tr>
              <td style="width:100%" colspan="2">
-                <label class="">Father's/Husband Name</label>
+                <label class="">Father's/Husband's Name</label>
                 <label class="value">{{app.member_f_or_h_name}}</label>
             </td>
 
@@ -131,7 +212,7 @@
                 <label class="value">{{app.address}}</label>
             </td>
              <td style="width:50%">
-                <label class="family_size">Number of family Member:</label>
+                <label class="family_size">Number of family Members:</label>
                 <label class="value">{{app.family_size}}</label>
             </td>
         </tr>
@@ -165,7 +246,7 @@
 
             </td>
              <td style="width:50%">
-                <label class="children_below18">Member Less than 18:</label>
+                <label class="children_below18">Members Less than 18:</label>
                 <label class="value">{{app.children_below18}}</label>
             </td>
         </tr>
@@ -175,7 +256,7 @@
                 <label class="value">{{app.member_country}}</label>
             </td>
              <td style="width:50%">
-                <label class="children_above18">Member Above18:</label>
+                <label class="children_above18">Members Above18:</label>
                 <label class="value">{{app.children_above18}}</label>
             </td>
         </tr>
@@ -208,6 +289,22 @@
         </tr>
 
     </table>
+    <p class="text-center">------------------------------------------------------------------------------------------------------------------</p>
+    <div style="width: 100%;">
+        <span class="text-center hinditext">ûeenkeÀ Hees®eHeeJeleer</span>
+        <span class="pull-left hinditext">veeJe:</span>
+        <p class="hinditext">
+        Deece®³ee cee³e¬eÀes¬esÀef[ì ueesve Òee@[keÌì Debleie&le Deecneuee DeeHeuee   20000<span class="english_font">/(Apply amt)-</span>  ©.meeþer keÀpe& ceeieCeer Depe& efceUeuesuee Deens.<br/>
+        Deece®³ee Debleie&le ceeie&oMe&keÀ met®eveebvegmeej legcner efouesu³ee keÀpe& ceeieCeer Depee&®³ee Hees®e HeeJeleer veblej peemleerle peemle 18 keÀecekeÀepeer³e efoJemeeble l³ee®³eeJej efveCe&³e IesTve Heg{erue Òeef¬eÀ³ee HetCe& keÀsueer peeF&ue.<br/>
+            </p>
+
+
+        <p class="pull-left">
+        <span class="hinditext">efoveebkeÀ</span>:  {{ disbursement_date|dateformat }} <br/>
+        <span class="hinditext">efmekeÌkeÀe</span>
+        </p>
+        <span class="pull-right hinditext"> DeefOekeÀeN³ee®eer mener Je </span>
+    </div>
     <table border="1" style="width:100%;margin: 10px;">
         <tr>
              <td style="width:50%">
@@ -215,23 +312,23 @@
                 <label class="value">{{app.gurantor_s_relationship_with_borrower}}</label>
             </td>
              <td style="width:50%">
-                <label class="gurantors_borrowers_are_nominee_for_each_other_">Gurantor-Borrowers are nominee for each other</label>
+                <label class="gurantors_borrowers_are_nominee_for_each_other_">Gurantor-Borrower's are nominee for each other</label>
                 <label class="value">{{app.gurantors_borrowers_are_nominee_for_each_other_}}</label>
             </td>
         </tr>
         <tr>
              <td style="width:50%">
-                <label class="gurantors_nominee_name">Name:</label>
+                <label class="gurantors_nominee_name">Gurantor'sName:</label>
                 <label class="value">{{app.gurantors_nominee_name}}</label>
             </td>
              <td style="width:50%">
-                <label class="gurranter_s_sex">Sex:</label>
+                <label class="gurranter_s_sex">Gurantor's Sex:</label>
                 <label class="value">{{app.gurranter_s_sex}}</label>
             </td>
         </tr>
         <tr>
              <td style="width:100%" colspan="2">
-                <label class="gurranter_s_age">Age:</label>
+                <label class="gurranter_s_age">Gurantor's Age:</label>
                 <label class="value">{{app.gurranter_s_age}}</label>
             </td>
 
@@ -258,6 +355,7 @@
 {#                <label class="value">{{app.drinking_water}}</label>#}
 {#            </td>#}
         </tr>
+        <tr><td><img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/app_pg1_bottom.png"></td></tr>
 {#        <tr>#}
 {#             <td style="width:50%">#}
 {#                <label class="">No of Cows:</label>#}
