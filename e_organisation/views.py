@@ -793,7 +793,7 @@ def get_centers_n_groups():
             })
     groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
     for grp in groups:
-        applications_all = EsthenosOrgApplication.objects.filter(group=group)
+        applications_all = EsthenosOrgApplication.objects.filter(group=grp)
         applications_cgt_ready = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
         if(len(applications_all)>0 and len(applications_all)>len(applications_cgt_ready)):
             all_group_list.append({'id':str(grp.group_id),
