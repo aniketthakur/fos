@@ -38,7 +38,9 @@
             min-height: 15px;
             height: 15px;
         }
-
+        .font-large{
+            font-size:22px;
+        }
         .font-small{
             font-size:8px;
         }
@@ -69,7 +71,7 @@
 {% endblock %}
 {% block maincontents %}
 
-    <h4 class="text-center ">Passbook/ <span class="hinditext-vlarge">HeemeyegkeÀ</span></h4>
+    <span class="text-center font-large">Passbook/ <span class="hinditext-vlarge">HeemeyegkeÀ</span></span>
     <span class="pull-right font-vsmall">CSP Name: {{ app.owner.first_name }} {{ app.owner.last_name }} &nbsp&nbsp&nbsp&nbsp&nbsp</span>
     <span class="pull-right font-vsmall">Mobile No: {{ app.owner.postal_telephone }}</span><br/>
     <table style="width: 100%;padding: 10px;">
