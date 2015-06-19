@@ -17,6 +17,7 @@
 {% endblock %}
 {% block maincontents %}
     <table border="1" style="width:100%;margin: 10px;">
+        <tr><td width="100%" colspan="2"><span class="pull-right">{{ disbursement_date|dateformat }}</span></td></tr>
         <tr><td width="100%" colspan="2"> <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/></td></tr>
         <tr>
             <td style="width:50%">
@@ -101,7 +102,7 @@
             </td>
         </tr>
         <tr>
-             <td style="width:50%">
+             <td style="width:100%" colspan="2">
                 <label class="member_relationship_status">Relationship Satatus:</label>
                 <label class="value">{{app.member_relationship_status}}</label>
             </td>
@@ -118,7 +119,7 @@
             </td>
         </tr>
         <tr>
-             <td style="width:50%">
+             <td style="width:100%" colspan="2">
                 <label class="">Father's/Husband Name</label>
                 <label class="value">{{app.member_f_or_h_name}}</label>
             </td>
@@ -248,7 +249,7 @@
             </td>
         </tr>
         <tr>
-             <td style="width:50%">
+             <td style="width:100%" colspan="2">
                 <label class="house_stay_duration">How Long are you Staying in house(in years):</label>
                 <label class="value">{{app.house_stay_duration}}</label>
             </td>
