@@ -89,16 +89,7 @@
 {% block maincontents %}
     <span class="pull-right">{{ disbursement_date|dateformat }}</span>
     <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
-    <div class="hinditext">
-        <span class="text-center">Jeejmeoej peenerjveecee </span>
-        <p>ceer    <span class="english_font">{{ app.applicant_name }}</span>      Depe&oej ³eeb®ee Heefle / cegueiee, meemeje
-            <span class="english_font">_____________________________</span>                           Demegve Depe&oej cnCepes®e ceePeer
-            <span class="english_font">_____________________________</span>     (veeles efueneJes) ner  <span class="english_font">{{ app.group.group_name }}</span>
-            J.L.G ieìe®eer meYeemeo Demetve, leer efnbogmLeeve cee³e¬eÀesHeÀe³eveevme Òee.efue. ³eeb®eskeÀ[tve keÀpe& Iesle Deens ³ee®es ceuee HegCe& keÀuHevee Deens. meojerue  keÀpee&efJe<e³eer®es meJe& efve³ece Je Deìer ceuee mecepeeJetve meebefieleuesu³ee Deensle Je les ceuee ceev³e Deensle ³ee keÀpee&®³ee HejleHesÀ[er®eer peyeeyeoejer Jeejmeoej ³ee veel³eeves ceePeer osKeerue Deens, ³ee®es ceuee HegCe& keÀuHevee Deens.</p>
-        <p class="pull-left">Jeejmeoeje®eer mener: <br/>Jeejmeoeje®es veeJe:  <span class="english_font">{{ app.applicant_name }}</span>
-        <p class="pull-right">mLeU:<br/>
-            efoveebkeÀ: <span class="english_font">{{ disbursement_date|dateformat }}</span></p>
-    </div>
+
     <table border="1" style="width:100%;margin: 10px;" class="english_font_small">
         <tr><td width="100%" colspan="2"></td></tr>
         <tr><td width="100%" colspan="2"> </td></tr>
@@ -291,6 +282,17 @@
         </tr>
 
     </table>
+    <div class="hinditext">
+        <span class="text-center">Jeejmeoej peenerjveecee </span>
+        <p>ceer    <span class="english_font">{{app.gurantors_nominee_name}}</span>      Depe&oej ³eeb®ee Heefle / cegueiee, meemeje
+            <span class="english_font">_____________________________</span>                           Demegve Depe&oej cnCepes®e ceePeer
+            <span class="english_font">_____________________________</span>     (veeles efueneJes) ner  <span class="english_font">{{ app.group.group_name }}
+            J.L.G </span> ieìe®eer meYeemeo Demetve, leer efnbogmLeeve cee³e¬eÀesHeÀe³eveevme Òee.efue. ³eeb®eskeÀ[tve keÀpe& Iesle Deens ³ee®es ceuee HegCe& keÀuHevee Deens. meojerue  keÀpee&efJe<e³eer®es meJe& efve³ece Je Deìer ceuee mecepeeJetve meebefieleuesu³ee Deensle Je les ceuee ceev³e Deensle ³ee keÀpee&®³ee HejleHesÀ[er®eer peyeeyeoejer Jeejmeoej ³ee veel³eeves ceePeer osKeerue Deens, ³ee®es ceuee HegCe& keÀuHevee Deens.</p>
+        <p class="pull-left">Jeejmeoeje®eer mener: <br/>Jeejmeoeje®es veeJe:  <span class="english_font">{{app.gurantors_nominee_name}}</span>
+        <p class="pull-right">mLeU:<br/>
+            efoveebkeÀ: <span class="english_font">{{ disbursement_date|dateformat }}</span></p>
+    </div>
+
     <p class="text-center">------------------------------------------------------------------------------------------------------------------</p>
     <div style="width: 100%;">
         <span class="text-center hinditext-large">ûeenkeÀ Hees®eHeeJeleer</span>
