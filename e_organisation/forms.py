@@ -594,6 +594,13 @@ class AddApplicationMobile(Form):
         app.repayment_method = self.repayment_option.data
         app.applicant_name = self.name.data
         app.dob = self.dob_yob.data
+        from esthenos.tasks import calculate_age
+
+        if len(app.dob) == 4:
+            app.age = calculate_age(datetime.datetime(year=int(app.dob), month=1, day=1).date())
+        elif len(app.dob) >4:
+            date_obj = datetime.datetime.strptime(app.dob, "%d/%m/%Y")
+            app.age = calculate_age(date_obj)
 
         app.address = self.address.data
         app.primary_business = self.primary_business_activities.data
