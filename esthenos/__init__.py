@@ -21,11 +21,13 @@ mainapp.config.update(
     DEBUG = True,
     TESTING = False,
     MONGODB_SETTINGS = {
-        'HOST': '127.0.0.1',#
-        'PORT': 27017,
-        'DB': 'test_v2',
-        'TZ_AWARE': True,
+        'HOST': 'ds047742.mongolab.com',#
+        'PORT': 47742,
+        'DB': 'testdb',
+        #'TZ_AWARE': True,
         #'replicaset':"rs0"
+        'USERNAME':'dbuser',
+        'PASSWORD':'dbpassword'
     },
 )
 
