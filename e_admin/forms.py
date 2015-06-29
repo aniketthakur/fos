@@ -7,7 +7,7 @@ from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,\
-    EsthenosOrgState,EsthenosOrgGRTTemplateQuestion,EsthenosOrgTeleCallingTemplateQuestion
+    EsthenosOrgState,EsthenosOrgTeleCallingTemplateQuestion
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
@@ -218,18 +218,18 @@ class AddOrganisationProductForm( Form):
 
 
 
-class AddOrgGRTTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
-
-    def save( self):
-        ques=EsthenosOrgGRTTemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-        return ques
+# class AddOrgGRTTemplateQuestionsForm( Form):
+#     question=TextField( validators=[v.Length(max=2048)])
+#     question_hindi=TextField( validators=[v.Length(max=2048)])
+#     org_id=TextField( validators=[ v.Length(max=255)])
+#
+#     def save( self):
+#         ques=EsthenosOrgGRTTemplateQuestion()
+#         ques.question=self.question.data
+#         ques.question_regional = self.question_hindi.data
+#         ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+#         ques.save()
+#         return ques
 
 # class AddOrgCGT1TemplateQuestionsForm( Form):
 #     question=TextField( validators=[v.Length(max=2048)])
