@@ -551,7 +551,7 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
-from .forms import AddOrgGRTTemplateQuestionsForm,AddOrgCGT1TemplateQuestionsForm,AddOrgCGT2TemplateQuestionsForm
+from .forms import AddOrgGRTTemplateQuestionsForm,AddOrgCGT2TemplateQuestionsForm
 from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
