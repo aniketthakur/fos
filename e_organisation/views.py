@@ -1070,7 +1070,7 @@ def check_cgt1():
     kwargs = locals()
     return render_template("centers_n_groups_cgt1.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgGroupGRTSession,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
+from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgGroupGRTSession,EsthenosOrgCGT2TemplateQuestion
 @organisation_views.route('/cgt1_question', methods=["GET","POST"])
 @login_required
 def cgt1_question():

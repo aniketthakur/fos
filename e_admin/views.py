@@ -552,7 +552,7 @@ def admin_organisation_product(org_id):
         return abort(403)
 
 from .forms import AddOrgGRTTemplateQuestionsForm,AddOrgCGT2TemplateQuestionsForm
-from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
+from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgCGT2TemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
 def grt_questions(org_id):

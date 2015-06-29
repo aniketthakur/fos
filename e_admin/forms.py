@@ -7,7 +7,7 @@ from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from .models import EsthenosUser
 from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,\
-    EsthenosOrgState,EsthenosOrgGRTTemplateQuestion,EsthenosOrgTeleCallingTemplateQuestion,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
+    EsthenosOrgState,EsthenosOrgGRTTemplateQuestion,EsthenosOrgTeleCallingTemplateQuestion,EsthenosOrgCGT2TemplateQuestion
 from e_admin.models import EsthenosUser
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser,EsthenosSettings
