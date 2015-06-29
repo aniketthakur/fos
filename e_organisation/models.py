@@ -293,14 +293,14 @@ class EsthenosOrgGRTTemplateQuestion(db.Document):
 #         return "EsthenosOrgCGT1TemplateQuestion"
 
 
-class EsthenosOrgCGT2TemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
-
-    def __unicode__(self):
-        return "EsthenosOrgCGT2TemplateQuestion"
+# class EsthenosOrgCGT2TemplateQuestion(db.Document):
+#     question=db.StringField(max_length=1024,required=True)
+#     question_regional = db.StringField(max_length=1024,required=True)
+#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
+#     organisation = db.ReferenceField('EsthenosOrg')
+#
+#     def __unicode__(self):
+#         return "EsthenosOrgCGT2TemplateQuestion"
 
 
 class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
