@@ -27,13 +27,13 @@
             <div class="grid simple">
                 <h1>Psychometric Questions </h1>
                 <div class="grid-body no-border invoice-body"> <br>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
                                 <td style="width: 5%;">{{ loop.index }}</td>
                                 <td style="width: 45%;">{{ question.question }}</td>
                                 <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                                <td style="width: 5%;"><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
                             </tr>
                         {% endfor %}
 
@@ -42,7 +42,7 @@
                                 <td style="width: 5%;">{{ loop.index }}</td>
                                 <td style="width: 45%;">{{ answer.answer }}</td>
                                 <td style="width: 45%;" class="hinditext">{{ answer.answer_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                                <td style="width: 5%;"><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -119,5 +119,10 @@
         $(document).ready(function(){
 
         });
+
+        function deletefunction(r){
+         var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("tablesoop").deleteRow(i);
+        }
     </script>
 {% endblock %}
