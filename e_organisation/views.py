@@ -1070,7 +1070,7 @@ def check_tele_applicant_questions():
 #     kwargs = locals()
 #     return render_template("centers_n_groups_cgt1.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgGroupGRTSession
+# from e_organisation.models import EsthenosOrgGroupGRTSession
 # @organisation_views.route('/cgt1_question', methods=["GET","POST"])
 # @login_required
 # def cgt1_question():
@@ -1363,7 +1363,7 @@ def admin_organisation_add_emp():
         kwargs = locals()
         return render_template("org_add_emp.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgGroupGRTSession
+# from e_organisation.models import EsthenosOrgGroupGRTSession
 # @organisation_views.route('/grt_question', methods=["GET","POST"])
 # @login_required
 # def grt_question():

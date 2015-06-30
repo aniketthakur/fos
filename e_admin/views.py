@@ -624,9 +624,13 @@ def psychometric_questions(org_id):
             return render_template("admin_organisation_psychometric_questions.html", **kwargs)
         else:
             question=AddOrgPsychometricTemplateQuestionsForm(request.form)
-            if(question.validate()):
+            # answer=AddOrgPsychometricTemplateQuestionsForm(request.form)
+            if(question.validate):
                 print "Product Details Validated,Saving the form"
                 question.save()
+                print "save answer"
+                # answer.save()
+                print "not saved answer"
                 org = EsthenosOrg.objects.get(id=org_id)
                 c_user = current_user
                 user = EsthenosUser.objects.get(id=c_user.id)

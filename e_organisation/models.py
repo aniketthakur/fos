@@ -255,23 +255,23 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
-class EsthenosOrgGroupGRTSession(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
-
-class EsthenosOrgGroupCGT1Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
-
-class EsthenosOrgGroupCGT2Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
+# class EsthenosOrgGroupGRTSession(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
+#
+# class EsthenosOrgGroupCGT1Session(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
+#
+# class EsthenosOrgGroupCGT2Session(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
 
 # class EsthenosOrgGRTTemplateQuestion(db.Document):
 #     question=db.StringField(max_length=1024,required=True)
@@ -285,6 +285,8 @@ class EsthenosOrgGroupCGT2Session(db.Document):
 class EsthenosOrgPsychometricTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
+    answer=db.StringField(max_length=1024,required=True)
+    answer_regional=db.StringField(max_length=1024,required=True)
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 

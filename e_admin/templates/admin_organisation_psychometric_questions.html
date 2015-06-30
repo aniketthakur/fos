@@ -37,14 +37,14 @@
                             </tr>
                         {% endfor %}
 
-                         <!--{% for answer in questions %}-->
-                            <!--<tr>-->
-                                <!--<td style="width: 5%;">{{ loop.index }}</td>-->
-                                <!--<td style="width: 45%;">{{ answer.question }}</td>-->
-                                <!--<td style="width: 45%;" class="hinditext">{{ answer.question_regional }}</td>-->
-                                <!--<td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>-->
-                            <!--</tr>-->
-                        <!--{% endfor %}-->
+                         {% for answer in questions %}
+                            <tr>
+                                <td style="width: 5%;">{{ loop.index }}</td>
+                                <td style="width: 45%;">{{ answer.answer }}</td>
+                                <td style="width: 45%;" class="hinditext">{{ answer.answer_regional }}</td>
+                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                            </tr>
+                        {% endfor %}
                     </table>
 
                 </div>
@@ -64,34 +64,34 @@
                             <table class="table table-bordered">
                                <tr>
                                    <td>
-                                      <b>A</b>  <input type="text" placeholder="enter new answer here" class="form-control text-left" name="question" id="answer" />
+                                      <b>A</b>  <input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer" />
                                    </td>
                                     <td>
-                                      <b>A</b>  <input type="text" placeholder="enter new answer in regional language" class="form-control text-left" name="question" id="answer1" />
+                                      <b>A</b>  <input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer1" />
                                    </td>
                                </tr>
                                 <tr>
                                     <td>
-                                         <b>B</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="question" id="answer2" />
+                                         <b>B</b><input type="text" placeholder="enter new answer here" class="form-control text-left " name="answer" id="answer2" />
                                     </td>
                                     <td>
-                                         <b>B</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left" name="question" id="answer3" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                         <b>C</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="question" id="answer4" />
-                                    </td>
-                                    <td>
-                                         <b>C</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left" name="question" id="answer5" />
+                                         <b>B</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer3" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                         <b>D</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="question" id="answer6" />
+                                         <b>C</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer4" />
                                     </td>
                                     <td>
-                                         <b>D</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left" name="question" id="answer7" />
+                                         <b>C</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer5" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                         <b>D</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer6" />
+                                    </td>
+                                    <td>
+                                         <b>D</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer7" />
                                     </td>
                                 </tr>
                                 </table>
