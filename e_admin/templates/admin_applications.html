@@ -78,23 +78,23 @@
                     <table class="table table-hover table-condensed" id="loan-applications">
                         <thead>
                         <tr>
-                            <th style="width:5%" >
+                            <th width="5"  >
                                 <div class="checkbox check-default">
                                     <input id="checkbox10" type="checkbox" value="1" class="checkall">
                                     <label for="checkbox10"></label>
                                 </div>
                             </th>
-                            <th style="width:15%">Application ID</th>
-                            <th style="width:10%">Date</th>
+                            <th width="15" class="text-center">Application ID</th>
+                            <th width="10"  class="text-center">Date</th>
                             <!--<th style="width:10%">Source</th>-->
-                            <th style="width:15%">Status</th>
+                            <th width="15"  class="text-center">Status</th>
 
-                            <th style="width:10% ">Progress Status</th>
+                            <th width="10"  class="text-center">Progress Status</th>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
-                            <th style="width:20%;" class="text-center">Action</th>
+                            <th width="20" class="text-center">Action</th>
                             {% endif %}
-                            <th style="width:10%">Application Log</th>
-                            <th style="width:10%">FOS</th>
+                            <th width="10"  class="text-center">Application Log</th>
+                            <th width="10"  class="text-center">FOS</th>
                         </tr>
                         </thead>
                         <tbody>
