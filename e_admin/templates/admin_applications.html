@@ -93,6 +93,7 @@
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <th style="width:30%;" class="text-center">Action</th>
                             {% endif %}
+                            <th style="...">Application Log</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -104,11 +105,11 @@
                                     <label for="checkbox{{ loop.index }}"></label>
                                 </div>
                             </td>
-{#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}
-{#                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>#}
-{#                            {% else %}#}
-                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
-{#                            {% endif %}#}
+<!--{#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}-->
+                                <td class="v-align-middle "></td>
+<!--{#                            {% else %}#}-->
+                                <!--<td class="v-align-middle clickable-row" ></td>-->
+<!--{#                            {% endif %}#}-->
                             <td><span class="muted">{{ app.date_created }}</span>
                             </td>
                             <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
@@ -126,6 +127,12 @@
                                 <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/track" >Status</a>
                                 {% endif %}
                             </td>
+                            {#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}
+{#                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>#}
+{#                            {% else %}#}
+                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
+{#                            {% endif %}#}
+
 
                         </tr>
                         {% endfor %}
