@@ -30,19 +30,19 @@
                     <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
-                                <td style="width: 5%;">{{ loop.index }}</td>
-                                <td style="width: 45%;">{{ question.question }}</td>
-                                <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
+                                <td width="5">{{ loop.index }}</td>
+                                <td width="181">{{ question.question }}</td>
+                                <td width="181"  class="hinditext">{{ question.question_regional }}</td>
+                                <td width="46" ><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
                             </tr>
                         {% endfor %}
 
                          {% for answer in questions %}
                             <tr>
-                                <td style="width: 5%;">{{ loop.index }}</td>
-                                <td style="width: 45%;">{{ answer.answer }}</td>
-                                <td style="width: 45%;" class="hinditext">{{ answer.answer_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
+                                <td width="5" >{{ loop.index }}</td>
+                                <td width="181" >{{ answer.answer }}</td>
+                                <td width="181"  class="hinditext">{{ answer.answer_regional }}</td>
+                                <td width="46" ><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -98,7 +98,7 @@
 
                         </div>
 
-                        <input type="hidden" style="width: 80px;" value="{{ org.id }}" name="org_id" id="org_id" />
+                        <input type="hidden" width="80px"  value="{{ org.id }}" name="org_id" id="org_id" />
                         <div class="form-actions">
 
                             <div class="pull-right">
