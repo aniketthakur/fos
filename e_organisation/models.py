@@ -1,4 +1,6 @@
 from wtforms.validators import required
+# from e_organisation.views import check_tele_applicant_questions
+
 
 __author__ = 'prathvi'
 import datetime
@@ -281,6 +283,13 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
 #
 #     def __unicode__(self):
 #         return "EsthenosOrgCGTTemplateQuestion"
+
+# class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
+#       organisation = db.ReferenceField('EsthenosOrg',required=True)
+#       group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#       questions=db.DictField(required=False)
+#       score=db.FloatField(default=0,required=False)
+
 
 class EsthenosOrgPsychometricTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)

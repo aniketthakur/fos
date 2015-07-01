@@ -295,6 +295,43 @@ def admin_reports():
 #         status=200,\
 #         mimetype="application/json")
 
+@organisation_views.route('/group/status/psychometric', methods=["PUT"])
+@login_required
+def group_psychometric():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+    c_user = current_user
+    data = json.loads(request.json)
+    group_id = data['group_id']
+    reqstatus = data['status']
+    user = EsthenosUser.objects.get(id=c_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
+    for app in applications:
+        print app.application_id
+        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0],updated_on=datetime.datetime.now())
+        status.save()
+        app.timeline.append(status)
+        print reqstatus
+        if reqstatus ==  "true":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 272
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=270)[0]
+            app.current_status_updated  = datetime.datetime.now()
+            app.status = 270
+        app.save()
+    content = {'response': 'OK'}
+    return Response(response=content,
+        status=200,\
+        mimetype="application/json")
+
+
+
+
+
+
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
 @login_required
 def uploads_group_app():
@@ -563,36 +600,36 @@ def uploads_indivijual_gkyc():
         status=200,\
         mimetype="application/json")
 
-#@organisation_views.route('/api/organisation/centers_n_groups', methods=["POST"])
-#@login_or_key_required
-#def create_centers_n_groups():
-##    if not session['role'].startswith("ORG_"):
-##        abort(403)
-#    username = current_user.name
-#    c_user = current_user
-#    user = EsthenosUser.objects.get(id=c_user.id)
-#    organisation = user.organisation
-#    center_name = request.form.get('center_name')
-#    group_name = request.form.get('group_name')
-#    if center_name == None:
-#        center_name = group_name
-#    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
-#        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-#        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
-#        if status:
-#            center.center_id = unique_center_id
-#            center.save()
-#            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
-#
-#        unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-#        group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
-#        if status:
-#            group.group_id = unique_group_id
-#            group.save()
-#            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-#
-#        return Response('{"success":True}', content_type="application/json", mimetype='application/json')
-#    return Response('{"success":False}', content_type="application/json", mimetype='application/json')
+@organisation_views.route('/api/organisation/centers_n_groups', methods=["POST"])
+@login_or_key_required
+def create_centers_n_groups():
+#    if not session['role'].startswith("ORG_"):
+#        abort(403)
+   username = current_user.name
+   c_user = current_user
+   user = EsthenosUser.objects.get(id=c_user.id)
+   organisation = user.organisation
+   center_name = request.form.get('center_name')
+   group_name = request.form.get('group_name')
+   if center_name == None:
+       center_name = group_name
+   if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+       unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
+       center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+       if status:
+           center.center_id = unique_center_id
+           center.save()
+           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
+
+       unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
+       group,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+       if status:
+           group.group_id = unique_group_id
+           group.save()
+           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
+
+       return Response('{"success":True}', content_type="application/json", mimetype='application/json')
+   return Response('{"success":False}', content_type="application/json", mimetype='application/json')
 
 @organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
 @login_or_key_required
