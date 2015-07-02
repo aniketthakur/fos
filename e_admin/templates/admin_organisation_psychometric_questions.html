@@ -30,19 +30,19 @@
                     <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
-                                <td width="5">{{ loop.index }}</td>
-                                <td width="181">{{ question.question }}</td>
-                                <td width="181"  class="hinditext">{{ question.question_regional }}</td>
-                                <td width="46" ><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
+                                <td scope="col" width="5">{{ loop.index }}</td>
+                                <td scope="col" width="200" >{{ question.question }}</td>
+                                <td scope="col" width="205"  class="hinditext">{{ question.question_regional }}</td>
+                                <td scope="col" width="5" ><button class="btn btn-small btn-danger"  >Delete</button></td>
                             </tr>
                         {% endfor %}
 
                          {% for answer in questions %}
                             <tr>
-                                <td width="5" >{{ loop.index }}</td>
-                                <td width="181" >{{ answer.answer }}</td>
-                                <td width="181"  class="hinditext">{{ answer.answer_regional }}</td>
-                                <td width="46" ><button class="btn btn-small btn-danger" onclick="deletefunction(this)">Delete</button></td>
+                                <td scope="col" width="5">{{ loop.index }}</td>
+                                <td scope="col" width="200">{{ answer.answer }}</td>
+                                <td scope="col" width="205"  class="hinditext">{{ answer.answer_regional }}</td>
+                                <td scope="col" width="5" ><button class="btn btn-small btn-danger" >Delete</button></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -120,9 +120,10 @@
 
         });
 
-        function deletefunction(r){
-         var i = r.parentNode.parentNode.rowIndex;
-        document.getElementById("tablesoop").deleteRow(i);
-        }
+
+
+
+
+
     </script>
 {% endblock %}
