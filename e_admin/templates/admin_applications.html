@@ -138,14 +138,15 @@
         <!--</td>-->
 <!--{#                            {% endif %}#}-->
 
-                            <td>
-
+                            <!--<td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins>-->
+                                <td >
                                  <!--<img src="{{ url_for('static', filename='img/logo-icon.png') }}" alt="" data-src="assets/img/logo-icon.png" width="300" height="200">-->
 
                                 <!--<link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-icon.png') }}">-->
 
 
-                                <img src="{{url_for('static',filename='img/icon/online.png')}}" alt="previous" width="16" height="16" title="previous" border="previous">
+                                    <a  href=" /admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}" >
+                                <img src="{{url_for('static',filename='img/icon/online.png')}}" alt="" width="16" height="16" title="previous" border="previous"></a>
 
                             </td>
                             <td></td>
