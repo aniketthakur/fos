@@ -35,14 +35,14 @@
                                                     <label for="checkbox1000"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:33%">Branch ID</th>
+                                            <th style="width:33%">Branch Name</th>
                                             <th style="width:33%">FOS</th>
                                             <th style="width:33%">Added Date</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for group in groups %}
+                                        {% for branch in branchs %}
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -50,10 +50,10 @@
                                                         <label for="checkbox11"></label>
                                                     </div>
                                                 </td>
-                                                <td class="v-align-middle clickable-row" data-href='/applications?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
-                                                <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
+                                                <td class="v-align-middle clickable-row" data-href='/applications?branch={{ branch.branch_name}}'><ins>{{ branch.branch_name }}</ins></td>
+                                                <td class="v-align-middle"><span class="muted">{{ branch.branch_name }}</span>
                                                 </td>
-                                                <td><span class="muted">{{ group.created_at }}</span>
+                                                <td><span class="muted">{{ branch.created_at }}</span>
                                                 </td>
                                             </tr>
                                         {% endfor %}

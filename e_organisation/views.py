@@ -20,7 +20,7 @@ from datetime import timedelta
 import datetime
 import uuid
 from e_admin.models import EsthenosSettings
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg, EsthenosOrgProduct
+from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg, EsthenosOrgProduct,EsthenosOrgBranch,EsthenosOrgRegion
 from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification,EsthenosOrgApplicationStatus
 import traceback
 from e_tokens.utils import login_or_key_required
@@ -840,8 +840,10 @@ def application_status():
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     org  = user.organisation
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    #centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    #groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    #regions = EsthenosOrgRegion.objects.filter(organisation=org)
+    branchs = EsthenosOrgBranch.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups.html", **kwargs)
 
