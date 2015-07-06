@@ -25,7 +25,7 @@
                             <h3>Search   <span class="semi-bold">Applications</span></h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                    <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Person Name">
                                     <table class="table no-more-tables ">
                                         <thead>
                                         <tr>
@@ -35,8 +35,8 @@
                                                     <label for="checkbox1000"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:33%">Group ID</th>
-                                            <th style="width:33%">Group Name</th>
+                                            <th style="width:33%">Person ID</th>
+                                            <!--<th style="width:33%">Group Name</th>-->
                                             <th style="width:33%">Added Date</th>
 
                                         </tr>
@@ -50,9 +50,9 @@
                                                         <label for="checkbox11"></label>
                                                     </div>
                                                 </td>
-                                                <td class="v-align-middle clickable-row" data-href='/applications?group={{ group.group_id }}'><ins>{{ group.group_id }}</td>
-                                                <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
-                                                </td>
+                                                <td class="v-align-middle clickable-row" data-href='/applications?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
+                                                <!--<td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>-->
+                                                <!--</td>-->
                                                 <td><span class="muted">{{ group.created_at }}</span>
                                                 </td>
                                             </tr>

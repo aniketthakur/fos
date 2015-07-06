@@ -884,6 +884,27 @@ def applications():
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
 
+# @organisation_views.route('/applications_list', methods=["GET"])
+# @login_required
+# def application_list():
+#     if not session['role'].startswith("ORG_"):
+#         abort(403)
+#     username = current_user.name
+#     print "hello"
+#     c_user = current_user
+#     print "hello error"
+#     user = EsthenosUser.objects.get(id=c_user.id)
+#     print "say hello"
+#     #applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=110)
+#     #applications = EsthenosOrgApplication.objects.filter(status__gte=110)
+#     print "say hello23"
+#     kwargs = locals()
+#     print "hi group"
+#     return render_template("applications_list.html",**kwargs)
+
+
+
+
 @organisation_views.route('/application/<app_id>/track', methods=["GET"])
 @login_required
 def applications_track(app_id):

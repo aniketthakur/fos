@@ -112,7 +112,7 @@
 {#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}
 {#                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>#}
 {#                            {% else %}#}
-                                <td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>
+                                <td  >{{ app.application_id }}</td>
 {#                            {% endif %}#}
                             <td><span class="muted">{{ app.date_created }}</span>
                             </td>

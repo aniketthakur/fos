@@ -284,11 +284,11 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
 #     def __unicode__(self):
 #         return "EsthenosOrgCGTTemplateQuestion"
 
-# class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
-#       organisation = db.ReferenceField('EsthenosOrg',required=True)
-#       group = db.ReferenceField('EsthenosOrgGroup',required=True)
-#       questions=db.DictField(required=False)
-#       score=db.FloatField(default=0,required=False)
+class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
+      organisation = db.ReferenceField('EsthenosOrg',required=True)
+      group = db.ReferenceField('EsthenosOrgGroup',required=True)
+      questions=db.DictField(required=False)
+      score=db.FloatField(default=0,required=False)
 
 
 class EsthenosOrgPsychometricTemplateQuestion(db.Document):
