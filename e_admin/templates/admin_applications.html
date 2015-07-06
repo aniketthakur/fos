@@ -96,8 +96,8 @@
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <th width="20" class="text-center">Action</th>
                             {% endif %}
-                            <th width="10"  class="text-center">Application Log</th>
-                            <th width="10"  class="text-center">FOS</th>
+                            <!--<th width="10"  class="text-center">Application Log</th>-->
+                            <!--<th width="10"  class="text-center">FOS</th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -130,26 +130,26 @@
                                 <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/cashflow" >Cashflow</a>
                                 <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/track" >Status</a>
                                 {% endif %}
-                            </td>
-                            <!--{#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}-->
-<!--{#                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>#}-->
-<!--{#                            {% else %}#}-->
-                                <!--<td class="" ><img src="{{ url_for('static', filename='img/icon/online.png') }}" alt="" data-src="assets/img/icon/online.png	" />-->
-        <!--</td>-->
-<!--{#                            {% endif %}#}-->
+                            <!--</td>-->
+                            <!--&lt;!&ndash;{#                            {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}&ndash;&gt;-->
+<!--&lt;!&ndash;{#                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>#}&ndash;&gt;-->
+<!--&lt;!&ndash;{#                            {% else %}#}&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td class="" ><img src="{{ url_for('static', filename='img/icon/online.png') }}" alt="" data-src="assets/img/icon/online.png	" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+<!--&lt;!&ndash;{#                            {% endif %}#}&ndash;&gt;-->
 
-                            <!--<td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins>-->
-                                <td >
-                                 <!--<img src="{{ url_for('static', filename='img/logo-icon.png') }}" alt="" data-src="assets/img/logo-icon.png" width="300" height="200">-->
+                            <!--&lt;!&ndash;<td class="v-align-middle clickable-row" data-href='/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins>&ndash;&gt;-->
+                                <!--<td >-->
+                                 <!--&lt;!&ndash;<img src="{{ url_for('static', filename='img/logo-icon.png') }}" alt="" data-src="assets/img/logo-icon.png" width="300" height="200">&ndash;&gt;-->
 
-                                <!--<link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-icon.png') }}">-->
+                                <!--&lt;!&ndash;<link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-icon.png') }}">&ndash;&gt;-->
 
 
-                                    <a  href=" /admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}" >
-                                <img src="{{url_for('static',filename='img/icon/online.png')}}" alt="" width="16" height="16" title="previous" border="previous"></a>
+                                    <!--<a  href=" /admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}" >-->
+                                <!--<img src="{{url_for('static',filename='img/icon/online.png')}}" alt="" width="16" height="16" title="previous" border="previous"></a>-->
 
-                            </td>
-                            <td></td>
+                            <!--</td>-->
+                            <!--<td></td>-->
 
 
 
