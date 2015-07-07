@@ -44,6 +44,7 @@ class EsthenosUser(BaseUser):
     postal_telephone = db.StringField(max_length=20, required=False)
     postal_tele_code = db.StringField(max_length=20, required=False)
     postal_city = db.StringField(max_length=100, required=False)
+    user_name = db.StringField(max_length=100,required=False)
     organisation = db.ReferenceField('EsthenosOrg',required=False)
     org_state = db.ReferenceField('EsthenosOrgState',required=False)
     org_area =   db.ReferenceField('EsthenosOrgArea',required=False)

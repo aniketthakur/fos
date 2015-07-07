@@ -191,6 +191,7 @@ class EsthenosOrg(db.Document):
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
     employee_count = db.IntField(default=1)
+    user_count = db.IntField(default=1)
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')

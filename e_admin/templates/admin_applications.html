@@ -8,7 +8,7 @@
 {% endblock %}
 {% block maincontents %}
 
-<link href="{{url_for('static',   filename='css/table.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{url_for('static',   filename='css/orange.css')}}" rel="stylesheet" type="text/css" >
 
 
     <div class="row">
@@ -102,7 +102,7 @@
                         </thead>
                         <tbody>
                         {% for app in  tagged_applications %}
-                        <tr >
+                        <tr  >
                             <td class="v-align-middle">
                                 <div class="checkbox check-default">
                                     <input id="checkbox{{ loop.index }}" type="checkbox" value="{{ app.organisation.id }}">
