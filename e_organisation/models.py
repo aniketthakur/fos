@@ -57,6 +57,8 @@ class EsthenosOrgBranch(db.Document):
     area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
+    branch = db.StringField(max_length=60,required=True)
+    # branch_id = db.StringField(max_length=60,required=True)
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgBranch
@@ -411,6 +413,7 @@ class EsthenosOrgApplicationStatus(db.Document):
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
+    branch = db.ReferenceField('EsthenosOrgBranch')
     organisation = db.ReferenceField('EsthenosOrg')
     owner = db.ReferenceField('EsthenosUser')
     product = db.ReferenceField('EsthenosOrgProduct',required=False)

@@ -26,8 +26,8 @@
                         </div>
 
                         <div class="grid-body no-border">
-{#                            <h3>{% if center_id == '' %} Group: {{ group.group_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>#}
-                            <h3> Group: {{ group.group_name }}  <span class="semi-bold">Application</span></h3>
+{#                            <h3>{% if center_id == '' %} Group: {{ branch.branch_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>#}
+                            <h3> Group: {{ branch.branch_name }}  <span class="semi-bold">Application</span></h3>
                             <div class="col-md-6">
                                 <input name="groupName" id="" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>
@@ -60,8 +60,8 @@
                                     </td>
                                     <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track' ><ins>{{ app.application_id }}</ins></td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
-                                    <!--<td class="v-align-middle">{{ app.group.group_name }}</td>-->
-<!--{#                                    <td class="v-align-middle">{{ app.center.center_name }}</td>#}-->
+                                    <td class="v-align-middle">{{ app.branch.branch_name }}</td>
+{#                                    <td class="v-align-middle">{{ app.center.center_name }}</td> #}
                                     <td><span class="muted">{{ app.date_created }}</span>
                                     </td>
                                     <td><span class="muted">{{ app.current_status.status_message }}</span>

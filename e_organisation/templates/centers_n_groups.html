@@ -51,11 +51,13 @@
                                                     </div>
                                                 </td>
                                                 <td class="v-align-middle clickable-row" data-href='/applications?branch={{ branch.branch_name}}'><ins>{{ branch.branch_name }}</ins></td>
-                                                <td class="v-align-middle"><span class="muted">{{ branch.branch_name }}</span>
+
+                                                <td class="v-align-middle"><span class="muted">{{ user.user_name }}</span>
                                                 </td>
                                                 <td><span class="muted">{{ branch.created_at }}</span>
                                                 </td>
                                             </tr>
+
                                         {% endfor %}
                                         </tbody>
                                     </table>
