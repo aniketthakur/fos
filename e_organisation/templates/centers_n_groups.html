@@ -43,7 +43,7 @@
                                         </thead>
                                         <tbody>
                                         {% for branch in branchs %}
-                                        {% for user in users  %}
+                                        <!--{% for user in users  %}-->
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -53,12 +53,12 @@
                                                 </td>
                                                 <td class="v-align-middle clickable-row" data-href='/applications?branch={{ branch.branch_name}}'><ins>{{ branch.branch_name }}</ins></td>
 
-                                                <td class="v-align-middle"><span class="muted">{{ user.user_name }}</span>
+                                                <td class="v-align-middle clickable-row" data-href='/application?user={{user.user_name}}"><span class="muted'><ins>{{ user.user_name }}</ins></span>
                                                 </td>
                                                 <td><span class="muted">{{ branch.created_at }}</span>
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        <!--{% endfor %}-->
                                          {% endfor %}
 
 
