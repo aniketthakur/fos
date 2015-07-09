@@ -842,7 +842,7 @@ def application_status():
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     org  = user.organisation
-    #centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     #groups = EsthenosOrgGroup.objects.filter(organisation=org)
     #regions = EsthenosOrgRegion.objects.filter(organisation=org)
     branchs = EsthenosOrgBranch.objects.filter(organisation=org)

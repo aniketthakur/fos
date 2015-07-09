@@ -43,6 +43,7 @@
                                         </thead>
                                         <tbody>
                                         {% for branch in branchs %}
+                                        {% for user in users  %}
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -57,8 +58,10 @@
                                                 <td><span class="muted">{{ branch.created_at }}</span>
                                                 </td>
                                             </tr>
-
                                         {% endfor %}
+                                         {% endfor %}
+
+
                                         </tbody>
                                     </table>
                                 </div>

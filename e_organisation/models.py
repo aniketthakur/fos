@@ -57,7 +57,7 @@ class EsthenosOrgBranch(db.Document):
     area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
-    branch = db.StringField(max_length=60,required=True)
+    #branch = db.StringField(max_length=60,required=True)
     # branch_id = db.StringField(max_length=60,required=True)
 
 class EsthenosOrgBranchResource(Resource):
