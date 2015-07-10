@@ -152,6 +152,7 @@ $(document).ready(function() {
                         required: true,
                     },
 					tele_code_add_organisation: {
+
 						minlength: 3,
 						maxlength: 4,
                         required: true,
@@ -234,6 +235,9 @@ $(document).ready(function() {
 				$('<span class="error"></span>').insertAfter(element).append(label)
 			}
 		});
+
+
+
 
 	$('#rootwizard').bootstrapWizard({
 	  		'tabClass': 'form-wizard',
