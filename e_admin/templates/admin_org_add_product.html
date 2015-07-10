@@ -134,7 +134,7 @@
 
                                         <i class=""></i>
                                         <input type="text" class="form-control text-right" id="service_tax"
-                                               name="service_tax" value="12.36"/>
+                                               name="service_tax" />
                                     </div>
                                 </div>
                                 <div class="form-control-group col-md-3">
@@ -227,10 +227,12 @@
                     rules: {
                         product_name: {
                             minlength: 6,
+                            url: true,
                             required: true
                         },
                         loan_amount:{
                             number:true,
+                            url: true,
                             required: true
                         },
                         life_insurance:{
@@ -268,6 +270,27 @@
                          insurance_period:{
                              number:true,
                              required: true
+                        },
+                        service_tax:{
+                            number:true,
+                            url: true,
+                            required:true
+                        },
+                        insurance_free:{
+                           number:true,
+                            url: true,
+                            required:true
+                        },
+                        total_insurance_fees:{
+                           number:true,
+                            url: true,
+                            required:true
+                        },
+                        rd_fees:{
+                          number:true,
+                            url: true,
+                            required:true
+
                         }
                     },
 
