@@ -132,7 +132,7 @@
 
                                 <div class="pull-right">
                                     <button class="btn btn-small btn-danger btn-cons"  id="submitForm2" type="submit"><i class="icon-ok"></i> Save</button>
-                                    <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                    <button class="btn btn-small btn-white btn-cons" type="reset" value="clear">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -157,6 +157,14 @@
             });
 
         });
+
+
+        $(':input','#form-employee')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
 
         $('#form-employee').validate({
             errorElement: 'span',
