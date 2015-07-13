@@ -98,7 +98,7 @@
 
                             <div class="pull-right">
                                 <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i class="icon-ok"></i> Add</button>
-                                <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                <button class="btn btn-small btn-white btn-cons" type="reset" id="reset" value="clear">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -129,6 +129,16 @@
 
 
         });
+
+
+              $(':input','#form-organisation')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
+
+
 
 
 
@@ -176,6 +186,9 @@
                     }
                 },
 
+
+
+
                 invalidHandler: function (event, validator) {
 					//display error alert on form submit
                 },
@@ -210,6 +223,7 @@
 
 
             });
+
 
 
 
