@@ -134,7 +134,7 @@
 
                                         <i class=""></i>
                                         <input type="text" class="form-control text-right" id="service_tax"
-                                               name="service_tax" />
+                                               name="service_tax" placeholder="14"/>
                                     </div>
                                 </div>
                                 <div class="form-control-group col-md-3">
@@ -172,7 +172,7 @@
 
                                         <i class=""></i>
                                         <input type="text" class="form-control text-right" id="insurance_service_tax"
-                                               name="insurance_service_tax" placeholder="0%"/>
+                                               name="insurance_service_tax" placeholder="0"/>
                                     </div>
                                 </div>
                                 <div class="form-control-group col-md-3">
@@ -203,7 +203,7 @@
                                     <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i
                                             class="icon-ok"></i> Add
                                     </button>
-                                    <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                    <button class="btn btn-small btn-white btn-cons" type="reset" value="Clear">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -219,6 +219,15 @@
             $(document).ready(function () {
                 $("#emi_repayment").select2();
             });
+
+
+            $(':input','#form-organisation')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
+
             $('#form-organisation').validate({
                     errorElement: 'span',
                     errorClass: 'error',
