@@ -103,8 +103,8 @@ $(document).ready(function() {
             });
 	//Form Condensed Validation
 	$('#form-condensed').validate({
-                errorElement: 'span', 
-                errorClass: 'error', 
+                errorElement: 'span',
+                errorClass: 'error',
                 focusInvalid: false, 
                 ignore: "",
                 rules: {
@@ -135,7 +135,8 @@ $(document).ready(function() {
                         required: true,
                     },
 					city_add_organisation: {
-						minlength: 5,
+						maxlength:10,
+						url:true,
                         required: true,
                     },
 					state_add_organisation: {
@@ -161,6 +162,7 @@ $(document).ready(function() {
 						maxlength: 10,
                         required: true,
                     },
+
                 },
 
                 invalidHandler: function (event, validator) {
