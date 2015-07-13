@@ -280,12 +280,11 @@ class AddApplicationManual(Form):
         app.bank_loan=float(self.bankfi_amount.data)
         app.patta_land=self.patta_land.data
         app.group_size=self.group_size.data
-        app.select_house_type=self.select_house_type.data
         app.village_road=self.village_road.data
         app.fnf_inclusion=self.fnf_inclusion.data
         app.member_f_or_h_name=self.member_f_or_h_name.data
         app.member_pincode=self.member_pincode.data
-        app.repayment_mode=self.repayment_mode.data
+        app.repayment_method=self.repayment_mode.data
 
         app.moneylenders_amount=self.moneylenders_amount.data
         if self.house_rent_expenditure.data == "":
@@ -370,6 +369,8 @@ ImmutableMultiDict([('how_long_are_you_staying_in_house__in_years', u'25'),
 class AddApplicationMobile(Form):
     group_leader_cell = TextField( validators=[ v.Length(max=512)]) #8197997788
     group_size = TextField( validators=[ v.Length(max=512)]) #20
+    group_leader_number = TextField( validators=[ v.Length(max=512)]) #20
+    group_leader_name = TextField( validators=[ v.Length(max=512)]) #20
     center_name = TextField( validators=[ v.Length(max=512)]) #center1
     group_name = TextField( validators=[ v.Length(max=512)]) #group1
     product_name = TextField( validators=[ v.Length(max=512)]) #LP2000026
@@ -475,6 +476,10 @@ class AddApplicationMobile(Form):
         #products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         app.organisation = user.organisation
+        app.group_size=self.group_size.data
+        app.group_leader_cell=self.group_leader_number.data
+        app.group_leader_cell=self.group_leader_name.data
+
         if len(products) > 0:
             app.product = products[0]
         else:
@@ -485,17 +490,16 @@ class AddApplicationMobile(Form):
 
         if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
             app.guarantor_borrowers_are_nominee = "NO"
-            app.gurantors_nominee_name = self.gurantors_nominee_name.data
-            app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
-            app.gurantors_nominee_age = self.gurantors_nominee_age.data
-            app.borrowers_nominee_age = self.borrowers_nominee_age.data
-            app.borrowers_nominee_gender = self.borrowers_nominee_gender.data
-            app.borrowers_nominee_name = self.borrowers_nominee_name.data
-            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
         else:
             app.guarantor_borrowers_are_nominee = "YES"
-        app.member_pincode=self.pincode.data
-
+            app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
+            app.gurantors_nominee_age = self.gurantors_nominee_age.data
+            app.borrowers_nominee_name = self.borrowers_nominee_name.data
+            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
+            app.member_pincode=self.pincode.data
+            app.male_count= self.male_count.data
+            app.female_count= self.female_count.data
+            
         if self.how_long_are_you_staying_in_house__in_years.data == "":
             app.house_stay_duration = 0.0
         else:

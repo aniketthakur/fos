@@ -475,6 +475,8 @@ class EsthenosOrgApplication(db.Document):
     total_other_outstanding = db.FloatField(default=0.0)
     net_income = db.FloatField(default=0.0)
     total_running_loans = db.IntField(default=0.0)
+    male_count = db.IntField(default=0.0)
+    female_count = db.IntField(default=0.0)
     total_existing_outstanding_from = db.FloatField(default=0.0)
     total_running_loans_from_mfi = db.IntField(default=0)
     total_existing_outstanding_from_mfi = db.FloatField(default=0.0)

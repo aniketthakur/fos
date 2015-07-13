@@ -153,6 +153,11 @@ def get_application_headers():
     headers.append("Date Created")
     headers.append("Date Updated")
     headers.append("Excepted Disbursment Date")
+    headers.append("Bank Name")
+    headers.append("Bank Ifsc Code")
+    headers.append("Bank Account Holder name")
+    headers.append("Bank Account Number")
+
     return headers
 
 def get_application_rowdata(app):
@@ -289,6 +294,10 @@ def get_application_rowdata(app):
     row_data.append(app["date_created"])
     row_data.append(app["date_updated"])
     row_data.append(app["excepted_disbursment_date"])
+    row_data.append(app["bank_name"])
+    row_data.append(app["bank_ifsc_code"])
+    row_data.append(app["bank_account_holder_name"])
+    row_data.append(app["bank_account_number"])
     return row_data
 
 @reports_views.route('/reports/internal_main/download', methods=["GET"])
