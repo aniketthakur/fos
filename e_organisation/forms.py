@@ -279,7 +279,10 @@ class AddApplicationManual(Form):
             self.bankfi_amount.data = "0"
         app.bank_loan=float(self.bankfi_amount.data)
         app.patta_land=self.patta_land.data
-        app.group_size=self.group_size.data
+        try:
+            app.group_size=int(self.group_size.data)
+        except Exception as e:
+            print e.message
         app.village_road=self.village_road.data
         app.fnf_inclusion=self.fnf_inclusion.data
         app.member_f_or_h_name=self.member_f_or_h_name.data
@@ -476,9 +479,12 @@ class AddApplicationMobile(Form):
         #products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         app.organisation = user.organisation
-        app.group_size=self.group_size.data
         app.group_leader_cell=self.group_leader_number.data
         app.group_leader_cell=self.group_leader_name.data
+        try:
+            app.group_size=int(self.group_size.data)
+        except Exception as e:
+            print e.message
 
         if len(products) > 0:
             app.product = products[0]
@@ -490,16 +496,16 @@ class AddApplicationMobile(Form):
 
         if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
             app.guarantor_borrowers_are_nominee = "NO"
-        else:
-            app.guarantor_borrowers_are_nominee = "YES"
+            app.gurantors_nominee_age = self.gurantors_nominee_age.data
             app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
             app.gurantors_nominee_age = self.gurantors_nominee_age.data
-            app.borrowers_nominee_name = self.borrowers_nominee_name.data
-            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
-            app.member_pincode=self.pincode.data
-            app.male_count= self.male_count.data
-            app.female_count= self.female_count.data
-            
+        else:
+            app.guarantor_borrowers_are_nominee = "YES"
+        app.borrowers_nominee_name = self.borrowers_nominee_name.data
+        app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
+        app.member_pincode=self.pincode.data
+        app.male_count= self.male_count.data
+        app.female_count= self.female_count.data
         if self.how_long_are_you_staying_in_house__in_years.data == "":
             app.house_stay_duration = 0.0
         else:
@@ -697,7 +703,8 @@ class AddApplicationMobile(Form):
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
         app.timeline.append(status)
-        data_kyc=  self.kyc.data.replace("'", '"')
+        data_kyc=  self.kyc.data.replace("'", '"').replace('u"', '"')
+        print data_kyc
         kyc_json = json.loads(data_kyc)
         if kyc_json.has_key("aadhaar"):
             kyc_obj = EsthenosOrgApplicationKYC()
@@ -711,8 +718,11 @@ class AddApplicationMobile(Form):
             {'kyc': {'aadhaar': {'vtc': 'Honavar', 'co': 'S/O Mahesh Palekar', 'uid': '428417881417', 'gender': 'M', 'lm': 'Kasarkod', 'yob': '1991', 'pc': '581334', 'state': 'Karnataka', 'street': 'Tonka', 'house': '#379', 'dist': 'Uttara Kannada', 'name': 'Swaraj Mahesh Palekar'}, 'gurrantor': {}}}
 
             """
-            kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
-            kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
+            try:
+                kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
+                kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
+            except:
+                print "no aadhaar images"
             kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
             kyc_obj.dob = kyc_json["aadhaar"]["yob"]
             kyc_obj.name = kyc_json["aadhaar"]["name"]

@@ -320,7 +320,7 @@ def cbcheck_statuscheck_applications():
                     application.status = 20
 
                     break
-        if not is_failed and resp.num_active_account > 2:
+        if not is_failed and resp.num_of_other_mfis > 1:
             is_failed = True
             print "number of active loans 2+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())

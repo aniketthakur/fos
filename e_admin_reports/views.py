@@ -387,7 +387,7 @@ def equifax_request_reports_import():
                         v[36] = 0
                     eq_resp.sum_current_balance=float(v[36])   #IntField(default=0)
                     application.total_existing_outstanding_from = eq_resp.sum_current_balance
-                    application.loan_eligibility_based_on_company_policy= 50000-application.total_existing_outstanding_from
+                    application.loan_eligibility_based_on_company_policy= 100000-application.total_existing_outstanding_from
                     if not is_number(v[37] ):
                         v[37] = 0
                     eq_resp.sum_current_balance_own=float(v[37])   #IntField(default=0)

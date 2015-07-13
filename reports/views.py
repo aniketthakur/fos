@@ -601,7 +601,7 @@ def admin_reports_download():
         row_data.append(app.application_id)
         row_data.append(app.applicant_name)
         row_data.append(app.group.group_name)
-        row_data.append(app.branch.branch_name)
+        row_data.append(app.group.branch.branch_name)
         row_data.append("")
         row_data.append("")
         app_row_data = row_data
