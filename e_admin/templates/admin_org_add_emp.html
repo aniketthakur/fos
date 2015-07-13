@@ -174,7 +174,7 @@
 
                                 <div class="pull-right">
                                     <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
-                                    <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                    <button class="btn btn-small btn-white btn-cons" type="reset" value="clear">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -213,6 +213,14 @@
                 placeholder: "Select a ROLE",
                 allowClear: true
             });
+
+            $(':input','#form-organisation')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
+
             $('#form-organisation-emp').validate({
                 errorElement: 'span',
                 errorClass: 'error',
