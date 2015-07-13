@@ -29,7 +29,7 @@
                                         <div class="col-md-7 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name">
+                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                         <div class="col-md-4 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91">
+                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" min="2">
                                             </div>
                                         </div>
                                         <div class="col-md-8 form-group">
@@ -174,13 +174,13 @@
             rules: {
                 FirstName: {
 
-                    minlength: 5,
-                    maxlength:30,
+                    minlength: 3,
+                    maxlength:10,
                     required: true
                 },
                 LastName: {
 
-                    minlength: 5,
+                    minlength: 2,
                     maxlength:30,
                     required: true
                 },
@@ -194,7 +194,7 @@
                 },
                 City: {
                     minlength: 5,
-                    maxlength: 20,
+                    maxlength: 10,
                     required: true
                 },
                 PostalCode: {
