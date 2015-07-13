@@ -58,59 +58,59 @@
 
     <div class="row-fluid">
 
-        <div class="span12">
-            <div class="grid simple ">
-                <div class="grid-title">
-                    <h4>Application <span class="semi-bold">List</span></h4>
-                </div>
-                <div class="grid-body ">
-                    <table class="table table-hover table-condensed" id="example">
-                        <thead>
-                        <tr>
-                            <th style="width:1%" >
-                                <div class="checkbox check-default">
-                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                                    <label for="checkbox10"></label>
-                                </div>
-                            </th>
-                            <th style="width:10%">Application ID</th>
-                            <th style="width:20%">Applicant Name</th>
-                            <th style="width:10%">Group Name</th>
-                            <th style="width:10%">Source</th>
-                            <th style="width:10%">Date</th>
+        <!--<div class="span12">-->
+            <!--<div class="grid simple ">-->
+                <!--<div class="grid-title">-->
+                    <!--<h4>Application <span class="semi-bold">List</span></h4>-->
+                <!--</div>-->
+                <!--<div class="grid-body ">-->
+                    <!--<table class="table table-hover table-condensed" id="example">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th style="width:1%" >-->
+                                <!--<div class="checkbox check-default">-->
+                                    <!--<input id="checkbox10" type="checkbox" value="1" class="checkall">-->
+                                    <!--<label for="checkbox10"></label>-->
+                                <!--</div>-->
+                            <!--</th>-->
+                            <!--<th style="width:10%">Application ID</th>-->
+                            <!--<th style="width:20%">Applicant Name</th>-->
+                            <!--<th style="width:10%">Group Name</th>-->
+                            <!--<th style="width:10%">Source</th>-->
+                            <!--<th style="width:10%">Date</th>-->
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for app in  tagged_applications %}
-                            <tr >
-                                <td class="v-align-middle">
-                                    <div class="checkbox check-default">
-                                        <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                        <label for="checkbox{{ loop.index }}"></label>
-                                    </div>
-                                </td>
-                                <td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--{% for app in  tagged_applications %}-->
+                            <!--<tr >-->
+                                <!--<td class="v-align-middle">-->
+                                    <!--<div class="checkbox check-default">-->
+                                        <!--<input id="checkbox{{ loop.index }}" type="checkbox" value="1">-->
+                                        <!--<label for="checkbox{{ loop.index }}"></label>-->
+                                    <!--</div>-->
+                                <!--</td>-->
+                                <!--<td class="v-align-middle "><ins>{{ app.application_id }}</ins></td>-->
 
-{#                                {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}
-{#                                {% else %}#}
-{#                                    <td class="v-align-middle clickable-row" data-href='/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>#}
-{#                                {% endif %}#}
-                                <td class="v-align-middle">{{ app.applicant_name }}</td>
-                                <td class="v-align-middle">{{ app.group.group_name }}</td>
-                                <td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>
-                                </td>
-                                <td><span class="muted">{{ app.date_created }}</span>
-                                </td>
+<!--{#                                {% if app.upload_type=='AUTOMATIC_UPLOAD' %}#}-->
+<!--{#                                {% else %}#}-->
+<!--{#                                    <td class="v-align-middle clickable-row" data-href='/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/'><ins>{{ app.application_id }}</ins></td>#}-->
+<!--{#                                {% endif %}#}-->
+                                <!--<td class="v-align-middle">{{ app.applicant_name }}</td>-->
+                                <!--<td class="v-align-middle">{{ app.group.group_name }}</td>-->
+                                <!--<td class="v-align-middle"><span class="muted">{{ app.upload_type }}</span>-->
+                                <!--</td>-->
+                                <!--<td><span class="muted">{{ app.date_created }}</span>-->
+                                <!--</td>-->
 
-                            </tr>
-                        {% endfor %}
+                            <!--</tr>-->
+                        <!--{% endfor %}-->
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 {% endblock %}
 {% block js_scripts %}{{ super() }}
