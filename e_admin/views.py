@@ -1132,6 +1132,17 @@ def admin_processing_fees(group_id):
 def admin_schedule():
     kwargs = locals()
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
+
+
+@admin_views.route('/admin/profile',methods=["GET"])
+def admin_profile():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template("admin_profile.html",**kwargs)
 #Added By Deepak
 import pdfkit
 @admin_views.route('/admin/pdf_dpn', methods=["GET"])
