@@ -849,7 +849,7 @@ def admin_org_applications(org_id):
         mimetype="application/json")
 
 from datetime import date, timedelta
-from pixuate_storage_digikyc import  *
+from e_pixuate.pixuate_storage_digikyc import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
@@ -970,7 +970,7 @@ def cashflow_statusupdate(org_id,app_id):
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
-from pixuate import  *
+from e_pixuate.pixuate import  *
 @admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
 @login_required
 def read_pan(object_id):

@@ -1,36 +1,41 @@
-__author__ = 'prathvi'
-from e_admin.models import EsthenosUser
-from esthenos.mongo_encoder import *
-from flask_sauth.views import flash_errors
 from mongoengine import Q
-# Flask and Flask-SQLAlchemy initialization here
+
+from flask.views import View
+from flask import  Blueprint
 from flask import render_template,session,request,Response,abort
-import json
+from flask_sauth.views import flash_errors
+from flask_login import current_user, login_user, logout_user, login_required
+
+import datetime
+import traceback
+import os, tempfile, uuid, json
 from PIL import Image
-from flask_login import current_user, login_required
+from datetime import timedelta
+
 from esthenos  import mainapp
 from esthenos.utils import request_wants_json
-from esthenos.mongo_encoder import encode_model
-from flask.views import View
 from esthenos.utils import random_with_N_digits
-import os,tempfile
-from pixuate_storage_digikyc import upload_images, get_url_with_id
-from flask_login import current_user, login_user, logout_user, login_required
-from datetime import timedelta
-import datetime
-import uuid
-from e_admin.models import EsthenosSettings
-from models import EsthenosOrgUserUploadSession,EsthenosOrgApplicationMap,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplication,EsthenosOrg, EsthenosOrgProduct,EsthenosOrgBranch,EsthenosOrgRegion
-from models import EsthenosOrgApplicationStatusType,EsthenosOrgNotification,EsthenosOrgApplicationStatus
-import traceback
 from e_tokens.utils import login_or_key_required
+from e_admin.models import EsthenosSettings, EsthenosUser
+from esthenos.mongo_encoder import *
+from esthenos.mongo_encoder import encode_model
+
+from e_pixuate.pixuate_storage_digikyc import upload_images, get_url_with_id
+
+from models import EsthenosOrgUserUploadSession, EsthenosOrgApplicationMap
+from models import EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplication
+from models import EsthenosOrg, EsthenosOrgProduct, EsthenosOrgBranch, EsthenosOrgRegion
+from models import EsthenosOrgApplicationStatusType, EsthenosOrgNotification, EsthenosOrgApplicationStatus
+
+
 class RenderTemplateView(View):
     def __init__(self, template_name):
         self.template_name = template_name
+
     def dispatch_request(self):
         return render_template(self.template_name)
 
-from flask import  Blueprint
+
 organisation_views = Blueprint('organisation_views', __name__,
                         template_folder='templates')
 
@@ -326,10 +331,6 @@ def group_psychometric():
     return Response(response=content,
         status=200,\
         mimetype="application/json")
-
-
-
-
 
 
 @organisation_views.route('/uploads_group_app', methods=["GET","POST"])
