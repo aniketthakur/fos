@@ -15,8 +15,7 @@ conn = None
 dirname,file_name = os.path.split(os.path.abspath(__file__))
 root_dir = os.path.join(dirname,"data")+"/"
 from celery.task import periodic_task
-from e_pixuate.pixuate_storage_digikyc import get_url_with_id
-from e_pixuate.pixuate import get_aadhaar_details_url,get_pan_details_url,get_vid_details_url
+from e_pixuate.pixuate import get_url_with_id, get_aadhaar_details_url, get_pan_details_url, get_vid_details_url
 from job import make_celery
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser

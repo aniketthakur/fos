@@ -13,15 +13,13 @@ from PIL import Image
 from datetime import timedelta
 
 from esthenos  import mainapp
+from esthenos.mongo_encoder import *
+from esthenos.mongo_encoder import encode_model
 from esthenos.utils import request_wants_json
 from esthenos.utils import random_with_N_digits
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosSettings, EsthenosUser
-from esthenos.mongo_encoder import *
-from esthenos.mongo_encoder import encode_model
-
-from e_pixuate.pixuate_storage_digikyc import upload_images, get_url_with_id
-
+from e_pixuate.pixuate import upload_images, get_url_with_id
 from models import EsthenosOrgUserUploadSession, EsthenosOrgApplicationMap
 from models import EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplication
 from models import EsthenosOrg, EsthenosOrgProduct, EsthenosOrgBranch, EsthenosOrgRegion

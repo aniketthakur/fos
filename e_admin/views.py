@@ -29,6 +29,7 @@ from esthenos import mainapp
 import sys,traceback
 import boto
 from e_tokens.utils import login_or_key_required
+from e_pixuate.pixuate import  *
 
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
@@ -848,8 +849,6 @@ def admin_org_applications(org_id):
         status=200,\
         mimetype="application/json")
 
-from datetime import date, timedelta
-from e_pixuate.pixuate_storage_digikyc import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
@@ -970,7 +969,7 @@ def cashflow_statusupdate(org_id,app_id):
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
-from e_pixuate.pixuate import  *
+
 @admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
 @login_required
 def read_pan(object_id):
