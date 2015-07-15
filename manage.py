@@ -29,7 +29,7 @@ mainapp.register_blueprint( admin_views)
 from e_tokens.views import token_views
 mainapp.register_blueprint( token_views)
 
-from reports.views import reports_views
+from e_reports.views import reports_views
 mainapp.register_blueprint( reports_views)
 
 from e_admin_reports.views import admin_reports_views
