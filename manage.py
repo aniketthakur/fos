@@ -11,7 +11,7 @@ manager.add_command("runserver", Server(
     host='0.0.0.0',port=8080)
 )
 
-from GunicornServer import GunicornServer
+from e_deploy.GunicornServer import GunicornServer
 manager.add_command("rungunicorn", GunicornServer())
 
 import flask_sauth.commands
