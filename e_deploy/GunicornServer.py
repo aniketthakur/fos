@@ -1,5 +1,5 @@
-__author__ = 'prathvi'
 from flask_script import Command, Option
+from gunicorn.app.base import Application
 
 class GunicornServer(Command):
 
@@ -10,6 +10,7 @@ class GunicornServer(Command):
         self.host = host
         self.workers = workers
         self.bind = bind
+
     def get_options(self):
         return (
             Option('-H', '--host',
@@ -32,8 +33,6 @@ class GunicornServer(Command):
             )
 
     def handle(self, app, host, port, workers,bind):
-
-        from gunicorn.app.base import Application
 
         class FlaskApplication(Application):
             def init(self, parser, opts, args):
