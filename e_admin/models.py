@@ -1,10 +1,8 @@
-__author__ = 'prathvi'
 import datetime
-from esthenos  import db
-from flask.ext.mongorest.resources import Resource
+from esthenos import db
 from blinker import signal
+from flask.ext.mongorest.resources import Resource
 from flask_sauth.models import BaseUser
-# Create your models here.
 
 
 class EsthenosSettings(db.Document):
