@@ -8,8 +8,7 @@ from e_tokens.utils import login_or_key_required
 from e_organisation.models import EsthenosOrgApplicationHighMarkRequest, EsthenosOrgApplicationHighMarkResponse, EsthenosOrgApplication
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
-reports_views = Blueprint('reports_views', __name__,
-                        template_folder='templates')
+reports_views = Blueprint('reports_views', __name__, template_folder='templates')
 
 
 def get_application_headers():
