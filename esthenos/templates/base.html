@@ -5,8 +5,6 @@
     <meta charset="utf-8" />
     <title>{% block title %}eSthenos{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
 
     <link href="{{ url_for('static', filename='plugins/pace/pace-theme-flash.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-slider/css/jquery.sidr.light.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
@@ -28,11 +26,9 @@
     {% block css_sheets %}
         <style type="text/css">
             table td .clickable-row{
-
                 color: #20b2aa;
                 text-decoration: none;
                 border-bottom: 1px solid #20b2aa;
-
             }
         </style>
     {% endblock %}
@@ -55,16 +51,16 @@
                 <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" > <div class="iconset top-menu-toggle-white"></div> </a> </li>
             </ul>
             <!-- BEGIN LOGO -->
-            <a href="index.html"><img src="{{ url_for('static', filename='img/logo-esthenos.png')}}" class="logo" alt=""  data-src="{{ url_for('static', filename='img/logo-esthenos.png')}}" data-src-retina="{{ url_for('static', filename='img/logo-esthenos2x.png')}}" width="106" height="21"/></a>
+            <a href="/">
+                <img src="{{ url_for('static', filename='img/logo-esthenos.png')}}" class="logo" alt="esthenos-logo"  data-src="{{ url_for('static', filename='img/logo-esthenos.png')}}" data-src-retina="{{ url_for('static', filename='img/logo-esthenos2x.png')}}"/>
+            </a>
             <!-- END LOGO -->
             <ul class="nav pull-right notifcation-center">
                 <li class="dropdown" id="header_task_bar"> <a href="/" class="dropdown-toggle active" data-toggle=""> <div class="iconset top-home"></div> </a> </li>
                 <li class="dropdown" id="portrait-chat-toggler" style="display:none"> <a href="#sidr" class="chat-menu-toggle"> <div class="iconset top-chat-white "></div> </a> </li>
             </ul>
         </div>
-        <!-- END RESPONSIVE MENU TOGGLER -->
         <div class="header-quick-nav" >
-            <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="pull-left">
                 <ul class="nav quick-section">
                     <li class="quicklinks"> <a href="#" class="" id="layout-condensed-toggle" >
@@ -80,19 +76,14 @@
                     </li>
                 </ul>
             </div>
-            <!-- END TOP NAVIGATION MENU -->
-            <!-- BEGIN CHAT TOGGLER -->
             <div class="pull-right">
                 <div class="chat-toggler">
                     <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="dropdown" data-original-title="Notifications">
                         <div class="user-details">
                             <div class="username">
-                                <span class="badge badge-important">3</span>
                                 {{ user.first_name }} <span class="bold">{{ user.last_name }}</span>
-
                             </div>
                         </div>
-
                         <div class="iconset top-down-arrow"></div>
                     </a>
                     <div id="notification-list" style="display:none">
@@ -128,20 +119,14 @@
                             <div class="iconset top-settings-dark "></div>
                         </a>
                         <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                            <li><a href="/accounts/profile"> My Account</a>
-                            </li>
+                            <li><a href="/accounts/profile">My Account</a></li>
                             <li class="divider"></li>
                             <li><a href="/accounts/logout"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                         </ul>
                     </li>
-
-
                 </ul>
             </div>
-            <!-- END CHAT TOGGLER -->
         </div>
-        <!-- END TOP NAVIGATION MENU -->
-
     </div>
     <!-- END TOP NAVIGATION BAR -->
 </div>
@@ -176,122 +161,85 @@
             <!-- END MINI-PROFILE -->
 
             <!-- BEGIN SIDEBAR MENU -->
-            <!--<p class="menu-title">BROWSE <span class="pull-right"><a href="javascript:;"><i class="fa fa-refresh"></i></a></span></p>-->
             <ul>
                 {% block nav_bar %}
                     <li class="start active">
                         <a href="/">
                             <i class="icon-custom-home"></i>
                             <span class="title">Home</span>
-                            <span class="selected"></span>
-                            <span class="badge badge-important pull-right">5</span>
                         </a>
                     </li>
-                    <!-- BEGIN BADGE LINK
+                    <!--
                     <li class="">
                         <a href="/upload_documents">
                             <i class="fa fa-envelope"></i>
                             <span class="title">Enroll Customer</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
                     </li>
-                    END BADGE LINK -->
-                    <!-- END SELECTED LINK -->
+                    -->
                     <li class="">
                         <a href="/users">
                             <i class="fa fa-flag"></i>
                             <span class="title">Users</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
-
                     </li>
                     <li class="">
                         <a href="/application_status">
                             <i class="fa fa-flag"></i>
                             <span class="title">Application Status</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
-
                     </li>
-                    <!-- END SINGLE LINK -->
-
-                    <!-- BEGIN SINGLE LINK -->
-
-                    <!-- BEGIN ONE LEVEL MENU -->
-
+                    <!--
                     <li class="">
-                        <!--<a href="/check_cgt1">-->
-                            <!--<i class="icon-custom-ui"></i>-->
-                            <!--<span class="title">CGT 1</span>-->
-                            <!--<span class="badge badge-disable pull-right">3</span>-->
-                        <!--</a>-->
+                        <a href="/check_cgt1">
+                            <i class="icon-custom-ui"></i>
+                            <span class="title">CGT 1</span>
+                        </a>
                     </li>
-                    <!--<li class="">-->
-                        <!--<a href="/check_cgt2">-->
-                            <!--<i class="icon-custom-ui"></i>-->
-                            <!--<span class="title">CGT 2</span>-->
-                            <!--<span class="badge badge-disable pull-right">3</span>-->
-                        <!--</a>-->
-                    <!--</li>-->
                     <li class="">
-                        <!--<a href="/check_grt">-->
-                            <!--<i class="icon-custom-ui"></i>-->
-                            <!--<span class="title">GRT</span>-->
-                            <!--<span class="badge badge-disable pull-right">3</span>-->
-                        <!--</a>-->
+                        <a href="/check_cgt2">
+                            <i class="icon-custom-ui"></i>
+                            <span class="title">CGT 2</span>
+                        </a>
                     </li>
+                    <li class="">
+                        <a href="/check_grt">
+                            <i class="icon-custom-ui"></i>
+                            <span class="title">GRT</span>
+                        </a>
+                    </li>
+                    -->
                     <li class="">
                         <a href="/telecalling">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Tele Calling</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
                     </li>
                     <li class="">
                         <a href="/check_disbusement">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Disbursement</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
                     </li>
                     <li class="">
                         <a href="/profile">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Profile</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
-
-
                     </li>
-
                     <li class="">
                         <a href="/reports">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Reports</span>
-                            <span class="badge badge-disable pull-right">3</span>
                         </a>
                     </li>
                 {% endblock %}
             </ul>
-
             <div class="clearfix"></div>
-            <!-- END SIDEBAR MENU -->
         </div>
     </div>
-    <a href="#" class="scrollup">Scroll</a>
-    <!--
-    <div class="footer-widget">
-        <div class="progress transparent progress-small no-radius no-margin">
-            <div data-percentage="79%" class="progress-bar progress-bar-success animate-progress-bar" ></div>
-        </div>
-        <div class="pull-right">
-            <div class="details-status">
-                <span data-animation-duration="560" data-value="86" class="animate-number"></span>%
-            </div>
-            <a href="lockscreen.html"><i class="fa fa-power-off"></i></a></div>
-    </div>
-    -->
     <!-- END SIDEBAR -->
+
     <!-- BEGIN PAGE CONTAINER-->
     <div class="page-content">
         <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
