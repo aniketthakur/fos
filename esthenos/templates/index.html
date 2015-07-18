@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
+
 {% block css_sheets %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 {% endblock %}
+
 {% block maincontents %}
     <section class="main padder">
       <div class="row">
         <div class="col-lg-12">
           <section class="toolbar clearfix m-t-large m-b">
-              <a href="/kyc_services" class="btn btn-small btn-info btn-circle"><i class="icon-cogs"></i>KYC Services</a>
+            <a href="/kyc_services" class="btn btn-small btn-info btn-circle"><i class="icon-cogs"></i>KYC Services</a>
             <a href="/my_buckets" class="btn btn-small btn-success btn-circle"><i class="icon-folder-close-alt"></i>Buckets</a>
             <a href="/notifications" class="btn btn-small btn-danger btn-circle"><i class="icon-envelope-alt"></i>Notifications <!--<b class="badge bg-white">5</b>--></a>
           </section>
@@ -17,51 +19,46 @@
       </div>
     </section>
     <div class="row">
-
         <div class="col-lg-4">
           <section class="panel">
             <header class="panel-heading">Total Requests</header>
             <div class="panel-body">
-                {% for req_total_obj in total_requests %}
+              {% for req_total_obj in total_requests %}
               <div class="media">
                 <div class="pull-right media-small">{{ req_total_obj[0] }}</div>
                 <div class="progress bg-light">
                   <div class="progress-bar bg-primary" style="width: {{req_total_obj[2] }}%;background-color:{{req_total_obj[3]}};">
-                      {{ req_total_obj[1] }}</div>
+                    {{ req_total_obj[1] }}
+                  </div>
                 </div>
               </div>
-                {%  endfor %}
+              {%  endfor %}
             </div>
           </section>
         </div>
-     </div>
-     <div class="row">
-         <div class="col-lg-4">
+    </div>
+    <div class="row">
+       <div class="col-lg-4">
           <section class="panel">
             <header class="panel-heading">Disk Usage</header>
             <div class="panel-body text-center">
               <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="{{ colors[:buckets|length]}}">{% for buc in buckets %}{{ buc.percent }},{% endfor %}</div>
               <div class="line pull-in"></div>
               <div class="text">
-                  {% for buc in buckets %}
-                <i class="icon-circle" style="color:{{ colors[loop.index0] }} ;"></i> {{ buc.percent }}% {{ buc.name }}
-                  {% endfor %}
+                {% for buc in buckets %}
+                  <i class="icon-circle" style="color:{{ colors[loop.index0] }} ;"></i> {{ buc.percent }}% {{ buc.name }}
+                {% endfor %}
               </div>
             </div>
           </section>
-        </div>
-
-     </div>
-
+       </div>
+    </div>
 {% endblock %}
-{% block modalcontent %}
-        <!-- .modal -->
 
-  <!-- / .modal -->
-        {% endblock %}
-    {% block js_scripts %}
-    <!-- Sparkline Chart -->
-    <script src="{{ url_for('static', filename='js/charts/sparkline/jquery.sparkline.min.js' ) }}"></script>
-    <!-- Easy Pie Chart -->
-    <script src="{{ url_for('static', filename='js/charts/easypiechart/jquery.easy-pie-chart.js' ) }}"></script>
-    {% endblock %}
+{% block modalcontent %}
+{% endblock %}
+
+{% block js_scripts %}
+  <script src="{{ url_for('static', filename='js/charts/sparkline/jquery.sparkline.min.js' ) }}"></script>
+  <script src="{{ url_for('static', filename='js/charts/easypiechart/jquery.easy-pie-chart.js' ) }}"></script>
+{% endblock %}
