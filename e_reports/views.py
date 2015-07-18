@@ -1,23 +1,16 @@
-__author__ = 'prathvi'
-# Flask and Flask-SQLAlchemy initialization here
-from flask import render_template, request,Response
+import os, tempfile
+import json, hashlib
+from flask.ext import excel
+from flask import Blueprint, request
 from flask_login import current_user, login_required
-from e_tokens.utils import login_or_key_required
-import json,hashlib
 from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse
-from flask import  Blueprint
-import os,tempfile
-from esthenos.crossdomain import *
-from esthenos.utils import random_with_N_digits
-#import flickr_api
-#flickr_api.set_keys(api_key = "8766ced6ec90eb38a32778e847a83233", api_secret = "cda7061fdbd608fd")
+from e_tokens.utils import login_or_key_required
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest, EsthenosOrgApplicationHighMarkResponse, EsthenosOrgApplication
+
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
 reports_views = Blueprint('reports_views', __name__,
                         template_folder='templates')
 
-from flask.ext import excel
-from flask import Flask, make_response
 
 def get_application_headers():
     headers = list()
@@ -396,6 +389,7 @@ def internal_main_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
+
 @reports_views.route('/reports/external_main/download', methods=["GET"])
 @login_or_key_required
 def external_main_reports():
@@ -417,7 +411,6 @@ def external_main_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
-from e_organisation.models import EsthenosOrgApplication
 
 @reports_views.route('/reports/highmark_request/download', methods=["GET"])
 @login_or_key_required
@@ -548,7 +541,6 @@ def himark_request_reports():
             row_data.append(hm_request["applicant_address2_pincode"])
             row_data.append(hm_request["nominee_relationship_type"])
 
-
             app_row_data = row_data
             application_data.append(app_row_data)
 
@@ -557,9 +549,9 @@ def himark_request_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
+
 @reports_views.route('/reports/eqifax_request/download', methods=["GET"])
 @login_or_key_required
-
 def eqifax_request_reports():
     c_user = current_user
     kwargs = locals()
@@ -627,7 +619,6 @@ def eqifax_request_reports():
             row_data.append(eq_request["gender"])
             row_data.append(eq_request["branch_id"])
             row_data.append(eq_request["kendra_id"])
-
 
             app_row_data = row_data
             application_data.append(app_row_data)

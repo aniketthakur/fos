@@ -1,16 +1,14 @@
 import os, tempfile
 import json, hashlib, pyexcel
 from flask.ext import excel
-from flask import Flask, make_response
-from flask import  Blueprint
-from flask import render_template, request,Response
+from flask import Flask, Blueprint, make_response
+from flask import render_template, request, Response
 from flask_login import current_user, login_required
 
-from esthenos.crossdomain import *
 from esthenos.utils import random_with_N_digits
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplicationEqifaxResponse
+from e_organisation.models import *
 from e_reports.views import get_application_headers,get_application_rowdata
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')

@@ -1,4 +1,3 @@
-__author__ = 'prathvi'
 from collections import namedtuple, OrderedDict
 import numpy as np
 import simplejson as json
@@ -13,24 +12,31 @@ def isnamedtuple(obj):
 def serialize(data):
     if data is None or isinstance(data, (bool, int, long, float, basestring)):
         return data
+
     if isinstance(data, list):
         return [serialize(val) for val in data]
+
     if isinstance(data, OrderedDict):
         return {"py/collections.OrderedDict":
                 [[serialize(k), serialize(v)] for k, v in data.iteritems()]}
+
     if isnamedtuple(data):
         return {"py/collections.namedtuple": {
             "type":   type(data).__name__,
             "fields": list(data._fields),
             "values": [serialize(getattr(data, f)) for f in data._fields]}}
+
     if isinstance(data, dict):
         if all(isinstance(k, basestring) for k in data):
             return {k: serialize(v) for k, v in data.iteritems()}
         return {"py/dict": [[serialize(k), serialize(v)] for k, v in data.iteritems()]}
+
     if isinstance(data, tuple):
         return {"py/tuple": [serialize(val) for val in data]}
+
     if isinstance(data, set):
         return {"py/set": [serialize(val) for val in data]}
+
     if isinstance(data, np.ndarray):
         return {"py/numpy.ndarray": {
             "values": data.tolist(),
