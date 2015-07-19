@@ -53,7 +53,6 @@ organisation_views = Blueprint('organisation_views', __name__, template_folder='
 @organisation_views.route('/', methods=["GET"])
 @login_required
 def home_page():
-    print session['role']
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
@@ -1676,12 +1675,13 @@ def disbursement(app_id):
 def user_profile_page():
     username = current_user.name
     c_user = current_user
-    profile = EsthenosUser.objects.get(id=current_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
 
     if request.method == "GET":
         return render_template("user_profile.html", **kwargs)
-    if request.method =="POST":
+
+    if request.method == "POST":
         file = request.files['file']
         if file is not None and allowed_file(file.filename):
             filename = secure_filename(file.filename)
@@ -1689,24 +1689,25 @@ def user_profile_page():
             image_file = io.BytesIO(file.read())
             im = Image.open(image_file)
             new_file = None
-            print im.size
+
             if im.size[0] > 120:
                 new_file = resize(im,120)
             else:
                 new_file = im
+
             new_file.save(o_fname)
             original_key = str(c_user.id) + '/pic/'+filename
-            print "uploading to s3...\n"+o_fname+" \n"+original_key
             upload_to_s3(s3_bucket(),o_fname,original_key,'public-read',True)
-            profile.profile_pic = 'https://s3.amazonaws.com/digikyc/'+original_key
-        profile.name = request.form.get('name')
-        profile.first_name = request.form.get('first_name')
-        profile.last_name = request.form.get('last_name')
-        profile.allow_contact = bool(request.form.get('allow_contact',False))
-        profile.email_updates = bool(request.form.get('email_updates',False))
-        profile.email_quota_limit = bool(request.form.get('email_quota_limit',False))
-        profile.train_complete = bool(request.form.get('train_complete',False))
-        profile.save()
+            user.profile_pic = 'https://s3.amazonaws.com/digikyc/'+original_key
+
+        user.name = request.form.get('name')
+        user.last_name = request.form.get('last_name')
+        user.first_name = request.form.get('first_name')
+        user.allow_contact = bool(request.form.get('allow_contact',False))
+        user.email_updates = bool(request.form.get('email_updates',False))
+        user.train_complete = bool(request.form.get('train_complete',False))
+        user.email_quota_limit = bool(request.form.get('email_quota_limit',False))
+        user.save()
         return render_template("user_profile.html", **kwargs)
 
 

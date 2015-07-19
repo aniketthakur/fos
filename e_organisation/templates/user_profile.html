@@ -5,10 +5,10 @@
 {% block title %}User Profile{% endblock %}
 
 {% block maincontents %}
-      <div class="main padder">
+    <div class="main padder">
       <div class="row">
         <div class="col-lg-6 col-lg-offset-3 m-t-large">
-            <section class="panel">
+          <section class="panel">
             <div class="panel-body">
               <form class="form-horizontal" method="post" action="/profile" enctype="multipart/form-data" data-validate="parsley">
                 <div class="form-group">
@@ -24,26 +24,26 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Email</label>
                   <div class="col-lg-8">
-                    <input type="text" name="email" disabled placeholder="Email Adderess" value="{{profile.email}}" class="bg-focus form-control" data-required="true" data-type="email">
+                    <input type="text" name="email" disabled placeholder="Email Adderess" value="{{user.email}}" class="bg-focus form-control" data-required="true" data-type="email">
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Display name</label>
                   <div class="col-lg-8">
-                    <input type="text" name="name" placeholder="Name" value="{{profile.name}}" data-required="true" class="form-control">
+                    <input type="text" name="name" placeholder="Name" value="{{user.name}}" data-required="true" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">First name</label>
                   <div class="col-lg-8">
-                    <input type="text" name="first_name" placeholder="" value="{{profile.first_name}}" data-required="true" class="form-control">
+                    <input type="text" name="first_name" placeholder="" value="{{user.first_name}}" data-required="true" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Last name</label>
                   <div class="col-lg-8">
-                    <input type="text" name="last_name" placeholder="" value="{{profile.last_name}}" data-required="true" class="form-control">
+                    <input type="text" name="last_name" placeholder="" value="{{user.last_name}}" data-required="true" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
@@ -52,14 +52,14 @@
                       <!-- checkbox -->
                       <div class="checkbox">
                         <label class="checkbox-custom">
-                          <input type="checkbox" name="train_complete" {% if profile.train_complete %} checked="checked" {% endif %}>
+                          <input type="checkbox" name="train_complete" {% if user.train_complete %} checked="checked" {% endif %}>
                           <i class="icon-unchecked"></i>
                           Train Complete
                         </label>
                       </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
-                          <input type="checkbox" name="email_quota_limit" {% if profile.email_quota_limit %} checked="checked" {% endif %} id="2">
+                          <input type="checkbox" name="email_quota_limit" {% if user.email_quota_limit %} checked="checked" {% endif %} id="2">
                           <i class="icon-unchecked"></i>
                           pre quota limit notification
                         </label>
@@ -69,17 +69,16 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Privacy</label>
                     <div class="col-lg-6">
-                      <!-- checkbox -->
                       <div class="checkbox">
                         <label class="checkbox-custom">
-                          <input type="checkbox" name="email_updates" {% if profile.email_updates %} checked="checked" {% endif %}>
+                          <input type="checkbox" name="email_updates" {% if user.email_updates %} checked="checked" {% endif %}>
                           <i class="icon-unchecked"></i>
                           Send me email on new feature updates
                         </label>
                       </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
-                          <input type="checkbox" name="allow_contact" {% if profile.allow_contact %} checked="checked" {% endif %} id="cb3">
+                          <input type="checkbox" name="allow_contact" {% if user.allow_contact %} checked="checked" {% endif %} id="cb3">
                           <i class="icon-unchecked"></i>
                           Allow other users to contact me
                         </label>
@@ -89,7 +88,7 @@
                 <div class="form-group">
                   <div class="col-lg-9 col-lg-offset-3">
                     <button type="submit" class="btn btn-small btn-white">Cancel</button>
-                    <button type="submit" class="btn btn-small btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-small btn-primary">Save Changes</button>
                   </div>
                 </div>
               </form>
@@ -99,6 +98,7 @@
       </div>
     </div>
 {% endblock %}
+
 {% block scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
