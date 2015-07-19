@@ -1,27 +1,19 @@
-from esthenos import mainapp
-import sys
-import os,tempfile
-import datetime
-from bson import  ObjectId
-import hashlib
-import traceback
-import  urllib2
-import pymongo
-import json
+import os, sys, time, json
+import requests, boto
+import tempfile, zipfile
+from datetime import date
+from mongoengine import Q
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from esthenos import mainapp
-conn = None
-dirname,file_name = os.path.split(os.path.abspath(__file__))
-root_dir = os.path.join(dirname,"data")+"/"
-from celery.task import periodic_task
-from e_pixuate.pixuate import get_url_with_id, get_aadhaar_details_url, get_pan_details_url, get_vid_details_url
 from job import make_celery
-from e_organisation.models import EsthenosOrg
-from e_admin.models import EsthenosUser
-celery = make_celery('esthenos.tasks',mainapp.config['CELERY_BROKER_URL'],mainapp.config['CELERY_RESULT_BACKEND'])
+from celery.task import periodic_task
 
-import boto
+from esthenos import mainapp
+from e_organisation.models import *
+
+from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
+from e_pixuate.pixuate import get_url_with_id, get_aadhaar_details_url, get_pan_details_url, get_vid_details_url
+
+
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
@@ -30,11 +22,8 @@ conn_s3 = boto.connect_s3(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 
-from esthenos import render_template,mainapp
+celery = make_celery('esthenos.tasks',mainapp.config['CELERY_BROKER_URL'],mainapp.config['CELERY_RESULT_BACKEND'])
 
-from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC,EsthenosOrgStats
-#from e_admin.models import EsthenosOrgApplication
-from datetime import date
 
 def calculate_age(born):
     today = date.today()
@@ -47,6 +36,36 @@ def calculate_age(born):
     else:
         return today.year - born.year
 
+
+def downloadFile(url, outfile) :
+    with open(outfile, 'wb') as f:
+        start = time.clock()
+        r = requests.get(url, stream=True)
+        total_length = r.headers.get('content-length')
+        dl = 0
+        if total_length is None: # no content length header
+            f.write(r.content)
+        else:
+            for chunk in r.iter_content(1024):
+                dl += len(chunk)
+                f.write(chunk)
+                done = int(50 * int(dl) / int(total_length))
+                sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
+                print ''
+    return (time.clock() - start)
+
+
+def zip_custom(src, dst):
+    zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
+    abs_src = os.path.abspath(src)
+    for dirname, subdirs, files in os.walk(src):
+        for filename in files:
+            absname = os.path.abspath(os.path.join(dirname, filename))
+            arcname = absname[len(abs_src) + 1:]
+            print 'zipping %s as %s' % (os.path.join(dirname, filename),
+                                        arcname)
+            zf.write(absname, arcname)
+    zf.close()
 
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
@@ -230,6 +249,7 @@ def tagged_applications():
             application.status = 120
             application.save()
 
+
 @celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def all_prefilled_applications():
@@ -265,7 +285,7 @@ def all_prefilled_applications():
 
             application.save()
 
-from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
+
 @celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=120))
 def cb_checkready_applications():
@@ -287,7 +307,7 @@ def cb_checkready_applications():
         application.status = 140
         application.save()
 
-from e_organisation.models import EsthenosOrgApplicationEqifaxResponse
+
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
     print "queue processor"
@@ -349,6 +369,7 @@ def cbcheck_statuscheck_applications():
             application.status = 160
         application.save()
 
+
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def cashflow_ready_applications():
     print "queue processor"
@@ -374,37 +395,6 @@ def cashflow_ready_applications():
         application.save()
 
 
-import os
-import zipfile
-import StringIO
-from dateutil.relativedelta import relativedelta
-import pdfkit
-import tempfile
-import requests
-import sys
-import time
-
-def downloadFile(url, outfile) :
-    with open(outfile, 'wb') as f:
-        start = time.clock()
-        r = requests.get(url, stream=True)
-        total_length = r.headers.get('content-length')
-        dl = 0
-        if total_length is None: # no content length header
-            f.write(r.content)
-        else:
-            for chunk in r.iter_content(1024):
-                dl += len(chunk)
-                f.write(chunk)
-                done = int(50 * int(dl) / int(total_length))
-                sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
-                print ''
-    return (time.clock() - start)
-
-
-
-from mongoengine import  Q
-from e_organisation.models import EsthenosOrgGroup,EsthenosOrgProduct
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
@@ -421,7 +411,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "dpn.pdf"
         print tf
         #generate dpn here
-        import urllib
         downloadFile("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id,tf)
         tmp_files.append(tf)
 
@@ -484,21 +473,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         group.save()
 
 
-import os
-import zipfile
-
-def zip_custom(src, dst):
-    zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
-    abs_src = os.path.abspath(src)
-    for dirname, subdirs, files in os.walk(src):
-        for filename in files:
-            absname = os.path.abspath(os.path.join(dirname, filename))
-            arcname = absname[len(abs_src) + 1:]
-            print 'zipping %s as %s' % (os.path.join(dirname, filename),
-                                        arcname)
-            zf.write(absname, arcname)
-    zf.close()
-
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def cgt_grt_success_applications():
     print "queue processor"
@@ -517,6 +491,7 @@ def cgt_grt_success_applications():
         application.current_status_updated  = datetime.datetime.now()
         application.status = 300
         application.save()
+
 
 if __name__ == '__main__':
     celery.start()
