@@ -200,10 +200,12 @@
                 rules: {
                     first_name_add_organisation: {
                         minlength: 3,
+                        maxlength:5,
                         required: true
                     },
                     last_name_add_organisation: {
                         minlength: 3,
+                        maxlength:5,
                         required: true
                     },
                     email_add_organisation: {
@@ -216,6 +218,7 @@
                     },
                     city_add_organisation: {
                         minlength: 2,
+                        maxlength:5,
                         required: true
                     },
 
@@ -231,6 +234,7 @@
                     },
                     tele_code_add_organisation: {
                         minlength: 2,
+                        number:true,
                         required: true
                     }
                 },

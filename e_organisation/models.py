@@ -1,4 +1,6 @@
 from wtforms.validators import required
+# from e_organisation.views import check_tele_applicant_questions
+
 
 __author__ = 'prathvi'
 import datetime
@@ -55,6 +57,8 @@ class EsthenosOrgBranch(db.Document):
     area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
+    #branch = db.StringField(max_length=60,required=True)
+    # branch_id = db.StringField(max_length=60,required=True)
 
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgBranch
@@ -189,6 +193,7 @@ class EsthenosOrg(db.Document):
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
     employee_count = db.IntField(default=1)
+    user_count = db.IntField(default=1)
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -255,27 +260,45 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
-class EsthenosOrgGroupGRTSession(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
+# class EsthenosOrgGroupGRTSession(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
+#
+# class EsthenosOrgGroupCGT1Session(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
+#
+# class EsthenosOrgGroupCGT2Session(db.Document):
+#     organisation = db.ReferenceField('EsthenosOrg',required=True)
+#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
+#     questions=db.DictField(required=False)
+#     score = db.FloatField(default=0,required=False)
 
-class EsthenosOrgGroupCGT1Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
+# class EsthenosOrgGRTTemplateQuestion(db.Document):
+#     question=db.StringField(max_length=1024,required=True)
+#     question_regional = db.StringField(max_length=1024,required=True)
+#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
+#     organisation = db.ReferenceField('EsthenosOrg')
+#
+#     def __unicode__(self):
+#         return "EsthenosOrgCGTTemplateQuestion"
 
-class EsthenosOrgGroupCGT2Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
+class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
+      organisation = db.ReferenceField('EsthenosOrg',required=True)
+      group = db.ReferenceField('EsthenosOrgGroup',required=True)
+      questions=db.DictField(required=False)
+      score=db.FloatField(default=0,required=False)
 
-class EsthenosOrgGRTTemplateQuestion(db.Document):
+
+class EsthenosOrgPsychometricTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
+    answer=db.StringField(max_length=1024,required=True)
+    answer_regional=db.StringField(max_length=1024,required=True)
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 
@@ -283,24 +306,25 @@ class EsthenosOrgGRTTemplateQuestion(db.Document):
         return "EsthenosOrgCGTTemplateQuestion"
 
 
-class EsthenosOrgCGT1TemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
 
-    def __unicode__(self):
-        return "EsthenosOrgCGT1TemplateQuestion"
+# class EsthenosOrgCGT1TemplateQuestion(db.Document):
+#     question=db.StringField(max_length=1024,required=True)
+#     question_regional = db.StringField(max_length=1024,required=True)
+#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
+#     organisation = db.ReferenceField('EsthenosOrg')
+#
+#     def __unicode__(self):
+#         return "EsthenosOrgCGT1TemplateQuestion"
 
 
-class EsthenosOrgCGT2TemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
-
-    def __unicode__(self):
-        return "EsthenosOrgCGT2TemplateQuestion"
+# class EsthenosOrgCGT2TemplateQuestion(db.Document):
+#     question=db.StringField(max_length=1024,required=True)
+#     question_regional = db.StringField(max_length=1024,required=True)
+#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
+#     organisation = db.ReferenceField('EsthenosOrg')
+#
+#     def __unicode__(self):
+#         return "EsthenosOrgCGT2TemplateQuestion"
 
 
 class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
@@ -389,6 +413,7 @@ class EsthenosOrgApplicationStatus(db.Document):
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
     group = db.ReferenceField('EsthenosOrgGroup')
+    branch = db.ReferenceField('EsthenosOrgBranch')
     organisation = db.ReferenceField('EsthenosOrg')
     owner = db.ReferenceField('EsthenosUser')
     product = db.ReferenceField('EsthenosOrgProduct',required=False)

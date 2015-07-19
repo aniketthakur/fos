@@ -29,6 +29,7 @@ from esthenos import mainapp
 import sys,traceback
 import boto
 from e_tokens.utils import login_or_key_required
+from e_pixuate.pixuate import  *
 
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
@@ -143,24 +144,32 @@ def admin_update_org_group(org_id):
         regions = EsthenosOrgRegion.objects.filter(organisation=org)
         areas = EsthenosOrgArea.objects.filter(organisation=org)
         branches = EsthenosOrgBranch.objects.filter(organisation=org)
-        groups = EsthenosOrgGroup.objects.filter(organisation=org)
+        users = EsthenosUser.objects.filter(organisation=org)
+        #groups = EsthenosOrgGroup.objects.filter(organisation=org)
+        #emp = AddOrganizationEmployeeForm.objects.filtee(organisation=org)
         print branches
         kwargs = locals()
         return render_template("admin_add_org_group.html", **kwargs)
     if request.method == "POST":
         print request.form
+        print "hello error"
         data =  request.form.get('org_data').split(",")
+        print "hello"
         loc_name = request.form.get('location_name')
-        group_name = request.form.get('group_name')
-        unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
+        #branch_name = request.form.get('branch_name')
+        #group_name = request.form.get('group_name')
+        user_name=request.form.get('user_name')
+        #emp_name = request.form.get('emp_name')
+        #unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
+        unique_c_user_id = org.name.upper().format(org.user_count)
         branch = EsthenosOrgBranch.objects.get(id=data[3])
-        group,status = EsthenosOrgGroup.objects.get_or_create(organisation=org,group_name=group_name)
+        user,status = EsthenosUser.objects.get_or_create(organisation=org,user_name=user_name)
         if status:
-            group.location_name=loc_name
-            group.branch=branch
-            group.group_id = unique_group_id
-            group.save()
-            EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
+            user.location_name=loc_name
+            user.branch=branch
+            #group.group_id = unique_group_id
+            user.save()
+            EsthenosOrg.objects.get(id = org.id).update(inc__user_count=1)
         return redirect("/admin/organisations")
 
 @admin_views.route('/admin/update_org/<org_id>/update_regions', methods=["POST"] )
@@ -552,92 +561,130 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
-from .forms import AddOrgGRTTemplateQuestionsForm,AddOrgCGT1TemplateQuestionsForm,AddOrgCGT2TemplateQuestionsForm
-from e_organisation.models import EsthenosOrgGRTTemplateQuestion,EsthenosOrgCGT1TemplateQuestion,EsthenosOrgCGT2TemplateQuestion
-@admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
+from .forms import AddOrgPsychometricTemplateQuestionsForm
+from e_organisation.models import EsthenosOrgPsychometricTemplateQuestion
+# @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
+# @login_required
+# def grt_questions(org_id):
+#     if session['role']=='ADMIN':
+#         username=current_user.name
+#         user=current_user
+#         org=EsthenosOrg.objects.get(id=org_id)
+#         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
+#         kwargs = locals()
+#         if request.method=="GET":
+#             return render_template("admin_organisation_grt_questions.html", **kwargs)
+#         else:
+#             question=AddOrgGRTTemplateQuestionsForm(request.form)
+#             if(question.validate()):
+#                 print "Product Details Validated,Saving the form"
+#                 question.save()
+#                 org = EsthenosOrg.objects.get(id=org_id)
+#                 c_user = current_user
+#                 user = EsthenosUser.objects.get(id=c_user.id)
+#                 return render_template("admin_organisation_grt_questions.html", **kwargs)
+#             else:
+#                 print "Validation Error"
+#                 print flash_errors(question)
+#                 kwargs = locals()
+#                 return render_template("admin_organisation_grt_questions.html", **kwargs)
+#     else:
+#         return abort(403)
+
+
+# @admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
+# @login_required
+# def cgt1_questions(org_id):
+#     if session['role']=='ADMIN':
+#         username=current_user.name
+#         user=current_user
+#         org=EsthenosOrg.objects.get(id=org_id)
+#         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
+#         kwargs = locals()
+#         if request.method=="GET":
+#             return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+#         else:
+#             question=AddOrgCGT1TemplateQuestionsForm(request.form)
+#             if(question.validate()):
+#                 print "Product Details Validated,Saving the form"
+#                 question.save()
+#                 org = EsthenosOrg.objects.get(id=org_id)
+#                 c_user = current_user
+#                 user = EsthenosUser.objects.get(id=c_user.id)
+#                 return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+#             else:
+#                 print "Validation Error"
+#                 print flash_errors(question)
+#                 kwargs = locals()
+#                 return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+#     else:
+#         return abort(403)
+
+
+@admin_views.route('/admin/organisation/<org_id>/psychometric_questions',methods=['GET','POST'])
 @login_required
-def grt_questions(org_id):
+def psychometric_questions(org_id):
     if session['role']=='ADMIN':
         username=current_user.name
         user=current_user
         org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
+        questions = EsthenosOrgPsychometricTemplateQuestion.objects.filter(organisation=org)
         kwargs = locals()
         if request.method=="GET":
-            return render_template("admin_organisation_grt_questions.html", **kwargs)
+            return render_template("admin_organisation_psychometric_questions.html", **kwargs)
         else:
-            question=AddOrgGRTTemplateQuestionsForm(request.form)
-            if(question.validate()):
+            question=AddOrgPsychometricTemplateQuestionsForm(request.form)
+            # answer=AddOrgPsychometricTemplateQuestionsForm(request.form)
+            if(question.validate):
                 print "Product Details Validated,Saving the form"
                 question.save()
+                print "save answer"
+                # answer.save()
+                print "not saved answer"
                 org = EsthenosOrg.objects.get(id=org_id)
                 c_user = current_user
                 user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_grt_questions.html", **kwargs)
+                return render_template("admin_organisation_psychometric_questions.html", **kwargs)
             else:
                 print "Validation Error"
                 print flash_errors(question)
                 kwargs = locals()
-                return render_template("admin_organisation_grt_questions.html", **kwargs)
+                return render_template("admin_organisation_psychometric_questions.html", **kwargs)
     else:
         return abort(403)
 
 
-@admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
-@login_required
-def cgt1_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-        else:
-            question=AddOrgCGT1TemplateQuestionsForm(request.form)
-            if(question.validate()):
-                print "Product Details Validated,Saving the form"
-                question.save()
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-            else:
-                print "Validation Error"
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-    else:
-        return abort(403)
 
-@admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
-@login_required
-def cgt2_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-        else:
-            question=AddOrgCGT2TemplateQuestionsForm(request.form)
-            if(question.validate()):
-                print "Product Details Validated,Saving the form"
-                question.save()
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-            else:
-                print "Validation Error"
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-    else:
-        return abort(403)
+
+
+
+# @admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
+# @login_required
+# def cgt2_questions(org_id):
+#     if session['role']=='ADMIN':
+#         username=current_user.name
+#         user=current_user
+#         org=EsthenosOrg.objects.get(id=org_id)
+#         questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
+#         kwargs = locals()
+#         if request.method=="GET":
+#             return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+#         else:
+#             question=AddOrgCGT2TemplateQuestionsForm(request.form)
+#             if(question.validate()):
+#                 print "Product Details Validated,Saving the form"
+#                 question.save()
+#                 org = EsthenosOrg.objects.get(id=org_id)
+#                 c_user = current_user
+#                 user = EsthenosUser.objects.get(id=c_user.id)
+#                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+#             else:
+#                 print "Validation Error"
+#                 print flash_errors(question)
+#                 kwargs = locals()
+#                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+#     else:
+#         return abort(403)
 
 
 from .forms import AddOrgTeleCallingTemplateQuestionsForm
@@ -803,8 +850,6 @@ def admin_org_applications(org_id):
         status=200,\
         mimetype="application/json")
 
-from datetime import date, timedelta
-from pixuate_storage_digikyc import  *
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
@@ -928,7 +973,7 @@ def cashflow_statusupdate(org_id,app_id):
         print e.message
     return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
 
-from pixuate import  *
+
 @admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
 @login_required
 def read_pan(object_id):
@@ -1090,6 +1135,17 @@ def admin_processing_fees(group_id):
 def admin_schedule():
     kwargs = locals()
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
+
+
+@admin_views.route('/admin/profile',methods=["GET"])
+def admin_profile():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template("admin_profile.html",**kwargs)
 #Added By Deepak
 import pdfkit
 @admin_views.route('/admin/pdf_dpn', methods=["GET"])

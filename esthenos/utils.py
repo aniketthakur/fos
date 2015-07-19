@@ -1,6 +1,11 @@
-__author__ = 'prathvi'
 import mailchimp
-from esthenos  import mainapp
+from flask import request
+from random import randint
+from esthenos import mainapp
+from e_organisation.models import EsthenosOrgApplication, EsthenosOrgApplicationEqifax
+from e_organisation.models import EsthenosOrgApplicationHighMarkRequest, EsthenosOrgApplicationHighMarkResponse
+
+
 @mainapp.template_filter('strftime')
 def _jinja2_filter_datetime(date, fmt=None):
     native = date.replace(tzinfo=None)
@@ -11,11 +16,13 @@ def subscribe(name,email_ad, list_id= "93c1a74cac"):
     try:
         m = get_mailchimp_api()
         m.lists.subscribe(list_id, email = {'email':email_ad},merge_vars={'DNAME':name})
-        print  "The email has been successfully subscribed"
+        print "The email has been successfully subscribed"
+
     except mailchimp.ListAlreadySubscribedError:
-        print  "That email is already subscribed to the list"
+        print "That email is already subscribed to the list"
+
     except mailchimp.Error, e:
-        print  'An error occurred: %s - %s' % (e.__class__, e)
+        print 'An error occurred: %s - %s' % (e.__class__, e)
 
 class ordered_dict(dict):
     def __init__(self, *args, **kwargs):
@@ -38,18 +45,13 @@ class ordered_dict(dict):
     def ordered_items(self):
         return [(key,self[key]) for key in self._order]
 
-
-from random import randint
 def random_with_N_digits(n):
     range_start = 10**(n-1)
     range_end = (10**n)-1
     return randint(range_start, range_end)
 
 def get_mailchimp_api():
-    return mailchimp.Mailchimp('6e73868dbf17cff787d3b9dab5a4f396-us5') #your api key here
-
-
-from flask import request
+    return mailchimp.Mailchimp('6e73868dbf17cff787d3b9dab5a4f396-us5')
 
 def request_wants_json():
     best = request.accept_mimetypes\
@@ -58,9 +60,6 @@ def request_wants_json():
            request.accept_mimetypes[best] >\
            request.accept_mimetypes['text/html']
 
-
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplication,EsthenosOrgApplicationEqifax
-#Added by Deepak
 def make_highmark_request_for_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)
     if app.highmark_submitted == True:
@@ -121,8 +120,6 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.sent_status=True
     hmrequest.save()
     app.save()
-
-from e_organisation.models import EsthenosOrgApplicationEqifax
 
 def make_equifax_request_entry_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)

@@ -29,7 +29,7 @@
                                         <div class="col-md-7 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name">
+                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                         <div class="col-md-4 form-group">
                                             <div class="input-with-icon  right">
                                                 <i class=""></i>
-                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91">
+                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" min="2">
                                             </div>
                                         </div>
                                         <div class="col-md-8 form-group">
@@ -132,7 +132,7 @@
 
                                 <div class="pull-right">
                                     <button class="btn btn-small btn-danger btn-cons"  id="submitForm2" type="submit"><i class="icon-ok"></i> Save</button>
-                                    <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                    <button class="btn btn-small btn-white btn-cons" type="reset" value="clear">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -157,6 +157,15 @@
             });
 
         });
+
+
+        $(':input','#form-employee')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
+
         $('#form-employee').validate({
             errorElement: 'span',
             errorClass: 'error',
@@ -164,11 +173,15 @@
             ignore: "",
             rules: {
                 FirstName: {
+
                     minlength: 3,
+                    maxlength:10,
                     required: true
                 },
                 LastName: {
-                    minlength: 3,
+
+                    minlength: 2,
+                    maxlength:30,
                     required: true
                 },
                 Email: {
@@ -180,7 +193,8 @@
                     required: true
                 },
                 City: {
-                    minlength: 2,
+                    minlength: 5,
+                    maxlength: 10,
                     required: true
                 },
                 PostalCode: {
@@ -188,6 +202,7 @@
                     required: true
                 },
                 TeleCode: {
+                    number: true,
                     minlength: 2,
                     required: true
                 },

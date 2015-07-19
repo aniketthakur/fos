@@ -23,7 +23,7 @@
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                            <input name="org_name" id="org_name" type="text" value=""  class="form-control" placeholder="Organisation Name">
+                                            <input name="org_name" id="org_name" type="text" value=""  class="form-control"  placeholder="Organisation Name">
                                         </div>
                                     </div>
 
@@ -63,7 +63,7 @@
                                     <div class="col-md-4">
                                         <div class="input-with-icon  right">
                                             <i class=""></i>
-                                            <input name="postal_code" id="postal_code" type="text" value=""  class="form-control" placeholder="Postal Code">
+                                            <input name="postal_code" id="postal_code" type="text" value=""  class="form-control"   placeholder="Postal Code">
                                         </div>
 
                                     </div>
@@ -98,7 +98,7 @@
 
                             <div class="pull-right">
                                 <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i class="icon-ok"></i> Add</button>
-                                <button class="btn btn-small btn-white btn-cons" type="button">Cancel</button>
+                                <button class="btn btn-small btn-white btn-cons" type="reset" id="reset" value="clear">Clear</button>
                             </div>
                         </div>
                     </form>
@@ -110,6 +110,12 @@
 {% endblock %}
 {% block js_scripts %}{{ super() }}
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
+    <!--<script src="{{url_for('static',filename='js/numeric.js')}}" type="text/javascript"></script>-->
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>-->
+    <!--<script type="text/javascript" src="jquery.alphanum.js"></script>-->
+
+     <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script type="text/javascript">
         $(document).ready(function(){
             $("#states").select2();
@@ -123,6 +129,19 @@
 
 
         });
+
+
+              $(':input','#form-organisation')
+                  .not(':button, :submit, :reset, :hidden')
+                  .val('')
+                  .removeAttr('checked')
+                  .removeAttr('selected');
+
+
+
+
+
+
         $('#form-organisation').validate({
                 errorElement: 'span',
                 errorClass: 'error',
@@ -138,26 +157,42 @@
                         required: true
                     },
                     postal_code:{
-                        minlength:2,
-                        required:true
+                        number: true,
+                        minlength:6,
+						maxlength: 6,
+                        required: true,
+
                     },
                     postal_city:{
-                        minlength:2,
-                        required:true
+
+                        required: true,
+                        minlength: 3,
+                        maxlength:20,
+
+
+
                     },
                     postal_tele_code:{
-                        minlength:2,
-                        required:true
+                        number: true,
+                        required: true,
+		                minlength: 2,
+		                maxlength:2
                     },
                     postal_telephone:{
+                        number: true,
                         minlength:2,
+                        maxlength:10,
                         required:true
                     },
                     email:{
-                        email:true,
-                        required:true
+                         required: true,
+		                 email: true,
+                         minlength: 3
                     }
                 },
+
+
+
 
                 invalidHandler: function (event, validator) {
 					//display error alert on form submit
@@ -190,7 +225,14 @@
                     form.submit();
                     console.log("Success");
                 }
+
+
             });
+
+
+
+
+
 
     </script>
 

@@ -1,10 +1,8 @@
-__author__ = 'prathvi'
 import datetime
-from esthenos  import db
-from flask.ext.mongorest.resources import Resource
+from esthenos import db
 from blinker import signal
+from flask.ext.mongorest.resources import Resource
 from flask_sauth.models import BaseUser
-# Create your models here.
 
 
 class EsthenosSettings(db.Document):
@@ -44,6 +42,7 @@ class EsthenosUser(BaseUser):
     postal_telephone = db.StringField(max_length=20, required=False)
     postal_tele_code = db.StringField(max_length=20, required=False)
     postal_city = db.StringField(max_length=100, required=False)
+    user_name = db.StringField(max_length=100,required=False)
     organisation = db.ReferenceField('EsthenosOrg',required=False)
     org_state = db.ReferenceField('EsthenosOrgState',required=False)
     org_area =   db.ReferenceField('EsthenosOrgArea',required=False)

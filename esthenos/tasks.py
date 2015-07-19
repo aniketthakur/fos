@@ -1,4 +1,3 @@
-__author__ = 'prathvi'
 from esthenos import mainapp
 import sys
 import os,tempfile
@@ -16,8 +15,7 @@ conn = None
 dirname,file_name = os.path.split(os.path.abspath(__file__))
 root_dir = os.path.join(dirname,"data")+"/"
 from celery.task import periodic_task
-from pixuate_storage_digikyc import get_url_with_id
-from pixuate import get_aadhaar_details_url,get_pan_details_url,get_vid_details_url
+from e_pixuate.pixuate import get_url_with_id, get_aadhaar_details_url, get_pan_details_url, get_vid_details_url
 from job import make_celery
 from e_organisation.models import EsthenosOrg
 from e_admin.models import EsthenosUser
@@ -28,10 +26,10 @@ conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 
-
 conn_s3 = boto.connect_s3(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
+
 from esthenos import render_template,mainapp
 
 from e_organisation.models import EsthenosOrgApplication,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus,EsthenosOrgApplicationKYC,EsthenosOrgStats

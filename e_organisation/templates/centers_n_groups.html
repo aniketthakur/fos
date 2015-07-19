@@ -25,7 +25,7 @@
                             <h3>Search   <span class="semi-bold">Applications</span></h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                                    <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Person Name">
                                     <table class="table no-more-tables ">
                                         <thead>
                                         <tr>
@@ -35,14 +35,15 @@
                                                     <label for="checkbox1000"></label>
                                                 </div>
                                             </th>
-                                            <th style="width:33%">Group ID</th>
-                                            <th style="width:33%">Group Name</th>
+                                            <th style="width:33%">Branch Name</th>
+                                            <th style="width:33%">FOS</th>
                                             <th style="width:33%">Added Date</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for group in groups %}
+                                        {% for branch in branchs %}
+                                        <!--{% for user in users  %}-->
                                             <tr>
                                                 <td class="v-align-middle">
                                                     <div class="checkbox check-default">
@@ -50,13 +51,17 @@
                                                         <label for="checkbox11"></label>
                                                     </div>
                                                 </td>
-                                                <td class="v-align-middle clickable-row" data-href='/applications?group={{ group.group_id }}'><ins>{{ group.group_id }}</td>
-                                                <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
+                                                <td class="v-align-middle clickable-row" data-href='/applications?branch={{ branch.branch_name}}'><ins>{{ branch.branch_name }}</ins></td>
+
+                                                <td class="v-align-middle clickable-row" data-href='/application?user={{user.user_name}}"><span class="muted'><ins>{{ user.user_name }}</ins></span>
                                                 </td>
-                                                <td><span class="muted">{{ group.created_at }}</span>
+                                                <td><span class="muted">{{ branch.created_at }}</span>
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        <!--{% endfor %}-->
+                                         {% endfor %}
+
+
                                         </tbody>
                                     </table>
                                 </div>

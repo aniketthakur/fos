@@ -4,3 +4,5 @@ venv/
 pygame
 /pitaya/data/
 /pitaya/uploads/
+*~
+\#*

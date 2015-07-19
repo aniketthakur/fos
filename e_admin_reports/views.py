@@ -1,24 +1,18 @@
-__author__ = 'prathvi'
-# Flask and Flask-SQLAlchemy initialization here
-from flask import render_template, request,Response
-from flask_login import current_user, login_required
-from e_tokens.utils import login_or_key_required
-import json,hashlib
-from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest,EsthenosOrgApplicationHighMarkResponse,EsthenosOrgApplicationEqifaxResponse
-from flask import  Blueprint
-import os,tempfile
-from esthenos.crossdomain import *
-from esthenos.utils import random_with_N_digits
-#import flickr_api
-#flickr_api.set_keys(api_key = "8766ced6ec90eb38a32778e847a83233", api_secret = "cda7061fdbd608fd")
-storage_path =  os.path.join(os.curdir,'pitaya/uploads')
-admin_reports_views = Blueprint('admin_reports_views', __name__,
-    template_folder='templates')
-import pyexcel
+import os, tempfile
+import json, hashlib, pyexcel
 from flask.ext import excel
-from flask import Flask, make_response
-from reports.views import get_application_headers,get_application_rowdata
+from flask import Flask, Blueprint, make_response
+from flask import render_template, request, Response
+from flask_login import current_user, login_required
+
+from esthenos.utils import random_with_N_digits
+from e_tokens.utils import login_or_key_required
+from e_admin.models import EsthenosUser
+from e_organisation.models import *
+from e_reports.views import get_application_headers,get_application_rowdata
+
+storage_path =  os.path.join(os.curdir,'pitaya/uploads')
+admin_reports_views = Blueprint('admin_reports_views', __name__, template_folder='templates')
 
 def is_number(s):
     try:

@@ -103,8 +103,8 @@ $(document).ready(function() {
             });
 	//Form Condensed Validation
 	$('#form-condensed').validate({
-                errorElement: 'span', 
-                errorClass: 'error', 
+                errorElement: 'span',
+                errorClass: 'error',
                 focusInvalid: false, 
                 ignore: "",
                 rules: {
@@ -135,7 +135,8 @@ $(document).ready(function() {
                         required: true,
                     },
 					city_add_organisation: {
-						minlength: 5,
+						maxlength:10,
+						url:true,
                         required: true,
                     },
 					state_add_organisation: {
@@ -152,6 +153,7 @@ $(document).ready(function() {
                         required: true,
                     },
 					tele_code_add_organisation: {
+
 						minlength: 3,
 						maxlength: 4,
                         required: true,
@@ -160,6 +162,7 @@ $(document).ready(function() {
 						maxlength: 10,
                         required: true,
                     },
+
                 },
 
                 invalidHandler: function (event, validator) {
@@ -234,6 +237,9 @@ $(document).ready(function() {
 				$('<span class="error"></span>').insertAfter(element).append(label)
 			}
 		});
+
+
+
 
 	$('#rootwizard').bootstrapWizard({
 	  		'tabClass': 'form-wizard',
