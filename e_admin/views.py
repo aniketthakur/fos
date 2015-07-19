@@ -29,6 +29,7 @@ conn = boto.connect_ses(
 
 signal_user_registered = signal('user-registered')
 
+
 admin_views = Blueprint('admin_views', __name__, template_folder='templates')
 
 

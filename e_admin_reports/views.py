@@ -1,18 +1,20 @@
-import os, tempfile
+import os, tempfile, datetime
 import json, hashlib, pyexcel
+
 from flask.ext import excel
 from flask import Flask, Blueprint, make_response
 from flask import render_template, request, Response
 from flask_login import current_user, login_required
 
-from esthenos.utils import random_with_N_digits
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosUser
 from e_organisation.models import *
 from e_reports.views import get_application_headers,get_application_rowdata
+from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
 admin_reports_views = Blueprint('admin_reports_views', __name__, template_folder='templates')
+
 
 def is_number(s):
     try:
@@ -21,6 +23,7 @@ def is_number(s):
     except ValueError:
         return False
 
+
 @admin_reports_views.route('/admin/reports/internal_main/download', methods=["GET"])
 @login_or_key_required
 def admin_internal_main_reports():
@@ -28,18 +31,15 @@ def admin_internal_main_reports():
     kwargs = locals()
     from e_organisation.models import EsthenosOrgApplication
     if request.method == 'GET':
-        user  = EsthenosUser.objects.get(id=c_user.id)
+        user = EsthenosUser.objects.get(id=c_user.id)
 
         app_headers = get_application_headers()
         app_headers.append("Organisation Name")
 
         applications = EsthenosOrgApplication.objects.all()
-
         application_data = list()
+        application_data.append(app_headers)
 
-
-        headers = app_headers
-        application_data.append(headers)
         for app in applications:
             app_row_data= get_application_rowdata(app)
             app_row_data.append(app.organisation.name)
@@ -50,9 +50,6 @@ def admin_internal_main_reports():
         output.headers["Content-Disposition"] = "attachment; filename=internal_main_reports.csv"
         output.headers["Content-type"] = "text/csv"
         return output
-
-from e_organisation.models import EsthenosOrgApplication,EsthenosOrg
-
 
 
 @admin_reports_views.route('/admin/cbcheck/highmark/', methods=["POST"])
@@ -137,6 +134,7 @@ def himark_request_reports_import():
 
 
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+
 
 @admin_reports_views.route('/admin/cbcheck/highmark/download', methods=["GET"])
 @login_or_key_required
@@ -275,8 +273,7 @@ def himark_request_reports():
         output.headers["Content-type"] = "text/csv"
         return output
 
-from e_organisation.models import EsthenosOrgApplicationStatus,EsthenosOrgApplicationStatusType
-import datetime
+
 @admin_reports_views.route('/admin/cbcheck/equifax/', methods=["POST"])
 @login_or_key_required
 def equifax_request_reports_import():
@@ -440,6 +437,7 @@ def equifax_request_reports_import():
 
 
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
+
 
 @admin_reports_views.route('/admin/cbcheck/equifax/download', methods=["GET"])
 @login_or_key_required

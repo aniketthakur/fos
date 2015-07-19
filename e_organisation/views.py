@@ -32,8 +32,6 @@ conn_s3 = boto.connect_s3(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
 
-organisation_views = Blueprint('organisation_views', __name__, template_folder='templates')
-
 class RenderTemplateView(View):
     def __init__(self, template_name):
         self.template_name = template_name
@@ -46,6 +44,10 @@ def round_to_1(x):
     if x < 0:
         return 0
     return round(x, -int(floor(log10(x))))
+
+
+organisation_views = Blueprint('organisation_views', __name__, template_folder='templates')
+
 
 @organisation_views.route('/', methods=["GET"])
 @login_required
