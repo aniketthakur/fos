@@ -1,371 +1,237 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
+{% block css_sheets %}
+  {{ super() }}
 {% endblock %}
 
 {% block action_bar %}
-
 {% endblock %}
+
 {% block maincontents %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Profile <span class="semi-bold">Information</span></h4>
+                    <div class="grid-body no-border">
+                        <form class="form-no-horizontal-spacing" id="form-profile" method="" action="">
+                            <table style="width:100%" >
+                                <tr>
+                                    <td>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b>Name:</b>
+                                        </div>
 
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b>Age:</b>
+                                        </div>
 
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Mobile:</b>
+                                        </div>
 
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Landline:</b>
+                                        </div>
 
-
-<div class="row">
-    <div class="col-md-12">
-    <div class="grid simple">
-    <div class="grid-title no-border">
-   <h4>Profile <span class="semi-bold">Information</span></h4>
-
-       <div class="grid-body no-border">
-            <form class="form-no-horizontal-spacing" id="form-profile" method="" action="">
-             <table style="width:100%" >
-                 <tr>
-                     <td>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                         <b>Name:</b>
-                                            </div>
-
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                          <b>Age:</b>
-                                            </div>
-
-                          <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Mobile:</b>
-                                            </div>
-
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Landline:</b>
-                                            </div>
-
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
                                             <b>Aadhar:</b>
-                                            </div>
+                                        </div>
 
-                             <br><br>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
+                                        <br><br>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
                                             <b>BankName:</b>
-                                            </div>
+                                        </div>
 
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
                                             <b>Name In Bank A/C:</b>
-                                            </div>
+                                        </div>
 
 
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                               <b>BankA/C:</b>
-                                                                     </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b>BankA/C:</b>
+                                        </div>
 
-                          <div class="input-  with-icon  right">
-                                                <i class=""></i>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
                                             <b>IFSC:</b>
-                                            </div>
-
-
-
-
-
-
-
-                     </td>
-                     <td>
-
-                      <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Business" id="Business" value="" type="text"  placeholder="Business">
-                                            <!--</div>-->
-
-                                 <br><br>
-
-                                  <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Purposeofloan" id="Purposeofloan" value="" type="text"  placeholder="Purpose of Loan">
-                                            <!--</div>-->
-
-                                 <br><br>
-
-                                 <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Loanamountapplied" id="Loanamountapplied" value="" type="text" placeholder="Loan Amount Applied">
-                                            <!--</div>-->
-
-
-                     </td>
-
-                     <td>
-
-                          <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Yearinbusiness" id="Yearinbusiness" value="" type="text"  placeholder="Year in Business">
-                                            <!--</div>-->
-                         <br><br>
-                          <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Employees" id="Employees" value="" type="text"  placeholder="Employees">
-                                            <!--</div>-->
-                         <br><br>
-                          <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Seasonality" id="Seasonality" value="" type="text"  placeholder="Seasonality">
-                                            <!--</div>-->
-                         <br><br>
-                         <!--<div class="input-  with-icon  right">-->
-                                                <!--<i class=""></i>-->
-                                            <input name="Own/rentedbusiness" id="Own/rentedbusiness" value="" type="text"  placeholder="Own/Rented Business">
-                                            <!--</div>-->
-
-
-
-                     </td>
-
-
-                 </tr>
-                 <!--<tr>-->
-                     <!--<table>-->
-                         <!--<tr>-->
-
-
-
-                         <!--</tr>-->
-                         <!--<tr>-->
-                             <!--<td>-->
-
-
-                             <!--</td>-->
-
-                         <!--</tr>-->
-                     <!--</table>-->
-
-                 <!--</tr>-->
-
-
-             </table>
-                <br><br>
-                <table style="100%">
-                 <tr>
-                     <th style="100%" width="202">Gurantor1</th>
-                     <th style="100%" width="207">Gurantor2</th>
-                 </tr>
-                    <tr>
-                        <td>
-                             <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                                <b>Name:</b>
-
-                                                                                        </div>
-                          <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Age:</b>
-                                            </div>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Mobile:</b>
-                                            </div>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Landline:</b>
-                                            </div>
-
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Aadhar:</b>
-                                            </div>
-
-
-                        </td>
-
-                        <td>
-
-                              <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                                <b>Name:</b>
-
-                                                                                        </div>
-                          <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Age:</b>
-                                            </div>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Mobile:</b>
-                                            </div>
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Landline:</b>
-                                            </div>
-
-                         <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Aadhar:</b>
-                                            </div>
-
-
-
-
-                        </td>
-
-
-                    </tr>
-
-                </table>
-                <br><br>
-                <table style="100%" border="1">
-                    <tr>
-                        <th width="130">KYC</th>
-                        <th width="83">Gurantor KYC</th>
-                        <th width="103">Personal Document</th>
-                        <th width="116">Business Document</th>
-                        <th width="20">Others</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-
-                </table>
-                <br><br>
-                <table style="100%" cellpadding="20px">
-                    <tr>
-                         <h4>HYPO1</h4>
-                        <th width="112">Assets</th>
-                        <th width="110">Supporting</th>
-                    </tr>
-                    <tr>
-
-                        <td>
-
-
-                        </td>
-                    </tr>
-
-
-                </table>
-                <br><br>
-                <table>
-                     <tr>
-                         <h4>HYPO2</h4>
-                        <th width="112">Assets</th>
-                        <th width="110">Supporting</th>
-                    </tr>
-                    <tr>
-
-                        <td>
-
-
-                        </td>
-                    </tr>
-
-
-                </table>
-                 <br><br>
-                <table>
-                     <tr>
-                         <h4>HYPO3</h4>
-                        <th width="112">Assets</th>
-                        <th width="110">Supporting</th>
-                    </tr>
-                    <tr>
-
-                        <td>
-
-
-                        </td>
-                    </tr>
-
-
-                </table>
-                  <br><br>
-                <table style="100%" border="1">
-                    <tr>
-                        <td>
-                         <h4>Cash Flow Analysis</h4>
-                            <br>
-                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Total Income:</b>
-                                            </div>
-
-                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Total Expenditure:</b>
-                                            </div>
-                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Loan To Value(LTV)=Total Value Of:</b>
-                                            </div>
-                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Fix Obligation To Income Ratio(FOIR):</b>
-                                            </div>
-                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                           <b> Loan Amount:</b>
-                                            </div>
-                        </td>
-                        <td>
-
-                            <!--<table border="1" style="100%">-->
-                                <!--<tr>-->
-                                    <!--<td>-->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input name="Business" id="Business" value="" type="text"  placeholder="Business">
+                                        <input name="Purposeofloan" id="Purposeofloan" value="" type="text"  placeholder="Purpose of Loan">
+                                        <input name="Loanamountapplied" id="Loanamountapplied" value="" type="text" placeholder="Loan Amount Applied">
+                                    </td>
+                                    <td>
+                                        <input name="Yearinbusiness" id="Yearinbusiness" value="" type="text"  placeholder="Year in Business">
+                                        <input name="Employees" id="Employees" value="" type="text"  placeholder="Employees">
+                                        <input name="Seasonality" id="Seasonality" value="" type="text"  placeholder="Seasonality">
+                                        <input name="Own/rentedbusiness" id="Own/rentedbusiness" value="" type="text"  placeholder="Own/Rented Business">
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table style="100%">
+                                <tr>
+                                    <th style="100%" width="202">Gurantor1</th>
+                                    <th style="100%" width="207">Gurantor2</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b>Name:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Age:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Mobile:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Landline:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Aadhar:</b>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b>Name:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Age:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Mobile:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Landline:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Aadhar:</b>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table style="100%" border="1">
+                                <tr>
+                                    <th width="130">KYC</th>
+                                    <th width="83">Gurantor KYC</th>
+                                    <th width="103">Personal Document</th>
+                                    <th width="116">Business Document</th>
+                                    <th width="20">Others</th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table style="100%" cellpadding="20px">
+                                <tr>
+                                    <h4>HYPO1</h4>
+                                    <th width="112">Assets</th>
+                                    <th width="110">Supporting</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table>
+                                <tr>
+                                    <h4>HYPO2</h4>
+                                    <th width="112">Assets</th>
+                                    <th width="110">Supporting</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table>
+                                <tr>
+                                    <h4>HYPO3</h4>
+                                    <th width="112">Assets</th>
+                                    <th width="110">Supporting</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <table style="100%" border="1">
+                                <tr>
+                                    <td>
+                                        <h4>Cash Flow Analysis</h4>
+                                        <br>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Total Income:</b>
+                                        </div>
+
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Total Expenditure:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Loan To Value(LTV)=Total Value Of:</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Fix Obligation To Income Ratio(FOIR):</b>
+                                        </div>
+                                        <div class="input-  with-icon  right">
+                                            <i class=""></i>
+                                            <b> Loan Amount:</b>
+                                        </div>
+                                    </td>
+                                    <td>
                                         Date----/-----/
                                         <br>
                                         <b>Mr/Mrs/Miss----------------------------------------------Son/Daughter/Spouse/Of------------------a Permanent</b>
-                            <br>
+                                        <br>
                                         <b>For Maitrya Capital</b>
                                         <br>
                                         <b>Loan Officer</b>
-
-                                    <!--</td>-->
-
-                                <!--</tr>-->
-
-                            <!--</table>-->
-                        </td>
-                    </tr>
-
-
-                </table>
-
-
-
-            </form>
-       </div>
-
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
-{% block js_scripts %}{{ super() }}
 
+{% block js_scripts %}
+  {{ super() }}
 {% endblock %}
 
