@@ -1,15 +1,8 @@
-from wtforms.validators import required
-# from e_organisation.views import check_tele_applicant_questions
-
-
-__author__ = 'prathvi'
 import datetime
-from esthenos  import db
-from flask.ext.mongorest.resources import Resource
+from esthenos import db
 from blinker import signal
-from flask_sauth.models import BaseUser
-from e_admin.models import EsthenosUser
-# Create your models here.
+from flask.ext.mongorest.resources import Resource
+
 
 class EsthenosOrgNotification(db.Document):
     to_user = db.ReferenceField('EsthenosOrg')
@@ -21,6 +14,7 @@ class EsthenosOrgNotification(db.Document):
     read_state = db.BooleanField(default=False)
     notification_date = db.DateTimeField(default=datetime.datetime.now)
 
+
 class EsthenosOrgNotificationResource(Resource):
     document= EsthenosOrgNotification
 
@@ -28,6 +22,7 @@ class EsthenosOrgNotificationResource(Resource):
 class EsthenosOrgState(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     state_name = db.StringField(max_length=60,required=True)
+
 
 class EsthenosOrgStateResource(Resource):
     document= EsthenosOrgState
@@ -39,13 +34,16 @@ class EsthenosOrgArea(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     area_name = db.StringField(max_length=60,required=True)
 
+
 class EsthenosOrgAreaResource(Resource):
     document= EsthenosOrgArea
+
 
 class EsthenosOrgRegion(db.Document):
     state = db.ReferenceField('EsthenosOrgState')
     organisation = db.ReferenceField('EsthenosOrg')
     region_name = db.StringField(max_length=60,required=True)
+
 
 class EsthenosOrgRegionResource(Resource):
     document= EsthenosOrgRegion
@@ -60,9 +58,9 @@ class EsthenosOrgBranch(db.Document):
     #branch = db.StringField(max_length=60,required=True)
     # branch_id = db.StringField(max_length=60,required=True)
 
+
 class EsthenosOrgBranchResource(Resource):
     document= EsthenosOrgBranch
-
 
 
 class EsthenosOrgToken(db.EmbeddedDocument):
@@ -74,8 +72,10 @@ class EsthenosOrgToken(db.EmbeddedDocument):
     client_name = db.StringField(max_length=255, required=True)
     api_version = db.StringField(max_length=255, required=True)
 
+
 class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
+
 
 class PixuateObjectUrlMap(db.Document):
     pixuate_id = db.StringField(max_length=255)
@@ -88,6 +88,7 @@ class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     app_file_pixuate_id = db.ListField(db.StringField(max_length=255))
     kyc_file_pixuate_id = db.DictField()
     gkyc_file_pixuate_id = db.DictField()
+
 
 class EsthenosOrgUserUploadSession(db.DynamicDocument):
     unique_session_key = db.StringField(max_length=255, required=True)
@@ -127,6 +128,7 @@ class EsthenosOrgRoleSettings(db.Document):
     reports_db_done = db.StringField(max_length=10, required=True,default="no")
     def __unicode__(self):
         return "EsthenosOrgRoleSettings"
+
 
 class EsthenosOrgStats(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -195,6 +197,7 @@ class EsthenosOrg(db.Document):
     employee_count = db.IntField(default=1)
     user_count = db.IntField(default=1)
 
+
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center_id = db.StringField(max_length=10,required=False)
@@ -207,6 +210,7 @@ class EsthenosOrgCenter(db.Document):
 
     def __unicode__(self):
         return self.center_id
+
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -231,9 +235,7 @@ class EsthenosOrgGroup(db.Document):
         return self.group_name
 
 
-
-
-class EsthenosOrgBranchResource(Resource):
+class EsthenosOrgGroupResource(Resource):
     document= EsthenosOrgGroup
 
 
@@ -260,32 +262,36 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
-# class EsthenosOrgGroupGRTSession(db.Document):
-#     organisation = db.ReferenceField('EsthenosOrg',required=True)
-#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
-#     questions=db.DictField(required=False)
-#     score = db.FloatField(default=0,required=False)
-#
-# class EsthenosOrgGroupCGT1Session(db.Document):
-#     organisation = db.ReferenceField('EsthenosOrg',required=True)
-#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
-#     questions=db.DictField(required=False)
-#     score = db.FloatField(default=0,required=False)
-#
-# class EsthenosOrgGroupCGT2Session(db.Document):
-#     organisation = db.ReferenceField('EsthenosOrg',required=True)
-#     group = db.ReferenceField('EsthenosOrgGroup',required=True)
-#     questions=db.DictField(required=False)
-#     score = db.FloatField(default=0,required=False)
+class EsthenosOrgGroupGRTSession(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
 
-# class EsthenosOrgGRTTemplateQuestion(db.Document):
-#     question=db.StringField(max_length=1024,required=True)
-#     question_regional = db.StringField(max_length=1024,required=True)
-#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
-#     organisation = db.ReferenceField('EsthenosOrg')
-#
-#     def __unicode__(self):
-#         return "EsthenosOrgCGTTemplateQuestion"
+
+class EsthenosOrgGroupCGT1Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
+
+
+class EsthenosOrgGroupCGT2Session(db.Document):
+    organisation = db.ReferenceField('EsthenosOrg',required=True)
+    group = db.ReferenceField('EsthenosOrgGroup',required=True)
+    questions=db.DictField(required=False)
+    score = db.FloatField(default=0,required=False)
+
+
+class EsthenosOrgGRTTemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
+
+    def __unicode__(self):
+        return "EsthenosOrgCGTTemplateQuestion"
+
 
 class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
       organisation = db.ReferenceField('EsthenosOrg',required=True)
@@ -306,25 +312,24 @@ class EsthenosOrgPsychometricTemplateQuestion(db.Document):
         return "EsthenosOrgCGTTemplateQuestion"
 
 
+class EsthenosOrgCGT1TemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
 
-# class EsthenosOrgCGT1TemplateQuestion(db.Document):
-#     question=db.StringField(max_length=1024,required=True)
-#     question_regional = db.StringField(max_length=1024,required=True)
-#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
-#     organisation = db.ReferenceField('EsthenosOrg')
-#
-#     def __unicode__(self):
-#         return "EsthenosOrgCGT1TemplateQuestion"
+    def __unicode__(self):
+        return "EsthenosOrgCGT1TemplateQuestion"
 
 
-# class EsthenosOrgCGT2TemplateQuestion(db.Document):
-#     question=db.StringField(max_length=1024,required=True)
-#     question_regional = db.StringField(max_length=1024,required=True)
-#     language_type=db.StringField(max_length=128,required=True,default="Hindi")
-#     organisation = db.ReferenceField('EsthenosOrg')
-#
-#     def __unicode__(self):
-#         return "EsthenosOrgCGT2TemplateQuestion"
+class EsthenosOrgCGT2TemplateQuestion(db.Document):
+    question=db.StringField(max_length=1024,required=True)
+    question_regional = db.StringField(max_length=1024,required=True)
+    language_type=db.StringField(max_length=128,required=True,default="Hindi")
+    organisation = db.ReferenceField('EsthenosOrg')
+
+    def __unicode__(self):
+        return "EsthenosOrgCGT2TemplateQuestion"
 
 
 class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
@@ -343,6 +348,7 @@ class EsthenosOrgIndivijualTeleCallingSession(db.Document):
     group = db.ReferenceField('EsthenosOrgGroup',required=True)
     questions=db.DictField(required=False)
     score = db.FloatField(default=0,required=False)
+
 
 class EsthenosOrgProduct(db.Document):
     product_name=db.StringField(max_length=128,required=True)
@@ -390,9 +396,9 @@ class EsthenosOrgSettings(db.Document):
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
 
-
     def __unicode__(self):
-        return "EsthenosOrgSetings"
+        return "EsthenosOrgSettings"
+
 
 class EsthenosOrgApplicationStatusType(db.Document):
     status =  db.StringField(max_length=100, required=True,default="")
@@ -400,15 +406,19 @@ class EsthenosOrgApplicationStatusType(db.Document):
     status_code = db.IntField(default=0)
     sub_status_code = db.IntField(default=0)
     sub_status_message =  db.StringField(max_length=512, required=True,default="")
+
     def __unicode__(self):
         return self.status
+
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     status_message =  db.StringField(max_length=512, required=True,default="")
     updated_on = db.DateTimeField(default=datetime.datetime.now)
+
     def __unicode__(self):
         return self.updated_on
+
 
 class EsthenosOrgApplication(db.Document):
     center = db.ReferenceField('EsthenosOrgCenter')
@@ -577,7 +587,6 @@ class EsthenosOrgApplication(db.Document):
     gurantor_s_relationship_with_borrower = db.StringField(max_length=20, required=False,default="")
     gurantors_borrowers_are_nominee_for_each_other_ = db.StringField(max_length=10, required=False,default="")
 
-
     member_f_or_h_age=db.IntField(default=0)
     girl=db.StringField(max_length=512, required=False,default="")
     boy=db.StringField(max_length=512, required=False,default="")
@@ -600,7 +609,6 @@ class EsthenosOrgApplication(db.Document):
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
-
 
 
 class EsthenosOrgApplicationHighMarkRequest(db.Document):
@@ -643,10 +651,11 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     branch=db.StringField(max_length=128, required=True,default="")
     kendra=db.StringField(max_length=128, required=True,default="")
     report_id=db.StringField(max_length=128, required=True,default="")
-
     raw = db.StringField(max_length=8096, required=True,default="")
+
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
+
 
 class EsthenosOrgApplicationHighMarkResponse(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
@@ -705,11 +714,12 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
     nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
+
     def __unicode__(self):
         return "EsthenosOrgApplicationStatus"
 
 
-class  EsthenosOrgApplicationEqifaxResponse(db.Document):
+class EsthenosOrgApplicationEqifaxResponse(db.Document):
     report_id=db.IntField(default=0)
     reference_number=db.StringField(max_length=255,required=False,default="")
     unique_account_number=db.StringField(max_length=255,required=False,default="")
@@ -766,7 +776,6 @@ class  EsthenosOrgApplicationEqifaxResponse(db.Document):
     num_writtenoff_accountnon_own=db.IntField(default=0)
 
 
-
 class EsthenosOrgApplicationEqifax(db.Document):
     reference_number=db.StringField(required=True)
     member_id_unique_accountnumber=db.StringField(default="", required=False)
@@ -793,11 +802,8 @@ class EsthenosOrgApplicationEqifax(db.Document):
     branch_id=db.StringField(max_length=255, required=False,default="")
     kendra_id=db.StringField(max_length=255, required=False,default="")
 
-
     def __unicode__(self):
         return self.reference_number +" ---Requests"
-
-
 
 
 sauth_user_registered = signal('user-registered')

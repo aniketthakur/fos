@@ -1,52 +1,13 @@
-__author__ = 'prathvi'
-#!/usr/bin/env python
+import json
 import datetime
 from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError, DateField
 from wtforms import validators as v
 from flask_login import current_user
-from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser, EsthenosOrgApplication,EsthenosOrgCenter,EsthenosOrgGroup,EsthenosOrgApplicationStatusType,EsthenosOrgApplicationStatus
-from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgApplicationKYC
-from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrg
-from e_admin.models import EsthenosUser,EsthenosSettings
 
-"""
-ImmutableMultiDict([('kyc1_teleno', u''), ('center_name', u'MUDDANAHALLI'), ('kyc2_kycid', u'VB/05/041/336769'),
-('group_name', u'DHANALAKSHMI'), ('kyc1_state', u'Andhra Pradesh'), ('kyc2_f_or_h_name', u'Name  Jovdeb'),
-('postofficeaccount_inclusion', u'yes'), ('kyc2_country', u''), ('interested_in_health_indurance', u'yes'), ('kyc3_f_or_h_name', u' Mahesh Palekar'),
-('kyc3_tele_code', u''), ('kyc2_city', u''), ('kyc1_country', u''),
-('medical_expenditure', u'200'), ('interested_in_nps', u'yes'), ('centre_leader', u'Rajamma'), ('gkycid1', u'5513eb792a762065ac21c88b'),
- ('member_fullname', u'Pattan Saddam Hussain'), ('state', u'Karnataka'), ('interested_in_other_fp', u'yes'),
-('select_t_business', u'ORCHARD'), ('radio_member_disability', u''), ('village_water', u'POND'), ('festival_expenditure', u'100'),
- ('cm_cell_no', u'8197998833'), ('kyc2_name', u' Mishra Suiit'), ('excepted_disbursment_date', u'27/03/2015'),
-('kycid2', u'5513ebb22a762065ac21c88f'), ('village_medical_facilities', u'PHC'), ('micropension_inclusion', u'yes'), ('kyc2_state', u''),
- ('kyc3_name', u' Prathwirai Palekar'), ('p_income', u'3500'), ('self_owned_land', u'1 Acare'), ('member_address_proof', u''),
-('center_leader_cell', u''), ('center_size', u'8'), ('select_type_of_residence', u'FAMILY_OWNED'), ('applicationtype', u'VID'),
-('shared_land', u''), ('child', u'1'), ('child', u'1'), ('bankaccount_inclusion', u'yes'), ('kyc1_f_or_h_name', u'S/O Fyroz Basha'),
-('fl_loans', u'2000'), ('guarantor_id_proof_number', u'ZMQ2471183'), ('fl_chits', u'2000'), ('kyc1_kycid', u'565061987998'),
-('selec_p_business_category', u'TRADING'), ('village_hospital_category', u'ALLOPATHY'), ('chit_amount', u''),
-('cm_id', u'0'), ('member_id_proof_number', u'565061987998'), ('member_telephone', u'8197998833'), ('kyc2_dob', u'20'),
-('kyc1_member_code', u''), ('group_leader_cell', u''), ('bankfi_amount', u''), ('kyc1_address', u'4/166'), ('patta_land', u'2Acare'),
-('chits_inclusion', u'yes'), ('moneylenders_roi', u'15'), ('kyc3_dob', u'27/08/1988'), ('current_cycle', u'1'),
-('kyc3_address', u''), ('member_age', u'25'), ('select_family_asset', u'MIXER'), ('select_family_asset', u'BULLOCK_CART'),
-('select_family_asset', u'BYCYCLE'), ('guarantor_fullname', u' Prathwirai Palekar'), ('purpose_of_loan', u'farming'),
- ('group_size', u'100'), ('member_husband_age', u'45'), ('member_address_proof_number', u'VB/05/041/336769'),
- ('select_house_type', u'PAKKA'), ('village_road', u'CONCRETE'), ('kyc2_teleno', u''), ('kycid1', u'5513ebad2a762065ac21c88e'),
-('chit_roi', u''), ('kyc1_dob', u'1992'), ('family_size', u'5'), ('member_address2', u'ABC'), ('select_s_business', u'ORCHARD'),
- ('member_address1', u'HAL'), ('food_expenditure', u'300'), ('repeat_client_id', u''), ('entertainment_expenditure', u'50'),
-('kyc3_country', u''), ('kyc3_city', u''), ('member_id_proof', u''), ('kyc1_name', u'Pattan Saddam Hussain'), ('fnf_inclusion', u'2000'),
-('education_expenditure', u'50'), ('branch', u'Branch1'), ('applied_loan_amount', u'10000'), ('member_f_or_h_name', u'S/O Fyroz Basha'),
-('travel_expenditure', u'20'), ('t_income', u'1500'), ('member_pincode', u'580003'), ('repayment_mode', u'monthly'),
-('taluk', u'Honavar'), ('group_leader', u'Ganga'), ('bankfi_roi', u''), ('member_husband_telephone', u'982929029'),
- ('kyc3_member_code', u''), ('selec_p_business', u'ORCHARD'), ('select_member_religion', u'HINDU'),
-('select_member_caste_category', u'GENERAL'), ('moneylenders_amount', u'1000'), ('guarantor_id_proof', u''),
-('house_rent_expenditure', u''), ('s_income', u'1500'), ('village_public_transport', u'BUS'), ('kyc1_tele_code', u''),
- ('house_hold_expenditure', u'1000'), ('kyc2_address', u''), ('village_electricity', u'12HR'), ('kyc2_tele_code', u''),
-('product_id', u'5513c64957ab391b2fb50191'), ('kyc1_city', u'Cuddapah'), ('region', u'R1'), ('kyc3_teleno', u''),
-('kyc3_kycid', u'ZMQ2471183'), ('fl_insurance', u'2000'), ('select_drinking_water', u'PIPED'), ('kyc2_member_code', u''),
-('select_s_business_category', u'TRADING'), ('kyc3_state', u''), ('select_t_business_category', u'TRADING')])
-    """
+from e_admin.models import EsthenosUser, EsthenosSettings
+from e_organisation.models import *
+
+
 class AddApplicationManual(Form):
     application_id = TextField( validators=[v.DataRequired(), v.Length(max=40)])
     center_name = TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -160,8 +121,6 @@ class AddApplicationManual(Form):
     p_expense=TextField( validators=[ v.Length(max=40)])
     s_expense=TextField( validators=[ v.Length(max=40)])
     t_expense=TextField( validators=[ v.Length(max=40)])
-
-
 
     def save( self):
         app = EsthenosOrgApplication.objects.get(application_id=self.application_id.data)
@@ -331,44 +290,7 @@ class AddApplicationManual(Form):
 
         return None
 
-import json
 
-"""
-ImmutableMultiDict([('how_long_are_you_staying_in_house__in_years', u'25'),
-('source_of_drinking_water', u'Borewell, Govt Bore Well, Open Well'), ('gurranter_s_sex', u''),
-('address', u' NEAR JERI MERI MANDIR'), ('total_earning_members', u'3'), ('pincode', u'421306'),
-('gurantors_borrowers_are_nominee_for_each_other_', u'Yes'), ('required_loan_amount', u'40000'), ('members_less_than_18', u'1'),
-('tertiary_business_category', u'None'), ('village_information_sanitation', u'Private'),
-('village_information_water_bodies', u'River, Pond, Hand Pump'), ('primary_business_expenses_monthly', u'15000'),
-('district', u'Thane'), ('financial_liabilities_insurance', u'300'), ('village_information_road_quality', u'Pakka'),
-('physical_disability_member', u'None'), ('family_medical_expenditure_monthly', u'300'),
- ('family_other_expenditure_monthly', u'300'), ('ifsc_code', u'0855466494'), ('secondary_business_income_monthly', u'18800'),
-  ('primary_business_activities', u'Railway'), ('bank_name', u'Sbi'), ('village_information_electricity_hours', u'15-20'),
-  ('primary_business_category', u'Services'), ('village_information_medical_category', u'Homeopathy, Ayurvedic'),
-   ('family_assets_number_of_cows', u'2'), ('group_name', u'GroupABC'), ('secondary_business_category', u'Agriculture'),
-   ('gurranter_s_age', u'22'), ('name', u'Nitin Gopalakrishnan'), ('other_family_asset_s', u'Bike, Tv'), ('gender', u'Male'),
-   ('family_festival_expenditure_monthly', u'300'), ('members_above_18', u'4'), ('dob_yob', u'1988'), ('model_type', u'JLG'),
-   ('quality_of_house', u'Kaccha/Mud'), ('relationship_status', u'Unmarried'), ('family_assets_land_acres', u'2'),
-    ('kyc', u'{"kyc":[{"uid":"454919121002","lm":"NEAR JERI MERI MANDIR",
-    "aadhar_f":"55449ee2207ffc05ff24e863","aadhar_b":"55449eee207ffc05ff24e864","pc":"421306","name":"Nitin Gopalakrishnan",
-    "state":"Maharashtra","yob":"1988","loc":"TISGAON","gender":"M","house":"ROOM NO 2, RAGAM APARTMENT","vtc":"KALYAN EAST",
-    "dist":"Thane"},{"pancard_f":"55449e7c207ffc05ff24e85f"},{"votercard_b":"5540d16d207ffc05ff24e84f","votercard_f":"5540d158207ffc05ff24e84e"},
-    {"gurrantors_b":"5540d196207ffc05ff24e851","gurrantors_f":"5540d183207ffc05ff24e850"},{"ration_b":"","ration_f":""},
-    {"other":"55449e94207ffc05ff24e860"},{"bank_account_statement":""}]}'), ('family_assets_number_of_sheeps', u'2'),
-     ('primary_business_income_monthly', u'32080'), ('village_information_medical_facility', u'Public Hospital'),
-     ('family_entertainment_expenditure__monthly', u'300'), ('family_travel_expenditure__monthly', u'300'),
-     ('village_information_financial_institutions', u'Post Office, MFI'), ('repayment_option', u'Monthly'),
-     ('gurranter_s_name', u'Swaraj'), ('education', u'Graduate'), ('category', u'General'),
-      ('financial_liabilities_friends__family_hand_loans', u'300'), ('religion', u'Hindu'), ('state', u'Maharashtra'),
-      ('taluk', u'KALYAN EAST'), ('gurantor_s_relationship_with_borrower', u'Others'), ('product_name', u''),
-      ('phone_number', u'8897967948'), ('purpose_of_the_loan', u'To Buy Land'), ('financial_liabilities_chits', u'300'),
-       ('account_holder_name', u'Nitin'), ('family_assets_orchard__acres', u'2'), ('father_s__husband_s_name', u'Gopalakrishnan'),
-       ('interested_in_buying_other_products', u'NPS, Solar Lamp'), ('financial_liabilities_bank_loans', u'300'),
-       ('family_education_expenditure_monthly', u'300'), ('male_count', u'4'), ('secondary_business_activities', u'Agriculture'),
-        ('village_information_public_transportaion', u'Train, Auto'), ('village_information_education_institutes', u'Government School, College'),
-        ('female_count', u'1'), ('total_number_of_family_members', u'5'), ('country', u'India'), ('age', u''), ('type_of_house', u'Rented/Leased'),
-        ('account_number', u'0855466494'), ('secondary_business_expenses_monthly', u'5000'), ('family_food_expenditure__monthly', u'300')])
-"""
 class AddApplicationMobile(Form):
     group_leader_cell = TextField( validators=[ v.Length(max=512)]) #8197997788
     group_size = TextField( validators=[ v.Length(max=512)]) #20
@@ -465,6 +387,7 @@ class AddApplicationMobile(Form):
     family_medical_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
     family_food_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #2000
     kyc = TextField( validators=[ v.Length(max=2048)]) #2000
+
     def save( self):
         c_user = current_user
         user = EsthenosUser.objects.get(id=c_user.id)
@@ -787,6 +710,3 @@ class AddApplicationMobile(Form):
 
 
         #fields present in form and not in models
-
-
-

@@ -1,30 +1,38 @@
 from mongoengine import Q
 
+import boto
+import pyexcel
+import datetime
+import traceback
+import os, io, StringIO
+import tempfile, zipfile, uuid, json
+from PIL import Image
+from math import log10, floor
+from datetime import timedelta
+from werkzeug.utils import secure_filename, redirect
+
+from flask.ext import excel
 from flask.views import View
-from flask import  Blueprint
-from flask import render_template,session,request,Response,abort
+from flask import Blueprint, render_template, session, request, Response, abort, make_response
 from flask_sauth.views import flash_errors
 from flask_login import current_user, login_user, logout_user, login_required
 
-import datetime
-import traceback
-import os, tempfile, uuid, json
-from PIL import Image
-from datetime import timedelta
-
-from esthenos  import mainapp
-from esthenos.mongo_encoder import *
+from esthenos import s3_bucket, mainapp
 from esthenos.mongo_encoder import encode_model
-from esthenos.utils import request_wants_json
-from esthenos.utils import random_with_N_digits
+from e_admin.forms import AddOrganizationEmployeeForm
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosSettings, EsthenosUser
+from esthenos.utils import request_wants_json, random_with_N_digits
+from esthenos.tasks import generate_post_grt_applications
 from e_pixuate.pixuate import upload_images, get_url_with_id
-from models import EsthenosOrgUserUploadSession, EsthenosOrgApplicationMap
-from models import EsthenosOrgCenter, EsthenosOrgGroup, EsthenosOrgApplication
-from models import EsthenosOrg, EsthenosOrgProduct, EsthenosOrgBranch, EsthenosOrgRegion
-from models import EsthenosOrgApplicationStatusType, EsthenosOrgNotification, EsthenosOrgApplicationStatus
+from e_organisation.models import *
 
+
+conn_s3 = boto.connect_s3(
+    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
+
+organisation_views = Blueprint('organisation_views', __name__, template_folder='templates')
 
 class RenderTemplateView(View):
     def __init__(self, template_name):
@@ -33,9 +41,7 @@ class RenderTemplateView(View):
     def dispatch_request(self):
         return render_template(self.template_name)
 
-organisation_views = Blueprint('organisation_views', __name__, template_folder='templates')
 
-from math import log10, floor
 def round_to_1(x):
     if x < 0:
         return 0
@@ -53,6 +59,7 @@ def home_page():
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
 
+
 @organisation_views.route('/accounts/logout', methods=["GET"])
 @login_required
 def admin_logout():
@@ -60,6 +67,7 @@ def admin_logout():
         abort(403)
     logout_user()
     return redirect("/accounts/login")
+
 
 # @organisation_views.route('/center/status/cgt1', methods=["PUT"])
 # @login_required
@@ -95,6 +103,7 @@ def admin_logout():
 #         status=200,\
 #         mimetype="application/json")
 
+
 @organisation_views.route('/api/organisation/products', methods=["GET"])
 @login_or_key_required
 def org_products():
@@ -123,8 +132,6 @@ def org_products():
     return Response(json.dumps({'products':content}), content_type="application/json", mimetype='application/json')
 
 
-
-
 @organisation_views.route('/reports', methods=["GET"])
 @login_required
 def admin_reports():
@@ -138,6 +145,7 @@ def admin_reports():
     tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("client_reports.html", **kwargs)
+
 
 # @organisation_views.route('/center/status/cgt2', methods=["PUT"])
 # @login_required
@@ -170,6 +178,7 @@ def admin_reports():
 #     return Response(response=content,
 #         status=200,\
 #         mimetype="application/json")
+
 
 # @organisation_views.route('/center/status/grt', methods=["PUT"])
 # @login_required
@@ -204,6 +213,7 @@ def admin_reports():
 #         status=200,\
 #         mimetype="application/json")
 
+
 # @organisation_views.route('/group/status/cgt1', methods=["PUT"])
 # @login_required
 # def group_cgt1():
@@ -235,6 +245,7 @@ def admin_reports():
 #     return Response(response=content,
 #         status=200,\
 #         mimetype="application/json")
+
 
 # @organisation_views.route('/group/status/cgt2', methods=["PUT"])
 # @login_required
@@ -268,6 +279,7 @@ def admin_reports():
 #         status=200,\
 #         mimetype="application/json")
 
+
 # @organisation_views.route('/group/status/grt', methods=["PUT"])
 # @login_required
 # def group_grt():
@@ -299,6 +311,7 @@ def admin_reports():
 #     return Response(response=content,
 #         status=200,\
 #         mimetype="application/json")
+
 
 @organisation_views.route('/group/status/psychometric', methods=["PUT"])
 @login_required
@@ -426,6 +439,7 @@ def uploads_group_kyc():
         status=200,\
         mimetype="application/json")
 
+
 @organisation_views.route('/uploads_group_gkyc', methods=["GET","POST"])
 @login_required
 def uploads_group_gkyc():
@@ -470,6 +484,7 @@ def uploads_group_gkyc():
         status=200,\
         mimetype="application/json")
 
+
 @organisation_views.route('/uploads_indivijual_app', methods=["GET","POST"])
 @login_required
 def uploads_indivijual_app():
@@ -512,8 +527,6 @@ def uploads_indivijual_app():
         status=200,\
         mimetype="application/json")
 
-import pyexcel
-from flask.ext import excel
 
 @organisation_views.route('/organisation/cheque_info/<group_id>', methods=["POST"])
 @login_required
@@ -808,11 +821,10 @@ def mobile_application():
         print "Could Not validate"
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
-import wtforms_json
 
+import wtforms_json
 wtforms_json.init()
 
-from flask import render_template,session,request,Response,abort
 @organisation_views.route('/mobile/application/json',methods=['POST'])
 @login_or_key_required
 def mobile_application_json():
@@ -850,7 +862,7 @@ def mobile_application_json():
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgSettings
+
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
 def upload_documents():
@@ -940,8 +952,6 @@ def upload_documents():
         return render_template("upload_documents.html", **kwargs)
 
 
-
-
 @organisation_views.route('/application_status', methods=["GET"])
 @login_required
 def application_status():
@@ -958,6 +968,7 @@ def application_status():
     users = EsthenosUser.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups.html", **kwargs)
+
 
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
@@ -999,6 +1010,7 @@ def applications():
     kwargs = locals()
     return render_template("applications_list.html", **kwargs)
 
+
 # @organisation_views.route('/applications_list', methods=["GET"])
 # @login_required
 # def application_list():
@@ -1031,6 +1043,7 @@ def applications_track(app_id):
     kwargs = locals()
     return render_template("application_tracking.html", **kwargs)
 
+
 @organisation_views.route('/check_disbusement', methods=["GET"])
 @login_required
 def check_disbusement():
@@ -1046,7 +1059,8 @@ def check_disbusement():
     kwargs = locals()
     return render_template("centers_n_groups_disbussment.html", **kwargs)
 
-from esthenos.tasks import generate_post_grt_applications
+
+
 @organisation_views.route('/disburse_group', methods=["PUT"])
 @login_required
 def disburse_document():
@@ -1075,11 +1089,6 @@ def disburse_document():
     kwargs = locals()
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
 
-import boto
-conn_s3 = boto.connect_s3(
-    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
-import tempfile
 
 @organisation_views.route('/download_disbursement', methods=["GET"])
 @login_required
@@ -1118,7 +1127,6 @@ def download_disbusement():
     # Grab ZIP file from in-memory, make response with correct MIME-type
 
 
-
 @organisation_views.route('/telecalling', methods=["GET"])
 @login_required
 def telecalling():
@@ -1133,6 +1141,7 @@ def telecalling():
     call_sessions = EsthenosOrgIndivijualTeleCallingSession.objects.filter(organisation=org)
     kwargs = locals()
     return render_template("centers_n_groups_tc.html", **kwargs)
+
 
 @organisation_views.route('/check_tele_applicant', methods=["GET"])
 @login_required
@@ -1171,7 +1180,7 @@ def check_tele_applicant():
     kwargs = locals()
     return render_template("update_tele_indivijual.html", **kwargs)
 
-from models import EsthenosOrgTeleCallingTemplateQuestion,EsthenosOrgIndivijualTeleCallingSession
+
 @organisation_views.route('/check_tele_applicant_questions', methods=["GET","POST"])
 @login_required
 def check_tele_applicant_questions():
@@ -1227,6 +1236,7 @@ def check_tele_applicant_questions():
         tele_session.save()
         kwargs = locals()
         return redirect("/check_tele_applicant?group="+group_id)
+
 
 # from e_organisation.models import EsthenosOrgGroupCGT1Session,EsthenosOrgGroupCGT2Session
 # @organisation_views.route('/check_cgt1', methods=["GET"])
@@ -1420,7 +1430,6 @@ def check_tele_applicant_questions():
 #     return render_template("update_cgt2_indivijual.html", **kwargs)
 
 
-
 @organisation_views.route('/check_grt_applicant', methods=["GET"])
 @login_required
 def check_grt_applicant():
@@ -1457,7 +1466,8 @@ def check_grt_applicant():
         applications = EsthenosOrgApplication.objects.filter(status__gte=250)
     kwargs = locals()
     return render_template("update_grt_indivijual.html", **kwargs)
-#
+
+
 # @organisation_views.route('/check_grt', methods=["GET"])
 # @login_required
 # def check_grt():
@@ -1473,6 +1483,7 @@ def check_grt_applicant():
 #
 #     kwargs = locals()
 #     return render_template("centers_n_groups_grt.html", **kwargs)
+
 
 @organisation_views.route('/application/<app_id>/cashflow', methods=["GET"])
 @login_required
@@ -1505,8 +1516,7 @@ def all_users():
     kwargs = locals()
     return render_template("org_employees.html", **kwargs)
 
-from e_admin.forms import AddOrganizationEmployeeForm
-from e_organisation.models import EsthenosOrgBranch
+
 @organisation_views.route('/users/add', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp():
@@ -1537,6 +1547,7 @@ def admin_organisation_add_emp():
         branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
         return render_template("org_add_emp.html", **kwargs)
+
 
 # from e_organisation.models import EsthenosOrgGroupGRTSession
 # @organisation_views.route('/grt_question', methods=["GET","POST"])
@@ -1582,7 +1593,7 @@ def admin_organisation_add_emp():
 #         kwargs = locals()
 #         return redirect("/check_grt")
 
-from e_organisation.models import EsthenosOrgApplicationStatus
+
 @organisation_views.route('/application/<app_id>/cashflow', methods=["POST"])
 @login_required
 def cashflow_statusupdate(app_id):
@@ -1614,13 +1625,7 @@ def cashflow_statusupdate(app_id):
         print e.message
     return redirect("/application/"+app_id+"/cashflow")
 
-from werkzeug.utils import secure_filename, redirect
-import os,io
-from esthenos  import  s3_bucket
-from flask import make_response
-import os
-import zipfile
-import StringIO
+
 @organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])
 @login_required
 def disbursement(app_id):
@@ -1660,6 +1665,7 @@ def disbursement(app_id):
     output.headers["Content-Disposition"] = "attachment; filename=%s" %zip_filename
     output.headers["Content-type"] = "application/zip"
     return output
+
 
 @organisation_views.route('/profile', methods=["GET","POST"])
 @login_required
@@ -1712,6 +1718,7 @@ def notifications_page():
     kwargs = locals()
     return render_template("notifications.html", **kwargs)
 
+
 @organisation_views.route('/notifications/read', methods=["PUT"])
 @login_required
 def set_notif_read():
@@ -1719,6 +1726,7 @@ def set_notif_read():
     c_user = current_user
     res = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False).update(set__read_state=True)
     return Response('{"message":"status updated"}', content_type="application/json", mimetype='application/json')
+
 
 @organisation_views.route('/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required

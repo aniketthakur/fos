@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError, DateField
 from wtforms import validators as v
 from wtforms import SelectMultipleField, Form
@@ -86,7 +84,6 @@ class AddEmployeeForm( Form):
         return emp
 
 
-
 class RegistrationFormAdmin( Form):
     name =TextField( validators=[v.DataRequired(), v.Length(max=256)])
     email =TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
@@ -102,6 +99,7 @@ class RegistrationFormAdmin( Form):
         user =EsthenosUser.create_user( self.name.data, self.email.data, self.password.data, email_verified=True)
         user.save()
         return user
+
 
 class AddOrganizationEmployeeForm(Form):
     first_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -210,18 +208,47 @@ class AddOrganisationProductForm( Form):
         return prod
 
 
-# class AddOrgGRTTemplateQuestionsForm( Form):
-#     question=TextField( validators=[v.Length(max=2048)])
-#     question_hindi=TextField( validators=[v.Length(max=2048)])
-#     org_id=TextField( validators=[ v.Length(max=255)])
-#
-#     def save( self):
-#         ques=EsthenosOrgGRTTemplateQuestion()
-#         ques.question=self.question.data
-#         ques.question_regional = self.question_hindi.data
-#         ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-#         ques.save()
-#         return ques
+class AddOrgGRTTemplateQuestionsForm( Form):
+    question=TextField( validators=[v.Length(max=2048)])
+    question_hindi=TextField( validators=[v.Length(max=2048)])
+    org_id=TextField( validators=[ v.Length(max=255)])
+
+    def save( self):
+        ques=EsthenosOrgGRTTemplateQuestion()
+        ques.question=self.question.data
+        ques.question_regional = self.question_hindi.data
+        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+        ques.save()
+        return ques
+
+
+class AddOrgCGT2TemplateQuestionsForm( Form):
+    question=TextField( validators=[v.Length(max=2048)])
+    question_hindi=TextField( validators=[v.Length(max=2048)])
+    org_id=TextField( validators=[ v.Length(max=255)])
+
+    def save( self):
+        ques=EsthenosOrgCGT2TemplateQuestion()
+        ques.question=self.question.data
+        ques.question_regional = self.question_hindi.data
+        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+        ques.save()
+        return ques
+
+
+class AddOrgTeleCallingTemplateQuestionsForm( Form):
+    question=TextField( validators=[v.Length(max=2048)])
+    question_hindi=TextField( validators=[v.Length(max=2048)])
+    org_id=TextField( validators=[ v.Length(max=255)])
+
+    def save( self):
+        ques=EsthenosOrgTeleCallingTemplateQuestion()
+        ques.question=self.question.data
+        ques.question_regional = self.question_hindi.data
+        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+        ques.save()
+        return ques
+
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     question=TextField( validators=[v.Length(max=2048)])
@@ -236,34 +263,6 @@ class AddOrgPsychometricTemplateQuestionsForm( Form):
         ques.question_regional = self.question_hindi.data
         ques.answer=self.answer.data
         ques.answer_regional=self.answer_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-
-        return ques
-
-# class AddOrgCGT2TemplateQuestionsForm( Form):
-#     question=TextField( validators=[v.Length(max=2048)])
-#     question_hindi=TextField( validators=[v.Length(max=2048)])
-#     org_id=TextField( validators=[ v.Length(max=255)])
-#
-#     def save( self):
-#         ques=EsthenosOrgCGT2TemplateQuestion()
-#         ques.question=self.question.data
-#         ques.question_regional = self.question_hindi.data
-#         ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-#         ques.save()
-#         return ques
-
-
-class AddOrgTeleCallingTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
-
-    def save( self):
-        ques=EsthenosOrgTeleCallingTemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
         ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
         ques.save()
         return ques
