@@ -1,7 +1,6 @@
-__author__ = 'prathvi'
 import cv2
-import pickle
 import gzip
+import pickle
 
 def save(object, filename, protocol = 0):
     """Saves a compressed object to disk
