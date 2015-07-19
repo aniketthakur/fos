@@ -1,13 +1,15 @@
-__author__ = 'prathvi'
-from flask import   request,Response
+import json
+from flask import request, Response
 from flask_login import current_user, login_required,login_user
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
-from flask import  Blueprint
-import  json
-from e_admin.models import EsthenosUser
-import utils,models
-from esthenos.mongo_encoder import encode_model
 from flask_sauth.forms import RegistrationForm, LoginForm
+
+from utils import generate_auth_token, login_or_key_required
+from models import EsthenosOrgUserToken
+
+from e_admin.models import EsthenosUser
+from esthenos.mongo_encoder import encode_model
+
 token_views = Blueprint('token_views', __name__,template_folder='templates')
 
 @token_views.route('/api/app_token/generate', methods=["POST"])
@@ -16,34 +18,34 @@ def generate_token_view():
     kwargs = locals()
     expires = -1
     login_form = LoginForm( request.form)
-    print login_form
     form = login_form
-    if(form.validate()):
 
+    if form.validate():
         user = EsthenosUser.objects.get( email=form.email.data)
         if user.active == False:
             flash(u'Your account has been deactivated', 'error')
             kwargs = {"login_form": login_form}
 
-        if (form.role.data == "ADMIN"):
+        if form.role.data == "ADMIN":
             session['role'] = "ADMIN"
-        if (form.role.data == "ORG_CM"):
+
+        if form.role.data == "ORG_CM":
             session['role'] = "ORG_CM"
-        if (form.role.data == "EMP_EXECUTIVE"):
+
+        if form.role.data == "EMP_EXECUTIVE":
             session['role'] = "EMP_EXECUTIVE"
 
         if expires is -1:
-            full_token = utils.generate_auth_token(user,expiration=360000)
-        else:
-            full_token = utils.generate_auth_token(user,expiration=expires)
-        print expires
-        print full_token
-        token  = full_token.split(".")[2]
-        token_obj,status = models.EsthenosOrgUserToken.objects.get_or_create(full_token= full_token,token = token,user = user,expires_in=expires)
-        print utils.verify_auth_token(token)
-        return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
-    return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
+            full_token = generate_auth_token(user,expiration=360000)
 
+        else:
+            full_token = generate_auth_token(user,expiration=expires)
+
+        token = full_token.split(".")[2]
+        token_obj, status = EsthenosOrgUserToken.objects.get_or_create(full_token= full_token,token = token,user = user,expires_in=expires)
+        return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
+
+    return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
 
 
 @token_views.route('/api/app_token/<token>', methods=["DELETE"])
@@ -51,19 +53,21 @@ def generate_token_view():
 def delete_token(token):
     c_user = current_user
     kwargs = locals()
-    tokenobj = models.EsthenosOrgUserToken.objects.get(token=token)
+    tokenobj = EsthenosOrgUserToken.objects.get(token=token)
     if str(tokenobj.user.id) == str(c_user.id):
         tokenobj.delete()
         return Response(json.dumps({"message":"successfully deleted"}), content_type="application/json", mimetype='application/json')
     return Response(json.dumps({"tokens":"unauthorised"}), content_type="application/json", mimetype='application/json')
 
+
 @token_views.route('/api/app_token', methods=["GET"])
-@utils.login_or_key_required
+@login_or_key_required
 def get_tokens():
     c_user = current_user
-    kwargs = locals()
-    all_tokens = models.EsthenosOrgUserToken.objects(user=c_user.id)
     tokens = list()
+    kwargs = locals()
+    all_tokens = EsthenosOrgUserToken.objects(user=c_user.id)
+
     for token in all_tokens:
         tok = dict()
         tok['token'] = token.token
@@ -76,4 +80,5 @@ def get_tokens():
         tok['perms'] = token.management_perms
         tok['services'] = token.services
         tokens.append(tok)
+
     return Response(json.dumps({"tokens":tokens},default=encode_model), content_type="application/json", mimetype='application/json')

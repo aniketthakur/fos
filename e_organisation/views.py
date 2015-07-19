@@ -25,6 +25,7 @@ from e_admin.models import EsthenosSettings, EsthenosUser
 from esthenos.utils import request_wants_json, random_with_N_digits
 from esthenos.tasks import generate_post_grt_applications
 from e_pixuate.pixuate import upload_images, get_url_with_id
+from e_organisation.forms import AddApplicationMobile
 from e_organisation.models import *
 
 
@@ -645,6 +646,7 @@ def uploads_indivijual_gkyc():
         status=200,\
         mimetype="application/json")
 
+
 @organisation_views.route('/api/organisation/centers_n_groups', methods=["POST"])
 @login_or_key_required
 def create_centers_n_groups():
@@ -677,6 +679,7 @@ def create_centers_n_groups():
 
        return Response('{"success":True}', content_type="application/json", mimetype='application/json')
    return Response('{"success":False}', content_type="application/json", mimetype='application/json')
+
 
 @organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
 @login_or_key_required
@@ -785,7 +788,7 @@ def get_application():
         status=200,\
         mimetype="application/json")
 
-from e_organisation.forms import AddApplicationMobile
+
 @organisation_views.route('/admin/mobile/application',methods=['POST'])
 @login_or_key_required
 def mobile_application():
@@ -1060,7 +1063,6 @@ def check_disbusement():
 
     kwargs = locals()
     return render_template("centers_n_groups_disbussment.html", **kwargs)
-
 
 
 @organisation_views.route('/disburse_group', methods=["PUT"])

@@ -2,10 +2,11 @@ import os, tempfile
 import json, hashlib
 from flask.ext import excel
 from flask import Blueprint, request
+from flask import render_template,session,request,Response,abort
 from flask_login import current_user, login_required
 from e_admin.models import EsthenosUser
 from e_tokens.utils import login_or_key_required
-from e_organisation.models import EsthenosOrgApplicationHighMarkRequest, EsthenosOrgApplicationHighMarkResponse, EsthenosOrgApplication
+from e_organisation.models import EsthenosOrg, EsthenosOrgApplicationHighMarkRequest, EsthenosOrgApplicationHighMarkResponse, EsthenosOrgApplication
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
 reports_views = Blueprint('reports_views', __name__, template_folder='templates')
@@ -292,6 +293,7 @@ def get_application_rowdata(app):
     row_data.append(app["bank_account_number"])
     return row_data
 
+
 @reports_views.route('/reports/internal_main/download', methods=["GET"])
 @login_or_key_required
 def internal_main_reports():
@@ -556,8 +558,8 @@ def himark_request_reports():
         output.headers["Content-Disposition"] = "attachment; filename=himark_request_reports.csv"
         output.headers["Content-type"] = "text/csv"
         return output
-from flask import render_template,session,request,Response,abort
-from e_organisation.models import EsthenosOrg
+
+
 @reports_views.route('/reports/download', methods=["GET"])
 @login_required
 def admin_reports_download():
