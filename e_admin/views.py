@@ -1,35 +1,27 @@
-from e_organisation.forms import AddApplicationMobile
-
-__author__ = 'prathvi'
-# Flask and Flask-SQLAlchemy initialization here
-from flask import render_template,session,request,Response, jsonify,make_response
-from flask import Blueprint, render_template, request, session, redirect, flash, current_app
-from flask_login import current_user, login_user, logout_user, login_required,confirm_login
-import json
-from e_admin.models import *
-from esthenos.mongo_encoder import encode_model
-from  werkzeug.exceptions import abort
-from flask import  Blueprint
-import psutil
 import os
-from e_admin.models import EsthenosUser
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct,EsthenosOrgSettings
-from e_organisation.forms import AddApplicationManual
-from e_organisation.models import  EsthenosOrg, EsthenosOrgApplication,EsthenosOrgProduct, EsthenosOrgCenter, EsthenosOrgGroup, \
-    EsthenosOrgApplicationStatusType,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,EsthenosOrgState
-import urlparse
-from flask_sauth.models import authenticate,User
-from e_admin.forms import AddOrganisationForm,RegistrationFormAdmin, AddEmployeeForm, AddOrganizationEmployeeForm, AddOrganisationProductForm
-from flask_sauth.views import flash_errors
+import sys, traceback
+import json, psutil, urlparse
+
+import boto, pdfkit
+from mongoengine import Q
+from dateutil.relativedelta import relativedelta
+
+from flask import Blueprint, redirect, flash, current_app
+from flask import render_template, session, request, Response, jsonify, make_response, abort
+from flask_login import current_user, login_user, logout_user, login_required, confirm_login
 from flask_sauth.forms import LoginForm
-from e_tokens.models import EsthenosOrgUserToken
-#from flask.ext.sendmail import Message
+from flask_sauth.views import flash_errors
+
+from e_admin.forms import *
+from e_admin.models import *
+from e_tokens.utils import login_or_key_required
+from e_pixuate.pixuate import *
+from e_organisation.forms import *
+from e_organisation.models import *
+
 from blinker import signal
 from esthenos import mainapp
-import sys,traceback
-import boto
-from e_tokens.utils import login_or_key_required
-from e_pixuate.pixuate import  *
+
 
 conn = boto.connect_ses(
     aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
@@ -37,10 +29,7 @@ conn = boto.connect_ses(
 
 signal_user_registered = signal('user-registered')
 
-admin_views = Blueprint('admin_views', __name__,
-                        template_folder='templates')
-
-
+admin_views = Blueprint('admin_views', __name__, template_folder='templates')
 
 
 @admin_views.route('/admin/dashboard', methods=["GET"])
@@ -53,7 +42,6 @@ def admin_dashboard():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
-
 
 
 @admin_views.route('/admin/settings', methods=["GET"])
@@ -80,6 +68,7 @@ def admin_settings():
 #     settings = EsthenosSettings.objects.all()[0]
 #     kwargs = locals()
 #     return render_template("admin_org_add_product.html", **kwargs)
+
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
@@ -171,6 +160,7 @@ def admin_update_org_group(org_id):
             user.save()
             EsthenosOrg.objects.get(id = org.id).update(inc__user_count=1)
         return redirect("/admin/organisations")
+
 
 @admin_views.route('/admin/update_org/<org_id>/update_regions', methods=["POST"] )
 @login_required
@@ -298,8 +288,6 @@ def admin_update_org_update_branches(org_id):
         return render_template("admin_add_org_details.html", **kwargs)
 
 
-
-
 @admin_views.route('/admin/add_emp', methods=["GET","POST"])
 @login_required
 def admin_add_emp():
@@ -327,6 +315,7 @@ def admin_add_emp():
 
         kwargs = locals()
         return render_template("admin_add_emp.html", **kwargs)
+
 
 @admin_views.route('/admin/employees', methods=["GET"])
 @login_required
@@ -379,7 +368,7 @@ def admin_organisation_dashboard(org_id):
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgRoleSettings
+
 @admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
 @login_required
 def admin_organisation_settings_role(org_id,role_type):
@@ -416,6 +405,7 @@ def admin_organisation_settings_role(org_id,role_type):
     return Response(response=json.dumps(resp),
         status=200,\
         mimetype="application/json")
+
 
 @admin_views.route('/admin/organisation/<org_id>/settings/other', methods=["POST"])
 @login_required
@@ -495,6 +485,7 @@ def admin_organisation_settings(org_id):
         kwargs = locals()
         return render_template("admin_org_settings.html", **kwargs)
 
+
 @admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
@@ -561,8 +552,7 @@ def admin_organisation_product(org_id):
     else:
         return abort(403)
 
-from .forms import AddOrgPsychometricTemplateQuestionsForm
-from e_organisation.models import EsthenosOrgPsychometricTemplateQuestion
+
 # @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 # @login_required
 # def grt_questions(org_id):
@@ -654,10 +644,6 @@ def psychometric_questions(org_id):
         return abort(403)
 
 
-
-
-
-
 # @admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
 # @login_required
 # def cgt2_questions(org_id):
@@ -687,8 +673,6 @@ def psychometric_questions(org_id):
 #         return abort(403)
 
 
-from .forms import AddOrgTeleCallingTemplateQuestionsForm
-from e_organisation.models import EsthenosOrgTeleCallingTemplateQuestion
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
 @login_required
 def telecalling_questions(org_id):
@@ -732,7 +716,6 @@ def admin_reports():
     return render_template("admin_reports.html", **kwargs)
 
 
-
 @admin_views.route('/admin/reports/master/download', methods=["GET"])
 @login_required
 def admin_reports_download():
@@ -746,7 +729,7 @@ def admin_reports_download():
     kwargs = locals()
     return render_template("admin_reports.html", **kwargs)
 
-from mongoengine import Q
+
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
@@ -766,7 +749,6 @@ def admin_application():
     return render_template("admin_applications.html", **kwargs)
 
 
-from mongoengine import Q
 @admin_views.route('/admin/organisation/<org_id>/areas/<reg_id>', methods=["GET"])
 @login_required
 def admin_org_areas(org_id,reg_id):
@@ -787,7 +769,6 @@ def admin_org_areas(org_id,reg_id):
         mimetype="application/json")
 
 
-from mongoengine import Q
 @admin_views.route('/admin/organisation/<org_id>/branches/<area_id>', methods=["GET"])
 @login_required
 def admin_org_branches(org_id,area_id):
@@ -807,7 +788,7 @@ def admin_org_branches(org_id,area_id):
         status=200,\
         mimetype="application/json")
 
-from mongoengine import Q
+
 @admin_views.route('/admin/organisation/<org_id>/regions/<state_id>', methods=["GET"])
 @login_required
 def admin_org_regions(org_id,state_id):
@@ -827,7 +808,7 @@ def admin_org_regions(org_id,state_id):
         status=200,\
         mimetype="application/json")
 
-from mongoengine import Q
+
 @admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
 @login_required
 def admin_org_applications(org_id):
@@ -849,6 +830,7 @@ def admin_org_applications(org_id):
     return Response(response=json.dumps(applications_list),
         status=200,\
         mimetype="application/json")
+
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
@@ -898,7 +880,6 @@ def admin_application_id(org_id,app_id):
     return render_template("admin_application_manual_DE.html", **kwargs)
 
 
-
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["POST"])
 @login_required
 def submit_application(org_id,app_id):
@@ -940,7 +921,7 @@ def admin_application_cashflow(org_id,app_id):
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
 
-from e_organisation.models import EsthenosOrgApplicationStatus
+
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["POST"])
 @login_required
 def cashflow_statusupdate(org_id,app_id):
@@ -990,6 +971,7 @@ def read_pan(object_id):
         status=200,\
         mimetype="application/json")
 
+
 @admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
 @login_required
 def read_vid(object_id):
@@ -1006,6 +988,7 @@ def read_vid(object_id):
         status=200,\
         mimetype="application/json")
 
+
 @admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
 @login_required
 def read_aadhaar(object_id):
@@ -1021,6 +1004,7 @@ def read_aadhaar(object_id):
     return Response(response=data,
         status=200,\
         mimetype="application/json")
+
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
 @login_required
@@ -1069,6 +1053,7 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
+
 @admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1099,6 +1084,8 @@ def admin_ipnpfr(group_id):
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'if'
     return response
+
+
 @admin_views.route('/internal/pdf_pf/<group_id>', methods=["GET"])
 def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1130,7 +1117,7 @@ def admin_processing_fees(group_id):
     'inline; filename=%s.pdf' % 'pf'
     return response
 
-#Added By Deepak
+
 @admin_views.route('/admin/schedule', methods=["GET"])
 def admin_schedule():
     kwargs = locals()
@@ -1146,8 +1133,8 @@ def admin_profile():
     user = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template("admin_profile.html",**kwargs)
-#Added By Deepak
-import pdfkit
+
+
 @admin_views.route('/admin/pdf_dpn', methods=["GET"])
 def admin_dpn():
     kwargs = locals()
@@ -1167,7 +1154,6 @@ def admin_dpn():
     'inline; filename=%s.pdf' % 'dpn'
     return response
 
-#Added By Deepak
 
 @admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
 def admin_sanction(grp_id):
@@ -1204,20 +1190,24 @@ def admin_sanction(grp_id):
     'inline; filename=%s.pdf' % 'sanction'
     return response
 
+
 @admin_views.route('/admin/acknowledgement', methods=["GET"])
 def admin_acknowledgement():
     kwargs = locals()
     return render_template( "pdf_HMPLACK.html", **kwargs)
+
 
 @admin_views.route('/admin/acknowledgementother', methods=["GET"])
 def admin_acknowledgementother():
     kwargs = locals()
     return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
 
+
 @admin_views.route('/admin/hmplcashflow', methods=["GET"])
 def admin_hmplcashflow():
     kwargs = locals()
     return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
+
 
 @admin_views.route('/admin/hmplgrt', methods=["GET"])
 def admin_hmplgrt():
@@ -1323,8 +1313,6 @@ def admin_hmpdpn(group_id):
     return response
 
 
-
-
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1363,10 +1351,12 @@ def admin_hmplloancard():
     kwargs = locals()
     return render_template( "pdf_HMPL_Loancard.html", **kwargs)
 
+
 @admin_views.route('/admin/hmplppl', methods=["GET"])
 def admin_hmplppl():
     kwargs = locals()
     return render_template( "pdf_HMPL_PPL.html", **kwargs)
+
 
 @admin_views.route('/admin/hmplsanction', methods=["GET"])
 def admin_hmplsanction():
@@ -1386,6 +1376,7 @@ def admin_disbursement_pdf():
     kwargs = locals()
     return render_template( "pdf_disbursement.html", **kwargs)
 
+
 @admin_views.route('/admin/ljlga', methods=["GET"])
 @login_required
 def admin_ljlga():
@@ -1396,6 +1387,7 @@ def admin_ljlga():
     usr = EsthenosUser.objects.get(id=c_user.id)
     kwargs = locals()
     return render_template( "pdf_LJLGAgreement.html", **kwargs)
+
 
 @admin_views.route('/admin/lrpassbook', methods=["GET"])
 @login_required
@@ -1422,8 +1414,6 @@ def admin_lrpassbook():
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'Passbook'
     return response
-
-from dateutil.relativedelta import relativedelta
 
 ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
  '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
@@ -1502,39 +1492,37 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     'inline; filename=%s.pdf' % 'hp'
     return response
 
+
 @admin_views.route('/admin/signup', methods=["GET", "POST"])
-#@login_required
 def admin_signup():
     if request.method == "POST":
-
         reg_form = RegistrationFormAdmin( request.form)
         form = reg_form
-        if(form.validate()):
+        if form.validate():
             user = form.save()
             userobj = EsthenosUser.objects.get(id=user.get_id())
             userobj.roles= list()
             userobj.roles.append("ADMIN")
             userobj.active = True
             userobj.save()
-            print "here entered"
             user = EsthenosUser.objects.get( email=form.email.data)
-            print form.type.data
+
             if (form.type.data == "ADMIN" ):
                 login_user(user)
                 session['type'] = "ADMIN"
-                print "success"
                 return redirect( '/admin/login')
 
         else:
-            print "here error"
             flash_errors(reg_form)
-            print reg_form.errors
             kwargs = {"login_form": reg_form}
             return render_template( "auth/login_admin.html", **kwargs)
+
     else:
         reg_form = RegistrationFormAdmin()
+
     kwargs = locals()
     return render_template("admin_signup.html", **kwargs)
+
 
 @admin_views.route('/admin/login', methods=["GET", "POST"])
 def login_admin():
@@ -1580,10 +1568,8 @@ def login_admin():
     return render_template("auth/login_admin.html", **kwargs)
 
 
-
-
-
 @admin_views.route('/admin/update_settings',methods=['POST'])
+@login_required
 def update_settings():
     employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
     for emp in employees:
@@ -1591,9 +1577,8 @@ def update_settings():
         permissions['data_entry']=request.form.get("ex_data_entry")
         permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
         permissions['view_reports']=request.form.get("ex_view_reports")
-        print emp
-        print permissions
         emp.update(in__permissions = permissions)
+
     employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
     for emp in employees:
         permissions=dict()
@@ -1602,6 +1587,7 @@ def update_settings():
         permissions['view_reports']=request.form.get("manager_view_reports")
         emp.permissions=permissions
         emp.update(in__permissions = permissions)
+
     employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
     for emp in employees:
         permissions=dict()
@@ -1611,10 +1597,4 @@ def update_settings():
         emp.permissions=permissions
         emp.update(in__permissions = permissions)
 
-    print emp
-#    kwargs=locals()
     return redirect("/admin/settings")
-
-
-
-

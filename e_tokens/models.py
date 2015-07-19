@@ -1,5 +1,3 @@
-__author__ = 'prathvi'
-
 import datetime
 from esthenos.mongo_encoder import encode_model
 from e_admin.models import EsthenosUser
@@ -16,5 +14,4 @@ class EsthenosOrgUserToken(db.Document):
         return encode_model(self)
 
     def __unicode__(self):
-        return self.token +" "+str(self.expires_in)
-
+        return self.token + " " + str(self.expires_in)

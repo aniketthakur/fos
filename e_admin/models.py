@@ -17,7 +17,7 @@ class EsthenosSettings(db.Document):
     organisations_count = db.IntField(default=0)
 
     def __unicode__(self):
-        return "EsthenosSetings"
+        return "EsthenosSettings"
 
 
 class EsthenosUser(BaseUser):
@@ -51,7 +51,6 @@ class EsthenosUser(BaseUser):
     permissions=db.DictField()
     owner = db.ReferenceField('EsthenosUser',required=False)
 
-
     def __unicode__(self):
         return self.name + "<" + self.email + ">"
 
@@ -75,16 +74,15 @@ class EsthenosUserResource(Resource):
     document = EsthenosUser
 
 
-
 class Session(db.Document):
     sid = db.StringField(primary_key=True)
     data = db.DictField()
     expiration = db.DateTimeField()
     is_processed = db.BooleanField(default=False)
 
+
 class EsthenosUserType(db.Document):
     type = db.StringField(max_length=20,required=True)
-
 
 
 class EsthenosUserBiliing(db.Document):
@@ -95,7 +93,6 @@ class EsthenosUserBiliing(db.Document):
     total_kyc_manual = db.IntField(default=0)
     billing_month = db.StringField(max_length=255, required=False,default="")
     billing_days = db.StringField(max_length=255, required=False,default="")
-
 
 
 sauth_user_registered = signal('user-registered')

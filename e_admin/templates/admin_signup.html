@@ -1,13 +1,11 @@
 {% extends "base_other.html" %}
 
-
 {% block maincontents %}
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="tiles white p-t-20 p-l-15 p-r-15 p-b-30">
                 <h2 class="text-center">Get in touch.<span class="semi-bold text-success"></span></h2>
-                <h4 class="text-center muted m-l-10 m-r-10">The talent of success is nothing more than doing
-                    what you can do, well. </h4>
+                <h4 class="text-center muted m-l-10 m-r-10">The talent of success is nothing more than doing what you can do, well.</h4>
                 <form id="frm_signup_form" class="m-t-30 m-l-15 m-r-15" action="/admin/signup" method="post">
                     <div class="form-group">
                         <label class="form-label">Email address</label>
@@ -15,7 +13,6 @@
                             <input type="text" name="email" class="form-control">
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">User Name</label>
                         <div class="controls">
@@ -28,21 +25,18 @@
                             <input type="password" name="password" class="form-control">
                         </div>
                     </div>
-
                     <button class="btn btn-small btn-block btn-primary m-t-10 "  id="signup_button" type="button"><i class="icon-cloud-download"></i>&nbsp;&nbsp;SignUp</button>
                 </form>
             </div>
         </div>
-
     </div>
 {% endblock %}
+
 {% block js_scripts %}{{ super() }}
     <script type="text/javascript">
         $(document).ready(function(){
             $("#signup_button").click(function(){
-                console.log("I am here");
                 $("#frm_signup_form").submit();
-                console.log("I am here");
                 return false;
             });
         });

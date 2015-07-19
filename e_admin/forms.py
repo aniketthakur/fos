@@ -5,12 +5,10 @@ from wtforms import validators as v
 from wtforms import SelectMultipleField, Form
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
-from .models import EsthenosUser
-from e_organisation.models import EsthenosOrg, EsthenosOrgProduct,EsthenosOrgArea,EsthenosOrgBranch,EsthenosOrgRegion,\
-    EsthenosOrgState,EsthenosOrgTeleCallingTemplateQuestion,EsthenosOrgPsychometricTemplateQuestion
-from e_admin.models import EsthenosUser
-from e_organisation.models import EsthenosOrg
-from e_admin.models import EsthenosUser,EsthenosSettings
+from e_organisation.models import *
+from e_admin.models import EsthenosUser, EsthenosSettings
+
+
 class AddOrganisationForm( Form):
     org_name =TextField( validators=[v.DataRequired(), v.Length(max=255)])
     branches =TextField()
@@ -126,6 +124,7 @@ class AddOrganizationEmployeeForm(Form):
         email_add_organisation =field.data.lower().strip()
         if( EsthenosUser.objects(email=email_add_organisation).count()):
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
+
     def save( self,org_id):
         emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
         emp.organisation =EsthenosOrg.objects.get(id=org_id)
@@ -162,11 +161,6 @@ class AddOrganizationEmployeeForm(Form):
         return emp
 
 
-#    ([('number_installments', u'1'), ('life_insurance', u'1'), ('insurance_free_borrowers_n_guarnteer', u'1'), ('loan_amount', u'1'),
-#      ('eligible_cycle', u'1'), ('emi_repayment', u'emi_collection_period_fortnightly'), ('total_processing_fees_borrowers_only', u'1'),
-#      ('insurance_free_borrowers_only', u'1'), ('interest_rate', u'1'), ('emi', u'1'), ('insurance_period', u'1'), ('total_processing_fees', u'1'),
-#      ('processing_fee', u'1'), ('total_processing_fees_borrowers_n_guarnteer', u'1'), ('last_emi ', u'1'), ('product_name', u'XYX')])
-
 class AddOrganisationProductForm( Form):
     product_name=TextField( validators=[v.Length(max=255)])
     loan_type=TextField( validators=[v.Length(max=255)])
@@ -191,6 +185,7 @@ class AddOrganisationProductForm( Form):
         product_name =field.data.lower().strip()
         if( EsthenosOrgProduct.objects.filter(product_name=product_name).count()):
             raise ValidationError( "Hey! This product is already registered with us")
+
     def save( self,org_id):
         prod=EsthenosOrgProduct(product_name=self.product_name.data)
         prod.loan_amount=float(self.loan_amount.data)
@@ -213,7 +208,6 @@ class AddOrganisationProductForm( Form):
         prod.organisation=EsthenosOrg.objects.get(id=org_id)
         prod.save()
         return prod
-
 
 
 # class AddOrgGRTTemplateQuestionsForm( Form):
