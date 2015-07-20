@@ -23,7 +23,10 @@ class EsthenosSettings(db.Document):
 class EsthenosUser(BaseUser):
     first_name = db.StringField(max_length=255, required=False,default="")
     last_name = db.StringField(max_length=255, required=False,default="")
+    user_name = db.StringField(max_length=100,required=False)
+    email = db.StringField(max_length=255, required=False)
     profile_pic = db.StringField(max_length=255, required=False)
+
     unique_id = db.StringField(max_length=20, required=True,default = "NOTSET")
     status = db.IntField(default=0)
     activation_code = db.StringField(max_length=50, required=False)
@@ -32,27 +35,27 @@ class EsthenosUser(BaseUser):
     permissions = db.DictField()
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
+
     about = db.StringField(max_length=255, required=False)
-    email = db.StringField(max_length=255, required=False)
-    designation=db.StringField(max_length=255,required=False)
-    date_of_birth=db.StringField(max_length=20, required=False)
+    designation = db.StringField(max_length=255,required=False)
+    date_of_birth = db.StringField(max_length=20, required=False)
+
     postal_address = db.StringField(max_length=255, required=False)
-    postal_country = db.StringField(max_length=100, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
     postal_state = db.StringField(max_length=100, required=False)
+    postal_country = db.StringField(max_length=100, required=False)
     postal_telephone = db.StringField(max_length=20, required=False)
     postal_tele_code = db.StringField(max_length=20, required=False)
-    postal_city = db.StringField(max_length=100, required=False)
-    user_name = db.StringField(max_length=100,required=False)
-    organisation = db.ReferenceField('EsthenosOrg',required=False)
+
+    owner = db.ReferenceField('EsthenosUser',required=False)
+    org_area = db.ReferenceField('EsthenosOrgArea',required=False)
     org_state = db.ReferenceField('EsthenosOrgState',required=False)
-    org_area =   db.ReferenceField('EsthenosOrgArea',required=False)
     org_region = db.ReferenceField('EsthenosOrgRegion',required=False)
     org_branch = db.ReferenceField('EsthenosOrgBranch',required=False)
-    permissions=db.DictField()
-    owner = db.ReferenceField('EsthenosUser',required=False)
+    organisation = db.ReferenceField('EsthenosOrg',required=False)
 
     def __unicode__(self):
-        return self.name + "<" + self.email + ">"
+        return "%s, %s, %s" % (self.name, self.email, self.organisation)
 
     def is_active(self):
         return self.active
@@ -65,6 +68,9 @@ class EsthenosUser(BaseUser):
 
     def get_shortname(self):
         return self.first_name
+
+    def get_organization(self):
+        return self.organisation
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
