@@ -4,6 +4,7 @@ import json, psutil, urlparse
 
 import boto, pdfkit
 from mongoengine import Q
+from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 
 from flask import Blueprint, redirect, flash, current_app
@@ -838,41 +839,38 @@ def admin_org_applications(org_id):
 def admin_application_id(org_id,app_id):
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    print user.roles[0]
+
     if not session['role'] == "ADMIN":
         abort(403)
+
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
     app_urls = list()
-    try:
-        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
-    except Exception as e:
-        print e.message
+    applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
 
     if len(applications)==0:
         redirect("/admin/applications")
 
     application = applications[0]
+    kyc_urls, kyc_ids = [], []
+    gkyc_urls, gkyc_ids = [], []
+
     if application.tag is not None:
         for kyc_id in application.tag.app_file_pixuate_id:
             app_urls.append(get_url_with_id(kyc_id))
 
-        kyc_urls = list()
-        kyc_ids = list()
         for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
             kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
             kyc_ids.append(kyc_id)
             kyc_urls.append(get_url_with_id(kyc_id))
 
-        gkyc_urls = list()
-        gkyc_ids = list()
         for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
             gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
             gkyc_ids.append(gkyc_id)
             gkyc_urls.append(get_url_with_id(gkyc_id))
 
-    today= datetime.datetime.today()
+    today = datetime.datetime.today()
     disbursement_date = datetime.datetime.today() + timedelta(days=1)
     disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
     products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
