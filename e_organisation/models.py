@@ -413,11 +413,11 @@ class EsthenosOrgApplicationStatusType(db.Document):
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
-    status_message =  db.StringField(max_length=512, required=True,default="")
+    status_message = db.StringField(max_length=512, required=True,default="")
     updated_on = db.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
-        return self.updated_on
+        return "EsthenosOrgApplication updated:%" % self.updated_on
 
 
 class EsthenosOrgApplication(db.Document):
@@ -527,7 +527,7 @@ class EsthenosOrgApplication(db.Document):
     other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
-    timeline =  db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
+    timeline = db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
     date_created = db.DateTimeField(default=datetime.datetime.now)
     date_updated = db.DateTimeField(default=datetime.datetime.now)
     village_electricity=db.StringField(max_length=10, required=False,default="")
@@ -654,7 +654,7 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     raw = db.StringField(max_length=8096, required=True,default="")
 
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatus"
+        return "EsthenosOrgApplicationHighMarkRequest"
 
 
 class EsthenosOrgApplicationHighMarkResponse(db.Document):
@@ -716,7 +716,7 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
 
     def __unicode__(self):
-        return "EsthenosOrgApplicationStatus"
+        return "EsthenosOrgApplicationHighMarkResponse"
 
 
 class EsthenosOrgApplicationEqifaxResponse(db.Document):

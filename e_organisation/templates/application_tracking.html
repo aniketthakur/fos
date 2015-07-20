@@ -1,11 +1,6 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
     <div class="row">
         <div class="col-md-10 col-vlg-7">
@@ -20,28 +15,13 @@
                     <div class="cbp_tmlabel">
                         <div class="p-t-10 p-l-30 p-r-20 p-b-20 xs-p-r-10 xs-p-l-10 xs-p-t-5">
                             <h4 class="inline m-b-5"><span class="text-success semi-bold">{{ appstatus.status.status }}</span> </h4>
-                           <!-- <h5 class="inline muted semi-bold m-b-5">@esthenos.com</h5>-->
                             <p class="m-t-5 dark-text">{{ appstatus.status.status_message }}</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                 </li>
                 {% endfor %}
-
             </ul>
         </div>
     </div>
-
-
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-
-    <script type="text/javascript">
-        $( document ).ready(function() {
-            console.log( "ready!" );
-
-        });
-
-    </script>
-
 {% endblock %}
