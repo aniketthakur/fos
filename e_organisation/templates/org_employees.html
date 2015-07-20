@@ -1,82 +1,43 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
-
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
 <div class="row">
     <div class="col-md-3 pull-right">
         <a class="btn btn-small btn-block btn-success" type="button" href="/users/add">Add Users</a></a>
     </div>
 </div>
-<br/>
-    <div class="row">
-        <div class="span12">
-            <div class="grid simple ">
-                <div class="grid-title">
-                    <h4> <span class="semi-bold">Users</span></h4>
-
-                </div>
-                <div class="grid-body ">
-                    <table class="table table-hover table-condensed" id="example">
-                        <thead>
-                        <tr >
-                            <th style="width:1%" >
-                                <div class="checkbox check-default">
-                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                                    <label for="checkbox10"></label>
-                                </div>
-                            </th>
-                            <th style="width:20%">EMP ID</th>
-                            <th style="width:23%">NAME</th>
-                            <th style="width:25%">EMAIL</th>
-                            <th style="width:22%">ROLES</th>
+<br>
+<div class="row">
+    <div class="span12">
+        <div class="grid simple ">
+            <div class="grid-title">
+                <h4> <span class="semi-bold">Users</span></h4>
+            </div>
+            <div class="grid-body">
+                <table class="table table-hover table-condensed" id="example">
+                    <thead>
+                    <tr>
+                        <th style="width:1%" >#</th>
+                        <th style="width:20%">EMP ID</th>
+                        <th style="width:25%">NAME</th>
+                        <th style="width:25%">EMAIL</th>
+                        <th style="width:25%">ROLES</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for emp in employees %}
+                        <tr>
+                            <td class="v-align-middle"><span class="muted">{{ loop.index }}</span></td>
+                            <td class="v-align-middle"><span class="muted">{{ emp.id }}</span></td>
+                            <td class="v-align-middle">{{ emp.first_name }}</td>
+                            <td><span class="muted">{{ emp.email }}</span></td>
+                            <td><span class="muted">{{ emp.roles }}</span></td>
                         </tr>
-                        </thead>
-
-                        <tbody>
-                        {% for emp in employees %}
-                            <tr>
-                                <td class="v-align-middle">
-                                    <div class="checkbox check-default">
-                                        <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                        <label for="checkbox{{ loop.index }}"></label>
-                                    </div>
-                                </td>
-                                <td class="v-align-middle"><span class="muted">{{ emp.id}}</span></td>
-                                <td class="v-align-middle">{{ emp.first_name }}</td>
-                                <td><span class="muted">{{ emp.email }}</span></td>
-                                <td><span class="muted">{{ emp.roles }}</span></td>
-                            </tr>
-                        {% endfor %}
-
-                        </tbody>
-
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-<script type="text/javascript">
-        $(document).ready(function(){
-            $("#source").select2({
-                placeholder: "Select a State",
-                allowClear: true
-            });
-            $("#branch").select2();
-            $("#region").select2();
-            $("#applicationstatus").select2({
-                placeholder: "filter by application state",
-                allowClear: true
-            });
-
-
-        });
-
-</script>
+</div>
 {% endblock %}
