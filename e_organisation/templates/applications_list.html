@@ -36,7 +36,9 @@
                                       <a href="/application/{{ app.application_id }}/track"><ins>{{ app.application_id }}</ins></a>
                                     </td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
-                                    <td class="v-align-middle">{{ app.group.group_name }}</td>
+                                    <td class="v-align-middle">
+                                      <a href="/applications/group/{{ app.group.group_id }}"><ins>{{ app.group.group_name }}</ins></a>
+                                    </td>
                                     <td class="v-align-middle">{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
                                     <td class="v-align-middle">{{ app.current_status.status_message }}</td>
                                     <td class="v-align-middle">

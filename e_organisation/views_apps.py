@@ -8,34 +8,23 @@ def applications():
     abort(403)
 
   group = None
-  group_id = request.args.get("group")
   user = EsthenosUser.objects.get(id=current_user.id)
-
-  if group_id is not None and group_id != '':
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
-  else:
-    center_id = ''
-
-  applications = None
-  if group is not None:
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=0)
-  else:
-    applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
 
   kwargs = locals()
   return render_template("applications_list.html", **kwargs)
 
 
-@organisation_views.route('/applications_list', methods=["GET"])
+@organisation_views.route('/applications/group/<group_id>', methods=["GET"])
 @login_required
-def application_list():
+def application_list(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
-  # applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=110)
-  # applications = EsthenosOrgApplication.objects.filter(status__gte=110)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
+
   kwargs = locals()
   return render_template("applications_list.html", **kwargs)
 
