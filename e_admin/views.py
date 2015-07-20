@@ -59,17 +59,17 @@ def admin_settings():
     return render_template("admin_settings.html", **kwargs)
 
 
-# @admin_views.route('/admin/organisation/products', methods=["GET"])
-# @login_required
-# def admin_org_add_product():
-#     if session['role'] != "ADMIN":
-#         abort(403)
-#     username = current_user.name
-#     c_user = current_user
-#     user = EsthenosUser.objects.get(id=c_user.id)
-#     settings = EsthenosSettings.objects.all()[0]
-#     kwargs = locals()
-#     return render_template("admin_org_add_product.html", **kwargs)
+@admin_views.route('/admin/organisation/products', methods=["GET"])
+@login_required
+def admin_org_add_product():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    settings = EsthenosSettings.objects.all()[0]
+    kwargs = locals()
+    return render_template("admin_org_add_product.html", **kwargs)
 
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
@@ -555,91 +555,91 @@ def admin_organisation_product(org_id):
         return abort(403)
 
 
-# @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
-# @login_required
-# def grt_questions(org_id):
-#     if session['role']=='ADMIN':
-#         username=current_user.name
-#         user=current_user
-#         org=EsthenosOrg.objects.get(id=org_id)
-#         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
-#         kwargs = locals()
-#         if request.method=="GET":
-#             return render_template("admin_organisation_grt_questions.html", **kwargs)
-#         else:
-#             question=AddOrgGRTTemplateQuestionsForm(request.form)
-#             if(question.validate()):
-#                 print "Product Details Validated,Saving the form"
-#                 question.save()
-#                 org = EsthenosOrg.objects.get(id=org_id)
-#                 c_user = current_user
-#                 user = EsthenosUser.objects.get(id=c_user.id)
-#                 return render_template("admin_organisation_grt_questions.html", **kwargs)
-#             else:
-#                 print "Validation Error"
-#                 print flash_errors(question)
-#                 kwargs = locals()
-#                 return render_template("admin_organisation_grt_questions.html", **kwargs)
-#     else:
-#         return abort(403)
+@admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
+@login_required
+def grt_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_grt_questions.html", **kwargs)
+        else:
+            question=AddOrgGRTTemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_grt_questions.html", **kwargs)
+    else:
+        return abort(403)
 
 
-# @admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
-# @login_required
-# def cgt1_questions(org_id):
-#     if session['role']=='ADMIN':
-#         username=current_user.name
-#         user=current_user
-#         org=EsthenosOrg.objects.get(id=org_id)
-#         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
-#         kwargs = locals()
-#         if request.method=="GET":
-#             return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-#         else:
-#             question=AddOrgCGT1TemplateQuestionsForm(request.form)
-#             if(question.validate()):
-#                 print "Product Details Validated,Saving the form"
-#                 question.save()
-#                 org = EsthenosOrg.objects.get(id=org_id)
-#                 c_user = current_user
-#                 user = EsthenosUser.objects.get(id=c_user.id)
-#                 return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-#             else:
-#                 print "Validation Error"
-#                 print flash_errors(question)
-#                 kwargs = locals()
-#                 return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-#     else:
-#         return abort(403)
+@admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
+@login_required
+def cgt1_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+        else:
+            question=AddOrgCGT1TemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+    else:
+        return abort(403)
 
 
-# @admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
-# @login_required
-# def cgt2_questions(org_id):
-#     if session['role']=='ADMIN':
-#         username=current_user.name
-#         user=current_user
-#         org=EsthenosOrg.objects.get(id=org_id)
-#         questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
-#         kwargs = locals()
-#         if request.method=="GET":
-#             return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-#         else:
-#             question=AddOrgCGT2TemplateQuestionsForm(request.form)
-#             if(question.validate()):
-#                 print "Product Details Validated,Saving the form"
-#                 question.save()
-#                 org = EsthenosOrg.objects.get(id=org_id)
-#                 c_user = current_user
-#                 user = EsthenosUser.objects.get(id=c_user.id)
-#                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-#             else:
-#                 print "Validation Error"
-#                 print flash_errors(question)
-#                 kwargs = locals()
-#                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-#     else:
-#         return abort(403)
+@admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
+@login_required
+def cgt2_questions(org_id):
+    if session['role']=='ADMIN':
+        username=current_user.name
+        user=current_user
+        org=EsthenosOrg.objects.get(id=org_id)
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
+        kwargs = locals()
+        if request.method=="GET":
+            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+        else:
+            question=AddOrgCGT2TemplateQuestionsForm(request.form)
+            if(question.validate()):
+                print "Product Details Validated,Saving the form"
+                question.save()
+                org = EsthenosOrg.objects.get(id=org_id)
+                c_user = current_user
+                user = EsthenosUser.objects.get(id=c_user.id)
+                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+            else:
+                print "Validation Error"
+                print flash_errors(question)
+                kwargs = locals()
+                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+    else:
+        return abort(403)
 
 
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
@@ -837,15 +837,10 @@ def admin_org_applications(org_id):
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def admin_application_id(org_id,app_id):
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-
     if not session['role'] == "ADMIN":
         abort(403)
 
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     app_urls = list()
     applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
 
