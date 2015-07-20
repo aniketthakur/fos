@@ -24,14 +24,14 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for branch in branchs %}
+                                        {% for group in groups %}
                                             <tr>
                                                 <td class="v-align-middle">{{ loop.index }}</td>
                                                 <td class="v-align-middle">
                                                   <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
                                                 </td>
                                                 <td class="v-align-middle">{{ group.group_name }}</td>
-                                                <td><span class="muted">{{ group.created_at }}</span></td>
+                                                <td><span class="muted">{{ group.created_at|datetimeformat }}</span></td>
                                             </tr>
                                          {% endfor %}
                                         </tbody>

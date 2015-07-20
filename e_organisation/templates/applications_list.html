@@ -7,11 +7,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="grid simple ">
-                        <div class="grid-title no-border">
-                            <h4>Status  <span class="semi-bold">Check </span></h4>
-                        </div>
                         <div class="grid-body no-border">
-                            <h3> Group: {{ group.group_name }}  <span class="semi-bold">Application</span></h3>
+                            <h3> Group: {{ group.group_name }} <span class="semi-bold">Application</span></h3>
                             <div class="col-md-6">
                                 <input name="groupName" id="" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>
@@ -20,12 +17,12 @@
                                 <tr>
                                     <th style="width:1%" >#</th>
                                     <th style="width:19%">Application ID</th>
-                                    <th style="width:19%">Applicant Name</th>
-                                    <th style="width:20%">Group Name</th>
-                                    <th style="width:16%">Date</th>
+                                    <th style="width:20%">Applicant Name</th>
+                                    <th style="width:15%">Group Name</th>
+                                    <th style="width:25%">Date</th>
                                     <th style="width:20%">Progress Status</th>
-                                    <th style="width:20%">Log</th>
-                                    <th style="width:20%">Action</th>
+                                    <th style="width:15%">Log</th>
+                                    <th style="width:15%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,19 +30,19 @@
                                 <tr>
                                     <td class="v-align-middle">{{ loop.index }}</td>
                                     <td class="v-align-middle">
-                                      <a href="/application/{{ app.application_id }}/track"><ins>{{ app.application_id }}</ins></a>
+                                      <a href="/application/{{ app.application_id }}/details"><ins>{{ app.application_id }}</ins></a>
                                     </td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
                                     <td class="v-align-middle">
                                       <a href="/applications/group/{{ app.group.group_id }}"><ins>{{ app.group.group_name }}</ins></a>
                                     </td>
-                                    <td class="v-align-middle">{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
+                                    <td class="v-align-middle">{{ app.date_created|datetimeformat }}</td>
                                     <td class="v-align-middle">{{ app.current_status.status_message }}</td>
                                     <td class="v-align-middle">
                                       <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/track">Log</a>
                                     </td>
                                     <td class="v-align-middle">
-                                      <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/cashflow" >Cashflow</a>
+                                      <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/cashflow">Cashflow</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

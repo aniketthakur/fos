@@ -104,32 +104,34 @@ def applications_track(app_id):
   return render_template("application_tracking.html", **kwargs)
 
 
-@organisation_views.route('/organisation/<org_id>/application/<app_id>', methods=["GET"])
+@organisation_views.route('/application/<app_id>/details', methods=["GET"])
 @login_required
-def client_application_id(org_id, app_id):
+def client_application_id(app_id):
 
   user = EsthenosUser.objects.get(id=current_user.id)
   applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
 
   if len(applications) == 0:
-    redirect("/reports")
+    redirect("/applications")
 
   app_urls = []
-  application = applications[0]
-  for kyc_id in application.tag.app_file_pixuate_id:
-    app_urls.append(get_url_with_id(kyc_id))
-
   kyc_urls, kyc_ids = [], []
-  for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
-    kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
-    kyc_ids.append(kyc_id)
-    kyc_urls.append(get_url_with_id(kyc_id))
-
   gkyc_urls, gkyc_ids = [], []
-  for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-    gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-    gkyc_ids.append(gkyc_id)
-    gkyc_urls.append(get_url_with_id(gkyc_id))
+  application = applications[0]
+
+  if application.tag is not None:
+    for kyc_id in application.tag.app_file_pixuate_id:
+      app_urls.append(get_url_with_id(kyc_id))
+
+    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
+      kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
+      kyc_ids.append(kyc_id)
+      kyc_urls.append(get_url_with_id(kyc_id))
+
+    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
+      gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
+      gkyc_ids.append(gkyc_id)
+      gkyc_urls.append(get_url_with_id(gkyc_id))
 
   today = datetime.datetime.today()
   disbursement_date = datetime.datetime.today() + timedelta(days=1)
