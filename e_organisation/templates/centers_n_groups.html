@@ -1,13 +1,6 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
-
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="row">
@@ -15,11 +8,6 @@
                     <div class="grid simple ">
                         <div class="grid-title no-border">
                             <h4>Application  <span class="semi-bold">Status</span></h4>
-                            <div class="tools">	<a href="javascript:;" class="collapse"></a>
-                                <a href="#grid-config" data-toggle="modal" class="config"></a>
-                                <a href="javascript:;" class="reload"></a>
-                                <a href="javascript:;" class="remove"></a>
-                            </div>
                         </div>
                         <div class="grid-body no-border">
                             <h3>Search   <span class="semi-bold">Applications</span></h3>
@@ -29,58 +17,31 @@
                                     <table class="table no-more-tables ">
                                         <thead>
                                         <tr>
-                                            <th style="width:1%" >
-                                                <div class="checkbox check-default">
-                                                    <input id="checkbox1000" type="checkbox" value="1" class="checkall">
-                                                    <label for="checkbox1000"></label>
-                                                </div>
-                                            </th>
-                                            <th style="width:33%">Branch Name</th>
-                                            <th style="width:33%">FOS</th>
+                                            <th style="width:1%" >#</th>
+                                            <th style="width:33%">Group Name</th>
+                                            <th style="width:33%">Group ID</th>
                                             <th style="width:33%">Added Date</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for branch in branchs %}
-                                        <!--{% for user in users  %}-->
                                             <tr>
+                                                <td class="v-align-middle">{{ loop.index }}</td>
                                                 <td class="v-align-middle">
-                                                    <div class="checkbox check-default">
-                                                        <input id="checkbox11" type="checkbox" value="1">
-                                                        <label for="checkbox11"></label>
-                                                    </div>
+                                                  <a href="/applications?group={{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
                                                 </td>
-                                                <td class="v-align-middle clickable-row" data-href='/applications?branch={{ branch.branch_name}}'><ins>{{ branch.branch_name }}</ins></td>
-
-                                                <td class="v-align-middle clickable-row" data-href='/application?user={{user.user_name}}"><span class="muted'><ins>{{ user.user_name }}</ins></span>
-                                                </td>
-                                                <td><span class="muted">{{ branch.created_at }}</span>
-                                                </td>
+                                                <td class="v-align-middle">{{ group.group_name }}</td>
+                                                <td><span class="muted">{{ group.created_at }}</span></td>
                                             </tr>
-                                        <!--{% endfor %}-->
                                          {% endfor %}
-
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
-    </script>
 {% endblock %}

@@ -1,95 +1,58 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
-    <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url_for('static', filename='plugins/dropzone/css/dropzone.css')}}" rel="stylesheet" type="text/css"/>
-{% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
-{% block top_js_scripts %}
-
-{% endblock %}
 {% block maincontents %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="grid simple ">
-
                         <div class="grid-title no-border">
                             <h4>Status  <span class="semi-bold">Check </span></h4>
-                            <div class="tools">
-                                <a href="javascript:;" class="reload"></a>
-                            </div>
                         </div>
-
                         <div class="grid-body no-border">
-{#                            <h3>{% if center_id == '' %} Group: {{ branch.branch_name }} {% else %} Center: {{ center.center_name }} {% endif %} <span class="semi-bold">Application</span></h3>#}
-                            <h3> Group: {{ branch.branch_name }}  <span class="semi-bold">Application</span></h3>
+                            <h3> Group: {{ group.group_name }}  <span class="semi-bold">Application</span></h3>
                             <div class="col-md-6">
                                 <input name="groupName" id="" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>
                             <table class="table no-more-tables">
                                 <thead>
                                 <tr>
-                                    <th style="width:1%" >
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox3" type="checkbox" value="1" class="checkall">
-                                            <label for="checkbox3"></label>
-                                        </div>
-                                    </th>
+                                    <th style="width:1%" >#</th>
                                     <th style="width:19%">Application ID</th>
                                     <th style="width:19%">Applicant Name</th>
-                                    <th style="width:20%">Application Log</th>
-<!--{#                                    <th style="width:20%">Center Name</th>#}-->
+                                    <th style="width:20%">Group Name</th>
                                     <th style="width:16%">Date</th>
                                     <th style="width:20%">Progress Status</th>
+                                    <th style="width:20%">Log</th>
                                     <th style="width:20%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for app in applications %}
                                 <tr>
+                                    <td class="v-align-middle">{{ loop.index }}</td>
                                     <td class="v-align-middle">
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                            <label for="checkbox{{ loop.index }}"></label>
-                                        </div>
+                                      <a href="/application/{{ app.application_id }}/track"><ins>{{ app.application_id }}</ins></a>
                                     </td>
-                                    <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track' ><ins>{{ app.application_id }}</ins></td>
                                     <td class="v-align-middle">{{ app.applicant_name }}</td>
-                                    <td class="v-align-middle">{{ app.branch.branch_name }}</td>
-{#                                    <td class="v-align-middle">{{ app.center.center_name }}</td> #}
-                                    <td><span class="muted">{{ app.date_created }}</span>
+                                    <td class="v-align-middle">{{ app.group.group_name }}</td>
+                                    <td class="v-align-middle">{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
+                                    <td class="v-align-middle">{{ app.current_status.status_message }}</td>
+                                    <td class="v-align-middle">
+                                      <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/track">Log</a>
                                     </td>
-                                    <td><span class="muted">{{ app.current_status.status_message }}</span>
-                                    <td><a class="btn btn-small btn-primary " href="/application/{{ app.application_id }}/cashflow" >Cashflow</a>
-
-
+                                    <td class="v-align-middle">
+                                      <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/cashflow" >Cashflow</a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-    <!-- PAGE JS -->
-    <script src="{{ url_for('static', filename='js/tabs_accordian.js')}}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
-    </script>
 {% endblock %}

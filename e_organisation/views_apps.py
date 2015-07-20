@@ -6,35 +6,19 @@ from views_base import *
 def applications():
   if not session['role'].startswith("ORG_"):
     abort(403)
-  username = current_user.name
-  c_user = current_user
-  # center_id = request.args.get("center")
-  branch_name = request.args.get("branch")
-  #    print  center_id," ",group_id
-  #    center = None
-  #    if center_id is not None and center_id != '':
-  #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-  #        print center.center_name
-  #    else:
-  #        group_id = ''
-  user = EsthenosUser.objects.get(id=c_user.id)
-  branch = None
-  print branch_name
-  if branch_name is not None and branch_name != '':
-    branch = EsthenosOrgBranch.objects.get(organisation=user.organisation, branch_name=branch_name.strip(" "))
-    print branch.branch_name
+
+  group = None
+  group_id = request.args.get("group")
+  user = EsthenosUser.objects.get(id=current_user.id)
+
+  if group_id is not None and group_id != '':
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
   else:
     center_id = ''
-  print  "filter " + branch.branch_name
 
   applications = None
-  #    if center != None:
-  #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=11)
-  #    el
-  if branch != None:
-    print  "filter " + branch.branch_name
-    applications = EsthenosOrgApplication.objects.filter(branch=branch, status__gte=110)
-
+  if group is not None:
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=0)
   else:
     applications = EsthenosOrgApplication.objects.filter(status__gte=0)
 
@@ -60,16 +44,13 @@ def application_list():
 @login_required
 def application_status():
   if not session['role'].startswith("ORG_"):
-    abort(403)
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
-  org = user.organisation
+      abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  org  = user.organisation
+  groups = EsthenosOrgGroup.objects.filter(organisation=org)
   centers = EsthenosOrgCenter.objects.filter(organisation=org)
-  # groups = EsthenosOrgGroup.objects.filter(organisation=org)
-  # regions = EsthenosOrgRegion.objects.filter(organisation=org)
-  branchs = EsthenosOrgBranch.objects.filter(organisation=org)
-  users = EsthenosUser.objects.filter(organisation=org)
+
   kwargs = locals()
   return render_template("centers_n_groups.html", **kwargs)
 
@@ -137,34 +118,25 @@ def applications_track(app_id):
 @organisation_views.route('/organisation/<org_id>/application/<app_id>', methods=["GET"])
 @login_required
 def client_application_id(org_id, app_id):
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
-  print user.roles[0]
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
-  app_urls = list()
-  try:
-    applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
-  except Exception as e:
-    print e.message
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
 
   if len(applications) == 0:
     redirect("/reports")
 
+  app_urls = []
   application = applications[0]
   for kyc_id in application.tag.app_file_pixuate_id:
     app_urls.append(get_url_with_id(kyc_id))
 
-  kyc_urls = list()
-  kyc_ids = list()
+  kyc_urls, kyc_ids = [], []
   for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
     kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
     kyc_ids.append(kyc_id)
     kyc_urls.append(get_url_with_id(kyc_id))
 
-  gkyc_urls = list()
-  gkyc_ids = list()
+  gkyc_urls, gkyc_ids = [], []
   for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
     gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
     gkyc_ids.append(gkyc_id)
