@@ -728,15 +728,15 @@ def upload_documents():
         return render_template("upload_documents.html", **kwargs)
 
 
-@organisation_views.route('/check_disbusement', methods=["GET"])
+@organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
-def check_disbusement():
+def check_disbursement():
     if not session['role'].startswith("ORG_"):
         abort(403)
     username = current_user.name
     c_user = current_user
     user = EsthenosUser.objects.get(id=c_user.id)
-    org  = user.organisation
+    org = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
 

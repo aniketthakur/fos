@@ -1,36 +1,27 @@
 {% extends "base.html" %}
 {% block css_sheets %}{{ super() }}
     <link href="{{ url_for('static', filename='plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
-
     <style type="text/css">
         .ui-datepicker { position: relative; z-index: 10000 !important; }
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
     <div class="col-md-12">
         <div class="grid simple ">
             <div class="grid-title no-border">
-                <h4>Disbursement Ready  <span class="semi-bold">Applications</span></h4>
+                <h4>Disbursement Ready&nbsp;<span class="semi-bold">Applications</span></h4>
             </div>
             <div class="grid-body no-border">
-                <h3>Search   <span class="semi-bold">Applications</span></h3>
-
+                <h3>Search&nbsp;<span class="semi-bold">Applications</span></h3>
                 <div class="row">
                     <div class="col-md-12">
                         <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
                         <table class="table no-more-tables ">
                             <thead>
                             <tr>
-                                <th style="width:1%" >
-                                    <div class="checkbox check-default">
-                                        <input id="checkbox-1" type="checkbox" value="1" class="checkall">
-                                        <label for="checkbox-1"></label>
-                                    </div>
-                                </th>
+                                <th style="width:1%" >#</th>
                                 <th style="width:10%">Group ID</th>
                                 <th style="width:10%">Group Name</th>
                                 <th style="width:10%">Created Date</th>
@@ -38,7 +29,6 @@
                                 <th style="width:15%">1st Collection Date</th>
                                 <th style="width:25%">Cheque #</th>
                                 <th style="width:12%">Action</th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -46,20 +36,14 @@
                                 <form action="#" name="{{ group.group_id }}form" id="{{ group.group_id }}form">
                                     <tr>
                                         <input type="hidden">
-                                        <td class="v-align-middle">
-                                            <div class="checkbox check-default">
-                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                <label for="checkbox{{ loop.index }}"></label>
-                                            </div>
+                                        <td class="v-align-middle"><span class="muted">{{ loop.index }}</span>
+                                        <td class="v-align-middle clickable-row">
+                                          <ins><a class="muted" href='/download_disbursement?group={{ group.group_id }}'>{{ group.group_id }}</a></ins>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/download_disbusement?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
-                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
-                                        </td>
-                                        <td><span class="muted">{{ group.created_at|dateformat }}</span>
-                                        </td>
+                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span></td>
+                                        <td><span class="muted">{{ group.created_at|dateformat }}</span></td>
                                         <td>
                                             <div class="input-with-icon  right">
-
                                                 <div class="input-append success date col-md-11">
                                                     <input type="text" class="form-control disbursement_date" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}disbursement_date" >
                                                     <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
@@ -68,19 +52,15 @@
                                         </td>
                                         <td>
                                             <div class="input-with-icon  right">
-
                                                 <div class="input-append success date col-md-11">
                                                     <input type="text" class="form-control collection_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}collection_date" >
                                                     <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
                                                 </div>
-
                                             </div>
                                         </td>
                                         <td>
                                             <input type="file" class="form-control cheque_no  file" data-id="{{ group.group_id }}" name="cheque_no_file"  id="{{ group.group_id }}cheque_no" >
                                         </td>
-
-
                                         <td class="v-align-middle">
                                             <div class="btn-group">
                                                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
@@ -90,29 +70,25 @@
                                                         {% if group.disbursement_pdf_link == "#" %}
                                                             <a class="clickable-row"  href="{{ group.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a class="clickable-row"  type="button" href="/download_disbursement?group_id={{ group.group_id }}" >Download</a>
+                                                            <a class="clickable-row"  type="button" href="/download_disbursement?group={{ group.group_id }}" >Download</a>
                                                         {% endif %}
                                                     </li>
                                                     <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
                                                 </ul>
-                                            </div><!-- /btn-group -->
+                                            </div>
                                         </td>
                                     </tr>
                                 </form>
-
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}
+
 {% block js_scripts %}{{ super() }}
     <script src="{{ url_for('static', filename='plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 
