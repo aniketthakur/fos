@@ -11,22 +11,19 @@
 
 {% endblock %}
 {% block top_js_scripts %}
-
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww">
-    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
     <script type="text/javascript">
         function initialize() {
             var mapOptions = {
                 center: { lat: 18.96, lng: 72.82},
                 zoom: 8
             };
-            var map = new google.maps.Map(document.getElementById('map-canvas'),
-                    mapOptions);
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 {% endblock %}
+
 {% block maincontents %}
     <div class="grid-body no-border">
     <div class="row">
@@ -280,6 +277,7 @@
     <br/>
     <br/>
 {% endblock %}
+
 {% block js_scripts_pre %}{{ super() }}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/d3.v2.js')}}"></script>
@@ -294,7 +292,6 @@
     <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js')}}"></script>
     <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
     <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js' )}}"></script>
-
 {% endblock %}
 
 {% block js_scripts %}{{ super() }}
@@ -325,7 +322,5 @@
                 spotRadius: 5
             });
         });
-
-
     </script>
 {% endblock %}

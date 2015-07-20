@@ -8,32 +8,20 @@
 
     <link href="{{ url_for('static', filename='plugins/pace/pace-theme-flash.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-slider/css/jquery.sidr.light.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
-
     <link href="{{ url_for('static', filename='plugins/boostrapv3/css/bootstrap.min.css' )}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='plugins/boostrapv3/css/bootstrap-theme.min.css' )}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='plugins/font-awesome/css/font-awesome.css' )}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='css/animate.min.css' )}}" rel="stylesheet" type="text/css"/>
-
     <link href="{{ url_for('static', filename='plugins/bootstrap-select2/select2.css')}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-notifications/css/messenger.css')}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-notifications/css/messenger-theme-flat.css')}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-notifications/css/location-sel.css')}}" rel="stylesheet" type="text/css" media="screen"/>
-
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='css/responsive.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='css/custom-icon-set.css') }}" rel="stylesheet" type="text/css"/>
-    {% block css_sheets %}
-        <style type="text/css">
-            table td .clickable-row{
-                color: #20b2aa;
-                text-decoration: none;
-                border-bottom: 1px solid #20b2aa;
-            }
-        </style>
-    {% endblock %}
 
-    {% block top_js_scripts %}
-    {% endblock %}
+    {% block css_sheets %}{% endblock %}
+    {% block top_js_scripts %}{% endblock %}
 </head>
 
 <body class="">
@@ -65,11 +53,9 @@
             </div>
             <div class="pull-right">
                 <div class="chat-toggler">
-                    <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="dropdown" data-original-title="Notifications">
+                    <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content="" data-toggle="dropdown" data-original-title="Notifications">
                         <div class="user-details">
-                            <div class="username">
-                                {{ user.first_name }} <span class="bold">{{ user.last_name }}</span>
-                            </div>
+                            <div class="username">{{ user.first_name }} <span class="bold">{{ user.last_name }}</span></div>
                         </div>
                         <div class="iconset top-down-arrow"></div>
                     </a>
@@ -200,38 +186,10 @@
     </div>
 
     <div class="page-content">
-        <div id="portlet-config" class="modal hide">
-            <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"></button>
-                <h3>Widget Settings</h3>
-            </div>
-            <div class="modal-body"> Widget settings form goes here </div>
-        </div>
-        <div class="clearfix"></div>
         <div class="content">
             {% block maincontents %}
             {% endblock %}
         </div>
-    </div>
-    <div id="sidr" class="chat-window-wrapper">
-    <div id="main-chat-wrapper" >
-        <div class="chat-window-wrapper fadeIn" id="chat-users" >
-            <div class="side-widget">
-                <div class="side-widget-title">Menu</div>
-                <div class="side-widget-content">
-                    <div id="groups-list">
-                        <ul class="groups">
-                            <li><a href="/accounts/profile"><div class="status-icon green"></div>My Account</a></li>
-                            <li><a href="/accounts/logout"><div class="status-icon green"></div>Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-wrapper" style="display:none">
-            <textarea id="chat-message-input" rows="1" placeholder="Type your message"></textarea>
-        </div>
-        <div class="clearfix"></div>
     </div>
 </div>
 
