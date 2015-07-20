@@ -493,29 +493,25 @@ def admin_organisation_settings(org_id):
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    print "reached here"
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+
     if request.method == "POST":
-        print request.form
-        org_emp  = AddOrganizationEmployeeForm(request.form)
-        form=org_emp
-        print org_id
+        org_emp = AddOrganizationEmployeeForm(request.form)
+        form = org_emp
         form.save(org_id)
-        if (form.validate()):
+
+        if form.validate():
             form.save(org_id)
-            print "formValidated"
             return redirect("/admin/organisation/"+org_id)
+
         else:
-            print "some Error"
             flash_errors(form)
-            print form.errors
             org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
             return render_template("admin_org_add_emp.html", **kwargs)
-    else:
 
+    else:
         org = EsthenosOrg.objects.get(id=org_id)
         branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
@@ -525,32 +521,31 @@ def admin_organisation_add_emp(org_id):
 @admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET','POST'])
 @login_required
 def admin_organisation_product(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
+    if session['role'] == 'ADMIN':
+        org = EsthenosOrg.objects.get(id=org_id)
+        user = current_user
         kwargs = locals()
-        if request.method=="GET":
+
+        if request.method == "GET":
             return render_template("admin_org_add_product.html", **kwargs)
+
         else:
-            product=AddOrganisationProductForm(request.form)
-            org_product=product
-            print request.form
+            product = AddOrganisationProductForm(request.form)
+            org_product = product
 #            org_product.save(org_id)
-            if(org_product.validate()):
-                print "Product Details Validated,Saving the form"
+
+            if org_product.validate():
                 org_product.save(org_id)
                 org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
+                user = EsthenosUser.objects.get(id=current_user.id)
                 organisation = EsthenosOrg.objects.get(id=org_id)
                 kwargs = locals()
                 return redirect("/admin/organisation/"+org_id)
+
             else:
-                print "Validation Error"
-                print flash_errors(org_product)
                 kwargs = locals()
                 return redirect("/admin/organisation/"+org_id+"/add_product")
+
     else:
         return abort(403)
 

@@ -1,18 +1,11 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
-
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Add <span class="semi-bold"> {{ org.name }} Employee</span></h4>
+                    <h4>Add <span class="semi-bold">Employee</span></h4>
                     <div class="grid-body no-border">
                         <form class="form-no-horizontal-spacing" novalidate="novalidate" id="form-organisation-emp" method="post" action="/admin/organisation/{{ org.id }}/add_emp">
                             <div class="row column-seperation">
