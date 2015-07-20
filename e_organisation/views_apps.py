@@ -128,11 +128,8 @@ def cashflow_statusupdate(app_id):
 def applications_track(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
+  user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=app_id)
-  # print application.timeline
   kwargs = locals()
   return render_template("application_tracking.html", **kwargs)
 

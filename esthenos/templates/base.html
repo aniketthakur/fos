@@ -85,7 +85,7 @@
                             <div class="iconset top-settings-dark "></div>
                         </a>
                         <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                            <li><a href="/accounts/profile">My Account</a></li>
+                            <li><a href="/profile">My Account</a></li>
                             <li class="divider"></li>
                             <li><a href="/accounts/logout"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                         </ul>
@@ -107,7 +107,7 @@
                 -->
                 <div class="user-info">
                     <div class="greeting">Welcome</div>
-                    <div class="username">{{ user.first_name }} <span class="bold">{{ user.last_name }}</span></div>
+                    <div class="username">{{ user.first_name }} {{ user.last_name }}</div>
                     <br/>
                     <div>
                        <h4> <span class="bold">{{ user.organisation.name }}</span></h4><br/>
@@ -182,9 +182,9 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="/profile">
+                        <a href="/scrutiny">
                             <i class="icon-custom-ui"></i>
-                            <span class="title">Profile</span>
+                            <span class="title">Scrutiny</span>
                         </a>
                     </li>
                     <li class="">
