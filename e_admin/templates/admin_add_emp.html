@@ -52,7 +52,7 @@
                                     <div class="row form-row">
                                         <div class="col-md-12 form-group">
                                             <div class="input-with-icon  right">
-                                                <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com">
+                                                <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com" minlength="3" maxlength="30">
                                             </div>
                                         </div>
                                     </div>
@@ -158,6 +158,8 @@
                 },
                 Email: {
                     email: true,
+                    minlength: 3,
+                    maxlength: 30,
                     required: true
                 },
                 Address: {
@@ -213,7 +215,6 @@
             },
             submitHandler: function (form) {
                 form.submit();
-                console.log("Success");
             }
         });
         $('.cancel-button').click(function(){
@@ -221,8 +222,7 @@
         });
         $('.input-append.date').datepicker({
             autoclose: true,
-            todayHighlight: true,
-            endDate: '-4000d'
+            todayHighlight: true
         });
     </script>
 {% endblock %}

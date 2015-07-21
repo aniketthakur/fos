@@ -27,7 +27,7 @@
                   <div class="row form-row">
                     <div class="col-md-12">
                       <div class="input-with-icon  right">
-                        <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com">
+                        <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com" minlength="3" maxlength="30">
                       </div>
                     </div>
                   </div>
@@ -188,6 +188,8 @@
           },
           email_add_organisation: {
             email: true,
+            minlength: 3,
+            maxlength: 30,
             required: true
           },
           address_add_org_emp: {

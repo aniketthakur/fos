@@ -77,24 +77,21 @@ def admin_org_add_product():
 def admin_add_org():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     if request.method == "POST":
-        print request.form
         org_form = AddOrganisationForm( request.form)
         form = org_form
-        if(form.validate()):
+
+        if form.validate():
             org = form.save()
             settings = EsthenosSettings.objects.all()[0]
             settings.update(inc__organisations_count=1)
-            print "success"
             return redirect("/admin/update_org/"+str(org.id))
+
         else:
-            print "here error"
             flash_errors(org_form)
-            print org_form.errors
-            user = EsthenosUser.objects.get(id=c_user.id)
+            user = EsthenosUser.objects.get(id=current_user.id)
             kwargs = {"login_form": org_form}
             return render_template("admin_add_org.html", **kwargs)
 

@@ -1,45 +1,31 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-    <div class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="grid simple">
             <div class="grid-title no-border">
                 <h4>Add <span class="semi-bold">Organisation</span></h4>
-
                 <div class="grid-body no-border">
                     <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/add_org" method="post">
                         <div class="row column-seperation">
-
                             <div class="col-md-6">
                                 <h4>Basic Information</h4>
                                 <div class="row form-row">
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="org_name" id="org_name" type="text" value=""  class="form-control"  placeholder="Organisation Name">
+                                            <input name="org_name" id="org_name" type="text" value=""  class="form-control" placeholder="Organisation Name" minlength="2" maxlength="30">
                                         </div>
                                     </div>
-
                                 </div>
-
-
                             </div>
                             <div class="col-md-6">
-
                                 <h4>Postal Information</h4>
-
                                 <div class="row form-row">
                                     <div class="col-md-12 form-group" >
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="postal_address" value="" id="postal_address" type="text"  class="form-control" placeholder="Address">
+                                            <input name="postal_address" value="" id="postal_address" type="text" class="form-control" placeholder="Address">
                                         </div>
                                     </div>
                                 </div>
@@ -50,55 +36,44 @@
                                     <div class="col-md-6 form-group">
                                         <select name="postal_state" id="state"  class="select2 form-control" placeholder="State"></select>
                                     </div>
-                                    <br/>
                                 </div>
                                 <div class="row form-row">
-
                                     <div class="col-md-8">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="postal_city" id="postal_city" type="text"  value="" class="form-control" placeholder="City">
+                                            <input name="postal_city" id="postal_city" type="text"  value="" class="form-control" placeholder="City" minlength="2" maxlength="30">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                            <input name="postal_code" id="postal_code" type="text" value=""  class="form-control"   placeholder="Postal Code">
+                                            <input name="postal_code" id="postal_code" type="text" value=""  class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
                                         </div>
-
                                     </div>
                                 </div>
-
                                 <div class="row form-row">
                                     <div class="col-md-4">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="postal_tele_code" id="postal_tele_code" value="" type="text"  class="form-control" placeholder="+91">
+                                            <input name="postal_tele_code" id="postal_tele_code" value="" type="text"  class="form-control" placeholder="+91" minlength="1" maxlength="2">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="postal_telephone" id="postal_telephone" value="" type="text"  class="form-control" placeholder="Phone Number" maxlength="10">
+                                            <input name="postal_telephone" id="postal_telephone" value="" type="text"  class="form-control" placeholder="Phone Number" minlength="10" maxlength="10">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row form-row">
                                     <div class="col-md-12">
                                         <div class="input-with-icon  right">
-                                            <i class=""></i>
-                                        <input name="email" id="email" type="text"  value="" class="form-control" placeholder="Email address">
+                                            <input name="email" id="email" type="text"  value="" class="form-control" placeholder="Email address" minlength="3" maxlength="30">
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="form-actions">
-
                             <div class="pull-right">
-                                <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit"><i class="icon-ok"></i> Add</button>
-                                <button class="btn btn-small btn-white btn-cons" type="reset" id="reset" value="clear">Clear</button>
+                                <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit">Add</button>
+                                <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" id="reset" value="clear">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -106,16 +81,12 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 {% endblock %}
+
+
 {% block js_scripts %}{{ super() }}
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
-    <!--<script src="{{url_for('static',filename='js/numeric.js')}}" type="text/javascript"></script>-->
-
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>-->
-    <!--<script type="text/javascript" src="jquery.alphanum.js"></script>-->
-
-     <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script type="text/javascript">
         $(document).ready(function(){
             $("#states").select2();
@@ -125,22 +96,13 @@
             $(".org-submit").click(function(){
                 $("#form-organisation").submit();
             });
-            //$("#multi-region").select2();
-
-
         });
 
-
-              $(':input','#form-organisation')
-                  .not(':button, :submit, :reset, :hidden')
-                  .val('')
-                  .removeAttr('checked')
-                  .removeAttr('selected');
-
-
-
-
-
+        $(':input','#form-organisation')
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .removeAttr('checked')
+            .removeAttr('selected');
 
         $('#form-organisation').validate({
                 errorElement: 'span',
@@ -150,91 +112,70 @@
                 rules: {
                     org_name: {
                         minlength: 2,
+                        maxlength: 30,
                         required: true
                     },
                     postal_address:{
-                        minlength:2,
+                        minlength: 2,
                         required: true
                     },
                     postal_code:{
                         number: true,
-                        minlength:6,
-						maxlength: 6,
-                        required: true,
-
+                        minlength: 5,
+                        maxlength: 6,
+                        required: true
                     },
                     postal_city:{
-
                         required: true,
-                        minlength: 3,
-                        maxlength:20,
-
-
-
+                        minlength: 2,
+                        maxlength: 30
                     },
                     postal_tele_code:{
                         number: true,
-                        required: true,
-		                minlength: 2,
-		                maxlength:2
+                        minlength: 1,
+                        maxlength: 2,
+                        required: true
                     },
                     postal_telephone:{
                         number: true,
-                        minlength:2,
-                        maxlength:10,
+                        minlength: 10,
+                        maxlength: 10,
                         required:true
                     },
                     email:{
-                         required: true,
-		                 email: true,
-                         minlength: 3
+                         email: true,
+                         minlength: 3,
+                         maxlength: 30,
+                         required: true
                     }
                 },
-
-
-
-
                 invalidHandler: function (event, validator) {
-					//display error alert on form submit
                 },
-
                 errorPlacement: function (error, element) { // render error placement for each input type
                     var icon = $(element).parent('.input-with-icon').children('i');
                     var parent = $(element).parent('.input-with-icon');
                     icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
                     parent.removeClass('success-control').addClass('error-control');
                 },
-
                 highlight: function (element) { // hightlight error inputs
-					var parent = $(element).parent();
+                    var parent = $(element).parent();
                     parent.removeClass('success-control').addClass('error-control');
                 },
-
                 unhighlight: function (element) { // revert the change done by hightlight
 
                 },
-
                 success: function (label, element) {
                     var icon = $(element).parent('.input-with-icon').children('i');
-					var parent = $(element).parent('.input-with-icon');
+                    var parent = $(element).parent('.input-with-icon');
                     icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
-					parent.removeClass('error-control').addClass('success-control');
+                    parent.removeClass('error-control').addClass('success-control');
                 },
-
                 submitHandler: function (form) {
                     form.submit();
-                    console.log("Success");
                 }
-
-
             });
-
-
-
-
-
-
+            $('.cancel-button').click(function(){
+                location.href = '/admin/organisations';
+            });
     </script>
-
-
 {% endblock %}
