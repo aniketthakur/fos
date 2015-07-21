@@ -222,6 +222,20 @@ class AddOrgGRTTemplateQuestionsForm( Form):
         return ques
 
 
+class AddOrgCGT1TemplateQuestionsForm( Form):
+    question = TextField( validators=[v.Length(max=2048)])
+    question_hindi = TextField( validators=[v.Length(max=2048)])
+    org_id = TextField( validators=[ v.Length(max=255)])
+
+    def save( self):
+        ques=EsthenosOrgCGT1TemplateQuestion()
+        ques.question=self.question.data
+        ques.question_regional = self.question_hindi.data
+        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
+        ques.save()
+        return ques
+
+
 class AddOrgCGT2TemplateQuestionsForm( Form):
     question=TextField( validators=[v.Length(max=2048)])
     question_hindi=TextField( validators=[v.Length(max=2048)])
