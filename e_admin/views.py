@@ -1006,17 +1006,16 @@ def admin_cbcheck():
      return render_template("admin_cbcheck.html", **kwargs)
 
 
-# @admin_views.route('/admin/disbursement', methods=["GET"])
-# @login_required
-# def admin_disbursement():
-#     if session['role'] != "ADMIN":
-#         abort(403)
-#     username = current_user.name
-#     c_user = current_user
-#     user = EsthenosUser.objects.get(id=c_user.id)
-#     kwargs = locals()
-#     return render_template("admin_disbursement.html", **kwargs)
-
+@admin_views.route('/admin/disbursement', methods=["GET"])
+@login_required
+def admin_disbursement():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    user = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    return render_template("admin_disbursement.html", **kwargs)
 
 
 @admin_views.route('/admin/logout', methods=["GET"])
