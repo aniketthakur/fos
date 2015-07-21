@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block css_sheets %}{{ super() }}
     <style type="text/css">
         input.no-border {
@@ -79,9 +80,7 @@
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
     <div class="row">
     <form id="form_user_application" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}" method="post">
