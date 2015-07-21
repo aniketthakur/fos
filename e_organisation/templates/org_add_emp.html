@@ -182,12 +182,14 @@
                     first_name_add_organisation: {
                         minlength: 3,
                         maxlength: 100,
-                        required: true
+                        required: true,
+                        lettersonly: true
                     },
                     last_name_add_organisation: {
                         minlength: 3,
                         maxlength: 100,
-                        required: true
+                        required: true,
+                        lettersonly: true
                     },
                     email_add_organisation: {
                         email: true,
@@ -200,7 +202,8 @@
                     city_add_organisation: {
                         minlength: 2,
                         maxlength: 100,
-                        required: true
+                        required: true,
+                        lettersonly: true
                     },
                     postal_code_add_organisation: {
                         number: true,
