@@ -295,22 +295,18 @@ def admin_update_org_update_branches(org_id):
 def admin_add_emp():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     if request.method == "POST":
         print "hello"
         org_form = AddEmployeeForm( request.form )
-
         form = org_form
-        if(form.validate()):
+        if form.validate():
             form.save()
-            print "success"
             return redirect("/admin/employees")
+
         else:
-            print "here error"
             flash_errors(org_form)
-            print org_form.errors
             kwargs = {"login_form": org_form}
             return render_template("admin_add_emp.html", **kwargs)
     else:

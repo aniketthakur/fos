@@ -15,21 +15,18 @@
                   <div class="row form-row">
                     <div class="col-md-5">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="first_name_add_organisation" id="first_name_add_organisation" value="" type="text" class="form-control" placeholder="First Name">
+                        <input name="first_name_add_organisation" id="first_name_add_organisation" value="" type="text" class="form-control" placeholder="First Name" maxlength="30">
                       </div>
                     </div>
                     <div class="col-md-7">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="last_name_add_organisation" id="last_name_add_organisation" value="" type="text" class="form-control" placeholder="Last Name">
+                        <input name="last_name_add_organisation" id="last_name_add_organisation" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-12">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
                         <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com">
                       </div>
                     </div>
@@ -37,7 +34,6 @@
                   <div class="row form-row">
                     <div class="col-md-7">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
                         <div class="input-append success date  col-lg-6 no-padding">
                           <input type="text" type="text" placeholder="Date of Birth" class="form-control" value="" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation" >
                           <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
@@ -81,22 +77,18 @@
                   <div class="row form-row">
                     <div class="col-md-12">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
                         <input name="address_add_org_emp" id="address_add_org_emp" value="" type="text" class="form-control" placeholder="Address">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
-
                     <div class="col-md-6 form-group">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
                         <select name="country_add_organisation" id="postal_country"  class="form-control select2" placeholder="Country"></select>
                       </div>
                     </div>
                     <div class="col-md-6 form-group">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
                         <select name="state_add_organisation" id="postal_state" class="form-control select2" placeholder="State"></select>
                       </div>
                     </div>
@@ -104,28 +96,24 @@
                   <div class="row form-row">
                     <div class="col-md-6">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="city_add_organisation" value="" id="city_add_organisation" type="text" class="form-control" placeholder="City">
+                        <input name="city_add_organisation" value="" id="city_add_organisation" type="text" class="form-control" placeholder="City" maxlength="30">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="postal_code_add_organisation" value="" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code">
+                        <input name="postal_code_add_organisation" value="" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-4">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="tele_code_add_organisation" value="" id="tele_code_add_organisation" type="text" class="form-control" placeholder="+91">
+                        <input name="tele_code_add_organisation" value="" id="tele_code_add_organisation" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
                       </div>
                     </div>
                     <div class="col-md-8">
                       <div class="input-with-icon  right">
-                        <i class=""></i>
-                        <input name="teleno_add_organisation" value="" id="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number">
+                        <input name="teleno_add_organisation" value="" id="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
                       </div>
                     </div>
                   </div>
@@ -145,7 +133,8 @@
   </div>
 {% endblock %}
 
-{% block js_scripts %}{{ super() }}
+
+{% block js_scripts %}
   <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function(){
@@ -186,14 +175,14 @@
         ignore: "",
         rules: {
           first_name_add_organisation: {
-            minlength: 3,
-            maxlength: 100,
+            minlength: 2,
+            maxlength: 30,
             required: true,
             lettersonly: true
           },
           last_name_add_organisation: {
-            minlength: 3,
-            maxlength: 100,
+            minlength: 2,
+            maxlength: 30,
             required: true,
             lettersonly: true
           },
@@ -207,7 +196,7 @@
           },
           city_add_organisation: {
             minlength: 2,
-            maxlength: 100,
+            maxlength: 30,
             required: true,
             lettersonly: true
           },
@@ -224,7 +213,7 @@
             required: true
           },
           tele_code_add_organisation: {
-            minlength: 2,
+            minlength: 1,
             maxlength: 2,
             number:true,
             required: true

@@ -1,19 +1,12 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
                 <div class="grid-title no-border">
                     <h4>Add <span class="semi-bold">Employee</span></h4>
-
                     <div class="grid-body no-border">
                         <form class="form-no-horizontal-spacing" id="form-employee" method="post" action="/admin/add_emp">
                             <div class="row column-seperation">
@@ -21,15 +14,13 @@
                                     <h4>Basic Information</h4>
                                     <div class="row form-row">
                                         <div class="col-md-5 form-group">
-                                            <div class="input-  with-icon  right">
-                                                <i class=""></i>
-                                            <input name="FirstName" id="FirstName" value="" type="text" class="form-control" placeholder="First Name">
+                                            <div class="input-with-icon right">
+                                                <input name="FirstName" id="FirstName" value="" type="text" class="form-control" placeholder="First Name" maxlength="30">
                                             </div>
                                         </div>
                                         <div class="col-md-7 form-group">
-                                            <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
+                                            <div class="input-with-icon right">
+                                                <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
                                             </div>
                                         </div>
                                     </div>
@@ -44,10 +35,10 @@
                                         <div class="col-md-6 form-group">
                                             <div class="input-append success date no-padding">
                                                 <input type="text" type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth" >
-                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> </div>
+                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                            </div>
                                         </div>
                                     </div>
-
                                     <div class="row form-row">
                                         <div class="col-md-8">
                                             <div class="radio">
@@ -61,78 +52,62 @@
                                     <div class="row form-row">
                                         <div class="col-md-12 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com">
+                                                <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com">
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="col-md-6">
-
                                     <h4>Postal Information</h4>
-
                                     <div class="row form-row">
                                         <div class="col-md-12 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="Address" id="Address" value="" type="text" class="form-control" placeholder="Address">
+                                                <input name="Address" id="Address" value="" type="text" class="form-control" placeholder="Address">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
-
                                         <div class="col-md-6 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
                                                 <select name="Country" id="Country"  class="form-control select2" placeholder="Country"></select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <select name="State" id="State"  class="form-control select2" placeholder="State"></select>
+                                                <select name="State" id="State"  class="form-control select2" placeholder="State"></select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-8 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                                <input name="City" id="City" value="" type="text" class="form-control" placeholder="City">
+                                                <input name="City" id="City" value="" type="text" class="form-control" placeholder="City" maxlength="30">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="PostalCode" type="text" value="" id="PostalCode" class="form-control" placeholder="Postal Code" maxlength="6">
+                                                <input name="PostalCode" type="text" value="" id="PostalCode" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-4 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" min="2">
+                                                <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
                                             </div>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <div class="input-with-icon  right">
-                                                <i class=""></i>
-                                            <input name="TeleNo" id="TeleNo" value="" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
-                                                </div>
-
+                                                <input name="TeleNo" id="TeleNo" value="" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="form-actions">
-
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons"  id="submitForm2" type="submit"><i class="icon-ok"></i> Save</button>
-                                    <button class="btn btn-small btn-white btn-cons" type="reset" value="clear">Clear</button>
+                                    <button class="btn btn-small btn-danger btn-cons" id="submitForm2" type="submit">Save</button>
+                                    <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -140,11 +115,11 @@
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
 
+
+{% block js_scripts %}
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -155,16 +130,13 @@
                 placeholder: "Select a ROLE",
                 allowClear: true
             });
-
         });
-
 
         $(':input','#form-employee')
                   .not(':button, :submit, :reset, :hidden')
                   .val('')
                   .removeAttr('checked')
                   .removeAttr('selected');
-
 
         $('#form-employee').validate({
             errorElement: 'span',
@@ -173,16 +145,16 @@
             ignore: "",
             rules: {
                 FirstName: {
-
-                    minlength: 3,
-                    maxlength:10,
-                    required: true
+                    minlength: 2,
+                    maxlength: 30,
+                    required: true,
+                    lettersonly: true
                 },
                 LastName: {
-
                     minlength: 2,
-                    maxlength:30,
-                    required: true
+                    maxlength: 30,
+                    required: true,
+                    lettersonly: true
                 },
                 Email: {
                     email: true,
@@ -193,57 +165,59 @@
                     required: true
                 },
                 City: {
-                    minlength: 5,
-                    maxlength: 10,
-                    required: true
+                    minlength: 2,
+                    maxlength: 30,
+                    required: true,
+                    lettersonly: true
                 },
                 PostalCode: {
+                    minlength: 5,
+                    maxlength: 6,
                     number:true,
                     required: true
                 },
                 TeleCode: {
                     number: true,
-                    minlength: 2,
+                    minlength: 1,
+                    maxlength: 2,
                     required: true
                 },
                 TeleNo: {
                     number:true,
-                    minlength: 8,
+                    minlength: 10,
+                    maxlength: 10,
                     required: true
                 }
             },
-
             invalidHandler: function (event, validator) {
                 //display error alert on form submit
             },
-
             errorPlacement: function (error, element) { // render error placement for each input type
                 var icon = $(element).parent('.input-with-icon').children('i');
                 var parent = $(element).parent('.input-with-icon');
                 icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
                 parent.removeClass('success-control').addClass('error-control');
             },
-
             highlight: function (element) { // hightlight error inputs
                 var parent = $(element).parent();
                 parent.removeClass('success-control').addClass('error-control');
             },
-
             unhighlight: function (element) { // revert the change done by hightlight
 
             },
-
             success: function (label, element) {
                 var icon = $(element).parent('.input-with-icon').children('i');
                 var parent = $(element).parent('.input-with-icon');
                 icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
                 parent.removeClass('error-control').addClass('success-control');
             },
-
             submitHandler: function (form) {
                 form.submit();
                 console.log("Success");
             }
+        });
+        $('.cancel-button').click(function(){
+            location.href = '/admin/employees';
         });
         $('.input-append.date').datepicker({
             autoclose: true,
