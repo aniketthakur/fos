@@ -982,14 +982,13 @@ def read_aadhaar(object_id):
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
 @login_required
-def admin_application_id_track(org_id,app_id):
+def admin_application_id_track(org_id, app_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     organisation = EsthenosOrg.objects.get(id = org_id)
-    application = EsthenosOrgApplication.objects.get(organisation = organisation,application_id=app_id)
+    application = EsthenosOrgApplication.objects.get(organisation=organisation,application_id=app_id)
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
