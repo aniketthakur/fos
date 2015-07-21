@@ -1,39 +1,25 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
 <div class="row" xmlns="http://www.w3.org/1999/html">
     <div class="col-md-3 pull-right">
         <a class="btn btn-small btn-block btn-success" type="button" href="/admin/add_emp">Add Employee</a></a>
     </div>
 </div>
-<br/>
-<div class="row">
 
+<div class="row">
     <div class="span12">
         <div class="grid simple ">
             <div class="grid-title">
                 <h4><span class="semi-bold">Employees</span></h4>
-
-                <div class="tools"><a href="javascript:;" class="reload"></a></div>
             </div>
 
             <div class="grid-body ">
-                <!--<form id="form-add-employee">-->
                 <table class="table table-hover table-condensed" id="employee-table">
                     <thead>
                     <tr>
-                        <th style="width:1%">
-                            <div class="checkbox check-default">
-                                <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                                <label for="checkbox10"></label>
-                            </div>
-                        </th>
+                        <th style="width:1%">#</th>
                         <th style="width:20%">EMP ID</th>
                         <th style="width:20%">NAME</th>
                         <th style="width:20%">ROLE</th>
@@ -44,35 +30,23 @@
                     <tbody>
                      {% for emp in employees %}
                         <tr>
-                            <td class="v-align-middle">
-                                <div class="checkbox check-default">
-                                    <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                    <label for="checkbox{{ loop.index }}"></label>
-                                </div>
-                            </td>
-
+                            <td class="v-align-middle">{{ loop.index }}</td>
                             <td class="v-align-middle">{{ emp.id }}</td>
-                            <td class="v-align-middle"><span class="muted">{{ emp.first_name}}</span>
-                            </td>
-                            <td><span class="muted">{{ emp.roles }}</span>
-                            </td>
-                            <td><span class="muted">{{ emp.email }}</span>
-                            </td>
-                            <td><span class="muted">{{ emp.postal_telephone }}</span>
-                            </td>
+                            <td class="v-align-middle">{{ emp.first_name}}</td>
+                            <td>{{ emp.roles }}</td>
+                            <td>{{ emp.email }}</td>
+                            <td>{{ emp.postal_telephone }}</td>
                         </tr>
                      {% endfor %}
-
                     </tbody>
                 </table>
             </div>
-            <!--</form>-->
         </div>
-
     </div>
 </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
+
+{% block js_scripts %}
 <script type="text/javascript">
         $(document).ready(function(){
             $("#source").select2({
@@ -94,7 +68,6 @@
             var tableElement = $('#employee-table');
 
             tableElement.dataTable( {
-                {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
                 "pageLength": 100,
                 "sPaginationType": "bootstrap",
                 "aoColumnDefs": [
@@ -119,23 +92,8 @@
                     responsiveHelper.respond();
                 }
             });
-
-            {#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
             $('#employee-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
-
             $(".select2 ").select2();
-
         });
-
-         $('#form-add-employee').validate({
-                errorElement: 'span',
-                errorClass: 'error',
-                focusInvalid: false,
-                ignore: "",
-                rules: {
-
-
-                }
-
 </script>
 {% endblock %}

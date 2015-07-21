@@ -324,10 +324,9 @@ def admin_add_emp():
 def admin_employees():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE","EMP_MANAGER","EMP_VP"])
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
     kwargs = locals()
     return render_template("admin_employees.html", **kwargs)
 
