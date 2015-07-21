@@ -69,7 +69,7 @@
                         {% for emp in employees %}
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
-                                <td class="v-align-middle"><span class="muted">{{ emp.id}}</span></td>
+                                <td class="v-align-middle">{{ emp.id}}</td>
                                 <td class="v-align-middle">{{ emp.first_name }}</td>
                                 <td><span class="muted">{{ emp.email }}</span></td>
                                 <td><span class="muted">{{ emp.roles }}</span></td>
@@ -117,7 +117,9 @@
         </div>
     </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
+
+
+{% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
             var responsiveHelper = undefined;
@@ -127,9 +129,7 @@
             };
 
             var tableElement = $('#organisation-emp-table');
-
             tableElement.dataTable( {
-                {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
                 "pageLength": 100,
                 "sPaginationType": "bootstrap",
                 "aoColumnDefs": [
@@ -142,7 +142,6 @@
                 },
                 bAutoWidth     : false,
                 fnPreDrawCallback: function () {
-                    // Initialize the responsive datatables helper once.
                     if (!responsiveHelper) {
                         responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
                     }
@@ -154,15 +153,11 @@
                     responsiveHelper.respond();
                 }
             });
-
-            {#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
             $('#organisation-emp-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
 
 
             var tableElement = $('#organisation-product-table');
-
             tableElement.dataTable( {
-                {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
                 "pageLength": 100,
                 "sPaginationType": "bootstrap",
                 "aoColumnDefs": [
@@ -175,7 +170,6 @@
                 },
                 bAutoWidth     : false,
                 fnPreDrawCallback: function () {
-                    // Initialize the responsive datatables helper once.
                     if (!responsiveHelper) {
                         responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
                     }
@@ -187,9 +181,7 @@
                     responsiveHelper.respond();
                 }
             });
-
-            {#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
-            $('#organisation-product-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
+            $('#organisation-product-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12");
 
             $(".select2 ").select2();
         });
