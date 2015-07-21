@@ -1502,37 +1502,31 @@ def admin_signup():
 def login_admin():
     next_url = request.form.get( "next", None) or request.args.get( "next", None) or session.get("next_url", None)
 
-    if( request.method == "GET" and not next_url and request.referrer):
+    if request.method == "GET" and not next_url and request.referrer:
         urldata = urlparse.urlparse( request.referrer)
-        if( urldata.path.find("/admin/login") != 0):
+        if urldata.path.find("/admin/login") != 0:
             host = request.headers.get("HOST", "")
-            if( host and urldata.netloc.find(host) > -1):
+            if host and urldata.netloc.find(host) > -1:
                 next_url = request.referrer
 
-    if( not next_url): next_url = "/admin/dashboard"
+    if not next_url:
+      next_url = "/admin/dashboard"
 
     session["next_url"] = next_url
-    def do_redirect():
-        #del( session["next_url"])
-        return redirect( next_url)
 
     if request.method == "POST":
         login_form = LoginForm( request.form)
         form = login_form
-        if(form.validate()):
+        if form.validate():
             user = EsthenosUser.objects.get( email=form.email.data)
             login_user(user)
             confirm_login()
-            print form.role.data
-            if (form.role.data == "ADMIN" ):
+            if form.role.data == "ADMIN":
                 session['type'] = "ADMIN"
-                print "success"
-                return do_redirect()
+                return redirect(next_url)
 
         else:
-            print "here error"
             flash_errors(login_form)
-            print login_form.errors
             kwargs = {"login_form": login_form}
             return render_template( "auth/login_admin.html", **kwargs)
     else:
