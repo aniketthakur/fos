@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 
+
 {% block maincontents %}
   <div class="row">
     <div class="col-md-12">
@@ -54,14 +55,13 @@
                   <div class="row form-row">
                     <div class="col-md-12 form-group">
                       <select name="role" id="role" class="select2 form-control">
-                        <option value="ORG_CM">CM(Center Manager)</option>
-                        <option value="ORG_BM">BM(Branch Manager)</option>
-                        <option value="ORG_AM">AM(Area Manager)</option>
-                        <option value="ORG_RM">RM(Regional Manager)</option>
-                        <option value="ORG_SH">SH(State Head)</option>
-                        <option value="ORG_ZH">ZH(Zonal Head)</option>
-                        <option value="ORG_VP">VP(Vice President)</option>
-                        <option value="ORG_VP">VP(Vice President)</option>
+                        <option value="ORG_CM">CM (Center Manager)</option>
+                        <option value="ORG_BM">BM (Branch Manager)</option>
+                        <option value="ORG_AM">AM (Area Manager)</option>
+                        <option value="ORG_RM">RM (Regional Manager)</option>
+                        <option value="ORG_SH">SH (State Head)</option>
+                        <option value="ORG_ZH">ZH (Zonal Head)</option>
+                        <option value="ORG_VP">VP (Vice President)</option>
                         <option value="ORG_CXO">CXO</option>
                       </select>
                     </div>
@@ -133,8 +133,8 @@
               </div>
               <div class="form-actions">
                 <div class="pull-right">
-                  <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Save</button>
-                  <button class="btn btn-small btn-white btn-cons" type="reset" value="clear">Clear</button>
+                  <button class="btn btn-small btn-danger btn-cons" type="submit">Save</button>
+                  <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
                 </div>
               </div>
             </form>
@@ -148,7 +148,6 @@
 {% block js_scripts %}{{ super() }}
   <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
   <script type="text/javascript">
-
     $(document).ready(function(){
       populateCountries("postal_country", "postal_state");
       $("#postal_country").select2();
@@ -180,7 +179,6 @@
           .removeAttr('checked')
           .removeAttr('selected');
 
-
       $('#form-organisation-emp').validate({
         errorElement: 'span',
         errorClass: 'error',
@@ -189,13 +187,15 @@
         rules: {
           first_name_add_organisation: {
             minlength: 3,
-            maxlength:5,
-            required: true
+            maxlength: 100,
+            required: true,
+            lettersonly: true
           },
           last_name_add_organisation: {
             minlength: 3,
-            maxlength:5,
-            required: true
+            maxlength: 100,
+            required: true,
+            lettersonly: true
           },
           email_add_organisation: {
             email: true,
@@ -207,60 +207,58 @@
           },
           city_add_organisation: {
             minlength: 2,
-            maxlength:5,
-            required: true
+            maxlength: 100,
+            required: true,
+            lettersonly: true
           },
-
           postal_code_add_organisation: {
             number:true,
+            minlength: 5,
+            maxlength: 6,
             required: true
           },
-
           teleno_add_organisation: {
             number:true,
-            minlength: 8,
+            minlength: 10,
+            maxlength: 10,
             required: true
           },
           tele_code_add_organisation: {
             minlength: 2,
+            maxlength: 2,
             number:true,
             required: true
           }
         },
-
         invalidHandler: function (event, validator) {
           //display error alert on form submit
         },
-
         errorPlacement: function (error, element) { // render error placement for each input type
           var icon = $(element).parent('.input-with-icon').children('i');
           var parent = $(element).parent('.input-with-icon');
           icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
           parent.removeClass('success-control').addClass('error-control');
         },
-
         highlight: function (element) { // hightlight error inputs
           var parent = $(element).parent();
           parent.removeClass('success-control').addClass('error-control');
         },
-
         unhighlight: function (element) { // revert the change done by hightlight
 
         },
-
         success: function (label, element) {
           var icon = $(element).parent('.input-with-icon').children('i');
           var parent = $(element).parent('.input-with-icon');
           icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
           parent.removeClass('error-control').addClass('success-control');
         },
-
         submitHandler: function (form) {
           form.submit();
-          console.log("Success");
         }
       });
-
+      $('.cancel-button').click(function(){
+          location.href = '/admin/organisation/{{ org.id }}';
+      });
       $('.input-append.date').datepicker({
         autoclose: true,
         todayHighlight: true
