@@ -99,15 +99,14 @@
                             <th style="width:22%"># of Installments</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {% for product  in products %}
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
-                                <td class="v-align-middle"><span class="muted">{{ product.id}}</span></td>
+                                <td class="v-align-middle">{{ product.id}}</td>
                                 <td class="v-align-middle">{{ product.product_name }}</td>
-                                <td><span class="muted">{{ product.loan_amount }}</span></td>
-                                <td><span class="muted">{{ product.number_installments }}</span></td>
+                                <td>{{ product.loan_amount }}</td>
+                                <td>{{ product.number_installments }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

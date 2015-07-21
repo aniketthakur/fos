@@ -344,23 +344,17 @@ def admin_organisations():
 def admin_organisation_dashboard(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
+
     org = EsthenosOrg.objects.get(id=org_id)
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
-    print org_id
+
     employees = []
-    try:
-        employees = EsthenosUser.objects.filter(organisation=organisation)
-    except Exception as e:
-        print e.message
+    employees = EsthenosUser.objects.filter(organisation=organisation)
 
     products = []
-    try:
-        products = EsthenosOrgProduct.objects.filter(organisation=organisation)
-    except Exception as e:
-        print e.message
+    products = EsthenosOrgProduct.objects.filter(organisation=organisation)
+
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
