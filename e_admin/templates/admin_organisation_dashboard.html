@@ -1,59 +1,49 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-
-
     <div class="row">
         <div class="span12">
             <div class="grid simple ">
                 <div class="grid-title">
-                <h3>Admin <span class="semi-bold">Actions</span></h3>
-                <p>{{ org.name }} Management Panel</p>
-                <br>
+                  <h3>Admin <span class="semi-bold">Actions</span></h3>
                 </div>
                 <div class="grid-body ">
                     <div class="row">
                         <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add Employee</a></a>
+                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Add Employee</a>
                         </div>
                         <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_product">Add Products</a></a>
+                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_product">Add Products</a>
                         </div>
                         <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a></a>
+                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a>
                         </div>
                     </div>
                     <br/>
                     <div class="row">
                         <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a></a>
+                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt1_questions">CGT1 Questions</a>
                         </div>
                         <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a></a>
-                            <!--<a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a></a>-->
+                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a>
                         </div>
                         <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/update_org/{{ org.id }}">Update Info</a></a>
-                            <!--<a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a></a>-->
+                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a>
                         </div>
-
-                     </div>
+                    </div>
                     <br/>
-                    <!--<div class="row">-->
-
-                        <!--<div class="col-md-4">-->
-                            <!--<a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a></a>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-4">-->
-                            <!--<a class="btn btn-small btn-block btn-success" type="button" href="/admin/update_org/{{ org.id }}">Update Info</a></a>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a>
+                        </div>
+                        <div class="col-md-4">
+                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a>
+                        </div>
+                        <div class="col-md-4">
+                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/update_org/{{ org.id }}">Update Info</a>
+                        </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -68,37 +58,24 @@
                     <table class="table table-hover table-condensed" id="organisation-emp-table">
                         <thead>
                         <tr >
-                            <th style="width:1%" >
-                                <div class="checkbox check-default">
-                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                                    <label for="checkbox10"></label>
-                                </div>
-                            </th>
+                            <th style="width:1%" >#</th>
                             <th style="width:20%">EMP ID</th>
                             <th style="width:23%">NAME</th>
                             <th style="width:25%">EMAIL</th>
                             <th style="width:22%">ROLES</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {% for emp in employees %}
                             <tr>
-                                <td class="v-align-middle">
-                                    <div class="checkbox check-default">
-                                        <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                        <label for="checkbox{{ loop.index }}"></label>
-                                    </div>
-                                </td>
+                                <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle"><span class="muted">{{ emp.id}}</span></td>
                                 <td class="v-align-middle">{{ emp.first_name }}</td>
                                 <td><span class="muted">{{ emp.email }}</span></td>
                                 <td><span class="muted">{{ emp.roles }}</span></td>
                             </tr>
                         {% endfor %}
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -115,12 +92,7 @@
                     <table class="table table-hover table-condensed" id="organisation-product-table">
                         <thead>
                         <tr >
-                            <th style="width:1%" >
-                                <div class="checkbox check-default">
-                                    <input id="checkbox2" type="checkbox" value="1" class="checkall">
-                                    <label for="checkbox2"></label>
-                                </div>
-                            </th>
+                            <th style="width:1%" >#</th>
                             <th style="width:20%">Product ID</th>
                             <th style="width:23%">Product NAME</th>
                             <th style="width:25%">Loan Amount</th>
@@ -131,21 +103,14 @@
                         <tbody>
                         {% for product  in products %}
                             <tr>
-                                <td class="v-align-middle">
-                                    <div class="checkbox check-default">
-                                        <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                        <label for="checkbox{{ loop.index }}"></label>
-                                    </div>
-                                </td>
+                                <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle"><span class="muted">{{ product.id}}</span></td>
                                 <td class="v-align-middle">{{ product.product_name }}</td>
                                 <td><span class="muted">{{ product.loan_amount }}</span></td>
                                 <td><span class="muted">{{ product.number_installments }}</span></td>
                             </tr>
                         {% endfor %}
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
