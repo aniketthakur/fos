@@ -337,9 +337,8 @@ def admin_employees():
 def admin_organisations():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     organisations = EsthenosOrg.objects.all()
     kwargs = locals()
     return render_template("admin_organisation.html", **kwargs)
@@ -782,7 +781,7 @@ def admin_org_branches(org_id,area_id):
         branches.append({'id':str(br.id),'name':br.branch_name})
     print branches
     return Response(response=json.dumps(branches),
-        status=200,\
+        status=200,
         mimetype="application/json")
 
 
