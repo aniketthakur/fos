@@ -401,11 +401,11 @@ class EsthenosOrgSettings(db.Document):
 
 
 class EsthenosOrgApplicationStatusType(db.Document):
-    status =  db.StringField(max_length=100, required=True,default="")
-    status_message =  db.StringField(max_length=512, required=True,default="")
+    status = db.StringField(max_length=100, required=True,default="")
+    status_message = db.StringField(max_length=512, required=True,default="")
     status_code = db.IntField(default=0)
     sub_status_code = db.IntField(default=0)
-    sub_status_message =  db.StringField(max_length=512, required=True,default="")
+    sub_status_message = db.StringField(max_length=512, required=True,default="")
 
     def __unicode__(self):
         return self.status

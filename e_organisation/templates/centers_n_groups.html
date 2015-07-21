@@ -18,8 +18,8 @@
                                         <thead>
                                         <tr>
                                             <th style="width:1%" >#</th>
-                                            <th style="width:33%">Group Name</th>
                                             <th style="width:33%">Group ID</th>
+                                            <th style="width:33%">Group NAME</th>
                                             <th style="width:33%">Added Date</th>
                                         </tr>
                                         </thead>
@@ -30,7 +30,9 @@
                                                 <td class="v-align-middle">
                                                   <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
                                                 </td>
-                                                <td class="v-align-middle">{{ group.group_name }}</td>
+                                                <td class="v-align-middle">
+                                                  <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_name }}</ins></a>
+                                                </td>
                                                 <td><span class="muted">{{ group.created_at|datetimeformat }}</span></td>
                                             </tr>
                                          {% endfor %}
