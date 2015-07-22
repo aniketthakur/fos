@@ -81,42 +81,38 @@ def check_cgt2():
     return render_template("cgt2/cgt2_group_list.html", **kwargs)
 
 
-@organisation_views.route('/cgt2_question', methods=["GET","POST"])
+@organisation_views.route('/check_cgt2/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
-def cgt2_question():
+def cgt2_question(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org=user.organisation
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org = user.organisation
     if request.method == "GET":
-        group_id = request.args.get("group_id")
-        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation = org)
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.filter(group_id=group_id)[0]
         kwargs = locals()
-        return render_template("grt_group_questions.html", **kwargs)
+        return render_template("cgt2/cgt2_group_questions.html", **kwargs)
+
     elif request.method == "POST":
-        print request.form
         i = 0
         total_score= 0.0
-        group_id = request.args.get("group_id")
-        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation = org)
+        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-        grt_session,status = EsthenosOrgGroupCGT2Session.objects.get_or_create(group=group,organisation=org)
+        grt_session, status = EsthenosOrgGroupCGT2Session.objects.get_or_create(group=group,organisation=org)
         question_dict = dict()
 
         for v in request.form:
-            i = i+1
-            (k,v) = (v,request.form[v])
+            i = i + 1
+            (k, v) = (v,request.form[v])
             if k.startswith("rating"):
                 key =  k.split("rating")[1]
                 question_dict[key] = str(v)
-                total_score = total_score+ int(v)
-        print total_score/i
-        print questions
+                total_score = total_score + int(v)
+
         grt_session.questions = question_dict
         grt_session.score = float(total_score/i)
         grt_session.save()

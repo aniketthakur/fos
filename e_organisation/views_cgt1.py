@@ -82,27 +82,24 @@ def check_cgt1():
     return render_template("cgt1/cgt1_group_list.html", **kwargs)
 
 
-@organisation_views.route('/cgt1_question', methods=["GET","POST"])
+@organisation_views.route('/check_cgt1/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
-def cgt1_question():
+def cgt1_question(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     org=user.organisation
     if request.method == "GET":
-        group_id = request.args.get("group_id")
-        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
+        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         kwargs = locals()
-        return render_template("grt_group_questions.html", **kwargs)
+        return render_template("cgt1/cgt1_group_questions.html", **kwargs)
 
     elif request.method == "POST":
         i = 0
         total_score= 0.0
-        group_id = request.args.get("group_id")
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
@@ -110,12 +107,12 @@ def cgt1_question():
         question_dict = dict()
 
         for v in request.form:
-            i = i+1
-            (k,v) = (v,request.form[v])
+            i = i + 1
+            (k, v) = (v,request.form[v])
             if k.startswith("rating"):
                 key =  k.split("rating")[1]
                 question_dict[key] = str(v)
-                total_score = total_score+ int(v)
+                total_score = total_score + int(v)
 
         grt_session.questions = question_dict
         grt_session.score = float(total_score/i)
