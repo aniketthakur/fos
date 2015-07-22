@@ -105,15 +105,13 @@ def admin_add_org():
 def admin_update_org(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    areas = EsthenosOrgArea.objects.filter(organisation=org)
     states = EsthenosOrgState.objects.filter(organisation=org)
     regions = EsthenosOrgRegion.objects.filter(organisation=org)
-    areas = EsthenosOrgArea.objects.filter(organisation=org)
 
-    print regions
     kwargs = locals()
     return render_template("admin_add_org_details.html", **kwargs)
 
@@ -123,41 +121,34 @@ def admin_update_org(org_id):
 def admin_update_org_group(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+
     if request.method == "GET":
         states = EsthenosOrgState.objects.filter(organisation=org)
-        regions = EsthenosOrgRegion.objects.filter(organisation=org)
         areas = EsthenosOrgArea.objects.filter(organisation=org)
+        groups = EsthenosOrgGroup.objects.filter(organisation=org)
+        regions = EsthenosOrgRegion.objects.filter(organisation=org)
         branches = EsthenosOrgBranch.objects.filter(organisation=org)
-        users = EsthenosUser.objects.filter(organisation=org)
-        #groups = EsthenosOrgGroup.objects.filter(organisation=org)
-        #emp = AddOrganizationEmployeeForm.objects.filtee(organisation=org)
-        print branches
         kwargs = locals()
         return render_template("admin_add_org_group.html", **kwargs)
+
     if request.method == "POST":
-        print request.form
-        print "hello error"
-        data =  request.form.get('org_data').split(",")
-        print "hello"
+        data = request.form.get('org_data').split(",")
         loc_name = request.form.get('location_name')
-        #branch_name = request.form.get('branch_name')
-        #group_name = request.form.get('group_name')
-        user_name=request.form.get('user_name')
-        #emp_name = request.form.get('emp_name')
-        #unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
-        unique_c_user_id = org.name.upper().format(org.user_count)
+        group_name = request.form.get('group_name')
+        unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
         branch = EsthenosOrgBranch.objects.get(id=data[3])
-        user,status = EsthenosUser.objects.get_or_create(organisation=org,user_name=user_name)
+        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name)
+
         if status:
-            user.location_name=loc_name
-            user.branch=branch
-            #group.group_id = unique_group_id
-            user.save()
-            EsthenosOrg.objects.get(id = org.id).update(inc__user_count=1)
+            group.location_name=loc_name
+            group.branch=branch
+            group.group_id = unique_group_id
+            group.save()
+            EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
+
         return redirect("/admin/organisations")
 
 

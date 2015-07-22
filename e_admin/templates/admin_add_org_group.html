@@ -1,33 +1,22 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12" style="background: #ffffff;">
             <h4>Update <span class="semi-bold">Organisation</span></h4>
             <div class="row ">
-
                 <div class="col-md-4">
                     <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/group" method="post">
                         <div class="row form-row">
-
                             <div class="col-md-12">
-                                <h3>Add <span class="semi-bold" >Branch</span></h3>
-                                <br>
+                                <h3>Add <span class="semi-bold" >Group</span></h3>
                                 <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for branch in branches %}
                                         <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}--{{ branch.region.region_name }}--{{ branch.area.area_name }}--{{ branch.branch_name }}</option>
                                     {% endfor %}
                                 </select>
-
                             </div>
-
-
                         </div>
                         <div class="clearfix"><br/></div>
                         <div class="row form-row">
@@ -42,14 +31,14 @@
                             <div class="col-md-12">
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
-                                    <input name="user_name" id="user_name" type="text" value=""  class="form-control" placeholder="user name">
+                                    <input name="group_name" id="user_name" type="text" value=""  class="form-control" placeholder="group name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit"><i class="icon-ok"></i> Add Branch</button>
+                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit"><i class="icon-ok"></i> Add Group</button>
                                 </div>
                             </div>
                         </div>
@@ -84,12 +73,13 @@
                         {% endfor %}
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
+
+
+{% block js_scripts %}
     <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -100,17 +90,9 @@
             $("#regions_3").select2();
             $("#areas_2").select2();
             $("#areas_3").select2();
-
             $(".org-submit").click(function(){
                 $("#form-organisation").submit();
             });
-            //$("#multi-region").select2();
-
-
         });
-        
-
     </script>
-
-
 {% endblock %}
