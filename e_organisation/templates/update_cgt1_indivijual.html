@@ -1,46 +1,24 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
-    <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url_for('static', filename='plugins/dropzone/css/dropzone.css')}}" rel="stylesheet" type="text/css"/>
-{% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
-{% block top_js_scripts %}
-
-{% endblock %}
 {% block maincontents %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="grid simple ">
-
                         <div class="grid-title no-border">
-                            <h4>Update  <span class="semi-bold">CGT 1</span></h4>
-                            <div class="tools">	<a href="javascript:;" class="collapse"></a>
-                                <a href="#grid-config" data-toggle="modal" class="config"></a>
-                                <a href="javascript:;" class="reload"></a>
-                                <a href="javascript:;" class="remove"></a>
-                            </div>
+                            <h3>CGT1 Group <span class="semi-bold">{{ group.group_name }}</span></h3>
                         </div>
 
                         <div class="grid-body no-border">
-                            <h3>Group   <span class="semi-bold">Application</span></h3>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Search By Group Name">
                             </div>
                             <table class="table no-more-tables">
                                 <thead>
                                 <tr>
-                                    <th style="width:1%" >
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox-1" type="checkbox" value="1" class="checkall">
-                                            <label for="checkbox-1"></label>
-                                        </div>
-                                    </th>
+                                    <th style="width:1%" >#</th>
                                     <th style="width:10%">Application ID</th>
                                     <th style="width:19%">Applicant Name</th>
                                     <th style="width:10%">Group Name</th>
@@ -54,18 +32,16 @@
                                 <tbody>
                                 {% for app in applications %}
                                     <tr >
+                                        <td class="v-align-middle">{{ loop.index }}</td>
                                         <td class="v-align-middle">
-                                            <div class="checkbox check-default">
-                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                <label for="checkbox{{ loop.index }}"></label>
-                                            </div>
+                                          <a href="/application/{{ app.application_id }}/track"><ins>{{ app.application_id }}</ins></a>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/application/{{ app.application_id }}/track'><ins>{{ app.application_id }}</ins></td>
                                         <td class="v-align-middle">{{ app.applicant_name }}</td>
-                                        <td class="v-align-middle">{{ app.group.group_name }}</td>
-                                        <td class="v-align-middle">{{ app.center.center_name }}</td>
-                                        <td><span class="muted">{{ app.date_created }}</span>
+                                        <td class="v-align-middle">
+                                          <a href="/applications/group/{{ app.group.group_id }}"><ins>{{ app.group.group_name }}</ins></a>
                                         </td>
+                                        <td class="v-align-middle">{{ app.center.center_name }}</td>
+                                        <td><span class="muted">{{ app.date_created|datetimeformat }}</span></td>
                                         <td class="v-align-middle">
                                             <div class="progress">
                                                 <div data-percentage="80%"  class="progress-bar progress-bar-info animate-progress-bar"></div>
@@ -77,29 +53,15 @@
                                         <td >
                                             <button class="btn btn-small btn-small btn-primary btn-cons  cgt1-pass" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                         </td>
-
                                     </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
-    <!-- PAGE JS -->
-    <script src="{{ url_for('static', filename='js/tabs_accordian.js')}}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
-    </script>
-{% endblock %}
+
