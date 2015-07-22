@@ -26,9 +26,11 @@
                                     <tr>
                                         <td class="v-align-middle">{{ loop.index }}</td>
                                         <td class="v-align-middle">
-                                          <a href="/check_grt_applicant?group={{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
+                                          <a href="/check_cgt2_applicant?group={{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
                                         </td>
-                                        <td class="v-align-middle">{{ group.group_name }}</td>
+                                        <td class="v-align-middle">
+                                          <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_name }}</ins></a>
+                                        </td>
                                         <td><a class="btn btn-small btn-primary " href="/cgt2_question?group_id={{ group.group_id }}">Questions</a></td>
                                     </tr>
                                 {% endfor %}
@@ -54,19 +56,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for grt_session in cgt2_sessions %}
+                                {% for cgt2_session in cgt2_sessions %}
                                     <tr>
                                         <td class="v-align-middle">{{ loop.index }}</td>
                                         <td class="v-align-middle">
-                                          <a href="/check_grt_applicant?group={{ grt_session.group.group_id }}"><ins>{{ grt_session.group.group_id }}</ins></a>
+                                          <a href="/check_cgt2_applicant?group={{ cgt2_session.group.group_id }}"><ins>{{ cgt2_session.group.group_id }}</ins></a>
                                         </td>
-                                        <td class="v-align-middle">{{ grt_session.group.group_name }}</td>
-                                        <td>{{'%0.2f' %  grt_session.score|float}}/5</td>
+                                        <td class="v-align-middle">
+                                          <a href="/applications/group/{{ cgt2_session.group.group_id }}"><ins>{{ cgt2_session.group.group_name }}</ins></a>
+                                        </td>
+                                        <td>{{'%0.2f' %  cgt2_session.score|float}}/5</td>
                                         <td>
-                                            <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                            <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ cgt2_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                         </td>
                                         <td >
-                                            <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                            <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ cgt2_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
                                         </td>
                                     </tr>
                                 {% endfor %}
