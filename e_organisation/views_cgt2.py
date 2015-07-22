@@ -78,7 +78,7 @@ def check_cgt2():
     cgt2_sessions = EsthenosOrgGroupCGT2Session.objects.filter(organisation=org)
 
     kwargs = locals()
-    return render_template("centers_n_groups_cgt2.html", **kwargs)
+    return render_template("cgt2/cgt2_group_list.html", **kwargs)
 
 
 @organisation_views.route('/cgt2_question', methods=["GET","POST"])
@@ -140,4 +140,4 @@ def check_cgt2_applicant(group_id):
         applications = EsthenosOrgApplication.objects.filter(status__gte=220)
 
     kwargs = locals()
-    return render_template("update_cgt2_indivijual.html", **kwargs)
+    return render_template("cgt2/cgt2_group_detail.html", **kwargs)

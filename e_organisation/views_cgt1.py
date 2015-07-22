@@ -79,7 +79,7 @@ def check_cgt1():
     cgt1_sessions = EsthenosOrgGroupCGT1Session.objects.filter(organisation=org)
 
     kwargs = locals()
-    return render_template("centers_n_groups_cgt1.html", **kwargs)
+    return render_template("cgt1/cgt1_group_list.html", **kwargs)
 
 
 @organisation_views.route('/cgt1_question', methods=["GET","POST"])
@@ -140,4 +140,4 @@ def check_cgt1_applicant(group_id):
         applications = EsthenosOrgApplication.objects.filter(status__gte=190)
 
     kwargs = locals()
-    return render_template("update_cgt1_indivijual.html", **kwargs)
+    return render_template("cgt1/cgt1_group_detail.html", **kwargs)
