@@ -124,39 +124,20 @@ def cgt2_question():
         return redirect("/check_cgt2")
 
 
-@organisation_views.route('/check_cgt2_applicant', methods=["GET"])
+@organisation_views.route('/check_cgt2/group/<group_id>', methods=["GET"])
 @login_required
-def check_cgt2_applicant():
+def check_cgt2_applicant(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    #center_id = request.args.get("center")
-    group_id = request.args.get("group")
-    #    print  center_id," ",group_id
-    #    center = None
-    #    if center_id is not None and center_id != '':
-    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-    #        print center.center_name
-    #    else:
-    #        group_id = ''
-    user = EsthenosUser.objects.get(id=c_user.id)
-    group = None
-    print group_id
-    if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
-        print group.group_name
-    else:
-        center_id = ''
-    print  "filter "+ group.group_name
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
     applications = None
-    #    if center != None:
-    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=220)
-    #    el
-    if group != None:
-        print  "filter "+ group.group_name
+    if group is not None:
         applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=220)
     else:
         applications = EsthenosOrgApplication.objects.filter(status__gte=220)
+
     kwargs = locals()
     return render_template("update_cgt2_indivijual.html", **kwargs)
