@@ -97,7 +97,7 @@ def cgt1_question():
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         kwargs = locals()
-        return render_template("centers_n_groups_grt_questions.html", **kwargs)
+        return render_template("grt_group_questions.html", **kwargs)
 
     elif request.method == "POST":
         i = 0

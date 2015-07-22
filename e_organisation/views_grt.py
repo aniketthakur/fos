@@ -71,16 +71,15 @@ def group_grt():
 def check_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     grt_sessions = EsthenosOrgGroupGRTSession.objects.filter(organisation=org)
 
     kwargs = locals()
-    return render_template("centers_n_groups_grt.html", **kwargs)
+    return render_template("grt/grt_group_list.html", **kwargs)
 
 
 @organisation_views.route('/grt_question', methods=["GET","POST"])
@@ -88,38 +87,35 @@ def check_grt():
 def grt_question():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org=user.organisation
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org = user.organisation
     if request.method == "GET":
         group_id = request.args.get("group_id")
         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         kwargs = locals()
-        return render_template("centers_n_groups_grt_questions.html", **kwargs)
+        return render_template("grt/grt_group_questions.html", **kwargs)
+
     elif request.method == "POST":
-        print request.form
         i = 0
         total_score= 0.0
         group_id = request.args.get("group_id")
         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-
-        grt_session,status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
+        grt_session, status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
         question_dict = dict()
 
         for v in request.form:
-            i = i+1
-            (k,v) = (v,request.form[v])
+            i = i + 1
+            (k, v) = (v,request.form[v])
             if k.startswith("rating"):
-                key =  k.split("rating")[1]
+                key = k.split("rating")[1]
                 question_dict[key] = str(v)
-                total_score = total_score+ int(v)
-        print total_score/i
-        print questions
+                total_score = total_score + int(v)
+
         grt_session.questions = question_dict
         grt_session.score = float(total_score/i)
         grt_session.save()
@@ -127,39 +123,20 @@ def grt_question():
         return redirect("/check_grt")
 
 
-@organisation_views.route('/check_grt_applicant', methods=["GET"])
+@organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
 @login_required
-def check_grt_applicant():
+def check_grt_applicant(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    #center_id = request.args.get("center")
-    group_id = request.args.get("group")
-    #    print  center_id," ",group_id
-    #    center = None
-    #    if center_id is not None and center_id != '':
-    #        center = EsthenosOrgCenter.objects.get(center_id=center_id)
-    #        print center.center_name
-    #    else:
-    #        group_id = ''
-    user = EsthenosUser.objects.get(id=c_user.id)
-    group = None
-    print group_id
-    if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
-        print group.group_name
-    else:
-        center_id = ''
-    print  "filter "+ group.group_name
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
     applications = None
-    #    if center != None:
-    #        applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=250)
-    #    el
-    if group != None:
-        print  "filter "+ group.group_name
+    if group is not None:
         applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
     else:
         applications = EsthenosOrgApplication.objects.filter(status__gte=250)
+
     kwargs = locals()
-    return render_template("update_grt_indivijual.html", **kwargs)
+    return render_template("grt/grt_group_detail.html", **kwargs)
