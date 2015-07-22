@@ -715,18 +715,18 @@ def admin_reports_download():
 @admin_views.route('/admin/applications', methods=["GET"])
 @login_required
 def admin_application():
-    c_user = current_user
     organisations = EsthenosOrg.objects.all()
-    user = EsthenosUser.objects.get(id=c_user.id)
-    permissions=user.permissions
-    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
-        if not permissions["data_entry"]=="yes":
-            abort(403)
-    if session['role'] != "ADMIN" and session['role'] !="EMP_EXECUTIVE":
-        abort(403)
-    username = current_user.name
+    user = EsthenosUser.objects.get(id=current_user.id)
 
-    tagged_applications = EsthenosOrgApplication.objects.all() #filter(upload_type="MANUAL_UPLOAD")#.filter(Q(status=1) |Q(status=0))
+    permissions = user.permissions
+    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
+        if not permissions["data_entry"] == "yes":
+            abort(403)
+
+    if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
+        abort(403)
+
+    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 
