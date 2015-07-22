@@ -70,13 +70,13 @@ def group_cgt2():
 def check_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     cgt2_sessions = EsthenosOrgGroupCGT2Session.objects.filter(organisation=org)
+
     kwargs = locals()
     return render_template("centers_n_groups_cgt2.html", **kwargs)
 
