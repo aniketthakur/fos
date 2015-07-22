@@ -6,48 +6,30 @@
         <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-title no-border">
-                    <h4>CGT2  <span class="semi-bold">Applications</span></h4>
-                    <div class="tools">	<a href="javascript:;" class="collapse"></a>
-                        <a href="#grid-config" data-toggle="modal" class="config"></a>
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="remove"></a>
-                    </div>
+                    <h1>CGT2 <span class="semi-bold">Applications</span></h1>
                 </div>
                 <div class="grid-body no-border">
-                    <h3>Search   <span class="semi-bold">Applications</span></h3>
                     <div class="row">
                         <div class="col-md-12">
-                            <input name="groupName" id="i_groupNameNew" type="text"  class="form-control" placeholder="Group Name">
+                            <input name="groupName" id="i_groupNameNew" type="text"  class="form-control" placeholder="Search By Group Name">
                             <table class="table no-more-tables ">
                                 <thead>
                                 <tr>
-                                    <th style="width:1%" >
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox-1" type="checkbox" value="1" class="checkall">
-                                            <label for="checkbox-1"></label>
-                                        </div>
-                                    </th>
+                                    <th style="width:1%" >#</th>
                                     <th style="width:25%">Group ID</th>
                                     <th style="width:25%">Group Name</th>
                                     <th style="width:25%">Questions</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for group in groups %}
                                     <tr>
+                                        <td class="v-align-middle">{{ loop.index }}</td>
                                         <td class="v-align-middle">
-                                            <div class="checkbox check-default">
-                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                <label for="checkbox{{ loop.index }}"></label>
-                                            </div>
+                                          <a href="/check_grt_applicant?group={{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ group.group_id }}'><ins>{{ group.group_id }}</ins></td>
-                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span>
-                                        </td>
-                                        <td><a class="btn btn-small btn-primary " href="/cgt2_question?group_id={{ group.group_id }}" >Questions</a>
-                                        </td>
-
+                                        <td class="v-align-middle">{{ group.group_name }}</td>
+                                        <td><a class="btn btn-small btn-primary " href="/cgt2_question?group_id={{ group.group_id }}">Questions</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -56,41 +38,30 @@
                     </div>
                 </div>
                 <div class="grid-body no-border">
-                    <h3>Search   <span class="semi-bold">Applications</span></h3>
+                    <h1>CGT2 <span class="semi-bold">Applications Results</span></h1>
                     <div class="row">
                         <div class="col-md-12">
-                            <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Group Name">
+                            <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Search By Group Name">
                             <table class="table no-more-tables ">
                                 <thead>
                                 <tr>
-                                    <th style="width:1%" >
-                                        <div class="checkbox check-default">
-                                            <input id="checkbox-1" type="checkbox" value="1" class="checkall">
-                                            <label for="checkbox-1"></label>
-                                        </div>
-                                    </th>
+                                    <th style="width:1%" >#</th>
                                     <th style="width:25%">Group ID</th>
                                     <th style="width:25%">Group Name</th>
-                                    <th style="width:25%">GRT Rating</th>
+                                    <th style="width:25%">CGT2 Rating</th>
                                     <th style="width:10%" class="text-center">Fail</th>
-                                    <th style="width:10%" class="text-center" >Pass</th>
+                                    <th style="width:10%" class="text-center">Pass</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for grt_session in cgt2_sessions %}
                                     <tr>
+                                        <td class="v-align-middle">{{ loop.index }}</td>
                                         <td class="v-align-middle">
-                                            <div class="checkbox check-default">
-                                                <input id="checkbox{{ loop.index }}" type="checkbox" value="1">
-                                                <label for="checkbox{{ loop.index }}"></label>
-                                            </div>
+                                          <a href="/check_grt_applicant?group={{ grt_session.group.group_id }}"><ins>{{ grt_session.group.group_id }}</ins></a>
                                         </td>
-                                        <td class="v-align-middle clickable-row" data-href='/check_grt_applicant?group={{ grt_session.group.group_id }}'><ins>{{ grt_session.group.group_id }}</ins></td>
-                                        <td class="v-align-middle"><span class="muted">{{ grt_session.group.group_name }}</span>
-                                        </td>
-                                        <td><span class="muted">{{'%0.2f' %  grt_session.score|float}}/5</span>
-                                        </td>
-
+                                        <td class="v-align-middle">{{ grt_session.group.group_name }}</td>
+                                        <td>{{'%0.2f' %  grt_session.score|float}}/5</td>
                                         <td>
                                             <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
                                         </td>
@@ -106,51 +77,15 @@
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
+
+
+{% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-            $(".center-fail").click(function(e){
-                e.preventDefault();
-                console.log("center fail "+$(this).attr("data-id"));
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":"false"}'
-                $.ajax({
-                    url: '/center/status/cgt2',
-                    data: {center_id:'"+$(this).attr("data-id")+"','status':false},
-                    data: JSON.stringify(data),
-                    type: 'PUT',
-                    contentType: "application/json",
-                    success: function(response) {
-                        //...
-                        console.log(response);
-                        Messenger().post("Application status changed for center id"+$(this).attr("data-id"));
-                    }
-                });
-            });
-            $(".center-pass").click(function(e){
-                e.preventDefault();
-                console.log("center pass "+$(this).attr("data-id"));
-                data = '{"center_id":"'+$(this).attr("data-id")+'","status":"true"}'
-                $.ajax({
-                    url: '/center/status/cgt2',
-                    data: JSON.stringify(data),
-                    type: 'PUT',
-                    contentType: "application/json",
-                    success: function(response) {
-                        //...
-                        console.log(response);
-                        Messenger().post("Application status changed for center id"+$(this).attr("data-id"));
-                    }
-                });
-            });
             $(".group-fail").click(function(e){
                 e.preventDefault();
-                console.log("group fail "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
                     url: '/group/status/cgt2',
@@ -158,16 +93,12 @@
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
-                        //...
-                        console.log(response);
                         Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
-
             });
             $(".group-pass").click(function(e){
                 e.preventDefault();
-                console.log("group pass "+$(this).attr("data-id"));
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
                     url: '/group/status/cgt2',
@@ -175,8 +106,6 @@
                     type: 'PUT',
                     contentType: "application/json",
                     success: function(response) {
-                        //...
-                        console.log(response);
                         Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
                     }
                 });
