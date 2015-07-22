@@ -82,16 +82,16 @@ def check_grt():
     return render_template("grt/grt_group_list.html", **kwargs)
 
 
-@organisation_views.route('/grt_question', methods=["GET","POST"])
+@organisation_views.route('/check_grt/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
-def grt_question():
+def grt_question(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
+
     if request.method == "GET":
-        group_id = request.args.get("group_id")
         questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
@@ -100,9 +100,8 @@ def grt_question():
 
     elif request.method == "POST":
         i = 0
-        total_score= 0.0
-        group_id = request.args.get("group_id")
-        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
+        total_score = 0.0
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
         grt_session, status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
