@@ -12,7 +12,7 @@ def applications():
   applications = EsthenosOrgApplication.objects.filter(status__gte=0)
 
   kwargs = locals()
-  return render_template("applications_list.html", **kwargs)
+  return render_template("apps/applications_list.html", **kwargs)
 
 
 @organisation_views.route('/applications/group/<group_id>', methods=["GET"])
@@ -26,7 +26,7 @@ def application_list(group_id):
   applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
-  return render_template("applications_list.html", **kwargs)
+  return render_template("apps/applications_list.html", **kwargs)
 
 
 @organisation_views.route('/application_status', methods=["GET"])
@@ -41,7 +41,7 @@ def application_status():
   centers = EsthenosOrgCenter.objects.filter(organisation=org)
 
   kwargs = locals()
-  return render_template("centers_n_groups.html", **kwargs)
+  return render_template("apps/applications_centers_n_groups.html", **kwargs)
 
 
 @organisation_views.route('/application/<app_id>/cashflow', methods=["GET"])
@@ -58,7 +58,7 @@ def admin_application_cashflow(app_id):
   kwargs = locals()
   app_urls = list()
   application = applications[0]
-  return render_template("org_cf.html", **kwargs)
+  return render_template("apps/application_cashflow.html", **kwargs)
 
 
 @organisation_views.route('/application/<app_id>/cashflow', methods=["POST"])
@@ -102,7 +102,7 @@ def applications_track(app_id):
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=app_id)
   kwargs = locals()
-  return render_template("application_tracking.html", **kwargs)
+  return render_template("apps/application_tracking.html", **kwargs)
 
 
 @organisation_views.route('/application/<app_id>/details', methods=["GET"])
@@ -140,4 +140,4 @@ def client_application_id(app_id):
   products = EsthenosOrgProduct.objects.filter(organisation=application.owner.organisation)
 
   kwargs = locals()
-  return render_template("client_application_manual_DE.html", **kwargs)
+  return render_template("apps/application_details.html", **kwargs)
