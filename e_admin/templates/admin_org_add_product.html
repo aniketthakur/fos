@@ -9,7 +9,7 @@
                     <h4>Organisation <span class="semi-bold"> Products</span></h4>
                 </div>
                 <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate" action="/admin/organisation/{{ org.id }}/add_product" method="POST">
+                        <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/add_product" method="POST">
                             <div class="row">
                                 <div class="form-control-group col-md-3">
                                     <label>Product Name</label>
@@ -159,6 +159,11 @@
                             maxlength: 30,
                             required: true
                          },
+                         loan_type: {
+                            minlength: 3,
+                            maxlength: 30,
+                            required: true
+                         },
                          loan_amount:{
                             number:true,
                             minlength: 1,
@@ -226,6 +231,12 @@
                              required:true
                          },
                          insurance_free:{
+                             number:true,
+                             minlength: 1,
+                             maxlength: 10,
+                             required:true
+                         },
+                         insurance_service_tax:{
                              number:true,
                              minlength: 1,
                              maxlength: 10,
