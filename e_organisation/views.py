@@ -427,32 +427,31 @@ def uploads_indivijual_gkyc():
 def create_centers_n_groups():
 #    if not session['role'].startswith("ORG_"):
 #        abort(403)
-   username = current_user.name
-   c_user = current_user
-   user = EsthenosUser.objects.get(id=c_user.id)
-   organisation = user.organisation
+   user = EsthenosUser.objects.get(id=current_user.id)
+   group_name = request.form.get('group_name')
    center_name = request.form.get('center_name')
-   #group_name = request.form.get('group_name')
 
-   branch_name = request.form.get('branch_name')
-   if center_name == None:
-       center_name = branch_name
-   if center_name !=None and len(center_name)>0 and branch_name !=None and len(branch_name) != None :
+   if center_name is None:
+       center_name = group_name
+
+   if (center_name is not None) and len(center_name) > 0 and (group_name is not None) and len(group_name) != None:
        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-       center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+
+       center, status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
        if status:
            center.center_id = unique_center_id
            center.save()
            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
 
-       unique_branch_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.branch_count)
-       branch,status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,branch_name=branch_name)
-       if status:
-           branch.branch_id = unique_branch_id
-           branch.save()
-           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__branch_count=1)
+       unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
 
+       group, status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
+       if status:
+           group.group_id = unique_group_id
+           group.save()
+           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
        return Response('{"success":True}', content_type="application/json", mimetype='application/json')
+
    return Response('{"success":False}', content_type="application/json", mimetype='application/json')
 
 
@@ -461,9 +460,7 @@ def create_centers_n_groups():
 def get_centers_n_groups():
 #    if not session['role'].startswith("ORG_"):
 #        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     organisation = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
     centers_list = []
@@ -488,7 +485,6 @@ def get_centers_n_groups():
         })
 
     data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(all_branch_list)+'}'
-    print data
     return Response(data, content_type="application/json", mimetype='application/json')
 
 
