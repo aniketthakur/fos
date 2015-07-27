@@ -598,14 +598,12 @@ def cgt2_questions(org_id):
         else:
             question=AddOrgCGT2TemplateQuestionsForm(request.form)
             if(question.validate()):
-                print "Product Details Validated,Saving the form"
                 question.save()
                 org = EsthenosOrg.objects.get(id=org_id)
                 c_user = current_user
                 user = EsthenosUser.objects.get(id=c_user.id)
                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)
             else:
-                print "Validation Error"
                 print flash_errors(question)
                 kwargs = locals()
                 return render_template("admin_organisation_cgt2_questions.html", **kwargs)

@@ -52,7 +52,7 @@ def downloadFile(url, outfile) :
                 done = int(50 * int(dl) / int(total_length))
                 sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
                 print ''
-    return (time.clock() - start)
+    return time.clock() - start
 
 
 def zip_custom(src, dst):
@@ -86,17 +86,7 @@ def org_applications_stats_update():
 @celery.task
 def tagged_applications():
     with mainapp.app_context():
-        print "in prefill applications"
         uploaded_applications = EsthenosOrgApplication.objects.filter(status=110)
-        """
-    {'query_url': u'http://api.pixuate.com/objects/55041d942a76201b0bf035ff/b48eead256efd179e211c141e82ede0a_p.jpg'}
-    {"scan_result": [{"DOB": "31/03/1989", "Father's/Organisation Name": "ASHOK SHARMA  ", "Name": "HARSH SHARMA  ", "PAN": "CTZPS1166F", "raw": " \n\n\nINCOME TAX DEPARTMENT\n\n\nHARSH SHARMA\n\n\nASHOK SHARMA\n\n\n31/03/1989\n\n\nEer11'1anenfAccount Number\n\n\nCTZPS1166F\n\n\n"}], "validation_result": "PENDING"}
-    127.0.0.1 - - [28/Mar/2015 01:24:00] "GET /admin/read_pan/5515a5682a762065ac21c974 HTTP/1.1" 200 -
-    {"scan_result": [{"VID": "XKP/0560292", "DOB": "09/11/1987", "Gender": "Female", "raw": " is-1:\n33 3.1\n'.. .'.S\"u-1\nWfiirasan\n\nIDENTITY\n. qn4 Hi...\nCOMMISSION\nELECTION\n\n./J\nU31\nW3-T1171\n1'eFcTTTFf\nOF\nINDIA\nCARD\namfm\nXKP/0560292\nHE\nIEEIET\n71TH\n09/11/1987\nDate of Birth\nElectors Name\nTrFHa'v1aTiITG\nWIHI/WEI '\nEm .\nWW\nF ather's/Husband's\n/ Female\nSex\n1511\n3111\nIE-3131\nDINESH BATARANA\nDIPIKA BATARANA\nWWFIT\nEWIYFIT\n", "Elector's Name": " DIPIKA BATARANA", "Father's/Mother's/Husband's Name": " DINESH BATARANA"}], "validation_result": "PENDING"}
-    127.0.0.1 - - [28/Mar/2015 01:24:25] "GET /admin/read_vid/5515a56f2a762065ac21c975 HTTP/1.1" 200 -
-    {"scan_result": {"vtc": "Lakkireddipalle", "co": "S/O Fyroz Basha", "name": "Pattan Saddam Hussain", "gender": "M", "state": "Andhra Pradesh", "raw": "\n\nv. V1V   1 .V .'r \n  :   1 ,  ,/J4... 4.u.n..L\nFun\ni 26515 26rgv'75a 7.'Ixi'fo 35\nPattan Saddam Hussain\n", "year_of_birth": "1992", "house": "4/166", "aadhaar_id": "565061987998", "dist": "Cuddapah"}, "validation_result": "PENDING"}
-        """
-        print "processing "+ str(len(uploaded_applications))+" applications"
         for application in uploaded_applications:
             cur_index = 1
             for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
@@ -110,15 +100,19 @@ def tagged_applications():
                     if "Name" in data.keys():
                         kyc.name =  data["Name"].strip()
                         application.applicant_name = kyc.name
+
                     if "Father's/Organisation Name" in data.keys():
                         kyc.father_or_husband_name =  data["Father's/Organisation Name"].strip()
                         application.member_f_or_h_name = kyc.father_or_husband_name
+
                     if "PAN" in data.keys():
                         kyc.kyc_number = data["PAN"].strip()
+
                     if "DOB" in data.keys():
                         kyc.dob = data["DOB"].strip()
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
+
                     if cur_index == 1:
                         application.kyc_1 = kyc
                     else:
@@ -127,23 +121,29 @@ def tagged_applications():
                 if str(kyc_id_key) == "v":
                     rawdata = get_vid_details_url(url)
                     data = json.loads(rawdata)["scan_result"][0]
-                    #{"scan_result": [{"VID": "XKP/0560292", "DOB": "09/11/1987", "Gender": "Female", "raw": " is-1:\n33 3.1\n'.. .'.S\"u-1\nWfiirasan\n\nIDENTITY\n. qn4 Hi...\nCOMMISSION\nELECTION\n\n./J\nU31\nW3-T1171\n1'eFcTTTFf\nOF\nINDIA\nCARD\namfm\nXKP/0560292\nHE\nIEEIET\n71TH\n09/11/1987\nDate of Birth\nElectors Name\nTrFHa'v1aTiITG\nWIHI/WEI '\nEm .\nWW\nF ather's/Husband's\n/ Female\nSex\n1511\n3111\nIE-3131\nDINESH BATARANA\nDIPIKA BATARANA\nWWFIT\nEWIYFIT\n", "Elector's Name": " DIPIKA BATARANA", "Father's/Mother's/Husband's Name": " DINESH BATARANA"}], "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
+
                     if "Elector's Name" in data.keys():
                         kyc.name =  data["Elector's Name"].strip()
+
                     if "Father's/Mother's/Husband's Name" in data.keys():
                         kyc.father_or_husband_name =  data["Father's/Mother's/Husband's Name"].strip()
+
                     if "VID" in data.keys():
                         kyc.kyc_number = data["VID"].strip()
+
                     if "Gender" in data.keys():
                         kyc.gender = data["Gender"].strip()
+
                     if "DOB" in data.keys():
                         kyc.dob = data["DOB"].strip()
 
                     if "Address" in data.keys():
                         kyc.address1 = data["Address"].strip()
+
                     if "Pincode" in data.keys():
                         kyc.pincode = data["Pincode"].strip()
+
                     kyc.raw = data["raw"]
                     kyc.validation = json.loads(rawdata)["validation_result"]
                     if cur_index == 1:
@@ -154,7 +154,6 @@ def tagged_applications():
                 if str(kyc_id_key) == "a":
                     rawdata = get_aadhaar_details_url(url)
                     data = json.loads(rawdata)["scan_result"]
-                    #{"scan_result": {"vtc": "Lakkireddipalle", "co": "S/O Fyroz Basha", "name": "Pattan Saddam Hussain", "gender": "M", "state": "Andhra Pradesh", "raw": "\n\nv. V1V   1 .V .'r \n  :   1 ,  ,/J4... 4.u.n..L\nFun\ni 26515 26rgv'75a 7.'Ixi'fo 35\nPattan Saddam Hussain\n", "year_of_birth": "1992", "house": "4/166", "aadhaar_id": "565061987998", "dist": "Cuddapah"}, "validation_result": "PENDING"}
                     kyc = EsthenosOrgApplicationKYC()
                     kyc.name =  data["name"].strip()
                     kyc.father_or_husband_name =  data["co"].strip()
@@ -310,7 +309,6 @@ def cb_checkready_applications():
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
-    print "queue processor"
     today = datetime.datetime.now()
     Year,WeekNum,DOW = today.isocalendar()
     # connect to another MongoDB server altogether
@@ -336,11 +334,10 @@ def cbcheck_statuscheck_applications():
                     application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
                     application.current_status_updated  = datetime.datetime.now()
                     application.status = 20
-
                     break
+
         if not is_failed and resp.num_of_other_mfis > 1:
             is_failed = True
-            print "number of active loans 2+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of active loans 2+"
             status.save()
@@ -351,7 +348,6 @@ def cbcheck_statuscheck_applications():
 
         if not is_failed and resp.sum_overdue_amount > 0:
             is_failed = True
-            print "number of defaults 1+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of defaults 1+"
             status.save()
@@ -398,8 +394,6 @@ def cashflow_ready_applications():
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
-        print "generate_post_grt_applications"
-
         org = EsthenosOrg.objects.get(id=org_id)
         group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
         apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
@@ -409,44 +403,43 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
         tf = dir+ "dpn.pdf"
-        print tf
         #generate dpn here
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_dpn/"+group_id,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_dpn/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
         tmp_files.append(tf)
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_sl/"+group_id,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_sl/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_pf/"+group_id,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_pf/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_if/"+group_id,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_if/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"hccs_receipt.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_hccs_reciept/"+group_id,tf)
+        downloadFile("http://demo.esthenos.com/internal/pdf_hccs_reciept/"+group_id,tf)
         tmp_files.append(tf)
 
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
-            print "http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
-            downloadFile("http://hindusthan.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
+            print "http://demo.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
+            downloadFile("http://demo.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
             tmp_files.append(tf)
 
             tf = dir+ app.application_id+"_application.pdf"
-            downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/"+app.application_id,tf)
+            downloadFile("http://demo.esthenos.com/internal/pdf_application/"+app.application_id,tf)
             tmp_files.append(tf)
 
 
