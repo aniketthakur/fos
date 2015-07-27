@@ -458,11 +458,12 @@ def create_centers_n_groups():
 @organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
 @login_or_key_required
 def get_centers_n_groups():
-#    if not session['role'].startswith("ORG_"):
-#        abort(403)
     user = EsthenosUser.objects.get(id=current_user.id)
     organisation = user.organisation
+
+    groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
     centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
+
     centers_list = []
     all_group_list = []
     for cen in centers:
@@ -477,7 +478,6 @@ def get_centers_n_groups():
             {'id':str(cen.center_id), 'center_name':str(cen.center_name),'groups':groups_list}
         )
 
-    groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
     for grp in groups:
         all_group_list.append(
           {'id':str(grp.group_id), 'groups':str(grp.group_name)}

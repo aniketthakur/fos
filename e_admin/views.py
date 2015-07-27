@@ -59,19 +59,6 @@ def admin_settings():
     return render_template("admin_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/products', methods=["GET"])
-@login_required
-def admin_org_add_product():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    settings = EsthenosSettings.objects.all()[0]
-    kwargs = locals()
-    return render_template("admin_org_add_product.html", **kwargs)
-
-
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
 @login_required
 def admin_add_org():
@@ -345,6 +332,33 @@ def admin_organisation_dashboard(org_id):
 
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
+
+
+#TODO: complete me; html + data + view wiring.
+@admin_views.route('/admin/organisation/<org_id>/groups', methods=["GET"])
+@login_required
+def admin_org_get_groups(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    settings = EsthenosSettings.objects.all()[0]
+    kwargs = locals()
+    return render_template("admin_org_add_product.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/products', methods=["GET"])
+@login_required
+def admin_org_get_products(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    settings = EsthenosSettings.objects.all()[0]
+    kwargs = locals()
+    return render_template("admin_org_add_product.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
