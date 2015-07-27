@@ -464,27 +464,26 @@ def get_centers_n_groups():
     organisation = user.organisation
     centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
     centers_list = []
-    all_branch_list = []
+    all_group_list = []
     for cen in centers:
-        branchs = EsthenosOrgGroup.objects.filter(organisation=organisation,center = cen)
-        branchs_list = []
-        for grp in branchs:
-            branchs_list.append({'id':str(grp.group_id),
-                                'group_name':str(grp.group_name)
-            })
+        groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = cen)
+        groups_list = []
+        for grp in groups:
+            groups_list.append(
+              {'id':str(grp.group_id), 'group_name':str(grp.group_name)}
+            )
 
         centers_list.append(
-            {'id':str(cen.center_id),
-                    'center_name':str(cen.center_name),'groups':branchs_list}
+            {'id':str(cen.center_id), 'center_name':str(cen.center_name),'groups':groups_list}
         )
 
     groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
     for grp in groups:
-        all_branch_list.append({'id':str(grp.group_id),
-                               'branch_name':str(grp.branch_name)
-        })
+        all_group_list.append(
+          {'id':str(grp.group_id), 'groups':str(grp.group_name)}
+        )
 
-    data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(all_branch_list)+'}'
+    data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(all_group_list)+'}'
     return Response(data, content_type="application/json", mimetype='application/json')
 
 
