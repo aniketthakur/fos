@@ -466,22 +466,17 @@ def get_centers_n_groups():
 
     centers_list = []
     all_group_list = []
-    for cen in centers:
-        groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = cen)
+    for center in centers:
+        groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = center)
         groups_list = []
-        for grp in groups:
-            groups_list.append(
-              {'id':str(grp.group_id), 'group_name':str(grp.group_name)}
-            )
+        for group in groups:
+            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name)})
 
-        centers_list.append(
-            {'id':str(cen.center_id), 'center_name':str(cen.center_name),'groups':groups_list}
-        )
-
-    for grp in groups:
-        all_group_list.append(
-          {'id':str(grp.group_id), 'groups':str(grp.group_name)}
-        )
+    for group in groups:
+        applications_all = EsthenosOrgApplication.objects.filter(group=group)
+        applications_cgt_ready = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
+        if len(applications_all) == 0 or len(applications_all) > len(applications_cgt_ready):
+            all_group_list.append({'id':str(group.group_id), 'group_name':str(group.group_name)})
 
     data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(all_group_list)+'}'
     return Response(data, content_type="application/json", mimetype='application/json')
