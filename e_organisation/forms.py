@@ -477,7 +477,7 @@ class AddApplicationMobile(Form):
         app.village_financial_institution = self.village_information_financial_institutions.data
         app.village_information_sanitation = self.village_information_sanitation.data
 
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
+        #app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
         app.current_status_updated = datetime.datetime.now()
         app.upload_type = "AUTOMATIC_UPLOAD"
         app.status = 0
@@ -700,7 +700,7 @@ class AddApplicationMobile(Form):
             kyc_obj.image_id_b = kyc_json["ration"]["ration_b"]
             app.other_documents.append(kyc_obj)
 
-        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
+        #app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
         app.current_status_updated = datetime.datetime.now()
         app.status = 120
         app.save()
