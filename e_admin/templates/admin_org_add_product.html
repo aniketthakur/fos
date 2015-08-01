@@ -6,10 +6,10 @@
             <div class="col-md-12">
                 <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Organisation <span class="semi-bold"> Products</span></h4>
+                    <h4>Add<span class="semi-bold">New Product</span></h4>
                 </div>
                 <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/add_product" method="POST">
+                        <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/products" method="POST">
                             <div class="row">
                                 <div class="form-control-group col-md-3">
                                     <label>Product Name</label>
@@ -129,6 +129,40 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grid simple ">
+                    <div class="grid-title">
+                        <h4><span class="semi-bold">Products</span></h4>
+                    </div>
+                    <div class="grid-body ">
+                        <table class="table table-hover table-condensed" id="organisation-product-table">
+                            <thead>
+                            <tr >
+                                <th style="width:1%" >#</th>
+                                <th style="width:20%">Product ID</th>
+                                <th style="width:23%">Product NAME</th>
+                                <th style="width:25%">Loan Amount</th>
+                                <th style="width:22%"># of Installments</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product  in products %}
+                                <tr>
+                                    <td class="v-align-middle">{{ loop.index }}</td>
+                                    <td class="v-align-middle">{{ product.id}}</td>
+                                    <td class="v-align-middle">{{ product.product_name }}</td>
+                                    <td>{{ product.loan_amount }}</td>
+                                    <td>{{ product.number_installments }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -282,7 +316,7 @@
                     }
                 });
                 $(".cancel-button").click(function(){
-                    location.href = "/admin/organisation/{{ org.id }}";
+                    location.href = "/admin/organisation/{{ org.id }}/dashboard";
                 });
         </script>
     {% endblock %}

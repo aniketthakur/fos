@@ -299,10 +299,8 @@ def admin_organisation_dashboard(org_id):
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    organisation = EsthenosOrg.objects.get(id=org_id)
-
-    employees = EsthenosUser.objects.filter(organisation=organisation)
-    products = EsthenosOrgProduct.objects.filter(organisation=organisation)
+    products = EsthenosOrgProduct.objects.filter(organisation=org)
+    employees = EsthenosUser.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
@@ -344,17 +342,28 @@ def admin_organisation_groups(org_id):
         return redirect("/admin/organisation/%s" % org_id)
 
 
-@admin_views.route('/admin/organisation/<org_id>/products', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
 @login_required
-def admin_org_get_products(org_id):
-    if session['role'] != "ADMIN":
+def admin_organisation_product(org_id):
+    if session['role'] != 'ADMIN':
         abort(403)
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    settings = EsthenosSettings.objects.all()[0]
-    kwargs = locals()
-    return render_template("admin_org_add_product.html", **kwargs)
+
+    if request.method == "GET":
+        products = EsthenosOrgProduct.objects.filter(organisation=org)
+
+        kwargs = locals()
+        return render_template("admin_org_add_product.html", **kwargs)
+
+    if request.method == "POST":
+        product = AddOrganisationProductForm(request.form)
+        if product.validate():
+            product.save(org_id)
+
+        kwargs = locals()
+        return redirect("/admin/organisation/%s/products" % org_id)
 
 
 @admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
@@ -498,38 +507,6 @@ def admin_organisation_add_emp(org_id):
         branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET', 'POST'])
-@login_required
-def admin_organisation_product(org_id):
-    if session['role'] == 'ADMIN':
-        org = EsthenosOrg.objects.get(id=org_id)
-        user = current_user
-        kwargs = locals()
-
-        if request.method == "GET":
-            return render_template("admin_org_add_product.html", **kwargs)
-
-        else:
-            product = AddOrganisationProductForm(request.form)
-            org_product = product
-#            org_product.save(org_id)
-
-            if org_product.validate():
-                org_product.save(org_id)
-                org = EsthenosOrg.objects.get(id=org_id)
-                user = EsthenosUser.objects.get(id=current_user.id)
-                organisation = EsthenosOrg.objects.get(id=org_id)
-                kwargs = locals()
-                return redirect("/admin/organisation/"+org_id)
-
-            else:
-                kwargs = locals()
-                return redirect("/admin/organisation/"+org_id+"/add_product")
-
-    else:
-        return abort(403)
 
 
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
