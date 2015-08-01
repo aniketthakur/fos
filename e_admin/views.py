@@ -184,42 +184,6 @@ def admin_update_org(org_id):
     return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>/group', methods=["GET","POST"] )
-@login_required
-def admin_update_org_group(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    if request.method == "GET":
-        states = EsthenosOrgState.objects.filter(organisation=org)
-        areas = EsthenosOrgArea.objects.filter(organisation=org)
-        groups = EsthenosOrgGroup.objects.filter(organisation=org)
-        regions = EsthenosOrgRegion.objects.filter(organisation=org)
-        branches = EsthenosOrgBranch.objects.filter(organisation=org)
-        kwargs = locals()
-        return render_template("admin_add_org_group.html", **kwargs)
-
-    if request.method == "POST":
-        data = request.form.get('org_data').split(",")
-        loc_name = request.form.get('location_name')
-        group_name = request.form.get('group_name')
-        unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
-        branch = EsthenosOrgBranch.objects.get(id=data[3])
-        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name)
-
-        if status:
-            group.location_name=loc_name
-            group.branch=branch
-            group.group_id = unique_group_id
-            group.save()
-            EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
-
-        return redirect("/admin/organisations")
-
-
 @admin_views.route('/admin/update_org/<org_id>/update_regions', methods=["POST"] )
 @login_required
 def admin_update_org_regions(org_id):
@@ -378,18 +342,40 @@ def admin_organisation_dashboard(org_id):
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
 
-#TODO: complete me; html + data + view wiring; should be list of groups.
-@admin_views.route('/admin/organisation/<org_id>/groups', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/groups', methods=["GET", "POST"])
 @login_required
-def admin_org_get_groups(org_id):
+def admin_organisation_groups(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    settings = EsthenosSettings.objects.all()[0]
-    kwargs = locals()
-    return render_template("admin_org_add_product.html", **kwargs)
+
+    if request.method == "GET":
+        states = EsthenosOrgState.objects.filter(organisation=org)
+        areas = EsthenosOrgArea.objects.filter(organisation=org)
+        groups = EsthenosOrgGroup.objects.filter(organisation=org)
+        regions = EsthenosOrgRegion.objects.filter(organisation=org)
+        branches = EsthenosOrgBranch.objects.filter(organisation=org)
+        kwargs = locals()
+        return render_template("admin_add_org_group.html", **kwargs)
+
+    if request.method == "POST":
+        data = request.form.get('org_data').split(",")
+        loc_name = request.form.get('location_name')
+        group_name = request.form.get('group_name')
+        unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
+        branch = EsthenosOrgBranch.objects.get(id=data[3])
+        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name)
+
+        if status:
+            group.location_name=loc_name
+            group.branch=branch
+            group.group_id = unique_group_id
+            group.save()
+            EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
+
+        return redirect("/admin/organisation/%s" % org_id)
 
 
 @admin_views.route('/admin/organisation/<org_id>/products', methods=["GET"])
@@ -477,7 +463,7 @@ def admin_organisation_settings_rbi(org_id):
         return redirect("/admin/organisation/"+org_id+"/settings")
 
 
-@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET","POST"])
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET", "POST"])
 @login_required
 def admin_organisation_settings(org_id):
     if session['role'] != "ADMIN":
@@ -522,7 +508,7 @@ def admin_organisation_settings(org_id):
         return render_template("admin_org_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET","POST"])
+@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET", "POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
@@ -552,7 +538,7 @@ def admin_organisation_add_emp(org_id):
         return render_template("admin_org_add_emp.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET','POST'])
+@admin_views.route('/admin/organisation/<org_id>/add_product',methods=['GET', 'POST'])
 @login_required
 def admin_organisation_product(org_id):
     if session['role'] == 'ADMIN':
