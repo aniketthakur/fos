@@ -299,7 +299,6 @@ def admin_organisation_dashboard(org_id):
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    products = EsthenosOrgProduct.objects.filter(organisation=org)
     employees = EsthenosUser.objects.filter(organisation=org)
 
     kwargs = locals()
