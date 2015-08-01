@@ -11,7 +11,7 @@
                 <div class="grid-body ">
                     <div class="row">
                         <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/add_emp">Employees</a>
+                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/employees">Employees</a>
                         </div>
                         <div class="col-md-4">
                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Products</a>
@@ -50,39 +50,6 @@
                              <a class="btn btn-small btn-block btn-success" type="button" href="/admin/update_org/{{ org.id }}">Update Info</a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span12">
-            <div class="grid simple ">
-                <div class="grid-title">
-                    <h4> <span class="semi-bold">Employees</span></h4>
-                </div>
-                <div class="grid-body ">
-                    <table class="table table-hover table-condensed" id="organisation-emp-table">
-                        <thead>
-                        <tr >
-                            <th style="width:1%" >#</th>
-                            <th style="width:20%">EMP ID</th>
-                            <th style="width:23%">NAME</th>
-                            <th style="width:25%">EMAIL</th>
-                            <th style="width:22%">ROLES</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for emp in employees %}
-                            <tr>
-                                <td class="v-align-middle">{{ loop.index }}</td>
-                                <td class="v-align-middle">{{ emp.id}}</td>
-                                <td class="v-align-middle">{{ emp.first_name }}</td>
-                                <td><span class="muted">{{ emp.email }}</span></td>
-                                <td><span class="muted">{{ emp.roles }}</span></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

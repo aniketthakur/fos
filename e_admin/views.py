@@ -299,7 +299,6 @@ def admin_organisation_dashboard(org_id):
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    employees = EsthenosUser.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
@@ -478,13 +477,15 @@ def admin_organisation_settings(org_id):
         return render_template("admin_org_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/add_emp', methods=["GET", "POST"])
+@admin_views.route('/admin/organisation/<org_id>/employees', methods=["GET", "POST"])
 @login_required
 def admin_organisation_add_emp(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
+    org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
+    employees = EsthenosUser.objects.filter(organisation=org)
 
     if request.method == "POST":
         org_emp = AddOrganizationEmployeeForm(request.form)
@@ -493,16 +494,14 @@ def admin_organisation_add_emp(org_id):
 
         if form.validate():
             form.save(org_id)
-            return redirect("/admin/organisation/"+org_id)
+            return redirect("/admin/organisation/%s" % org_id)
 
         else:
             flash_errors(form)
-            org = EsthenosOrg.objects.get(id=org_id)
             kwargs = locals()
             return render_template("admin_org_add_emp.html", **kwargs)
 
     else:
-        org = EsthenosOrg.objects.get(id=org_id)
         branches = EsthenosOrgBranch.objects.filter(organisation = org)
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
