@@ -30,13 +30,13 @@
                             <tr >
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href='/admin/organisation/{{ org.id }}/'><ins>{{ org.id }}</ins></a>
+                                  <a href='/admin/organisation/{{ org.id }}/dashboard'><ins>{{ org.id }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">{{ org.name }}</td>
                                 <td>{{ org.email }}</td>
                                 <td>{{ org.postal_tele_code }}{{ org.postal_telephone }}</td>
-                                <td><a href="/admin/update_org/{{ org.id }}" class="update_org btn btn-small btn-info" >Update</a>
-                                    <a href="/admin/update_org/{{ org.id }}/group" class="update_org btn  btn-small btn-info" >Add Group</a>
+                                <td><a href="/admin/organisation/{{ org.id }}" class="btn btn-small btn-info" >Update</a>
+                                    <a href="/admin/organisation/{{ org.id }}/groups" class="btn  btn-small btn-info" >Add Group</a>
                                 </td>
                             </tr>
                            {% else %}

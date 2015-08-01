@@ -7,7 +7,7 @@
             <h4>Update <span class="semi-bold">Organisation</span></h4>
             <div class="row ">
                 <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation4" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_states" method="post">
+                    <form class="form-no-horizontal-spacing" id="form-organisation4" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/states" method="post">
                         <div class="row form-row">
                             <div class="col-md-12">
                                 <h3>Set <span class="semi-bold" >States</span></h3>
@@ -54,7 +54,7 @@
                         <div class="form-actions">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm4" type="submit"><i class="icon-ok"></i> Update</button>
+                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm4" type="submit">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="row ">
                 <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_regions" method="post">
+                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/regions" method="post">
                         <div class="row form-row">
                             <div class="col-md-12">
                                 <h4>Select <span class="semi-bold" >States</span></h4>
@@ -92,7 +92,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_areas" method="post">
+                    <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/areas" method="post">
                         <div class="row form-row">
                             <div class="col-md-12">
                                 <h4>Set <span class="semi-bold" >Regions</span></h4>
@@ -121,7 +121,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/update_org/{{ org.id }}/update_branches" method="post">
+                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/branches" method="post">
                         <div class="row form-row">
                             <div class="col-md-12">
                                 <h4>Select <span class="semi-bold" >States-Regions-Areas</span></h4>

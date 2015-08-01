@@ -60,7 +60,7 @@ def admin_settings():
 
 @admin_views.route('/admin/settings/update', methods=['POST'])
 @login_required
-def update_settings():
+def admin_settings_update():
     employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
     for emp in employees:
         permissions=dict()
@@ -119,7 +119,7 @@ def admin_add_org():
 
 @admin_views.route('/admin/reports', methods=["GET"])
 @login_required
-def admin_reports_download():
+def admin_reports():
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -167,7 +167,7 @@ def admin_employees_add():
         return render_template("admin_add_emp.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>', methods=["GET"] )
+@admin_views.route('/admin/organisation/<org_id>/details', methods=["GET"] )
 @login_required
 def admin_org_details(org_id):
     if session['role'] != "ADMIN":
@@ -185,7 +185,7 @@ def admin_org_details(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"] )
 @login_required
-def admin_update_org_regions(org_id):
+def admin_org_regions_update(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -209,7 +209,7 @@ def admin_update_org_regions(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/states', methods=["POST"] )
 @login_required
-def admin_org_states(org_id):
+def admin_org_states_update(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -233,7 +233,7 @@ def admin_org_states(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/areas', methods=["POST"] )
 @login_required
-def admin_update_org_update_areas(org_id):
+def admin_org_areas_update(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -256,7 +256,7 @@ def admin_update_org_update_areas(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/branches', methods=["POST"] )
 @login_required
-def admin_update_org_update_branches(org_id):
+def admin_org_branches_update(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -291,7 +291,7 @@ def admin_organisations():
     return render_template("admin_organisation.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/dashboard', methods=["GET"])
 @login_required
 def admin_organisation_dashboard(org_id):
     if session['role'] != "ADMIN":
@@ -301,10 +301,7 @@ def admin_organisation_dashboard(org_id):
     user = EsthenosUser.objects.get(id=current_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
 
-    employees = []
     employees = EsthenosUser.objects.filter(organisation=organisation)
-
-    products = []
     products = EsthenosOrgProduct.objects.filter(organisation=organisation)
 
     kwargs = locals()
@@ -703,7 +700,7 @@ def admin_application():
 
 @admin_views.route('/admin/organisation/<org_id>/areas/<reg_id>', methods=["GET"])
 @login_required
-def admin_org_areas(org_id,reg_id):
+def admin_org_areas_regions(org_id, reg_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
@@ -723,7 +720,7 @@ def admin_org_areas(org_id,reg_id):
 
 @admin_views.route('/admin/organisation/<org_id>/branches/<area_id>', methods=["GET"])
 @login_required
-def admin_org_branches(org_id,area_id):
+def admin_org_branches_areas(org_id,area_id):
     if session['role'] != "ADMIN":
         abort(403)
     username = current_user.name
@@ -743,7 +740,7 @@ def admin_org_branches(org_id,area_id):
 
 @admin_views.route('/admin/organisation/<org_id>/regions/<state_id>', methods=["GET"])
 @login_required
-def admin_org_regions(org_id, state_id):
+def admin_org_regions_states(org_id, state_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -964,9 +961,8 @@ def admin_application_id_track(org_id, app_id):
 def admin_cbcheck():
      if session['role'] != "ADMIN":
          abort(403)
-     username = current_user.name
-     c_user = current_user
-     user = EsthenosUser.objects.get(id=c_user.id)
+
+     user = EsthenosUser.objects.get(id=current_user.id)
      kwargs = locals()
      return render_template("admin_cbcheck.html", **kwargs)
 
@@ -976,9 +972,8 @@ def admin_cbcheck():
 def admin_disbursement():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
     return render_template("admin_disbursement.html", **kwargs)
 

@@ -1,13 +1,7 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
-    <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ url_for('static', filename='plugins/dropzone/css/dropzone.css')}}" rel="stylesheet" type="text/css"/>
-{% endblock %}
-{% block action_bar %}
 
-{% endblock %}
+
 {% block maincontents %}
-
     <div style="background: #ffffff;padding-left:20px;">
         <div class="clearfix"><br/></div>
         <div class="row">
@@ -44,21 +38,16 @@
 {% block js_scripts %}{{ super() }}
     <script src="{{ url_for('static', filename='plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
-
         $(document).ready(function(){
-            console.log("ready");
             Dropzone.options.equifaxUpload = {
                 init: function() {
                     this.on("addedfile", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:uploading "+file.name+" !");
                     });
                     this.on("success", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:sucessfully uploaded "+file.name+" !");
                     });
                     this.on("error", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:upload failed "+file.name+" !");
                     });
 
@@ -68,22 +57,16 @@
             Dropzone.options.highmarkUpload = {
                 init: function() {
                     this.on("addedfile", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:uploading "+file.name+" !");
                     });
                     this.on("success", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:sucessfully uploaded "+file.name+" !");
                     });
                     this.on("error", function(file) {
-                        console.log("uploading "+file.name+" !");
                         Messenger().post("Group Aplication:upload failed "+file.name+" !");
                     });
-
                 }
             };
         });
     </script>
-
-
 {% endblock %}
