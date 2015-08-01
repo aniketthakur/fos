@@ -309,9 +309,21 @@ def admin_update_org_update_branches(org_id):
         return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/add_emp', methods=["GET","POST"])
+@admin_views.route('/admin/employees', methods=["GET"])
 @login_required
-def admin_add_emp():
+def admin_employees():
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
+    kwargs = locals()
+    return render_template("admin_employees.html", **kwargs)
+
+
+@admin_views.route('/admin/employees/add', methods=["GET","POST"])
+@login_required
+def admin_employees_add():
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -332,18 +344,6 @@ def admin_add_emp():
 
         kwargs = locals()
         return render_template("admin_add_emp.html", **kwargs)
-
-
-@admin_views.route('/admin/employees', methods=["GET"])
-@login_required
-def admin_employees():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
-    kwargs = locals()
-    return render_template("admin_employees.html", **kwargs)
 
 
 @admin_views.route('/admin/organisations', methods=["GET"])
