@@ -60,10 +60,10 @@
                         <thead>
                         <tr>
                             <th width="5"  >#</th>
-                            <th width="10" class="text-center">Application ID</th>
+                            <th width="10"  class="text-center">Application ID</th>
+                            <th width="10"  class="text-center">Group Name</th>
                             <th width="10"  class="text-center">Date</th>
                             <th width="15"  class="text-center">Status</th>
-                            <th width="10"  class="text-center">Status</th>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
                                 <th width="30" class="text-center">Action</th>
                                 <th width="10"  class="text-center">Log</th>
@@ -73,17 +73,15 @@
                         <tbody>
                         {% for app in  tagged_applications %}
                         <tr>
-                            <td class="v-align-middle"><span class="muted">{{ loop.index }}</span>
+                            <td class="v-align-middle">{{ loop.index }}</td>
                             <td class="v-align-middle ">
                                 <ins><a  href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}">{{ app.application_id }}</a></ins>
                             </td>
-                            <td><span class="muted">{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</span></td>
-                            <td><span class="muted">{{ app.current_status.status }}</span></td>
                             <td class="v-align-middle">
-                                <div class="progress">
-                                    <div data-percentage="2%"  class="progress-bar progress-bar-danger animate-progress-bar"></div>
-                                </div>
+                              <a href="/applications/group/{{ app.group.group_id }}"><ins>{{ app.group.group_name }}</ins></a>
                             </td>
+                            <td>{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
+                            <td>{{ app.current_status.status }}</td>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <td>
                                 <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/cashflow" >Cashflow</a>
@@ -94,7 +92,6 @@
                             {% endif %}
                         </tr>
                         {% endfor %}
-
                         </tbody>
                     </table>
                 </div>

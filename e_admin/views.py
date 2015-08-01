@@ -334,7 +334,7 @@ def admin_organisation_dashboard(org_id):
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
 
-#TODO: complete me; html + data + view wiring.
+#TODO: complete me; html + data + view wiring; should be list of groups.
 @admin_views.route('/admin/organisation/<org_id>/groups', methods=["GET"])
 @login_required
 def admin_org_get_groups(org_id):
