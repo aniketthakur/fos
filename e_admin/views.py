@@ -90,7 +90,7 @@ def update_settings():
     return redirect("/admin/settings")
 
 
-@admin_views.route('/admin/add_org', methods=["GET","POST"] )
+@admin_views.route('/admin/add_org', methods=["GET", "POST"])
 @login_required
 def admin_add_org():
     if session['role'] != "ADMIN":
@@ -116,6 +116,19 @@ def admin_add_org():
     else:
         kwargs = locals()
         return render_template("admin_add_org.html", **kwargs)
+
+
+@admin_views.route('/admin/reports', methods=["GET"])
+@login_required
+def admin_reports_download():
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    organisations = EsthenosOrg.objects.all()
+    tagged_applications = EsthenosOrgApplication.objects.all()
+    kwargs = locals()
+    return render_template("admin_reports.html", **kwargs)
 
 
 @admin_views.route('/admin/update_org/<org_id>', methods=["GET"] )
@@ -716,34 +729,6 @@ def psychometric_questions(org_id):
                 return render_template("admin_organisation_psychometric_questions.html", **kwargs)
     else:
         return abort(403)
-
-
-@admin_views.route('/admin/reports', methods=["GET"])
-@login_required
-def admin_reports():
-#    if session['role'] != "ADMIN":
-#        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    organisations = EsthenosOrg.objects.all()
-    tagged_applications = EsthenosOrgApplication.objects.all()
-    kwargs = locals()
-    return render_template("admin_reports.html", **kwargs)
-
-
-@admin_views.route('/admin/reports/master/download', methods=["GET"])
-@login_required
-def admin_reports_download():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    organisations = EsthenosOrg.objects.all()
-    tagged_applications = EsthenosOrgApplication.objects.all()
-    kwargs = locals()
-    return render_template("admin_reports.html", **kwargs)
 
 
 @admin_views.route('/admin/applications', methods=["GET"])

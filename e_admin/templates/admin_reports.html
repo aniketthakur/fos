@@ -1,18 +1,11 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
     <div class="row">
         <h3>Admin <span class="semi-bold">Reports</span></h3>
-        <br>
     </div>
     <div class="row">
-
         <div class="col-md-4">
             <select id="applicationstatus"  style="width:100%">
                 <option value="1">Master (All data input captured by LA+KYC+CB)</option>
@@ -35,7 +28,6 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col-md-4">
             <select id="source" style="width:100%">
                 {% for org in  organisations %}
