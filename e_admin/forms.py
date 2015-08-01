@@ -115,22 +115,20 @@ class AddOrganizationEmployeeForm(Form):
     postal_code_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     tele_code_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
     teleno_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    branch =TextField( validators=[ v.Length(max=512)])
+    branch =TextField(validators=[ v.Length(max=512)])
 
-
-    def validate_email_add_organisation( form,field):
-        email_add_organisation =field.data.lower().strip()
-        if( EsthenosUser.objects(email=email_add_organisation).count()):
+    def validate_email_add_organisation(form, field):
+        email_add_organisation = field.data.lower().strip()
+        if EsthenosUser.objects(email=email_add_organisation).count():
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
 
-    def save( self,org_id):
-        emp=EsthenosUser.create_user(self.first_name_add_organisation.data,self.email_add_organisation.data,"Esthenos",True)
-        emp.organisation =EsthenosOrg.objects.get(id=org_id)
-        emp.postal_address =self.address_add_org_emp.data
+    def save(self, org_id):
+        emp = EsthenosUser.create_user(self.first_name_add_organisation.data, self.email_add_organisation.data, "Esthenos", True)
+        emp.organisation = EsthenosOrg.objects.get(id=org_id)
+        emp.postal_address = self.address_add_org_emp.data
         emp.unique_id = emp.organisation.name.upper()[0:2]+"{0:03d}".format(emp.organisation.employee_count)
-        emp.roles=list()
-        emp.roles.append(self.role.data)
-        emp.active =True
+        emp.roles = [self.role.data]
+        emp.active = True
         emp.first_name =self.first_name_add_organisation.data
         emp.last_name =self.last_name_add_organisation.data
         emp.add_role(self.role.data)
@@ -150,7 +148,7 @@ class AddOrganizationEmployeeForm(Form):
         #    emp.org_area = EsthenosOrgArea.objects.get(organisation=emp.organisation,area_name = self.area.data)
         #if self.region.data !=None or self.region.data !='':
         #    emp.org_region = EsthenosOrgRegion.objects.get(organisation=emp.organisation,region_name = self.region.data)
-        if self.branch.data !=None or self.branch.data !='':
+        if self.branch.data is not None or self.branch.data != '':
             emp.org_branch = EsthenosOrgBranch.objects.get(id = self.branch.data)
 
         emp.save()

@@ -12,13 +12,16 @@ from flask.ext.sauth.utils import get_hexdigest
 righthand = '23456qwertasdfgzxcvbQWERTASDFGZXCVB'
 lefthand = '789yuiophjknmYUIPHJKLNM'
 allchars = righthand + lefthand
+
+
 def generate_password(length=8):
     rng = Random()
     chars = []
     for i in range(0,length):
         chars.append( rng.choice(allchars))
 
-    return ''.join( chars)
+    return ''.join(chars)
+
 
 class BaseUser(Document, UserMixin):
     email = StringField( unique=True)
@@ -48,10 +51,10 @@ class BaseUser(Document, UserMixin):
 
     @property
     def short_name( self):
-        if( re.search( "[A-Z]", self.name[1])): return self.name
+        if(re.search( "[A-Z]", self.name[1])): return self.name
 
         arr = self.name.split( " ")
-        if( len( arr) == 1): return self.name
+        if len( arr) == 1: return self.name
 
         s = ""
         for i in range( 0, len( arr)-1):
@@ -61,19 +64,17 @@ class BaseUser(Document, UserMixin):
         return s.strip()
 
     def has_role( self, role):
-        if( not self.roles or role not in self.roles):
+        if not self.roles or role not in self.roles:
             return False
-
         return True
 
-
     def add_role( self, role):
-        if( role not in self.roles):
+        if role not in self.roles:
             self.roles.append( role)
 
     def remove_role( self, role):
-        if( role in self.roles):
-            self.roles.remove( role)
+        if role in self.roles:
+            self.roles.remove(role)
 
     def mark_email_for_activation( self):
         self.is_email_activated = False
@@ -107,9 +108,7 @@ class BaseUser(Document, UserMixin):
 
     @classmethod
     def create_user(cls, name, email, password, email_verified=True):
-        """Create (and save) a new user with the given password and
-        email address.
-        """
+        """Create (and save) a new user with the given password and email address"""
         now = datetime.datetime.utcnow()
         
         # Normalize the address by lowercasing the domain part of the email
@@ -123,7 +122,7 @@ class BaseUser(Document, UserMixin):
             
         user = User(name=name, email=email, date_joined=now)
 
-        if( not password):
+        if not password:
             password = generate_password()
         user.set_password(password)
 
