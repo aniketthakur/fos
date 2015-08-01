@@ -105,11 +105,10 @@ def admin_add_org():
             org = form.save()
             settings = EsthenosSettings.objects.all()[0]
             settings.update(inc__organisations_count=1)
-            return redirect("/admin/update_org/"+str(org.id))
+            return redirect("/admin/organisation/%s" % org.id)
 
         else:
             flash_errors(org_form)
-            user = EsthenosUser.objects.get(id=current_user.id)
             kwargs = {"login_form": org_form}
             return render_template("admin_add_org.html", **kwargs)
 
@@ -168,9 +167,9 @@ def admin_employees_add():
         return render_template("admin_add_emp.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>', methods=["GET"] )
+@admin_views.route('/admin/organisation/<org_id>', methods=["GET"] )
 @login_required
-def admin_update_org(org_id):
+def admin_org_details(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -184,126 +183,96 @@ def admin_update_org(org_id):
     return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>/update_regions', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"] )
 @login_required
 def admin_update_org_regions(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
 
     if request.method == "POST":
-        print request.form
-        print request.form.get('org_regions')
         for region in request.form.get('org_regions').split(","):
             state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
             reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org,state=state)
             reg.save()
 
-        """
-        my_branches = []
-        for branch in self.branches.data.split(","):
-            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
-            br.save()
-            my_branches.append(br)
-        org.branches =my_branches
-
-        """
-        return redirect("/admin/organisations")
+        return redirect("/admin/organisation/%s" % org_id)
 
     else:
         states = EsthenosOrgState.objects.filter(organisation=org)
         regions = EsthenosOrgRegion.objects.filter(organisation=org)
-        print regions
         kwargs = locals()
         return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>/update_states', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/states', methods=["POST"] )
 @login_required
-def admin_update_states(org_id):
+def admin_org_states(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
 
     if request.method == "POST":
-        print request.form
-        print request.form.get('org_states')
         for state in request.form.get('org_states').split(","):
             st,status = EsthenosOrgState.objects.get_or_create(state_name=state,organisation=org)
             org.states.append(st)
-
         org.save()
-        """
-        my_branches = []
-        for branch in self.branches.data.split(","):
-            br = EsthenosOrgBranch.objects.create(branch_name=branch,organisation=org)
-            br.save()
-            my_branches.append(br)
-        org.branches =my_branches
 
-        """
-        return redirect("/admin/organisations")
+        return redirect("/admin/organisation/%s" % org_id)
 
     else:
         states = EsthenosOrgState.objects.filter(organisation=org)
         regions = EsthenosOrgRegion.objects.filter(organisation=org)
-        print regions
         kwargs = locals()
         return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>/update_areas', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/areas', methods=["POST"] )
 @login_required
 def admin_update_org_update_areas(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
-    states = org.states
+    user = EsthenosUser.objects.get(id=current_user.id)
+
     if request.method == "POST":
-        print request.form
-        data =  request.form.get('org_data').split(",")
+        data = request.form.get('org_data').split(",")
         for area in request.form.get('org_areas').split(","):
             state = EsthenosOrgState.objects.get(id=data[0])
             region = EsthenosOrgRegion.objects.get(id=data[1])
             area_obj = EsthenosOrgArea.objects.create(area_name=area,organisation=org,state=state,region=region)
             area_obj.save()
-        return redirect("/admin/organisations")
+        return redirect("/admin/organisation/%s" % org_id)
 
     else:
         kwargs = locals()
         return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/update_org/<org_id>/update_branches', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/branches', methods=["POST"] )
 @login_required
 def admin_update_org_update_branches(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+
     if request.method == "POST":
-        print request.form
-        data =  request.form.get('org_data').split(",")
-        brs = request.form.get('org_branch_data').split(",")
-        print "Here...............", data,brs
-        for branche in brs:
+        data = request.form.get('org_data').split(",")
+        branches = request.form.get('org_branch_data').split(",")
+        for branch in branches:
             state = EsthenosOrgState.objects.get(id=data[0])
             region = EsthenosOrgRegion.objects.get(id=data[1])
             area = EsthenosOrgArea.objects.get(id=data[2])
-            br_obj = EsthenosOrgBranch.objects.create(branch_name=branche,area=area,organisation=org,state=state,region=region)
+            br_obj = EsthenosOrgBranch.objects.create(branch_name=branch,area=area,organisation=org,state=state,region=region)
             br_obj.save()
-        return redirect("/admin/organisations")
+        return redirect("/admin/organisation/%s" % org_id)
 
     else:
         kwargs = locals()
@@ -435,15 +404,10 @@ def admin_organisation_settings_rbi(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
-    username = current_user.name
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
-    settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    settings, status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+
     if request.method == "POST":
-        print request.form
         settings.loan_cycle_1_org = float(request.form.get("loan_cycle_1_org"))
         settings.loan_cycle_1_plus_org = float(request.form.get("loan_cycle_1_plus_org"))
         settings.one_year_tenure_limit_org = float(request.form.get("one_year_tenure_limit_org"))
@@ -460,7 +424,8 @@ def admin_organisation_settings_rbi(org_id):
         settings.product_cycle_4_group_min = int(request.form.get("product_cycle_4_group_min"))
         settings.product_cycle_4_group_max = int(request.form.get("product_cycle_4_group_max"))
         settings.save()
-        return redirect("/admin/organisation/"+org_id+"/settings")
+
+        return redirect("/admin/organisation/%s/settings" % org_id)
 
 
 @admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET", "POST"])
@@ -778,22 +743,18 @@ def admin_org_branches(org_id,area_id):
 
 @admin_views.route('/admin/organisation/<org_id>/regions/<state_id>', methods=["GET"])
 @login_required
-def admin_org_regions(org_id,state_id):
+def admin_org_regions(org_id, state_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     organisation = EsthenosOrg.objects.get(id=org_id)
     data = EsthenosOrgBranch.objects.get(organisation=organisation,state=state_id)
-    print data
+
     regions = []
     for br in data:
         regions.append({'id':str(br.id),'name':br.region_name})
-    print regions
-    return Response(response=json.dumps(regions),
-        status=200,\
-        mimetype="application/json")
+
+    return Response(response=json.dumps(regions), status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
