@@ -1,13 +1,7 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-    <br/>
     <div class="row">
         <div class="col-md-6">
             <div class="grid simple">
@@ -82,15 +76,14 @@
                     </table>
                     <div class="form-actions">
                         <div class="pull-right">
-                            <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update
-                            </button>
+                            <button class="btn btn-small btn-danger btn-cons" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <form action="/admin/update_settings" method="POST">
+            <form action="/admin/settings/update" method="POST">
                 <div class="grid simple">
                     <div class="grid-body no-border invoice-body"><br>
                         <h4>Access Settings <span class="semi-bold"> Executive</span></h4>
@@ -201,8 +194,7 @@
                         </div>
                         <div class="form-actions">
                             <div class="pull-right">
-                                <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update
-                                </button>
+                                <button class="btn btn-small btn-danger btn-cons" type="submit">Update</button>
                             </div>
                         </div>
                     </div>
@@ -210,12 +202,6 @@
             </form>
         </div>
     </div>
-    </div>
 {% endblock %}
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function () {
 
-        });
-    </script>
-{% endblock %}
+

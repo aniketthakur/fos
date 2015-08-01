@@ -51,12 +51,43 @@ def admin_dashboard():
 def admin_settings():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     settings = EsthenosSettings.objects.all()[0]
     kwargs = locals()
     return render_template("admin_settings.html", **kwargs)
+
+
+@admin_views.route('/admin/settings/update', methods=['POST'])
+@login_required
+def update_settings():
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("ex_data_entry")
+        permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("ex_view_reports")
+        emp.update(in__permissions = permissions)
+
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("manager_data_entry")
+        permissions['cash_flow']=request.form.get("manager_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("manager_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+
+    employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
+    for emp in employees:
+        permissions=dict()
+        permissions['data_entry']=request.form.get("vp_data_entry")
+        permissions['cash_flow']=request.form.get("vp_cash_flow_analysis")
+        permissions['view_reports']=request.form.get("vp_view_reports")
+        emp.permissions=permissions
+        emp.update(in__permissions = permissions)
+
+    return redirect("/admin/settings")
 
 
 @admin_views.route('/admin/add_org', methods=["GET","POST"] )
@@ -1536,34 +1567,3 @@ def admin_logout():
     logout_user()
     return redirect( "/admin/login")
 
-
-@admin_views.route('/admin/update_settings',methods=['POST'])
-@login_required
-def update_settings():
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("ex_data_entry")
-        permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("ex_view_reports")
-        emp.update(in__permissions = permissions)
-
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("manager_data_entry")
-        permissions['cash_flow']=request.form.get("manager_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("manager_view_reports")
-        emp.permissions=permissions
-        emp.update(in__permissions = permissions)
-
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("vp_data_entry")
-        permissions['cash_flow']=request.form.get("vp_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("vp_view_reports")
-        emp.permissions=permissions
-        emp.update(in__permissions = permissions)
-
-    return redirect("/admin/settings")
