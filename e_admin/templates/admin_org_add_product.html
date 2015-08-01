@@ -1,140 +1,140 @@
 {% extends "admin_base.html" %}
 
 
-    {% block maincontents %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="grid simple">
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Add<span class="semi-bold">New Product</span></h4>
+                    <h4>Add<span class="semi-bold"> Product</span></h4>
                 </div>
                 <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/products" method="POST">
-                            <div class="row">
-                                <div class="form-control-group col-md-3">
-                                    <label>Product Name</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="product_name" id="product_name" placeholder="Product Name" minlength="1" maxlength="30" />
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Product Type</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="loan_type"  id="loan_type" placeholder="Product Type" minlength="1" maxlength="30"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Loan Amount</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="loan_amount" id="loan_amount" placeholder="20000" minlength="1" maxlength="10"/>
-                                    </div>
-                                 </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Eligible Cycle</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="eligible_cycle" name="eligible_cycle" placeholder="1" minlength="1" maxlength="10"/>
-                                    </div>
+                    <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/products" method="POST">
+                        <div class="row">
+                            <div class="form-control-group col-md-3">
+                                <label>Product Name</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="product_name" id="product_name" placeholder="Product Name" minlength="1" maxlength="30" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-control-group col-md-3">
-                                    <label>Life Insurance</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="life_insurance" id="life_insurance" placeholder="20000"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Number Installments</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="number_installments" name="number_installments" placeholder="24"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>EMI</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="emi" id="emi" placeholder="1100"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Last EMI</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" name="last_emi" id="last_emi" placeholder="0"  minlength="1" maxlength="10"/>
-                                    </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Product Type</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="loan_type"  id="loan_type" placeholder="Product Type" minlength="1" maxlength="30"/>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-control-group col-md-3">
-                                    <label>Interest Rate</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="interest_rate" name="interest_rate" placeholder="26"  minlength="1" maxlength="5"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Processing Fee</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="processing_fee" name="processing_fee" placeholder="228"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Service Tax</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="service_tax" name="service_tax" placeholder="14"  minlength="1" maxlength="5"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Total Processing Fees</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="total_processing_fees" name="total_processing_fees" placeholder="228"  minlength="1" maxlength="10"/>
-                                    </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Loan Amount</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="loan_amount" id="loan_amount" placeholder="20000" minlength="1" maxlength="10"/>
                                 </div>
                              </div>
-                            <div class="row">
-                                <div class="form-control-group col-md-3">
-                                    <label>Insurance Period</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="insurance_period" name="insurance_period" placeholder="24"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Insurance Fee</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right"  id="insurance_free" name="insurance_free" placeholder="380"  minlength="1" maxlength="10"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Insurance Service Tax</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="insurance_service_tax" name="insurance_service_tax" placeholder="0"  minlength="1" maxlength="5"/>
-                                    </div>
-                                </div>
-                                <div class="form-control-group col-md-3">
-                                    <label>Total Insurance  Fees</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="total_insurance_fees" name="total_insurance_fees" placeholder="380"  minlength="1" maxlength="10"/>
-                                    </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Eligible Cycle</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="eligible_cycle" name="eligible_cycle" placeholder="1" minlength="1" maxlength="10"/>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-control-group col-md-3">
-                                    <label>RD Fee</label>
-                                    <div class="input-with-icon  right">
-                                        <input type="text" class="form-control text-right" id="rd_fees" name="rd_fees" placeholder="200"  minlength="1" maxlength="10"/>
-                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control-group col-md-3">
+                                <label>Life Insurance</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="life_insurance" id="life_insurance" placeholder="20000"  minlength="1" maxlength="10"/>
                                 </div>
                             </div>
-                            <div class="form-actions">
-                                <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit">Add</button>
-                                    <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="Cancel">Cancel</button>
+                            <div class="form-control-group col-md-3">
+                                <label>Number Installments</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="number_installments" name="number_installments" placeholder="24"  minlength="1" maxlength="10"/>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="form-control-group col-md-3">
+                                <label>EMI</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="emi" id="emi" placeholder="1100"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Last EMI</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" name="last_emi" id="last_emi" placeholder="0"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control-group col-md-3">
+                                <label>Interest Rate</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="interest_rate" name="interest_rate" placeholder="26"  minlength="1" maxlength="5"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Processing Fee</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="processing_fee" name="processing_fee" placeholder="228"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Service Tax</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="service_tax" name="service_tax" placeholder="14"  minlength="1" maxlength="5"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Total Processing Fees</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="total_processing_fees" name="total_processing_fees" placeholder="228"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                         </div>
+                        <div class="row">
+                            <div class="form-control-group col-md-3">
+                                <label>Insurance Period</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="insurance_period" name="insurance_period" placeholder="24"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Insurance Fee</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right"  id="insurance_free" name="insurance_free" placeholder="380"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Insurance Service Tax</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="insurance_service_tax" name="insurance_service_tax" placeholder="0"  minlength="1" maxlength="5"/>
+                                </div>
+                            </div>
+                            <div class="form-control-group col-md-3">
+                                <label>Total Insurance  Fees</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="total_insurance_fees" name="total_insurance_fees" placeholder="380"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control-group col-md-3">
+                                <label>RD Fee</label>
+                                <div class="input-with-icon  right">
+                                    <input type="text" class="form-control text-right" id="rd_fees" name="rd_fees" placeholder="200"  minlength="1" maxlength="10"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="pull-right">
+                                <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit">Add Product</button>
+                                <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="Cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
+    <div class="row">
             <div class="col-md-12">
                 <div class="grid simple ">
                     <div class="grid-title">
@@ -167,7 +167,7 @@
                 </div>
             </div>
         </div>
-    {% endblock %}
+{% endblock %}
 
 
     {% block js_scripts %}

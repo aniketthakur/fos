@@ -3,74 +3,77 @@
 
 {% block maincontents %}
     <div class="row">
-        <div class="col-md-12" style="background: #ffffff;">
-            <h4>Update <span class="semi-bold">Organisation</span></h4>
-            <div class="row ">
-                <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Add<span class="semi-bold"> Group</span></h4>
+                </div>
+                <div class="grid-body no-border">
                     <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/groups" method="post">
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <h3>Add <span class="semi-bold" >Group</span></h3>
-                                <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
-                                    {% for branch in branches %}
-                                        <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}--{{ branch.region.region_name }}--{{ branch.area.area_name }}--{{ branch.branch_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                        <div class="form-row">
+                            <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
+                                {% for branch in branches %}
+                                    <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}--{{ branch.region.region_name }}--{{ branch.area.area_name }}--{{ branch.branch_name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="clearfix"><br/></div>
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <div class="input-with-icon  right">
-                                    <i class=""></i>
-                                    <input name="location_name" id="location_name" type="text" value=""  class="form-control" placeholder="location name">
-                                </div>
+                        <div class="form-row">
+                            <div class="input-with-icon  right">
+                                <i class=""></i>
+                                <input name="location_name" id="location_name" type="text" value=""  class="form-control" placeholder="location name">
                             </div>
                         </div>
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <div class="input-with-icon  right">
-                                    <i class=""></i>
-                                    <input name="group_name" id="user_name" type="text" value=""  class="form-control" placeholder="group name">
-                                </div>
+                        <div class="form-row">
+                            <div class="input-with-icon  right">
+                                <i class=""></i>
+                                <input name="group_name" id="user_name" type="text" value=""  class="form-control" placeholder="group name">
                             </div>
                         </div>
                         <div class="form-actions">
-                            <div class="col-md-12">
-                                <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit">Add Group</button>
-                                </div>
+                            <div class="pull-right">
+                                <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit">Add Group</button>
+                                <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="Cancel">Cancel</button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-8">
-                    <table class="table table-condensed">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-title">
+                    <h4><span class="semi-bold">Groups</span></h4>
+                </div>
+                <div class="grid-body ">
+                    <table class="table table-hover table-condensed" id="organisation-group-table">
+                        <thead>
+                        <tr >
+                            <th style="width:1%" >#</th>
+                            <th style="width:20%">Group ID</th>
+                            <th style="width:23%">Group NAME</th>
+                            <th style="width:25%">Group Size</th>
+                            <th style="width:22%">Group Leader</th>
+                            <th style="width:22%">Group Location</th>
+                            <th style="width:22%">Group Branch Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {% for group in groups %}
                             <tr>
-                                <td>
-                                    {{ group.group_id }}
-                                </td>
-                                <td>
-                                    {{ group.group_name }}
-                                </td>
-                                <td>
-                                    {{ group.size }}
-                                </td>
-                                <td>
-                                    {{ group.leader_name }}
-                                </td>
-                                <td>
-                                    {{ group.leader_number }}
-                                </td>
-                                <td>
-                                    {{ group.location_name }}
-                                </td>
-                                <td>
-                                    {{ group.branch.branch_name }}
-                                </td>
+                                <td class="v-align-middle">{{ group.group_id }}</td>
+                                <td class="v-align-middle">{{ group.group_name }}</td>
+                                <td class="v-align-middle">{{ group.size }}</td>
+                                <td class="v-align-middle">{{ group.leader_name }}</td>
+                                <td class="v-align-middle">{{ group.leader_number }}</td>
+                                <td class="v-align-middle">{{ group.location_name }}</td>
+                                <td class="v-align-middle">{{ group.branch.branch_name }}</td>
                             </tr>
                         {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -92,6 +95,9 @@
             $("#areas_3").select2();
             $(".org-submit").click(function(){
                 $("#form-organisation").submit();
+            });
+            $(".cancel-button").click(function(){
+                location.href = "/admin/organisation/{{ org.id }}/dashboard";
             });
         });
     </script>
