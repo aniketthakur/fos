@@ -1020,15 +1020,6 @@ def admin_disbursement():
     return render_template("admin_disbursement.html", **kwargs)
 
 
-@admin_views.route('/admin/logout', methods=["GET"])
-@login_required
-def admin_logout():
-    if session['role'] != "ADMIN":
-        abort(403)
-    logout_user()
-    return redirect( "/admin/login")
-
-
 @admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1535,6 +1526,15 @@ def login_admin():
 
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
+
+
+@admin_views.route('/admin/logout', methods=["GET"])
+@login_required
+def admin_logout():
+    if session['role'] != "ADMIN":
+        abort(403)
+    logout_user()
+    return redirect( "/admin/login")
 
 
 @admin_views.route('/admin/update_settings',methods=['POST'])
