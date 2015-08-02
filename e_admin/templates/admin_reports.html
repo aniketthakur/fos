@@ -35,16 +35,6 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-md-4">
-            <select id="region" style="width:100%">
-
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select id="branch" style="width:100%">
-
-            </select>
-        </div>
     </div>
 
 
@@ -137,7 +127,6 @@
                     });
 
             $("#branch").select2();
-
             $("#region").select2();
             $('#region').select2()
                     .on("change", function (e) {
