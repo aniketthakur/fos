@@ -936,7 +936,7 @@ def admin_application_id_track(org_id, app_id):
     return render_template("admin_application_tracking.html", **kwargs)
 
 
-@admin_views.route('/admin/cbcheck', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/cbcheck', methods=["GET"])
 @login_required
 def admin_cbcheck():
      if session['role'] != "ADMIN":
@@ -947,7 +947,7 @@ def admin_cbcheck():
      return render_template("admin_cbcheck.html", **kwargs)
 
 
-@admin_views.route('/admin/disbursement', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement', methods=["GET"])
 @login_required
 def admin_disbursement():
     if session['role'] != "ADMIN":
@@ -958,7 +958,7 @@ def admin_disbursement():
     return render_template("admin_disbursement.html", **kwargs)
 
 
-@admin_views.route('/admin/schedule', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/schedule', methods=["GET"])
 def admin_schedule():
     if session['role'] != "ADMIN":
         abort(403)
@@ -966,7 +966,7 @@ def admin_schedule():
     return render_template( "pdf_SCHEDULE_A.html", **kwargs)
 
 
-@admin_views.route('/admin/pdf_dpn', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/pdf_dpn', methods=["GET"])
 def admin_dpn():
     if session['role'] != "ADMIN":
         abort(403)
@@ -988,7 +988,7 @@ def admin_dpn():
     return response
 
 
-@admin_views.route('/admin/acknowledgement', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgement', methods=["GET"])
 def admin_acknowledgement():
     if session['role'] != "ADMIN":
         abort(403)
@@ -996,7 +996,7 @@ def admin_acknowledgement():
     return render_template( "pdf_HMPLACK.html", **kwargs)
 
 
-@admin_views.route('/admin/acknowledgementother', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgementother', methods=["GET"])
 def admin_acknowledgementother():
     if session['role'] != "ADMIN":
         abort(403)
@@ -1004,31 +1004,7 @@ def admin_acknowledgementother():
     return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
 
 
-@admin_views.route('/admin/hmplcashflow', methods=["GET"])
-def admin_hmplcashflow():
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplgrt', methods=["GET"])
-def admin_hmplgrt():
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_GRT.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplloancard', methods=["GET"])
-def admin_hmplloancard():
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplppl', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplppl', methods=["GET"])
 def admin_hmplppl():
     if session['role'] != "ADMIN":
         abort(403)
@@ -1036,7 +1012,31 @@ def admin_hmplppl():
     return render_template( "pdf_HMPL_PPL.html", **kwargs)
 
 
-@admin_views.route('/admin/hmplsanction', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplgrt', methods=["GET"])
+def admin_hmplgrt():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_GRT.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplcashflow', methods=["GET"])
+def admin_hmplcashflow():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplloancard', methods=["GET"])
+def admin_hmplloancard():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplsanction', methods=["GET"])
 def admin_hmplsanction():
     if session['role'] != "ADMIN":
         abort(403)
@@ -1044,7 +1044,7 @@ def admin_hmplsanction():
     return render_template( "pdf_HMPL_Sanction_Jlg.html", **kwargs)
 
 
-@admin_views.route('/admin/ljlga', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/ljlga', methods=["GET"])
 @login_required
 def admin_ljlga():
     if session['role'] != "ADMIN":
@@ -1053,7 +1053,7 @@ def admin_ljlga():
     return render_template( "pdf_LJLGAgreement.html", **kwargs)
 
 
-@admin_views.route('/admin/lrpassbook', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/lrpassbook', methods=["GET"])
 @login_required
 def admin_lrpassbook():
     if session['role'] != "ADMIN":
@@ -1080,7 +1080,7 @@ def admin_lrpassbook():
     return response
 
 
-@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/disbursement/cgt_grt_pdf', methods=["GET"])
 @login_required
 def admin_disbursement_pdf():
     if session['role'] != "ADMIN":
@@ -1255,7 +1255,7 @@ def admin_pdf_application(app_id):
 
 
 @admin_views.route('/internal/pdf_hccs_reciept/<group_id>', methods=["GET"])
-def adminpdf_hccs_reciept(group_id):
+def admin_pdf_hccs_reciept(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()

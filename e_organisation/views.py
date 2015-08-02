@@ -121,9 +121,6 @@ def admin_logout():
     return redirect("/accounts/login")
 
 
-
-
-
 @organisation_views.route('/uploads_group_app', methods=["GET", "POST"])
 @login_required
 def uploads_group_app():
