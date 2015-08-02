@@ -24,34 +24,34 @@ def generate_password(length=8):
 
 
 class BaseUser(Document, UserMixin):
-    email = StringField( unique=True)
     name = StringField()
+    email = StringField(unique=True)
     password = StringField(max_length=128)
 
     date_joined = DateTimeField(default=datetime.datetime.now)
     email_activation_key = StringField(default="")
-    is_email_activated = BooleanField( default=True)
+    is_email_activated = BooleanField(default=True)
     password_reset_token = StringField()
 
-    roles = ListField( StringField(), default=[])
+    roles = ListField(StringField(), default=[])
 
     meta = {"abstract": True}
 
     @property
-    def first_name( self):
+    def first_name(self):
         return self.name.split(" ")[0]
 
     @property
-    def last_name( self):
+    def last_name(self):
         arr = self.name.split(" ")
-        if( len( arr) > 1):
+        if len(arr) > 1:
             return ' '.join( arr[1:])
         else:
             return ''
 
     @property
-    def short_name( self):
-        if(re.search( "[A-Z]", self.name[1])): return self.name
+    def short_name(self):
+        if re.search("[A-Z]", self.name[1]): return self.name
 
         arr = self.name.split( " ")
         if len( arr) == 1: return self.name
@@ -63,14 +63,18 @@ class BaseUser(Document, UserMixin):
 
         return s.strip()
 
-    def has_role( self, role):
+    def has_role(self, role):
         if not self.roles or role not in self.roles:
             return False
         return True
 
-    def add_role( self, role):
+    def add_role(self, role):
         if role not in self.roles:
-            self.roles.append( role)
+            self.roles.append(role)
+
+    @property
+    def user_roles(self):
+        return ",".join(self.roles)
 
     def remove_role( self, role):
         if role in self.roles:

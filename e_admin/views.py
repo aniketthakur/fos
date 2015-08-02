@@ -115,7 +115,7 @@ def admin_employees_add():
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
-    employees = EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
+    employees = EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER", "EMP_VP"])
 
     if request.method == "POST":
         org_form = AddEmployeeForm( request.form )
