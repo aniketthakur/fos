@@ -135,27 +135,16 @@ def admin_reports():
     return render_template("admin_reports.html", **kwargs)
 
 
-@admin_views.route('/admin/employees', methods=["GET"])
-@login_required
-def admin_employees():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
-    kwargs = locals()
-    return render_template("admin_employees.html", **kwargs)
-
-
-@admin_views.route('/admin/employees/add', methods=["GET","POST"])
+@admin_views.route('/admin/employees', methods=["GET","POST"])
 @login_required
 def admin_employees_add():
     if session['role'] != "ADMIN":
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
+    employees = EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER","EMP_VP"])
+
     if request.method == "POST":
-        print "hello"
         org_form = AddEmployeeForm( request.form )
         form = org_form
         if form.validate():
@@ -166,8 +155,8 @@ def admin_employees_add():
             flash_errors(org_form)
             kwargs = {"login_form": org_form}
             return render_template("admin_add_emp.html", **kwargs)
-    else:
 
+    if request.method == "GET":
         kwargs = locals()
         return render_template("admin_add_emp.html", **kwargs)
 
