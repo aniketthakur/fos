@@ -34,6 +34,11 @@ signal_user_registered = signal('user-registered')
 admin_views = Blueprint('admin_views', __name__, template_folder='templates')
 
 
+ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
+ '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
+ '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
+
+
 @admin_views.route('/admin/dashboard', methods=["GET"])
 @login_required
 def admin_dashboard():
@@ -953,6 +958,173 @@ def admin_disbursement():
     return render_template("admin_disbursement.html", **kwargs)
 
 
+@admin_views.route('/admin/schedule', methods=["GET"])
+def admin_schedule():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_SCHEDULE_A.html", **kwargs)
+
+
+@admin_views.route('/admin/pdf_dpn', methods=["GET"])
+def admin_dpn():
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    kwargs = locals()
+    body = render_template( "pdf_DPN.html", **kwargs)
+    try:
+        pdfkit.from_string(body, 'dpn.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'dpn'
+    return response
+
+
+@admin_views.route('/admin/acknowledgement', methods=["GET"])
+def admin_acknowledgement():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPLACK.html", **kwargs)
+
+
+@admin_views.route('/admin/acknowledgementother', methods=["GET"])
+def admin_acknowledgementother():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplcashflow', methods=["GET"])
+def admin_hmplcashflow():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplgrt', methods=["GET"])
+def admin_hmplgrt():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_GRT.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplloancard', methods=["GET"])
+def admin_hmplloancard():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplppl', methods=["GET"])
+def admin_hmplppl():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_PPL.html", **kwargs)
+
+
+@admin_views.route('/admin/hmplsanction', methods=["GET"])
+def admin_hmplsanction():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_HMPL_Sanction_Jlg.html", **kwargs)
+
+
+@admin_views.route('/admin/ljlga', methods=["GET"])
+@login_required
+def admin_ljlga():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_LJLGAgreement.html", **kwargs)
+
+
+@admin_views.route('/admin/lrpassbook', methods=["GET"])
+@login_required
+def admin_lrpassbook():
+    if session['role'] != "ADMIN":
+        abort(403)
+    username = current_user.name
+    c_user = current_user
+    org_name = "Hindusthan Microfinance"
+    usr = EsthenosUser.objects.get(id=c_user.id)
+    kwargs = locals()
+    body = render_template( "pdf_LRPassbook.html", **kwargs)
+    try:
+        pdfkit.from_string(body, 'pass.pdf')
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('pass.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'Passbook'
+    return response
+
+
+@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
+@login_required
+def admin_disbursement_pdf():
+    if session['role'] != "ADMIN":
+        abort(403)
+    kwargs = locals()
+    return render_template( "pdf_disbursement.html", **kwargs)
+
+
+@admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
+def admin_sanction(grp_id):
+    group = EsthenosOrgGroup.objects.get(group_id=grp_id)
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+
+    product = apps[0].product
+    print product
+    disbursement_date = datetime.datetime.now()
+    org_name = "Hindusthan Microfinance"
+    kwargs = locals()
+    body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
+    try:
+        options = {
+            'page-size': 'A4',
+            'margin-top': '0.35in',
+            'margin-right': '0.25in',
+            'margin-bottom': '0.35in',
+            'margin-left': '0.25in',
+            'encoding': "UTF-8",
+            'orientation' : 'Landscape'
+        }
+        pdfkit.from_string(body, 'dpn.pdf',options=options)
+    except Exception as e:
+        print e.message
+
+    raw_bytes = ""
+    with open('dpn.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] =\
+    'inline; filename=%s.pdf' % 'sanction'
+    return response
+
+
 @admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1017,63 +1189,23 @@ def admin_processing_fees(group_id):
     return response
 
 
-@admin_views.route('/admin/schedule', methods=["GET"])
-def admin_schedule():
-    kwargs = locals()
-    return render_template( "pdf_SCHEDULE_A.html", **kwargs)
-
-
-@admin_views.route('/admin/profile',methods=["GET"])
-def admin_profile():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    return render_template("admin_profile.html",**kwargs)
-
-
-@admin_views.route('/admin/pdf_dpn', methods=["GET"])
-def admin_dpn():
-    kwargs = locals()
-    body = render_template( "pdf_DPN.html", **kwargs)
-    try:
-        pdfkit.from_string(body, 'dpn.pdf')
-    except Exception as e:
-        print e.message
-
-    raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
-    return response
-
-
-@admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
-def admin_sanction(grp_id):
-    group = EsthenosOrgGroup.objects.get(group_id=grp_id)
+@admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
+def admin_hmpdpn(group_id):
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
-
-    product = apps[0].product
-    print product
     disbursement_date = datetime.datetime.now()
-    org_name = "Hindusthan Microfinance"
+    interest_rate = 26.0
     kwargs = locals()
-    body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
+    body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
     try:
         options = {
             'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
-            'margin-left': '0.25in',
+            'margin-top': '0.50in',
+            'margin-right': '0.50in',
+            'margin-bottom': '0.50in',
+            'margin-left': '0.50in',
             'encoding': "UTF-8",
-            'orientation' : 'Landscape'
+            'orientation' : 'Portrait'
         }
         pdfkit.from_string(body, 'dpn.pdf',options=options)
     except Exception as e:
@@ -1086,32 +1218,8 @@ def admin_sanction(grp_id):
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'sanction'
+    'inline; filename=%s.pdf' % 'dpn'
     return response
-
-
-@admin_views.route('/admin/acknowledgement', methods=["GET"])
-def admin_acknowledgement():
-    kwargs = locals()
-    return render_template( "pdf_HMPLACK.html", **kwargs)
-
-
-@admin_views.route('/admin/acknowledgementother', methods=["GET"])
-def admin_acknowledgementother():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplcashflow', methods=["GET"])
-def admin_hmplcashflow():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplgrt', methods=["GET"])
-def admin_hmplgrt():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_GRT.html", **kwargs)
 
 
 @admin_views.route('/internal/pdf_application/<app_id>', methods=["GET"])
@@ -1179,39 +1287,6 @@ def adminpdf_hccs_reciept(group_id):
     return response
 
 
-@admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
-def admin_hmpdpn(group_id):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
-    disbursement_date = datetime.datetime.now()
-    interest_rate = 26.0
-    kwargs = locals()
-    body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.50in',
-            'margin-right': '0.50in',
-            'margin-bottom': '0.50in',
-            'margin-left': '0.50in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
-
-    raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
-    return response
-
-
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
@@ -1243,80 +1318,6 @@ def admin_hmplloanagreement(group_id,dis_date_str):
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'la'
     return response
-
-
-@admin_views.route('/admin/hmplloancard', methods=["GET"])
-def admin_hmplloancard():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplppl', methods=["GET"])
-def admin_hmplppl():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_PPL.html", **kwargs)
-
-
-@admin_views.route('/admin/hmplsanction', methods=["GET"])
-def admin_hmplsanction():
-    kwargs = locals()
-    return render_template( "pdf_HMPL_Sanction_Jlg.html", **kwargs)
-
-
-@admin_views.route('/admin/cgt_grt_pdf', methods=["GET"])
-@login_required
-def admin_disbursement_pdf():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
-
-    kwargs = locals()
-    return render_template( "pdf_disbursement.html", **kwargs)
-
-
-@admin_views.route('/admin/ljlga', methods=["GET"])
-@login_required
-def admin_ljlga():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    usr = EsthenosUser.objects.get(id=current_user.id)
-    kwargs = locals()
-    return render_template( "pdf_LJLGAgreement.html", **kwargs)
-
-
-@admin_views.route('/admin/lrpassbook', methods=["GET"])
-@login_required
-def admin_lrpassbook():
-    if session['role'] != "ADMIN":
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    org_name = "Hindusthan Microfinance"
-    usr = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    body = render_template( "pdf_LRPassbook.html", **kwargs)
-    try:
-        pdfkit.from_string(body, 'pass.pdf')
-    except Exception as e:
-        print e.message
-
-    raw_bytes = ""
-    with open('pass.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'Passbook'
-    return response
-
-
-ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
- '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
- '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
 
 
 @admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
