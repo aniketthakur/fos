@@ -9,8 +9,8 @@ from flask_login import current_user, login_required
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosUser
 from e_organisation.models import *
-from e_reports.views import get_application_headers,get_application_rowdata
-from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType
+from e_reports.views import get_internal_report_headers, get_application_rowdata
+from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType, EsthenosOrgApplication
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
 admin_reports_views = Blueprint('admin_reports_views', __name__, template_folder='templates')
@@ -27,13 +27,12 @@ def is_number(s):
 @admin_reports_views.route('/admin/reports/internal_main/download', methods=["GET"])
 @login_or_key_required
 def admin_internal_main_reports():
-    c_user = current_user
-    kwargs = locals()
-    from e_organisation.models import EsthenosOrgApplication
-    if request.method == 'GET':
-        user = EsthenosUser.objects.get(id=c_user.id)
 
-        app_headers = get_application_headers()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    kwargs = locals()
+
+    if request.method == 'GET':
+        app_headers = get_internal_report_headers()
         app_headers.append("Organisation Name")
 
         applications = EsthenosOrgApplication.objects.all()
