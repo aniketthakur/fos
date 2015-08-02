@@ -21,7 +21,7 @@
             <div class="grid simple">
                 <h1>CGT1 Questions </h1>
                 <div class="grid-body no-border invoice-body">
-                    <form class="form-no-horizontal-spacing" method="post" id="org_questions_form">
+                    <form class="form-no-horizontal-spacing" method="post" id="org_questions_form" action="/admin/organisation/{{ org.id }}/cgt1_questions">
                         <div class="form-row">
                             <div class="form-group">
                                 <input type="text" placeholder="enter new question here" class="form-control text-left" name="question" id="questions" />
@@ -50,7 +50,11 @@
                                 <td style="width: 5%;">{{ loop.index }}</td>
                                 <td style="width: 45%;">{{ question.question }}</td>
                                 <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                                <td style="width: 5%;">
+                                    <form method="post" action="/admin/organisation/{{ org.id }}/cgt1_questions/{{ question.id }}/delete">
+                                        <button class="btn btn-small btn-danger">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -59,13 +63,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-        });
-    </script>
 {% endblock %}

@@ -523,7 +523,6 @@ def grt_questions(org_id):
 @admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
 @login_required
 def cgt1_questions(org_id):
-
     if session['role'] != 'ADMIN':
         return abort(403)
 
@@ -544,9 +543,20 @@ def cgt1_questions(org_id):
             return render_template("admin_organisation_cgt1_questions.html", **kwargs)
 
         else:
-            print flash_errors(question)
+            flash_errors(question)
             kwargs = locals()
             return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/cgt1_questions/<question_id>/delete',methods=['POST'])
+@login_required
+def cgt1_questions_delete(org_id, question_id):
+    if session['role'] != 'ADMIN':
+        return abort(403)
+
+    question = EsthenosOrgCGT1TemplateQuestion.objects.filter(id=question_id)
+    question.delete()
+    return redirect("/admin/organisation/%s/cgt1_questions" % org_id)
 
 
 @admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
