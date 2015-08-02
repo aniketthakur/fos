@@ -95,33 +95,6 @@ def admin_settings_update():
     return redirect("/admin/settings")
 
 
-@admin_views.route('/admin/add_org', methods=["GET", "POST"])
-@login_required
-def admin_add_org():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    if request.method == "POST":
-        org_form = AddOrganisationForm( request.form)
-        form = org_form
-
-        if form.validate():
-            org = form.save()
-            settings = EsthenosSettings.objects.all()[0]
-            settings.update(inc__organisations_count=1)
-            return redirect("/admin/organisation/%s" % org.id)
-
-        else:
-            flash_errors(org_form)
-            kwargs = {"login_form": org_form}
-            return render_template("admin_add_org.html", **kwargs)
-
-    else:
-        kwargs = locals()
-        return render_template("admin_add_org.html", **kwargs)
-
-
 @admin_views.route('/admin/reports', methods=["GET"])
 @login_required
 def admin_reports():
@@ -159,6 +132,35 @@ def admin_employees_add():
     if request.method == "GET":
         kwargs = locals()
         return render_template("admin_add_emp.html", **kwargs)
+
+
+@admin_views.route('/admin/organisations', methods=["GET", "POST"])
+@login_required
+def admin_organisations():
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    organisations = EsthenosOrg.objects.all()
+
+    if request.method == "POST":
+        org_form = AddOrganisationForm( request.form)
+        form = org_form
+
+        if form.validate():
+            org = form.save()
+            settings = EsthenosSettings.objects.all()[0]
+            settings.update(inc__organisations_count=1)
+            return redirect("/admin/organisation/%s/dashboard" % org.id)
+
+        else:
+            flash_errors(org_form)
+            kwargs = {"login_form": org_form}
+            return render_template("admin_organisation.html", **kwargs)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_organisation.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/details', methods=["GET"] )
@@ -271,18 +273,6 @@ def admin_org_branches_update(org_id):
     else:
         kwargs = locals()
         return render_template("admin_add_org_details.html", **kwargs)
-
-
-@admin_views.route('/admin/organisations', methods=["GET"])
-@login_required
-def admin_organisations():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    organisations = EsthenosOrg.objects.all()
-    kwargs = locals()
-    return render_template("admin_organisation.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/dashboard', methods=["GET"])
