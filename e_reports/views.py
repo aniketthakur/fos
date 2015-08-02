@@ -117,6 +117,25 @@ def get_application_headers():
     headers.append("Bank Account Holder name")
     headers.append("Bank Account Number")
 
+    headers.append("Group Name")
+    headers.append("Group Leader Name")
+    headers.append("Male Count")
+    headers.append("Female Count")
+    headers.append("Earning Members")
+    headers.append("Guarantor Name")
+    headers.append("Guarantor Age")
+    headers.append("Guarantor Sex")
+    headers.append("Guarantor Relationship with Borrower")
+    headers.append("How Stay Duration")
+    headers.append("Village Education Institution")
+    headers.append("Village Financial Institution")
+    headers.append("Village Sanitation")
+    headers.append("Family assets: No of Cows")
+    headers.append("Family assets: No of Cows")
+    headers.append("Family assets: Land(Acres)")
+    headers.append("Family assets: Orchard(Acres)")
+    headers.append("Financial Liabilities-Friends and Family")
+
     return headers
 
 
@@ -224,6 +243,26 @@ def get_application_rowdata(app):
     row_data.append(app["bank_ifsc_code"])
     row_data.append(app["bank_account_holder_name"])
     row_data.append(app["bank_account_number"])
+
+    row_data.append(str(app.group.group_name))
+    row_data.append(str(app.group.leader_name))
+    row_data.append(app["male_count"])
+    row_data.append(app["female_count"])
+    row_data.append(app["total_earning_members"])
+    row_data.append(app["gurranter_s_name"])
+    row_data.append(app["gurranter_s_age"])
+    row_data.append(app["gurranter_s_sex"])
+    row_data.append(app["gurantor_s_relationship_with_borrower"])
+    row_data.append(app["house_stay_duration"])
+    row_data.append(app["village_edu_facilities"])
+    row_data.append(app["village_financial_institution"])
+    row_data.append(app["village_information_sanitation"])
+    row_data.append(app["num_cows"])
+    row_data.append(app["num_sheeps"])
+    row_data.append(app["self_owned_land"])
+    row_data.append(app["orchard_acre"])
+    row_data.append(app["other_outstanding_familynfriends"])
+
     return row_data
 
 

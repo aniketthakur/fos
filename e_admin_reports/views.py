@@ -42,7 +42,6 @@ def admin_internal_main_reports():
         for app in applications:
             app_row_data= get_application_rowdata(app)
             app_row_data.append(app.organisation.name)
-            app_row_data = app_row_data
             application_data.append(app_row_data)
 
         output = excel.make_response_from_array(application_data, 'csv')
