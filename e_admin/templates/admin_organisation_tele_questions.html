@@ -33,7 +33,11 @@
                                 <td style="width: 5%;">{{ loop.index }}</td>
                                 <td style="width: 45%;">{{ question.question }}</td>
                                 <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                                <td style="width: 5%;">
+                                    <form method="post" action="/admin/organisation/{{ org.id }}/telecalling_questions/{{ question.id }}/delete">
+                                        <button class="btn btn-small btn-danger">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>

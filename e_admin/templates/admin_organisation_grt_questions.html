@@ -1,5 +1,7 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
+
+
+{% block css_sheets %}
     <style type="text/css">
         @font-face {
             font-family: kruti dev ;
@@ -10,18 +12,11 @@
             font-family: kruti dev;
             font-size:14px;
         }
-
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
-
-
-    <br xmlns="http://www.w3.org/1999/html"/>
-
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
@@ -33,7 +28,11 @@
                                 <td style="width: 5%;">{{ loop.index }}</td>
                                 <td style="width: 45%;">{{ question.question }}</td>
                                 <td style="width: 45%;" class="hinditext">{{ question.question_regional }}</td>
-                                <td style="width: 5%;"><button class="btn btn-small btn-danger">Delete</button></td>
+                                <td style="width: 5%;">
+                                    <form method="post" action="/admin/organisation/{{ org.id }}/grt_questions/{{ question.id }}/delete">
+                                        <button class="btn btn-small btn-danger">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -68,11 +67,4 @@
         </div>
     </div>
     </div>
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-        });
-    </script>
 {% endblock %}

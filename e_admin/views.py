@@ -520,6 +520,17 @@ def grt_questions(org_id):
         return abort(403)
 
 
+@admin_views.route('/admin/organisation/<org_id>/grt_questions/<question_id>/delete',methods=['POST'])
+@login_required
+def grt_questions_delete(org_id, question_id):
+    if session['role'] != 'ADMIN':
+        return abort(403)
+
+    question = EsthenosOrgGRTTemplateQuestion.objects.filter(id=question_id)
+    question.delete()
+    return redirect("/admin/organisation/%s/grt_questions" % org_id)
+
+
 @admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
 @login_required
 def cgt1_questions(org_id):
@@ -586,6 +597,17 @@ def cgt2_questions(org_id):
         return abort(403)
 
 
+@admin_views.route('/admin/organisation/<org_id>/cgt2_questions/<question_id>/delete',methods=['POST'])
+@login_required
+def cgt2_questions_delete(org_id, question_id):
+    if session['role'] != 'ADMIN':
+        return abort(403)
+
+    question = EsthenosOrgCGT2TemplateQuestion.objects.filter(id=question_id)
+    question.delete()
+    return redirect("/admin/organisation/%s/cgt2_questions" % org_id)
+
+
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
 @login_required
 def telecalling_questions(org_id):
@@ -615,37 +637,55 @@ def telecalling_questions(org_id):
         return abort(403)
 
 
+@admin_views.route('/admin/organisation/<org_id>/telecalling_questions/<question_id>/delete',methods=['POST'])
+@login_required
+def telecalling_questions_delete(org_id, question_id):
+    if session['role'] != 'ADMIN':
+        return abort(403)
+
+    question = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(id=question_id)
+    question.delete()
+    return redirect("/admin/organisation/%s/telecalling_questions" % org_id)
+
+
 @admin_views.route('/admin/organisation/<org_id>/psychometric_questions',methods=['GET','POST'])
 @login_required
 def psychometric_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgPsychometricTemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_psychometric_questions.html", **kwargs)
-        else:
-            question=AddOrgPsychometricTemplateQuestionsForm(request.form)
-            # answer=AddOrgPsychometricTemplateQuestionsForm(request.form)
-            if(question.validate):
-                print "Product Details Validated,Saving the form"
-                question.save()
-                print "save answer"
-                # answer.save()
-                print "not saved answer"
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_psychometric_questions.html", **kwargs)
-            else:
-                print "Validation Error"
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_psychometric_questions.html", **kwargs)
-    else:
+
+    if session['role'] != 'ADMIN':
         return abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    questions = EsthenosOrgPsychometricTemplateQuestion.objects.filter(organisation=org)
+    kwargs = locals()
+
+    if request.method == "GET":
+        return render_template("admin_organisation_psychometric_questions.html", **kwargs)
+
+    if request.method == "POST":
+        question = AddOrgPsychometricTemplateQuestionsForm(request.form)
+
+        if question.validate():
+            question.save()
+
+            return render_template("admin_organisation_psychometric_questions.html", **kwargs)
+
+        else:
+            print flash_errors(question)
+            kwargs = locals()
+            return render_template("admin_organisation_psychometric_questions.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/psychometric_questions/<question_id>/delete',methods=['POST'])
+@login_required
+def psychometric_questions_delete(org_id, question_id):
+    if session['role'] != 'ADMIN':
+        return abort(403)
+
+    question = EsthenosOrgPsychometricTemplateQuestion.objects.filter(id=question_id)
+    question.delete()
+    return redirect("/admin/organisation/%s/psychometric_questions" % org_id)
 
 
 @admin_views.route('/admin/applications', methods=["GET"])

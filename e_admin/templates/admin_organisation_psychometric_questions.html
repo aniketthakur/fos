@@ -1,11 +1,12 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
+
+
+{% block css_sheets %}
     <style type="text/css">
         @font-face {
             font-family: kruti dev ;
             src: url( '{{ url_for('static', filename='fonts/AYOGNI_N.TTF')}}' );
         }
-
         .hinditext {
             font-family: kruti dev;
             font-size:14px;
@@ -14,14 +15,8 @@
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
-  <link href="{{url_for('static',   filename='css/table.css')}}" rel="stylesheet" type="text/css" >
-
-    <br xmlns="http://www.w3.org/1999/html"/>
-
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
@@ -30,23 +25,19 @@
                     <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
-                                <td scope="col" width="5">{{ loop.index }}</td>
-                                <td scope="col" width="200" >{{ question.question }}</td>
-                                <td scope="col" width="205"  class="hinditext">{{ question.question_regional }}</td>
-                                <td scope="col" width="5" ><button class="btn btn-small btn-danger"  >Delete</button></td>
-                            </tr>
-                        {% endfor %}
-
-                         {% for answer in questions %}
-                            <tr>
-                                <td scope="col" width="5">{{ loop.index }}</td>
-                                <td scope="col" width="200">{{ answer.answer }}</td>
-                                <td scope="col" width="205"  class="hinditext">{{ answer.answer_regional }}</td>
-                                <td scope="col" width="5" ><button class="btn btn-small btn-danger" >Delete</button></td>
+                                <td scope="col" style="width: 5%">{{ loop.index }}</td>
+                                <td scope="col" style="width: 15%">{{ question.question }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.question_regional }}</td>
+                                <td scope="col" style="width: 15%">{{ question.answer }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional }}</td>
+                                <td scope="col" style="width: 5%">
+                                    <form method="post" action="/admin/organisation/{{ org.id }}/psychometric_questions/{{ question.id }}/delete">
+                                        <button class="btn btn-small btn-danger">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
-
                 </div>
             </div>
         </div>
@@ -59,7 +50,6 @@
                             <div class="col-md-12 form-group">
                                 <input type="text" placeholder="enter new question here" class="form-control text-left" name="question" id="questions" />
                                 <input type="text" placeholder="enter new question in regional language" class="form-control text-left hinditext" name="question_hindi" id="questions_hindi" />
-
                             </div>
                             <table class="table table-bordered">
                                <tr>
@@ -94,36 +84,18 @@
                                          <b>D</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer7" />
                                     </td>
                                 </tr>
-                                </table>
-
+                            </table>
                         </div>
-
                         <input type="hidden" width="80px"  value="{{ org.id }}" name="org_id" id="org_id" />
                         <div class="form-actions">
-
                             <div class="pull-right">
                                 <input class="btn btn-small btn-danger btn-cons" type="submit"/>
                             </div>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>
     </div>
     </div>
-{% endblock %}
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-        });
-
-
-
-
-
-
-    </script>
 {% endblock %}
