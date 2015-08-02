@@ -494,30 +494,28 @@ def admin_organisation_add_emp(org_id):
 @admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
 @login_required
 def grt_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_grt_questions.html", **kwargs)
-        else:
-            question=AddOrgGRTTemplateQuestionsForm(request.form)
-            if(question.validate()):
-                print "Product Details Validated,Saving the form"
-                question.save()
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_grt_questions.html", **kwargs)
-            else:
-                print "Validation Error"
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_grt_questions.html", **kwargs)
-    else:
+    if session['role'] != 'ADMIN':
         return abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_organisation_grt_questions.html", **kwargs)
+
+    if request.method == "POST":
+        question = AddOrgGRTTemplateQuestionsForm(request.form)
+        if question.validate():
+            question.save()
+            kwargs = locals()
+            return redirect("/admin/organisation/%s/grt_questions" % org_id)
+
+        else:
+            flash_errors(question)
+            kwargs = locals()
+            return render_template("admin_organisation_grt_questions.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/grt_questions/<question_id>/delete',methods=['POST'])
@@ -551,7 +549,7 @@ def cgt1_questions(org_id):
         if question.validate():
             question.save()
             kwargs = locals()
-            return render_template("admin_organisation_cgt1_questions.html", **kwargs)
+            return redirect("/admin/organisation/%s/cgt1_questions" % org_id)
 
         else:
             flash_errors(question)
@@ -573,28 +571,29 @@ def cgt1_questions_delete(org_id, question_id):
 @admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
 @login_required
 def cgt2_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-        else:
-            question=AddOrgCGT2TemplateQuestionsForm(request.form)
-            if(question.validate()):
-                question.save()
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-            else:
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-    else:
+    if session['role'] != 'ADMIN':
         return abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_organisation_cgt2_questions.html", **kwargs)
+
+    if request.method == "POST":
+        question = AddOrgCGT2TemplateQuestionsForm(request.form)
+
+        if question.validate():
+            question.save()
+            kwargs = locals()
+            return redirect("/admin/organisation/%s/cgt2_questions" % org_id)
+
+        else:
+            flash_errors(question)
+            kwargs = locals()
+            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/cgt2_questions/<question_id>/delete',methods=['POST'])
@@ -611,30 +610,28 @@ def cgt2_questions_delete(org_id, question_id):
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
 @login_required
 def telecalling_questions(org_id):
-    if session['role']=='ADMIN':
-        username=current_user.name
-        user=current_user
-        org=EsthenosOrg.objects.get(id=org_id)
-        questions = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(organisation=org)
-        kwargs = locals()
-        if request.method=="GET":
-            return render_template("admin_organisation_tele_questions.html", **kwargs)
-        else:
-            question=AddOrgTeleCallingTemplateQuestionsForm(request.form)
-            if(question.validate()):
-                print "Product Details Validated,Saving the form"
-                question.save()
-                org = EsthenosOrg.objects.get(id=org_id)
-                c_user = current_user
-                user = EsthenosUser.objects.get(id=c_user.id)
-                return render_template("admin_organisation_tele_questions.html", **kwargs)
-            else:
-                print "Validation Error"
-                print flash_errors(question)
-                kwargs = locals()
-                return render_template("admin_organisation_tele_questions.html", **kwargs)
-    else:
+    if session['role'] != 'ADMIN':
         return abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    questions = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(organisation=org)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_organisation_tele_questions.html", **kwargs)
+
+    if request.method == "POST":
+        question=AddOrgTeleCallingTemplateQuestionsForm(request.form)
+        if question.validate():
+            question.save()
+            kwargs = locals()
+            return redirect("/admin/organisation/%s/telecalling_questions" % org_id)
+
+        else:
+            flash_errors(question)
+            kwargs = locals()
+            return render_template("admin_organisation_tele_questions.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/telecalling_questions/<question_id>/delete',methods=['POST'])
@@ -651,16 +648,15 @@ def telecalling_questions_delete(org_id, question_id):
 @admin_views.route('/admin/organisation/<org_id>/psychometric_questions',methods=['GET','POST'])
 @login_required
 def psychometric_questions(org_id):
-
     if session['role'] != 'ADMIN':
         return abort(403)
 
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
     questions = EsthenosOrgPsychometricTemplateQuestion.objects.filter(organisation=org)
-    kwargs = locals()
 
     if request.method == "GET":
+        kwargs = locals()
         return render_template("admin_organisation_psychometric_questions.html", **kwargs)
 
     if request.method == "POST":
@@ -668,11 +664,11 @@ def psychometric_questions(org_id):
 
         if question.validate():
             question.save()
-
-            return render_template("admin_organisation_psychometric_questions.html", **kwargs)
+            kwargs = locals()
+            return redirect("/admin/organisation/%s/psychometric_questions" % org_id)
 
         else:
-            print flash_errors(question)
+            flash_errors(question)
             kwargs = locals()
             return render_template("admin_organisation_psychometric_questions.html", **kwargs)
 
