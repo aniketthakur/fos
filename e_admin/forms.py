@@ -90,13 +90,13 @@ class RegistrationFormAdmin( Form):
     password =PasswordField( validators=[v.DataRequired(), v.Length(max=256)])
     type =HiddenField()
 
-    def validate_email( form, field):
+    def validate_email(form, field):
         email =field.data.lower().strip()
-        if( EsthenosUser.objects(email=email).count()):
+        if EsthenosUser.objects(email=email).count():
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
 
-    def save( self):
-        user =EsthenosUser.create_user( self.name.data, self.email.data, self.password.data, email_verified=True)
+    def save(self):
+        user = EsthenosUser.create_user( self.name.data, self.email.data, self.password.data, email_verified=True)
         user.save()
         return user
 

@@ -1392,37 +1392,6 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     return response
 
 
-@admin_views.route('/admin/signup', methods=["GET", "POST"])
-def admin_signup():
-    if request.method == "POST":
-        reg_form = RegistrationFormAdmin( request.form)
-        form = reg_form
-        if form.validate():
-            user = form.save()
-            userobj = EsthenosUser.objects.get(id=user.get_id())
-            userobj.roles= list()
-            userobj.roles.append("ADMIN")
-            userobj.active = True
-            userobj.save()
-            user = EsthenosUser.objects.get( email=form.email.data)
-
-            if (form.type.data == "ADMIN" ):
-                login_user(user)
-                session['type'] = "ADMIN"
-                return redirect( '/admin/login')
-
-        else:
-            flash_errors(reg_form)
-            kwargs = {"login_form": reg_form}
-            return render_template( "auth/login_admin.html", **kwargs)
-
-    else:
-        reg_form = RegistrationFormAdmin()
-
-    kwargs = locals()
-    return render_template("admin_signup.html", **kwargs)
-
-
 @admin_views.route('/admin/login', methods=["GET", "POST"])
 def login_admin():
     next_url = request.form.get( "next", None) or request.args.get( "next", None) or session.get("next_url", None)
@@ -1468,4 +1437,3 @@ def admin_logout():
         abort(403)
     logout_user()
     return redirect( "/admin/login")
-
