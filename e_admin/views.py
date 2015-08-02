@@ -1281,9 +1281,8 @@ def admin_disbursement_pdf():
 def admin_ljlga():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    usr = EsthenosUser.objects.get(id=c_user.id)
+
+    usr = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
     return render_template( "pdf_LJLGAgreement.html", **kwargs)
 
@@ -1313,6 +1312,7 @@ def admin_lrpassbook():
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'Passbook'
     return response
+
 
 ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
  '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
