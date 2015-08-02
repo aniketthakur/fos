@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 from e_tokens.utils import login_or_key_required
 from e_admin.models import EsthenosUser
 from e_organisation.models import *
-from e_reports.views import get_internal_report_headers, get_application_rowdata
+from e_reports.views import get_application_headers, get_application_rowdata
 from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType, EsthenosOrgApplication
 
 storage_path =  os.path.join(os.curdir,'pitaya/uploads')
@@ -32,7 +32,7 @@ def admin_internal_main_reports():
     kwargs = locals()
 
     if request.method == 'GET':
-        app_headers = get_internal_report_headers()
+        app_headers = get_application_headers()
         app_headers.append("Organisation Name")
 
         applications = EsthenosOrgApplication.objects.all()
