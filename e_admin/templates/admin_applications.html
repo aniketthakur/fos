@@ -3,8 +3,13 @@
 
 {% block maincontents %}
     <div class="row">
-        <h3>Loan <span class="semi-bold">Applications</span></h3>
-        <p>Note: Results are loaded after selecting organisation </p>
+        <div class="col-md-12 form-group">
+            <h3>Loan <span class="semi-bold">Applications</span></h3>
+            <p>Note: Results are loaded after selecting organisation </p>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <select id="source" style="width:100%">
             {% for org in  organisations %}
