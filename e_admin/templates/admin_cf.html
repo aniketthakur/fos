@@ -12,29 +12,23 @@
         <form id="cf_action_top" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">
-                Application ID
-              </label>
+              <label class="form-label">Application ID</label>
               <div class="controls">
-                <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
+                <input type="text" value="{{ app_id }}" class="form-control" disabled>
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">
-                Name of the Customer
-              </label>
+              <label class="form-label">Name of the Customer</label>
               <div class="controls">
-                <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
+                <input type="text" value="{{ application.applicant_name }}" class="form-control" disabled>
               </div>
             </div>
           </div>
           <div class="col-md-3 pull-right">
             <div class="form-group">
-              <label class="form-label">
-                Cash Flow Verification Pending
-              </label>
+              <label class="form-label">Cash Flow Verification Pending</label>
               <a class="btn btn-small btn-block btn-warning form-control cfa_failed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
               <a class="btn btn-small btn-block btn-success form-control cfa_passed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
             </div>
@@ -45,93 +39,66 @@
         <tbody>
         <thead>
         <tr>
-          <th style="width:60px" class="unseen text-center">
-          </th>
-          <th class="text-left">
-          </th>
-          <th style="width:150px">
-          </th>
+          <th style="width:60px" class="unseen text-center"></th>
+          <th class="text-left"></th>
+          <th style="width:150px"></th>
         </tr>
         </thead>
         <tr>
           <td colspan="3" >
-            <h4 class="semi-bold">
-              Total Gross Income said at the time of Sourcing (A)
-            </h4>
+            <h4 class="semi-bold">(A) Total Gross Income said at the time of Sourcing</h4>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            1
-          </td>
-          <td>
-            Primary Business Income
-          </td>
+          <td class="unseen text-center">1</td>
+          <td>Primary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.primary_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text" class="form-control text-right" value="{{ application.primary_income }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            2
-          </td>
-          <td>
-            Secondary Business Income
-          </td>
+          <td class="unseen text-center">2</td>
+          <td>Secondary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.secondary_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.secondary_income }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            3
-          </td>
-          <td>
-            Tertiary Business Income
-          </td>
-
+          <td class="unseen text-center">3</td>
+          <td>Tertiary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right"  value="{{ application.tertiary_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right"  value="{{ application.tertiary_income }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            4
-          </td>
-          <td>
-            Other income
-          </td>
+          <td class="unseen text-center">4</td>
+          <td>Other income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.other_income }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-          </td>
+          <td class="unseen text-center"></td>
           <td class="bold text-right">
-            <strong>
-              Total Income (A)
-            </strong>
+            <strong>(A) Total Income</strong>
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_income }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="3" >
-            <h4 class="semi-bold">
-              Total Gross expenditure said at the time of sourcing (B)
-            </h4>
+            <h4 class="semi-bold">(B) Total Gross expenditure said at the time of sourcing</h4>
           </td>
         </tr>
         <tr>
@@ -143,7 +110,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.business_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.business_expense }}">
             </div>
           </td>
         </tr>
@@ -151,14 +118,12 @@
           <td class="unseen text-center">
             6
           </td>
-
           <td>
             Food expense
           </td>
-
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.food_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.food_expense }}">
             </div>
           </td>
         </tr>
@@ -171,7 +136,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.travel_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.travel_expense }}">
             </div>
           </td>
         </tr>
@@ -184,33 +149,25 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.educational_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.educational_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            9
-          </td>
-          <td>
-            Education expense
-          </td>
+          <td class="unseen text-center">9</td>
+          <td>Education expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.entertainment_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.entertainment_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            10
-          </td>
-          <td>
-            Medical expense
-          </td>
+          <td class="unseen text-center">10</td>
+          <td>Medical expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.medical_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.medical_expense }}">
             </div>
           </td>
         </tr>
@@ -223,7 +180,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_expense }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.other_expense }}">
             </div>
           </td>
         </tr>
@@ -231,33 +188,25 @@
           <td class="unseen text-center">
           </td>
           <td class="bold text-right">
-            <strong>
-              Total Expenditure (B)
-            </strong>
+            <strong>(B) Total Expenditure</strong>
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_expenditure }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_expenditure }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="3" >
-            <h4 class="semi-bold">
-              Outstanding from other MFI/NBFI/Banks
-            </h4>
+            <h4 class="semi-bold">(C) Outstanding from other MFI/NBFI/Banks</h4>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            12
-          </td>
-          <td>
-            Outstanding-1
-          </td>
+          <td class="unseen text-center">12</td>
+          <td>Outstanding-1</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_1 }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.outstanding_1 }}">
             </div>
           </td>
         </tr>
@@ -266,7 +215,7 @@
           <td>Outstanding-2</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_2 }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.outstanding_2 }}">
             </div>
           </td>
         </tr>
@@ -275,7 +224,7 @@
           <td>Outstanding-3</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_3 }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.outstanding_3 }}">
             </div>
           </td>
         </tr>
@@ -284,7 +233,7 @@
           <td>Outstanding-4</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_4 }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.outstanding_4 }}">
             </div>
           </td>
         </tr>
@@ -292,17 +241,17 @@
           <td class="unseen text-center">
           </td>
           <td class="bold text-right">
-            <strong>Total Outstanding (C.)</strong>
+            <strong>(C) Total Outstanding</strong>
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_outstanding }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_outstanding }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="3" >
-            <h4 class="semi-bold">Other Liability (D)</h4>
+            <h4 class="semi-bold">(D) Other Liability</h4>
           </td>
         </tr>
         <tr>
@@ -310,7 +259,7 @@
           <td>Chit</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_chit }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_chit }}">
             </div>
           </td>
         </tr>
@@ -319,7 +268,7 @@
           <td>Insurance</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_insurance }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_insurance }}">
             </div>
           </td>
         </tr>
@@ -328,30 +277,28 @@
           <td>EMI</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_emi }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_emi }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center"></td>
           <td class="bold text-right">
-            <strong>Total Outstanding (D)</strong>
+            <strong>(D) Total Outstanding</strong>
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_other_outstanding }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_other_outstanding }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">
-              Net Income (A-B-D)
-            </h6>
+            <h6 class="semi-bold">Net Income (A-B-D)</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.net_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -361,19 +308,17 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">
-              Total Existing Loan Outstanding
-            </h6>
+            <h6 class="semi-bold">Total Existing Loan Outstanding</h6>
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" disabled>
             </div>
           </td>
         </tr>
@@ -383,7 +328,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" disabled>
             </div>
           </td>
         </tr>
@@ -393,7 +338,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" disabled>
             </div>
           </td>
         </tr>
@@ -403,7 +348,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" disabled>
             </div>
           </td>
         </tr>
@@ -413,31 +358,27 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.attendence_percentage }}"  data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.attendence_percentage }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">
-              Loan eligibility based on Net Income
-            </h6>
+            <h6 class="semi-bold">Loan eligibility based on Net Income</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">
-              Loan eligibility based on company policy
-            </h6>
+            <h6 class="semi-bold">Loan eligibility based on company policy</h6>
           </td>
           <td>
             <div class="controls  {% if application.loan_eligibility_based_on_company_policy < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" data-a-sep="," data-a-dec=".">
+              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" disabled>
             </div>
           </td>
         </tr>
@@ -447,29 +388,23 @@
         <form id="cf_action_bottom"  action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">
-                Application ID
-              </label>
+              <label class="form-label">Application ID</label>
               <div class="controls">
-                <input type="text" value="{{ app_id }}" class="form-control" data-a-sep="," data-a-dec=".">
+                <input type="text" value="{{ app_id }}" class="form-control" disabled>
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">
-                Name of the Customer
-              </label>
+              <label class="form-label">Name of the Customer</label>
               <div class="controls">
-                <input type="text" class="form-control" value="{{ application.applicant_name }}" data-a-sep="," data-a-dec=".">
+                <input type="text" class="form-control" value="{{ application.applicant_name }}" disabled>
               </div>
             </div>
           </div>
           <div class="col-md-3 pull-right">
             <div class="form-group">
-              <label class="form-label">
-                Cash Flow Verification Pending
-              </label>
+                <label class="form-label">Cash Flow Verification Pending</label>
               <a class="btn btn-small btn-block btn-warning form-control cfa_failed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
               <a class="btn btn-small btn-block btn-success form-control cfa_passed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
             </div>
