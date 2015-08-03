@@ -130,7 +130,7 @@ class BaseUser(Document, UserMixin):
             password = generate_password()
         user.set_password(password)
 
-        if( not email_verified):
+        if not email_verified:
             user.mark_email_for_activation()
         else:
             user.is_email_activated = True
