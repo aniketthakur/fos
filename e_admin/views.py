@@ -37,8 +37,8 @@ admin_views = Blueprint('admin_views', __name__, template_folder='templates')
 
 
 ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
- '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
- '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
+           '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
+           '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
 
 
 @admin_views.route('/admin/dashboard', methods=["GET"])
@@ -879,15 +879,13 @@ def submit_application(org_id,app_id):
 def admin_application_cashflow(org_id,app_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    try:
-        applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
-    except Exception as e:
-        print e.message
-    if len(applications)==0:
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
+
+    if len(applications) == 0:
         redirect("/admin/cbcheck")
+
     app_urls = list()
     application = applications[0]
     kwargs = locals()
