@@ -72,19 +72,48 @@ def user_profile_page():
         return render_template("user_profile.html", **kwargs)
 
 
-@organisation_views.route('/reports', methods=["GET"])
+@organisation_views.route('/reports', methods=["GET", "POST"])
 @login_required
 def admin_reports():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org = user.organisation
-    organisations = EsthenosOrg.objects.all()
-    tagged_applications = EsthenosOrgApplication.objects.all()
-    kwargs = locals()
-    return render_template("client_reports.html", **kwargs)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("client_reports.html", **kwargs)
+
+    if request.method == "POST":
+        applications = []
+        application_data = [
+          ["ApplicationID", "Applicant Name", "Group Name", "Branch Name", "Cheque #", "Bank Name"]
+        ]
+
+        report_name = "eqifax_reports.csv"
+        report_end = request.form.get("end-date")
+        report_start = request.form.get("start-date")
+
+        if (report_start is None) or (report_end is None):
+            report_name = "eqifax_full_reports.csv"
+            applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
+
+        else:
+            from datetime import datetime
+            endDate = datetime.strptime(report_end, "%m/%d/%Y")
+            startDate = datetime.strptime(report_start, "%m/%d/%Y")
+            report_name = "eqifax_range_reports.csv"
+            applications = EsthenosOrgApplication.objects.filter(date_created__gte=startDate, date_created__lte=endDate, organisation=user.organisation)
+
+        for app in applications:
+            app_branch = app.group.branch.branch_name if app.group.branch else ""
+            app_row_data = [app.application_id, app.applicant_name, app.group.group_name, app_branch, app.cheque_no, app.cheque_bank_name]
+            application_data.append(app_row_data)
+
+        output = excel.make_response_from_array(application_data, 'csv')
+        output.headers["Content-Disposition"] = "attachment; filename=%s" % report_name
+        output.headers["Content-type"] = "text/csv"
+        return output
 
 
 @organisation_views.route('/notifications', methods=["GET"])

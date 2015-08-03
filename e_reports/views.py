@@ -532,52 +532,6 @@ def himark_request_reports():
         return output
 
 
-@reports_views.route('/reports/download', methods=["GET"])
-@login_required
-def admin_reports_download():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org = user.organisation
-    organisations = EsthenosOrg.objects.all()
-    is_all = request.args.get("all")
-    type = request.args.get("type")
-    start_date = request.args.get("start_date")
-    end_date = request.args.get("end_date")
-    print is_all
-    print type,end_date,start_date
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
-    application_data = list()
-
-    eq_request_headers = list()
-    eq_request_headers.append("ApplicationID")
-    eq_request_headers.append("Applicant Name")
-    eq_request_headers.append("Group Name")
-    eq_request_headers.append("Branch Name")
-    eq_request_headers.append("Cheque #")
-    eq_request_headers.append("Bank Name")
-    headers =  eq_request_headers
-    application_data.append(headers)
-    for app in applications:
-        print app.application_id
-        row_data = list()
-        row_data.append(app.application_id)
-        row_data.append(app.applicant_name)
-        row_data.append(app.group.group_name)
-        row_data.append(app.group.branch.branch_name)
-        row_data.append("")
-        row_data.append("")
-        app_row_data = row_data
-        application_data.append(app_row_data)
-
-    output = excel.make_response_from_array(application_data, 'csv')
-    output.headers["Content-Disposition"] = "attachment; filename=eqifax_request_reports.csv"
-    output.headers["Content-type"] = "text/csv"
-    return output
-
-
 @reports_views.route('/reports/eqifax_request/download', methods=["GET"])
 @login_or_key_required
 def eqifax_request_reports():
