@@ -728,7 +728,10 @@ def admin_application():
     if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
         abort(403)
 
-    tagged_applications = EsthenosOrgApplication.objects.all()
+    groups = EsthenosOrgGroup.objects.all()
+    applications = EsthenosOrgApplication.objects.all()
+    status_types = EsthenosOrgApplicationStatusType.objects.all()
+
     kwargs = locals()
     return render_template("admin_applications.html", **kwargs)
 

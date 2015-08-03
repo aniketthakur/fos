@@ -10,46 +10,33 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 form-group">
             <select id="source" style="width:100%">
             {% for org in  organisations %}
                 <option value="{{ org.id }}">{{ org.name }}</option>
             {% endfor %}
-          </select>
+            </select>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by center">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by group">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by center id">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by group id">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 form-group">
             <input class="form-control" type="text" placeholder="search by application id">
         </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by KYC id">
+        <div class="col-md-3 form-group">
+            <select id="group-source" style="width:100%" class="select2">
+                <option selected disabled>search by group</option>
+                {% for group in groups %}
+                <option value="{{ group.group_name }}">{{ group.group_name }}</option>
+                {% endfor %}
+            </select>
         </div>
-        <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="search by applicant name">
-        </div>
-        <div class="col-md-3">
-            <select id="applicationstatus" multiple style="width:100%">
-                <option value="1">PROCESSING</option>
-                <option value="2">CB_CHECK_READY</option>
-                <option value="3">CB_REJECTED</option>
-                <option value="4">CB_ACCEPTED</option>
+        <div class="col-md-4 form-group">
+            <select id="group-source" style="width:100%" class="select2">
+                <option selected disabled>search by status</option>
+                {% for status in status_types %}
+                <option value="{{ status.status }}">{{ status.status }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -76,15 +63,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for app in  tagged_applications %}
+                        {% for app in applications %}
                         <tr>
                             <td class="v-align-middle">{{ loop.index }}</td>
                             <td class="v-align-middle ">
-                                <ins><a  href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}">{{ app.application_id }}</a></ins>
+                                <ins><a href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}">{{ app.application_id }}</a></ins>
                             </td>
-                            <td class="v-align-middle">
-                              <a href="#"><ins>{{ app.group.group_name }}</ins></a>
-                            </td>
+                            <td class="v-align-middle">{{ app.group.group_name }}</td>
                             <td>{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
                             <td>{{ app.current_status.status }}</td>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
@@ -109,64 +94,20 @@
 {% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#source").select2({
-                placeholder: "Select a State",
-                allowClear: true
-            });
             $('#source').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
+                .on("change", function (e) {
+                    // mostly used event, fired to the original element when the value changes
+                    console.log("change val=" + e.val);
+                })
+                .on("select2-close", function () {
+                    var type = $("#source").val();
+                    $.getJSON("/admin/organisation/"+type+"/applications",function(data){
+                        console.log(data);
+                        for(i=0;i < data.length;i++){
+                            console.log(data[i])
+                        }
                     })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/regions",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#region").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#region").select2();
-                        });
-                        $.getJSON("/admin/organisation/"+type+"/applications",function(data){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i])
-                            }
-                        })
-                    });
-
-            $("#branch").select2();
-
-            $("#region").select2();
-            $('#region').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/branches",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#branch").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#branch").select2();
-                        });
-                    });
-
-            $("#applicationstatus").select2({
-                placeholder: "filter by application state",
-                allowClear: true
-            });
-
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-
+                });
 
             var responsiveHelper = undefined;
             var breakpointDefinition = {
@@ -175,7 +116,6 @@
             };
 
             var tableElement = $('#loan-applications');
-
             tableElement.dataTable( {
 {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
                 "pageLength": 100,
@@ -203,9 +143,7 @@
                 }
             });
 
-{#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
             $('#loan-applications_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
-
             $(".select2 ").select2();
         });
     </script>
