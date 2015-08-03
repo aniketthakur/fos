@@ -46,7 +46,7 @@ class AddOrganisationForm( Form):
         return org
 
 
-class AddEmployeeForm( Form):
+class AddEmployeeForm(Form):
     FirstName =TextField( validators=[v.DataRequired(), v.Length(max=255)])
     LastName =TextField( validators=[v.DataRequired(), v.Length(max=512)])
     role =TextField( validators=[v.DataRequired(), v.Length(max=512)])
@@ -55,32 +55,33 @@ class AddEmployeeForm( Form):
     Address =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     TeleNo =TextField( validators=[v.DataRequired(), v.Length(max=20)])
     TeleCode =TextField( validators=[v.DataRequired(), v.Length(max=5)])
-    Country =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    State =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    City =TextField( validators=[v.DataRequired(), v.Length(max=100)])
-    Email =TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
-    PostalCode=TextField(validators=[v.DataRequired(),v.Length(max=6)])
+    City = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    State = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    Country = TextField( validators=[v.DataRequired(), v.Length(max=100)])
+    PostalCode = TextField(validators=[v.DataRequired(),v.Length(max=6)])
 
-    def save( self):
-        emp =EsthenosUser.create_user(self.FirstName.data,self.Email.data,"Pass123",True)
+    Email = TextField(validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
+    Password = PasswordField(validators=[v.DataRequired(),v.Length(max=30)])
+
+    def save(self):
+        emp = EsthenosUser.create_user(self.FirstName.data,self.Email.data,self.Password.data,True)
         emp.save()
-        #set fields
-        emp.first_name =self.FirstName.data
-        emp.last_name =self.LastName.data
+
+        emp.active = True
+        emp.sex = self.gender.data
+        emp.email = self.Email.data
+        emp.last_name = self.LastName.data
+        emp.first_name = self.FirstName.data
         emp.roles.append(self.role.data)
-        emp.active =True
-        emp.date_of_birth =self.DateOfBirth.data
-        emp.postal_address =self.Address.data
-        emp.postal_telephone =self.TeleNo.data
-        emp.postal_tele_code =self.TeleCode.data
-        emp.postal_country =self.Country.data
-        emp.postal_state =self.State.data
-        emp.postal_city =self.City.data
-        emp.sex=self.gender.data
-        emp.owner =EsthenosUser.objects.get(id=current_user.id)
-        emp.email =self.Email.data
+        emp.date_of_birth = self.DateOfBirth.data
+        emp.postal_address = self.Address.data
+        emp.postal_telephone = self.TeleNo.data
+        emp.postal_tele_code = self.TeleCode.data
+        emp.postal_city = self.City.data
+        emp.postal_state = self.State.data
+        emp.postal_country = self.Country.data
+        emp.owner = EsthenosUser.objects.get(id=current_user.id)
         emp.save()
-
         return emp
 
 
