@@ -8,6 +8,11 @@
     <link href="{{ url_for('static', filename='plugins/font-awesome/css/font-awesome.css' )}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='css/style.css' )}}" rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='css/responsive.css' )}}" rel="stylesheet" type="text/css"/>
+    <script type="application/javascript">
+      setTimeout(function(){
+        window.location.replace("{{ redirect_url }}")
+      }, 2000);
+    </script>
 </head>
 <body class="error-body no-top">
     <div class="error-wrapper container">
@@ -15,9 +20,9 @@
             <div class="col-md-8 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-offset-1 col-xs-10">
                 <div class="error-container" >
                     <div class="error-main">
-                        <div class="error-number"> 404 </div>
-                        <div class="error-description" > We seem to have lost you in the clouds. </div>
-                        <div class="error-description-mini"> The page your looking for is not here </div>
+                        <div class="error-number"> 403 </div>
+                        <div class="error-description" > We've reached un-authorized areas </div>
+                        <div class="error-description-mini"> redirecting you to safe haven in 5 seconds.</div>
                     </div>
                 </div>
             </div>

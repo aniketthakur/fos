@@ -106,7 +106,7 @@ status_type.save()
 
 status_type = EsthenosOrgApplicationStatusType()
 status_type.status = "APPLICATION_CF_CRITERIA_FAILED"
-status_type.status_message = "Borrower defaulted in 1 or more previous MFI's"
+status_type.status_message = "Borrower defaulted in 1 or more MFIs"
 status_type.status_code = 20
 status_type.sub_status_code = 1
 status_type.sub_status = "CRITERIA_FAILED_CF_DEFAULTS"

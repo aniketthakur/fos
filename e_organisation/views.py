@@ -24,9 +24,8 @@ from views_psychometric import *
 def home_page():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
 
@@ -34,8 +33,7 @@ def home_page():
 @organisation_views.route('/profile', methods=["GET","POST"])
 @login_required
 def user_profile_page():
-    username = current_user.name
-    c_user = current_user
+
     user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
 
@@ -745,12 +743,11 @@ def upload_documents():
 def check_disbursement():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    centers = EsthenosOrgCenter.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("centers_n_groups_disbussment.html", **kwargs)

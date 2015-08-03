@@ -129,3 +129,14 @@ def _jinja2_filter_datetime(date, fmt=None):
 @mainapp.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@mainapp.errorhandler(403)
+def page_not_allowed(e):
+    if session['role'].startswith("ORG_"):
+        kwargs = {"redirect_url": "/" }
+        return render_template('403.html', **kwargs), 403
+
+    elif session['role'].startswith("ADMIN"):
+        kwargs = {"redirect_url": "/admin/dashboard" }
+        return render_template('403.html', **kwargs), 403
+
