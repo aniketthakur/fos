@@ -24,32 +24,6 @@ def is_number(s):
         return False
 
 
-@admin_reports_views.route('/admin/reports/internal_main/download', methods=["GET"])
-@login_or_key_required
-def admin_internal_main_reports():
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    kwargs = locals()
-
-    if request.method == 'GET':
-        app_headers = get_application_headers()
-        app_headers.append("Organisation Name")
-
-        applications = EsthenosOrgApplication.objects.all()
-        application_data = list()
-        application_data.append(app_headers)
-
-        for app in applications:
-            app_row_data= get_application_rowdata(app)
-            app_row_data.append(app.organisation.name)
-            application_data.append(app_row_data)
-
-        output = excel.make_response_from_array(application_data, 'csv')
-        output.headers["Content-Disposition"] = "attachment; filename=internal_main_reports.csv"
-        output.headers["Content-type"] = "text/csv"
-        return output
-
-
 @admin_reports_views.route('/admin/cbcheck/highmark/', methods=["POST"])
 @login_or_key_required
 def himark_request_reports_import():

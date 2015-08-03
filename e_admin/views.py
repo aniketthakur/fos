@@ -4,9 +4,10 @@ import json, psutil, urlparse
 
 import boto, pdfkit
 from mongoengine import Q
-from datetime import timedelta
+from datetime import timedelta, datetime
 from dateutil.relativedelta import relativedelta
 
+from flask.ext import excel
 from flask import Blueprint, redirect, flash, current_app
 from flask import render_template, session, request, Response, jsonify, make_response, abort
 from flask_login import current_user, login_user, logout_user, login_required, confirm_login
@@ -16,6 +17,7 @@ from flask_sauth.views import flash_errors
 from e_admin.forms import *
 from e_admin.models import *
 from e_tokens.utils import login_or_key_required
+from e_reports.views import get_application_headers, get_application_rowdata
 from e_pixuate.pixuate import *
 from e_organisation.forms import *
 from e_organisation.models import *
@@ -44,9 +46,8 @@ ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'
 def admin_dashboard():
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
     return render_template("admin_dashboard.html", **kwargs)
 
@@ -95,7 +96,7 @@ def admin_settings_update():
     return redirect("/admin/settings")
 
 
-@admin_views.route('/admin/reports', methods=["GET"])
+@admin_views.route('/admin/reports', methods=["GET", "POST"])
 @login_required
 def admin_reports():
     if session['role'] != "ADMIN":
@@ -103,8 +104,39 @@ def admin_reports():
 
     user = EsthenosUser.objects.get(id=current_user.id)
     organisations = EsthenosOrg.objects.all()
-    kwargs = locals()
-    return render_template("admin_reports.html", **kwargs)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_reports.html", **kwargs)
+
+    if request.method == "POST":
+        applications = []
+        application_data = [get_application_headers() + ["Organisation Name"]]
+
+        report_name = "internal_report.csv"
+        report_end = request.form.get("end-date")
+        report_start = request.form.get("start-date")
+
+        if (report_start is None) or (report_end is None):
+            report_name = "internal_main_report.csv"
+            applications = EsthenosOrgApplication.objects.all()
+
+        else:
+            from datetime import datetime
+            endDate = datetime.strptime(report_end, "%m/%d/%Y")
+            startDate = datetime.strptime(report_start, "%m/%d/%Y")
+            report_name = "internal_range_report.csv"
+            applications = EsthenosOrgApplication.objects.filter(date_created__gte=startDate, date_created__lte=endDate)
+
+        for app in applications:
+            app_row_data = get_application_rowdata(app)
+            app_row_data.append(app.organisation.name)
+            application_data.append(app_row_data)
+
+        output = excel.make_response_from_array(application_data, 'csv')
+        output.headers["Content-Disposition"] = "attachment; filename=%s" % report_name
+        output.headers["Content-type"] = "text/csv"
+        return output
 
 
 @admin_views.route('/admin/employees', methods=["GET","POST"])

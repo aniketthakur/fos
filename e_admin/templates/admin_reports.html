@@ -3,121 +3,64 @@
 
 {% block maincontents %}
     <div class="row">
-        <h3>Admin <span class="semi-bold">Reports</span></h3>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <select id="applicationstatus"  style="width:100%">
-                <option value="1">Master (All data input captured by LA+KYC+CB)</option>
-                <option value="2">All data inputs captured by LA+KYC</option>
-                <option value="3">Data entry Done</option>
-                <option value="4">CB check Done</option>
-                <option value="5">Cash flow Analysis Done</option>
-                <option value="6">Disbursment Documentation Done</option>
-                <option value="7">Disbursed</option>
-            </select>
+        <div class="col-md-12 form-group">
+            <h3>Admin <span class="semi-bold">Reports</span></h3>
         </div>
-        <div class="col-md-8">
-            <div class="input-daterange" id="datepicker" >
-                <input type="text" class="input-small" name="start-date" id="start-date" />
-                <span class="add-on" style="vertical-align: top;height:30px">to</span>
-                <input type="text" class="input-small" name="end" id="end-date" />
-                <a href="/admin/reports/internal_main/download" class="btn btn-small btn-sm btn-info" id="generate_button">Generate</a>
-                <a href="#" class="btn btn-small btn-sm btn-info" id="generate_button_as_of">Reports as on Now</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <select style="width:100%" class="select2">
+                <option selected disabled>select organization</option>
+                {% for org in  organisations %}
+                <option value="{{ org.id }}">{{ org.name }}</option>
+                {% endfor %}
+          </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <h4>Master Report</h4><h6>(All data captured by LA+ KYC+ CB)</h6>
+        </div>
+        <div class="col-md-6">
+            <div class="input-daterange">
+                <form method="post" action="/admin/reports">
+                    <input type="hidden" name="report-type" value="range"/>
+                    <input type="text" class="input-small" name="start-date" id="start-date" placeholder="start-date" />
+                    <input type="text" class="input-small" name="end-date" id="end-date" placeholder="end-date" />
+                    <button class="btn btn-medium btn-md btn-info" id="generate_button" type="submit">Generate Report</button>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <select id="source" style="width:100%">
-                {% for org in  organisations %}
-                    <option value="{{ org.id }}">{{ org.name }}</option>
-                {% endfor %}
-            </select>
+        <div class="col-md-2 generate-button">
+            <form method="post" action="/admin/reports">
+                <input type="hidden" name="report-type" value="full"/>
+                <button class="btn btn-medium btn-md btn-info" id="generate_button_as_of">Generate Reports As On Now</button>
+            </form>
         </div>
     </div>
 {% endblock %}
 
 
-{% block js_scripts %}{{ super() }}
+{% block js_scripts %}
     <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript">
-
-        $(document).ready(function(){
-            $("#source").select2({
-                placeholder: "Select a State",
-                allowClear: true
-            });
-            $('#source').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/regions",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#region").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#region").select2();
-                        });
-                        $.getJSON("/admin/organisation/"+type+"/applications",function(data){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i])
-                            }
-                        })
-                    });
-
-            $("#branch").select2();
-            $("#region").select2();
-            $('#region').select2()
-                    .on("change", function (e) {
-                        // mostly used event, fired to the original element when the value changes
-                        console.log("change val=" + e.val);
-                    })
-                    .on("select2-close", function () {
-                        console.log($("#source").val());
-                        var type = $("#source").val();
-                        $.getJSON("/admin/organisation/"+type+"/branches",function( data ){
-                            console.log(data);
-                            for(i=0;i < data.length;i++){
-                                console.log(data[i]["name"])
-                                $("#branch").append("<option value="+data[i]["id"]+">"+data[i]["name"]+"</option>")
-                            }
-                            $("#branch").select2();
-                        });
-                    });
-            $("#applicationstatus").select2({
-                placeholder: "choose report type",
-                allowClear: true
-            });
-
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
         $(document).ready(function () {
-
             $('.input-daterange').datepicker({
                 todayBtn: "linked"
             });
             $("#generate_button").click(function() {
-                console.log($("#start-date").val());
-                console.log($("#end-date").val());
-                if(checkDateRange($("#start-date").val(),$("#end-date").val())){
-                    window.open("/reports/download?type");
+                if(!checkDateRange($("#start-date").val(), $("#end-date").val())) {
+                    console.log("invalid date range selected.");
                 }
             });
 
             function checkDateRange(start, end) {
                 // Parse the entries
-                var startDate = Date.parse(start);
-                var endDate = Date.parse(end);
                 var today = new Date();
+                var endDate = Date.parse(end);
+                var startDate = Date.parse(start);
 
                 // Make sure they are valid
                 if (isNaN(startDate)) {
@@ -158,47 +101,7 @@
                 }
                 return true;
             }
-
-            var responsiveHelper = undefined;
-            var breakpointDefinition = {
-                tablet: 1024,
-                phone : 480
-            };
-
-            var tableElement = $('#admin-reports-table');
-
-            tableElement.dataTable( {
-                {#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
-                "pageLength": 100,
-                "sPaginationType": "bootstrap",
-                "aoColumnDefs": [
-                    { 'bSortable': false, 'aTargets': [ 0 ] }
-                ],
-                "aaSorting": [[ 1, "asc" ]],
-                "oLanguage": {
-                    "sLengthMenu": "_MENU_ ",
-                    "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
-                },
-                bAutoWidth     : false,
-                fnPreDrawCallback: function () {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper) {
-                        responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-                    }
-                },
-                fnRowCallback  : function (nRow) {
-                    responsiveHelper.createExpandIcon(nRow);
-                },
-                fnDrawCallback : function (oSettings) {
-                    responsiveHelper.respond();
-                }
-            });
-
-            {#            $('#loan-applications_wrapper .dataTables_filter input').addClass("input-medium "); // modify table search input#}
-            $('#admin-reports-table_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
-
             $(".select2 ").select2();
-
         });
     </script>
 {% endblock %}
