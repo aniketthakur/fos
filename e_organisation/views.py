@@ -1,8 +1,5 @@
 from views_base import *
 
-# import views for user details.
-from views_users import *
-
 # import views for user applications.
 from views_apps import *
 

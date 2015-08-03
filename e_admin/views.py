@@ -472,8 +472,7 @@ def admin_organisation_add_emp(org_id):
     employees = EsthenosUser.objects.filter(organisation=org)
 
     if request.method == "POST":
-        org_emp = AddOrganizationEmployeeForm(request.form)
-        form = org_emp
+        form = AddOrganizationEmployeeForm(request.form)
         form.save(org_id)
 
         if form.validate():
