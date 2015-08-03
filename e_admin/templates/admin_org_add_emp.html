@@ -148,9 +148,10 @@
                       <tr >
                           <th style="width:1%" >#</th>
                           <th style="width:20%">EMP ID</th>
-                          <th style="width:23%">NAME</th>
-                          <th style="width:25%">EMAIL</th>
-                          <th style="width:22%">ROLES</th>
+                          <th style="width:20%">NAME</th>
+                          <th style="width:20%">ROLES</th>
+                          <th style="width:20%">EMAIL</th>
+                          <th style="width:20%">PHONE NUMBER</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -159,8 +160,9 @@
                               <td class="v-align-middle">{{ loop.index }}</td>
                               <td class="v-align-middle">{{ emp.id}}</td>
                               <td class="v-align-middle">{{ emp.first_name }}</td>
-                              <td><span class="muted">{{ emp.email }}</span></td>
-                              <td><span class="muted">{{ emp.user_roles }}</span></td>
+                              <td class="v-align-middle">{{ emp.user_roles }}</td>
+                              <td class="v-align-middle">{{ emp.email }}</td>
+                              <td class="v-align-middle">{{ emp.postal_telephone }}</td>
                           </tr>
                       {% endfor %}
                       </tbody>
