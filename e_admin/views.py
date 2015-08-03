@@ -118,7 +118,7 @@ def admin_employees_add():
     employees = EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER", "EMP_VP"])
 
     if request.method == "POST":
-        org_form = AddEmployeeForm( request.form )
+        org_form = AddEmployeeForm(request.form)
         form = org_form
         if form.validate():
             form.save()
@@ -1459,7 +1459,5 @@ def login_admin():
 @admin_views.route('/admin/logout', methods=["GET"])
 @login_required
 def admin_logout():
-    if session['role'] != "ADMIN":
-        abort(403)
     logout_user()
     return redirect( "/admin/login")
