@@ -103,7 +103,6 @@ def admin_reports():
 
     user = EsthenosUser.objects.get(id=current_user.id)
     organisations = EsthenosOrg.objects.all()
-    tagged_applications = EsthenosOrgApplication.objects.all()
     kwargs = locals()
     return render_template("admin_reports.html", **kwargs)
 
