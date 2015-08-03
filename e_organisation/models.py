@@ -126,6 +126,7 @@ class EsthenosOrgRoleSettings(db.Document):
     reports_cfa_done = db.StringField(max_length=10, required=True,default="no")
     reports_dd_done = db.StringField(max_length=10, required=True,default="no")
     reports_db_done = db.StringField(max_length=10, required=True,default="no")
+
     def __unicode__(self):
         return "EsthenosOrgRoleSettings"
 

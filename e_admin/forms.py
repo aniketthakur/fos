@@ -65,8 +65,6 @@ class AddEmployeeForm(Form):
 
     def save(self):
         emp = EsthenosUser.create_user(self.FirstName.data,self.Email.data,self.Password.data,True)
-        emp.save()
-
         emp.active = True
         emp.sex = self.gender.data
         emp.email = self.Email.data
@@ -86,13 +84,13 @@ class AddEmployeeForm(Form):
 
 
 class RegistrationFormAdmin( Form):
-    name =TextField( validators=[v.DataRequired(), v.Length(max=256)])
-    email =TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
-    password =PasswordField( validators=[v.DataRequired(), v.Length(max=256)])
-    type =HiddenField()
+    type = HiddenField()
+    name = TextField( validators=[v.DataRequired(), v.Length(max=256)])
+    email = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
+    password = PasswordField( validators=[v.DataRequired(), v.Length(max=256)])
 
     def validate_email(form, field):
-        email =field.data.lower().strip()
+        email = field.data.lower().strip()
         if EsthenosUser.objects(email=email).count():
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
 
@@ -103,20 +101,24 @@ class RegistrationFormAdmin( Form):
 
 
 class AddOrganizationEmployeeForm(Form):
-    first_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    last_name_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    role=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    date_of_birth_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    gender=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    email_add_organisation=TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
-    address_add_org_emp=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    city_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    state_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    country_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    postal_code_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    tele_code_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    teleno_add_organisation=TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    branch =TextField(validators=[ v.Length(max=512)])
+    last_name_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    first_name_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    gender = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    date_of_birth_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+
+    email_add_organisation = TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256)])
+    password_add_organisation = PasswordField(validators=[v.DataRequired(), v.Length(max=30)])
+
+    role = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    branch = TextField(validators=[ v.Length(max=512)])
+
+    address_add_org_emp = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    city_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    state_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    country_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    teleno_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    tele_code_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    postal_code_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
 
     def validate_email_add_organisation(form, field):
         email_add_organisation = field.data.lower().strip()
@@ -124,31 +126,27 @@ class AddOrganizationEmployeeForm(Form):
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
 
     def save(self, org_id):
-        emp = EsthenosUser.create_user(self.first_name_add_organisation.data, self.email_add_organisation.data, "Esthenos", True)
+        emp = EsthenosUser.create_user(self.first_name_add_organisation.data, self.email_add_organisation.data, self.password_add_organisation.data, True)
         emp.organisation = EsthenosOrg.objects.get(id=org_id)
         emp.postal_address = self.address_add_org_emp.data
         emp.unique_id = emp.organisation.name.upper()[0:2]+"{0:03d}".format(emp.organisation.employee_count)
+
         emp.roles = [self.role.data]
         emp.active = True
-        emp.first_name =self.first_name_add_organisation.data
-        emp.last_name =self.last_name_add_organisation.data
+        emp.name = self.first_name_add_organisation.data
+        emp.email = self.email_add_organisation.data
+        emp.last_name = self.last_name_add_organisation.data
+        emp.first_name = self.first_name_add_organisation.data
         emp.add_role(self.role.data)
-        emp.date_of_birth =self.date_of_birth_add_organisation.data
-        emp.postal_address =self.address_add_org_emp.data
-        emp.postal_telephone =self.teleno_add_organisation.data
-        emp.postal_tele_code =self.tele_code_add_organisation.data
-        emp.postal_country =self.country_add_organisation.data
-        emp.postal_state =self.state_add_organisation.data
-        emp.postal_city =self.city_add_organisation.data
-        emp.owner =EsthenosUser.objects.get(id=current_user.id)
-        emp.name=self.first_name_add_organisation.data
-        emp.email=self.email_add_organisation.data
-        #if self.state.data !=None or self.state.data !='':
-        #    emp.org_state = EsthenosOrgState.objects.get(organisation=emp.organisation,state_name = self.state.data)
-        #if self.area.data !=None or self.area.data !='':
-        #    emp.org_area = EsthenosOrgArea.objects.get(organisation=emp.organisation,area_name = self.area.data)
-        #if self.region.data !=None or self.region.data !='':
-        #    emp.org_region = EsthenosOrgRegion.objects.get(organisation=emp.organisation,region_name = self.region.data)
+        emp.date_of_birth = self.date_of_birth_add_organisation.data
+        emp.postal_address = self.address_add_org_emp.data
+        emp.postal_telephone = self.teleno_add_organisation.data
+        emp.postal_tele_code = self.tele_code_add_organisation.data
+        emp.postal_city = self.city_add_organisation.data
+        emp.postal_state = self.state_add_organisation.data
+        emp.postal_country = self.country_add_organisation.data
+        emp.owner = EsthenosUser.objects.get(id=current_user.id)
+
         if self.branch.data is not None or self.branch.data != '':
             emp.org_branch = EsthenosOrgBranch.objects.get(id = self.branch.data)
 
