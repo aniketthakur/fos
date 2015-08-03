@@ -25,16 +25,38 @@
                     <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
-                                <td scope="col" style="width: 5%">{{ loop.index }}</td>
+                                <td scope="col" style="width: 5%">Q.{{ loop.index }}</td>
                                 <td scope="col" style="width: 15%">{{ question.question }}</td>
                                 <td scope="col" style="width: 15%" class="hinditext">{{ question.question_regional }}</td>
-                                <td scope="col" style="width: 15%">{{ question.answer }}</td>
-                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional }}</td>
                                 <td scope="col" style="width: 5%">
                                     <form method="post" action="/admin/organisation/{{ org.id }}/psychometric_questions/{{ question.id }}/delete">
                                         <button class="btn btn-small btn-danger">Delete</button>
                                     </form>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td scope="col" style="width: 5%">Q.{{ loop.index }}, Answer.1</td>
+                                <td scope="col" style="width: 15%">{{ question.answer1 }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional1 }}</td>
+                                <td scope="col" style="width: 5%"></td>
+                            </tr>
+                            <tr>
+                                <td scope="col" style="width: 5%">Q.{{ loop.index }}, Answer.2</td>
+                                <td scope="col" style="width: 15%">{{ question.answer2 }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional2 }}</td>
+                                <td scope="col" style="width: 5%"></td>
+                            </tr>
+                            <tr>
+                                <td scope="col" style="width: 5%">Q.{{ loop.index }}, Answer.3</td>
+                                <td scope="col" style="width: 15%">{{ question.answer3 }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional3 }}</td>
+                                <td scope="col" style="width: 5%"></td>
+                            </tr>
+                            <tr>
+                                <td scope="col" style="width: 5%">Q.{{ loop.index }}, Answer.4</td>
+                                <td scope="col" style="width: 15%">{{ question.answer4 }}</td>
+                                <td scope="col" style="width: 15%" class="hinditext">{{ question.answer_regional4 }}</td>
+                                <td scope="col" style="width: 5%"></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -44,49 +66,36 @@
         <div class="col-md-12">
             <div class="grid simple">
                 <div class="grid-body no-border invoice-body"> <br>
-
                     <form class="" method="post" id="org_questions_form">
                         <div class="row form-row">
                             <div class="col-md-12 form-group">
-                                <input type="text" placeholder="enter new question here" class="form-control text-left" name="question" id="questions" />
-                                <input type="text" placeholder="enter new question in regional language" class="form-control text-left hinditext" name="question_hindi" id="questions_hindi" />
+                                <input type="text" placeholder="enter new question here" class="form-control text-left" name="question"/>
+                                <input type="text" placeholder="enter new question in regional language" class="form-control text-left hinditext" name="question_hindi"/>
                             </div>
-                            <table class="table table-bordered">
-                               <tr>
-                                   <td>
-                                      <b>A</b>  <input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer" />
-                                   </td>
-                                    <td>
-                                      <b>A</b>  <input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer1" />
-                                   </td>
-                               </tr>
+                            <table class="col-md-12 form-group table table-bordered">
                                 <tr>
-                                    <td>
-                                         <b>B</b><input type="text" placeholder="enter new answer here" class="form-control text-left " name="answer" id="answer2" />
-                                    </td>
-                                    <td>
-                                         <b>B</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer3" />
-                                    </td>
+                                    <td>A</td>
+                                    <td><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer1" id="answer"/></td>
+                                    <td><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer_regional1"/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                         <b>C</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer4" />
-                                    </td>
-                                    <td>
-                                         <b>C</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer5" />
-                                    </td>
+                                    <td>B</td>
+                                    <td><input type="text" placeholder="enter new answer here" class="form-control text-left " name="answer2" id="answer2"/></td>
+                                    <td><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer_regional2"/></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                         <b>D</b><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer" id="answer6" />
-                                    </td>
-                                    <td>
-                                         <b>D</b><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer" id="answer7" />
-                                    </td>
+                                    <td>C</td>
+                                    <td><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer3" id="answer3"/></td>
+                                    <td><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer_regional3"/></td>
+                                </tr>
+                                <tr>
+                                    <td>D</td>
+                                    <td><input type="text" placeholder="enter new answer here" class="form-control text-left" name="answer4" id="answer4"/></td>
+                                    <td><input type="text" placeholder="enter new answer in regional language" class="form-control text-left hinditext" name="answer_regional4"/></td>
                                 </tr>
                             </table>
                         </div>
-                        <input type="hidden" width="80px"  value="{{ org.id }}" name="org_id" id="org_id" />
+                        <input type="hidden" value="{{ org.id }}" name="org_id" id="org_id" />
                         <div class="form-actions">
                             <div class="pull-right">
                                 <input class="btn btn-small btn-danger btn-cons" type="submit"/>

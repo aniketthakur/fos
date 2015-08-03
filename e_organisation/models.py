@@ -302,10 +302,21 @@ class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
 
 
 class EsthenosOrgPsychometricTemplateQuestion(db.Document):
-    question= db.StringField(max_length=1024,required=True)
+    question = db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
-    answer = db.StringField(max_length=1024,required=True)
-    answer_regional = db.StringField(max_length=1024,required=True)
+
+    answer1 = db.StringField(max_length=1024,required=True)
+    answer_regional1 = db.StringField(max_length=1024,required=True)
+
+    answer2 = db.StringField(max_length=1024,required=True)
+    answer_regional2 = db.StringField(max_length=1024,required=True)
+
+    answer3 = db.StringField(max_length=1024,required=True)
+    answer_regional3 = db.StringField(max_length=1024,required=True)
+
+    answer4 = db.StringField(max_length=1024,required=True)
+    answer_regional4 = db.StringField(max_length=1024,required=True)
+
     language_type = db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 

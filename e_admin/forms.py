@@ -206,9 +206,9 @@ class AddOrganisationProductForm( Form):
 
 
 class AddOrgGRTTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
+    question = TextField( validators=[v.Length(max=2048)])
+    question_hindi = TextField( validators=[v.Length(max=2048)])
+    org_id = TextField( validators=[ v.Length(max=255)])
 
     def save( self):
         ques=EsthenosOrgGRTTemplateQuestion()
@@ -234,9 +234,9 @@ class AddOrgCGT1TemplateQuestionsForm( Form):
 
 
 class AddOrgCGT2TemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
+    question = TextField( validators=[v.Length(max=2048)])
+    question_hindi = TextField( validators=[v.Length(max=2048)])
+    org_id = TextField( validators=[ v.Length(max=255)])
 
     def save( self):
         ques=EsthenosOrgCGT2TemplateQuestion()
@@ -248,9 +248,9 @@ class AddOrgCGT2TemplateQuestionsForm( Form):
 
 
 class AddOrgTeleCallingTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
+    org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    question = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
+    question_hindi = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
 
     def save( self):
         ques=EsthenosOrgTeleCallingTemplateQuestion()
@@ -262,18 +262,39 @@ class AddOrgTeleCallingTemplateQuestionsForm( Form):
 
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
-    question=TextField( validators=[v.Length(max=2048)])
-    question_hindi=TextField( validators=[v.Length(max=2048)])
-    answer=TextField ( validators=[v.Length(max=2048)])
-    answer_hindi=TextField (validators=[v.Length(max=2048)])
-    org_id=TextField( validators=[ v.Length(max=255)])
+    org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+    question = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
+    question_hindi = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
+
+    answer1 = TextField ( validators=[v.DataRequired(), v.Length(max=2048)])
+    answer_regional1 = TextField (validators=[v.DataRequired(), v.Length(max=2048)])
+
+    answer2 = TextField ( validators=[v.DataRequired(), v.Length(max=2048)])
+    answer_regional2 = TextField (validators=[v.DataRequired(), v.Length(max=2048)])
+
+    answer3 = TextField ( validators=[v.DataRequired(), v.Length(max=2048)])
+    answer_regional3 = TextField (validators=[v.DataRequired(), v.Length(max=2048)])
+
+    answer4 = TextField ( validators=[v.DataRequired(), v.Length(max=2048)])
+    answer_regional4 = TextField (validators=[v.DataRequired(), v.Length(max=2048)])
 
     def save( self):
         ques=EsthenosOrgPsychometricTemplateQuestion()
         ques.question=self.question.data
         ques.question_regional = self.question_hindi.data
-        ques.answer=self.answer.data
-        ques.answer_regional=self.answer_hindi.data
+
+        ques.answer1 = self.answer1.data
+        ques.answer_regional1 = self.answer_regional1.data
+
+        ques.answer2 = self.answer2.data
+        ques.answer_regional2 = self.answer_regional2.data
+
+        ques.answer3 = self.answer3.data
+        ques.answer_regional3 = self.answer_regional3.data
+
+        ques.answer4 = self.answer4.data
+        ques.answer_regional4 = self.answer_regional4.data
+
         ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
         ques.save()
         return ques
