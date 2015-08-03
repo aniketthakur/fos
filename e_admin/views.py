@@ -381,7 +381,7 @@ def admin_organisation_product(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
 @login_required
-def admin_organisation_settings_role(org_id,role_type):
+def admin_organisation_settings_role(org_id, role_type):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -876,7 +876,7 @@ def submit_application(org_id,app_id):
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
 @login_required
-def admin_application_cashflow(org_id,app_id):
+def admin_application_cashflow(org_id, app_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -884,9 +884,8 @@ def admin_application_cashflow(org_id,app_id):
     applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
 
     if len(applications) == 0:
-        redirect("/admin/cbcheck")
+        redirect("/admin/organisation/%s/cbcheck" % org_id)
 
-    app_urls = list()
     application = applications[0]
     kwargs = locals()
     return render_template("admin_cf.html", **kwargs)
@@ -894,35 +893,40 @@ def admin_application_cashflow(org_id,app_id):
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["POST"])
 @login_required
-def cashflow_statusupdate(org_id,app_id):
+def cashflow_statusupdate(org_id, app_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     try:
-        application = EsthenosOrgApplication.objects.filter(application_id = app_id)
+        user = EsthenosUser.objects.get(id=current_user.id)
+        application = EsthenosOrgApplication.objects.filter(application_id=app_id)
         if len(application) >= 0:
             application = application[0]
             status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
+
             if request.form.get("status") == "true":
                 application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
-                application.current_status_updated  = datetime.datetime.now()
+                application.current_status_updated = datetime.datetime.now()
                 application.status = 170
+
             else:
                 application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=180)[0]
                 application.current_status_updated  = datetime.datetime.now()
                 application.status = 170
+
             new_num = int(app_id[-6:])+1
             new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
             new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
-            if len(new_apps) >0:
-                return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/cashflow")
+
+            if len(new_apps) > 0:
+                return redirect("/admin/organisation/%s/application/%s/cashflow" % (org_id, new_id))
+
     except Exception as e:
         print e.message
-    return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/cashflow")
+
+    return redirect("/admin/organisation/%s/application/%s/cashflow" % (org_id, app_id))
 
 
 @admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
@@ -991,7 +995,7 @@ def admin_application_id_track(org_id, app_id):
 
 @admin_views.route('/admin/organisation/<org_id>/cbcheck', methods=["GET"])
 @login_required
-def admin_cbcheck():
+def admin_cbcheck(org_id):
      if session['role'] != "ADMIN":
          abort(403)
 
@@ -1002,7 +1006,7 @@ def admin_cbcheck():
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement', methods=["GET"])
 @login_required
-def admin_disbursement():
+def admin_disbursement(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -1012,7 +1016,7 @@ def admin_disbursement():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/schedule', methods=["GET"])
-def admin_schedule():
+def admin_schedule(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1020,7 +1024,7 @@ def admin_schedule():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/pdf_dpn', methods=["GET"])
-def admin_dpn():
+def admin_dpn(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -1042,7 +1046,7 @@ def admin_dpn():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgement', methods=["GET"])
-def admin_acknowledgement():
+def admin_acknowledgement(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1050,7 +1054,7 @@ def admin_acknowledgement():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgementother', methods=["GET"])
-def admin_acknowledgementother():
+def admin_acknowledgementother(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1058,7 +1062,7 @@ def admin_acknowledgementother():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/hmplppl', methods=["GET"])
-def admin_hmplppl():
+def admin_hmplppl(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1066,7 +1070,7 @@ def admin_hmplppl():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/hmplgrt', methods=["GET"])
-def admin_hmplgrt():
+def admin_hmplgrt(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1074,7 +1078,7 @@ def admin_hmplgrt():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/hmplcashflow', methods=["GET"])
-def admin_hmplcashflow():
+def admin_hmplcashflow(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1090,7 +1094,7 @@ def admin_hmplloancard():
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/hmplsanction', methods=["GET"])
-def admin_hmplsanction():
+def admin_hmplsanction(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1099,7 +1103,7 @@ def admin_hmplsanction():
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/ljlga', methods=["GET"])
 @login_required
-def admin_ljlga():
+def admin_ljlga(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1108,13 +1112,12 @@ def admin_ljlga():
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/lrpassbook', methods=["GET"])
 @login_required
-def admin_lrpassbook():
+def admin_lrpassbook(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
+
     org_name = "Hindusthan Microfinance"
-    usr = EsthenosUser.objects.get(id=c_user.id)
+    usr = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
     try:
@@ -1135,7 +1138,7 @@ def admin_lrpassbook():
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/cgt_grt_pdf', methods=["GET"])
 @login_required
-def admin_disbursement_pdf():
+def admin_disbursement_pdf(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
