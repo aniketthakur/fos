@@ -433,12 +433,12 @@ class EsthenosOrgApplicationStatus(db.Document):
 
 
 class EsthenosOrgApplication(db.Document):
-    center = db.ReferenceField('EsthenosOrgCenter')
-    group = db.ReferenceField('EsthenosOrgGroup')
-    branch = db.ReferenceField('EsthenosOrgBranch')
-    organisation = db.ReferenceField('EsthenosOrg')
     owner = db.ReferenceField('EsthenosUser')
-    product = db.ReferenceField('EsthenosOrgProduct',required=False)
+    group = db.ReferenceField('EsthenosOrgGroup')
+    center = db.ReferenceField('EsthenosOrgCenter')
+    branch = db.ReferenceField('EsthenosOrgBranch')
+    product = db.ReferenceField('EsthenosOrgProduct', required=False)
+    organisation = db.ReferenceField('EsthenosOrg')
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     application_id = db.StringField(max_length=255, required=False,default="")
     upload_type = db.StringField(max_length=512, required=False,default="")

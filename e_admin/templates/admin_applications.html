@@ -9,10 +9,11 @@
         </div>
     </div>
 
+    <form method="post" action="/admin/applications">
     <div class="row">
         <div class="col-md-6 form-group">
-            <select id="source" style="width:100%">
-            {% for org in  organisations %}
+            <select id="source" style="width:100%" name="app-org">
+            {% for org in organisations %}
                 <option value="{{ org.id }}">{{ org.name }}</option>
             {% endfor %}
             </select>
@@ -21,10 +22,10 @@
 
     <div class="row">
         <div class="col-md-3 form-group">
-            <input class="form-control" type="text" placeholder="search by application id">
+            <input class="form-control" type="text" placeholder="search by application id" name="app-id">
         </div>
         <div class="col-md-3 form-group">
-            <select id="group-source" style="width:100%" class="select2">
+            <select id="app-group" style="width:100%" class="select2" name="app-group">
                 <option selected disabled>search by group</option>
                 {% for group in groups %}
                 <option value="{{ group.group_name }}">{{ group.group_name }}</option>
@@ -32,14 +33,18 @@
             </select>
         </div>
         <div class="col-md-4 form-group">
-            <select id="group-source" style="width:100%" class="select2">
+            <select id="app-status" style="width:100%" class="select2" name="app-status">
                 <option selected disabled>search by status</option>
                 {% for status in status_types %}
                 <option value="{{ status.status }}">{{ status.status }}</option>
                 {% endfor %}
             </select>
         </div>
+        <div class="col-md-1 form-group">
+          <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+        </div>
     </div>
+    </form>
 
     <div class="row-fluid">
         <div class="span12">
@@ -94,21 +99,6 @@
 {% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#source').select2()
-                .on("change", function (e) {
-                    // mostly used event, fired to the original element when the value changes
-                    console.log("change val=" + e.val);
-                })
-                .on("select2-close", function () {
-                    var type = $("#source").val();
-                    $.getJSON("/admin/organisation/"+type+"/applications",function(data){
-                        console.log(data);
-                        for(i=0;i < data.length;i++){
-                            console.log(data[i])
-                        }
-                    })
-                });
-
             var responsiveHelper = undefined;
             var breakpointDefinition = {
                 tablet: 1024,
@@ -117,7 +107,6 @@
 
             var tableElement = $('#loan-applications');
             tableElement.dataTable( {
-{#                "sDom": "<'row'<'col-md-6'l T><'col-md-6'f>r>t<'row'<'col-md-12'p i>>",#}
                 "pageLength": 100,
                 "sPaginationType": "bootstrap",
                 "aoColumnDefs": [
@@ -143,7 +132,7 @@
                 }
             });
 
-            $('#loan-applications_wrapper .dataTables_length select').addClass("select2  select2-wrapper span12"); // modify table per page dropdown
+            $('#loan-applications_wrapper .dataTables_length select').addClass("select2 select2-wrapper span12"); // modify table per page dropdown
             $(".select2 ").select2();
         });
     </script>
