@@ -9,7 +9,7 @@
   <div class="grid simple">
     <div class="grid-body no-border invoice-body">
       <div class="row">
-        <form id="cf_action_top" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
+        <form id="cf_action" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
           <div class="col-md-4">
             <div class="form-group">
               <label class="form-label">Application ID</label>
@@ -29,8 +29,8 @@
           <div class="col-md-3 pull-right">
             <div class="form-group">
               <label class="form-label">Cash Flow Verification Pending</label>
-              <a class="btn btn-small btn-block btn-warning form-control cfa_failed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
-              <a class="btn btn-small btn-block btn-success form-control cfa_passed_top" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
+              <a class="btn btn-small btn-block btn-warning form-control cfa_failed" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
+              <a class="btn btn-small btn-block btn-success form-control cfa_passed" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
             </div>
           </div>
         </form>
@@ -54,7 +54,7 @@
           <td>Primary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.primary_income }}">
+              <input type="text" class="form-control text-right section-a" value="{{ application.primary_income }}">
             </div>
           </td>
         </tr>
@@ -63,7 +63,7 @@
           <td>Secondary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.secondary_income }}">
+              <input type="text" class="form-control text-right section-a" value="{{ application.secondary_income }}">
             </div>
           </td>
         </tr>
@@ -72,7 +72,7 @@
           <td>Tertiary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right"  value="{{ application.tertiary_income }}">
+              <input type="text" class="form-control text-right section-a" value="{{ application.tertiary_income }}">
             </div>
           </td>
         </tr>
@@ -81,7 +81,7 @@
           <td>Other income</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_income }}">
+              <input type="text" class="form-control text-right section-a" value="{{ application.other_income }}">
             </div>
           </td>
         </tr>
@@ -92,7 +92,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_income }}" disabled>
+              <input type="text" class="form-control text-right section-a-total" value="{{ application.total_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -102,54 +102,38 @@
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            5
-          </td>
-          <td>
-            Business expense
-          </td>
+          <td class="unseen text-center">5</td>
+          <td>Business expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.business_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.business_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            6
-          </td>
-          <td>
-            Food expense
-          </td>
+          <td class="unseen text-center">6</td>
+          <td>Food expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.food_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.food_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            7
-          </td>
-          <td>
-            Travel expense
-          </td>
+          <td class="unseen text-center">7</td>
+          <td>Travel expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.travel_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.travel_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            8
-          </td>
-          <td>
-            Entertainment expense
-          </td>
+          <td class="unseen text-center">8</td>
+          <td>Entertainment expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.educational_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.educational_expense }}">
             </div>
           </td>
         </tr>
@@ -158,7 +142,7 @@
           <td>Education expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.entertainment_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.entertainment_expense }}">
             </div>
           </td>
         </tr>
@@ -167,20 +151,16 @@
           <td>Medical expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.medical_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.medical_expense }}">
             </div>
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">
-            11
-          </td>
-          <td>
-            Other expense
-          </td>
+          <td class="unseen text-center">11</td>
+          <td>Other expense</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_expense }}">
+              <input type="text" class="form-control text-right section-b" value="{{ application.other_expense }}">
             </div>
           </td>
         </tr>
@@ -192,7 +172,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_expenditure }}" disabled>
+              <input type="text" class="form-control text-right section-b-total" value="{{ application.total_expenditure }}" disabled>
             </div>
           </td>
         </tr>
@@ -206,7 +186,7 @@
           <td>Outstanding-1</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_1 }}" disabled>
+              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_1 }}" disabled>
             </div>
           </td>
         </tr>
@@ -215,7 +195,7 @@
           <td>Outstanding-2</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_2 }}" disabled>
+              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_2 }}" disabled>
             </div>
           </td>
         </tr>
@@ -224,7 +204,7 @@
           <td>Outstanding-3</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_3 }}" disabled>
+              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_3 }}" disabled>
             </div>
           </td>
         </tr>
@@ -233,7 +213,7 @@
           <td>Outstanding-4</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.outstanding_4 }}" disabled>
+              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_4 }}" disabled>
             </div>
           </td>
         </tr>
@@ -245,7 +225,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_outstanding }}" disabled>
+              <input type="text" class="form-control text-right section-c-total" value="{{ application.total_outstanding }}" disabled>
             </div>
           </td>
         </tr>
@@ -259,7 +239,7 @@
           <td>Chit</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_chit }}">
+              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_chit }}">
             </div>
           </td>
         </tr>
@@ -268,7 +248,7 @@
           <td>Insurance</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_insurance }}">
+              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_insurance }}">
             </div>
           </td>
         </tr>
@@ -277,7 +257,7 @@
           <td>EMI</td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.other_outstanding_emi }}">
+              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_emi }}">
             </div>
           </td>
         </tr>
@@ -288,7 +268,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_other_outstanding }}" disabled>
+              <input type="text" class="form-control text-right section-d-total" value="{{ application.total_other_outstanding }}" disabled>
             </div>
           </td>
         </tr>
@@ -298,7 +278,7 @@
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.net_income }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -308,7 +288,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.total_running_loans }}" disabled>
             </div>
           </td>
         </tr>
@@ -318,7 +298,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" disabled>
             </div>
           </td>
         </tr>
@@ -328,7 +308,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" disabled>
             </div>
           </td>
         </tr>
@@ -338,7 +318,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" disabled>
             </div>
           </td>
         </tr>
@@ -348,7 +328,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" disabled>
             </div>
           </td>
         </tr>
@@ -358,7 +338,7 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text"  class="form-control text-right" value="{{ application.attendence_percentage }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.attendence_percentage }}" disabled>
             </div>
           </td>
         </tr>
@@ -368,7 +348,7 @@
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -378,39 +358,12 @@
           </td>
           <td>
             <div class="controls  {% if application.loan_eligibility_based_on_company_policy < application.applied_loan %}has-error{% endif %}">
-              <input type="text"  class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" disabled>
+              <input type="text" class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" disabled>
             </div>
           </td>
         </tr>
         </tbody>
       </table>
-      <div class="row">
-        <form id="cf_action_bottom"  action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="form-label">Application ID</label>
-              <div class="controls">
-                <input type="text" value="{{ app_id }}" class="form-control" disabled>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="form-label">Name of the Customer</label>
-              <div class="controls">
-                <input type="text" class="form-control" value="{{ application.applicant_name }}" disabled>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 pull-right">
-            <div class="form-group">
-                <label class="form-label">Cash Flow Verification Pending</label>
-              <a class="btn btn-small btn-block btn-warning form-control cfa_failed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-times"></i>CFA Failed</a></a>
-              <a class="btn btn-small btn-block btn-success form-control cfa_passed_bottom" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
   </div>
 {% endblock %}
@@ -419,28 +372,42 @@
 {% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-           $(".cfa_failed_top").click(function(e){
-               e.preventDefault();
-               $("#cf_action_top").append("<input type='hidden' name='status' value='false'>");
-                $("#cf_action_top").submit()
-               return false;
-           });
-            $(".cfa_failed_bottom").click(function(e){
+            $(".section-a").on("change", function(e){
+              var total = 0.0;
+              $(".section-a").each(function(index){
+                total += parseFloat($(this).val());
+              });
+              $(".section-a-total").val(total);
+            });
+
+            $(".section-b").on("change", function(e){
+              var total = 0.0;
+              $(".section-b").each(function(index){
+                total += parseFloat($(this).val());
+              });
+              $(".section-b-total").val(total);
+            });
+
+            $(".section-d").on("change", function(e){
+              var total = 0.0;
+              $(".section-d").each(function(index){
+                total += parseFloat($(this).val());
+              });
+              $(".section-d-total").val(total);
+            });
+
+            $(".cfa_failed").click(function(e){
                 e.preventDefault();
-                $("#cf_action_bottom").append("<input type='hidden' name='status' value='false'>");
-                $("#cf_action_bottom").submit()
+                $("#cf_action")
+                    .append("<input type='hidden' name='status' value='false'>")
+                    .submit();
                 return false;
             });
-            $(".cfa_passed_top").click(function(e){
+            $(".cfa_passed").click(function(e){
                 e.preventDefault();
-                $("#cf_action_top").append("<input type='hidden' name='status' value='true'>");
-                $("#cf_action_top").submit()
-                return false;
-            });
-            $(".cfa_passed_bottom").click(function(e){
-                e.preventDefault();
-                $("#cf_action_bottom").append("<input type='hidden' name='status' value='true'>");
-                $("#cf_action_bottom").submit()
+                $("#cf_action")
+                    .append("<input type='hidden' name='status' value='true'>")
+                    .submit();
                 return false;
             });
         });
