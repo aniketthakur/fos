@@ -37,9 +37,7 @@
                                     <tr>
                                         <input type="hidden">
                                         <td class="v-align-middle"><span class="muted">{{ loop.index }}</span></td>
-                                        <td class="v-align-middle clickable-row">
-                                          <ins><a class="muted" href='/download_disbursement?group={{ group.group_id }}'>{{ group.group_id }}</a></ins>
-                                        </td>
+                                        <td class="v-align-middle">{{ group.group_id }}</td>
                                         <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span></td>
                                         <td><span class="muted">{{ group.created_at|dateformat }}</span></td>
                                         <td>
@@ -68,9 +66,9 @@
                                                     <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
                                                     <li>
                                                         {% if group.disbursement_pdf_link == "#" %}
-                                                            <a class="clickable-row"  href="{{ group.disbursement_pdf_link }}" >Download</a>
+                                                            <a href="{{ group.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a class="clickable-row"  type="button" href="/download_disbursement?group={{ group.group_id }}" >Download</a>
+                                                            <a type="button" href="/download_disbursement?group={{ group.group_id }}" >Download</a>
                                                         {% endif %}
                                                     </li>
                                                     <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
@@ -94,11 +92,6 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".clickable-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-
-            // select the file input (using a id would be faster)
             $('.cheque_no').change(function() {
                 // select the form and submit
                 console.log( $(this).attr("data-id"));
