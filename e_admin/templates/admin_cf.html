@@ -274,11 +274,11 @@
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Net Income (A-B-D)</h6>
+            <h6 class="semi-bold">Net Income (A -B -D)</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right" value="{{ application.net_income }}" disabled>
+              <input type="text" class="form-control text-right section-net-income" value="{{ application.net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -348,7 +348,7 @@
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
+              <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -378,6 +378,8 @@
                 total += parseFloat($(this).val());
               });
               $(".section-a-total").val(total);
+              update_net_income();
+              update_loan_eligibility();
             });
 
             $(".section-b").on("change", function(e){
@@ -386,6 +388,8 @@
                 total += parseFloat($(this).val());
               });
               $(".section-b-total").val(total);
+              update_net_income();
+              update_loan_eligibility();
             });
 
             $(".section-d").on("change", function(e){
@@ -394,7 +398,25 @@
                 total += parseFloat($(this).val());
               });
               $(".section-d-total").val(total);
+              update_net_income();
+              update_loan_eligibility();
             });
+
+            function update_net_income() {
+              var total_income = parseFloat($(".section-a-total").val());
+              var total_liability = parseFloat($(".section-b-total").val());
+              var total_expenditure = parseFloat($(".section-d-total").val());
+              var net_income = total_income - total_liability - total_expenditure;
+              $(".section-net-income").val(net_income);
+            }
+
+            function update_loan_eligibility() {
+              var total_income = parseFloat($(".section-a-total").val());
+              var total_liability = parseFloat($(".section-b-total").val());
+              var total_expenditure = parseFloat($(".section-d-total").val());
+              var total_loan_eligibility = (total_income - total_liability - total_expenditure) / 2  * 24;
+              $(".section-loan-eligibility").val(total_loan_eligibility);
+            }
 
             $(".cfa_failed").click(function(e){
                 e.preventDefault();
