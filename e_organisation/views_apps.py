@@ -47,50 +47,52 @@ def application_status():
 @organisation_views.route('/application/<app_id>/cashflow', methods=["GET"])
 @login_required
 def admin_application_cashflow(app_id):
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
 
+  user = EsthenosUser.objects.get(id=current_user.id)
   applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=app_id)
+
   if len(applications) == 0:
     redirect("/application_status")
 
-  kwargs = locals()
   app_urls = list()
   application = applications[0]
+
+  kwargs = locals()
   return render_template("apps/application_cashflow.html", **kwargs)
 
 
 @organisation_views.route('/application/<app_id>/cashflow', methods=["POST"])
 @login_required
 def cashflow_statusupdate(app_id):
-  username = current_user.name
-  c_user = current_user
-  user = EsthenosUser.objects.get(id=c_user.id)
-  try:
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     application = EsthenosOrgApplication.objects.filter(application_id=app_id)
+
     if len(application) >= 0:
       application = application[0]
       status = EsthenosOrgApplicationStatus(status=application.current_status, updated_on=datetime.datetime.now())
       status.save()
       application.timeline.append(status)
+
       if request.form.get("status") == "true":
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
         application.current_status_updated = datetime.datetime.now()
         application.status = 170
+
       else:
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=180)[0]
         application.current_status_updated = datetime.datetime.now()
         application.status = 170
+
       application.save()
       new_num = int(app_id[-6:]) + 1
       new_id = app_id[0:len(app_id) - 6] + "{0:06d}".format(new_num)
       new_apps = EsthenosOrgApplication.objects.filter(application_id=new_id)
+
       if len(new_apps) > 0:
-        return redirect("/application/" + new_id + "/cashflow")
-  except Exception as e:
-    print e.message
-  return redirect("/application/" + app_id + "/cashflow")
+        return redirect("/application/%s/cashflow" % new_id)
+
+    return redirect("/application/%s/cashflow" % app_id)
 
 
 @organisation_views.route('/application/<app_id>/track', methods=["GET"])
