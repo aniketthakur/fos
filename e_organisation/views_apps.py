@@ -74,6 +74,37 @@ def cashflow_statusupdate(app_id):
       status.save()
       application.timeline.append(status)
 
+      application.primary_income = float(request.form.get("primary_income"))
+      application.tertiary_income = float(request.form.get("tertiary_income"))
+      application.secondary_income = float(request.form.get("secondary_income"))
+      application.other_income = float(request.form.get("other_income"))
+      application.total_income = application.primary_income \
+                                 + application.secondary_income \
+                                 + application.tertiary_income \
+                                 + application.other_income
+
+      application.food_expense = float(request.form.get("food_expense"))
+      application.travel_expense = float(request.form.get("travel_expense"))
+      application.medical_expense = float(request.form.get("medical_expense"))
+      application.business_expense = float(request.form.get("business_expense"))
+      application.educational_expense = float(request.form.get("educational_expense"))
+      application.entertainment_expense = float(request.form.get("entertainment_expense"))
+      application.other_expense = float(request.form.get("other_expense"))
+      application.total_expenditure = application.food_expense \
+                                 + application.travel_expense \
+                                 + application.medical_expense \
+                                 + application.business_expense \
+                                 + application.educational_expense \
+                                 + application.entertainment_expense \
+                                 + application.other_expense
+
+      application.other_outstanding_emi = float(request.form.get("other_outstanding_emi"))
+      application.other_outstanding_chit = float(request.form.get("other_outstanding_chit"))
+      application.other_outstanding_insurance = float(request.form.get("other_outstanding_insurance"))
+      application.total_other_outstanding = application.other_outstanding_emi + \
+                                            application.other_outstanding_chit + \
+                                            application.other_outstanding_insurance
+
       if request.form.get("status") == "true":
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
         application.current_status_updated = datetime.datetime.now()
@@ -85,12 +116,6 @@ def cashflow_statusupdate(app_id):
         application.status = 170
 
       application.save()
-      new_num = int(app_id[-6:]) + 1
-      new_id = app_id[0:len(app_id) - 6] + "{0:06d}".format(new_num)
-      new_apps = EsthenosOrgApplication.objects.filter(application_id=new_id)
-
-      if len(new_apps) > 0:
-        return redirect("/application/%s/cashflow" % new_id)
 
     return redirect("/application/%s/cashflow" % app_id)
 

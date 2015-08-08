@@ -8,8 +8,8 @@
 
   <div class="grid simple">
     <div class="grid-body no-border invoice-body">
+      <form id="cf_action" action="/application/{{ app_id }}/cashflow" method="post">
       <div class="row">
-        <form id="cf_action" action="/admin/organisation/{{ org_id }}/application/{{ app_id }}/cashflow" method="post">
           <div class="col-md-4">
             <div class="form-group">
               <label class="form-label">Application ID</label>
@@ -33,17 +33,16 @@
               <a class="btn btn-small btn-block btn-success form-control cfa_passed" data-id="{{ app_id }}" type="button" href="#"><i class="fa fa-check"></i>CFA Passed</a></a>
             </div>
           </div>
-        </form>
       </div>
       <table class="table" cols=3>
-        <tbody>
         <thead>
-        <tr>
-          <th style="width:60px" class="unseen text-center"></th>
-          <th class="text-left"></th>
-          <th style="width:150px"></th>
-        </tr>
+          <tr>
+            <th style="width:60px" class="unseen text-center"></th>
+            <th class="text-left"></th>
+            <th style="width:150px"></th>
+          </tr>
         </thead>
+        <tbody>
         <tr>
           <td colspan="3" >
             <h4 class="semi-bold">(A) Total Gross Income said at the time of Sourcing</h4>
@@ -54,7 +53,7 @@
           <td>Primary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" value="{{ application.primary_income }}">
+              <input type="text" class="form-control text-right section-a" name="primary_income" value="{{ application.primary_income }}">
             </div>
           </td>
         </tr>
@@ -63,7 +62,7 @@
           <td>Secondary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" value="{{ application.secondary_income }}">
+              <input type="text" class="form-control text-right section-a" name="secondary_income" value="{{ application.secondary_income }}">
             </div>
           </td>
         </tr>
@@ -72,7 +71,7 @@
           <td>Tertiary Business Income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" value="{{ application.tertiary_income }}">
+              <input type="text" class="form-control text-right section-a" name="tertiary_income" value="{{ application.tertiary_income }}">
             </div>
           </td>
         </tr>
@@ -81,7 +80,7 @@
           <td>Other income</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" value="{{ application.other_income }}">
+              <input type="text" class="form-control text-right section-a" name="other_income" value="{{ application.other_income }}">
             </div>
           </td>
         </tr>
@@ -106,7 +105,7 @@
           <td>Business expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.business_expense }}">
+              <input type="text" class="form-control text-right section-b" name="business_expense" value="{{ application.business_expense }}">
             </div>
           </td>
         </tr>
@@ -115,7 +114,7 @@
           <td>Food expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.food_expense }}">
+              <input type="text" class="form-control text-right section-b" name="food_expense" value="{{ application.food_expense }}">
             </div>
           </td>
         </tr>
@@ -124,25 +123,25 @@
           <td>Travel expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.travel_expense }}">
+              <input type="text" class="form-control text-right section-b" name="travel_expense" value="{{ application.travel_expense }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">8</td>
-          <td>Entertainment expense</td>
+          <td>Education expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.educational_expense }}">
+              <input type="text" class="form-control text-right section-b" name="educational_expense" value="{{ application.educational_expense }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">9</td>
-          <td>Education expense</td>
+          <td>Entertainment expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.entertainment_expense }}">
+              <input type="text" class="form-control text-right section-b" name="entertainment_expense" value="{{ application.entertainment_expense }}">
             </div>
           </td>
         </tr>
@@ -151,7 +150,7 @@
           <td>Medical expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.medical_expense }}">
+              <input type="text" class="form-control text-right section-b" name="medical_expense" value="{{ application.medical_expense }}">
             </div>
           </td>
         </tr>
@@ -160,7 +159,7 @@
           <td>Other expense</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" value="{{ application.other_expense }}">
+              <input type="text" class="form-control text-right section-b" name="other_expense" value="{{ application.other_expense }}">
             </div>
           </td>
         </tr>
@@ -239,7 +238,7 @@
           <td>Chit</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_chit }}">
+              <input type="text" class="form-control text-right section-d" name="other_outstanding_chit" value="{{ application.other_outstanding_chit }}">
             </div>
           </td>
         </tr>
@@ -248,7 +247,7 @@
           <td>Insurance</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_insurance }}">
+              <input type="text" class="form-control text-right section-d" name="other_outstanding_insurance" value="{{ application.other_outstanding_insurance }}">
             </div>
           </td>
         </tr>
@@ -257,7 +256,7 @@
           <td>EMI</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-d" value="{{ application.other_outstanding_emi }}">
+              <input type="text" class="form-control text-right section-d" name="other_outstanding_emi" value="{{ application.other_outstanding_emi }}">
             </div>
           </td>
         </tr>
@@ -364,6 +363,7 @@
         </tr>
         </tbody>
       </table>
+      </form>
     </div>
   </div>
 {% endblock %}

@@ -391,7 +391,7 @@ class AddApplicationMobile(Form):
     def save( self):
         c_user = current_user
         user = EsthenosUser.objects.get(id=c_user.id)
-        app=EsthenosOrgApplication(applicant_name=self.name.data)
+        app = EsthenosOrgApplication(applicant_name=self.name.data)
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
@@ -404,6 +404,7 @@ class AddApplicationMobile(Form):
         app.organisation = user.organisation
         app.group_leader_cell=self.group_leader_number.data
         app.group_leader_cell=self.group_leader_name.data
+
         try:
             app.group_size=int(self.group_size.data)
         except Exception as e:
@@ -413,9 +414,9 @@ class AddApplicationMobile(Form):
             app.product = products[0]
         else:
             app.product = EsthenosOrgProduct.objects.all()[0]
-        #app.center = center
-        app.group = group
+
         app.owner = user
+        app.group = group
 
         if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
             app.guarantor_borrowers_are_nominee = "NO"
@@ -424,17 +425,17 @@ class AddApplicationMobile(Form):
             app.gurantors_nominee_age = self.gurantors_nominee_age.data
         else:
             app.guarantor_borrowers_are_nominee = "YES"
+
         app.borrowers_nominee_name = self.borrowers_nominee_name.data
         app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
         app.member_pincode=self.pincode.data
         app.male_count= self.male_count.data
         app.female_count= self.female_count.data
+
         if self.how_long_are_you_staying_in_house__in_years.data == "":
             app.house_stay_duration = 0.0
         else:
             app.house_stay_duration  = int(self.how_long_are_you_staying_in_house__in_years.data)
-
-
 
         if self.financial_liabilities_chits.data == "":
             app.other_outstanding_chit = 0.0
@@ -463,8 +464,10 @@ class AddApplicationMobile(Form):
         app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
+
         if self.gurranter_s_age.data == "":
             self.gurranter_s_age.data = 0.0
+
         app.gurranter_s_age = float(self.gurranter_s_age.data)
         app.member_disability = self.physical_disability_member.data
         app.village_electricity = self.village_information_electricity_hours.data
@@ -573,7 +576,6 @@ class AddApplicationMobile(Form):
         else:
             app.tertiary_expenses =float(self.tertiary_business_expenses_monthly.data)
 
-
         app.gender = self.gender.data
         app.other_income = 0
         app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
@@ -620,46 +622,43 @@ class AddApplicationMobile(Form):
         else:
             app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data.strip())
 #       app.other_outstanding_emi =
-        app.total_other_outstanding = app.other_outstanding_chit+app.other_outstanding_insurance+app.other_outstanding_emi
+        app.total_other_outstanding = app.other_outstanding_chit + app.other_outstanding_insurance + app.other_outstanding_emi
         app.net_income = app.total_income - app.total_expenditure - app.total_other_outstanding
         app.loan_eligibility_based_on_net_income = app.net_income * app.product.number_installments
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
         app.timeline.append(status)
         data_kyc=  self.kyc.data.replace("'", '"').replace('u"', '"')
-        print data_kyc
+
         kyc_json = json.loads(data_kyc)
         if kyc_json.has_key("aadhaar"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.kyc_type = "AADHAAR"
-            """
-            {"uid":"454919121002","lm":"NEAR JERI MERI MANDIR",
-    "aadhar_f":"55449ee2207ffc05ff24e863","aadhar_b":"55449eee207ffc05ff24e864","pc":"421306","name":"Nitin Gopalakrishnan",
-    "state":"Maharashtra","yob":"1988","loc":"TISGAON","gender":"M","house":"ROOM NO 2, RAGAM APARTMENT","vtc":"KALYAN EAST",
-    "dist":"Thane"}
 
-            {'kyc': {'aadhaar': {'vtc': 'Honavar', 'co': 'S/O Mahesh Palekar', 'uid': '428417881417', 'gender': 'M', 'lm': 'Kasarkod', 'yob': '1991', 'pc': '581334', 'state': 'Karnataka', 'street': 'Tonka', 'house': '#379', 'dist': 'Uttara Kannada', 'name': 'Swaraj Mahesh Palekar'}, 'gurrantor': {}}}
-
-            """
             try:
                 kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
                 kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
             except:
                 print "no aadhaar images"
+
             kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
             kyc_obj.dob = kyc_json["aadhaar"]["yob"]
             kyc_obj.name = kyc_json["aadhaar"]["name"]
             kyc_obj.gender = kyc_json["aadhaar"]["gender"]
+
             if kyc_json["aadhaar"].has_key("house"):
                 kyc_obj.address1 = kyc_json["aadhaar"]["house"]
+
             if kyc_json["aadhaar"].has_key("lm"):
                 kyc_obj.address1 = kyc_json["aadhaar"]["lm"]
+
             kyc_obj.state = kyc_json["aadhaar"]["state"]
             kyc_obj.dist = kyc_json["aadhaar"]["dist"]
+
             if kyc_json["aadhaar"].has_key("vtc"):
                 kyc_obj.taluk = kyc_json["aadhaar"]["vtc"]
+
             kyc_obj.pincode = kyc_json["aadhaar"]["pc"]
-            #kyc_obj.raw = kyc_json[0]
             app.kyc_1 = kyc_obj
 
 
@@ -667,11 +666,11 @@ class AddApplicationMobile(Form):
         if kyc_json.has_key("pan") :
             kyc_obj.kyc_type = "PAN"
             kyc_obj.image_id_f = kyc_json["pan"]["pancard_f"]
+
         elif kyc_json.has_key("voters"):
             kyc_obj.kyc_type = "VOTERS"
             kyc_obj.image_id_f = kyc_json["voters"]["votercard_f"]
             kyc_obj.image_id_b = kyc_json["voters"]["votercard_b"]
-
         app.kyc_2 = kyc_obj
 
         if kyc_json.has_key("gurrantor") and kyc_json["gurrantor"].has_key("gurrantors_f")and kyc_json["gurrantor"].has_key("gurrantors_b"):
@@ -706,7 +705,3 @@ class AddApplicationMobile(Form):
         app.save()
 
         return None
-
-
-
-        #fields present in form and not in models
