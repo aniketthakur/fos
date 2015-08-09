@@ -273,7 +273,7 @@ class EsthenosOrgGroupGRTSession(db.Document):
 class EsthenosOrgGroupCGT1Session(db.Document):
     organisation = db.ReferenceField('EsthenosOrg',required=True)
     group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
+    questions = db.DictField(required=False)
     score = db.FloatField(default=0,required=False)
 
 

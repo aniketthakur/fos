@@ -6,28 +6,32 @@ from views_base import *
 def center_cgt1():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
+
     data = json.loads(request.json)
     center_id = data['center_id']
     reqstatus = data['status']
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
     applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=190)
+
     for app in applications:
-        print app.application_id
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(
+          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
+          updated_on=datetime.datetime.now()
+        )
         status.save()
         app.timeline.append(status)
 
-        if reqstatus ==  "true":
+        if reqstatus == "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 220
+
         else:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 210
+
         app.save()
 
     content = {'response': 'OK'}
@@ -39,27 +43,32 @@ def center_cgt1():
 def group_cgt1():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    c_user = current_user
+
     data = json.loads(request.json)
     group_id = data['group_id']
     reqstatus = data['status']
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
+    applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=190)
 
     for app in applications:
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(
+          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
+          updated_on=datetime.datetime.now()
+        )
         status.save()
         app.timeline.append(status)
 
-        if reqstatus ==  "true":
+        if reqstatus == "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 220
+
         else:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 210
+
         app.save()
 
     content = {'response': 'OK'}
@@ -89,7 +98,7 @@ def cgt1_question(group_id):
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
-    org=user.organisation
+    org = user.organisation
     if request.method == "GET":
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
@@ -102,15 +111,15 @@ def cgt1_question(group_id):
         total_score= 0.0
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
         centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-        grt_session,status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group,organisation=org)
+        group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+        grt_session, status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group, organisation=org)
         question_dict = dict()
 
         for v in request.form:
             i = i + 1
-            (k, v) = (v,request.form[v])
+            (k, v) = (v, request.form[v])
             if k.startswith("rating"):
-                key =  k.split("rating")[1]
+                key = k.split("rating")[1]
                 question_dict[key] = str(v)
                 total_score = total_score + int(v)
 
