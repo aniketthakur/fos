@@ -139,6 +139,17 @@ def admin_reports():
         return output
 
 
+@admin_views.route('/admin/cbcheck', methods=["GET"])
+@login_required
+def admin_cbcheck():
+     if session['role'] != "ADMIN":
+         abort(403)
+
+     user = EsthenosUser.objects.get(id=current_user.id)
+     kwargs = locals()
+     return render_template("admin_cbcheck.html", **kwargs)
+
+
 @admin_views.route('/admin/employees', methods=["GET","POST"])
 @login_required
 def admin_employees_add():
@@ -1017,17 +1028,6 @@ def admin_application_id_track(org_id, app_id):
     application = EsthenosOrgApplication.objects.get(organisation=organisation,application_id=app_id)
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/cbcheck', methods=["GET"])
-@login_required
-def admin_cbcheck(org_id):
-     if session['role'] != "ADMIN":
-         abort(403)
-
-     user = EsthenosUser.objects.get(id=current_user.id)
-     kwargs = locals()
-     return render_template("admin_cbcheck.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement', methods=["GET"])
