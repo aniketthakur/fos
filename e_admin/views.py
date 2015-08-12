@@ -194,7 +194,7 @@ def admin_organisations():
         return render_template("admin_organisation.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/details', methods=["GET"] )
+@admin_views.route('/admin/organisation/<org_id>/update', methods=["GET"] )
 @login_required
 def admin_org_details(org_id):
     if session['role'] != "ADMIN":
