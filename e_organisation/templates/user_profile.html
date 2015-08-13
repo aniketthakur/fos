@@ -14,7 +14,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Photo</label>
                   <div class="col-lg-9 media">
-                    <div class="bg-light pull-left text-center media-large thumb-large"><img src="{% if c_user.profile_pic  %}{{ c_user.profile_pic }}{% else %}/static/images/avatar.png{% endif %}"  width="80px" /></div>
+                    <div class="bg-light pull-left text-center media-large thumb-large"><img src="{% if current_user.profile_pic  %}{{ current_user.profile_pic }}{% else %}/static/images/avatar.png{% endif %}"  width="80px" /></div>
                     <div class="media-body">
                       <input type="file" name="file" title="Change" class="btn btn-small btn-sm btn-info m-b-small"><br>
                       <button class="btn btn-small btn-sm btn-default">Delete</button>
