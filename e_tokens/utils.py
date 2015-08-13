@@ -20,6 +20,7 @@ def feature_processor():
 
 def feature_enable(feature):
     def decorator(view_function):
+        @wraps(view_function)
         def decorated(*args, **kwargs):
             if app.config["FEATURES"][feature]:
                 return view_function(*args, **kwargs)
