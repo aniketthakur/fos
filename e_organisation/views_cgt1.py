@@ -144,7 +144,9 @@ def cgt1_application_download(group_id):
     tmp_files = list()
     for app in applications:
         tf = dir + app.application_id + "_application.pdf"
-        downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/%s" % app.application_id, tf)
+
+        #TODO remove localhost
+        downloadFile("http://localhost:8080/internal/pdf_application/%s" % app.application_id, tf)
         tmp_files.append(tf)
 
     tf = "%s/%s" % (tempfile.mkdtemp( prefix='zip_'), group_id)

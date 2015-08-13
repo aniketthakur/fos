@@ -122,6 +122,34 @@ def grt_question(group_id):
         return redirect("/check_grt")
 
 
+@organisation_views.route('/check_grt/group/<group_id>/download/<disbursement_date>', methods=["GET"])
+@login_required
+def grt_application_download(group_id, disbursement_date):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    tmp_files = list()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+
+    dir = "%s/" % tempfile.mkdtemp(prefix='pdf_')
+    tfa = dir + group_id + "_agreement.pdf"
+
+    #TODO remove localhost
+    downloadFile("http://localhost:8080/internal/pdf_la/%s/%s" % (group_id, disbursement_date), tfa)
+    tmp_files.append(tfa)
+
+    tf = "%s/%s" % (tempfile.mkdtemp(prefix='zip_'), group_id)
+    zip_custom(dir, tf)
+    filehandle = open(tf + ".zip", 'rb')
+
+    data = StringIO.StringIO(filehandle.read())
+    output = make_response(data.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
+    output.headers["Content-type"] = "application/zip"
+    return output
+
+
 @organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
 @login_required
 def check_grt_applicant(group_id):

@@ -42,7 +42,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><a class="btn btn-small btn-info btn-download-la" data-id="{{ group.group_id }}" href="#" >Download Agreement</a></td>
+                                        <td><a class="btn btn-small btn-info btn-download-la" data-id="{{ group.group_id }}" href="#">Download Agreement</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -132,8 +132,16 @@
             });
             $(".btn-download-la").click(function(e){
                 e.preventDefault();
-                var url = "/grt_agreement_download?group_id="+$(this).attr("data-id")+"&disbursement_date="+$("#"+$(this).attr("data-id")+"grt_date").val();
-                var redirectWindow = window.open(url, '_blank');
+                var group_id = $(this).attr("data-id");
+
+                var group_date = $("#" + group_id + "grt_date").val();
+                if (group_date == '' || group_date == undefined) {
+                  alert("please select agreement download date");
+                  return;
+                }
+
+                var download_url = "/check_grt/group/" + group_id + "/download/" + group_date;
+                var redirectWindow = window.open(download_url);
                 redirectWindow.location;
             });
         });
