@@ -489,10 +489,10 @@ class EsthenosOrgApplication(db.Document):
     state_id = db.StringField(max_length=512, required=False,default="")
     region_name = db.StringField(max_length=512, required=False,default="")
     region_id  = db.StringField(max_length=512, required=False,default="")
-    cm_id  = db.StringField(max_length=512, required=False,default="")
-    cm_cell_no  = db.StringField(max_length=512, required=False,default="")
-    repeat_application_id   = db.StringField(max_length=512, required=False,default="")
-    repayment_method  = db.StringField(max_length=512, required=False,default="")
+    cm_id = db.StringField(max_length=512, required=False,default="")
+    cm_cell_no = db.StringField(max_length=512, required=False,default="")
+    repeat_application_id = db.StringField(max_length=512, required=False,default="")
+    repayment_method = db.StringField(max_length=512, required=False,default="")
 
     primary_income = db.FloatField(default=0.0)
     secondary_income = db.FloatField(default=0.0)
@@ -615,7 +615,7 @@ class EsthenosOrgApplication(db.Document):
     t_expense=db.FloatField(default=0.0)
     i_total=db.FloatField(default=0.0)
     e_total=db.FloatField(default=0.0)
-    member_id_proof_number=db.StringField(max_length=512, required=False,default="")
+    member_id_proof_number = db.StringField(max_length=512, required=False,default="")
     house_stay_duration = db.FloatField(default=0.0)
 
     gurranter_s_sex = db.StringField(max_length=10, required=False,default="")
