@@ -130,6 +130,34 @@ def cgt1_question(group_id):
         return redirect("/check_cgt1")
 
 
+@organisation_views.route('/check_cgt1/group/<group_id>/download', methods=["GET"])
+@login_required
+def cgt1_application_download(group_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=100)
+
+    dir = "%s/" % tempfile.mkdtemp(prefix='pdf_')
+    tmp_files = list()
+    for app in applications:
+        tf = dir + app.application_id + "_application.pdf"
+        downloadFile("http://hindusthan.esthenos.com/internal/pdf_application/%s" % app.application_id, tf)
+        tmp_files.append(tf)
+
+    tf = "%s/%s" % (tempfile.mkdtemp( prefix='zip_'), group_id)
+    zip_custom(dir, tf)
+    filehandle = open(tf+".zip", 'rb')
+
+    data = StringIO.StringIO(filehandle.read())
+    output = make_response(data.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
+    output.headers["Content-type"] = "application/zip"
+    return output
+
+
 @organisation_views.route('/check_cgt1/group/<group_id>', methods=["GET"])
 @login_required
 def check_cgt1_applicant(group_id):

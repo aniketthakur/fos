@@ -37,7 +37,7 @@ def calculate_age(born):
         return today.year - born.year
 
 
-def downloadFile(url, outfile) :
+def downloadFile(url, outfile):
     with open(outfile, 'wb') as f:
         start = time.clock()
         r = requests.get(url, stream=True)
@@ -51,7 +51,7 @@ def downloadFile(url, outfile) :
                 f.write(chunk)
                 done = int(50 * int(dl) / int(total_length))
                 sys.stdout.write("\r[%s%s] %s bps" % ('=' * done, ' ' * (50-done), dl//(time.clock() - start)))
-                print ''
+
     return time.clock() - start
 
 
