@@ -3,15 +3,31 @@
 
 {% block maincontents %}
     <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>CGT2 <span class="semi-bold">Applications</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <input type="text" class="form-control" placeholder="Search By Group Id">
+        </div>
+        <div class="col-md-4 form-group">
+            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <input type="text" class="form-control" placeholder="Search By Group Name">
+        </div>
+        <div class="col-md-4 form-group">
+            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
             <div class="grid simple ">
-                <div class="grid-title no-border">
-                    <h1>CGT2 <span class="semi-bold">Applications</span></h1>
-                </div>
                 <div class="grid-body no-border">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input name="groupName" id="i_groupNameNew" type="text"  class="form-control" placeholder="Search By Group Name">
                             <table class="table no-more-tables ">
                                 <thead>
                                 <tr>
@@ -36,14 +52,20 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>CGT2 <span class="semi-bold">Applications Results</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
                 <div class="grid-body no-border">
-                    <h1>CGT2 <span class="semi-bold">Applications Results</span></h1>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input name="groupName" id="i_groupName" type="text"  class="form-control" placeholder="Search By Group Name">
                             <table class="table no-more-tables ">
                                 <thead>
                                 <tr>
@@ -76,8 +98,6 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
