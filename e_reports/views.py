@@ -22,7 +22,7 @@ def get_application_headers():
     headers.append("Age")
     headers.append("DOB")
     headers.append("Address")
-    headers.append("Member Telephone")
+    headers.append("Member Mobile Phone")
     headers.append("Member Tele Code")
     headers.append("Member Country")
     headers.append("Member State")
@@ -30,7 +30,6 @@ def get_application_headers():
     headers.append("Member Taluk")
     headers.append("Member Village")
     headers.append("Member Relationship Status")
-    headers.append("Telephone Number")
 
     headers.append("Applied Loan")
     headers.append("Religion")
@@ -131,7 +130,7 @@ def get_application_headers():
     headers.append("Village Financial Institution")
     headers.append("Village Sanitation")
     headers.append("Family assets: No of Cows")
-    headers.append("Family assets: No of Cows")
+    headers.append("Family assets: No of Sheeps")
     headers.append("Family assets: Land(Acres)")
     headers.append("Family assets: Orchard(Acres)")
     headers.append("Financial Liabilities-Friends and Family")
@@ -157,7 +156,6 @@ def get_application_rowdata(app):
     row_data.append(app["member_taluk"])
     row_data.append(app["member_village"])
     row_data.append(app["member_relationship_status"])
-    row_data.append(app["member_telephone"])
 
     row_data.append(app["applied_loan"])
     row_data.append(app["religion"])
