@@ -404,42 +404,42 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         dir = dir+"/"
         tf = dir+ "dpn.pdf"
         #generate dpn here
-        downloadFile("http://demo.esthenos.com/internal/pdf_dpn/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_dpn/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        downloadFile("http://demo.esthenos.com/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
+        downloadFile("http://localhost:8080/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
         tmp_files.append(tf)
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        downloadFile("http://demo.esthenos.com/internal/pdf_sl/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_sl/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        downloadFile("http://demo.esthenos.com/internal/pdf_pf/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_pf/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        downloadFile("http://demo.esthenos.com/internal/pdf_if/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_if/"+group_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"hccs_receipt.pdf"
-        downloadFile("http://demo.esthenos.com/internal/pdf_hccs_reciept/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_hccs_reciept/"+group_id,tf)
         tmp_files.append(tf)
 
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
-            print "http://demo.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
-            downloadFile("http://demo.esthenos.com/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
+            print "http://localhost:8080/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
+            downloadFile("http://localhost:8080/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
             tmp_files.append(tf)
 
             tf = dir+ app.application_id+"_application.pdf"
-            downloadFile("http://demo.esthenos.com/internal/pdf_application/"+app.application_id,tf)
+            downloadFile("http://localhost:8080/internal/pdf_application/"+app.application_id,tf)
             tmp_files.append(tf)
 
 
