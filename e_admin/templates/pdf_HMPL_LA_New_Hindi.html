@@ -1,11 +1,12 @@
 {% extends "base_pdf.html" %}
-{% block css_sheets %}{{ super() }}
+
+
+{% block css_sheets %}
 <style type="text/css">
     @font-face {
         font-family: kruti dev ;
         src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
     }
-
     .hinditext-large {
         font-family: kruti dev;
         font-size:22px;
@@ -37,19 +38,15 @@
         padding-top: 2px;
         padding-bottom: 2px;
     }
-
 </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
-
-
 <div class="col-md-12">
     <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
     <div class="hinditext">
+        {% if apps %}
         <p>ne keÀpe& keÀjej Je neceer yee@C[ Deepe efoveebkeÀ <spam class="english">{{ disbursement_date|dateformat }}</spam> jespeer  <spam class="english">{{ apps[0].group.branch.branch_name }}</spam>  n³ee efþkeÀeCeer efuentve þsJeC³eele Deeues.</p>
         <table  id="repayment" style="width: 60%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,apps|length + 1,2) %}
@@ -63,18 +60,14 @@
                 </tr>
             {% endfor %}
         </table>
-        <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page1.jpg"
-             style="width: 80%;" alt="">
-
-        <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page2.jpg"
-             style="width: 80%;" alt="">
-
+        {% endif %}
+        <img src="/static/img/pdf_images/LA_Page1.jpg" style="width: 80%;" alt="">
+        <img src="/static/img/pdf_images/LA_Page2.jpg" style="width: 80%;" alt="">
         <p>
             <b>ne keÀpe& keÀjej Je nceer yee@C[ Jej GuuesKe kesÀuesu³ee efoveebkeÀ <spam class="english">{{ disbursement_date|dateformat }}</spam> ³esLes efuentve osC³eele Deeuee.</b><br/>
             mJee#eebefkeÀle, meerueyebo DeeefCe efJeleefjle
         </p>
-
-       <table  id="repayment2" style="width: 100%;" class="table table-bordered table-condensed font-small">
+       <table id="repayment2" style="width: 100%;" class="table table-bordered table-condensed font-small">
             {% for n in range(1,apps|length + 1,2) %}
                 <tr >
                     <td style="width: 50%;height: 60px;">{{ n }}</td>
@@ -82,11 +75,7 @@
                 </tr>
             {% endfor %}
         </table>
-
-        <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/LA_Page2_b.jpg"
-             style="width: 80%;" alt="">
+        <img src="/static/img/pdf_images/LA_Page2_b.jpg" style="width: 80%;" alt="">
     </div>
 </div>
-
-
 {% endblock %}
