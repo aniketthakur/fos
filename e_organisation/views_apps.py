@@ -17,12 +17,26 @@ def applications():
 
 @organisation_views.route('/applications/group/<group_id>', methods=["GET"])
 @login_required
-def application_list(group_id):
+def application_list_group(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
   group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
+
+  kwargs = locals()
+  return render_template("apps/applications_list.html", **kwargs)
+
+
+@organisation_views.route('/applications/center/<center_id>', methods=["GET"])
+@login_required
+def application_list_center(center_id):
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=center_id)
   applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
