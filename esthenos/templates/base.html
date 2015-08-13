@@ -65,11 +65,6 @@
                     <a href="#" data-placement="bottom">
                         <div class="user-details"><a href="/accounts/logout"><i class="fa fa-power-off"></i></a></div>
                     </a>
-                    <!--
-                    <div class="profile-pic">
-                        <img src="assets/img/profiles/avatar_small.jpg"  alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35" />
-                    </div>
-                    -->
                 </div>
             </div>
         </div>
@@ -80,18 +75,12 @@
     <div class="page-sidebar" id="main-menu">
         <div class="page-sidebar-wrapper" id="main-menu-wrapper">
             <div class="user-info-wrapper">
-                <!--
-                <div class="profile-wrapper">
-                    <img src="assets/img/profiles/avatar.jpg"  alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg" width="69" height="69" />
-                </div>
-                -->
                 <div class="user-info">
                     <div class="greeting">Welcome</div>
                     <div class="username">{{ user.first_name }} {{ user.last_name }}</div>
                     <div class="org-name"><h4><span class="bold">{{ user.organisation.name }}</span></h4></div>
                 </div>
             </div>
-
             <ul>
                 {% block nav_bar %}
                     <li class="start active">
@@ -100,60 +89,78 @@
                             <span class="title">Home</span>
                         </a>
                     </li>
+                    {% if feature_show("accounts_enroll_customers") %}
                     <li class="">
                         <a href="/upload_documents">
                             <i class="fa fa-envelope"></i>
-                            <span class="title">Enroll Customer</span>
+                            <span class="title">Enroll Customers</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("accounts_applications") %}
                     <li class="">
                         <a href="/application_status">
                             <i class="fa fa-flag"></i>
-                            <span class="title">Application Status</span>
+                            <span class="title">Applications</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("questions_cgt1") %}
                     <li class="">
                         <a href="/check_cgt1">
                             <i class="icon-custom-ui"></i>
                             <span class="title">CGT 1</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("questions_cgt2") %}
                     <li class="">
                         <a href="/check_cgt2">
                             <i class="icon-custom-ui"></i>
                             <span class="title">CGT 2</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("questions_grt") %}
                     <li class="">
                         <a href="/check_grt">
                             <i class="icon-custom-ui"></i>
                             <span class="title">GRT</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("questions_telecalling") %}
                     <li class="">
                         <a href="/telecalling">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Tele Calling</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("disbursement") %}
                     <li class="">
                         <a href="/check_disbursement">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Disbursement</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("accounts_scrutiny") %}
                     <li class="">
                         <a href="/scrutiny">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Scrutiny</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("accounts_reports") %}
                     <li class="">
                         <a href="/reports">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Reports</span>
                         </a>
                     </li>
+                    {% endif %}
                 {% endblock %}
             </ul>
             <div class="clearfix"></div>

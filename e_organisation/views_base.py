@@ -20,7 +20,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from esthenos import s3_bucket, mainapp
 from esthenos.mongo_encoder import encode_model
 from e_admin.forms import AddOrganizationEmployeeForm
-from e_tokens.utils import login_or_key_required
+from e_tokens.utils import login_or_key_required, feature_enable
 from e_reports.views import get_application_headers, get_application_rowdata
 from e_admin.models import EsthenosSettings, EsthenosUser
 from esthenos.utils import request_wants_json, random_with_N_digits

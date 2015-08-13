@@ -32,9 +32,7 @@ mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/'
 mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/uploads')
 mainapp.config.update(
     CELERY_BROKER_URL='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',
-    CELERY_RESULT_BACKEND='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',#train.pixuate.com
-)
-mainapp.config.update(
+    CELERY_RESULT_BACKEND='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',
     DEBUG = True,
     TESTING = False,
     MONGODB_SETTINGS = {
@@ -44,19 +42,19 @@ mainapp.config.update(
         'USERNAME':'saggraha-user',
         'PASSWORD':'saggraha-password'
     },
-)
-mainapp.config.update(
     FEATURES = {
         "questions_grt": True,
         "questions_cgt1": True,
         "questions_cgt2": True,
         "questions_telecalling": True,
         "questions_psychometric": True,
-        "reports": True,
-        "scrutiny": True,
-        "applications": True,
-        "disbursement": True,
-        "enroll_customers": False,
+
+        "disbursement" : True,
+
+        "accounts_reports": True,
+        "accounts_scrutiny": True,
+        "accounts_applications": True,
+        "accounts_enroll_customers": False,
     }
 )
 login_manager = LoginManager()

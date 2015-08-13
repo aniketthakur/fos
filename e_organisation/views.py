@@ -574,7 +574,7 @@ def get_application():
         mimetype="application/json")
 
 
-@organisation_views.route('/admin/mobile/application',methods=['POST'])
+@organisation_views.route('/admin/mobile/application', methods=['POST'])
 @login_or_key_required
 def mobile_application():
     username = current_user.name
@@ -615,7 +615,7 @@ def mobile_application():
 import wtforms_json
 wtforms_json.init()
 
-@organisation_views.route('/mobile/application/json',methods=['POST'])
+@organisation_views.route('/mobile/application/json', methods=['POST'])
 @login_or_key_required
 def mobile_application_json():
     username = current_user.name
@@ -655,7 +655,8 @@ def mobile_application_json():
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
-def upload_documents():
+@feature_enable("enroll_customers")
+def enroll_customers():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -673,12 +674,11 @@ def upload_documents():
     elif request.method == "POST":
         center_name = request.form.get('i_center_name')
         group_name = request.form.get('i_group_name')
-        if center_name ==None:
+        if center_name is None:
             center_name = request.form.get('g_center_name')
             group_name = request.form.get('g_group_name')
 
         center, group = (None, None)
-
         if center_name is None:
             center_name = group_name
 
@@ -738,6 +738,7 @@ def upload_documents():
 
 @organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
+@feature_enable("disbursement")
 def check_disbursement():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -753,6 +754,7 @@ def check_disbursement():
 
 @organisation_views.route('/disburse_group', methods=["PUT"])
 @login_required
+@feature_enable("disbursement")
 def disburse_document():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -782,6 +784,7 @@ def disburse_document():
 
 @organisation_views.route('/download_disbursement', methods=["GET"])
 @login_required
+@feature_enable("disbursement")
 def download_disbusement():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -819,6 +822,7 @@ def download_disbusement():
 
 @organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])
 @login_required
+@feature_enable("disbursement")
 def disbursement(app_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
