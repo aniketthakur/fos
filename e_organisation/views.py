@@ -658,21 +658,18 @@ def mobile_application_json():
 def upload_documents():
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     if request.method == "GET":
         unique_key =  uuid.uuid4()
         session_obj =  EsthenosOrgUserUploadSession()
         session_obj.owner = user
-        print unique_key
         session_obj.unique_session_key = str(unique_key)
         session_obj.save()
-        print session_obj.id
-#        from esthenos.tasks import prefill_applications
-#        prefill_applications()
+
         kwargs = locals()
         return render_template("upload_documents.html", **kwargs)
+
     elif request.method == "POST":
         center_name = request.form.get('i_center_name')
         group_name = request.form.get('i_group_name')
@@ -680,13 +677,14 @@ def upload_documents():
             center_name = request.form.get('g_center_name')
             group_name = request.form.get('g_group_name')
 
-        center = None
-        group = None
-        if center_name == None:
+        center, group = (None, None)
+
+        if center_name is None:
             center_name = group_name
-        if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+
+        if (center_name is not None) and len(center_name)>0 and (group_name is not None) and len(group_name)>0:
             unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-            center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+            center, status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name, organisation=user.organisation)
             if status:
                 center.center_id = unique_center_id
                 center.save()
@@ -699,7 +697,7 @@ def upload_documents():
                 group.save()
                 EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
 
-        if center != None or group != None:
+        if (center is not None) or (group is not None):
             unique_key = request.form.get('unique_key')
             session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key,tagged=False)
             inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
