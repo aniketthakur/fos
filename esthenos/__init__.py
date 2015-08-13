@@ -38,17 +38,30 @@ mainapp.config.update(
     DEBUG = True,
     TESTING = False,
     MONGODB_SETTINGS = {
-        'HOST': 'ds047742.mongolab.com',
-        'PORT': 47742,
-        'DB': 'testdb',
-        'USERNAME':'dbuser',
-        'PASSWORD':'dbpassword'
+        'HOST': 'ds061228.mongolab.com',
+        'PORT': 61228,
+        'DB': 'saggrahadb',
+        'USERNAME':'saggraha-user',
+        'PASSWORD':'saggraha-password'
     },
 )
-
+mainapp.config.update(
+    FEATURES = {
+        "questions_grt": True,
+        "questions_cgt1": True,
+        "questions_cgt2": True,
+        "questions_telecalling": True,
+        "questions_psychometric": True,
+        "reports": True,
+        "scrutiny": True,
+        "applications": True,
+        "disbursement": True,
+        "enroll_customers": False,
+    }
+)
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
-login_manager.needs_refresh_message = (u"To protect your account, please re-authenticate to access this page.")
+login_manager.needs_refresh_message = u"To protect your account, please re-authenticate to access this page."
 login_manager.needs_refresh_message_category = "info"
 login_manager.init_app(mainapp)
 mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)

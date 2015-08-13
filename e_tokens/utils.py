@@ -11,7 +11,26 @@ from flask_login import current_user, current_app, login_user
 from itsdangerous import SignatureExpired, BadSignature, JSONWebSignatureSerializer as Serializer
 
 
-# The actual decorator function
+@app.context_processor
+def feature_processor():
+  def feature_show(feature):
+      return app.config["FEATURES"][feature]
+  return dict(feature_show=feature_show)
+
+
+def feature_enable(feature):
+    def decorator(view_function):
+        def decorated(*args, **kwargs):
+            if app.config["FEATURES"][feature]:
+                return view_function(*args, **kwargs)
+
+            else:
+                abort(403)
+
+        return decorated
+    return decorator
+
+
 def login_or_key_required(view_function):
     @wraps(view_function)
     # the new, post-decoration function. Note *args and **kwargs here.
