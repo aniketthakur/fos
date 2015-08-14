@@ -218,7 +218,7 @@ def scrutiny_application(app_id):
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(id=app_id)
+  application = EsthenosOrgApplication.objects.filter(id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_details.html", **kwargs)
