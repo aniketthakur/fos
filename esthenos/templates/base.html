@@ -99,7 +99,7 @@
                     {% endif %}
                     {% if feature_show("accounts_applications") %}
                     <li class="">
-                        <a href="/application_status">
+                        <a href="{{ url_for('organisation_views.application_list') }}">
                             <i class="fa fa-flag"></i>
                             <span class="title">Applications</span>
                         </a>
@@ -147,7 +147,7 @@
                     {% endif %}
                     {% if feature_show("accounts_scrutiny") %}
                     <li class="">
-                        <a href="/scrutiny">
+                          <a href="{{ url_for('organisation_views.scrutiny') }}">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Scrutiny</span>
                         </a>

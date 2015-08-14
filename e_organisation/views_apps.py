@@ -3,16 +3,17 @@ from views_base import *
 
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
-def applications():
+def application_list():
   if not session['role'].startswith("ORG_"):
-    abort(403)
+      abort(403)
 
-  group = None
   user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+  org  = user.organisation
+  groups = EsthenosOrgGroup.objects.filter(organisation=org)
+  centers = EsthenosOrgCenter.objects.filter(organisation=org)
 
   kwargs = locals()
-  return render_template("apps/applications_list.html", **kwargs)
+  return render_template("apps/applications_centers_n_groups.html", **kwargs)
 
 
 @organisation_views.route('/applications/group/<group_id>', methods=["GET"])
@@ -43,24 +44,9 @@ def application_list_center(center_id):
   return render_template("apps/applications_list.html", **kwargs)
 
 
-@organisation_views.route('/application_status', methods=["GET"])
-@login_required
-def application_status():
-  if not session['role'].startswith("ORG_"):
-      abort(403)
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  org  = user.organisation
-  groups = EsthenosOrgGroup.objects.filter(organisation=org)
-  centers = EsthenosOrgCenter.objects.filter(organisation=org)
-
-  kwargs = locals()
-  return render_template("apps/applications_centers_n_groups.html", **kwargs)
-
-
 @organisation_views.route('/application/<app_id>/cashflow', methods=["GET"])
 @login_required
-def admin_application_cashflow(app_id):
+def application_cashflow(app_id):
 
   user = EsthenosUser.objects.get(id=current_user.id)
   applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=app_id)
@@ -146,9 +132,9 @@ def applications_track(app_id):
   return render_template("apps/application_tracking.html", **kwargs)
 
 
-@organisation_views.route('/application/<app_id>/details', methods=["GET"])
+@organisation_views.route('/application/<app_id>/kyc', methods=["GET"])
 @login_required
-def client_application_id(app_id):
+def application_kyc(app_id):
 
   user = EsthenosUser.objects.get(id=current_user.id)
   applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
@@ -182,3 +168,57 @@ def client_application_id(app_id):
 
   kwargs = locals()
   return render_template("apps/application_details.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny', methods=["GET"])
+@login_required
+def scrutiny():
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny/group/<group_id>', methods=["GET"])
+@login_required
+def scrutiny_list_group(group_id):
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny/center/<group_location>', methods=["GET"])
+@login_required
+def scrutiny_list_center(group_location):
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=group_location)
+  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny/application/<app_id>', methods=["GET"])
+@login_required
+def scrutiny_application(app_id):
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_details.html", **kwargs)
