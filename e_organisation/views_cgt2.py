@@ -3,6 +3,7 @@ from views_base import *
 
 @organisation_views.route('/center/status/cgt2', methods=["PUT"])
 @login_required
+@feature_enable("questions_cgt2")
 def center_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -35,6 +36,7 @@ def center_cgt2():
 
 @organisation_views.route('/group/status/cgt2', methods=["PUT"])
 @login_required
+@feature_enable("questions_cgt2")
 def group_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -67,6 +69,7 @@ def group_cgt2():
 
 @organisation_views.route('/check_cgt2', methods=["GET"])
 @login_required
+@feature_enable("questions_cgt2")
 def check_cgt2():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -83,6 +86,7 @@ def check_cgt2():
 
 @organisation_views.route('/check_cgt2/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
+@feature_enable("questions_cgt2")
 def cgt2_question(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -122,6 +126,7 @@ def cgt2_question(group_id):
 
 @organisation_views.route('/check_cgt2/group/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("questions_cgt2")
 def check_cgt2_applicant(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)

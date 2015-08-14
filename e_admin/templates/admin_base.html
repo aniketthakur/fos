@@ -91,11 +91,6 @@
                     <a href="#" data-placement="bottom">
                         <div class="user-details"><a href="/admin/logout"><i class="fa fa-power-off"></i></a></div>
                     </a>
-                    <!--
-                    <div class="profile-pic">
-                        <img src="assets/img/profiles/avatar_small.jpg"  alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="35" height="35" />
-                    </div>
-                    -->
                 </div>
             </div>
         </div>
@@ -105,11 +100,6 @@
 <div class="page-container row-fluid">
     <div class="page-sidebar" id="main-menu">
         <div class="user-info-wrapper">
-            <!--
-            <div class="profile-wrapper">
-                <img src="assets/img/profiles/avatar.jpg"  alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg" width="69" height="69" />
-            </div>
-            -->
             <div class="user-info">
                 <div class="greeting">Welcome</div>
                 <div class="username">{{ user.first_name }} {{ user.last_name }}</div>
@@ -134,9 +124,11 @@
                     <li class="start">
                         <a href="/admin/applications"> <i class="icon-custom-home"></i> <span class="title">Applications</span></a>
                     </li>
+                    {% if feature_show("hignmark_equifax") %}
                     <li class="start">
                         <a href="/admin/cbcheck"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
                     </li>
+                    {% endif %}
                     <li class="start">
                         <a href="/admin/reports"> <i class="fa fa-group"></i> <span class="title">Reports</span></a>
                     </li>
@@ -156,9 +148,11 @@
                     <li class="start">
                         <a href="/admin/applications"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span></a>
                     </li>
+                    {% if feature_show("hignmark_equifax") %}
                     <li class="start">
                         <a href="/admin/cbcheck"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
                     </li>
+                    {% endif %}
                     <li class="start">
                         <a href="/admin/reports"> <i class="fa fa-thumbs-up"></i> <span class="title">Reports</span></a>
                     </li>

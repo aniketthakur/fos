@@ -3,6 +3,7 @@ from views_base import *
 
 @organisation_views.route('/api/organisation/products', methods=["GET"])
 @login_or_key_required
+@feature_enable("questions_psychometric")
 def org_products():
     username = current_user.name
     c_user = current_user
@@ -31,6 +32,7 @@ def org_products():
 
 @organisation_views.route('/group/status/psychometric', methods=["PUT"])
 @login_required
+@feature_enable("questions_psychometric")
 def group_psychometric():
     if not session['role'].startswith("ORG_"):
         abort(403)

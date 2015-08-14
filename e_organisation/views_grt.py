@@ -3,6 +3,7 @@ from views_base import *
 
 @organisation_views.route('/center/status/grt', methods=["PUT"])
 @login_required
+@feature_enable("questions_grt")
 def center_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -36,6 +37,7 @@ def center_grt():
 
 @organisation_views.route('/group/status/grt', methods=["PUT"])
 @login_required
+@feature_enable("questions_grt")
 def group_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -68,6 +70,7 @@ def group_grt():
 
 @organisation_views.route('/check_grt', methods=["GET"])
 @login_required
+@feature_enable("questions_grt")
 def check_grt():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -84,6 +87,7 @@ def check_grt():
 
 @organisation_views.route('/check_grt/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
+@feature_enable("questions_grt")
 def grt_question(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -124,6 +128,7 @@ def grt_question(group_id):
 
 @organisation_views.route('/check_grt/group/<group_id>/download/<disbursement_date>', methods=["GET"])
 @login_required
+@feature_enable("questions_grt")
 def grt_application_download(group_id, disbursement_date):
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -152,6 +157,7 @@ def grt_application_download(group_id, disbursement_date):
 
 @organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("questions_grt")
 def check_grt_applicant(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)

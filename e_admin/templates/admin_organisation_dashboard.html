@@ -22,24 +22,34 @@
                     </div>
                     <br/>
                     <div class="row">
+                        {% if feature_show("questions_cgt1") %}
                         <div class="col-md-4">
                              <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt1_questions">CGT1 Questions</a>
                         </div>
+                        {% endif %}
+                        {% if feature_show("questions_cgt2") %}
                         <div class="col-md-4">
                              <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a>
                         </div>
+                        {% endif %}
+                        {% if feature_show("questions_grt") %}
                         <div class="col-md-4">
                              <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a>
                         </div>
+                        {% endif %}
                     </div>
                     <br/>
                     <div class="row">
+                        {% if feature_show("questions_psychometric") %}
                         <div class="col-md-4">
                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a>
                         </div>
+                        {% endif %}
+                        {% if feature_show("questions_telecalling") %}
                         <div class="col-md-4">
                              <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a>
                         </div>
+                        {% endif %}
                     </div>
                     <br/>
                     <div class="row">

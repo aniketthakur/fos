@@ -16,7 +16,7 @@ from flask_sauth.views import flash_errors
 
 from e_admin.forms import *
 from e_admin.models import *
-from e_tokens.utils import login_or_key_required
+from e_tokens.utils import login_or_key_required, feature_enable
 from e_reports.views import get_application_headers, get_application_rowdata
 from e_pixuate.pixuate import *
 from e_organisation.forms import *
@@ -141,6 +141,7 @@ def admin_reports():
 
 @admin_views.route('/admin/cbcheck', methods=["GET"])
 @login_required
+@feature_enable("hignmark_equifax")
 def admin_cbcheck():
      if session['role'] != "ADMIN":
          abort(403)

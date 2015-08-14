@@ -3,6 +3,7 @@ from views_base import *
 
 @organisation_views.route('/telecalling', methods=["GET"])
 @login_required
+@feature_enable("questions_telecalling")
 def telecalling():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -18,6 +19,7 @@ def telecalling():
 
 @organisation_views.route('/check_tele_applicant', methods=["GET"])
 @login_required
+@feature_enable("questions_telecalling")
 def check_tele_applicant():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -42,6 +44,7 @@ def check_tele_applicant():
 
 @organisation_views.route('/check_tele_applicant_questions', methods=["GET","POST"])
 @login_required
+@feature_enable("questions_telecalling")
 def check_tele_applicant_questions():
     if not session['role'].startswith("ORG_"):
         abort(403)
