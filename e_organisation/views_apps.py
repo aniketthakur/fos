@@ -9,8 +9,22 @@ def application_list():
 
   user = EsthenosUser.objects.get(id=current_user.id)
   org  = user.organisation
-  groups = EsthenosOrgGroup.objects.filter(organisation=org)
-  centers = EsthenosOrgCenter.objects.filter(organisation=org)
+
+  groupId = request.args.get('groupId', '')
+  groupName = request.args.get('groupName', '')
+  centerName = request.args.get('centerName', '')
+
+  if (groupId is not None) and (groupId != ''):
+    groups = EsthenosOrgGroup.objects.filter(organisation=org, group_id=groupId)
+
+  elif (groupName is not None) and (groupName != ''):
+    groups = EsthenosOrgGroup.objects.filter(organisation=org, group_name=groupName)
+
+  elif (centerName is not None) and (centerName != ''):
+    groups = EsthenosOrgGroup.objects.filter(organisation=org, location_name=centerName)
+
+  else:
+    groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)

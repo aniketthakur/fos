@@ -8,34 +8,34 @@
     </div>
 
     <div class="row">
-    <form method="get" action="{{ url_for("organisation_views.application_list") }}">
-        <div class="col-md-6 form-group">
-            <input type="text" class="form-control" placeholder="Search By Center Name">
-        </div>
-        <div class="col-md-4 form-group">
-            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-        </div>
-    </form>
+        <form method="get" action="{{ url_for("organisation_views.application_list") }}">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" name="centerName" placeholder="Search By Center Name" value="{{ centerName }}">
+            </div>
+            <div class="col-md-4 form-group">
+                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+            </div>
+        </form>
     </div>
     <div class="row">
-    <form method="get" action="{{ url_for("organisation_views.application_list") }}">
-        <div class="col-md-6 form-group">
-            <input type="text" class="form-control" placeholder="Search By Group Id">
-        </div>
-        <div class="col-md-4 form-group">
-            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-        </div>
-    </form>
+        <form method="get" action="{{ url_for("organisation_views.application_list") }}">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" name="groupId" placeholder="Search By Group Id" value="{{ groupId }}">
+            </div>
+            <div class="col-md-4 form-group">
+                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+            </div>
+        </form>
     </div>
     <div class="row">
-    <form method="get" action="{{ url_for("organisation_views.application_list") }}">
-        <div class="col-md-6 form-group">
-            <input type="text" class="form-control" placeholder="Search By Group Name">
-        </div>
-        <div class="col-md-4 form-group">
-            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-        </div>
-    </form>
+        <form method="get" action="{{ url_for("organisation_views.application_list") }}">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" name="groupName" placeholder="Search By Group Name" value="{{ groupName }}">
+            </div>
+            <div class="col-md-4 form-group">
+                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+            </div>
+        </form>
     </div>
 
     <div class="row">
@@ -57,13 +57,13 @@
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="/applications/center/{{ group.location_name }}"><ins>{{ group.location_name }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_center", center_id=group.location_name) }}"><ins>{{ group.location_name }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
-                                  <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_id }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
-                                  <a href="/applications/group/{{ group.group_id }}"><ins>{{ group.group_name }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
                                 </td>
                                 <td><span class="muted">{{ group.created_at|datetimeformat }}</span></td>
                             </tr>
