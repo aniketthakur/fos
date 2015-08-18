@@ -4,7 +4,7 @@ from views_base import *
 @organisation_views.route('/center/status/cgt1', methods=["PUT"])
 @login_required
 @feature_enable("questions_cgt1")
-def center_cgt1():
+def cgt1_center_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -42,7 +42,7 @@ def center_cgt1():
 @organisation_views.route('/group/status/cgt1', methods=["PUT"])
 @login_required
 @feature_enable("questions_cgt1")
-def group_cgt1():
+def cgt1_group_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -80,15 +80,25 @@ def group_cgt1():
 @organisation_views.route('/check_cgt1', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt1")
-def check_cgt1():
+def cgt1_list():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     cgt1_sessions = EsthenosOrgGroupCGT1Session.objects.filter(organisation=org)
+
+    groupId = request.args.get('groupId', '')
+    groupName = request.args.get('groupName', '')
+
+    if (groupId is not None) and (groupId != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_id=groupId)
+
+    elif (groupName is not None) and (groupName != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_name=groupName)
+
+    else:
+      groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("cgt1/cgt1_group_list.html", **kwargs)
@@ -97,7 +107,7 @@ def check_cgt1():
 @organisation_views.route('/check_cgt1/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
 @feature_enable("questions_cgt1")
-def cgt1_question(group_id):
+def cgt1_questions(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -137,7 +147,7 @@ def cgt1_question(group_id):
 @organisation_views.route('/check_cgt1/group/<group_id>/download', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt1")
-def cgt1_application_download(group_id):
+def cgt1_downloads(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -168,7 +178,7 @@ def cgt1_application_download(group_id):
 @organisation_views.route('/check_cgt1/group/<group_id>', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt1")
-def check_cgt1_applicant(group_id):
+def cgt1_group_list(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
