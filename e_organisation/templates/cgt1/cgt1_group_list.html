@@ -118,7 +118,7 @@
                 e.preventDefault();
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"false"}'
                 $.ajax({
-                    url: '/group/status/cgt1',
+                    url: '{{ url_for("organisation_views.cgt1_group_status") }}',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
@@ -131,7 +131,7 @@
                 e.preventDefault();
                 data = '{"group_id":"'+$(this).attr("data-id")+'","status":"true"}'
                 $.ajax({
-                    url: '/group/status/cgt1',
+                    url: '{{ url_for("organisation_views.cgt1_group_status") }}',
                     data: JSON.stringify(data),
                     type: 'PUT',
                     contentType: "application/json",
