@@ -22,8 +22,8 @@ def application_list_group(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
-  appId = request.args.get('appId', None)
-  appName = request.args.get('appName', None)
+  appId = request.args.get('appId', '')
+  appName = request.args.get('appName', '')
 
   applications = []
   user = EsthenosUser.objects.get(id=current_user.id)
