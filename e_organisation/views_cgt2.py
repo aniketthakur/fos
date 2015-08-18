@@ -4,7 +4,7 @@ from views_base import *
 @organisation_views.route('/center/status/cgt2', methods=["PUT"])
 @login_required
 @feature_enable("questions_cgt2")
-def center_cgt2():
+def cgt2_center_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
@@ -37,7 +37,7 @@ def center_cgt2():
 @organisation_views.route('/group/status/cgt2', methods=["PUT"])
 @login_required
 @feature_enable("questions_cgt2")
-def group_cgt2():
+def cgt2_group_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
@@ -70,15 +70,25 @@ def group_cgt2():
 @organisation_views.route('/check_cgt2', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt2")
-def check_cgt2():
+def cgt2_list():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     cgt2_sessions = EsthenosOrgGroupCGT2Session.objects.filter(organisation=org)
+
+    groupId = request.args.get('groupId', '')
+    groupName = request.args.get('groupName', '')
+
+    if (groupId is not None) and (groupId != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_id=groupId)
+
+    elif (groupName is not None) and (groupName != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_name=groupName)
+
+    else:
+      groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("cgt2/cgt2_group_list.html", **kwargs)
@@ -87,7 +97,7 @@ def check_cgt2():
 @organisation_views.route('/check_cgt2/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
 @feature_enable("questions_cgt2")
-def cgt2_question(group_id):
+def cgt2_questions(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -127,7 +137,7 @@ def cgt2_question(group_id):
 @organisation_views.route('/check_cgt2/group/<group_id>', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt2")
-def check_cgt2_applicant(group_id):
+def cgt2_group_list(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
