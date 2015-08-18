@@ -740,8 +740,26 @@ def admin_application():
     if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
         abort(403)
 
+    appId = request.args.get('appId', '')
+    groupId = request.args.get('groupId', '')
+    statusId = request.args.get('statusId', '')
+
+    applications = []
+    if (appId is not None) and (appId != ''):
+      applications = EsthenosOrgApplication.objects.filter(application_id=appId)
+
+    elif (statusId is not None) and (statusId != ''):
+      status = EsthenosOrgApplicationStatusType.objects.get(id=statusId)
+      applications = EsthenosOrgApplication.objects.filter(current_status=status)
+
+    elif (groupId is not None) and (groupId != ''):
+      group = EsthenosOrgGroup.objects.get(id=groupId)
+      applications = EsthenosOrgApplication.objects.filter(group=group)
+
+    else:
+      applications = EsthenosOrgApplication.objects.all()
+
     groups = EsthenosOrgGroup.objects.all()
-    applications = EsthenosOrgApplication.objects.all()
     status_types = EsthenosOrgApplicationStatusType.objects.all()
 
     kwargs = locals()
