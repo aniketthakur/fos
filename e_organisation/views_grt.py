@@ -4,7 +4,7 @@ from views_base import *
 @organisation_views.route('/center/status/grt', methods=["PUT"])
 @login_required
 @feature_enable("questions_grt")
-def center_grt():
+def grt_center_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
@@ -38,7 +38,7 @@ def center_grt():
 @organisation_views.route('/group/status/grt', methods=["PUT"])
 @login_required
 @feature_enable("questions_grt")
-def group_grt():
+def grt_group_status():
     if not session['role'].startswith("ORG_"):
         abort(403)
     c_user = current_user
@@ -71,15 +71,25 @@ def group_grt():
 @organisation_views.route('/check_grt', methods=["GET"])
 @login_required
 @feature_enable("questions_grt")
-def check_grt():
+def grt_list():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
     grt_sessions = EsthenosOrgGroupGRTSession.objects.filter(organisation=org)
+
+    groupId = request.args.get('groupId', '')
+    groupName = request.args.get('groupName', '')
+
+    if (groupId is not None) and (groupId != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_id=groupId)
+
+    elif (groupName is not None) and (groupName != ''):
+      groups = EsthenosOrgGroup.objects.filter(organisation=org, group_name=groupName)
+
+    else:
+      groups = EsthenosOrgGroup.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("grt/grt_group_list.html", **kwargs)
@@ -88,7 +98,7 @@ def check_grt():
 @organisation_views.route('/check_grt/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
 @feature_enable("questions_grt")
-def grt_question(group_id):
+def grt_questions(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -129,7 +139,7 @@ def grt_question(group_id):
 @organisation_views.route('/check_grt/group/<group_id>/download/<disbursement_date>', methods=["GET"])
 @login_required
 @feature_enable("questions_grt")
-def grt_application_download(group_id, disbursement_date):
+def grt_downloads(group_id, disbursement_date):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
@@ -158,7 +168,7 @@ def grt_application_download(group_id, disbursement_date):
 @organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
 @login_required
 @feature_enable("questions_grt")
-def check_grt_applicant(group_id):
+def grt_group_list(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
