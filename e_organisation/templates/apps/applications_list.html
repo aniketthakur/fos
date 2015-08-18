@@ -51,19 +51,19 @@
                         <tr>
                             <td class="v-align-middle">{{ loop.index }}</td>
                             <td class="v-align-middle">
-                              <a href="/application/{{ app.application_id }}/details"><ins>{{ app.application_id }}</ins></a>
+                              <a href="{{ url_for("organisation_views.scrutiny_application", app_id=app.application_id) }}"><ins>{{ app.application_id }}</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.applicant_name }}</td>
                             <td class="v-align-middle">
-                              <a href="/applications/group/{{ app.group.group_id }}"><ins>{{ app.group.group_name }}</ins></a>
+                              <a href="{{ url_for("organisation_views.application_list_group", group_id=app.group.group_id) }}"><ins>{{ app.group.group_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.date_created|datetimeformat }}</td>
                             <td class="v-align-middle">{{ app.current_status.status_message }}</td>
                             <td class="v-align-middle">
-                              <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/track">Log</a>
+                              <a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.applications_track", app_id=app.application_id) }}">Log</a>
                             </td>
                             <td class="v-align-middle">
-                              <a class="btn btn-small btn-primary" href="/application/{{ app.application_id }}/cashflow">Cashflow</a>
+                              <a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.application_cashflow", app_id=app.application_id) }}">Cashflow</a>
                             </td>
                         </tr>
                         {% endfor %}
