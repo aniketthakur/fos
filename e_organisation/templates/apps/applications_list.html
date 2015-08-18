@@ -9,20 +9,24 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 form-group">
-            <input type="text"  class="form-control" placeholder="Search By Applicant Id">
-        </div>
-        <div class="col-md-4 form-group">
-            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-        </div>
+        <form method="get" action="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" name="appId" placeholder="Search By Applicant Id">
+            </div>
+            <div class="col-md-4 form-group">
+                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+            </div>
+        </form>
     </div>
     <div class="row">
-        <div class="col-md-6 form-group">
-            <input type="text"  class="form-control" placeholder="Search By Applicant Name">
-        </div>
-        <div class="col-md-4 form-group">
-            <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-        </div>
+        <form method="get" action="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" name="appName" placeholder="Search By Applicant Name">
+            </div>
+            <div class="col-md-4 form-group">
+                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+            </div>
+        </form>
     </div>
 
     <div class="row">

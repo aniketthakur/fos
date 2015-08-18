@@ -22,9 +22,21 @@ def application_list_group(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
+  appId = request.args.get('appId', None)
+  appName = request.args.get('appName', None)
+
+  applications = []
   user = EsthenosUser.objects.get(id=current_user.id)
   group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
+
+  if (appId is not None) and (appId != ''):
+    applications = EsthenosOrgApplication.objects.filter(application_id=appId, group=group, status__gte=0)
+
+  elif (appName is not None) and (appName != ''):
+    applications = EsthenosOrgApplication.objects.filter(applicant_name=appName, group=group, status__gte=0)
+
+  else:
+    applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
