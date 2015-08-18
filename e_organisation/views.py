@@ -72,7 +72,7 @@ def user_profile_page():
 
 @organisation_views.route('/reports', methods=["GET", "POST"])
 @login_required
-def admin_reports():
+def reports_internal_main():
     if not session['role'].startswith("ORG_"):
         abort(403)
 

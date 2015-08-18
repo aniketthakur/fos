@@ -98,7 +98,7 @@ def admin_settings_update():
 
 @admin_views.route('/admin/reports', methods=["GET", "POST"])
 @login_required
-def admin_reports():
+def admin_reports_internal_main():
     if session['role'] != "ADMIN":
         abort(403)
 

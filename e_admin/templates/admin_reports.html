@@ -25,7 +25,8 @@
         </div>
         <div class="col-md-6">
             <div class="input-daterange">
-                <form method="post" action="/admin/reports">
+                <!-- disabling internal report issue#112. -->
+                <form method="get" action="/admin/reports">
                     <input type="text" class="input-small" name="start-date" id="start-date" placeholder="start-date" />
                     <input type="text" class="input-small" name="end-date" id="end-date" placeholder="end-date" />
                     <button class="btn btn-medium btn-md btn-info" id="generate_button" type="submit">Generate Report</button>
@@ -33,7 +34,8 @@
             </div>
         </div>
         <div class="col-md-2 generate-button">
-            <form method="post" action="/admin/reports">
+            <!-- disabling internal report issue#112. -->
+            <form method="get" action="/admin/reports">
                 <button class="btn btn-medium btn-md btn-info" id="generate_button_as_of">Generate Reports As On Now</button>
             </form>
         </div>
