@@ -34,6 +34,26 @@ def grt_list():
     return render_template("grt/grt_group_list.html", **kwargs)
 
 
+@organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
+@login_required
+@feature_enable("questions_grt")
+def grt_group_list(group_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
+    applications = None
+    if group is not None:
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(status__gte=250)
+
+    kwargs = locals()
+    return render_template("grt/grt_group_detail.html", **kwargs)
+
+
 @organisation_views.route('/check_grt/group/<group_id>/status', methods=["POST"])
 @login_required
 @feature_enable("questions_grt")
@@ -142,23 +162,3 @@ def grt_downloads(group_id, disbursement_date):
     output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
     output.headers["Content-type"] = "application/zip"
     return output
-
-
-@organisation_views.route('/check_grt/group/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("questions_grt")
-def grt_group_list(group_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-
-    applications = None
-    if group is not None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
-    else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=250)
-
-    kwargs = locals()
-    return render_template("grt/grt_group_detail.html", **kwargs)

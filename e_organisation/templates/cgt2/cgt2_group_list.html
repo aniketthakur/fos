@@ -32,30 +32,30 @@
         <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-body no-border">
-                            <table class="table no-more-tables ">
-                                <thead>
-                                <tr>
-                                    <th style="width:1%" >#</th>
-                                    <th style="width:25%">Group ID</th>
-                                    <th style="width:25%">Group Name</th>
-                                    <th style="width:25%">Questions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for group in groups %}
-                                    <tr>
-                                        <td class="v-align-middle">{{ loop.index }}</td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.cgt2_group_list", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
-                                        </td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
-                                        </td>
-                                        <td><a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.cgt2_questions", group_id=group.group_id) }}">Questions</a></td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                    <table class="table no-more-tables ">
+                        <thead>
+                        <tr>
+                            <th style="width:1%" >#</th>
+                            <th style="width:25%">Group ID</th>
+                            <th style="width:25%">Group Name</th>
+                            <th style="width:25%">Questions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for group in groups %}
+                            <tr>
+                                <td class="v-align-middle">{{ loop.index }}</td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.cgt2_group_list", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
+                                </td>
+                                <td><a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.cgt2_questions", group_id=group.group_id) }}">Questions</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
