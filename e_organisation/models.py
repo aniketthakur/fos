@@ -275,6 +275,7 @@ class EsthenosOrgGroupCGT1Session(db.Document):
     group = db.ReferenceField('EsthenosOrgGroup',required=True)
     questions = db.DictField(required=False)
     score = db.FloatField(default=0,required=False)
+    state = db.StringField(max_length=128, required=True, default="none")
 
 
 class EsthenosOrgGroupCGT2Session(db.Document):

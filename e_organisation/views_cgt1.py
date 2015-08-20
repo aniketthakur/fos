@@ -1,82 +1,6 @@
 from views_base import *
 
 
-@organisation_views.route('/center/status/cgt1', methods=["PUT"])
-@login_required
-@feature_enable("questions_cgt1")
-def cgt1_center_status():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
-    data = json.loads(request.json)
-    center_id = data['center_id']
-    reqstatus = data['status']
-    user = EsthenosUser.objects.get(id=current_user.id)
-    center = EsthenosOrgCenter.objects.get(organisation=user.organisation,center_id=center_id)
-    applications = EsthenosOrgApplication.objects.filter(center=center,status__gte=190)
-
-    for app in applications:
-        status = EsthenosOrgApplicationStatus(
-          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
-          updated_on=datetime.datetime.now()
-        )
-        status.save()
-        app.timeline.append(status)
-
-        if reqstatus == "true":
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
-            app.current_status_updated = datetime.datetime.now()
-            app.status = 220
-
-        else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
-            app.current_status_updated = datetime.datetime.now()
-            app.status = 210
-
-        app.save()
-
-    content = {'response': 'OK'}
-    return Response(response=content, status=200, mimetype="application/json")
-
-
-@organisation_views.route('/group/status/cgt1', methods=["PUT"])
-@login_required
-@feature_enable("questions_cgt1")
-def cgt1_group_status():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
-    data = json.loads(request.json)
-    group_id = data['group_id']
-    reqstatus = data['status']
-    user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-    applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=190)
-
-    for app in applications:
-        status = EsthenosOrgApplicationStatus(
-          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
-          updated_on=datetime.datetime.now()
-        )
-        status.save()
-        app.timeline.append(status)
-
-        if reqstatus == "true":
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
-            app.current_status_updated = datetime.datetime.now()
-            app.status = 220
-
-        else:
-            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
-            app.current_status_updated = datetime.datetime.now()
-            app.status = 210
-
-        app.save()
-
-    content = {'response': 'OK'}
-    return Response(response=content, status=200, mimetype="application/json")
-
-
 @organisation_views.route('/check_cgt1', methods=["GET"])
 @login_required
 @feature_enable("questions_cgt1")
@@ -86,7 +10,13 @@ def cgt1_list():
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    cgt1_sessions = EsthenosOrgGroupCGT1Session.objects.filter(organisation=org)
+
+    pending = EsthenosOrgGroupCGT1Session.objects(
+      Q(organisation=org) & Q(state="none")
+    )
+    finalized = EsthenosOrgGroupCGT1Session.objects(
+      Q(organisation=org) & (Q(state="pass") | Q(state="fail"))
+    )
 
     groupId = request.args.get('groupId', '')
     groupName = request.args.get('groupName', '')
@@ -104,6 +34,69 @@ def cgt1_list():
     return render_template("cgt1/cgt1_group_list.html", **kwargs)
 
 
+@organisation_views.route('/check_cgt1/group/<group_id>', methods=["GET"])
+@login_required
+@feature_enable("questions_cgt1")
+def cgt1_group_list(group_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
+    applications = None
+    if group is not None:
+        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(status__gte=190)
+
+    kwargs = locals()
+    return render_template("cgt1/cgt1_group_detail.html", **kwargs)
+
+
+@organisation_views.route('/check_cgt1/group/<group_id>/status', methods=["POST"])
+@login_required
+@feature_enable("questions_cgt1")
+def cgt1_group_status(group_id):
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org  = user.organisation
+
+    group = EsthenosOrgGroup.objects.get(organisation=org, group_id=group_id)
+    applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=190)
+
+    reqstatus = request.form.get("status")
+    print reqstatus
+
+    cgt1_session = EsthenosOrgGroupCGT1Session.objects.get(group=group, organisation=org)
+    cgt1_session.state = "pass" if reqstatus == "true" else "fail"
+    cgt1_session.save()
+
+    for app in applications:
+        status = EsthenosOrgApplicationStatus(
+          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
+          updated_on=datetime.datetime.now()
+        )
+        status.save()
+        app.timeline.append(status)
+
+        if reqstatus == "true":
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=220)[0]
+            app.current_status_updated = datetime.datetime.now()
+            app.status = 220
+
+        else:
+            app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=210)[0]
+            app.current_status_updated = datetime.datetime.now()
+            app.status = 210
+
+        app.save()
+
+    return redirect("/check_cgt1")
+
+
 @organisation_views.route('/check_cgt1/group/<group_id>/questions', methods=["GET","POST"])
 @login_required
 @feature_enable("questions_cgt1")
@@ -114,19 +107,17 @@ def cgt1_questions(group_id):
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
     if request.method == "GET":
+        group = EsthenosOrgGroup.objects.get(organisation=org, group_id=group_id)
         questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
-        centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
         kwargs = locals()
         return render_template("cgt1/cgt1_group_questions.html", **kwargs)
 
     elif request.method == "POST":
         i = 0
-        total_score= 0.0
-        questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation = org)
-        centers = EsthenosOrgCenter.objects.filter(organisation=org)
+        total_score = 0.0
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-        grt_session, status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group, organisation=org)
+        cgt1_session, status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group, organisation=org)
         question_dict = dict()
 
         for v in request.form:
@@ -137,9 +128,10 @@ def cgt1_questions(group_id):
                 question_dict[key] = str(v)
                 total_score = total_score + int(v)
 
-        grt_session.questions = question_dict
-        grt_session.score = float(total_score/i)
-        grt_session.save()
+        cgt1_session.questions = question_dict
+        cgt1_session.score = float(total_score/i)
+        cgt1_session.save()
+
         kwargs = locals()
         return redirect("/check_cgt1")
 
@@ -173,23 +165,3 @@ def cgt1_downloads(group_id):
     output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
     output.headers["Content-type"] = "application/zip"
     return output
-
-
-@organisation_views.route('/check_cgt1/group/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("questions_cgt1")
-def cgt1_group_list(group_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-
-    applications = None
-    if group is not None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
-    else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=190)
-
-    kwargs = locals()
-    return render_template("cgt1/cgt1_group_detail.html", **kwargs)
