@@ -10,7 +10,13 @@ def grt_list():
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-    grt_sessions = EsthenosOrgGroupGRTSession.objects.filter(organisation=org)
+
+    pending = EsthenosOrgGroupGRTSession.objects(
+      Q(organisation=org) & Q(state="none")
+    )
+    finalized = EsthenosOrgGroupGRTSession.objects(
+      Q(organisation=org) & (Q(state="pass") | Q(state="fail"))
+    )
 
     groupId = request.args.get('groupId', '')
     groupName = request.args.get('groupName', '')
@@ -28,37 +34,46 @@ def grt_list():
     return render_template("grt/grt_group_list.html", **kwargs)
 
 
-@organisation_views.route('/group/status/grt', methods=["PUT"])
+@organisation_views.route('/check_grt/group/<group_id>/status', methods=["POST"])
 @login_required
 @feature_enable("questions_grt")
-def grt_group_status():
+def grt_group_status(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    c_user = current_user
-    data = json.loads(request.json)
-    group_id = data['group_id']
-    reqstatus = data['status']
-    user = EsthenosUser.objects.get(id=c_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org  = user.organisation
+
+    group = EsthenosOrgGroup.objects.get(organisation=org, group_id=group_id)
     applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=250)
 
+    reqstatus = request.form.get("status")
+
+    qsession = EsthenosOrgGroupGRTSession.objects.get(group=group, organisation=org)
+    qsession.state = "pass" if reqstatus == "true" else "fail"
+    qsession.save()
+
     for app in applications:
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0],updated_on=datetime.datetime.now())
+        status = EsthenosOrgApplicationStatus(
+            status = EsthenosOrgApplicationStatusType.objects.filter(status_code=250)[0],
+            updated_on=datetime.datetime.now()
+        )
         status.save()
         app.timeline.append(status)
 
-        if reqstatus ==  "true":
+        if reqstatus == "true":
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=272)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 272
+
         else:
             app.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=270)[0]
-            app.current_status_updated  = datetime.datetime.now()
+            app.current_status_updated = datetime.datetime.now()
             app.status = 270
+
         app.save()
 
-    content = {'response': 'OK'}
-    return Response(response=content, status=200, mimetype="application/json")
+    return redirect("/check_grt")
 
 
 @organisation_views.route('/check_grt/group/<group_id>/questions', methods=["GET","POST"])
@@ -70,34 +85,32 @@ def grt_questions(group_id):
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-
     if request.method == "GET":
-        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation = org)
-        centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
+        group = EsthenosOrgGroup.objects.get(organisation=org, group_id=group_id)
+        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
+
         kwargs = locals()
         return render_template("grt/grt_group_questions.html", **kwargs)
 
     elif request.method == "POST":
         i = 0
         total_score = 0.0
-        questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
-        centers = EsthenosOrgCenter.objects.filter(organisation=org)
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-        grt_session, status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group,organisation=org)
+        group = EsthenosOrgGroup.objects.get(organisation=org, group_id=group_id)
+        qsession, status = EsthenosOrgGroupGRTSession.objects.get_or_create(group=group, organisation=org)
         question_dict = dict()
 
         for v in request.form:
             i = i + 1
-            (k, v) = (v,request.form[v])
+            (k, v) = (v, request.form[v])
             if k.startswith("rating"):
                 key = k.split("rating")[1]
                 question_dict[key] = str(v)
                 total_score = total_score + int(v)
 
-        grt_session.questions = question_dict
-        grt_session.score = float(total_score/i)
-        grt_session.save()
+        qsession.questions = question_dict
+        qsession.score = float(total_score/i)
+        qsession.save()
+
         kwargs = locals()
         return redirect("/check_grt")
 

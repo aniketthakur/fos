@@ -32,41 +32,41 @@
         <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-body no-border">
-                            <table class="table no-more-tables ">
-                                <thead>
-                                <tr>
-                                    <th style="width:1%" >#</th>
-                                    <th style="width:25%">Group ID</th>
-                                    <th style="width:25%">Group Name</th>
-                                    <th style="width:25%">Questions</th>
-                                    <th style="width:15%">GRT Date</th>
-                                    <th style="width:25%">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for group in groups %}
-                                    <tr>
-                                        <td class="v-align-middle">{{ loop.index }}</td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.grt_group_list", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
-                                        </td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
-                                        </td>
-                                        <td><a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.grt_questions", group_id=group.group_id) }}">Questions</a></td>
-                                        <td>
-                                            <div class="input-with-icon  right">
-                                                <div class="input-append success date col-md-11">
-                                                    <input type="text" class="form-control grt_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}grt_date" >
-                                                    <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><a class="btn btn-small btn-info btn-download-la" data-id="{{ group.group_id }}" href="#">Download Agreement</a></td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                    <table class="table no-more-tables ">
+                        <thead>
+                        <tr>
+                            <th style="width:1%" >#</th>
+                            <th style="width:25%">Group ID</th>
+                            <th style="width:25%">Group Name</th>
+                            <th style="width:25%">Questions</th>
+                            <th style="width:15%">GRT Date</th>
+                            <th style="width:25%">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for group in groups %}
+                            <tr>
+                                <td class="v-align-middle">{{ loop.index }}</td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.grt_group_list", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
+                                </td>
+                                <td><a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.grt_questions", group_id=group.group_id) }}">Questions</a></td>
+                                <td>
+                                    <div class="input-with-icon  right">
+                                        <div class="input-append success date col-md-11">
+                                            <input type="text" class="form-control grt_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}grt_date" >
+                                            <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a class="btn btn-small btn-info btn-download-la" data-id="{{ group.group_id }}" href="#">Download Agreement</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -74,45 +74,97 @@
 
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>GRT <span class="semi-bold">Applications Results</span></h3>
+            <h3>GRT <span class="semi-bold">Applications Results - Pending</span></h3>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-body no-border">
-                            <table class="table no-more-tables ">
-                                <thead>
-                                <tr>
-                                    <th style="width:1%" >#</th>
-                                    <th style="width:25%">Group ID</th>
-                                    <th style="width:25%">Group Name</th>
-                                    <th style="width:25%">GRT Rating</th>
-                                    <th style="width:10%" class="text-center">Fail</th>
-                                    <th style="width:10%" class="text-center" >Pass</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for grt_session in grt_sessions %}
-                                    <tr>
-                                        <td class="v-align-middle">{{ loop.index }}</td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.grt_group_list", group_id=grt_session.group.group_id) }}"><ins>{{ grt_session.group.group_id }}</ins></a>
-                                        </td>
-                                        <td class="v-align-middle">
-                                          <a href="{{ url_for("organisation_views.application_list_group", group_id=grt_session.group.group_id) }}"><ins>{{ grt_session.group.group_name }}</ins></a>
-                                        </td>
-                                        <td><span class="muted">{{'%0.2f' %  grt_session.score|float}}/5</span></td>
-                                        <td>
-                                            <button class="btn btn-small btn-small btn-danger btn-cons group-fail" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-times"></span></button>
-                                        </td>
-                                        <td >
-                                            <button class="btn btn-small btn-small btn-primary btn-cons group-pass" data-id="{{ grt_session.group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check"></span></button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                    <table class="table no-more-tables ">
+                        <thead>
+                        <tr>
+                            <th style="width:1%" >#</th>
+                            <th style="width:25%">Group ID</th>
+                            <th style="width:25%">Group Name</th>
+                            <th style="width:25%">GRT Rating</th>
+                            <th style="width:10%" class="text-center">Fail</th>
+                            <th style="width:10%" class="text-center" >Pass</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for session in pending %}
+                            <tr>
+                                <td class="v-align-middle">{{ loop.index }}</td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.grt_group_list", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_name }}</ins></a>
+                                </td>
+                                <td><span class="muted">{{'%0.2f' %  session.score|float}}/5</span></td>
+                                <td>
+                                    <form method="post" action="{{ url_for("organisation_views.grt_group_status", group_id=session.group.group_id) }}">
+                                        <input type="hidden" name="status" value="false">
+                                        <button class="btn btn-small btn-small btn-danger btn-cons" type="submit"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                    </form>
+                                </td>
+                                <td >
+                                    <form method="post" action="{{ url_for("organisation_views.grt_group_status", group_id=session.group.group_id) }}">
+                                        <input type="hidden" name="status" value="true">
+                                        <button class="btn btn-small btn-small btn-primary btn-cons" type="submit"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>GRT <span class="semi-bold">Applications Results - Finalized</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <table class="table no-more-tables ">
+                        <thead>
+                        <tr>
+                            <th style="width:1%" >#</th>
+                            <th style="width:25%">Group ID</th>
+                            <th style="width:25%">Group Name</th>
+                            <th style="width:25%">GRT Rating</th>
+                            <th style="width:10%" class="text-center">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for session in finalized %}
+                            <tr>
+                                <td class="v-align-middle">{{ loop.index }}</td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.grt_group_list", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_name }}</ins></a>
+                                </td>
+                                <td><span class="muted">{{'%0.2f' %  session.score|float}}/5</span></td>
+                                <td>
+                                    {% if session.state == "fail" %}
+                                    <button class="btn btn-small btn-small btn-danger btn-cons"><span aria-hidden="true" class="fa fa-times"></span></button>
+                                    {% else %}
+                                    <button class="btn btn-small btn-small btn-primary btn-cons"><span aria-hidden="true" class="fa fa-check"></span></button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -123,32 +175,6 @@
 {% block js_scripts %}
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".group-fail").click(function(e){
-                e.preventDefault();
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":"false"}'
-                $.ajax({
-                    url: '{{ url_for("organisation_views.grt_group_status") }}',
-                    data: JSON.stringify(data),
-                    type: 'PUT',
-                    contentType: "application/json",
-                    success: function(response) {
-                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
-                    }
-                });
-            });
-            $(".group-pass").click(function(e){
-                e.preventDefault();
-                data = '{"group_id":"'+$(this).attr("data-id")+'","status":"true"}'
-                $.ajax({
-                    url: '{{ url_for("organisation_views.grt_group_status") }}',
-                    data: JSON.stringify(data),
-                    type: 'PUT',
-                    contentType: "application/json",
-                    success: function(response) {
-                        Messenger().post("Application status changed for group id"+$(this).attr("data-id"));
-                    }
-                });
-            });
             $('.input-append.date').datepicker({
                 autoclose: true,
                 todayHighlight: true,
