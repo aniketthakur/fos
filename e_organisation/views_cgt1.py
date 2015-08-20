@@ -68,16 +68,15 @@ def cgt1_group_status(group_id):
     applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=190)
 
     reqstatus = request.form.get("status")
-    print reqstatus
 
-    cgt1_session = EsthenosOrgGroupCGT1Session.objects.get(group=group, organisation=org)
-    cgt1_session.state = "pass" if reqstatus == "true" else "fail"
-    cgt1_session.save()
+    qsession = EsthenosOrgGroupCGT1Session.objects.get(group=group, organisation=org)
+    qsession.state = "pass" if reqstatus == "true" else "fail"
+    qsession.save()
 
     for app in applications:
         status = EsthenosOrgApplicationStatus(
-          status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
-          updated_on=datetime.datetime.now()
+            status=EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0],
+            updated_on=datetime.datetime.now()
         )
         status.save()
         app.timeline.append(status)
@@ -117,7 +116,7 @@ def cgt1_questions(group_id):
         i = 0
         total_score = 0.0
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-        cgt1_session, status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group, organisation=org)
+        qsession, status = EsthenosOrgGroupCGT1Session.objects.get_or_create(group=group, organisation=org)
         question_dict = dict()
 
         for v in request.form:
@@ -128,9 +127,9 @@ def cgt1_questions(group_id):
                 question_dict[key] = str(v)
                 total_score = total_score + int(v)
 
-        cgt1_session.questions = question_dict
-        cgt1_session.score = float(total_score/i)
-        cgt1_session.save()
+        qsession.questions = question_dict
+        qsession.score = float(total_score/i)
+        qsession.save()
 
         kwargs = locals()
         return redirect("/check_cgt1")
