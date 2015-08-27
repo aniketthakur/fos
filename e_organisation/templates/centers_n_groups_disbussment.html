@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block css_sheets %}{{ super() }}
+{% block css_sheets %}
     <link href="{{ url_for('static', filename='plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .ui-datepicker { position: relative; z-index: 10000 !important; }

@@ -43,19 +43,19 @@ mainapp.config.update(
         'PASSWORD':'saggraha-password'
     },
     FEATURES = {
-        "disbursement": True,
-        "hignmark_equifax": True,
+        "disbursement": False,
+        "hignmark_equifax": False,
 
-        "questions_grt": True,
-        "questions_cgt1": True,
-        "questions_cgt2": True,
-        "questions_telecalling": True,
-        "questions_psychometric": True,
+        "questions_grt": False,
+        "questions_cgt1": False,
+        "questions_cgt2": False,
+        "questions_telecalling": False,
+        "questions_psychometric": False,
 
         "accounts_reports": True,
         "accounts_scrutiny": True,
         "accounts_applications": True,
-        "accounts_enroll_customers": True,
+        "accounts_enroll_customers": False,
     }
 )
 login_manager = LoginManager()

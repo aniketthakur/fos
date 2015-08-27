@@ -576,11 +576,13 @@ class EsthenosOrgApplication(db.Document):
     bankaccount_inclusion=db.StringField(max_length=512, required=False,default="")
     fl_loans=db.IntField(default=0)
     group_leader_cell=db.StringField(max_length=512, required=False,default="")
-    bank_name=db.StringField(max_length=200, required=False,default="")
-    bank_ifsc_code=db.StringField(max_length=20, required=False,default="")
-    bank_account_holder_name=db.StringField(max_length=200, required=False,default="")
-    bank_account_number=db.StringField(max_length=200, required=False,default="")
-    bankfi_amount=db.IntField(default=0)
+
+    bank_name = db.StringField(max_length=200, required=False,default="")
+    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
+    bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
+    bank_account_number = db.StringField(max_length=200, required=False,default="")
+    bankfi_amount = db.IntField(default=0)
+
     patta_land=db.StringField(max_length=512, required=False,default="")
     cheque_no=db.StringField(max_length=512, required=False,default="")
     cheque_bank_name=db.StringField(max_length=512, required=False,default="")
