@@ -6,6 +6,13 @@
     .section {
       margin-top: 10px;
     }
+    .right-col .grid.simple .grid-body {
+      padding: 13px;
+    }
+    .right-col .section {
+      margin-top: 12px;
+      height: 265px;
+    }
     .footer {
       margin: 10px 0 100px 0;
     }
@@ -15,6 +22,17 @@
       font-weight: bold;
     }
     .name .value {
+    }
+    .map .title, .profile-pic .title {
+      color: #000000;
+      top: -45px;
+      left: 10px;
+      font-size: 24px;
+      position: relative;
+    }
+    .map #map-business, .map #map-residence {
+      width: 235px;
+      height: 250px;
     }
     .doc-image {
       float: left;
@@ -35,6 +53,28 @@
   </style>
 {% endblock %}
 
+
+{% block top_js_scripts %}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+              center: { lat: 19.876165, lng: 75.343314},
+              zoom: 7,
+              minZoom: 5,
+              maxZoom: 10,
+              zoomControl: false,
+              mapTypeControl: false,
+              streetViewControl: false
+            };
+            var map1 = new google.maps.Map(document.getElementById('map-business'), mapOptions);
+            var map2 = new google.maps.Map(document.getElementById('map-residence'), mapOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+{% endblock %}
+
+
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
@@ -43,7 +83,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="grid simple ">
                 <div class="grid-body no-border">
                     <div class="personal-info section">
@@ -165,26 +205,22 @@
             </div>
         </div>
 
-        <div class="col-md-4 right-col">
+        <div class="col-md-3 right-col">
             <div class="grid simple ">
                 <div class="grid-body no-border">
                     <div class="profile-pic section">
                        <div class="pic">
                          <img src="http://placehold.it/235x250">
                        </div>
-                       <div class="title">click-to-call</div>
+                       <h5 class="title">click-to-call</h5>
                     </div>
-                    <div class="business-map section">
-                       <div class="map">
-                         <img src="http://placehold.it/235x250">
-                       </div>
-                       <div class="title">business</div>
+                    <div class="map section">
+                       <div id="map-business"></div>
+                       <h5 class="title">business location</h5>
                     </div>
-                    <div class="residence-map section">
-                       <div class="map">
-                         <img src="http://placehold.it/235x250">
-                       </div>
-                       <div class="title">residence</div>
+                    <div class="map section">
+                       <div id="map-residence"></div>
+                       <h5 class="title">residence location</h5>
                     </div>
                 </div>
             </div>
