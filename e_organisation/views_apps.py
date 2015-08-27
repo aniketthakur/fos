@@ -209,6 +209,48 @@ def scrutiny():
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
 
 
+#todo : filter by approved criterion.
+@organisation_views.route('/scrutiny/approved', methods=["GET"])
+@login_required
+def scrutiny_approved():
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
+#todo : filter by rejected criterion.
+@organisation_views.route('/scrutiny/rejected', methods=["GET"])
+@login_required
+def scrutiny_rejected():
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
+#todo : filter by onhold criterion.
+@organisation_views.route('/scrutiny/onhold', methods=["GET"])
+@login_required
+def scrutiny_onhold():
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_list.html", **kwargs)
+
+
 @organisation_views.route('/scrutiny/group/<group_id>', methods=["GET"])
 @login_required
 def scrutiny_list_group(group_id):
