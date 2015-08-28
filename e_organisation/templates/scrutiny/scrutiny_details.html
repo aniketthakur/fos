@@ -6,6 +6,12 @@
     .section {
       margin-top: 10px;
     }
+    .section .btn {
+      width: 200px;
+    }
+    .section .btn-success {
+      background-color: #1C882D;
+    }
     .right-col .grid.simple .grid-body {
       padding: 13px;
     }
@@ -46,9 +52,13 @@
     .documents h5 a:hover {
       text-decoration: underline;
     }
-    .field-date, .field-to, .field-from, .field-signature {
+    .field-date, .field-to, .field-from, .field-signature, .field-comments {
       color: #000000;
-      padding: 10px 0;
+      padding: 10px 0 0 0;
+    }
+    .field-comments textarea {
+      width: 100%;
+      height: 100px;
     }
   </style>
 {% endblock %}
@@ -87,6 +97,7 @@
             <div class="grid simple ">
                 <div class="grid-body no-border">
                     <div class="personal-info section">
+                        <h4 class="section-title">Personal Details</h4>
                         <div class="name">
                             <span class="tag">Name : </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
@@ -106,7 +117,12 @@
                             <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
                     <div class="business-info section">
+                        <h4 class="section-title">Business Details</h4>
                         <div class="name">
                             <span class="tag">Years In Business : </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
@@ -120,7 +136,12 @@
                             <span class="tag">Own/ Rented Business Premise : </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
                     <div class="bank-info section">
+                        <h4 class="section-title">Bank Details</h4>
                         <div class="name">
                             <span class="tag">Bank Name : </span><span class="value">{{ application.bank_name }}</span>
                         </div>
@@ -134,7 +155,12 @@
                             <span class="tag">Bank IFSC Code: </span><span class="value">{{ application.bank_ifsc_code  }}</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
                     <div class="loan-info section">
+                        <h4 class="section-title">Loan Details</h4>
                         <div class="name">
                             <span class="tag">Business: </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
@@ -151,7 +177,7 @@
             <div class="grid simple ">
                 <div class="grid-body no-border">
                     <div class="guarantor-info section">
-                        <h4 class="guarantor">Guarantor 1</h4>
+                        <h4 class="section-title">Guarantor 1</h4>
                         <div class="name">
                             <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
@@ -174,7 +200,7 @@
             <div class="grid simple ">
                 <div class="grid-body no-border">
                     <div class="guarantor-info section">
-                        <h4 class="guarantor">Guarantor 2</h4>
+                        <h4 class="section-title">Guarantor 2</h4>
                         <div class="name">
                             <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
@@ -276,7 +302,7 @@
         <div class="col-md-4">
             <div class="grid simple">
                 <div class="grid-body no-border">
-                    <h4 class="name"><a href="#">Cash Flow Analysis</a></h4>
+                    <h4 class="name">Financial Analysis</h4>
                     <div class="name">
                         <span class="tag">Total Income: </span><span class="value"></span>
                     </div>
@@ -292,21 +318,20 @@
                     <div class="name">
                         <span class="tag">Loan Amount: </span><span class="value"></span>
                     </div>
+                    <div class="name">
+                        <span class="tag"><a href="{{ url_for("organisation_views.application_cashflow", app_id=application.application_id) }}">Cash Flow Analysis</a></span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-body no-border">
-                    <div class="field-date pull-right">Date : 12/ 12/ 2015</div>
-                    <div class="clearfix"></div>
-
-                    <div class="field-to pull-left">Mr/ Mrs/ Miss <span class="tag">{{ application.applicant_name }}</span> Son/ Daughter/ Spouse Of <span class="tag">{{ application.applicant_father }}</span></div>
-                    <div class="clearfix"></div>
-
+                    <div class="field-date">Date : 12/ 12/ 2015</div>
+                    <div class="field-to">Mr/ Mrs/ Miss <span class="tag">{{ application.applicant_name }}</span> Son/ Daughter/ Spouse Of <span class="tag">{{ application.applicant_father }}</span></div>
+                    <div class="field-comments"><textarea></textarea></div>
                     <div class="field-from pull-right">For Maitreya</div>
                     <div class="clearfix"></div>
-
                     <div class="field-signature pull-right">Loan Officer</div>
                     <div class="clearfix"></div>
                 </div>
@@ -326,6 +351,5 @@
         </div>
     </div>
 
-   <div class="row section footer">
-    </div>
+   <div class="row section footer"></div>
 {% endblock %}
