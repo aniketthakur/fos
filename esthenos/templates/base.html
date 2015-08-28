@@ -137,14 +137,6 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("disbursement") %}
-                    <li class="">
-                        <a href="/check_disbursement">
-                            <i class="icon-custom-ui"></i>
-                            <span class="title">Disbursement</span>
-                        </a>
-                    </li>
-                    {% endif %}
                     {% if feature_show("accounts_scrutiny") %}
                     <li class="">
                           <a href="{{ url_for('organisation_views.scrutiny') }}">
@@ -158,6 +150,14 @@
                           <a href="{{ url_for('organisation_views.sanctions') }}">
                             <i class="icon-custom-ui"></i>
                             <span class="title">Sanctions</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if feature_show("disbursement") %}
+                    <li class="">
+                        <a href="/check_disbursement">
+                            <i class="icon-custom-ui"></i>
+                            <span class="title">Disbursement</span>
                         </a>
                     </li>
                     {% endif %}
