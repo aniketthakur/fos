@@ -256,6 +256,7 @@ def scrutiny_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
+  today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
 
