@@ -61,6 +61,16 @@
       width: 100%;
       height: 100px;
     }
+    .guarantor-details .grid-body {
+      clear: none;
+      width: 49%;
+    }
+    .grid {
+      margin-bottom: 18px;
+    }
+    .grid.simple .grid-body {
+      padding: 15px;
+    }
   </style>
 {% endblock %}
 
@@ -175,9 +185,9 @@
                 </div>
             </div>
 
-            <div class="grid simple ">
-                <div class="grid-body no-border">
-                    <div class="guarantor-info section">
+            <div class="grid simple guarantor-details">
+                <div class="grid-body no-border col-md-6 pull-left">
+                    <div class="section">
                         <h4 class="section-title">Guarantor 1</h4>
                         <div class="name">
                             <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
@@ -196,11 +206,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="grid simple ">
-                <div class="grid-body no-border">
-                    <div class="guarantor-info section">
+                <div class="grid-body no-border col-md-6 pull-right">
+                    <div class="section">
                         <h4 class="section-title">Guarantor 2</h4>
                         <div class="name">
                             <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
@@ -219,6 +227,8 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
             </div>
 
             <div class="grid simple documents">
