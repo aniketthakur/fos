@@ -1,0 +1,494 @@
+{% extends "base.html" %}
+
+
+{% block css_sheets %}
+  <style type="text/css">
+    .section {
+      margin-top: 10px;
+    }
+    .section .btn {
+      width: 200px;
+      margin-right: 20px;
+    }
+    .section .btn-success {
+      background-color: #1C882D;
+    }
+    form .section input {
+      border: none;
+      width: inherit;
+      display: inline;
+      min-height: 40px;
+      vertical-align: inherit;
+      padding: 0 0 0 5px !important;
+      border-bottom: 1px solid #e5e9ec;
+    }
+    .section .small {
+      width: 35px !important;
+    }
+    .section .medium {
+      width: 60px !important;
+    }
+    .section .big {
+      width: 100px !important;
+    }
+    .section .cashflow {
+      margin: 15px 0 0 0;
+    }
+    .section .error-control {
+      border-bottom: 2px solid #f35958 !important;
+    }
+    .section .success-control {
+      border-bottom: 2px solid #1C882D !important;
+    }
+    .right-col .grid.simple .grid-body {
+      padding: 13px;
+    }
+    .right-col .section {
+      margin-top: 12px;
+      height: 265px;
+    }
+    .footer {
+      margin: 10px 0 100px 0;
+    }
+    .name {
+    }
+    .name .tag, .reciept .tag {
+      font-weight: bold;
+    }
+    .name .value {
+    }
+    .map .title, .profile-pic .title {
+      color: #000000;
+      top: -45px;
+      left: 10px;
+      font-size: 24px;
+      position: relative;
+    }
+    .map #map-business, .map #map-residence {
+      width: 235px;
+      height: 250px;
+    }
+    .doc-image {
+      float: left;
+      width: 100px;
+      height: 100px;
+      margin: 5px 15px 10px 0;
+    }
+    .documents h5 {
+      margin: 20px 10px 0 0;
+    }
+    .documents h5 a:hover {
+      text-decoration: underline;
+    }
+    .field-date, .field-from, .field-signature {
+      color: #000000;
+      padding: 10px 0 0px 0;
+    }
+    .field-comments textarea {
+      width: 100%;
+      height: 100px;
+    }
+    .guarantor-details .grid-body {
+      clear: none;
+      width: 49%;
+    }
+    .grid {
+      margin-bottom: 18px;
+    }
+    .grid.simple .grid-body {
+      padding: 15px;
+    }
+  </style>
+{% endblock %}
+
+
+{% block js_scripts %}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function initialize() {
+                var mapOptions = {
+                  center: {lat: 19.876165, lng: 75.343314},
+                  zoom: 7,
+                  minZoom: 5,
+                  maxZoom: 10,
+                  zoomControl: false,
+                  mapTypeControl: false,
+                  streetViewControl: false
+                };
+                var map1 = new google.maps.Map(document.getElementById('map-business'), mapOptions);
+                var map2 = new google.maps.Map(document.getElementById('map-residence'), mapOptions);
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            $('#scrutiny-form').validate({
+                errorElement: 'span',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    total_income: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    total_expenditure: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    total_ltv: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    fior: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    loan_emi: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    loan_period: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    loan_amount: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    loan_interest: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    loan_processing_fee: {
+                        number: true,
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    memo_business_name: {
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    memo_business_type: {
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    },
+                    memo_applicant_address: {
+                        minlength: 1,
+                        maxlength: 30,
+                        required: true
+                    }
+                },
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    //var parent = $(element).parent('.input-with-icon');
+                    $(element).removeClass('success-control').addClass('error-control');
+                },
+                highlight: function (element) { // hightlight error inputs
+                    //var parent = $(element).parent();
+                    $(element).removeClass('success-control').addClass('error-control');
+                },
+                success: function (label, element) {
+                    //var parent = $(element).parent('.input-with-icon');
+                    $(element).removeClass('error-control').addClass('success-control');
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>Scrutiny: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <div class="personal-info section">
+                        <h4 class="section-title">Personal Details</h4>
+                        <div class="name">
+                            <span class="tag">Name : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Age : </span><span class="value">{{ application.age }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Fathers/Spouse Name : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Mobile : </span><span class="value">{{ application.member_tele_code }}{{ application.member_telephone }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Landline : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <div class="business-info section">
+                        <h4 class="section-title">Business Details</h4>
+                        <div class="name">
+                            <span class="tag">Years In Business : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Employees : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Seasonality : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Own/ Rented Business Premise : </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <div class="bank-info section">
+                        <h4 class="section-title">Bank Details</h4>
+                        <div class="name">
+                            <span class="tag">Bank Name : </span><span class="value">{{ application.bank_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Your Name in Bank : </span><span class="value">{{ application.bank_account_holder_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Bank Account No: </span><span class="value">{{ application.bank_account_number }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Bank IFSC Code: </span><span class="value">{{ application.bank_ifsc_code  }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <div class="loan-info section">
+                        <h4 class="section-title">Loan Details</h4>
+                        <div class="name">
+                            <span class="tag">Business: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Loan Purpose: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="name">
+                            <span class="tag">Loan Amount Applied: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid simple guarantor-details">
+                <div class="grid-body no-border col-md-6 pull-left">
+                    <div class="section">
+                        <h4 class="section-title">Guarantor 1</h4>
+                        <div class="name">
+                            <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="age">
+                            <span class="tag">Age: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="mobile">
+                            <span class="tag">Mobile: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="landline">
+                            <span class="tag">Landline: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="aadhar">
+                            <span class="tag">Aadhar: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-body no-border col-md-6 pull-right">
+                    <div class="section">
+                        <h4 class="section-title">Guarantor 2</h4>
+                        <div class="name">
+                            <span class="tag">Name: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="age">
+                            <span class="tag">Age: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="mobile">
+                            <span class="tag">Mobile: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="landline">
+                            <span class="tag">Landline: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                        <div class="aadhar">
+                            <span class="tag">Aadhar: </span><span class="value">{{ application.applicant_name }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="grid simple documents">
+                <div class="grid-body no-border">
+                    <h5 class="inline"><a href="#">kyc</a></h5>
+                    <h5 class="inline"><a href="#">guarantor kyc</a></h5>
+                    <h5 class="inline"><a href="#">personal documents</a></h5>
+                    <h5 class="inline"><a href="#">business documents</a></h5>
+                    <h5 class="inline"><a href="#">other documents</a></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 right-col">
+            <div class="grid simple ">
+                <div class="grid-body no-border">
+                    <div class="profile-pic section">
+                       <div class="pic">
+                         <img src="http://placehold.it/235x250">
+                       </div>
+                       <h5 class="title">click-to-call</h5>
+                    </div>
+                    <div class="map section">
+                       <div id="map-business"></div>
+                       <h5 class="title">business location</h5>
+                    </div>
+                    <div class="map section">
+                       <div id="map-residence"></div>
+                       <h5 class="title">residence location</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row hypothecation section">
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <h4>Hypothecation Doc. #1</h4>
+                    <div class="doc-image asset hypo1">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="doc-image support hypo1">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <h4>Hypothecation Doc. #2</h4>
+                    <div class="doc-image asset hypo2">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="doc-image support hypo2">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <h4>Hypothecation Doc. #3</h4>
+                    <div class="doc-image asset hypo3">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="doc-image support hypo3">
+                        <img src="http://placehold.it/100x100">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-no-horizontal-spacing" id="scrutiny-form" method="post" action="{{ url_for("organisation_views.scrutiny_application", app_id=application.application_id) }}">
+    <div class="row reciept section">
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border form-row">
+                    <h4 class="name">Financial Analysis</h4>
+                    <div class="name">
+                        <span class="tag">Total Income: </span>
+                        <input type="text" class="form-control medium" name="total_income" id="total_income">
+                    </div>
+                    <div class="name">
+                        <span class="tag">Total Expenditure: </span>
+                        <input type="text" class="form-control medium" name="total_expenditure" id="total_expenditure">
+                    </div>
+                    <div class="name">
+                        <span class="tag">Loan to Value (LTV): </span>
+                        <input type="text" class="form-control medium" name="total_ltv" id="total_ltv">
+                    </div>
+                    <div class="name">
+                        <span class="tag">Fix Obligation to Income Ratio (FOIR): </span>
+                        <input type="text" class="form-control medium" name="fior" id="fior">
+                    </div>
+                    <div class="name">
+                        <span class="tag">Loan Amount: </span>
+                        <input type="text" class="form-control medium" name="loan_amount" id="loan_amount">
+                    </div>
+                    <div class="name cashflow">
+                        <span class="tag"><a href="{{ url_for("organisation_views.application_cashflow", app_id=application.application_id) }}">Cash Flow Analysis</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <h4 class="name">Credit Memo</h4>
+                    <div class="field-date">Date : {{ today|dateformat }}</div>
+                    <div class="field-memo">
+                        Mr/ Mrs/ Miss <span class="tag">{{ application.applicant_name }}</span> Son/ Daughter/ Spouse of {{ application.applicant_father }} a permanent resident of <input type="text" class="form-control big input-with-icon" name="memo_applicant_address" id="memo_applicant_address"> owner of <input type="text" class="form-control big input-with-icon" name="memo_business_name" id="memo_business_name"> which deals in retail/wholsale/distribution/service of <input type="text" class="form-control big input-with-icon" name="memo_business_type" id="memo_business_type"> On the basis of her/his application, CB report and internal underwriting process, loan of INR <input type="text" class="form-control medium input-with-icon" name="loan_amount" id="loan_amount"> at <input type="text" class="form-control small input-with-icon" name="loan_interest" id="loan_interest"> % for <input type="text" class="form-control small input-with-icon" name="loan_period" id="loan_period"> month has been approved.
+                        Processing fee of <input type="text" class="form-control small input-with-icon" name="loan_processing_fee" id="loan_processing_fee"> % will be charged on the same loan amount with existing service tax. The EMI for said loan will be INR <input type="text" class="form-control small input-with-icon" name="loan_emi" id="loan_emi">
+                    </div>
+                    <div class="field-from pull-right">For Maitreya</div>
+                    <div class="clearfix"></div>
+                    <div class="field-signature pull-right">Loan Officer</div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <div class="row actions section">
+        <div class="col-md-8 col-md-offset-4">
+            <button type="submit" class="btn btn-success btn-large">approve</button>
+            <button type="submit" class="btn btn-danger btn-large">reject</button>
+            <button type="submit" class="btn btn-warning btn-large">hold</button>
+        </div>
+    </div>
+    </form>
+
+   <div class="row section footer"></div>
+{% endblock %}
