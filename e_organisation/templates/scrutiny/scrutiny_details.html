@@ -13,7 +13,7 @@
     .section .btn-success {
       background-color: #1C882D;
     }
-    .section form input {
+    form .section input {
       border: none;
       width: inherit;
       display: inline;
@@ -22,13 +22,13 @@
       padding: 0 0 0 5px !important;
       border-bottom: 1px solid #e5e9ec;
     }
-    .section form .small {
+    .section .small {
       width: 35px !important;
     }
-    .section form .medium {
+    .section .medium {
       width: 60px !important;
     }
-    .section form .big {
+    .section .big {
       width: 100px !important;
     }
     .section .cashflow {
@@ -431,8 +431,8 @@
         </div>
     </div>
 
+    <form class="form-no-horizontal-spacing" id="scrutiny-form" method="post" action="{{ url_for("organisation_views.scrutiny_application", app_id=application.application_id) }}">
     <div class="row reciept section">
-        <form class="form-no-horizontal-spacing" id="scrutiny-form" method="post" action="{{ url_for("organisation_views.scrutiny_application", app_id=application.application_id) }}">
         <div class="col-md-4">
             <div class="grid simple">
                 <div class="grid-body no-border form-row">
@@ -479,7 +479,6 @@
                 </div>
             </div>
         </div>
-        </form>
     </div>
 
    <div class="row actions section">
@@ -489,6 +488,7 @@
             <button type="submit" class="btn btn-warning btn-large">hold</button>
         </div>
     </div>
+    </form>
 
    <div class="row section footer"></div>
 {% endblock %}

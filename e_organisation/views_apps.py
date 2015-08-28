@@ -250,15 +250,21 @@ def scrutiny_list_center(group_location):
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
 
 
-@organisation_views.route('/scrutiny/application/<app_id>', methods=["GET"])
+@organisation_views.route('/scrutiny/application/<app_id>', methods=["GET", "POST"])
 @login_required
 def scrutiny_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
-  today = datetime.datetime.now()
-  user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  if request.method == "GET":
+    today = datetime.datetime.now()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    application = EsthenosOrgApplication.objects.get(application_id=app_id)
 
-  kwargs = locals()
-  return render_template("scrutiny/scrutiny_details.html", **kwargs)
+    kwargs = locals()
+    return render_template("scrutiny/scrutiny_details.html", **kwargs)
+
+
+  elif request.method == "POST":
+    return redirect("/scrutiny")
+
