@@ -43,7 +43,7 @@ mainapp.config.update(
         'PASSWORD':'saggraha-password'
     },
     FEATURES = {
-        "disbursement": False,
+        "disbursement": True,
         "hignmark_equifax": False,
 
         "questions_grt": False,
@@ -54,6 +54,7 @@ mainapp.config.update(
 
         "accounts_reports": True,
         "accounts_scrutiny": True,
+        "accounts_sanctions": True,
         "accounts_applications": True,
         "accounts_enroll_customers": False,
     }

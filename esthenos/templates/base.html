@@ -152,22 +152,12 @@
                             <span class="title">Scrutiny</span>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if feature_show("accounts_sanctions") %}
                     <li class="">
-                          <a href="{{ url_for('organisation_views.scrutiny_approved') }}">
+                          <a href="{{ url_for('organisation_views.sanctions') }}">
                             <i class="icon-custom-ui"></i>
-                            <span class="title">Scrutiny - Approved</span>
-                        </a>
-                    </li>
-                    <li class="">
-                          <a href="{{ url_for('organisation_views.scrutiny_rejected') }}">
-                            <i class="icon-custom-ui"></i>
-                            <span class="title">Scrutiny - Rejected</span>
-                        </a>
-                    </li>
-                    <li class="">
-                          <a href="{{ url_for('organisation_views.scrutiny_onhold') }}">
-                            <i class="icon-custom-ui"></i>
-                            <span class="title">Scrutiny - On-Hold</span>
+                            <span class="title">Sanctions</span>
                         </a>
                     </li>
                     {% endif %}
