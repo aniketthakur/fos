@@ -1,35 +1,6 @@
 from views_base import *
 
 
-@organisation_views.route('/api/organisation/products', methods=["GET"])
-@login_or_key_required
-@feature_enable("questions_psychometric")
-def org_products():
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    organisations = EsthenosOrg.objects.all()
-    products = EsthenosOrgProduct.objects.all()
-    content = list()
-    for product in products:
-        pr = dict()
-        pr["product_name"] = product["product_name"]
-        pr["loan_amount"] = product["loan_amount"]
-        pr["life_insurance"] = product["life_insurance"]
-        pr["eligible_cycle"] = product["eligible_cycle"]
-        pr["number_installments"] = product["number_installments"]
-        pr["emi"] = product["emi"]
-        pr["last_emi"] = product["last_emi"]
-        pr["processing_fee"] = product["processing_fee"]
-        pr["total_processing_fees"] = product["total_processing_fees"]
-        pr["interest_rate"] = product["interest_rate"]
-        pr["insurance_period"] = product["insurance_period"]
-        pr["emi_repayment"] = product["emi_repayment"]
-        content.append(pr)
-    kwargs = locals()
-    return Response(json.dumps({'products':content}), content_type="application/json", mimetype='application/json')
-
-
 @organisation_views.route('/group/status/psychometric', methods=["PUT"])
 @login_required
 @feature_enable("questions_psychometric")
