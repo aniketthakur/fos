@@ -1,0 +1,4 @@
+check process esthenos-celery with pidfile /var/run/esthenos/esthenos-celery.pid
+    start program = "/bin/su - ubuntu -c '/bin/bash /home/ubuntu/esthenos/e_deploy/esthenos-start.sh esthenos-celery'"
+    stop program = "/bin/su - ubuntu -c '/bin/kill `/bin/cat /var/run/esthenos/esthenos-celery.pid`'"
+end

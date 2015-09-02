@@ -1,0 +1,4 @@
+check process esthenos-beats with pidfile /var/run/esthenos/esthenos-beats.pid
+    start program = "/bin/su - ubuntu -c '/bin/bash /home/ubuntu/esthenos/e_deploy/esthenos-start.sh esthenos-beats'"
+    stop program = "/bin/su - ubuntu -c '/bin/kill `/bin/cat /var/run/esthenos/esthenos-beats.pid`'"
+end
