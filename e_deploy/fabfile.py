@@ -55,6 +55,9 @@ def provision():
     # setup monit service.
     _monitrc()
 
+    # setup rabbitmq server.
+    _rabbitmq()
+
 def _nginx():
     print "setting up nginx server."
 
@@ -66,7 +69,7 @@ def _nginx():
     sudo('ln -s /etc/nginx/sites-available/esthenos-nginx.conf /etc/nginx/sites-enabled/esthenos-webapp')
 
     # restart nginx server.
-    sudo('service nginx restart')    
+    sudo('service nginx restart')
 
 def _monitrc():
     print "setting up monitrc"
@@ -83,7 +86,13 @@ def _monitrc():
 
     sudo('service monit restart')
 
-    
+def _rabbitmq():
+    sudo('rabbitmqctl add_user esthenos-tasks esthenos')
+    sudo('rabbitmqctl add_vhost /esthenos-tasks')
+    sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
+
+    sudo('service rabbitmq-server restart')
+
 def stop(app_name):
     with settings(warn_only=True):
         command = "sudo monit stop {app}".format(app=app_name)
