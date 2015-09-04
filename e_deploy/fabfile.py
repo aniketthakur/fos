@@ -28,7 +28,7 @@ DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 def provision():
     env.user = client["user-provision"]
     
-    with open(os.path.expanduser('~/.ssh/esthenos.key.pub')) as f:
+    with open(os.path.expanduser('~/.ssh/esthenos.ops.key.pub')) as f:
         local_ssh_key = f.read().strip('\n')
 
     # install dependencies.
