@@ -44,6 +44,7 @@ def provision():
         'htop',
         'monit',
         'nginx',
+        'mongodb',
         'python-dev',
         'python-pip',
         'python-virtualenv',
@@ -65,6 +66,9 @@ def provision():
     # setup nginx server.
     _nginx()
 
+    # setup mongo server.
+    _mongodb()
+
     # setup monit service.
     _monitrc()
 
@@ -83,6 +87,9 @@ def _nginx():
 
     # restart nginx server.
     sudo('service nginx restart')
+
+def _mongodb():
+    print "setting up database for : {name}".format(name=client["name"])
 
 def _monitrc():
     print "setting up monitrc"
@@ -105,9 +112,6 @@ def _rabbitmq():
     sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
 
     sudo('service rabbitmq-server restart')
-
-def _create_database():
-    print "setting up database for : {name}".format(name=client["name"])
 
 
 def stop(app_name):
