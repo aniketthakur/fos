@@ -3,8 +3,19 @@ from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
 
-USER = 'ubuntu'
-env.user = USER
+
+client = {
+    "name" : "fos-demo",
+    "host" : ["fos-demo.esthenos.com"],
+    "dbname" : "fos-demo",
+    "dbhost" : "10.130.146.245",
+    "user-deploy" : "ubuntu",
+    "user-provision" : "root"
+}
+
+env.user = client["user-deploy"]
+env.hosts = client["host"]
+env.key_filename = "~/.ssh/esthenos.ops.key"
 env.use_ssh_config = True
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -15,6 +26,8 @@ DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 
 def provision():
+    env.user = client["user-provision"]
+    
     with open(os.path.expanduser('~/.ssh/esthenos.key.pub')) as f:
         local_ssh_key = f.read().strip('\n')
 
@@ -93,6 +106,10 @@ def _rabbitmq():
 
     sudo('service rabbitmq-server restart')
 
+def _create_database():
+    print "setting up database for : {name}".format(name=client["name"])
+
+
 def stop(app_name):
     with settings(warn_only=True):
         command = "sudo monit stop {app}".format(app=app_name)
@@ -108,8 +125,9 @@ def restart(app_name):
         command = "sudo monit restart {app}".format(app=app_name)
         sudo(command)
     
-def _ensure_dirs(user):
-    env.user = user
+
+
+def _ensure_dirs():
     dirs = [PIDS_DIR, LOGS_DIR]
     for d in dirs:
         sudo('mkdir -p {d}'.format(d=d))
@@ -119,11 +137,11 @@ def _requirements(deploy_path=DEPLOY_PATH):
     print "installing webapp python dependencies."
     sudo("pip -q install -r {path}/requirements.txt".format(path=deploy_path))
 
-def deploy(user=USER):
+def deploy():
     # TODO: replace this with
     # - zip up working directory
     # - upload and unzip into DEPLOY_PATH
-    env.user = user
+    env.user = client["user-deploy"]
     dirname = check_output(
         ["echo \"$(date +'%Y-%m-%d')-$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
 
@@ -134,7 +152,7 @@ def deploy(user=USER):
     rsync_project(remote_dir=deploy_path, local_dir='./', exclude=['.git', '*.pyc', '*.db', ".DS_Store"])
 
     with cd(deploy_path):
-        _ensure_dirs(env.user)
+        _ensure_dirs()
         _requirements(deploy_path)
 
         print 'updating deployment version, this may cause a bit of downtime.'
