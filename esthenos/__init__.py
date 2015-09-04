@@ -53,8 +53,8 @@ mainapp.config.update(
         "questions_psychometric": False,
 
         "accounts_reports": True,
-        "accounts_scrutiny": False,
-        "accounts_sanctions": False,
+        "accounts_scrutiny": True,
+        "accounts_sanctions": True,
         "accounts_applications": True,
         "accounts_enroll_customers": False,
     }
