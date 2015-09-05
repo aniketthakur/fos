@@ -6,11 +6,11 @@ SERVER_SETTINGS = {
 }
 
 MONGODB_SETTINGS = {
-    'DB': 'fos',
-    'PORT': 61228,
-    'HOST': 'ds061228.mongolab.com',
-    'USERNAME':'saggraha-user',
-    'PASSWORD':'saggraha-password'
+    'DB': 'testdb',
+    'PORT': 47742,
+    'HOST': 'ds047742.mongolab.com',
+    'USERNAME': 'test-user',
+    'PASSWORD': 'test-password'
 }
 
 CELERY_SETTINGS = {
