@@ -2,16 +2,7 @@ from fabric.api import *
 from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
-
-
-client = {
-    "name" : "fos-demo",
-    "host" : ["fos-demo.esthenos.com"],
-    "dbname" : "fos-demo",
-    "dbhost" : "10.130.146.245",
-    "user-deploy" : "ubuntu",
-    "user-provision" : "root"
-}
+from esthenos.settings import SERVER_SETTINGS as client
 
 env.user = client["user-deploy"]
 env.hosts = client["host"]
@@ -24,6 +15,10 @@ PIDS_DIR = '/var/run/esthenos/'
 LOGS_DIR = '/var/log/esthenos/'
 DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
+
+def sanity():
+    print "simple task to assert deployment script sanity."
+    sudo("apt-get update -qq")
 
 def provision():
     env.user = client["user-provision"]
@@ -93,7 +88,7 @@ def _mongodb():
 
 def _monitrc():
     print "setting up monitrc"
-    put('e_deploy/monitrc', '/etc/monit/monitrc')
+    put('e_deploy/esthenos-monitrc', '/etc/monit/monitrc')
 
     put("e_deploy/esthenos-beats.monitrc", "/tmp/")
     sudo("mv /tmp/esthenos-beats.monitrc /etc/monit/conf.d/")
@@ -107,6 +102,7 @@ def _monitrc():
     sudo('service monit restart')
 
 def _rabbitmq():
+    print "setting up rabbitmq server."
     sudo('rabbitmqctl add_user esthenos-tasks esthenos')
     sudo('rabbitmqctl add_vhost /esthenos-tasks')
     sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
@@ -128,8 +124,6 @@ def restart(app_name):
     with settings(warn_only=True):
         command = "sudo monit restart {app}".format(app=app_name)
         sudo(command)
-    
-
 
 def _ensure_dirs():
     dirs = [PIDS_DIR, LOGS_DIR]

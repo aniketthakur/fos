@@ -12,6 +12,7 @@ from flask_login import  LoginManager
 from werkzeug.contrib.fixers import ProxyFix
 
 import boto
+import settings
 from boto.s3.connection import S3Connection
 
 mainapp = Flask(__name__)
@@ -20,51 +21,35 @@ mainapp.url_map.strict_slashes = False
 mainapp.config['MAX_CONTENT_LENGTH'] = 5024000
 mainapp.config['SERVER_EMAIL'] = "support@esthenos.com"
 mainapp.config['MIN_IMAGE_DIMENSION'] = 300
-mainapp.config["region_list"] = ['us-east-1','us-west-1','us-west-2']
-mainapp.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
-mainapp.config['AWS_S3_BUCKET_DIRECT'] = 'esthenos'
-mainapp.config["AWS_ACCESS_KEY_ID"] = 'AKIAITWBEHC2SAGDFQSA'
-mainapp.config["AWS_SECRET_ACCESS_KEY"] = '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'
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
+mainapp.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 mainapp.config["USER_MODEL_CLASS"] = "e_admin.models.EsthenosUser"
 mainapp.config['ROOT'] = os.curdir
 mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/')
 mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/uploads')
+mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
+
+# applying settings.
+mainapp.config["FEATURES"] = settings.FEATURES
+mainapp.config["SERVER_SETTINGS"] = settings.SERVER_SETTINGS
+mainapp.config["MONGODB_SETTINGS"] = settings.MONGODB_SETTINGS
+
+# updating settings.
+mainapp.config.update(settings.AWS_SETTINGS)
+mainapp.config.update(settings.CELERY_SETTINGS)
+
+# updating debug settings.
 mainapp.config.update(
-    CELERY_BROKER_URL='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',
-    CELERY_RESULT_BACKEND='amqp://esthenos-tasks:esthenos@127.0.0.1:5672//esthenos-tasks',
     DEBUG = True,
     TESTING = False,
-    MONGODB_SETTINGS = {
-        'HOST': 'ds061228.mongolab.com',
-        'PORT': 61228,
-        'DB': 'saggrahadb',
-        'USERNAME':'saggraha-user',
-        'PASSWORD':'saggraha-password'
-    },
-    FEATURES = {
-        "disbursement": True,
-        "hignmark_equifax": True,
-
-        "questions_grt": True,
-        "questions_cgt1": True,
-        "questions_cgt2": True,
-        "questions_telecalling": True,
-        "questions_psychometric": False,
-
-        "accounts_reports": True,
-        "accounts_scrutiny": True,
-        "accounts_sanctions": True,
-        "accounts_applications": True,
-        "accounts_enroll_customers": False,
-    }
 )
+
+
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.needs_refresh_message = u"To protect your account, please re-authenticate to access this page."
 login_manager.needs_refresh_message_category = "info"
 login_manager.init_app(mainapp)
-mainapp.config["REMEMBER_COOKIE_DURATION"] = timedelta(minutes=30)
 
 LANGUAGES = {
     'en' : 'English'
