@@ -3,7 +3,6 @@
 from e_admin.models import EsthenosSettings, EsthenosUser
 from e_organisation.models import *
 
-
 organisation = EsthenosOrg.objects.all()
 for org in organisation:
     org.delete()

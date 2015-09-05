@@ -488,7 +488,7 @@ def get_centers_n_groups():
         groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = center)
         groups_list = []
         for group in groups:
-            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name)})
+            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name), 'group_location':str(group.location_name)})
 
     groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
     groups_list = []
