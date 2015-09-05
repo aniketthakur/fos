@@ -496,7 +496,7 @@ def get_centers_n_groups():
         applications_all = EsthenosOrgApplication.objects.filter(group=group)
         applications_cgt_ready = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
         if len(applications_all) == 0 or len(applications_all) > len(applications_cgt_ready):
-            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name)})
+            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name), 'group_location':str(group.location_name)})
 
     data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(groups_list)+'}'
     return Response(data, content_type="application/json", mimetype='application/json')
