@@ -59,19 +59,19 @@ def provision():
     sudo('pip install -U pip --no-use-wheel')
 
     # setup nginx server.
-    _nginx()
+    nginx()
 
     # setup mongo server.
-    _mongodb()
+    mongodb()
 
     # setup monit service.
-    _monitrc()
+    monitrc()
 
     # setup rabbitmq server.
-    _rabbitmq()
+    rabbitmq()
 
-def _nginx():
-    print "setting up nginx server."
+def nginx():
+    """setting up nginx server."""
 
     sudo('rm -f /etc/nginx/sites-enabled/default')
     sudo('rm -f /etc/nginx/sites-enabled/esthenos-webapp')
@@ -83,11 +83,13 @@ def _nginx():
     # restart nginx server.
     sudo('service nginx restart')
 
-def _mongodb():
-    print "setting up database for : {name}".format(name=client["name"])
+def mongodb():
+    """setting up mongo database."""
+    pass
 
-def _monitrc():
-    print "setting up monitrc"
+def monitrc():
+    """setting up monitrc manager."""
+
     put('e_deploy/esthenos-monitrc', '/etc/monit/monitrc')
 
     put("e_deploy/esthenos-beats.monitrc", "/tmp/")
@@ -101,8 +103,9 @@ def _monitrc():
 
     sudo('service monit restart')
 
-def _rabbitmq():
-    print "setting up rabbitmq server."
+def rabbitmq():
+    """setting up rabbitmq server."""
+    
     sudo('rabbitmqctl add_user esthenos-tasks esthenos')
     sudo('rabbitmqctl add_vhost /esthenos-tasks')
     sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
