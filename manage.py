@@ -14,8 +14,8 @@ manager.add_command("runserver", Server(
 from e_deploy.GunicornServer import GunicornServer
 manager.add_command("rungunicorn", GunicornServer())
 
-import flask_sauth.commands
-flask_sauth.commands.add_commands( manager)
+from esthenos import commands
+commands.add_commands( manager)
 
 from flask.ext.sauth.views import auth_views
 mainapp.register_blueprint( auth_views)
