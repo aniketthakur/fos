@@ -77,27 +77,6 @@ class EsthenosUserResource(Resource):
     document = EsthenosUser
 
 
-class Session(db.Document):
-    sid = db.StringField(primary_key=True)
-    data = db.DictField()
-    expiration = db.DateTimeField()
-    is_processed = db.BooleanField(default=False)
-
-
-class EsthenosUserType(db.Document):
-    type = db.StringField(max_length=20,required=True)
-
-
-class EsthenosUserBiliing(db.Document):
-    user = db.ReferenceField(EsthenosUser)
-    total_applications = db.IntField(default=0)
-    total_applications_manual = db.IntField(default=0)
-    total_kyc = db.IntField(default=0)
-    total_kyc_manual = db.IntField(default=0)
-    billing_month = db.StringField(max_length=255, required=False,default="")
-    billing_days = db.StringField(max_length=255, required=False,default="")
-
-
 sauth_user_registered = signal('user-registered')
 
 @sauth_user_registered.connect
