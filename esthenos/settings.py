@@ -67,7 +67,9 @@ FEATURES = {
     "questions_cgt2": False,
     "questions_telecalling": False,
     "questions_psychometric": True,
-    
+
+    "admin_groups": False,
+
     "accounts_reports": True,
     "accounts_scrutiny": True,
     "accounts_sanctions": True,

@@ -7486,3 +7486,6 @@ input[type="checkbox"] {
   font-weight: 300;
   text-indent: -2px;
 }
+.row .admin-action {
+  margin-bottom: 20px;
+}
