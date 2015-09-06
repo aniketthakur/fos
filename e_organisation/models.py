@@ -127,9 +127,6 @@ class EsthenosOrgRoleSettings(db.Document):
     reports_dd_done = db.StringField(max_length=10, required=True,default="no")
     reports_db_done = db.StringField(max_length=10, required=True,default="no")
 
-    def __unicode__(self):
-        return "EsthenosOrgRoleSettings"
-
 
 class EsthenosOrgStats(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -142,10 +139,6 @@ class EsthenosOrgStats(db.Document):
     application_cbcheck_done = db.IntField(default=0)
     application_cbcheck_passed = db.IntField(default=0)
     application_cbcheck_failed = db.IntField(default=0)
-    application_cf_ready = db.IntField(default=0)
-    application_cf_done = db.IntField(default=0)
-    application_cf_passed = db.IntField(default=0)
-    application_cf_failed = db.IntField(default=0)
     application_cf_ready = db.IntField(default=0)
     application_cf_done = db.IntField(default=0)
     application_cf_passed = db.IntField(default=0)
@@ -209,9 +202,6 @@ class EsthenosOrgCenter(db.Document):
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
 
-    def __unicode__(self):
-        return self.center_id
-
 
 class EsthenosOrgCenterResource(Resource):
     document= EsthenosOrgRegion
@@ -231,9 +221,6 @@ class EsthenosOrgGroup(db.Document):
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
-
-    def __unicode__(self):
-        return self.group_name
 
 
 class EsthenosOrgGroupResource(Resource):
@@ -293,9 +280,6 @@ class EsthenosOrgGRTTemplateQuestion(db.Document):
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 
-    def __unicode__(self):
-        return "EsthenosOrgCGTTemplateQuestion"
-
 
 class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
       organisation = db.ReferenceField('EsthenosOrg',required=True)
@@ -323,18 +307,12 @@ class EsthenosOrgPsychometricTemplateQuestion(db.Document):
     language_type = db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 
-    def __unicode__(self):
-        return "EsthenosOrgPsychometricTemplateQuestion"
-
 
 class EsthenosOrgCGT1TemplateQuestion(db.Document):
     question = db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
     language_type = db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
-
-    def __unicode__(self):
-        return "EsthenosOrgCGT1TemplateQuestion"
 
 
 class EsthenosOrgCGT2TemplateQuestion(db.Document):
@@ -343,18 +321,12 @@ class EsthenosOrgCGT2TemplateQuestion(db.Document):
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
 
-    def __unicode__(self):
-        return "EsthenosOrgCGT2TemplateQuestion"
-
 
 class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
     question=db.StringField(max_length=1024,required=True)
     question_regional = db.StringField(max_length=1024,required=True)
     language_type=db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
-
-    def __unicode__(self):
-        return "EsthenosOrgTeleCallingTemplateQuestion"
 
 
 class EsthenosOrgIndivijualTeleCallingSession(db.Document):
@@ -386,9 +358,6 @@ class EsthenosOrgProduct(db.Document):
     rd_free = db.FloatField(default=0)
     emi_repayment=db.StringField(max_length=128,required=False)
 
-    def __unicode__(self):
-        return "EsthenosOrgProduct"
-
 
 class EsthenosOrgSettings(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -411,9 +380,6 @@ class EsthenosOrgSettings(db.Document):
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
 
-    def __unicode__(self):
-        return "EsthenosOrgSettings"
-
 
 class EsthenosOrgApplicationStatusType(db.Document):
     status = db.StringField(max_length=100, required=True,default="")
@@ -430,9 +396,6 @@ class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField('EsthenosOrgApplicationStatusType')
     status_message = db.StringField(max_length=512, required=True,default="")
     updated_on = db.DateTimeField(default=datetime.datetime.now)
-
-    def __unicode__(self):
-        return "EsthenosOrgApplication updated:%" % self.updated_on
 
 
 class EsthenosOrgApplication(db.Document):
@@ -679,9 +642,6 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
     report_id=db.StringField(max_length=128, required=True,default="")
     raw = db.StringField(max_length=8096, required=True,default="")
 
-    def __unicode__(self):
-        return "EsthenosOrgApplicationHighMarkRequest"
-
 
 class EsthenosOrgApplicationHighMarkResponse(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
@@ -740,9 +700,6 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
     nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
-
-    def __unicode__(self):
-        return "EsthenosOrgApplicationHighMarkResponse"
 
 
 class EsthenosOrgApplicationEqifaxResponse(db.Document):
@@ -827,9 +784,6 @@ class EsthenosOrgApplicationEqifax(db.Document):
     gender=db.StringField(max_length=255, required=False,default="")
     branch_id=db.StringField(max_length=255, required=False,default="")
     kendra_id=db.StringField(max_length=255, required=False,default="")
-
-    def __unicode__(self):
-        return self.reference_number +" ---Requests"
 
 
 sauth_user_registered = signal('user-registered')
