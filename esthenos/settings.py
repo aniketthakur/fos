@@ -19,6 +19,16 @@ ORGS_SETTINGS = [
                 "passwd" : "demodemo",
                 "mobile" : "+91-9876543210"
             }
+        ],
+        "hierarchy" : [
+            { "level" : 1, "title" : "cxo", "title_full" : "chief executive officer" },
+            { "level" : 2, "title" : "vp",  "title_full" : "vice president"},
+            { "level" : 3, "title" : "sh",  "title_full" : "state head" },
+            { "level" : 4, "title" : "cm",  "title_full" : "cluster manager" },
+            { "level" : 5, "title" : "dm",  "title_full" : "divisional manager" },
+            { "level" : 6, "title" : "sm",  "title_full" : "saggraha manager" },
+            { "level" : 7, "title" : "som", "title_full" : "saggraha operations manager" },
+            { "level" : 8, "title" : "so",  "title_full" : "saggraha officer" }
         ]
     }
 ]
