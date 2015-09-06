@@ -19,7 +19,9 @@ class InitDB(Command):
     """Initialize new database."""
 
     def run(self):
-        print "dropping database only creating new account. *** uncomment lines for clean initialize ***"
+        print "dropping database only creating new accounts and organization."
+        print "uncomment lines for clean initialize."
+        print "\ninitializing db: {DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS)
         # dbname = settings.MONGODB_SETTINGS["DB"]
         # db.connection.drop_database(dbname)
 
