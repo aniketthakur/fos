@@ -84,7 +84,7 @@ def nginx():
     sudo('service nginx restart')
 
 def mongodb():
-    """setting up mongo database."""
+    """setting up mongo database (create-only)."""
     pass
 
 def monitrc():
