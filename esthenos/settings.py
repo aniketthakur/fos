@@ -28,7 +28,6 @@ SERVER_SETTINGS = {
     "host" : ["fos.prod.esthenos.com"],
     "git-branch" : "fos",
     "user-deploy" : "ubuntu",
-    "user-provision" : "root",
     "user-details" : [
         {
             "role" : "admin",
