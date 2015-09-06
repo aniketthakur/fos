@@ -22,15 +22,14 @@ class AddOrganisationForm( Form):
     postal_city =TextField( validators=[v.DataRequired(), v.Length(max=100)])
     email =TextField( validators=[v.DataRequired(), v.Email(), v.Length(max=256), v.Email()])
 
-    def validate_org_name( form, field):
+    def validate_org_name(form, field):
         org_name = field.data.lower().strip()
-        if( EsthenosOrg.objects(name=org_name).count()):
-            raise ValidationError( "Hey! This organisation is already registered with us")
+        if EsthenosOrg.objects(name=org_name).count():
+            raise ValidationError("Hey! This organisation is already registered with us")
 
-    def save( self):
+    def save(self):
         settings = EsthenosSettings.objects.all()[0]
-        org =EsthenosOrg(name=self.org_name.data,code = ""+str(settings.organisations_count))
-        #set fields
+        org = EsthenosOrg(name=self.org_name.data, code = ""+str(settings.organisations_count))
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
         org.postal_tele_code =self.postal_tele_code.data
@@ -38,10 +37,9 @@ class AddOrganisationForm( Form):
         org.postal_state =self.postal_state.data
         org.postal_city =self.postal_city.data
         org.postal_code = self.postal_code.data
+        org.email = self.email.data
+        org.owner = EsthenosUser.objects.get(id=current_user.id)
 
-        org.owner =EsthenosUser.objects.get(id=current_user.id)
-
-        org.email =self.email.data
         org.save()
         return org
 
