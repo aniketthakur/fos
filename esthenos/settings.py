@@ -1,8 +1,8 @@
 ORGS_SETTINGS = [
     {
-        "org" : "fos.esthenos.com",
-        "name" : "FOS Demo MicroFinance Pvt. Ltd.",
-        "email": "admin-org@fos.esthenos.com",
+        "org" : "dev.esthenos.com",
+        "name" : "Dev MicroFinance Pvt. Ltd.",
+        "email": "admin-org@dev.esthenos.com",
         "phone": "9876543210",
         "phone-code": "91",
         "postal-city": "Kolaba",
@@ -24,9 +24,9 @@ ORGS_SETTINGS = [
 ]
 
 SERVER_SETTINGS = {
-    "org" : "fos.esthenos.com",
-    "host" : ["fos.prod.esthenos.com"],
-    "git-branch" : "fos",
+    "org" : "dev.esthenos.com",
+    "host" : ["dev.prod.esthenos.com"],
+    "git-branch" : "dev",
     "user-deploy" : "ubuntu",
     "user-details" : [
         {
