@@ -397,12 +397,9 @@ def admin_organisation_settings_role(org_id, role_type):
     if session['role'] != "ADMIN":
         abort(403)
 
-    username = current_user.name
-    print role_type
-    org = EsthenosOrg.objects.get(id=org_id)
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation,role=role_type)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation, role=role_type)
+
     resp = dict()
     resp["access_dash"] = org_settings.access_dash
     resp["access_enroll_customer"]= org_settings.access_enroll_customer
@@ -424,9 +421,7 @@ def admin_organisation_settings_role(org_id, role_type):
     resp["reports_dd_done"]= org_settings.reports_dd_done
     resp["reports_db_done"]= org_settings.reports_db_done
 
-    return Response(response=json.dumps(resp),
-        status=200,\
-        mimetype="application/json")
+    return Response(response=json.dumps(resp), status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/settings/other', methods=["POST"])
@@ -465,17 +460,14 @@ def admin_organisation_settings(org_id):
     if session['role'] != "ADMIN":
         abort(403)
 
-    username = current_user.name
-
     org = EsthenosOrg.objects.get(id=org_id)
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+    user = EsthenosUser.objects.get(id=current_user.id)
     organisation = EsthenosOrg.objects.get(id=org_id)
-    settings,status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    settings, status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+
     if request.method == "POST":
-        print request.form
         role = request.form.get("role")
-        org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation,role=role)
+        org_settings, status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation, role=role)
         org_settings.access_dash = request.form.get("access_dash")
         org_settings.access_enroll_customer = request.form.get("access_enroll_customer")
         org_settings.access_cgt = request.form.get("access_cgt")
@@ -496,10 +488,11 @@ def admin_organisation_settings(org_id):
         org_settings.reports_dd_done = request.form.get("reports_dd_done")
         org_settings.reports_db_done = request.form.get("reports_db_done")
         org_settings.save()
+
         kwargs = locals()
         return render_template("admin_org_settings.html", **kwargs)
-    else :
-        print settings.loan_cycle_1_org
+
+    else:
         kwargs = locals()
         return render_template("admin_org_settings.html", **kwargs)
 
@@ -771,19 +764,12 @@ def admin_application():
 def admin_org_areas_regions(org_id, reg_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     organisation = EsthenosOrg.objects.get(id=org_id)
-    data = EsthenosOrgArea.objects.get(organisation=organisation,region=reg_id)
-    print data
-    regions = []
-    for br in data:
-        regions.append({'id':str(br.id),'name':br.region_name})
-    print regions
-    return Response(response=json.dumps(regions),
-        status=200,\
-        mimetype="application/json")
+    areas = EsthenosOrgArea.objects.get(organisation=organisation, region=reg_id)
+
+    response = [{'id':str(ar.id),'name':ar.region_name} for ar in areas]
+    return Response(response=json.dumps(response), status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/branches/<area_id>', methods=["GET"])
@@ -791,19 +777,12 @@ def admin_org_areas_regions(org_id, reg_id):
 def admin_org_branches_areas(org_id,area_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     organisation = EsthenosOrg.objects.get(id=org_id)
-    data = EsthenosOrgBranch.objects.get(organisation=organisation,area=area_id)
-    print data
-    branches = []
-    for br in data:
-        branches.append({'id':str(br.id),'name':br.branch_name})
-    print branches
-    return Response(response=json.dumps(branches),
-        status=200,
-        mimetype="application/json")
+    branches = EsthenosOrgBranch.objects.get(organisation=organisation,area=area_id)
+
+    response = [{'id':str(br.id),'name':br.branch_name} for br in branches]
+    return Response(response=json.dumps(response), status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/regions/<state_id>', methods=["GET"])
@@ -887,21 +866,18 @@ def admin_application_id(org_id,app_id):
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["POST"])
 @login_required
-def submit_application(org_id,app_id):
+def submit_application(org_id, app_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    application_id = request.form.get("application_id")
+
     form = AddApplicationManual(request.form)
     if form.validate():
         form.save()
-    print form.errors
+
     new_num = int(app_id[-6:])+1
     new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
     new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
-    if len(new_apps) >0:
+    if len(new_apps) > 0:
         return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
     else:
         return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/")
@@ -990,16 +966,13 @@ def cashflow_statusupdate(org_id, app_id):
 def read_pan(object_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     url = get_url_with_id(object_id)
     data = get_pan_details_url(url)
-    print data
+
     kwargs = locals()
-    return Response(response=data,
-        status=200,\
-        mimetype="application/json")
+    return Response(response=data, status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
@@ -1007,16 +980,13 @@ def read_pan(object_id):
 def read_vid(object_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     url = get_url_with_id(object_id)
     data = get_vid_details_url(url)
-    print data
+
     kwargs = locals()
-    return Response(response=data,
-        status=200,\
-        mimetype="application/json")
+    return Response(response=data, status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
@@ -1024,16 +994,13 @@ def read_vid(object_id):
 def read_aadhaar(object_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     url = get_url_with_id(object_id)
     data = get_aadhaar_details_url(url)
-    print data
+
     kwargs = locals()
-    return Response(response=data,
-        status=200,\
-        mimetype="application/json")
+    return Response(response=data, status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
@@ -1163,6 +1130,7 @@ def admin_lrpassbook(org_id):
 
     org_name = "Hindusthan Microfinance"
     usr = EsthenosUser.objects.get(id=current_user.id)
+
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
     try:
@@ -1174,10 +1142,10 @@ def admin_lrpassbook(org_id):
     with open('pass.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'Passbook'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'Passbook'
     return response
 
 
@@ -1196,9 +1164,9 @@ def admin_sanction(grp_id):
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
 
     product = apps[0].product
-    print product
     disbursement_date = datetime.datetime.now()
     org_name = "Hindusthan Microfinance"
+
     kwargs = locals()
     body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
     try:
@@ -1219,10 +1187,10 @@ def admin_sanction(grp_id):
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'sanction'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'sanction'
     return response
 
 
@@ -1480,7 +1448,6 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
         }
         pdfkit.from_string(body, 'tmp.pdf',options=options)
     except Exception as e:
-        print "in exception"
         print e.message
 
     raw_bytes = ""

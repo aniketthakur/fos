@@ -3,65 +3,68 @@
 
 {% block maincontents %}
     <div class="row">
-        <div class="col-md-12 form-group">
-            <h3>Loan <span class="semi-bold">Applications</span></h3>
-            <p>Note: Results are loaded after selecting organisation </p>
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Loan <span class="semi-bold">Applications</span></h3>
+                    <h3 class="v-align-middle pull-right"></h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <select id="source" style="width:100%" name="app-org" class="select2">
+                            <option selected disabled>select organization</option>
+                            {% for org in organisations %}
+                                <option value="{{ org.id }}">{{ org.name }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
+                            <div class="col-md-3 form-group">
+                                <input class="form-control" type="text" placeholder="Search by Application Id" name="appId" value="{{ appId }}">
+                            </div>
+                            <div class="col-md-1 form-group">
+                                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+                            </div>
+                        </form>
+                        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
+                            <div class="col-md-2 form-group">
+                                <select id="app-status" style="width:100%" class="select2" name="groupId">
+                                    <option selected disabled>Search By Group</option>
+                                    {% for group in groups %}
+                                    <option value="{{ group.id }}">{{ group.group_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-1 form-group">
+                                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+                            </div>
+                        </form>
+                        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
+                            <div class="col-md-3 form-group">
+                                <select id="app-status" style="width:100%" class="select2" name="statusId">
+                                    <option selected disabled>Search By Application Status</option>
+                                    {% for status in status_types %}
+                                    <option value="{{ status.id }}">{{ status.status }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-1 form-group">
+                                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6 form-group">
-            <select id="source" style="width:100%" name="app-org">
-            {% for org in organisations %}
-                <option value="{{ org.id }}">{{ org.name }}</option>
-            {% endfor %}
-            </select>
-        </div>
-    </div>
-
-    <div class="row">
-        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
-            <div class="col-md-4 form-group">
-                <input class="form-control" type="text" placeholder="Search by Application Id" name="appId" value="{{ appId }}">
-            </div>
-            <div class="col-md-4 form-group">
-                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
-            <div class="col-md-4 form-group">
-                <select id="app-status" style="width:100%" class="select2" name="groupId">
-                    <option selected disabled>Search By Group</option>
-                    {% for group in groups %}
-                    <option value="{{ group.id }}">{{ group.group_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-4 form-group">
-                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <form method="get" action="{{ url_for("admin_views.admin_application") }}">
-            <div class="col-md-4 form-group">
-                <select id="app-status" style="width:100%" class="select2" name="statusId">
-                    <option selected disabled>Search By Application Status</option>
-                    {% for status in status_types %}
-                    <option value="{{ status.id }}">{{ status.status }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-1 form-group">
-              <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="row-fluid">
-        <div class="span12">
+        <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-title">
                     <h4>Loan <span class="semi-bold">Application</span></h4>

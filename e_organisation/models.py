@@ -104,6 +104,17 @@ class EsthenosOrgUserUploadSession(db.DynamicDocument):
     tagged = db.BooleanField(default=False)
 
 
+class EsthenosOrgHierarchy(db.Document):
+    level = db.IntField(required=True)
+    title = db.StringField(max_length=10, required=True)
+    title_full = db.StringField(max_length=25, required=True)
+
+
+class EsthenosOrgRole(db.Document):
+    role = db.StringField(max_length=25, required=True)
+    features = db.ListField(db.StringField(max_length=255))
+
+
 class EsthenosOrgRoleSettings(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     role = db.StringField(max_length=25, required=True)

@@ -19,8 +19,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <h1>GRT Questions </h1>
-                <div class="grid-body no-border invoice-body">
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">GRT <span class="semi-bold">Questions</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
                     <form class="form-no-horizontal-spacing" method="post" id="org_questions_form" action="/admin/organisation/{{ org.id }}/grt_questions">
                         <div class="form-row">
                             <div class="form-group">

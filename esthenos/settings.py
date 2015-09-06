@@ -1,8 +1,8 @@
 ORGS_SETTINGS = [
     {
-        "org" : "fos.esthenos.com",
-        "name" : "FOS Demo MicroFinance Pvt. Ltd.",
-        "email": "admin-org@fos.esthenos.com",
+        "org" : "dev.esthenos.com",
+        "name" : "Dev MicroFinance Pvt. Ltd.",
+        "email": "admin-org@dev.esthenos.com",
         "phone": "9876543210",
         "phone-code": "91",
         "postal-city": "Kolaba",
@@ -19,6 +19,16 @@ ORGS_SETTINGS = [
                 "passwd" : "demodemo",
                 "mobile" : "+91-9876543210"
             }
+        ],
+        "hierarchy" : [
+            { "level" : 1, "title" : "cxo", "title_full" : "chief executive officer" },
+            { "level" : 2, "title" : "vp",  "title_full" : "vice president"},
+            { "level" : 3, "title" : "sh",  "title_full" : "state head" },
+            { "level" : 4, "title" : "cm",  "title_full" : "cluster manager" },
+            { "level" : 5, "title" : "dm",  "title_full" : "divisional manager" },
+            { "level" : 6, "title" : "sm",  "title_full" : "saggraha manager" },
+            { "level" : 7, "title" : "som", "title_full" : "saggraha operations manager" },
+            { "level" : 8, "title" : "so",  "title_full" : "saggraha officer" }
         ]
     }
 ]
@@ -65,7 +75,9 @@ FEATURES = {
     "questions_cgt2": False,
     "questions_telecalling": False,
     "questions_psychometric": True,
-    
+
+    "admin_groups": False,
+
     "accounts_reports": True,
     "accounts_scrutiny": True,
     "accounts_sanctions": True,

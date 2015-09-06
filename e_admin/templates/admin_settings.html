@@ -3,15 +3,25 @@
 
 {% block maincontents %}
     <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Admin <span class="semi-bold">Settings</span></h3>
+                    <h3 class="v-align-middle pull-right">Administration</h3>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="grid simple">
-                <div class="grid-body no-border invoice-body"><br>
+                <div class="grid-body"><br>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th class="text-left"><h4>RBI <span class="semi-bold"> Compliances and Guidelines</span>
-                            </h4></th>
-                            <th style="width:200px" class="text-right"></th>
+                            <th class="text-left"><h4>RBI <span class="semi-bold"> Compliances and Guidelines</span></h4></th>
+                            <th style="width:150px" class="text-right"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -85,7 +95,7 @@
         <div class="col-md-6">
             <form action="/admin/settings/update" method="POST">
                 <div class="grid simple">
-                    <div class="grid-body no-border invoice-body"><br>
+                    <div class="grid-body"><br>
                         <h4>Access Settings <span class="semi-bold"> Executive</span></h4>
                         <div class="row">
                             <div class="col-md-6">

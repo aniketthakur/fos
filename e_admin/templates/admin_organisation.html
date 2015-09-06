@@ -4,9 +4,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Add <span class="semi-bold">Organisation</span></h4>
-                    <div class="grid-body no-border">
+                <div class="grid-body">
+                    <h3 class="inline">Add <span class="semi-bold">Organization</span></h3>
+                    <h3 class="v-align-middle pull-right">Administration</h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
                         <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/organisations" method="post">
                             <div class="row column-seperation">
                                 <div class="col-md-6">
@@ -17,34 +20,9 @@
                                                 <input name="org_name" id="org_name" type="text" value=""  class="form-control" placeholder="Organisation Name" minlength="2" maxlength="30">
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>Postal Information</h4>
-                                    <div class="row form-row">
-                                        <div class="col-md-12 form-group" >
+                                        <div class="col-md-12">
                                             <div class="input-with-icon  right">
-                                                <input name="postal_address" value="" id="postal_address" type="text" class="form-control" placeholder="Address">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6 form-group">
-                                            <select name="postal_country" id="country"   class="select2 form-control" placeholder="Country"></select>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <select name="postal_state" id="state"  class="select2 form-control" placeholder="State"></select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <div class="input-with-icon  right">
-                                                <input name="postal_city" id="postal_city" type="text"  value="" class="form-control" placeholder="City" minlength="2" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="input-with-icon  right">
-                                                <input name="postal_code" id="postal_code" type="text" value=""  class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
+                                                <input name="email" id="email" type="text"  value="" class="form-control" placeholder="Email address" minlength="3" maxlength="30">
                                             </div>
                                         </div>
                                     </div>
@@ -60,11 +38,34 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Postal Information</h4>
                                     <div class="row form-row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" >
                                             <div class="input-with-icon  right">
-                                                <input name="email" id="email" type="text"  value="" class="form-control" placeholder="Email address" minlength="3" maxlength="30">
+                                                <input name="postal_address" value="" id="postal_address" type="text" class="form-control" placeholder="Address">
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <div class="input-with-icon  right">
+                                                <input name="postal_city" id="postal_city" type="text"  value="" class="form-control" placeholder="City" minlength="2" maxlength="30">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-with-icon  right">
+                                                <input name="postal_code" id="postal_code" type="text" value=""  class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-6 form-group">
+                                            <select name="postal_country" id="country"   class="select2 form-control" placeholder="Country"></select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <select name="postal_state" id="state"  class="select2 form-control" placeholder="State"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +78,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div>

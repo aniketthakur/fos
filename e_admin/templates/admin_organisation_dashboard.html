@@ -3,61 +3,56 @@
 
 {% block maincontents %}
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             <div class="grid simple ">
-                <div class="grid-title">
-                  <h3>Admin <span class="semi-bold">Actions</span></h3>
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Admin <span class="semi-bold">Actions</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="grid-body ">
+                <div class="grid-body">
                     <div class="row">
-                        <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/employees">Employees</a>
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/employees">Employees</a>
                         </div>
-                        <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Products</a>
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Products</a>
                         </div>
-                        <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/groups">Groups</a>
+                        {% if feature_show("admin_groups") %}
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/groups">Groups</a>
                         </div>
-                    </div>
-                    <br/>
-                    <div class="row">
+                        {% endif %}
                         {% if feature_show("questions_cgt1") %}
-                        <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt1_questions">CGT1 Questions</a>
+                        <div class="col-md-4 admin-action">
+                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt1_questions">CGT1 Questions</a>
                         </div>
                         {% endif %}
                         {% if feature_show("questions_cgt2") %}
-                        <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a>
+                        <div class="col-md-4 admin-action">
+                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a>
                         </div>
                         {% endif %}
                         {% if feature_show("questions_grt") %}
-                        <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a>
+                        <div class="col-md-4 admin-action">
+                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a>
                         </div>
                         {% endif %}
-                    </div>
-                    <br/>
-                    <div class="row">
                         {% if feature_show("questions_psychometric") %}
-                        <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a>
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a>
                         </div>
                         {% endif %}
                         {% if feature_show("questions_telecalling") %}
-                        <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a>
+                        <div class="col-md-4 admin-action">
+                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a>
                         </div>
                         {% endif %}
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a>
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a>
                         </div>
-                        <div class="col-md-4">
-                             <a class="btn btn-small btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/update">Update Info</a>
+                        <div class="col-md-4 admin-action">
+                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/update">Update Info</a>
                         </div>
                     </div>
                 </div>

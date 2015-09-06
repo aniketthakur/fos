@@ -11,7 +11,6 @@
             font-family: kruti dev;
             font-size:14px;
         }
-
     </style>
 {% endblock %}
 
@@ -20,8 +19,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <h1>Psychometric Questions </h1>
-                <div class="grid-body no-border invoice-body"> <br>
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Psychometric <span class="semi-bold">Questions</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
                     <table class="table table-bordered" id="tablesoop">
                         {% for question in questions %}
                             <tr>
