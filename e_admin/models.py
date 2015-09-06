@@ -16,9 +16,6 @@ class EsthenosSettings(db.Document):
     sales_tax = db.FloatField(default=12.36)
     organisations_count = db.IntField(default=0)
 
-    def __unicode__(self):
-        return "EsthenosSettings"
-
 
 class EsthenosUser(BaseUser):
     first_name = db.StringField(max_length=255, required=False,default="")
