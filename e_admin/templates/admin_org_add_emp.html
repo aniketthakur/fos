@@ -70,7 +70,7 @@
                     </div>
                   </div>
                   <div class="row form-row">
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-12">
                       <select name="branch" id="branch" class="select2 form-control">
                         {% for branch in branches %}
                           <option value="{{ branch.id }}">{{ branch.state.state_name }}-{{ branch.region.region_name }}-{{ branch.area.area_name }}-{{ branch.branch_name }}</option>
@@ -82,7 +82,7 @@
                 <div class="col-md-6">
                   <h4>Postal Information</h4>
                   <div class="row form-row">
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-12">
                       <div class="input-with-icon  right">
                         <input name="address_add_org_emp" id="address_add_org_emp" value="" type="text" class="form-control" placeholder="Address">
                       </div>
@@ -94,31 +94,31 @@
                         <select name="country_add_organisation" id="postal_country"  class="form-control select2" placeholder="Country"></select>
                       </div>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6 ">
                       <div class="input-with-icon  right">
                         <select name="state_add_organisation" id="postal_state" class="form-control select2" placeholder="State"></select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6 ">
                       <div class="input-with-icon  right">
                         <input name="city_add_organisation" value="" id="city_add_organisation" type="text" class="form-control" placeholder="City" maxlength="30">
                       </div>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-6 ">
                       <div class="input-with-icon  right">
                         <input name="postal_code_add_organisation" value="" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-4 ">
                       <div class="input-with-icon  right">
                         <input name="tele_code_add_organisation" value="" id="tele_code_add_organisation" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
                       </div>
                     </div>
-                    <div class="col-md-8 form-group">
+                    <div class="col-md-8 ">
                       <div class="input-with-icon  right">
                         <input name="teleno_add_organisation" value="" id="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
                       </div>
