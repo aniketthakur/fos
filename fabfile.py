@@ -4,6 +4,8 @@ from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
 from esthenos.settings import SERVER_SETTINGS as client
+from esthenos.settings import MONGODB_SETTINGS as database
+
 
 env.user = client["user-deploy"]
 env.hosts = client["host"]
@@ -18,12 +20,12 @@ DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 
 GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
-if GIT_BRANCH != "on branch {git-branch}".format(**client):
-    print
-    print "on different branch as compared to server-settings."
-    print "abort."
-    print
+GIT_SERVER_DB = "on branch {git-branch}".format(**client)
+GIT_SERVER_BRANCH = "on branch {DB}".format(**database)
+if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH):
+    print "\non different branch as compared to server-settings.\nabort.\n"
     sys.exit(1)
+
 
 def provision():
     # install apt-get packages.
