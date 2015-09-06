@@ -3,12 +3,14 @@
 
 {% block maincontents %}
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             <div class="grid simple ">
-                <div class="grid-title">
-                  <h3>Admin <span class="semi-bold">Actions</span></h3>
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Admin <span class="semi-bold">Actions</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="grid-body ">
+                <div class="grid-body">
                     <div class="row">
                         <div class="col-md-4 admin-action">
                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/employees">Employees</a>

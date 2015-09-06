@@ -3,18 +3,18 @@
 
 {% block maincontents %}
     <div class="row">
-        <div class="col-md-12" style="background: #ffffff;">
-            <h4>Update <span class="semi-bold">Organisation</span></h4>
-            <div class="row ">
-
-                <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation4" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/states" method="post">
-
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Set <span class="semi-bold" >States</span></h3>
-                                <br>
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Update <span class="semi-bold">Organization</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
+                    <div class="row pick-center-state-form">
+                        <form class="form-no-horizontal-spacing" id="form-organisation4" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}" method="post">
+                            <div class="col-md-8">
+                                <h4 class="inline">Select States</h4>
                                 <select id="states" name="org_states" style="width:100%" class="select2 form-control" multiple>
                                     <option value='Andaman and Nicobar Islands'>Andaman and Nicobar Islands</option>
                                     <option value='Andhra Pradesh'>Andhra Pradesh</option>
@@ -54,161 +54,119 @@
                                     <option value='West Bengal'>West Bengal</option>
                                 </select>
                             </div>
-
-                        </div>
-                        <div class="form-actions">
-                            <div class="col-md-12">
-                                <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm4" type="submit">Update</button>
+                            <div class="col-md-2">
+                                <div class="update-form pull-right">
+                                    <br><br>
+                                    <button class="btn btn-large btn-danger btn-cons org-submit" id="submitForm4" type="submit">Update</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/regions" method="post">
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >States</span></h3>
-                                <br>
+                <div class="grid-body">
+                    <div class="row pick-center-state-form">
+                        <form class="form-no-horizontal-spacing" id="form-organisation" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}" method="post">
+                            <div class="col-md-4">
+                                <h4>Select States</h4>
                                 <select id="org_state" name="org_state" style="width:100%" class="select2 form-control">
                                     {% for state in states %}
                                         <option value='{{ state.id }}'>{{ state.state_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >Clusters</span></h3>
-                                <br>
+                            <div class="col-md-4">
+                                <h4>Select Clusters</h4>
                                 <div class="input-with-icon  right">
                                     <input class="span12 tagsinput" name="org_regions" id="org_regions" type="text" value="" data-role="tagsinput" placeholder="Select Clusters"/>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="form-actions">
-                            <div class="col-md-12">
-                                <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm1" type="submit">Update</button>
+                            <div class="col-md-2">
+                                <div class="update-form pull-right">
+                                    <br><br>
+                                    <button class="btn btn-large btn-danger btn-cons org-submit" id="submitForm1" type="submit">Update</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="row ">
-                <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/areas" method="post">
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >State-Cluster</span></h3>
-                                <br>
+                <div class="grid-body">
+                    <div class="row pick-center-state-form">
+                        <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}" method="post">
+                            <div class="col-md-4">
+                                <h4>Select State-Cluster</h4>
                                 <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for region in regions %}
                                         <option value='{{ region.state.id }},{{ region.id }}'>{{ region.state.state_name }}-{{ region.region_name }}</option>
                                     {% endfor %}
-
                                 </select>
                             </div>
-                        </div>
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold">Division</span></h3>
-                                <br>
+                            <div class="col-md-4">
+                                <h4>Select Division</h4>
                                 <div class="input-with-icon  right">
-                                    <i class=""></i>
                                     <input class="span12 tagsinput" name="org_areas" id="areas" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="form-actions">
-                            <div class="col-md-12">
+                            <div class="col-md-2">
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm2" type="submit">Update</button>
+                                    <br><br>
+                                    <button class="btn btn-large btn-danger btn-cons org-submit" id="submitForm2" type="submit">Update</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-
-                <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/branches" method="post">
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >States-Cluster-Division</span></h3>
-                                <br>
+                <div class="grid-body">
+                    <div class="row pick-center-state-form">
+                        <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_branches_update", org_id=org.id) }}" method="post">
+                            <div class="col-md-4">
+                                <h4>Select States-Cluster-Division</h4>
                                 <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for area in areas %}
                                         <option value='{{ area.state.id }},{{ area.region.id }},{{ area.id }}'>{{ area.state.state_name }}--{{ area.region.region_name }}--{{ area.area_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold">Branches</span></h3>
-                                <br>
+                            <div class="col-md-4">
+                                <h4>Select Branches</h4>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
                                     <input class="span12 tagsinput" name="org_branch_data" id="org_branches" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="form-actions">
-                            <div class="col-md-12">
+                            <div class="col-md-2">
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit">Update</button>
+                                    <br><br>
+                                    <button class="btn btn-large btn-danger btn-cons org-submit" id="submitForm3" type="submit">Update</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-
-
-                <div class="col-md-4">
-                    <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/centers" method="post">
-                        <div class="row form-row">
-                            <div class="col-md-12">
-                                <h3>Select <span class="semi-bold" >States-Cluster-Division-Branch</span></h3>
-                                <br>
+                <div class="grid-body">
+                    <div class="row pick-center-state-form">
+                        <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/centers" method="post">
+                            <div class="col-md-4">
+                                <h4>Select States-Cluster-Division-Branch</h4>
                                 <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for branch in branches %}
                                         <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}--{{ branch.region.region_name }}--{{ branch.area.area_name }}--{{ branch.branch_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="row form-row">
-
-                            <div class="col-md-12">
-                                <h3>Enter <span class="semi-bold">Village Locations</span></h3>
-                                <br>
+                            <div class="col-md-4">
+                                <h4>Select Village Locations</h4>
                                 <div class="input-with-icon  right">
                                     <input class="span12 tagsinput" name="org_center_data" id="org_centers" type="text" value="" data-role="tagsinput" />
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="form-actions">
-                            <div class="col-md-12">
+                            <div class="col-md-2">
                                 <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons org-submit" id="submitForm3" type="submit">Update</button>
+                                    <br><br>
+                                    <button class="btn btn-large btn-danger btn-cons org-submit" id="submitForm3" type="submit">Update</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,26 +1,18 @@
 {% extends "admin_base.html" %}
-{% block css_sheets %}{{ super() }}
 
-{% endblock %}
 
-{% block action_bar %}
-
-{% endblock %}
 {% block maincontents %}
-
-
-<br/>
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <div class="grid-body no-border invoice-body"> <br>
-                    <!--
-                    <option value="ORG_VP">VP(Vice President)</option>
-                    <option value="ORG_CXO">CXO</option>
-                    -->
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Access <span class="semi-bold">Settings</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-body">
                     <form class="form-no-horizontal-spacing" novalidate="novalidate" action="/admin/organisation/{{ org_id }}/settings" id="form-role_settings" method="post" >
                     <div class="row">
-                        <h4>Access <span class="semi-bold"> Settings</span></h4>
                         <div class="row form-row">
                             <div class="col-md-12 form-group">
                                 <select name="role" id="role" class="select2 form-control">
@@ -184,10 +176,7 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="form-actions">
-
                         <div class="pull-right">
                             <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update</button>
                         </div>
@@ -196,87 +185,73 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="row">
         <form action="/admin/organisation/{{ org_id }}/settings/other" method="post">
-        <div class="col-md-6">
-            <div class="grid simple">
-                <div class="grid-body no-border invoice-body"> <br>
-
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-body">
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th class="text-left"><h4>Organisation <span class="semi-bold"> Guidelines</span></h4></th>
-                                <th style="width:200px" class="text-right"></th>
-                            </tr>
+                                <tr>
+                                    <th class="text-left"><h4>Organisation <span class="semi-bold"> Guidelines</span></h4></th>
+                                    <th style="width:200px" class="text-right"></th>
+                                </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>Loan cycle 1 limit</td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="loan_cycle_1_org" value="{{ settings.loan_cycle_1_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>Loan cycle 1 plus limit</td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="loan_cycle_1_plus_org" value="{{ settings.loan_cycle_1_plus_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>One Year Tenure limit</td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="one_year_tenure_limit_org" value="{{ settings.one_year_tenure_limit_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>Household income Rural limit</td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="hh_annual_income_limit_rural_org" value="{{ settings.hh_annual_income_limit_rural_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>Household income Urban limit</td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="hh_annual_income_limit_urban_org" value="{{ settings.hh_annual_income_limit_urban_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>Total indebtness </td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="total_indebtness_org" value="{{ settings.total_indebtness_org }}" /></td>
-
                             </tr>
                             <tr>
                                 <td>Max existing loan limit </td>
                                 <td class="text-right"><input type="text" class="form-control text-right" name="max_existing_loan_count_org" value="{{ settings.max_existing_loan_count_org }}" /></td>
-
                             </tr>
-
                             </tbody>
                         </table>
                         <div class="form-actions">
-
                             <div class="pull-right">
                                 <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update</button>
                             </div>
                         </div>
-
-
-
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="grid simple">
-                <div class="grid-body no-border invoice-body"> <br>
-
+            <div class="col-md-6">
+                <div class="grid simple">
+                    <div class="grid-body">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th class="text-left"><h4>Product <span class="semi-bold">  Guidelines</span></h4></th>
-                            <th style="width:200px" class="text-right"></th>
-                        </tr>
+                            <tr>
+                                <th class="text-left"><h4>Product <span class="semi-bold"> Guidelines</span></h4></th>
+                                <th style="width:100px" class="text-right"></th>
+                                <th style="width:100px" class="text-right"></th>
+                            </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Cycle 1</td>
+                            <td>Cycle 1</td><td></td><td></td>
                         </tr>
                         <tr>
                             <td>Group </td>
@@ -289,7 +264,7 @@
 {#                            <td class="text-right"><input type="text" style="width: 80px;" class="form-control text-right" name="loan_cycle_1_center_max" value="20" /></td>#}
 {#                        </tr>#}
                         <tr>
-                            <td>Cycle 2</td>
+                            <td>Cycle 2</td><td></td><td></td>
                         </tr>
                         <tr>
                             <td>Group </td>
@@ -302,7 +277,7 @@
 {#                            <td class="text-right"><input type="text" style="width: 80px;" class="form-control text-right" name="loan_cycle_1_center_max" value="20" /></td>#}
 {#                        </tr>#}
                         <tr>
-                            <td>Cycle 3</td>
+                            <td>Cycle 3</td><td></td><td></td>
                         </tr>
                         <tr>
                             <td>Group </td>
@@ -315,7 +290,7 @@
 {#                            <td class="text-right"><input type="text" style="width: 80px;" class="form-control text-right" name="loan_cycle_1_center_max" value="20" /></td>#}
 {#                        </tr>#}
                         <tr>
-                            <td>Cycle 3+</td>
+                            <td>Cycle 3+</td><td></td><td></td>
                         </tr>
                         <tr>
                             <td>Group </td>
@@ -329,9 +304,7 @@
 {#                        </tr>#}
                         </tbody>
                     </table>
-
                     <div class="form-actions">
-
                         <div class="pull-right">
                             <button class="btn btn-small btn-danger btn-cons" type="submit"><i class="icon-ok"></i> Update</button>
                         </div>
@@ -343,27 +316,22 @@
     </div>
 </div>
 {% endblock %}
+
+
 {% block js_scripts %}{{ super() }}
     <script type="text/javascript">
         $(document).ready(function(){
             $(".select2").select2();
             $.getJSON("/admin/organisation/{{ org_id }}/settings/role/ORG_CM", function(result){
-                console.log(result);
                 $.each(result, function(i, field){
-                    console.log(i);
                     $("input[name="+i+"][value=" + field + "]").attr('checked', 'checked');
-                    console.log(field);
                 });
             });
 
             $(".select2").on("change", function(e) {
-                console.log("you selected :" + $(this).val());
                 $.getJSON("/admin/organisation/{{ org_id }}/settings/role/"+ $(this).val(), function(result){
-                    console.log(result);
                     $.each(result, function(i, field){
-                        console.log(i);
                         $("input[name="+i+"][value=" + field + "]").attr('checked', 'checked');
-                        console.log(field);
                     });
                 });
             });

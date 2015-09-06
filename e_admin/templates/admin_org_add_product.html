@@ -5,10 +5,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Add<span class="semi-bold"> Product</span></h4>
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Add <span class="semi-bold">Product</span></h3>
+                    <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="grid-body no-border">
+                <div class="grid-body">
                     <form class="form-no-horizontal-spacing" id="form-organisation" action="/admin/organisation/{{ org.id }}/products" method="POST">
                         <div class="row">
                             <div class="form-control-group col-md-3">

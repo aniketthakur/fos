@@ -5,119 +5,121 @@
     <div class="row">
         <div class="col-md-12">
             <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Add <span class="semi-bold">Employee</span></h4>
-                    <div class="grid-body no-border">
-                        <form class="form-no-horizontal-spacing" id="form-employee" method="post" action="/admin/employees">
-                            <div class="row column-seperation">
-                                <div class="col-md-6">
-                                    <h4>Basic Information</h4>
-                                    <div class="row form-row">
-                                        <div class="col-md-7">
-                                            <div class="input-with-icon right">
-                                                <input name="FirstName" id="FirstName" value="" type="text" class="form-control" placeholder="First Name" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="input-with-icon right">
-                                                <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-7">
-                                            <div class="input-with-icon  right">
-                                                <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com" minlength="3" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="input-with-icon  right">
-                                                <input name="Password" id="Password" value="" type="password" class="form-control" placeholder="Esthenos" minlength="3" maxlength="30">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-7">
-                                            <div class="input-append success date no-padding">
-                                                <input type="text" type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth" >
-                                                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="radio form-group">
-                                                <input id="male" type="radio" name="gender" value="male" checked="checked">
-                                                <label for="male">Male</label>
-                                                <input id="female" type="radio" name="gender" value="female">
-                                                <label for="female">Female</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <select name="role" id="role" class="select2 form-control">
-                                                <option value="EMP_EXECUTIVE">Executive</option>
-                                                <option value="EMP_MANAGER">Manager</option>
-                                                <option value="EMP_VP">VP</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>Postal Information</h4>
-                                    <div class="row form-row">
-                                        <div class="col-md-12 form-group">
-                                            <div class="input-with-icon  right">
-                                                <input name="Address" id="Address" value="" type="text" class="form-control" placeholder="Address">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6 form-group">
-                                            <div class="input-with-icon  right">
-                                                <select name="Country" id="Country"  class="form-control select2" placeholder="Country"></select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <div class="input-with-icon  right">
-                                                <select name="State" id="State"  class="form-control select2" placeholder="State"></select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-6 form-group">
-                                            <div class="input-with-icon  right">
-                                                <input name="City" id="City" value="" type="text" class="form-control" placeholder="City" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <div class="input-with-icon  right">
-                                                <input name="PostalCode" type="text" value="" id="PostalCode" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-4 form-group">
-                                            <div class="input-with-icon  right">
-                                                <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <div class="input-with-icon  right">
-                                                <input name="TeleNo" id="TeleNo" value="" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <div class="pull-right">
-                                    <button class="btn btn-small btn-danger btn-cons" id="submitForm2" type="submit">Add Employee</button>
-                                    <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="grid-body grid-page-title">
+                    <h3 class="inline">Add <span class="semi-bold">Employees</span></h3>
+                    <h3 class="v-align-middle pull-right"></h3>
+                    <div class="clearfix"></div>
                 </div>
+                <div class="grid-body">
+                    <form class="form-no-horizontal-spacing" id="form-employee" method="post" action="/admin/employees">
+                        <div class="row column-seperation">
+                            <div class="col-md-6">
+                                <h4>Basic Information</h4>
+                                <div class="row form-row">
+                                    <div class="col-md-7">
+                                        <div class="input-with-icon right">
+                                            <input name="FirstName" id="FirstName" value="" type="text" class="form-control" placeholder="First Name" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-with-icon right">
+                                            <input name="LastName" id="LastName" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-7">
+                                        <div class="input-with-icon  right">
+                                            <input name="Email" id="Email" value="" type="text" class="form-control" placeholder="email@address.com" minlength="3" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-with-icon  right">
+                                            <input name="Password" id="Password" value="" type="password" class="form-control" placeholder="Esthenos" minlength="3" maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-7">
+                                        <div class="input-append success date no-padding">
+                                            <input type="text" type="text" placeholder="Date of Birth" class="form-control" id="DateOfBirth" name="DateOfBirth" >
+                                            <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="radio form-group">
+                                            <input id="male" type="radio" name="gender" value="male" checked="checked">
+                                            <label for="male">Male</label>
+                                            <input id="female" type="radio" name="gender" value="female">
+                                            <label for="female">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-12">
+                                        <select name="role" id="role" class="select2 form-control">
+                                            <option value="EMP_EXECUTIVE">Executive</option>
+                                            <option value="EMP_MANAGER">Manager</option>
+                                            <option value="EMP_VP">VP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Postal Information</h4>
+                                <div class="row form-row">
+                                    <div class="col-md-12 form-group">
+                                        <div class="input-with-icon  right">
+                                            <input name="Address" id="Address" value="" type="text" class="form-control" placeholder="Address">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <select name="Country" id="Country"  class="form-control select2" placeholder="Country"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <select name="State" id="State"  class="form-control select2" placeholder="State"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <input name="City" id="City" value="" type="text" class="form-control" placeholder="City" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="input-with-icon  right">
+                                            <input name="PostalCode" type="text" value="" id="PostalCode" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-row">
+                                    <div class="col-md-4 form-group">
+                                        <div class="input-with-icon  right">
+                                            <input name="TeleCode" id="TeleCode" value="" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                        <div class="input-with-icon  right">
+                                            <input name="TeleNo" id="TeleNo" value="" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="pull-right">
+                                <button class="btn btn-small btn-danger btn-cons" id="submitForm2" type="submit">Add Employee</button>
+                                <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
             </div>
         </div>
     </div>
