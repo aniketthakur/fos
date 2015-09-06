@@ -1,3 +1,4 @@
+import os, sys
 from fabric.api import *
 from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
@@ -16,9 +17,13 @@ LOGS_DIR = '/var/log/esthenos/'
 DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 
-def sanity():
-    print "simple task to assert deployment script sanity."
-    sudo("apt-get update -qq")
+GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
+if GIT_BRANCH != "on branch {git-branch}".format(**client):
+    print
+    print "on different branch as compared to server-settings."
+    print "abort."
+    print
+    sys.exit(1)
 
 def provision():
     env.user = client["user-provision"]
