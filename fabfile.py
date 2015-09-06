@@ -26,16 +26,6 @@ if GIT_BRANCH != "on branch {git-branch}".format(**client):
     sys.exit(1)
 
 def provision():
-    env.user = client["user-provision"]
-    
-    with open(os.path.expanduser('~/.ssh/esthenos.ops.key.pub')) as f:
-        local_ssh_key = f.read().strip('\n')
-
-    # install dependencies.
-    put('e_deploy/fabfile.sh', '/tmp/fabfile.sh')
-    sudo('LOCAL_SSH_KEY="%s" bash /tmp/fabfile.sh' % local_ssh_key)
-    run('rm /tmp/fabfile.sh')
-
     # install apt-get packages.
     packages = [
         'git',
@@ -49,6 +39,7 @@ def provision():
         'python-pip',
         'python-virtualenv',
         'xvfb',
+        'zlib1g-dev',
         'wkhtmltopdf',
         'libxml2-dev',
         'libxslt1-dev',
@@ -95,7 +86,9 @@ def mongodb():
 def monitrc():
     """setting up monitrc manager."""
 
-    put('e_deploy/esthenos-monitrc', '/etc/monit/monitrc')
+    put('e_deploy/esthenos-monitrc', '/tmp/')
+    sudo("mv /tmp/esthenos-monitrc /etc/monit/monitrc")
+    sudo("chmod 0700 /etc/monit/monitrc && chown root:root /etc/monit/monitrc")
 
     put("e_deploy/esthenos-beats.monitrc", "/tmp/")
     sudo("mv /tmp/esthenos-beats.monitrc /etc/monit/conf.d/")
@@ -147,7 +140,6 @@ def deploy():
     # TODO: replace this with
     # - zip up working directory
     # - upload and unzip into DEPLOY_PATH
-    env.user = client["user-deploy"]
     dirname = check_output(
         ["echo \"$(date +'%Y-%m-%d')-$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
 
