@@ -26,7 +26,7 @@ ORGS_SETTINGS = [
 SERVER_SETTINGS = {
     "org" : "fos.esthenos.com",
     "host" : ["fos.prod.esthenos.com"],
-    "git-branch" : "fos",
+    "git-branch" : "fos-demo",
     "user-deploy" : "ubuntu",
     "user-provision" : "root",
     "user-details" : [
@@ -42,11 +42,9 @@ SERVER_SETTINGS = {
 }
 
 MONGODB_SETTINGS = {
-    'DB': 'testdb1',
-    'PORT': 41583,
-    'HOST': 'ds041583.mongolab.com',
-    'USERNAME': 'test-user',
-    'PASSWORD': 'test-password'
+    'DB': 'fos-demo',
+    'PORT': 27017,
+    'HOST': 'mongodb.prod.esthenos.com'
 }
 
 CELERY_SETTINGS = {
