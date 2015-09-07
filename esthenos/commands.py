@@ -120,6 +120,13 @@ class InitDB(Command):
         print "{count} application statuses created".format(count=len(settings.APP_STATUS))
 
 
+        print "dropping state, region, area and branch collections."
+        EsthenosOrgState.drop_collection()
+        EsthenosOrgRegion.drop_collection()
+        EsthenosOrgArea.drop_collection()
+        EsthenosOrgBranch.drop_collection()
+
+
 class AddUser( Command):
     """Adds a user to the database."""
 

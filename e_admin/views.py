@@ -249,6 +249,7 @@ def admin_org_details(org_id):
     areas = EsthenosOrgArea.objects.filter(organisation=org)
     states = EsthenosOrgState.objects.filter(organisation=org)
     regions = EsthenosOrgRegion.objects.filter(organisation=org)
+    branches = EsthenosOrgBranch.objects.filter(organisation=org)
 
     kwargs = locals()
     return render_template("admin_add_org_details.html", **kwargs)
@@ -264,12 +265,13 @@ def admin_org_regions_update(org_id):
     user = EsthenosUser.objects.get(id=current_user.id)
 
     if request.method == "POST":
+        print request.form
         for region in request.form.get('org_regions').split(","):
             state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
-            reg = EsthenosOrgRegion.objects.create(region_name=region,organisation=org,state=state)
+            reg = EsthenosOrgRegion.objects.create(region_name=region, organisation=org, state=state)
             reg.save()
 
-        return redirect("/admin/organisation/%s" % org_id)
+        return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
     else:
         states = EsthenosOrgState.objects.filter(organisation=org)
@@ -288,12 +290,12 @@ def admin_org_states_update(org_id):
     user = EsthenosUser.objects.get(id=current_user.id)
 
     if request.method == "POST":
-        for state in request.form.get('org_states').split(","):
-            st,status = EsthenosOrgState.objects.get_or_create(state_name=state,organisation=org)
+        for state in request.form.getlist('org_states'):
+            st, status = EsthenosOrgState.objects.get_or_create(state_name=state, organisation=org)
             org.states.append(st)
         org.save()
 
-        return redirect("/admin/organisation/%s" % org_id)
+        return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
     else:
         states = EsthenosOrgState.objects.filter(organisation=org)
@@ -318,7 +320,7 @@ def admin_org_areas_update(org_id):
             region = EsthenosOrgRegion.objects.get(id=data[1])
             area_obj = EsthenosOrgArea.objects.create(area_name=area,organisation=org,state=state,region=region)
             area_obj.save()
-        return redirect("/admin/organisation/%s" % org_id)
+        return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
     else:
         kwargs = locals()
@@ -343,11 +345,31 @@ def admin_org_branches_update(org_id):
             area = EsthenosOrgArea.objects.get(id=data[2])
             br_obj = EsthenosOrgBranch.objects.create(branch_name=branch,area=area,organisation=org,state=state,region=region)
             br_obj.save()
-        return redirect("/admin/organisation/%s" % org_id)
+        return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
     else:
         kwargs = locals()
         return render_template("admin_add_org_details.html", **kwargs)
+
+
+@admin_views.route('/admin/organisation/<org_id>/centers', methods=["POST"] )
+@login_required
+def admin_org_centers_update(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    data = request.form.get('org_data').split(",")
+    centers = request.form.get('org_center_data').split(",")
+    for center in centers:
+        if center is not "":
+            state = EsthenosOrgState.objects.get(id=data[0])
+            region = EsthenosOrgRegion.objects.get(id=data[1])
+            area = EsthenosOrgArea.objects.get(id=data[2])
+            branch = EsthenosOrgBranch.objects.get(id=data[3])
+            center = EsthenosOrgCenter.objects.create(center_name=center, area=area, organisation=org, state=state, region=region, branch=branch)
+            center.save()
+    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
 @admin_views.route('/admin/organisation/<org_id>/dashboard', methods=["GET"])
@@ -396,7 +418,7 @@ def admin_organisation_groups(org_id):
             group.save()
             EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
 
-        return redirect("/admin/organisation/%s" % org_id)
+        return redirect(url_for("admin_views.admin_organisation_groups", org_id=org_id))
 
 
 @admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
