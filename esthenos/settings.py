@@ -1,8 +1,8 @@
 ORGS_SETTINGS = [
     {
-        "org" : "dev.esthenos.com",
-        "name" : "Dev MicroFinance Pvt. Ltd.",
-        "email": "admin-org@dev.esthenos.com",
+        "org" : "fos.esthenos.com",
+        "name" : "FOS MicroFinance Pvt. Ltd.",
+        "email": "admin@fos.esthenos.com",
         "phone": "9876543210",
         "phone-code": "91",
         "postal-city": "Kolaba",
@@ -23,7 +23,7 @@ ORGS_SETTINGS = [
                 "tele_code" : "+91",
                 "fname" : "demo",
                 "lname" : "users",
-                "email" : "demo@dev.esthenos.com",
+                "email" : "demo@fos.esthenos.com",
                 "passwd" : "demodemo",
             }
         ],
