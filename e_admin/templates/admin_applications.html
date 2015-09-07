@@ -91,7 +91,7 @@
                         <tr>
                             <th width="5"  >#</th>
                             <th width="10"  class="text-center">Application ID</th>
-                            <th width="10"  class="text-center">Group Name</th>
+                            <th width="10"  class="text-center">Applicant Name</th>
                             <th width="10"  class="text-center">Date</th>
                             <th width="15"  class="text-center">Status</th>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
@@ -107,7 +107,7 @@
                             <td class="v-align-middle ">
                                 <ins><a href="{{ url_for("admin_views.admin_application_id", org_id=app.organisation.id, app_id=app.application_id) }}">{{ app.application_id }}</a></ins>
                             </td>
-                            <td class="v-align-middle">{{ app.group.group_name }}</td>
+                            <td class="v-align-middle">{{ app.applicant_name }}</td>
                             <td>{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
                             <td>{{ app.current_status.status }}</td>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
