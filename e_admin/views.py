@@ -541,7 +541,7 @@ def admin_organisation_add_emp(org_id):
 
         if form.validate():
             form.save(org_id)
-            return redirect(url_for("admin_views.admin_organisation_dashboard", org_id=org_id))
+            return redirect(url_for("admin_views.admin_organisation_add_emp", org_id=org_id))
 
         else:
             flash_errors(form)

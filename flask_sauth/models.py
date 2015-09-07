@@ -29,8 +29,6 @@ class BaseUser(Document, UserMixin):
     password = StringField(max_length=128)
 
     date_joined = DateTimeField(default=datetime.datetime.now)
-    email_activation_key = StringField(default="")
-    is_email_activated = BooleanField(default=True)
     password_reset_token = StringField()
 
     roles = ListField(StringField(), default=[])
@@ -49,20 +47,6 @@ class BaseUser(Document, UserMixin):
         else:
             return ''
 
-    @property
-    def short_name(self):
-        if re.search("[A-Z]", self.name[1]): return self.name
-
-        arr = self.name.split( " ")
-        if len( arr) == 1: return self.name
-
-        s = ""
-        for i in range( 0, len( arr)-1):
-            s += arr[i][0]
-        s += " " + arr[-1]
-
-        return s.strip()
-
     def has_role(self, role):
         if not self.roles or role not in self.roles:
             return False
@@ -79,10 +63,6 @@ class BaseUser(Document, UserMixin):
     def remove_role( self, role):
         if role in self.roles:
             self.roles.remove(role)
-
-    def mark_email_for_activation( self):
-        self.is_email_activated = False
-        self.email_activation_key = sha_constructor(str(time.time()) + str( randint( 1,1000000))).hexdigest()
 
     def set_password(self, raw_password):
         """Sets the user's password - always use this rather than directly
@@ -125,16 +105,7 @@ class BaseUser(Document, UserMixin):
             email = '@'.join([email_name.lower(), domain_part.lower()])
             
         user = User(name=name, email=email, date_joined=now)
-
-        if not password:
-            password = generate_password()
         user.set_password(password)
-
-        if not email_verified:
-            user.mark_email_for_activation()
-        else:
-            user.is_email_activated = True
-
         user.save()
 
         return user

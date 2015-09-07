@@ -11,38 +11,38 @@
           <div class="clearfix"></div>
         </div>
         <div class="grid-body">
-            <form class="form-no-horizontal-spacing" novalidate="novalidate" id="form-organisation-emp" method="post" action="/admin/organisation/{{ org.id }}/employees">
+            <form class="form-no-horizontal-spacing" id="form-organisation-emp" method="post" action="{{ url_for("admin_views.admin_organisation_add_emp", org_id=org.id) }}">
               <div class="row column-seperation">
                 <div class="col-md-6">
                   <h4>Basic Information </h4>
                   <div class="row form-row">
                     <div class="col-md-7">
                       <div class="input-with-icon  right">
-                        <input name="first_name_add_organisation" id="first_name_add_organisation" value="" type="text" class="form-control" placeholder="First Name" maxlength="30">
+                        <input name="first_name_add_organisation" type="text" class="form-control" placeholder="First Name" maxlength="30">
                       </div>
                     </div>
                     <div class="col-md-5">
                       <div class="input-with-icon  right">
-                        <input name="last_name_add_organisation" id="last_name_add_organisation" value="" type="text" class="form-control" placeholder="Last Name" maxlength="30">
+                        <input name="last_name_add_organisation" type="text" class="form-control" placeholder="Last Name" maxlength="30">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-7">
                       <div class="input-with-icon  right">
-                        <input name="email_add_organisation" id="email_add_organisation" value="" type="text" class="form-control" placeholder="email@address.com" minlength="3" maxlength="30">
+                        <input name="email_add_organisation" type="text" class="form-control" placeholder="username" minlength="3" maxlength="30">@dev.esthenos.com
                       </div>
                     </div>
                     <div class="col-md-5">
                       <div class="input-with-icon  right">
-                        <input name="password_add_organisation" id="password_add_organisation" value="" type="password" class="form-control" placeholder="Esthenos" minlength="3" maxlength="30">
+                        <input name="password_add_organisation" type="password" class="form-control" placeholder="password" minlength="3" maxlength="30">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-7">
                       <div class="input-append success date no-padding">
-                        <input type="text" type="text" placeholder="Date of Birth" class="form-control" value="" id="date_of_birth_add_organisation" name="date_of_birth_add_organisation" >
+                        <input name="date_of_birth_add_organisation" type="text" class="form-control" placeholder="Date of Birth" >
                         <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
                       </div>
                     </div>
@@ -80,43 +80,43 @@
                   <div class="row form-row">
                     <div class="col-md-12">
                       <div class="input-with-icon  right">
-                        <input name="address_add_org_emp" id="address_add_org_emp" value="" type="text" class="form-control" placeholder="Address">
+                        <input name="address_add_org_emp" type="text" class="form-control" placeholder="Address">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-6 form-group">
                       <div class="input-with-icon  right">
-                        <select name="country_add_organisation" id="postal_country"  class="form-control select2" placeholder="Country"></select>
+                        <select name="country_add_organisation" class="form-control select2" placeholder="Country"></select>
                       </div>
                     </div>
                     <div class="col-md-6 ">
                       <div class="input-with-icon  right">
-                        <select name="state_add_organisation" id="postal_state" class="form-control select2" placeholder="State"></select>
+                        <select name="state_add_organisation" class="form-control select2" placeholder="State"></select>
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-6 ">
                       <div class="input-with-icon  right">
-                        <input name="city_add_organisation" value="" id="city_add_organisation" type="text" class="form-control" placeholder="City" maxlength="30">
+                        <input name="city_add_organisation" type="text" class="form-control" placeholder="City" maxlength="30">
                       </div>
                     </div>
                     <div class="col-md-6 ">
                       <div class="input-with-icon  right">
-                        <input name="postal_code_add_organisation" value="" id="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
+                        <input name="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6">
                       </div>
                     </div>
                   </div>
                   <div class="row form-row">
                     <div class="col-md-4 ">
                       <div class="input-with-icon  right">
-                        <input name="tele_code_add_organisation" value="" id="tele_code_add_organisation" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
+                        <input name="tele_code_add_organisation" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2">
                       </div>
                     </div>
                     <div class="col-md-8 ">
                       <div class="input-with-icon  right">
-                        <input name="teleno_add_organisation" value="" id="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
+                        <input name="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number" maxlength="10">
                       </div>
                     </div>
                   </div>
