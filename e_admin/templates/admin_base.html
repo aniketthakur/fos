@@ -43,9 +43,9 @@
             <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">
                 <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" > <div class="iconset top-menu-toggle-white"></div> </a> </li>
             </ul>
-            <a href="/admin/dashboard"><img src="{{ url_for('static', filename='img/logo-esthenos.png')}}" class="logo" alt=""  data-src="{{ url_for('static', filename='img/logo-esthenos.png')}}" data-src-retina="{{ url_for('static', filename='img/logo-esthenos2x.png')}}"/></a>
+            <a href="{{ url_for("admin_views.admin_dashboard") }}"><img src="{{ url_for('static', filename='img/logo-esthenos.png')}}" class="logo" alt=""  data-src="{{ url_for('static', filename='img/logo-esthenos.png')}}" data-src-retina="{{ url_for('static', filename='img/logo-esthenos2x.png')}}"/></a>
             <ul class="nav pull-right notifcation-center">
-                <li class="dropdown" id="header_task_bar"> <a href="/admin/dashboard" class="dropdown-toggle active" data-toggle=""> <div class="iconset top-home"></div> </a> </li>
+                <li class="dropdown" id="header_task_bar"> <a href="{{ url_for("admin_views.admin_dashboard") }}" class="dropdown-toggle active" data-toggle=""> <div class="iconset top-home"></div> </a> </li>
                 <li class="dropdown" id="portrait-chat-toggler" style="display:none"> <a href="#sidr" class="chat-menu-toggle"> <div class="iconset top-chat-white "></div> </a> </li>
             </ul>
         </div>
@@ -112,17 +112,17 @@
                 {% block nav_bar %}
                     {% if user.roles[0]=='EMP_EXECUTIVE' %}
                     <li class="start active ">
-                        <a href="/admin/applications"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span></a>
+                        <a href="{{ url_for("admin_views.admin_application") }}"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span></a>
                     </li>
                     <li class="start">
-                        <a href="/admin/reports"> <i class="fa fa-group"></i> <span class="title">Reports</span></a>
+                        <a href="{{ url_for("admin_views.admin_reports_internal_main") }}"> <i class="fa fa-group"></i> <span class="title">Reports</span></a>
                     </li>
                 {% elif user.roles[0]=='EMP_MANAGER' %}
                     <li class="start active ">
-                        <a href="/admin/dashboard"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span></a>
+                        <a href="{{ url_for("admin_views.admin_dashboard") }}"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span></a>
                     </li>
                     <li class="start">
-                        <a href="/admin/applications"> <i class="icon-custom-home"></i> <span class="title">Applications</span></a>
+                        <a href="{{ url_for("admin_views.admin_application") }}"> <i class="icon-custom-home"></i> <span class="title">Applications</span></a>
                     </li>
                     {% if feature_show("hignmark_equifax") %}
                     <li class="start">
@@ -130,31 +130,28 @@
                     </li>
                     {% endif %}
                     <li class="start">
-                        <a href="/admin/reports"> <i class="fa fa-group"></i> <span class="title">Reports</span></a>
+                        <a href="{{ url_for("admin_views.admin_reports_internal_main") }}"> <i class="fa fa-group"></i> <span class="title">Reports</span></a>
                     </li>
                 {% else %}
                     <li class="start active">
-                        <a href="/admin/dashboard"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span></a>
+                        <a href="{{ url_for("admin_views.admin_dashboard") }}"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span></a>
                     </li>
                     <li class="start">
-                        <a href="/admin/settings"> <i class="fa fa-gear"></i> <span class="title">Settings</span></a>
+                        <a href="{{ url_for("admin_views.admin_employees") }}"> <i class="fa fa-group"></i> <span class="title">Employees</span></a>
                     </li>
                     <li class="start">
-                        <a href="/admin/employees"> <i class="fa fa-group"></i> <span class="title">Employees</span></a>
+                        <a href="{{ url_for("admin_views.admin_application") }}"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span></a>
                     </li>
                     <li class="start">
-                        <a href="/admin/organisations"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
-                    </li>
-                    <li class="start">
-                        <a href="/admin/applications"> <i class="fa fa-list-ul"></i> <span class="title">Applications</span></a>
+                        <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
                     </li>
                     {% if feature_show("hignmark_equifax") %}
                     <li class="start">
-                        <a href="/admin/cbcheck"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
+                        <a href="{{ url_for("admin_views.admin_cbcheck") }}"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
                     </li>
                     {% endif %}
                     <li class="start">
-                        <a href="/admin/reports"> <i class="fa fa-thumbs-up"></i> <span class="title">Reports</span></a>
+                        <a href="{{ url_for("admin_views.admin_reports_internal_main") }}"> <i class="fa fa-thumbs-up"></i> <span class="title">Reports</span></a>
                     </li>
                 {% endif %}
                 {% endblock %}

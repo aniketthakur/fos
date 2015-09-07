@@ -52,18 +52,6 @@ def admin_dashboard():
     return render_template("admin_dashboard.html", **kwargs)
 
 
-@admin_views.route('/admin/settings', methods=["GET"])
-@login_required
-def admin_settings():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    settings = EsthenosSettings.objects.all()[0]
-    kwargs = locals()
-    return render_template("admin_settings.html", **kwargs)
-
-
 @admin_views.route('/admin/settings/update', methods=['POST'])
 @login_required
 def admin_settings_update():
@@ -153,7 +141,7 @@ def admin_cbcheck():
 
 @admin_views.route('/admin/employees', methods=["GET","POST"])
 @login_required
-def admin_employees_add():
+def admin_employees():
     if session['role'] != "ADMIN":
         abort(403)
 
@@ -838,7 +826,7 @@ def admin_application_id(org_id,app_id):
     app_urls = list()
     applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
 
-    if len(applications)==0:
+    if len(applications) == 0:
         redirect("/admin/applications")
 
     application = applications[0]
