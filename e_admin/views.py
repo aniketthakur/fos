@@ -799,9 +799,7 @@ def admin_org_regions_states(org_id, state_id):
 def admin_org_applications(org_id):
     if session['role'] != "ADMIN":
         abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+
     organisation = EsthenosOrg.objects.get(id=org_id)
     applications = EsthenosOrgApplication.objects.filter(organisation=organisation)
     applications_list = []
@@ -812,9 +810,7 @@ def admin_org_applications(org_id):
                                       'current_status':str(app.current_status.status)
         })
 
-    return Response(response=json.dumps(applications_list),
-        status=200,\
-        mimetype="application/json")
+    return Response(response=json.dumps(applications_list), status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
