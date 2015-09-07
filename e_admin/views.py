@@ -8,7 +8,7 @@ from datetime import timedelta, datetime
 from dateutil.relativedelta import relativedelta
 
 from flask.ext import excel
-from flask import Blueprint, redirect, flash, current_app
+from flask import Blueprint, redirect, url_for, flash, current_app
 from flask import render_template, session, request, Response, jsonify, make_response, abort
 from flask_login import current_user, login_user, logout_user, login_required, confirm_login
 from flask_sauth.forms import LoginForm
@@ -153,7 +153,7 @@ def admin_employees():
         form = org_form
         if form.validate():
             form.save()
-            return redirect("/admin/employees")
+            return redirect(url_for("admin_views.admin_employees"))
 
         else:
             flash_errors(org_form)
@@ -545,7 +545,7 @@ def admin_organisation_add_emp(org_id):
 
         if form.validate():
             form.save(org_id)
-            return redirect("/admin/organisation/%s" % org_id)
+            return redirect(url_for("admin_views.admin_organisation_dashboard", org_id=org_id))
 
         else:
             flash_errors(form)

@@ -117,6 +117,10 @@ def _jinja2_filter_datetime(date, fmt=None):
 def _jinja2_filter_datetime(num):
     return num2words(num).upper()
 
+@mainapp.template_filter('enabledfilter')
+def _jinja2_filter_enabledfilter(active):
+    return "enabled" if active else "disabled"
+
 @mainapp.template_filter('timeformat')
 def _jinja2_filter_datetime(date, fmt=None):
     if fmt:

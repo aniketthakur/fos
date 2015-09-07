@@ -140,6 +140,7 @@
                             <th style="width:20%">ROLE</th>
                             <th style="width:20%">EMAIL</th>
                             <th style="width:20%">PHONE NUMBER</th>
+                            <th style="width:20%">ACTIVE</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -151,6 +152,7 @@
                                 <td class="v-align-middle">{{ emp.user_roles }}</td>
                                 <td class="v-align-middle">{{ emp.email }}</td>
                                 <td class="v-align-middle">{{ emp.postal_telephone }}</td>
+                                <td class="v-align-middle">{{ emp.active|enabledfilter }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

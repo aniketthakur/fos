@@ -145,7 +145,7 @@ class AddOrganizationEmployeeForm(Form):
         emp.postal_country = self.country_add_organisation.data
         emp.owner = EsthenosUser.objects.get(id=current_user.id)
 
-        if self.branch.data is not None or self.branch.data != '':
+        if self.branch.data is not None and self.branch.data:
             emp.org_branch = EsthenosOrgBranch.objects.get(id = self.branch.data)
 
         emp.save()
