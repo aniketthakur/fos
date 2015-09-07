@@ -383,7 +383,7 @@ def admin_organisation_groups(org_id):
         group_name = request.form.get('group_name')
         unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
         branch = EsthenosOrgBranch.objects.get(id=data[3])
-        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name)
+        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name, location_name=loc_name)
 
         if status:
             group.location_name=loc_name

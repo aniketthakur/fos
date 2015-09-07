@@ -120,7 +120,8 @@ class InitDB(Command):
         print "{count} application statuses created".format(count=len(settings.APP_STATUS))
 
 
-        print "dropping state, region, area and branch collections."
+        print "dropping groups, state, region, area and branch collections."
+        EsthenosOrgGroup.drop_collection()
         EsthenosOrgState.drop_collection()
         EsthenosOrgRegion.drop_collection()
         EsthenosOrgArea.drop_collection()
