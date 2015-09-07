@@ -78,7 +78,7 @@ FEATURES = {
 
     "admin_groups": False,
     "admin_select_regions": True,
-    "admin_select_regions_village": True,
+    "admin_select_regions_village": False,
 
     "accounts_reports": True,
     "accounts_scrutiny": True,
