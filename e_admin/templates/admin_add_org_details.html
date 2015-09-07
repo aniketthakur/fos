@@ -75,7 +75,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Select Clusters</h4>
+                                <h4>Set Region</h4>
                                 <div class="input-with-icon  right">
                                     <input class="span12 tagsinput" name="org_regions" id="org_regions" type="text" value="" data-role="tagsinput" placeholder="Select Clusters"/>
                                 </div>
@@ -93,7 +93,7 @@
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" id="form-organisation2" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}" method="post">
                             <div class="col-md-4">
-                                <h4>Select State-Cluster</h4>
+                                <h4>Select State-Region</h4>
                                 <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for region in regions %}
                                         <option value='{{ region.state.id }},{{ region.id }}'>{{ region.state.state_name }}-{{ region.region_name }}</option>
@@ -101,7 +101,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Select Division</h4>
+                                <h4>Set Area</h4>
                                 <div class="input-with-icon  right">
                                     <input class="span12 tagsinput" name="org_areas" id="areas" type="text" value="" data-role="tagsinput" />
                                 </div>
@@ -119,7 +119,7 @@
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="{{ url_for("admin_views.admin_org_branches_update", org_id=org.id) }}" method="post">
                             <div class="col-md-4">
-                                <h4>Select States-Cluster-Division</h4>
+                                <h4>Select States-Region-Area</h4>
                                 <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for area in areas %}
                                         <option value='{{ area.state.id }},{{ area.region.id }},{{ area.id }}'>{{ area.state.state_name }}--{{ area.region.region_name }}--{{ area.area_name }}</option>
@@ -127,7 +127,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Select Branches</h4>
+                                <h4>Set Branches</h4>
                                 <div class="input-with-icon  right">
                                     <i class=""></i>
                                     <input class="span12 tagsinput" name="org_branch_data" id="org_branches" type="text" value="" data-role="tagsinput" />
@@ -146,7 +146,7 @@
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" id="form-organisation3" novalidate="novalidate"  action="/admin/organisation/{{ org.id }}/centers" method="post">
                             <div class="col-md-4">
-                                <h4>Select States-Cluster-Division-Branch</h4>
+                                <h4>Select States-Region-Area-Branch</h4>
                                 <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
                                     {% for branch in branches %}
                                         <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}--{{ branch.region.region_name }}--{{ branch.area.area_name }}--{{ branch.branch_name }}</option>
