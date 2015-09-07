@@ -106,8 +106,9 @@ class EsthenosOrgUserUploadSession(db.DynamicDocument):
 
 class EsthenosOrgHierarchy(db.Document):
     level = db.IntField(required=True)
+    role = db.StringField(max_length=10, required=True)
     title = db.StringField(max_length=10, required=True)
-    title_full = db.StringField(max_length=25, required=True)
+    title_full = db.StringField(max_length=50, required=True)
 
 
 class EsthenosOrgRole(db.Document):

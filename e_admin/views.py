@@ -554,6 +554,7 @@ def admin_organisation_add_emp(org_id):
 
     else:
         branches = EsthenosOrgBranch.objects.filter(organisation = org)
+        hierarchy = EsthenosOrgHierarchy.objects.all()
         kwargs = locals()
         return render_template("admin_org_add_emp.html", **kwargs)
 

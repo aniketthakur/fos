@@ -21,14 +21,14 @@ ORGS_SETTINGS = [
             }
         ],
         "hierarchy" : [
-            { "level" : 1, "title" : "cxo", "title_full" : "chief executive officer" },
-            { "level" : 2, "title" : "vp",  "title_full" : "vice president"},
-            { "level" : 3, "title" : "sh",  "title_full" : "state head" },
-            { "level" : 4, "title" : "cm",  "title_full" : "cluster manager" },
-            { "level" : 5, "title" : "dm",  "title_full" : "divisional manager" },
-            { "level" : 6, "title" : "sm",  "title_full" : "saggraha manager" },
-            { "level" : 7, "title" : "som", "title_full" : "saggraha operations manager" },
-            { "level" : 8, "title" : "so",  "title_full" : "saggraha officer" }
+            { "level" : 1, "role": "ORG_CXO", "title" : "cxo", "title_full" : "chief executive officer" },
+            { "level" : 2, "role": "ORG_VP",  "title" : "vp",  "title_full" : "vice president"},
+            { "level" : 3, "role": "ORG_ZH",  "title" : "sh",  "title_full" : "state head" },
+            { "level" : 4, "role": "ORG_SH",  "title" : "cm",  "title_full" : "cluster manager" },
+            { "level" : 5, "role": "ORG_RM",  "title" : "dm",  "title_full" : "divisional manager" },
+            { "level" : 6, "role": "ORG_AM",  "title" : "cm",  "title_full" : "center area manager" },
+            { "level" : 7, "role": "ORG_BM",  "title" : "com", "title_full" : "center branch manager" },
+            { "level" : 8, "role": "ORG_CM",  "title" : "co",  "title_full" : "center officer" }
         ]
     }
 ]

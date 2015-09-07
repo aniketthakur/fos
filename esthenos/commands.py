@@ -46,7 +46,10 @@ class InitDB(Command):
         EsthenosSettings().save()
 
         organisations = settings.ORGS_SETTINGS
+        EsthenosOrg().drop_collection()
+        EsthenosOrgHierarchy().drop_collection()
         for org in organisations:
+            print "dropping & creating organization : %s" % org["name"]
             EsthenosOrg(
                 name = org["name"],
                 code = "1",
@@ -61,6 +64,14 @@ class InitDB(Command):
                 owner = EsthenosUser.objects.filter(roles__contains="ADMIN").first()
             ).save()
 
+            print "dropping & creating user hierarchy for : %s" % org["name"]
+            for item in org["hierarchy"]:
+                EsthenosOrgHierarchy(
+                    role=item["role"],
+                    level=item["level"],
+                    title=item["title"],
+                    title_full=item["title_full"]
+                ).save()
 
         print "dropping & creating application status types."
         EsthenosOrgApplicationStatusType.drop_collection()

@@ -58,14 +58,10 @@
                   <div class="row form-row">
                     <div class="col-md-12 form-group">
                       <select name="role" id="role" class="select2 form-control">
-                        <option value="ORG_CM">SAGGRAHA OFFICER (SO)</option>
-                        <option value="ORG_BM">SAGGRAHA OPERATIONS MANAGER (SOM)</option>
-                        <option value="ORG_AM">SAGGRAHA MANAGER (SM)</option>
-                        <option value="ORG_RM">DIVISIONAL MANAGER (DM)</option>
-                        <option value="ORG_SH">CLUSTER MANAGER (CM)</option>
-                        <option value="ORG_ZH">STATE HEAD (SH)</option>
-                        <option value="ORG_VP">VP(Vice President)</option>
-                        <option value="ORG_CXO">CXO</option>
+                        <option selected disabled>select designation</option>
+                        {% for designation in hierarchy %}
+                        <option value="{{ designation.role|upper }}">({{ designation.title|upper }}) {{ designation.title_full|upper }}</option>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
