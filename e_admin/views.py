@@ -192,12 +192,16 @@ def admin_application():
         abort(403)
 
     appId = request.args.get('appId', '')
+    appName = request.args.get('appName', '')
     groupId = request.args.get('groupId', '')
     statusId = request.args.get('statusId', '')
 
     applications = []
     if (appId is not None) and (appId != ''):
       applications = EsthenosOrgApplication.objects.filter(application_id=appId)
+
+    elif (appName is not None) and (appName != ''):
+      applications = EsthenosOrgApplication.objects.filter(applicant_name=appName)
 
     elif (statusId is not None) and (statusId != ''):
       status = EsthenosOrgApplicationStatusType.objects.get(id=statusId)
