@@ -89,17 +89,17 @@
                         <tr>
                             <td class="v-align-middle">{{ loop.index }}</td>
                             <td class="v-align-middle ">
-                                <ins><a href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}">{{ app.application_id }}</a></ins>
+                                <ins><a href="{{ url_for("admin_views.admin_application_id", org_id=app.organisation.id, app_id=app.application_id) }}">{{ app.application_id }}</a></ins>
                             </td>
                             <td class="v-align-middle">{{ app.group.group_name }}</td>
                             <td>{{ app.date_created|dateformat }} {{ app.date_created|timeformat }}</td>
                             <td>{{ app.current_status.status }}</td>
                             {% if user.roles[0]!="EMP_EXECUTIVE" %}
                             <td>
-                                <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/cashflow" >Cashflow</a>
+                                <a class="btn btn-small btn-info btn-small" href="{{ url_for("admin_views.admin_application_cashflow", org_id=app.organisation.id, app_id=app.application_id) }}" >Cashflow</a>
                             </td>
                             <td>
-                                <a class="btn btn-small btn-info btn-small" href="/admin/organisation/{{ app.organisation.id }}/application/{{ app.application_id }}/track" >Status</a>
+                                <a class="btn btn-small btn-info btn-small" href="{{ url_for("admin_views.admin_application_track", org_id=app.organisation.id, app_id=app.application_id) }}" >Status</a>
                             </td>
                             {% endif %}
                         </tr>

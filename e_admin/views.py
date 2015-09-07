@@ -177,6 +177,46 @@ def admin_employees_add():
         return render_template("admin_add_emp.html", **kwargs)
 
 
+@admin_views.route('/admin/applications', methods=["GET"])
+@login_required
+def admin_application():
+    organisations = EsthenosOrg.objects.all()
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    permissions = user.permissions
+    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
+        if not permissions["data_entry"] == "yes":
+            abort(403)
+
+    if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
+        abort(403)
+
+    appId = request.args.get('appId', '')
+    groupId = request.args.get('groupId', '')
+    statusId = request.args.get('statusId', '')
+
+    applications = []
+    if (appId is not None) and (appId != ''):
+      applications = EsthenosOrgApplication.objects.filter(application_id=appId)
+
+    elif (statusId is not None) and (statusId != ''):
+      status = EsthenosOrgApplicationStatusType.objects.get(id=statusId)
+      applications = EsthenosOrgApplication.objects.filter(current_status=status)
+
+    elif (groupId is not None) and (groupId != ''):
+      group = EsthenosOrgGroup.objects.get(id=groupId)
+      applications = EsthenosOrgApplication.objects.filter(group=group)
+
+    else:
+      applications = EsthenosOrgApplication.objects.all()
+
+    groups = EsthenosOrgGroup.objects.all()
+    status_types = EsthenosOrgApplicationStatusType.objects.all()
+
+    kwargs = locals()
+    return render_template("admin_applications.html", **kwargs)
+
+
 @admin_views.route('/admin/organisations', methods=["GET", "POST"])
 @login_required
 def admin_organisations():
@@ -719,46 +759,6 @@ def psychometric_questions_delete(org_id, question_id):
     return redirect("/admin/organisation/%s/psychometric_questions" % org_id)
 
 
-@admin_views.route('/admin/applications', methods=["GET"])
-@login_required
-def admin_application():
-    organisations = EsthenosOrg.objects.all()
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    permissions = user.permissions
-    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
-        if not permissions["data_entry"] == "yes":
-            abort(403)
-
-    if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
-        abort(403)
-
-    appId = request.args.get('appId', '')
-    groupId = request.args.get('groupId', '')
-    statusId = request.args.get('statusId', '')
-
-    applications = []
-    if (appId is not None) and (appId != ''):
-      applications = EsthenosOrgApplication.objects.filter(application_id=appId)
-
-    elif (statusId is not None) and (statusId != ''):
-      status = EsthenosOrgApplicationStatusType.objects.get(id=statusId)
-      applications = EsthenosOrgApplication.objects.filter(current_status=status)
-
-    elif (groupId is not None) and (groupId != ''):
-      group = EsthenosOrgGroup.objects.get(id=groupId)
-      applications = EsthenosOrgApplication.objects.filter(group=group)
-
-    else:
-      applications = EsthenosOrgApplication.objects.all()
-
-    groups = EsthenosOrgGroup.objects.all()
-    status_types = EsthenosOrgApplicationStatusType.objects.all()
-
-    kwargs = locals()
-    return render_template("admin_applications.html", **kwargs)
-
-
 @admin_views.route('/admin/organisation/<org_id>/areas/<reg_id>', methods=["GET"])
 @login_required
 def admin_org_areas_regions(org_id, reg_id):
@@ -959,48 +959,6 @@ def cashflow_statusupdate(org_id, app_id):
         application.save()
 
     return redirect("/admin/organisation/%s/application/%s/cashflow" % (org_id, app_id))
-
-
-@admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
-@login_required
-def read_pan(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_pan_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
-@login_required
-def read_vid(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_vid_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
-@login_required
-def read_aadhaar(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_aadhaar_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
@@ -1459,6 +1417,48 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     response.headers['Content-Disposition'] =\
     'inline; filename=%s.pdf' % 'hp'
     return response
+
+
+@admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
+@login_required
+def read_pan(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    url = get_url_with_id(object_id)
+    data = get_pan_details_url(url)
+
+    kwargs = locals()
+    return Response(response=data, status=200, mimetype="application/json")
+
+
+@admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
+@login_required
+def read_vid(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    url = get_url_with_id(object_id)
+    data = get_vid_details_url(url)
+
+    kwargs = locals()
+    return Response(response=data, status=200, mimetype="application/json")
+
+
+@admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
+@login_required
+def read_aadhaar(object_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    url = get_url_with_id(object_id)
+    data = get_aadhaar_details_url(url)
+
+    kwargs = locals()
+    return Response(response=data, status=200, mimetype="application/json")
 
 
 @admin_views.route('/admin/login', methods=["GET", "POST"])
