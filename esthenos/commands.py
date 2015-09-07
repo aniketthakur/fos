@@ -64,14 +64,43 @@ class InitDB(Command):
                 owner = EsthenosUser.objects.filter(roles__contains="ADMIN").first()
             ).save()
 
+            org1 = EsthenosOrg.objects.get(name = org["name"])
+
+            print "dropping & creating users for : %s" % org["name"]
+            users = org["users"]
+            for user in users:
+                emp = EsthenosUser(
+                    organisation = org1,
+                    roles = user["roles"],
+                    active = user["active"],
+                    name = "{fname} {lname}".format(fname=user["fname"], lname=user["lname"]),
+                    email = user["email"],
+                    last_name = user["lname"],
+                    first_name = user["fname"],
+                    date_of_birth = user["dob"],
+                    postal_city = user["city"],
+                    postal_state = user["state"],
+                    postal_country = user["country"],
+                    postal_address = user["address"],
+                    postal_telephone = user["telephone"],
+                    postal_tele_code = user["tele_code"],
+                )
+                emp.set_password(user["passwd"])
+                emp.save()
+                org1.update(inc__employee_count=1)
+            print "{count} {name} users created.".format(count=len(users), name=org["name"])
+
             print "dropping & creating user hierarchy for : %s" % org["name"]
-            for item in org["hierarchy"]:
+            hierarchy = org["hierarchy"]
+            for item in hierarchy:
                 EsthenosOrgHierarchy(
                     role=item["role"],
                     level=item["level"],
                     title=item["title"],
                     title_full=item["title_full"]
                 ).save()
+            print "{count} {name} hierarchy designations created.".format(count=len(hierarchy), name=org["name"])
+
 
         print "dropping & creating application status types."
         EsthenosOrgApplicationStatusType.drop_collection()

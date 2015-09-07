@@ -12,12 +12,19 @@ ORGS_SETTINGS = [
         "postal-country": "India",
         "users" : [
             {
-                "role" : "executive",
+                "roles" : ["ORG_CM"],
+                "active" : True,
+                "dob" : "01/01/1970",
+                "city" : "kabul",
+                "state" : "kabula",
+                "country" : "kabuland",
+                "address" : "1st kabul, kaula, kabuland.",
+                "telephone" : "9876543210",
+                "tele_code" : "+91",
                 "fname" : "demo",
                 "lname" : "users",
-                "email" : "demo",
+                "email" : "demo@dev.esthenos.com",
                 "passwd" : "demodemo",
-                "mobile" : "+91-9876543210"
             }
         ],
         "hierarchy" : [
