@@ -198,6 +198,7 @@ def application_kyc(app_id):
 
 @organisation_views.route('/scrutiny', methods=["GET"])
 @login_required
+@feature_enable("accounts_scrutiny")
 def scrutiny():
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -211,6 +212,7 @@ def scrutiny():
 
 @organisation_views.route('/scrutiny/group/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("accounts_scrutiny")
 def scrutiny_list_group(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -225,6 +227,7 @@ def scrutiny_list_group(group_id):
 
 @organisation_views.route('/scrutiny/center/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("accounts_scrutiny")
 def scrutiny_list_center(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -239,6 +242,7 @@ def scrutiny_list_center(group_id):
 
 @organisation_views.route('/scrutiny/application/<app_id>', methods=["GET", "POST"])
 @login_required
+@feature_enable("accounts_scrutiny")
 def scrutiny_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -258,6 +262,7 @@ def scrutiny_application(app_id):
 
 @organisation_views.route('/sanctions', methods=["GET"])
 @login_required
+@feature_enable("accounts_sanctions")
 def sanctions():
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -271,6 +276,7 @@ def sanctions():
 
 @organisation_views.route('/sanctions/group/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("accounts_sanctions")
 def sanctions_list_group(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -285,6 +291,7 @@ def sanctions_list_group(group_id):
 
 @organisation_views.route('/sanctions/center/<group_id>', methods=["GET"])
 @login_required
+@feature_enable("accounts_sanctions")
 def sanctions_list_center(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -299,6 +306,7 @@ def sanctions_list_center(group_id):
 
 @organisation_views.route('/sanctions/application/<app_id>', methods=["GET", "POST"])
 @login_required
+@feature_enable("accounts_sanctions")
 def sanctions_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
