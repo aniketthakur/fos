@@ -9,11 +9,11 @@ import tempfile, zipfile, uuid, json
 from PIL import Image
 from math import log10, floor
 from datetime import timedelta
-from werkzeug.utils import secure_filename, redirect
+from werkzeug.utils import secure_filename
 
 from flask.ext import excel
 from flask.views import View
-from flask import Blueprint, render_template, session, request, Response, abort, make_response
+from flask import Blueprint, redirect, url_for, render_template, session, request, Response, abort, make_response
 from flask_sauth.views import flash_errors
 from flask_login import current_user, login_user, logout_user, login_required
 

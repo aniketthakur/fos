@@ -7489,3 +7489,10 @@ input[type="checkbox"] {
 .row .admin-action {
   margin-bottom: 20px;
 }
+.row .search-container input, .row .search-container select {
+  width: 80%;
+  margin-right: 10px;
+}
+.row .search-container .btn-info {
+  padding: 9px 12px;
+}

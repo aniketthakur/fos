@@ -9,39 +9,75 @@
     </div>
 
     <div class="row">
-        <form method="get" action="{{ url_for("organisation_views.scrutiny") }}">
-            <div class="col-md-6 form-group">
-                <input type="text"  class="form-control" name="appId" placeholder="Search By Applicant Id">
-            </div>
-            <div class="col-md-4 form-group">
-                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <form method="get" action="{{ url_for("organisation_views.scrutiny") }}">
-            <div class="col-md-6 form-group">
-                <input type="text"  class="form-control" name="appName" placeholder="Search By Applicant Name">
-            </div>
-            <div class="col-md-4 form-group">
-                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <form method="get" action="{{ url_for("organisation_views.scrutiny") }}">
-            <div class="col-md-6 form-group">
-                <select style="width:100%" class="select2" name="statusId">
-                    <option selected disabled>search by scrutiny status</option>
-                    <option value="approved">approved</option>
-                    <option value="rejected">rejected</option>
-                    <option value="onhold">onhold</option>
+        {% if feature_show("search_by_app_id") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <input type="text" class="inline form-control" name="appId" placeholder="Search By Applicant Id">
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+        {% if feature_show("search_by_app_name") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <input type="text" class="inline form-control" name="appName" placeholder="Search By Applicant Name">
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+        {% if feature_show("search_by_group_id") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <input type="text" class="inline form-control" name="groupId" placeholder="Search By group id">
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+        {% if feature_show("search_by_group_name") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <select class="inline select2 form-control" name="groupId">
+                    <option selected disabled>search by group name</option>
+                    {% for group in groups %}
+                    <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                    {% endfor %}
                 </select>
-            </div>
-            <div class="col-md-4 form-group">
-                <button class="btn btn-info btn-medium" type="submit" value="search">search</button>
-            </div>
-        </form>
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+        {% if feature_show("search_by_center_name") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <select class="inline select2 form-control" name="groupId">
+                    <option selected disabled>search by center name</option>
+                    {% for group in groups %}
+                    <option value="{{ group.group_id }}">{{ group.location_name }}</option>
+                    {% endfor %}
+                </select>
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
+        {% if feature_show("search_by_scrutiny_status") %}
+        <div class="col-md-6 form-group">
+            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
+                <select class="inline select2 form-control" name="scrutinyStatus">
+                    <option selected disabled>search by scrutiny status</option>
+                    <option value="onhold">onhold</option>
+                    <option value="rejected">rejected</option>
+                    <option value="approved">approved</option>
+                </select>
+                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        {% endif %}
     </div>
 
     <div class="row">
@@ -54,13 +90,10 @@
                             <th style="width:1%" >#</th>
                             <th style="width:15%">Application ID</th>
                             <th style="width:20%">Applicant Name</th>
-                            <th style="width:15%">Group Name</th>
-                            <th style="width:15%">Center Name</th>
+                            <th style="width:15%">Branch Name</th>
+                            <th style="width:15%">FOS Name</th>
+                            <th style="width:15%">Scrutiny Status</th>
                             <th style="width:10%">Date</th>
-                            <th style="width:10%">Borrower</th>
-                            <th style="width:10%">Co-Borrower</th>
-                            <th style="width:10%">Location</th>
-                            <th style="width:10%">Scrutiny</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,18 +103,19 @@
                             <td class="v-align-middle">
                               <a href="{{ url_for("organisation_views.scrutiny_application", app_id=app.application_id) }}"><ins>{{ app.application_id }}</ins></a>
                             </td>
-                            <td class="v-align-middle">{{ app.applicant_name }}</td>
                             <td class="v-align-middle">
-                              <a href="{{ url_for("organisation_views.scrutiny_list_group", group_id=app.group.group_id) }}"><ins>{{ app.group.group_name }}</ins></a>
+                              <a href="{{ url_for("organisation_views.scrutiny", appName=app.applicant_name) }}"><ins>{{ app.applicant_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <a href="{{ url_for("organisation_views.scrutiny_list_center", group_id=app.group.group_id) }}"><ins>{{ app.group.location_name }}</ins></a>
+                              <a href="#"><ins>branch-name</ins></a>
+                            </td>
+                            <td class="v-align-middle">
+                              <a href="#"><ins>fos-name</ins></a>
+                            </td>
+                            <td class="v-align-middle">
+                              <a href="#"><ins>scrutiny-status</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.date_created|dateformat }}</td>
-                            <td class="v-align-middle">foto</td>
-                            <td class="v-align-middle">foto</td>
-                            <td class="v-align-middle">loca</td>
-                            <td class="v-align-middle">scrutiny</td>
                         </tr>
                         {% endfor %}
                         </tbody>

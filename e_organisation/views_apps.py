@@ -204,43 +204,41 @@ def scrutiny():
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+  groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
+
+  appId = request.args.get('appId', '')
+  appName = request.args.get('appName', '')
+  groupId = request.args.get('groupId', '')
+  groupName = request.args.get('groupName', '')
+  centerName = request.args.get('centerName', '')
+  scrutinyStatus = request.args.get('scrutinyStatus', '')
+
+  if (appId is not None) and (appId != ''):
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId)
+
+  elif (appName is not None) and (appName != ''):
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName)
+
+  elif (groupId is not None) and (groupId != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=groupId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  elif (groupName is not None) and (groupName != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_name=groupName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  elif (centerName is not None) and (centerName != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=centerName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  else:
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=0)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
 
 
-@organisation_views.route('/scrutiny/group/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("accounts_scrutiny")
-def scrutiny_list_group(group_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
-
-  kwargs = locals()
-  return render_template("scrutiny/scrutiny_list.html", **kwargs)
-
-
-@organisation_views.route('/scrutiny/center/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("accounts_scrutiny")
-def scrutiny_list_center(group_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
-
-  kwargs = locals()
-  return render_template("scrutiny/scrutiny_list.html", **kwargs)
-
-
-@organisation_views.route('/scrutiny/application/<app_id>', methods=["GET", "POST"])
+@organisation_views.route('/scrutiny/<app_id>', methods=["GET", "POST"])
 @login_required
 @feature_enable("accounts_scrutiny")
 def scrutiny_application(app_id):
@@ -257,7 +255,7 @@ def scrutiny_application(app_id):
 
 
   elif request.method == "POST":
-    return redirect("/scrutiny")
+    return redirect(url_for("organisation_views.scrutiny"))
 
 
 @organisation_views.route('/sanctions', methods=["GET"])
@@ -268,43 +266,41 @@ def sanctions():
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(status__gte=0)
+  groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
+
+  appId = request.args.get('appId', '')
+  appName = request.args.get('appName', '')
+  groupId = request.args.get('groupId', '')
+  groupName = request.args.get('groupName', '')
+  centerName = request.args.get('centerName', '')
+  scrutinyStatus = request.args.get('scrutinyStatus', '')
+
+  if (appId is not None) and (appId != ''):
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId)
+
+  elif (appName is not None) and (appName != ''):
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName)
+
+  elif (groupId is not None) and (groupId != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=groupId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  elif (groupName is not None) and (groupName != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_name=groupName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  elif (centerName is not None) and (centerName != ''):
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=centerName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+  else:
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=0)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)
 
 
-@organisation_views.route('/sanctions/group/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("accounts_sanctions")
-def sanctions_list_group(group_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
-
-  kwargs = locals()
-  return render_template("sanctions/sanctions_list.html", **kwargs)
-
-
-@organisation_views.route('/sanctions/center/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("accounts_sanctions")
-def sanctions_list_center(group_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
-  applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
-
-  kwargs = locals()
-  return render_template("sanctions/sanctions_list.html", **kwargs)
-
-
-@organisation_views.route('/sanctions/application/<app_id>', methods=["GET", "POST"])
+@organisation_views.route('/sanctions/<app_id>', methods=["GET", "POST"])
 @login_required
 @feature_enable("accounts_sanctions")
 def sanctions_application(app_id):
@@ -321,4 +317,4 @@ def sanctions_application(app_id):
 
 
   elif request.method == "POST":
-    return redirect("/sanctions")
+    return redirect(url_for("organisation_views.sanctions"))

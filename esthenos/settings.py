@@ -87,6 +87,13 @@ FEATURES = {
     "admin_select_regions": True,
     "admin_select_regions_village": False,
 
+    "search_by_app_id": True,
+    "search_by_app_name": True,
+    "search_by_group_id": False,
+    "search_by_group_name": False,
+    "search_by_center_name": False,
+    "search_by_scrutiny_status": True,
+
     "accounts_reports": True,
     "accounts_scrutiny": True,
     "accounts_sanctions": True,
