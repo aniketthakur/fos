@@ -29,6 +29,8 @@ class BaseUser(Document, UserMixin):
     password = StringField(max_length=128)
 
     date_joined = DateTimeField(default=datetime.datetime.now)
+    email_activation_key = StringField(default="")
+    is_email_activated = BooleanField(default=True)
     password_reset_token = StringField()
 
     roles = ListField(StringField(), default=[])

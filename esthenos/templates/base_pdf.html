@@ -1,46 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css">
-    <!-- END CSS TEMPLATE -->
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="pdfkit-margin-top" content="0mm"/>
-    <meta name="pdfkit-margin-bottom" content="0mm"/>
-    <meta name="pdfkit-margin-right" content="0mm"/>
-    <meta name="pdfkit-margin-left" content="0mm"/>
-    <meta name="print_media_type" content="true"/>
-    {% block css_sheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <meta name="print_media_type" content="true"/>
+    <meta name="pdfkit-margin-top" content="0mm"/>
+    <meta name="pdfkit-margin-left" content="0mm"/>
+    <meta name="pdfkit-margin-right" content="0mm"/>
+    <meta name="pdfkit-margin-bottom" content="0mm"/>
+
+    {% block css_sheets %}
     {% endblock %}
 
     {% block meta %}
     {% endblock %}
 
-</head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body >
-<div class="container">
-    {% block maincontents %}
+    {% block js_scripts %}
     {% endblock %}
-
-</div>
-<!-- END CONTAINER -->
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- BEGIN CORE TEMPLATE JS -->
-<!-- END CORE TEMPLATE JS -->
-
-{% block js_scripts %}
-
-{% endblock %}
-
-
+</head>
+<body >
+    <div class="container">
+        {% block maincontents %}
+        {% endblock %}
+    </div>
 </body>
 </html>
