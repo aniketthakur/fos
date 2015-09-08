@@ -145,7 +145,7 @@
                     {% endif %}
                     {% if feature_show("disbursement") %}
                     <li class="">
-                        <a href="/check_disbursement">
+                        <a href="{{ url_for('organisation_views.check_disbursement') }}">
                             <i class="fa fa-thumbs-o-up"></i>
                             <span class="title">Disbursement</span>
                         </a>
@@ -153,7 +153,7 @@
                     {% endif %}
                     {% if feature_show("accounts_reports") %}
                     <li class="">
-                        <a href="/reports">
+                        <a href="{{ url_for('organisation_views.reports_internal_main') }}">
                             <i class="fa fa-line-chart"></i>
                             <span class="title">Reports</span>
                         </a>
