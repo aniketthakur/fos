@@ -1,5 +1,6 @@
 import os, sys
 from fabric.api import *
+from slacker import Slacker
 from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
@@ -18,13 +19,17 @@ PIDS_DIR = '/var/run/esthenos/'
 LOGS_DIR = '/var/log/esthenos/'
 DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
-
 GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
 GIT_SERVER_DB = "on branch {git-branch}".format(**client)
 GIT_SERVER_BRANCH = "on branch {DB}".format(**database)
 if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH):
     print "\non different branch as compared to server-settings.\nabort.\n"
     sys.exit(1)
+
+
+def notify(message, channel="#general", username="fab-bot"):
+    slack = Slacker('xoxp-6694899808-6694899856-10378717686-a7deb0')
+    slack.chat.post_message(channel, message, username=username)
 
 
 def provision():
@@ -67,6 +72,9 @@ def provision():
 
     # setup rabbitmq server.
     rabbitmq()
+
+    # notify slack channel.
+    notify("successfully provisioned new server for {server}".format(server=env.host))
 
 def nginx():
     """setting up nginx server."""
@@ -145,6 +153,10 @@ def deploy():
     dirname = check_output(
         ["echo \"$(date +'%Y-%m-%d')-$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
 
+    # notify slack for deploy start.
+    notify("starting deployment of {version} on {server}".format(version=dirname, server=env.host))
+
+    
     deploy_path = os.path.join(HOME_DIR, dirname)
     run('mkdir -p {}'.format(deploy_path))
 
@@ -161,7 +173,9 @@ def deploy():
     restart('esthenos-beats')
     restart('esthenos-celery')
     restart('esthenos-webapp')
-    print "Done!"
+
+    # notify slack for deployment finish
+    notify("successfully deployed on server {version} on {server}".format(version=dirname, server=env.host))
 
 
 @parallel
