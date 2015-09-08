@@ -75,7 +75,7 @@
                               <a href="{{ url_for("organisation_views.sanctions_list_group", group_id=app.group.group_id) }}"><ins>{{ app.group.group_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <a href="{{ url_for("organisation_views.sanctions_list_center", group_location=app.group.location_name) }}"><ins>{{ app.group.location_name }}</ins></a>
+                              <a href="{{ url_for("organisation_views.sanctions_list_center", group_id=app.group.group_id) }}"><ins>{{ app.group.location_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.date_created|dateformat }}</td>
                             <td class="v-align-middle">foto</td>

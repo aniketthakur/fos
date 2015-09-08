@@ -57,7 +57,7 @@
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="{{ url_for("organisation_views.application_list_center", center_id=group.location_name) }}"><ins>{{ group.location_name }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_center", group_id=group.group_id) }}"><ins>{{ group.location_name }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
                                   <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>

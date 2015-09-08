@@ -56,14 +56,14 @@ def application_list_group(group_id):
   return render_template("apps/applications_list.html", **kwargs)
 
 
-@organisation_views.route('/applications/center/<center_id>', methods=["GET"])
+@organisation_views.route('/applications/center/<group_id>', methods=["GET"])
 @login_required
-def application_list_center(center_id):
+def application_list_center(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=center_id)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
   applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
@@ -223,14 +223,14 @@ def scrutiny_list_group(group_id):
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
 
 
-@organisation_views.route('/scrutiny/center/<group_location>', methods=["GET"])
+@organisation_views.route('/scrutiny/center/<group_id>', methods=["GET"])
 @login_required
-def scrutiny_list_center(group_location):
+def scrutiny_list_center(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=group_location)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
   applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
@@ -283,14 +283,14 @@ def sanctions_list_group(group_id):
   return render_template("sanctions/sanctions_list.html", **kwargs)
 
 
-@organisation_views.route('/sanctions/center/<group_location>', methods=["GET"])
+@organisation_views.route('/sanctions/center/<group_id>', methods=["GET"])
 @login_required
-def sanctions_list_center(group_location):
+def sanctions_list_center(group_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=group_location)
+  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
   applications = EsthenosOrgApplication.objects.filter(group=group, status__gte=0)
 
   kwargs = locals()
