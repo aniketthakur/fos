@@ -485,6 +485,12 @@ class EsthenosOrgApplication(db.Document):
     travel_expense = db.FloatField(default=0.0)
     medical_expense = db.FloatField(default=0.0)
     business_expense = db.FloatField(default=0.0)
+    business_expense_working_capital = db.FloatField(default=0.0)
+    business_expense_employee_salary = db.FloatField(default=0.0)
+    business_expense_rent = db.FloatField(default=0.0)
+    business_expense_admin = db.FloatField(default=0.0)
+    business_expense_other = db.FloatField(default=0.0)
+
     educational_expense = db.FloatField(default=0.0)
     entertainment_expense = db.FloatField(default=0.0)
     other_expense = db.FloatField(default=0.0)

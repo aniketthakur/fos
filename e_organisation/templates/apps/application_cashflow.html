@@ -101,11 +101,56 @@
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">5</td>
-          <td>Business expense</td>
+          <td class="unseen text-center">5.1</td>
+          <td>Business expense - Working Capital Expenditure</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="business_expense" value="{{ application.business_expense }}">
+              <input type="text" class="form-control text-right section-b1" name="business_expense_working_capital" value="{{ application.business_expense_working_capital }}">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="unseen text-center">5.2</td>
+          <td>Business expense - Employee Salary Expenditure</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="business_expense_employee_salary" value="{{ application.business_expense_employee_salary }}">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="unseen text-center">5.3</td>
+          <td>Business expense - Admin Expenditure</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="business_expense_admin" value="{{ application.business_expense_admin }}">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="unseen text-center">5.4</td>
+          <td>Business expense - Rent Expenditure</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="business_expense_rent" value="{{ application.business_expense_rent }}">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="unseen text-center">5.5</td>
+          <td>Business expense - Other Expenditures</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="business_expense_other" value="{{ application.business_expense_other }}">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="unseen text-center">5.6</td>
+          <td>Business expense - Total</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1-total" name="business_expense" value="{{ application.business_expense }}" disabled>
             </div>
           </td>
         </tr>
@@ -177,64 +222,11 @@
         </tr>
         <tr>
           <td colspan="3" >
-            <h4 class="semi-bold">(C) Outstanding from other MFI/NBFI/Banks</h4>
+            <h4 class="semi-bold">(C) Other Liability</h4>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">12</td>
-          <td>Outstanding-1</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_1 }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">13</td>
-          <td>Outstanding-2</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_2 }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">14</td>
-          <td>Outstanding-3</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_3 }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">15</td>
-          <td>Outstanding-4</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-c" value="{{ application.outstanding_4 }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">
-          </td>
-          <td class="bold text-right">
-            <strong>(C) Total Outstanding</strong>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-c-total" value="{{ application.total_outstanding }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3" >
-            <h4 class="semi-bold">(D) Other Liability</h4>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">16</td>
           <td>Chit</td>
           <td>
             <div class="controls">
@@ -243,7 +235,7 @@
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">17</td>
+          <td class="unseen text-center">13</td>
           <td>Insurance</td>
           <td>
             <div class="controls">
@@ -252,7 +244,7 @@
           </td>
         </tr>
         <tr>
-          <td class="unseen text-center">18</td>
+          <td class="unseen text-center">14</td>
           <td>EMI</td>
           <td>
             <div class="controls">
@@ -263,7 +255,7 @@
         <tr>
           <td class="unseen text-center"></td>
           <td class="bold text-right">
-            <strong>(D) Total Outstanding</strong>
+            <strong>(C) Total Outstanding</strong>
           </td>
           <td>
             <div class="controls">
@@ -273,7 +265,7 @@
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Net Income (A -B -D)</h6>
+            <h6 class="semi-bold">Net Income (A -B -C)</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
@@ -303,61 +295,11 @@
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Total Existing Running number of Loans from MFIs</h6>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.total_running_loans_from_mfi }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >
-            <h6 class="semi-bold">Total Existing Loan Outstanding from MFIs</h6>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.total_existing_outstanding_from_mfi }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >
-            <h6 class="semi-bold">Default with no of MFIs</h6>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.defaults_with_no_mfis }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >
-            <h6 class="semi-bold">Attendance %</h6>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.attendence_percentage }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >
             <h6 class="semi-bold">Loan eligibility based on Net Income</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
               <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >
-            <h6 class="semi-bold">Loan eligibility based on company policy</h6>
-          </td>
-          <td>
-            <div class="controls  {% if application.loan_eligibility_based_on_company_policy < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right" value="{{ application.loan_eligibility_based_on_company_policy }}" disabled>
             </div>
           </td>
         </tr>
@@ -382,8 +324,25 @@
               update_loan_eligibility();
             });
 
+            $(".section-b1").on("change", function(e){
+              var total = 0.0;
+              $(".section-b1").each(function(index){
+                total += parseFloat($(this).val());
+              });
+              $(".section-b1-total").val(total);
+              $(".section-b").each(function(index){
+                total += parseFloat($(this).val());
+              });
+              $(".section-b-total").val(total);
+              update_net_income();
+              update_loan_eligibility();
+            });
+
             $(".section-b").on("change", function(e){
               var total = 0.0;
+              $(".section-b1").each(function(index){
+                total += parseFloat($(this).val());
+              });
               $(".section-b").each(function(index){
                 total += parseFloat($(this).val());
               });

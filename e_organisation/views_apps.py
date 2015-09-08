@@ -124,7 +124,18 @@ def cashflow_statusupdate(app_id):
       application.food_expense = float(request.form.get("food_expense"))
       application.travel_expense = float(request.form.get("travel_expense"))
       application.medical_expense = float(request.form.get("medical_expense"))
-      application.business_expense = float(request.form.get("business_expense"))
+
+      application.business_expense_working_capital = float(request.form.get("business_expense_working_capital"))
+      application.business_expense_employee_salary = float(request.form.get("business_expense_employee_salary"))
+      application.business_expense_rent = float(request.form.get("business_expense_rent"))
+      application.business_expense_admin = float(request.form.get("business_expense_admin"))
+      application.business_expense_other = float(request.form.get("business_expense_other"))
+      application.business_expense = application.business_expense_working_capital \
+                                 + application.business_expense_employee_salary \
+                                 + application.business_expense_rent \
+                                 + application.business_expense_admin \
+                                 + application.business_expense_other
+
       application.educational_expense = float(request.form.get("educational_expense"))
       application.entertainment_expense = float(request.form.get("entertainment_expense"))
       application.other_expense = float(request.form.get("other_expense"))
