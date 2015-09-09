@@ -7,6 +7,18 @@ from flask_login import current_user
 from e_admin.models import EsthenosUser, EsthenosSettings
 from e_organisation.models import *
 
+def toInt(value):
+  try:
+    return int(value)
+  except:
+    return 0
+
+def toFloat(value):
+  try:
+    return float(value)
+  except:
+    return 0.0
+
 
 class AddApplicationManual(Form):
     application_id = TextField( validators=[v.DataRequired(), v.Length(max=40)])
@@ -294,8 +306,6 @@ class AddApplicationManual(Form):
 class AddApplicationMobile(Form):
     group_leader_cell = TextField( validators=[ v.Length(max=512)]) #8197997788
     group_size = TextField( validators=[ v.Length(max=512)]) #20
-    group_leader_number = TextField( validators=[ v.Length(max=512)]) #20
-    group_leader_name = TextField( validators=[ v.Length(max=512)]) #20
     center_name = TextField( validators=[ v.Length(max=512)]) #center1
     group_name = TextField( validators=[ v.Length(max=512)]) #group1
     product_name = TextField( validators=[ v.Length(max=512)]) #LP2000026
@@ -315,35 +325,47 @@ class AddApplicationMobile(Form):
     taluk = TextField( validators=[ v.Length(max=512)]) #Honavar
     father_s__husband_s_name = TextField( validators=[ v.Length(max=512)]) #S/O Mahesh Palekar
     dob_yob = TextField( validators=[ v.Length(max=512)]) #1991
-    male_count = TextField( validators=[ v.Length(max=512)]) #6
     address = TextField( validators=[ v.Length(max=512)]) #Tonka
-    female_count = TextField( validators=[ v.Length(max=512)]) #6
+
     total_earning_members = TextField( validators=[ v.Length(max=512)]) #
     total_number_of_family_members = TextField( validators=[ v.Length(max=512)]) #12
-    members_less_than_18 = TextField( validators=[ v.Length(max=512)]) #6
+
+    male_count = TextField( validators=[ v.Length(max=512)]) #6
+    female_count = TextField( validators=[ v.Length(max=512)]) #6
+
     members_above_18 = TextField( validators=[ v.Length(max=512)]) #6
+    members_less_than_18 = TextField( validators=[ v.Length(max=512)]) #6
+
     other_family_asset_s = TextField( validators=[ v.Length(max=512)]) #Bike, Gas
+
+    gurranter_s_sex = TextField( validators=[ v.Length(max=512)]) #
+    gurranter_s_age = TextField( validators=[ v.Length(max=512)]) #
+    gurranter_s_name = TextField( validators=[ v.Length(max=512)]) #
+
+    gurantors_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
     gurantors_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
     gurantors_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
-    gurantors_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
+
     borrowers_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
     borrowers_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
     borrowers_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
-    gurantor_s_relationship_with_borrower = TextField( validators=[ v.Length(max=512)]) #Father
-    gurantors_borrowers_are_nominee_for_each_other_ = TextField( validators=[ v.Length(max=512)]) #Yes
-    quality_of_house = TextField( validators=[ v.Length(max=512)]) #Kaccha/Mud
-    type_of_house = TextField( validators=[ v.Length(max=512)]) #Self Owned
-    how_long_are_you_staying_in_house__in_years = TextField( validators=[ v.Length(max=512)]) #25
-    source_of_drinking_water = TextField( validators=[ v.Length(max=512)]) #Borewell, Open Well
 
+    gurantors_borrowers_are_nominee_for_each_other_ = TextField( validators=[ v.Length(max=512)]) #Yes
+    gurantor_s_relationship_with_borrower = TextField( validators=[ v.Length(max=512)]) #Father
+
+    type_of_house = TextField( validators=[ v.Length(max=512)]) #Self Owned
+    quality_of_house = TextField( validators=[ v.Length(max=512)]) #Kaccha/Mud
+    source_of_drinking_water = TextField( validators=[ v.Length(max=512)]) #Borewell, Open Well
+    how_long_are_you_staying_in_house__in_years = TextField( validators=[ v.Length(max=512)]) #25
+
+    repayment_option = TextField( validators=[ v.Length(max=512)]) #Monthly
     purpose_of_the_loan = TextField( validators=[ v.Length(max=512)]) #cattle rearing
     required_loan_amount = TextField( validators=[ v.Length(max=512)]) #25000
-    repayment_option = TextField( validators=[ v.Length(max=512)]) #Monthly
-    bank_name = TextField( validators=[ v.Length(max=512)]) #
-    account_holder_name = TextField( validators=[ v.Length(max=512)]) #')])
-    account_number = TextField( validators=[ v.Length(max=512)]) #')])
-    ifsc_code = TextField( validators=[ v.Length(max=512)]) #
 
+    bank_name = TextField( validators=[ v.Length(max=512)]) #
+    ifsc_code = TextField( validators=[ v.Length(max=512)]) #
+    account_number = TextField( validators=[ v.Length(max=512)]) #')])
+    account_holder_name = TextField( validators=[ v.Length(max=512)]) #')])
 
     interested_in_buying_other_products = TextField( validators=[ v.Length(max=512)]) #None
 
@@ -351,21 +373,22 @@ class AddApplicationMobile(Form):
     financial_liabilities_chits = TextField( validators=[ v.Length(max=512)]) #
     financial_liabilities_insurance = TextField( validators=[ v.Length(max=512)]) #
     financial_liabilities_bank_loans = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_sex = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_name = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_age = TextField( validators=[ v.Length(max=512)]) #
-    tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
+
     secondary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
-    tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
     secondary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
+    secondary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
+    secondary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #1000
+
+    primary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
     primary_business_activities = TextField( validators=[ v.Length(max=512)]) #something here
     primary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #8000
-    primary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
-    secondary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #1000
-    secondary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
+    primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
+
+    tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
+    tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
     tertiary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
     tertiary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #3000
-    primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
+
     village_information_water_bodies = TextField( validators=[ v.Length(max=512)]) #Sea, Pond
     village_information_medical_facility = TextField( validators=[ v.Length(max=512)]) #Public Hospital, None
     village_information_sanitation = TextField( validators=[ v.Length(max=512)]) #Public
@@ -375,17 +398,20 @@ class AddApplicationMobile(Form):
     village_information_road_quality = TextField( validators=[ v.Length(max=512)]) #Kaccha
     village_information_public_transportaion = TextField( validators=[ v.Length(max=512)]) #Train, Auto
     village_information_electricity_hours = TextField( validators=[ v.Length(max=512)]) #6_15
+
     family_assets_orchard__acres = TextField( validators=[ v.Length(max=512)]) #1
     family_assets_land_acres = TextField( validators=[ v.Length(max=512)]) #1
-    family_education_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
     family_assets_number_of_sheeps = TextField( validators=[ v.Length(max=512)]) #10
     family_assets_number_of_cows = TextField( validators=[ v.Length(max=512)]) #20
-    family_entertainment_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
+
+    family_food_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #2000
     family_other_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #1000
-    family_festival_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #1000
     family_travel_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
     family_medical_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
-    family_food_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #2000
+    family_festival_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #1000
+    family_education_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
+    family_entertainment_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
+
     kyc = TextField( validators=[ v.Length(max=2048)]) #2000
 
     def save( self):
@@ -402,14 +428,6 @@ class AddApplicationMobile(Form):
         #products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
         app.organisation = user.organisation
-        app.group_leader_cell=self.group_leader_number.data
-        app.group_leader_cell=self.group_leader_name.data
-
-        try:
-            app.group_size=int(self.group_size.data)
-        except Exception as e:
-            print e.message
-
         if len(products) > 0:
             app.product = products[0]
         else:
@@ -420,70 +438,52 @@ class AddApplicationMobile(Form):
 
         if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
             app.guarantor_borrowers_are_nominee = "NO"
-            app.gurantors_nominee_age = self.gurantors_nominee_age.data
+            app.gurantors_nominee_name = self.gurantors_nominee_name.data
             app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
             app.gurantors_nominee_age = self.gurantors_nominee_age.data
+            app.borrowers_nominee_age = self.borrowers_nominee_age.data
+            app.borrowers_nominee_gender = self.borrowers_nominee_gender.data
+            app.borrowers_nominee_name = self.borrowers_nominee_name.data
+            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
         else:
             app.guarantor_borrowers_are_nominee = "YES"
 
         app.borrowers_nominee_name = self.borrowers_nominee_name.data
         app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
-        app.member_pincode=self.pincode.data
-        app.male_count= self.male_count.data
-        app.female_count= self.female_count.data
 
-        if self.how_long_are_you_staying_in_house__in_years.data == "":
-            app.house_stay_duration = 0.0
-        else:
-            app.house_stay_duration  = int(self.how_long_are_you_staying_in_house__in_years.data)
-
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
-        else:
-            app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
-
-        if self.financial_liabilities_friends__family_hand_loans.data == "":
-            app.financial_liabilities_chits = 0.0
-        else:
-            app.other_outstanding_familynfriends = float(self.financial_liabilities_friends__family_hand_loans.data)
-
-        if self.financial_liabilities_insurance.data == "":
-            app.other_outstanding_insurance = 0.0
-        else:
-            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data)
-
-        if self.financial_liabilities_bank_loans.data == "":
-            app.other_outstanding_emi = 0.0
-        else:
-            app.other_outstanding_emi = float(self.financial_liabilities_bank_loans.data)
+        app.member_pincode = self.pincode.data
+        app.male_count = toInt(self.male_count.data)
+        app.female_count = toInt(self.female_count.data)
+        app.house_stay_duration = toFloat(self.how_long_are_you_staying_in_house__in_years.data)
 
         app.bank_name = self.bank_name.data
         app.bank_ifsc_code = self.ifsc_code.data
-        app.bank_account_holder_name = self.account_holder_name.data
         app.bank_account_number = self.account_number.data
+        app.bank_account_holder_name = self.account_holder_name.data
+
+        app.member_disability = self.physical_disability_member.data
         app.member_f_or_h_name = self.father_s__husband_s_name.data
+
+        app.gurranter_s_age = toFloat(self.gurranter_s_age.data)
         app.gurranter_s_sex = self.gurranter_s_sex.data
         app.gurranter_s_name = self.gurranter_s_name.data
 
-        if self.gurranter_s_age.data == "":
-            self.gurranter_s_age.data = 0.0
-
-        app.gurranter_s_age = float(self.gurranter_s_age.data)
-        app.member_disability = self.physical_disability_member.data
         app.village_electricity = self.village_information_electricity_hours.data
         app.village_hospital_category = self.village_information_medical_category.data
         app.village_medical_facilities = self.village_information_medical_facility.data
         app.village_public_transport = self.village_information_public_transportaion.data
-        app.village_water= self.village_information_water_bodies.data
         app.village_road = self.village_information_road_quality.data
-        app.village_edu_facilities =self.village_information_education_institutes.data
+        app.village_water = self.village_information_water_bodies.data
+        app.village_edu_facilities = self.village_information_education_institutes.data
         app.village_financial_institution = self.village_information_financial_institutions.data
         app.village_information_sanitation = self.village_information_sanitation.data
 
-        #app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
-        app.current_status_updated = datetime.datetime.now()
-        app.upload_type = "AUTOMATIC_UPLOAD"
         app.status = 0
+        app.upload_type = "AUTOMATIC_UPLOAD"
+
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
+        app.current_status_updated = datetime.datetime.now()
+
         app.member_telephone = self.phone_number.data
         app.member_tele_code = "+91"
         app.member_country = self.country.data
@@ -492,28 +492,21 @@ class AddApplicationMobile(Form):
         app.member_taluk = self.taluk.data
         app.member_village = ""
         app.member_relationship_status = self.relationship_status.data
-        app.applied_loan = float(self.required_loan_amount.data)
+
+        app.cast = ""
         app.religion = self.religion.data
         app.category = self.category.data
-        app.cast = ""
+        app.applied_loan = toFloat(self.required_loan_amount.data)
 
         app.education = self.education.data
         app.type_of_residence = self.type_of_house.data
         app.quality_of_house = self.quality_of_house.data
         app.drinking_water = self.source_of_drinking_water.data
         app.purpose_of_loan = self.purpose_of_the_loan.data
-        if self.total_number_of_family_members == '':
-            self.total_number_of_family_members.data  = 0
-        app.family_size  = int(self.total_number_of_family_members.data)
-        if self.total_earning_members == '':
-            app.total_earning_members  = 0
-        app.total_earning_members  = int(self.total_earning_members.data)
-        if self.members_above_18 == '':
-            app.children_above18 = 0
-        app.children_above18 = int(self.members_above_18.data)
-        if self.members_less_than_18 == '':
-            app.children_below18 = 0
-        app.children_below18 = int(self.members_less_than_18.data)
+        app.family_size = toInt(self.total_number_of_family_members.data)
+        app.total_earning_members = toInt(self.total_earning_members.data)
+        app.children_above18 = toInt(self.members_above_18.data)
+        app.children_below18 = toInt(self.members_less_than_18.data)
         app.family_asset = self.other_family_asset_s.data
 #        app.money_lenders_loan = float(self.application_money_lenders_loan.data)
 #        app.money_lenders_loan_roi = float(self.application_money_lenders_loan_roi.data)
@@ -530,13 +523,9 @@ class AddApplicationMobile(Form):
         app.repayment_method = self.repayment_option.data
         app.applicant_name = self.name.data
         app.dob = self.dob_yob.data
-        from esthenos.tasks import calculate_age
-
-        if len(app.dob) == 4:
-            app.age = calculate_age(datetime.datetime(year=int(app.dob), month=1, day=1).date())
-        elif len(app.dob) >4:
-            date_obj = datetime.datetime.strptime(app.dob, "%d/%m/%Y")
-            app.age = calculate_age(date_obj)
+        app.gender = self.gender.data
+        app.num_cows = toInt(self.family_assets_number_of_cows.data)
+        app.num_sheeps = toInt(self.family_assets_number_of_sheeps.data)
 
         app.address = self.address.data
         app.primary_business = self.primary_business_activities.data
@@ -547,104 +536,77 @@ class AddApplicationMobile(Form):
         app.secondary_business_category = self.secondary_business_category.data
         app.tertiary_business_category=self.tertiary_business_category.data
 
-        if self.primary_business_income_monthly.data == "":
-            app.primary_income = 0.0
-        else:
-            app.primary_income =float(self.primary_business_income_monthly.data)
-        if self.secondary_business_income_monthly.data == "":
-            app.secondary_income = 0.0
-        else:
-            app.secondary_income = float(self.secondary_business_income_monthly.data)
-
-        if self.tertiary_business_income_monthly.data == "":
-            app.tertiary_income =0.0
-        else:
-            app.tertiary_income =float(self.tertiary_business_income_monthly.data)
-
-        if self.primary_business_expenses_monthly.data == "":
-            app.primary_expenses = 0.0
-        else:
-            app.primary_expenses =float(self.primary_business_expenses_monthly.data)
-
-        if self.secondary_business_expenses_monthly.data == "":
-            app.secondary_expenses = 0.0
-        else:
-            app.secondary_expenses = float(self.secondary_business_expenses_monthly.data)
-
-        if self.tertiary_business_expenses_monthly.data == "":
-            app.tertiary_expenses =0.0
-        else:
-            app.tertiary_expenses =float(self.tertiary_business_expenses_monthly.data)
-
-        app.gender = self.gender.data
+        app.primary_income = toFloat(self.primary_business_income_monthly.data)
+        app.secondary_income = toFloat(self.secondary_business_income_monthly.data)
+        app.tertiary_income = toFloat(self.tertiary_business_income_monthly.data)
         app.other_income = 0
-        app.total_income = app.primary_income+app.secondary_income+app.tertiary_income+app.other_income
-#       app.business_expense =
-        if self.family_food_expenditure__monthly.data == "":
-            app.food_expense = 0.0
-        else:
-            app.food_expense = float(self.family_food_expenditure__monthly.data)
-        if self.family_travel_expenditure__monthly.data == "":
-            app.travel_expense = 0.0
-        else:
-            app.travel_expense =float(self.family_travel_expenditure__monthly.data)
-        if self.family_entertainment_expenditure__monthly.data == "":
-            app.entertainment_expense = 0.0
-        else:
-            app.entertainment_expense =float(self.family_entertainment_expenditure__monthly.data)
-        if self.family_education_expenditure_monthly.data == "":
-            app.educational_expense = 0.0
-        else:
-            app.educational_expense = float(self.family_education_expenditure_monthly.data)
-        if self.family_medical_expenditure_monthly.data == "":
-            app.medical_expense = 0.0
-        else:
-            app.medical_expense =float(self.family_medical_expenditure_monthly.data)
-        if self.family_other_expenditure_monthly.data == "":
-            app.other_expense = 0.0
-        else:
-            app.other_expense = float(self.family_other_expenditure_monthly.data)
-        app.total_expenditure = app.food_expense+app.travel_expense+app.entertainment_expense+app.educational_expense+app.medical_expense+app.other_expense+app.tertiary_expenses+app.secondary_expenses+app.primary_expenses
-#       app.total_liability =
-#       app.outstanding_1 =
-#       app.outstanding_2 =
-#       app.outstanding_3 =
-#       app.outstanding_4 =
-#       app.total_outstanding =
-        app.num_cows = self.family_assets_number_of_cows.data
-        app.num_sheeps = self.family_assets_number_of_sheeps.data
-        if self.financial_liabilities_chits.data == "":
-            app.other_outstanding_chit = 0.0
-        else:
-            app.other_outstanding_chit = float(self.financial_liabilities_chits.data)
-        if self.financial_liabilities_insurance.data == "":
-            app.other_outstanding_insurance = 0.0
-        else:
-            app.other_outstanding_insurance = float(self.financial_liabilities_insurance.data.strip())
-#       app.other_outstanding_emi =
-        app.total_other_outstanding = app.other_outstanding_chit + app.other_outstanding_insurance + app.other_outstanding_emi
+        app.total_income = app.primary_income\
+                           + app.secondary_income\
+                           + app.tertiary_income \
+                           + app.other_income
+
+        app.primary_expenses = toFloat(self.primary_business_expenses_monthly.data)
+        app.secondary_expenses = toFloat(self.secondary_business_expenses_monthly.data)
+        app.tertiary_expenses = toFloat(self.tertiary_business_expenses_monthly.data)
+        app.food_expense = toFloat(self.family_food_expenditure__monthly.data)
+        app.other_expense = toFloat(self.family_other_expenditure_monthly.data)
+        app.travel_expense = toFloat(self.family_travel_expenditure__monthly.data)
+        app.medical_expense = toFloat(self.family_medical_expenditure_monthly.data)
+        app.educational_expense = toFloat(self.family_education_expenditure_monthly.data)
+        app.entertainment_expense = toFloat(self.family_entertainment_expenditure__monthly.data)
+        app.business_expense = app.primary_expenses\
+                               + app.secondary_expenses \
+                               + app.tertiary_expenses
+        app.total_expenditure = app.food_expense\
+                                + app.travel_expense\
+                                + app.entertainment_expense \
+                                + app.educational_expense \
+                                + app.medical_expense \
+                                + app.other_expense \
+                                + app.primary_expenses \
+                                + app.secondary_expenses \
+                                + app.tertiary_expenses
+
+        app.other_outstanding_emi = toFloat(self.financial_liabilities_bank_loans.data)
+        app.other_outstanding_chit = toFloat(self.financial_liabilities_chits.data)
+        app.other_outstanding_insurance = toFloat(self.financial_liabilities_insurance.data)
+        app.other_outstanding_familynfriends = toFloat(self.financial_liabilities_friends__family_hand_loans.data)
+        app.total_other_outstanding = + app.other_outstanding_emi \
+                                      + app.other_outstanding_chit \
+                                      + app.other_outstanding_insurance \
+                                      + app.other_outstanding_familynfriends
+
         app.net_income = app.total_income - app.total_expenditure - app.total_other_outstanding
         app.loan_eligibility_based_on_net_income = app.net_income * app.product.number_installments
+
         status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
         status.save()
+
         app.timeline.append(status)
-        data_kyc=  self.kyc.data.replace("'", '"').replace('u"', '"')
+        data_kyc = self.kyc.data.replace("'", '"').replace('u"', '"')
 
         kyc_json = json.loads(data_kyc)
         if kyc_json.has_key("aadhaar"):
             kyc_obj = EsthenosOrgApplicationKYC()
             kyc_obj.kyc_type = "AADHAAR"
 
-            try:
+            if "aadhar_f" in kyc_json["aadhaar"]:
                 kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
-                kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
-            except:
-                print "no aadhaar images"
 
-            kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
-            kyc_obj.dob = kyc_json["aadhaar"]["yob"]
-            kyc_obj.name = kyc_json["aadhaar"]["name"]
-            kyc_obj.gender = kyc_json["aadhaar"]["gender"]
+            if "aadhar_b" in kyc_json["aadhaar"]:
+                kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
+
+            if "uid" in kyc_json["aadhaar"]:
+                kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
+
+            if "yob" in kyc_json["aadhaar"]:
+                kyc_obj.dob = kyc_json["aadhaar"]["yob"]
+
+            if "name" in kyc_json["aadhaar"]:
+                kyc_obj.name = kyc_json["aadhaar"]["name"]
+
+            if "gender" in kyc_json["aadhaar"]:
+                kyc_obj.gender = kyc_json["aadhaar"]["gender"]
 
             if kyc_json["aadhaar"].has_key("house"):
                 kyc_obj.address1 = kyc_json["aadhaar"]["house"]
@@ -652,15 +614,19 @@ class AddApplicationMobile(Form):
             if kyc_json["aadhaar"].has_key("lm"):
                 kyc_obj.address1 = kyc_json["aadhaar"]["lm"]
 
-            kyc_obj.state = kyc_json["aadhaar"]["state"]
-            kyc_obj.dist = kyc_json["aadhaar"]["dist"]
+            if "state" in kyc_json["aadhaar"]:
+                kyc_obj.state = kyc_json["aadhaar"]["state"]
+
+            if "dist" in kyc_json["aadhaar"]:
+                kyc_obj.dist = kyc_json["aadhaar"]["dist"]
 
             if kyc_json["aadhaar"].has_key("vtc"):
                 kyc_obj.taluk = kyc_json["aadhaar"]["vtc"]
 
-            kyc_obj.pincode = kyc_json["aadhaar"]["pc"]
-            app.kyc_1 = kyc_obj
+            if "pc" in kyc_json["aadhaar"]:
+                kyc_obj.pincode = kyc_json["aadhaar"]["pc"]
 
+            app.kyc_1 = kyc_obj
 
         kyc_obj = EsthenosOrgApplicationKYC()
         if kyc_json.has_key("pan") :
@@ -699,7 +665,7 @@ class AddApplicationMobile(Form):
             kyc_obj.image_id_b = kyc_json["ration"]["ration_b"]
             app.other_documents.append(kyc_obj)
 
-        #app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
+        app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
         app.current_status_updated = datetime.datetime.now()
         app.status = 120
         app.save()

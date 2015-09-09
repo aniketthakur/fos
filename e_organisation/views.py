@@ -555,30 +555,34 @@ def org_products():
 @organisation_views.route('/api/organisation/applications', methods=["GET"])
 @login_or_key_required
 def get_application():
-#    if not session['role'].startswith("ORG_"):
-#        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    center_name = request.form.get('center_name')
     group_name = request.args['group_name']
-    print  group_name
-    group = EsthenosOrgGroup.objects.filter(organisation=user.organisation,group_name=group_name)[0]
+    center_name = request.form.get('center_name')
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    print group_name
+    group = EsthenosOrgGroup.objects.filter(organisation=user.organisation, group_name=group_name)[0]
 
     if center_name != None and group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group=group).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group=group)\
+          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+
     elif center_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__center_name__contains=center_name).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__center_name__contains=center_name)\
+          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+
     elif group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group)\
+          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
     else:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation).only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)\
+          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
+
     myapps = list()
     for app in applications:
         item = dict()
         item["id"] = app["application_id"]
-        item["applicant_name"] = app["applicant_name"]
         item["date_created"] = str(app["date_created"])
+        item["applicant_name"] = app["applicant_name"]
         item["current_status"] = app["current_status"].status_message
         item["loan_eligibility_based_on_net_income"] = app["loan_eligibility_based_on_net_income"]
         item["loan_eligibility_based_on_company_policy"] = app["loan_eligibility_based_on_company_policy"]
@@ -589,15 +593,12 @@ def get_application():
     applications_list = []
     #resp['center'] = center.name
     #resp['center_size'] = center.size
-    if group!=None:
+    if group is not None:
         resp['group'] =  group.group_name
         resp['group_size'] = group.size
 
     resp["applications"] = myapps
-
-    return Response(response=json.dumps(resp),
-        status=200,\
-        mimetype="application/json")
+    return Response(response=json.dumps(resp), status=200, mimetype="application/json")
 
 
 @organisation_views.route('/admin/mobile/application', methods=['POST'])
@@ -644,21 +645,19 @@ wtforms_json.init()
 @organisation_views.route('/mobile/application/json', methods=['POST'])
 @login_or_key_required
 def mobile_application_json():
-    username = current_user.name
-    c_user = current_user
+
     print request.json
-    user = EsthenosUser.objects.get(id=c_user.id)
-    form= request.json #get_json(force=True)
-    print form
-    center_name = request.json.get('center_name')
+    user = EsthenosUser.objects.get(id=current_user.id)
     group_name = request.json.get('group_name')
-    center = None
-    group = None
-    if center_name == None:
+    center_name = request.json.get('center_name')
+    group, center = None, None
+
+    if center_name is None:
         center_name = group_name
-    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
+
+    if (center_name is not None) and len(center_name) > 0 and (group_name is not None) and len(group_name) > 0:
         unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
+        center, status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
         if status:
             center.center_id = unique_center_id
             center.save()
@@ -666,15 +665,18 @@ def mobile_application_json():
 
         group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
         EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-    app_form=AddApplicationMobile.from_json(form)
-    if(app_form.validate()):
-        print "Form Validated"
-        print "Saving Form"
+
+    app_form = AddApplicationMobile.from_json(request.json)
+
+    if app_form.validate():
+        print "Form Validated, Saving."
         app_form.save()
         return Response(json.dumps({'status':'success'}), content_type="application/json", mimetype='application/json')
+
     else:
-        print app_form.errors
-        print "Could Not validate"
+        print "Could Not validate" + str(app_form.errors)
+        return Response(json.dumps({'status':'failure'}), content_type="application/json", mimetype='application/json')
+
     kwargs = locals()
     return render_template("auth/login_admin.html", **kwargs)
 
