@@ -33,6 +33,9 @@ def notify(message, channel="#general", username="fab-bot"):
 
 
 def provision():
+    # notify slack channel.
+    notify("starting to provision new server for {server}".format(server=env.host))
+
     # install apt-get packages.
     packages = [
         'git',

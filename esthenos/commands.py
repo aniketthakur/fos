@@ -1,10 +1,16 @@
 from flask.ext.sauth.models import User
 from flask.ext.script import Command, Option
 
+from slacker import Slacker
 from esthenos import db, settings
 from e_admin.models import *
 from e_organisation.models import *
 
+
+def notify(message, channel="#general", username="fab-bot"):
+    slack = Slacker('xoxp-6694899808-6694899856-10378717686-a7deb0')
+    print message
+    slack.chat.post_message(channel, message, username=username)
 
 class DropDB(Command):
     """Drop existing database."""
@@ -12,6 +18,7 @@ class DropDB(Command):
     def run(self):
         # dbname = settings.MONGODB_SETTINGS["DB"]
         # db.connection.drop_database(dbname)
+        # notify("dropping database {database}".format(database=dbname))
         print "drop-database is dangerous, uncomment above lines if you really mean it."
         
 
@@ -21,7 +28,8 @@ class InitDB(Command):
     def run(self):
         print "dropping database only creating new accounts and organization."
         print "uncomment lines for clean initialize."
-        print "\ninitializing db: {DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS)
+        notify("\ninitializing db: {DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
+
         # dbname = settings.MONGODB_SETTINGS["DB"]
         # db.connection.drop_database(dbname)
 
@@ -39,7 +47,7 @@ class InitDB(Command):
             user.first_name = fname
             user.active = True
             user.save()
-        print "{count} esthenos users created.".format(count=len(users))
+        notify("{count} esthenos users created.".format(count=len(users)))
         
         print "creating organizations with its users."
         EsthenosSettings.drop_collection()
@@ -99,7 +107,7 @@ class InitDB(Command):
                     title=item["title"],
                     title_full=item["title_full"]
                 ).save()
-            print "{count} {name} hierarchy designations created.".format(count=len(hierarchy), name=org["name"])
+            notify("{count} {name} hierarchy designations created.".format(count=len(hierarchy), name=org["name"]))
 
 
         print "dropping & creating application status types."
@@ -117,15 +125,17 @@ class InitDB(Command):
                 status_type.sub_status_code = status["sub_status_code"]
 
             status_type.save()
-        print "{count} application statuses created".format(count=len(settings.APP_STATUS))
+        notify("{count} application statuses created".format(count=len(settings.APP_STATUS)))
 
 
-        print "dropping groups, state, region, area and branch collections."
+        notify("dropping groups, state, region, area and branch collections.")
         EsthenosOrgGroup.drop_collection()
         EsthenosOrgState.drop_collection()
         EsthenosOrgRegion.drop_collection()
         EsthenosOrgArea.drop_collection()
         EsthenosOrgBranch.drop_collection()
+
+        notify("\nsuccessfully initialized db:{DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
 
 
 class AddUser( Command):
