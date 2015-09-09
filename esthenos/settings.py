@@ -42,7 +42,7 @@ ORGS_SETTINGS = [
 
 SERVER_SETTINGS = {
     "org" : "fos.esthenos.com",
-    "host" : ["fos.prod.esthenos.com"],
+    "host" : ["fos-demo.prod.esthenos.com"],
     "git-branch" : "fos-demo",
     "user-deploy" : "ubuntu",
     "user-details" : [
