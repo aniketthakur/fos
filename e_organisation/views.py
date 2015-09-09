@@ -601,44 +601,6 @@ def get_application():
     return Response(response=json.dumps(resp), status=200, mimetype="application/json")
 
 
-@organisation_views.route('/admin/mobile/application', methods=['POST'])
-@login_or_key_required
-def mobile_application():
-    username = current_user.name
-    c_user = current_user
-    import wtforms_json
-    wtforms_json.init()
-    user = EsthenosUser.objects.get(id=c_user.id)
-    form= request.form
-    print form
-    center_name = request.form.get('center_name')
-    group_name = request.form.get('group_name')
-    center = None
-    group = None
-    if center_name == None:
-        center_name = group_name
-    if center_name !=None and len(center_name)>0 and group_name !=None and len(group_name) != None :
-        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-        center,status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
-        if status:
-            center.center_id = unique_center_id
-            center.save()
-            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
-
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
-        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-    app_form=AddApplicationMobile(form)
-    if(app_form.validate()):
-        print "Form Validated"
-        print "Saving Form"
-        app_form.save()
-        return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
-    else:
-        print app_form.errors
-        print "Could Not validate"
-    kwargs = locals()
-    return render_template("auth/login_admin.html", **kwargs)
-
 import wtforms_json
 wtforms_json.init()
 

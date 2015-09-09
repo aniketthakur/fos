@@ -849,25 +849,6 @@ def admin_application_id(org_id,app_id):
     return render_template("admin_application_manual_DE.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["POST"])
-@login_required
-def submit_application(org_id, app_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    form = AddApplicationManual(request.form)
-    if form.validate():
-        form.save()
-
-    new_num = int(app_id[-6:])+1
-    new_id = app_id[0:len(app_id)-6] + "{0:06d}".format(new_num)
-    new_apps = EsthenosOrgApplication.objects.filter(application_id = new_id)
-    if len(new_apps) > 0:
-        return redirect("/admin/organisation/"+org_id+"/application/"+new_id+"/")
-    else:
-        return redirect("/admin/organisation/"+org_id+"/application/"+app_id+"/")
-
-
 @admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
 @login_required
 def admin_application_cashflow(org_id, app_id):
