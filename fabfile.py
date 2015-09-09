@@ -21,9 +21,11 @@ DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
 GIT_SERVER_DB = "on branch {git-branch}".format(**client)
+GIT_SERVER_HOST = "on branch {host}".format(host=client["host"][0].split('.')[0])
 GIT_SERVER_BRANCH = "on branch {DB}".format(**database)
-if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH):
+if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH) or (GIT_BRANCH != GIT_SERVER_HOST):
     print "\non different branch as compared to server-settings.\nabort.\n"
+    print GIT_BRANCH, GIT_SERVER_DB, GIT_SERVER_HOST, GIT_SERVER_BRANCH
     sys.exit(1)
 
 
