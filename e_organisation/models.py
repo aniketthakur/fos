@@ -203,6 +203,9 @@ class EsthenosOrg(db.Document):
     employee_count = db.IntField(default=1)
     user_count = db.IntField(default=1)
 
+    def __unicode__(self):
+      return "%s, %s, %s, %s" % (self.name, self.email, self.group_count, self.center_count)
+
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
@@ -213,6 +216,9 @@ class EsthenosOrgCenter(db.Document):
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False)
+
+    def __unicode__(self):
+      return "%s, %s, %s" % (self.center_id, self.center_name, self.organisation)
 
 
 class EsthenosOrgCenterResource(Resource):
@@ -233,6 +239,9 @@ class EsthenosOrgGroup(db.Document):
     updated_at = db.DateTimeField(default=datetime.datetime.now)
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
+
+    def __unicode__(self):
+        return "%s, %s, %s, %s" % (self.organisation, self.group_name, self.location_name, self.size)
 
 
 class EsthenosOrgGroupResource(Resource):
