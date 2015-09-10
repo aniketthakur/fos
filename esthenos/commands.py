@@ -135,6 +135,9 @@ class InitDB(Command):
         EsthenosOrgArea.drop_collection()
         EsthenosOrgBranch.drop_collection()
 
+        notify("dropping all existing applications.")
+        EsthenosOrgApplication.drop_collection()
+
         notify("\nsuccessfully initialized db:{DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
 
 
