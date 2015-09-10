@@ -7,7 +7,10 @@ from mongoengine import Q
 from job import make_celery
 from celery.task import periodic_task
 
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 from esthenos import mainapp
+from e_admin.models import *
 from e_organisation.models import *
 
 from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
@@ -317,7 +320,7 @@ def cbcheck_statuscheck_applications():
         status.save()
         application.timeline.append(status)
         resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(kendra_or_centre_id=application.application_id)[0]
-        apps_with_same_aadhaar =  EsthenosOrgApplication.objects.filter(kyc_1__kyc_number=resp.national_id_card)
+        apps_with_same_aadhaar = EsthenosOrgApplication.objects.filter(kyc_1__kyc_number=resp.national_id_card)
         is_failed = False
         if len(apps_with_same_aadhaar)>1:
             is_failed = True
@@ -332,10 +335,11 @@ def cbcheck_statuscheck_applications():
                     application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
                     application.current_status_updated  = datetime.datetime.now()
                     application.status = 20
-                    break
 
-        if not is_failed and resp.num_of_other_mfis > 1:
+                    break
+        if not is_failed and resp.num_active_account > 2:
             is_failed = True
+            print "number of active loans 2+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of active loans 2+"
             status.save()
@@ -346,6 +350,7 @@ def cbcheck_statuscheck_applications():
 
         if not is_failed and resp.sum_overdue_amount > 0:
             is_failed = True
+            print "number of defaults 1+ "+application.application_id
             status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
             status.status_message = "number of defaults 1+"
             status.save()
@@ -392,6 +397,8 @@ def cashflow_ready_applications():
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
+        print "generate_post_grt_applications"
+
         org = EsthenosOrg.objects.get(id=org_id)
         group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
         apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
