@@ -645,7 +645,7 @@ def mobile_application_json():
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])
 @login_required
-@feature_enable("enroll_customers")
+@feature_enable("accounts_enroll_customers")
 def enroll_customers():
     if not session['role'].startswith("ORG_"):
         abort(403)
