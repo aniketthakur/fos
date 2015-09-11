@@ -9,10 +9,610 @@
     </style>
 {% endblock %}
 
-{% block top_js_scripts %}
+
+{% block maincontents %}
+    <div class="row summary">
+        <div class="col-md-4 summary-desc">
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Summary</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Total Amount Disbursed</span> <span class="item-count animate-number semi-bold" >50,000 INR</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total Loans Disbursed / Leaked</span> <span class="item-count animate-number semi-bold" >34,456 / 125</span>
+                        </div>
+                    </div><br/>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 summary-tat">
+            <div class="tiles green">
+                <div class="tiles-body no-border">
+                    <div class="chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 summary-rate">
+            <div class="tiles blue">
+                <div class="tiles-body no-border">
+                    <div class="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row monthly-applications">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles green m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications Submitted</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Monthly Applications <span class="semi-bold">Submitted</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row monthly-disbursement">
+        <div class="col-md-4 col-vlg-3 col-sm-6">
+            <div class="tiles purple m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Disbursment </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Monthly Disbursement <span class="semi-bold">Charts</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row center-groups-map">
+        <div class="col-md-12">
+            <div class="grid simple m-b-20">
+                <div id="map-canvas" style="height:350px"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row validations-app-kyc-cbc">
+        <div class="col-md-4 validations-app">
+            <div class="tiles blue m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Application Validation </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 validations-kyc">
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">KYC Validation </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 validations-cbc">
+            <div class="tiles purple m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">CB Check </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row donut-app-kyc-cbc">
+        <div class="col-md-4 donut-app">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Application <span class="semi-bold">Feb 2015</span></h4>
+                    <p>98% Accepted</p>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:200px;" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 donut-kyc">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>KYC  <span class="semi-bold">Feb 2015</span></h4>
+                    <p>96% Validated</p>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:200px;" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 donut-cbc">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>CB Check  <span class="semi-bold">Feb 2015</span></h4>
+                    <p>95% Accepted</p>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:200px;" ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row applications-cgt1">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications CGT1 Ready </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">CGT1 Ready</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row applications-cgt2">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-yellow m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications CGT2 Ready </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">CGT2 Ready</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row applications-grt">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles gray m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications GRT Ready </div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">GRT Ready</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row applications-telecalling">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications TeleCalling</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">TeleCalling</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row applications-psychometric">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-yellow m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications TeleCalling</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Psychometric</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js_scripts_pre %}{{ super() }}
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
-    <script type="text/javascript">
-        function initialize() {
+    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/d3.v2.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/rickshaw.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-morris-chart/js/morris.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.time.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.selection.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.animator.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.orderBars.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js' )}}"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='plugins/jquery-jvectormap/js/jquery-jvectormap-in-mill-en.js')}}" type="text/javascript"></script>
+{% endblock %}
+
+
+{% block js_scripts %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        Morris.Donut({
+            size:200,
+            element: $('.donut-app .chart'),
+            data: [
+                {label: "Accepted", value: 96},
+                {label: "Rejected", value: 4},
+            ],
+            colors:['#0066FF','#91cdec']
+        });
+        Morris.Donut({
+            size:200,
+            element: $('.donut-kyc .chart'),
+            data: [
+                {label: "Accepted", value: 96},
+                {label: "Rejected", value: 4},
+            ]
+            ,colors:['#9966FF','#91cdec']
+        });
+        Morris.Donut({
+            size:200,
+            element: $('.donut-cbc .chart'),
+            data: [
+                {label: "Success", value: 93},
+                {label: "Failed", value: 7},
+            ]
+            ,colors:['#FF5050','#91cdec']
+        });
+        Morris.Line({
+            element: $('.monthly-applications .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'KYC'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: $('.monthly-disbursement .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'CGT1'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: $('.applications-cgt1 .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'CGT2'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: $('.applications-cgt2 .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'GRT'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: $('.applications-grt .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 12000 },
+                { d: '2014-10', a: 3000,  b: 10000 },
+                { d: '2014-11', a: 3600,  b: 12000 },
+                { d: '2014-12', a: 4000,  b: 10500 },
+                { d: '2015-01', a: 4200,  b: 12000 },
+                { d: '2015-02', a: 4500,  b: 10500 },
+                { d: '2015-03', a: 4000, b: 12000 }
+            ],
+            xkey: 'd',
+            ykeys: ['a', 'b'],
+            labels: ['Loan Applications', 'GRT'],
+            lineColors:['#0aa699','#6666ff'],
+        });
+        Morris.Line({
+            element: $('.applications-telecalling .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
+                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
+                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
+                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
+                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
+                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
+                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+            ],
+            xkey: 'd',
+            ykeys: ['a','b','c'],
+            labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
+            lineColors:['#0aa699','#010699','#D45959'],
+        });
+        Morris.Line({
+            element: $('.applications-psychometric .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
+                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
+                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
+                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
+                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
+                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
+                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+            ],
+            xkey: 'd',
+            ykeys: ['a','b','c'],
+            labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
+            lineColors:['#0aa699','#010699','#D45959'],
+        });
+
+        function drawMap() {
             var mapOptions = {
                 center: { lat: 19.876165, lng: 75.343314},
                 zoom: 7,
@@ -90,599 +690,289 @@
             });
 
         }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-{% endblock %}
-
-{% block maincontents %}
-    <div class="row">
-        <div class="col-md-5">
-            <div class="grid simple">
-                <div class="grid-body no-border" style="background: #ffffff;height: 230px;" >
-                    <h5>Summary</h5>
-                    <div class="col-md-7">
-                        <h4>Monthly Target <span class="semi-bold text-info">480</span></h4>
-                        <h4>Loan Disbursed <span class="semi-bold text-info">576</span></h4>
-                        <h4>Amount Disbursed <span class="bold text-primary">1.27 Cr</span></h4>
-                    </div>
-                    <div class="col-md-5">
-                        <h3 class="pull-right">Achivement <span class="bold text-success">120%</span></h3>
-                        <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                            <div class="progress-bar progress-bar-red animate-progress-bar" data-percentage="50%" style="width: 64.8%;"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="grid simple" style="background: #ffffff;height: 150px;">
-
-                <div class="grid-body no-border">
-                    <h4>Daily <span class="semi-bold">TAT Graph</span></h4>
-                    <h3>Avg TAT <span class="semi-bold">3.9</span></h3>
-                    <!--
-                    <p>Sparkline line charts using <code>HTML</code> attributes. This method allows for all options </p>
-                    -->
-                </div>
-                <div class="tiles white no-margin"> <span id="spark-2" style="height:130px;"></span> </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                    <h5>Processing rate Feb 2015</h5>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="donut-example4" style="height:150px;" ></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles green added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications Submitted </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="line-example" style="height:180px"> </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles blue added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">Application Validation </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles red added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">KYC Validation </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles purple added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">CB Check </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Application  <span class="semi-bold">Feb 2015</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                    <p>98% Accepted</p>
-
-                </div>
-                <div class="grid-body no-border">
-                    <div id="donut-example" style="height:200px;" ></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>KYC  <span class="semi-bold">Feb 2015</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                    <p>96% Validated</p>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="donut-example3" style="height:200px;" ></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>CB Check  <span class="semi-bold">Feb 2015</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                    <p>95% Accepted</p>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="donut-example2" style="height:200px;" ></div>
-                </div>
-            </div>
-        </div>
-    </div>
+        google.maps.event.addDomListener(window, 'load', drawMap);
 
 
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-red added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications CGT1 Ready </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT1 Ready</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="line-example-1" style="height:180px"> </div>
-                </div>
+        function Gauge(selector, configuration)
+        {
+            var self = this;
+            this.selector = selector;
+            this.configure = function(configuration) {
+                this.config = configuration;
+                this.config.size = this.config.size * 0.9;
+                this.config.raduis = this.config.size * 0.97 / 2;
+                this.config.cx = this.config.size / 2;
+                this.config.cy = this.config.size / 2;
+                this.config.min = undefined != configuration.min ? configuration.min : 0;
+                this.config.max = undefined != configuration.max ? configuration.max : 100;
+                this.config.range = this.config.max - this.config.min;
+                this.config.majorTicks = configuration.majorTicks || 5;
+                this.config.minorTicks = configuration.minorTicks || 2;
+                this.config.redColor = configuration.redColor || "#DC3912";
+                this.config.greenColor = configuration.greenColor || "#109618";
+                this.config.yellowColor = configuration.yellowColor || "#FF9900";
+                this.config.transitionDuration = configuration.transitionDuration || 500;
+            };
 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-yellow added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications CGT2 Ready </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT2 Ready</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="line-example-2" style="height:180px"> </div>
-                </div>
+            this.render = function()
+            {
+                this.body = d3.select(this.selector)
+                    .append("svg:svg")
+                    .attr("class", "gauge")
+                    .attr("width", this.config.size)
+                    .attr("height", this.config.size);
 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles gray added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a>  </div>
-                    <div class="tiles-title text-black">Applications GRT Ready </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">GRT Ready</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="line-example-3" style="height:180px"> </div>
-                </div>
+                this.body.append("svg:circle")
+                    .attr("cx", this.config.cx)
+                    .attr("cy", this.config.cy)
+                    .attr("r", this.config.raduis)
+                    .style("fill", "#ccc")
+                    .style("stroke", "#000")
+                    .style("stroke-width", "0.5px");
 
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-vlg-3 col-sm-6">
-            <div class="tiles purple added-margin  m-b-20">
-                <div class="tiles-body">
-                    <div class="controller"> <a href="javascript:;" class="reload"></a> </div>
-                    <div class="tiles-title text-black">Disbursment </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="90%" style="width: 90%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Monthly Disbursement <span class="semi-bold">Charts</span></h4>
-                    <div class="tools">  <a href="javascript:;" class="reload"></a>  </div>
-                </div>
-                <div class="grid-body no-border">
-                    <div id="line-example2" style="height:180px"> </div>
-                </div>
+                this.body.append("svg:circle")
+                    .attr("cx", this.config.cx)
+                    .attr("cy", this.config.cy)
+                    .attr("r", 0.9 * this.config.raduis)
+                    .style("fill", "#fff")
+                    .style("stroke", "#e0e0e0")
+                    .style("stroke-width", "2px");
 
-            </div>
-        </div>
-    </div>
-
-{% endblock %}
-{% block js_scripts_pre %}{{ super() }}
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/d3.v2.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/js/rickshaw.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-morris-chart/js/morris.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.time.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.selection.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.animator.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-flot/jquery.flot.orderBars.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-easy-pie-chart/js/jquery.easypiechart.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-sparkline/jquery-sparkline.js' )}}"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-jvectormap/js/jquery-jvectormap-1.2.2.min.js')}}" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='plugins/jquery-jvectormap/js/jquery-jvectormap-in-mill-en.js')}}" type="text/javascript"></script>
-{% endblock %}
-
-
-{% block js_scripts %}
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            Morris.Donut({
-                size:200,
-                element: 'donut-example',
-                data: [
-                    {label: "Accecpted", value: 96},
-                    {label: "Rejected", value: 4},
-                ]
-                ,colors:['#0066FF','#91cdec']
-            });
-            Morris.Donut({
-                size:200,
-                element: 'donut-example2',
-                data: [
-                    {label: "Accecpted", value: 96},
-                    {label: "Rejected", value: 4},
-                ]
-                ,colors:['#9966FF','#91cdec']
-            });
-            Morris.Donut({
-                size:200,
-                element: 'donut-example3',
-                data: [
-                    {label: "Success", value: 93},
-                    {label: "Failed", value: 7},
-                ]
-                ,colors:['#FF5050','#91cdec']
-            });
-
-            Morris.Donut({
-                size:130,
-                element: 'donut-example4',
-                data: [
-                    {label: "Success", value: 96},
-                    {label: "Failed", value: 4},
-                ]
-            });
-
-            $("#spark-2").sparkline([5,3,4,5,4,4,4,4,4,3,3,4,3,4,4,5,4,4,4,4,3,4,4,4], {
-                type: 'line',
-                width: '100%',
-                height: '120',
-                lineColor: '#0aa699',
-                fillColor: '#e6f6f5',
-                minSpotColor: '#0c948a',
-                maxSpotColor: '#78cec7',
-                highlightSpotColor: '#78cec7',
-                highlightLineColor: '#78cec7',
-                spotRadius: 5
-            });
-        });
-
-        Morris.Line({
-            element: 'line-example',
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'KYC'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        Morris.Line({
-            element: 'line-example-1',
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'CGT1'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        Morris.Line({
-            element: 'line-example-2',
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'CGT2'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        Morris.Line({
-            element: 'line-example-3',
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'GRT'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        Morris.Line({
-            element: 'line-example2',
-            data: [
-                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
-                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
-                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
-                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
-                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
-                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
-                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
-            ],
-            xkey: 'd',
-            ykeys: ['a','b','c'],
-            labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
-            lineColors:['#0aa699','#010699','#D45959'],
-        });
-
-        $('#world-map').vectorMap({
-            map: 'in_mill_en',
-            scaleColors: ['#C8EEFF', '#0071A4'],
-            normalizeFunction: 'polynomial',
-            focusOn:{
-                x: 0.5,
-                y: 0.5,
-                scale: 1.5
-            },
-            zoomMin:1.0,
-            hoverColor: false,
-            regionStyle:{
-                initial: {
-                    fill: '#A5d9ec',
-                    "fill-opacity": 1,
-                    stroke: '#babdc0',
-                    "stroke-width": 0,
-                    "stroke-opacity": 0
-                },
-                hover: {
-                    "fill-opacity": 0.8
-                },
-                selected: {
-                    fill: 'yellow'
-                },
-                selectedHover: {
+                for (var index in this.config.greenZones)
+                {
+                    this.drawBand(this.config.greenZones[index].from, this.config.greenZones[index].to, self.config.greenColor);
                 }
-            },
-            markerStyle: {
-                initial: {
-                    fill: '#f35958',
-                    stroke: '#f35958',
-                    "fill-opacity": 1,
-                    "stroke-width": 4,
-                    "stroke-opacity": 0.2,
-                    r: 5
-                },
-                hover: {
-                    stroke: 'black',
-                    "stroke-width": 2
-                },
-                selected: {
-                    fill: 'blue'
-                },
-                selectedHover: {
+
+                for (var index in this.config.yellowZones)
+                {
+                    this.drawBand(this.config.yellowZones[index].from, this.config.yellowZones[index].to, self.config.yellowColor);
                 }
-            },
-            backgroundColor: '#ffffff',
-            markers: [
-                {latLng: [15.38, 77.19], name: 'Hyderabad City'},
-                {latLng: [22.73, 70.41], name: 'Gujarat'},
-                {latLng: [20.52, 76.93], name: 'Maharastra'},
-            ]
-        });
-    </script>
+
+                for (var index in this.config.redZones)
+                {
+                    this.drawBand(this.config.redZones[index].from, this.config.redZones[index].to, self.config.redColor);
+                }
+
+                if (undefined != this.config.label)
+                {
+                    var fontSize = Math.round(this.config.size / 9);
+                    this.body.append("svg:text")
+                        .attr("x", this.config.cx)
+                        .attr("y", this.config.cy / 2 + fontSize / 2)
+                        .attr("dy", fontSize / 2)
+                        .attr("text-anchor", "middle")
+                        .text(this.config.label)
+                        .style("font-size", fontSize + "px")
+                        .style("fill", "#333")
+                        .style("stroke-width", "0px");
+                }
+
+                var fontSize = Math.round(this.config.size / 16);
+                var majorDelta = this.config.range / (this.config.majorTicks - 1);
+                for (var major = this.config.min; major <= this.config.max; major += majorDelta)
+                {
+                    var minorDelta = majorDelta / this.config.minorTicks;
+                    for (var minor = major + minorDelta; minor < Math.min(major + majorDelta, this.config.max); minor += minorDelta)
+                    {
+                        var point1 = this.valueToPoint(minor, 0.75);
+                        var point2 = this.valueToPoint(minor, 0.85);
+
+                        this.body.append("svg:line")
+                            .attr("x1", point1.x)
+                            .attr("y1", point1.y)
+                            .attr("x2", point2.x)
+                            .attr("y2", point2.y)
+                            .style("stroke", "#666")
+                            .style("stroke-width", "1px");
+                    }
+
+                    var point1 = this.valueToPoint(major, 0.7);
+                    var point2 = this.valueToPoint(major, 0.85);
+                    this.body.append("svg:line")
+                        .attr("x1", point1.x)
+                        .attr("y1", point1.y)
+                        .attr("x2", point2.x)
+                        .attr("y2", point2.y)
+                        .style("stroke", "#333")
+                        .style("stroke-width", "2px");
+
+                    if (major == this.config.min || major == this.config.max)
+                    {
+                        var point = this.valueToPoint(major, 0.63);
+                        this.body.append("svg:text")
+                            .attr("x", point.x)
+                            .attr("y", point.y)
+                            .attr("dy", fontSize / 3)
+                            .attr("text-anchor", major == this.config.min ? "start" : "end")
+                            .text(major)
+                            .style("font-size", fontSize + "px")
+                            .style("fill", "#333")
+                            .style("stroke-width", "0px");
+                    }
+                }
+
+                var pointerContainer = this.body.append("svg:g").attr("class", "pointerContainer");
+                var midValue = (this.config.min + this.config.max) / 2;
+                var pointerPath = this.buildPointerPath(midValue);
+                var pointerLine = d3.svg.line()
+                              .x(function(d) { return d.x })
+                              .y(function(d) { return d.y })
+                              .interpolate("basis");
+
+                pointerContainer.selectAll("path")
+                          .data([pointerPath])
+                          .enter()
+                          .append("svg:path")
+                            .attr("d", pointerLine)
+                            .style("fill", "#dc3912")
+                            .style("stroke", "#c63310")
+                            .style("fill-opacity", 0.7);
+
+                pointerContainer.append("svg:circle")
+                          .attr("cx", this.config.cx)
+                          .attr("cy", this.config.cy)
+                          .attr("r", 0.12 * this.config.raduis)
+                          .style("fill", "#4684EE")
+                          .style("stroke", "#666")
+                          .style("opacity", 1);
+
+                var fontSize = Math.round(this.config.size / 10);
+                pointerContainer.selectAll("text")
+                          .data([midValue])
+                          .enter()
+                            .append("svg:text")
+                              .attr("x", this.config.cx)
+                              .attr("y", this.config.size - this.config.cy / 4 - fontSize)
+                              .attr("dy", fontSize / 2)
+                              .attr("text-anchor", "middle")
+                              .style("font-size", fontSize + "px")
+                              .style("fill", "#000")
+                              .style("stroke-width", "0px");
+
+                this.redraw(this.config.min, 0);
+            }
+
+            this.buildPointerPath = function(value)
+            {
+                var delta = this.config.range / 13;
+                var head = valueToPoint(value, 0.85);
+                var head1 = valueToPoint(value - delta, 0.12);
+                var head2 = valueToPoint(value + delta, 0.12);
+
+                var tailValue = value - (this.config.range * (1/(270/360)) / 2);
+                var tail = valueToPoint(tailValue, 0.28);
+                var tail1 = valueToPoint(tailValue - delta, 0.12);
+                var tail2 = valueToPoint(tailValue + delta, 0.12);
+
+                return [head, head1, tail2, tail, tail1, head2, head];
+
+                function valueToPoint(value, factor)
+                {
+                    var point = self.valueToPoint(value, factor);
+                    point.x -= self.config.cx;
+                    point.y -= self.config.cy;
+                    return point;
+                }
+            };
+
+            this.drawBand = function(start, end, color)
+            {
+                if (0 >= end - start) return;
+
+                this.body.append("svg:path")
+                      .style("fill", color)
+                      .attr("d", d3.svg.arc()
+                          .startAngle(this.valueToRadians(start))
+                          .endAngle(this.valueToRadians(end))
+                          .innerRadius(0.65 * this.config.raduis)
+                          .outerRadius(0.85 * this.config.raduis))
+                      .attr("transform", function() { return "translate(" + self.config.cx + ", " + self.config.cy + ") rotate(270)" });
+            };
+
+            this.redraw = function(value, transitionDuration)
+            {
+                var pointerContainer = this.body.select(".pointerContainer");
+                pointerContainer.selectAll("text").text(Math.round(value));
+
+                var pointer = pointerContainer.selectAll("path");
+                pointer.transition()
+                    .duration(undefined != transitionDuration ? transitionDuration : this.config.transitionDuration)
+                    //.delay(0)
+                    //.ease("linear")
+                    //.attr("transform", function(d)
+                    .attrTween("transform", function()
+                    {
+                        var pointerValue = value;
+                        if (value > self.config.max) pointerValue = self.config.max + 0.02*self.config.range;
+                        else if (value < self.config.min) pointerValue = self.config.min - 0.02*self.config.range;
+                        var targetRotation = (self.valueToDegrees(pointerValue) - 90);
+                        var currentRotation = self._currentRotation || targetRotation;
+                        self._currentRotation = targetRotation;
+
+                        return function(step)
+                        {
+                            var rotation = currentRotation + (targetRotation-currentRotation)*step;
+                            return "translate(" + self.config.cx + ", " + self.config.cy + ") rotate(" + rotation + ")";
+                        }
+                    });
+            };
+
+            this.valueToDegrees = function(value)
+            {
+              // thanks @closealert
+              //return value / this.config.range * 270 - 45;
+              return value / this.config.range * 270 - (this.config.min / this.config.range * 270 + 45);
+            }
+
+            this.valueToRadians = function(value)
+            {
+              return this.valueToDegrees(value) * Math.PI / 180;
+            }
+
+            this.valueToPoint = function(value, factor)
+            {
+              return {
+                x: this.config.cx - this.config.raduis * factor * Math.cos(this.valueToRadians(value)),
+                y: this.config.cy - this.config.raduis * factor * Math.sin(this.valueToRadians(value))
+              };
+            }
+
+            this.configure(configuration);
+        }
+
+        function createGauge(name, label, min, max)
+        {
+            var config = {
+                size: 180,
+                label: label,
+                min: undefined != min ? min : 0,
+                max: undefined != max ? max : 100,
+                minorTicks: 5
+            };
+
+            var range = config.max - config.min;
+            config.redZones = [{ from: config.min + range*0.9, to: config.max }];
+            config.yellowZones = [{ from: config.min + range*0.75, to: config.min + range*0.9 }];
+
+            var gauge = new Gauge(name, config);
+            gauge.render();
+
+            var value = getRandomValue(gauge);
+            gauge.redraw(getRandomValue(gauge));
+        }
+
+        function getRandomValue(gauge)
+        {
+            var overflow = 0; //10;
+            return gauge.config.min - overflow + (gauge.config.max - gauge.config.min + overflow*2) *  Math.random();
+        }
+
+        function drawGauges()
+        {
+            createGauge(".summary .summary-tat .chart", "TAT");
+            createGauge(".summary .summary-rate .chart", "Rate");
+        }
+        drawGauges();
+    });
+</script>
 {% endblock %}
