@@ -5,7 +5,28 @@
     <link href="{{ url_for('static', filename='plugins/jquery-ricksaw-chart/css/rickshaw.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
     <link href="{{ url_for('static', filename='plugins/jquery-morris-chart/css/morris.css' )}}" rel="stylesheet" type="text/css" media="screen"/>
     <style type="text/css">
-        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0; }
+        .widget-stats .item-title, .widget-stats .item-count {
+            font-weight: 300;
+            font-family: 'Open Sans';
+        }
+        .summary span.item-title {
+          font-size: 20px;
+        }
+        .summary span.item-count {
+          font-size: 33px;
+        }
+        .summary .chart {
+            margin-right: 20px;
+        }
+        .summary .summary-tat .item-count, .summary .summary-rate .item-count {
+            font-size: 80px;
+            padding: 40px 15px 0 0;
+            margin-bottom: 20px;
+        }
+        .summary .summary-tat .item-title, .summary .summary-rate .item-title {
+            font-size: 30px;
+        }
     </style>
 {% endblock %}
 
@@ -15,35 +36,109 @@
         <div class="col-md-4 summary-desc">
             <div class="tiles red m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Summary</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Total Amount Disbursed</span> <span class="item-count animate-number semi-bold" >50,000 INR</span>
+                            <span class="item-title">Total Amount Disbursed</span> <span class="item-count animate-number semi-bold" >50,000 Lac INR</span>
                         </div>
                     </div><br/>
+                </div>
+            </div>
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total Loans Disbursed / Leaked</span> <span class="item-count animate-number semi-bold" >34,456 / 125</span>
+                            <span class="item-title">Total No. Applications Applied</span> <span class="item-count animate-number semi-bold" >34,456</span>
                         </div>
                     </div><br/>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                </div>
+            </div>
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Applications Leaked</span> <span class="item-count animate-number semi-bold" >125</span>
+                        </div>
+                    </div><br/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 summary-desc">
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Loans Disbursed</span> <span class="item-count animate-number semi-bold" >64,456</span>
+                        </div>
+                    </div><br/>
+                </div>
+            </div>
+
+            {% if feature_show("disbursement_group_dashboard") %}
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Groups Disbursed</span> <span class="item-count animate-number semi-bold" >4,456</span>
+                        </div>
+                    </div><br/>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature_show("disbursement_center_dashboard") %}
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Centers Disbursed</span> <span class="item-count animate-number semi-bold" >356</span>
+                        </div>
                     </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 summary-tat">
-            <div class="tiles green">
-                <div class="tiles-body no-border">
-                    <div class="chart"></div>
+            {% endif %}
+
+            {% if feature_show("accounts_scrutiny_dashboard") %}
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Scrutiny Done</span> <span class="item-count animate-number semi-bold" >356</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endif %}
+
+            {% if feature_show("accounts_sanctions_dashboard") %}
+            <div class="tiles red m-b-20">
+                <div class="tiles-body">
+                    <div class="widget-stats last">
+                        <div class="wrapper last">
+                            <span class="item-title">Total No. Sanctions Done</span> <span class="item-count animate-number semi-bold" >356</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
-        <div class="col-md-4 summary-rate">
-            <div class="tiles blue">
+        <div class="col-md-4">
+            <div class="tiles green summary-tat m-b-10">
                 <div class="tiles-body no-border">
-                    <div class="chart"></div>
+                    <div class="inline chart pull-left"></div>
+                    <div class="inline desc pull-right">
+                        <h1 class="item-count">88</h1>
+                        <h3 class="item-title">Days</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="tiles blue summary-rate m-b-10">
+                <div class="tiles-body no-border">
+                    <div class="inline chart pull-left"></div>
+                    <div class="inline desc pull-right">
+                        <h1 class="item-count">91<span class="item-title">%</span></h1>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
@@ -56,17 +151,17 @@
                     <div class="tiles-title text-black">Applications Submitted</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -79,7 +174,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Monthly Applications <span class="semi-bold">Submitted</span></h4>
+                    <h4>Applications <span class="semi-bold">Submitted</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -95,17 +190,17 @@
                     <div class="tiles-title text-black">Disbursment </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
                         </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Weekly's Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >12 / 50 / 1500</span>
-                        </div>
-                    </div>
+                    </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly Center / Group / Indivijual</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -118,7 +213,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Monthly Disbursement <span class="semi-bold">Charts</span></h4>
+                    <h4>Disbursement <span class="semi-bold">Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -136,49 +231,23 @@
     </div>
 
     <div class="row validations-app-kyc-cbc">
-        <div class="col-md-4 validations-app">
-            <div class="tiles blue m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Application Validation </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats">
-                        <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
-                        </div>
-                    </div>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
         <div class="col-md-4 validations-kyc">
             <div class="tiles red m-b-20">
                 <div class="tiles-body">
                     <div class="tiles-title text-black">KYC Validation </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
                         </div>
                     </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
                         </div>
                     </div>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -194,17 +263,17 @@
                     <div class="tiles-title text-black">CB Check </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
                         </div>
                     </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Weekly's</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
                         </div>
                     </div>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -214,25 +283,39 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row donut-app-kyc-cbc">
-        <div class="col-md-4 donut-app">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Application <span class="semi-bold">Feb 2015</span></h4>
-                    <p>98% Accepted</p>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:200px;" ></div>
+        <div class="col-md-4 validations-app">
+            <div class="tiles blue m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Cashflow Analysis</div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row donut-app-kyc-cbc">
         <div class="col-md-4 donut-kyc">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>KYC  <span class="semi-bold">Feb 2015</span></h4>
-                    <p>96% Validated</p>
+                    <h4>KYC <span class="semi-bold">Feb 2015</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:200px;" ></div>
@@ -242,8 +325,17 @@
         <div class="col-md-4 donut-cbc">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>CB Check  <span class="semi-bold">Feb 2015</span></h4>
-                    <p>95% Accepted</p>
+                    <h4>CB Check <span class="semi-bold">Feb 2015</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:200px;" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 donut-cfa">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Cashflow Analysis<span class="semi-bold">Feb 2015</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:200px;" ></div>
@@ -252,24 +344,25 @@
         </div>
     </div>
 
+    {% if feature_show("questions_cgt1") %}
     <div class="row applications-cgt1">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-red m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications CGT1 Ready </div>
+                    <div class="tiles-title text-black">Applications CGT1 Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -282,7 +375,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT1 Ready</span></h4>
+                    <h4>Applications <span class="semi-bold">CGT1 Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -290,25 +383,27 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
+    {% if feature_show("questions_cgt2") %}
     <div class="row applications-cgt2">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-yellow m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications CGT2 Ready </div>
+                    <div class="tiles-title text-black">Applications CGT2 Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -321,7 +416,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT2 Ready</span></h4>
+                    <h4>Applications <span class="semi-bold">CGT2 Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -329,25 +424,27 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
+    {% if feature_show("questions_grt") %}
     <div class="row applications-grt">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles gray m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications GRT Ready </div>
+                    <div class="tiles-title text-black">Applications GRT Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -360,7 +457,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">GRT Ready</span></h4>
+                    <h4>Applications <span class="semi-bold">GRT Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -368,25 +465,27 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
+    {% if feature_show("questions_telecalling") %}
     <div class="row applications-telecalling">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-red m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications TeleCalling</div>
+                    <div class="tiles-title text-black">Applications TeleCalling Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -399,7 +498,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">TeleCalling</span></h4>
+                    <h4>Applications <span class="semi-bold">TeleCalling Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -407,25 +506,109 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
+    {% if feature_show("accounts_scrutiny_dashboard") %}
+    <div class="row applications-scrutiny">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications Scrutiny Done</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Scrutiny Done</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if feature_show("accounts_sanctions_dashboard") %}
+    <div class="row applications-sanctions">
+        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
+            <div class="tiles bg-red m-b-20">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black">Applications Sanctions Done</div>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats">
+                        <div class="wrapper last">
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                        </div>
+                    </div><br/>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                        </div>
+                    </div>
+                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
+                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    </div>
+                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="grid simple">
+                <div class="grid-title no-border">
+                    <h4>Applications <span class="semi-bold">Sanctions Done</span></h4>
+                </div>
+                <div class="grid-body no-border">
+                    <div class="chart" style="height:180px"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if feature_show("questions_psychometric") %}
     <div class="row applications-psychometric">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-yellow m-b-20">
                 <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications TeleCalling</div>
+                    <div class="tiles-title text-black">Applications Psychometric Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today's LA / KYC</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Weekly's LA / KYC</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Monthly LA / KYC</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -438,7 +621,7 @@
         <div class="col-md-8">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">Psychometric</span></h4>
+                    <h4>Applications <span class="semi-bold">Psychometric Done</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:180px"> </div>
@@ -446,6 +629,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 
@@ -474,7 +658,7 @@
     $(document).ready(function(){
         Morris.Donut({
             size:200,
-            element: $('.donut-app .chart'),
+            element: $('.donut-cfa .chart'),
             data: [
                 {label: "Accepted", value: 96},
                 {label: "Rejected", value: 4},
@@ -531,6 +715,8 @@
             labels: ['Loan Applications', 'CGT1'],
             lineColors:['#0aa699','#6666ff'],
         });
+
+        {% if feature_show("questions_cgt1") %}
         Morris.Line({
             element: $('.applications-cgt1 .chart'),
             data: [
@@ -547,6 +733,9 @@
             labels: ['Loan Applications', 'CGT2'],
             lineColors:['#0aa699','#6666ff'],
         });
+        {% endif %}
+
+        {% if feature_show("questions_cgt2") %}
         Morris.Line({
             element: $('.applications-cgt2 .chart'),
             data: [
@@ -563,6 +752,9 @@
             labels: ['Loan Applications', 'GRT'],
             lineColors:['#0aa699','#6666ff'],
         });
+        {% endif %}
+
+        {% if feature_show("questions_grt") %}
         Morris.Line({
             element: $('.applications-grt .chart'),
             data: [
@@ -579,6 +771,9 @@
             labels: ['Loan Applications', 'GRT'],
             lineColors:['#0aa699','#6666ff'],
         });
+        {% endif %}
+
+        {% if feature_show("questions_telecalling") %}
         Morris.Line({
             element: $('.applications-telecalling .chart'),
             data: [
@@ -595,6 +790,47 @@
             labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
             lineColors:['#0aa699','#010699','#D45959'],
         });
+        {% endif %}
+
+        {% if feature_show("accounts_scrutiny_dashboard") %}
+        Morris.Line({
+            element: $('.applications-scrutiny .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
+                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
+                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
+                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
+                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
+                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
+                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+            ],
+            xkey: 'd',
+            ykeys: ['a','b','c'],
+            labels: ['Approved', 'Rejected', 'On-Hold'],
+            lineColors:['#0aa699','#010699','#D45959'],
+        });
+        {% endif %}
+
+        {% if feature_show("accounts_sanctions_dashboard") %}
+        Morris.Line({
+            element: $('.applications-sanctions .chart'),
+            data: [
+                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
+                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
+                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
+                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
+                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
+                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
+                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+            ],
+            xkey: 'd',
+            ykeys: ['a','b','c'],
+            labels: ['Approved', 'Rejected', 'On-Hold'],
+            lineColors:['#0aa699','#010699','#D45959'],
+        });
+        {% endif %}
+
+        {% if feature_show("questions_psychometric") %}
         Morris.Line({
             element: $('.applications-psychometric .chart'),
             data: [
@@ -611,6 +847,7 @@
             labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
             lineColors:['#0aa699','#010699','#D45959'],
         });
+        {% endif %}
 
         function drawMap() {
             var mapOptions = {

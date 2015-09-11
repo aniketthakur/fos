@@ -75,8 +75,11 @@ AWS_SETTINGS = {
 
 FEATURES = {
     "disbursement": True,
-    "hignmark_equifax": False,
-    
+    "disbursement_group_dashboard": False,
+    "disbursement_center_dashboard": False,
+
+    "hignmark_equifax": True,
+
     "questions_grt": False,
     "questions_cgt1": False,
     "questions_cgt2": False,
@@ -95,8 +98,13 @@ FEATURES = {
     "search_by_scrutiny_status": True,
 
     "accounts_reports": True,
+
     "accounts_scrutiny": True,
+    "accounts_scrutiny_dashboard": True,
+
     "accounts_sanctions": True,
+    "accounts_sanctions_dashboard": True,
+
     "accounts_applications": True,
     "accounts_enroll_customers": False,
 }
