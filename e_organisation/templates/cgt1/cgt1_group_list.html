@@ -38,6 +38,7 @@
                             <th style="width:1%" >#</th>
                             <th style="width:25%">Group ID</th>
                             <th style="width:25%">Group Name</th>
+                            <th style="width:25%">Center Name</th>
                             <th style="width:25%">Questions</th>
                             <th style="width:25%">Actions</th>
                         </tr>
@@ -47,10 +48,13 @@
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="{{ url_for("organisation_views.cgt1_group_list", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_id }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
                                   <a href="{{ url_for("organisation_views.application_list_group", group_id=group.group_id) }}"><ins>{{ group.group_name }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_center", group_id=group.group_id) }}"><ins>{{ group.location_name }}</ins></a>
                                 </td>
                                 <td><a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.cgt1_questions", group_id=group.group_id) }}">Questions</a></td>
                                 <td><a class="btn btn-small btn-info " href="{{ url_for("organisation_views.cgt1_downloads", group_id=group.group_id) }}" >Download Applications</a></td>
@@ -78,6 +82,7 @@
                             <th style="width:1%" >#</th>
                             <th style="width:25%">Group ID</th>
                             <th style="width:25%">Group Name</th>
+                            <th style="width:25%">Center Name</th>
                             <th style="width:25%">CGT1 Rating</th>
                             <th style="width:10%" class="text-center">Fail</th>
                             <th style="width:10%" class="text-center">Pass</th>
@@ -88,10 +93,13 @@
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="{{ url_for("organisation_views.cgt1_group_list", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
                                   <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_name }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_center", group_id=session.group.group_id) }}"><ins>{{ session.group.location_name }}</ins></a>
                                 </td>
                                 <td>{{'%0.2f' % session.score|float}}/5</td>
                                 <td>
@@ -130,6 +138,7 @@
                             <th style="width:1%" >#</th>
                             <th style="width:25%">Group ID</th>
                             <th style="width:25%">Group Name</th>
+                            <th style="width:25%">Center Name</th>
                             <th style="width:25%">CGT1 Rating</th>
                             <th style="width:10%" class="text-center">Status</th>
                         </tr>
@@ -139,10 +148,13 @@
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="{{ url_for("organisation_views.cgt1_group_list", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_id }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
                                   <a href="{{ url_for("organisation_views.application_list_group", group_id=session.group.group_id) }}"><ins>{{ session.group.group_name }}</ins></a>
+                                </td>
+                                <td class="v-align-middle">
+                                  <a href="{{ url_for("organisation_views.application_list_center", group_id=session.group.group_id) }}"><ins>{{ session.group.location_name }}</ins></a>
                                 </td>
                                 <td>{{'%0.2f' % session.score|float}}/5</td>
                                 <td>

@@ -34,26 +34,6 @@ def cgt1_list():
     return render_template("cgt1/cgt1_group_list.html", **kwargs)
 
 
-@organisation_views.route('/check_cgt1/group/<group_id>', methods=["GET"])
-@login_required
-@feature_enable("questions_cgt1")
-def cgt1_group_list(group_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id)
-
-    applications = None
-    if group is not None:
-        applications = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
-    else:
-        applications = EsthenosOrgApplication.objects.filter(status__gte=190)
-
-    kwargs = locals()
-    return render_template("cgt1/cgt1_group_detail.html", **kwargs)
-
-
 @organisation_views.route('/check_cgt1/group/<group_id>/status', methods=["POST"])
 @login_required
 @feature_enable("questions_cgt1")
