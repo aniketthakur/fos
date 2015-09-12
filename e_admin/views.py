@@ -1224,10 +1224,10 @@ def admin_pdf_application(app_id):
         'encoding': "UTF-8",
         'orientation' : 'Portrait'
     }
-    pdfkit.from_string(body, 'dpn.pdf', options=options)
+    pdfkit.from_string(body, 'pdf_loan_application.pdf', options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('pdf_loan_application.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
@@ -1277,7 +1277,7 @@ def admin_hmplloanagreement(group_id,dis_date_str):
     interest_rate = 26.0
 
     kwargs = locals()
-    body = render_template( "pdf_HMPL_LA_New_Hindi.html", **kwargs)
+    body = render_template("pdf_HMPL_LA_New_Hindi.html", **kwargs)
 
     options = {
         'page-size': 'A4',
@@ -1288,10 +1288,10 @@ def admin_hmplloanagreement(group_id,dis_date_str):
         'encoding': "UTF-8",
         'orientation' : 'Portrait'
     }
-    pdfkit.from_string(body, 'dpn.pdf', options=options)
+    pdfkit.from_string(body, 'pdf_grt_agreement.pdf', options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('pdf_grt_agreement.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
