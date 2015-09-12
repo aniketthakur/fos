@@ -772,42 +772,34 @@ def disburse_document():
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
 
 
-@organisation_views.route('/download_disbursement', methods=["GET"])
+@organisation_views.route('/download_disbursement/<group_id>', methods=["GET"])
 @login_required
 @feature_enable("disbursement")
-def download_disbusement():
+def download_disbursement(group_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
-    username = current_user.name
-    c_user = current_user
+
     #center_id = request.args.get("center")
-    group_id = request.args.get("group_id")
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+    bucket = conn_s3.get_bucket("hindusthanarchives")
+    bucket_list = bucket.list()
 
-    user = EsthenosUser.objects.get(id=c_user.id)
-    group = None
-    print group_id
-    if group_id is not None and group_id != '':
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_id=group_id.strip(" "))
-        bucket = conn_s3.get_bucket("hindusthanarchives")
-        bucket_list = bucket.list()
+    for item in bucket_list:
+        print item, item.key, group.disbursement_pdf_link
+        if group.disbursement_pdf_link[1:] == item.key:
+            # check if file exists locally, if not: download it
+            if not os.path.exists(group.disbursement_pdf_link):
+                item.get_contents_to_filename(group.disbursement_pdf_link)
 
-        for l in bucket_list:
-            print l
-            print group.disbursement_pdf_link
-            if group.disbursement_pdf_link[1:] == l.key:
-                keyString = str(l.key)
-                # check if file exists locally, if not: download it
-                if not os.path.exists(group.disbursement_pdf_link):
-                    l.get_contents_to_filename(group.disbursement_pdf_link)
-                filehandle = open(group.disbursement_pdf_link, 'rb')
-                data = StringIO.StringIO(filehandle.read())
-                output = make_response(data.getvalue())
-                output.headers["Content-Disposition"] = "attachment; filename=%s.zip" %group_id
-                output.headers["Content-type"] = "application/zip"
-                return output
-        print group.group_name
+            filehandle = open(group.disbursement_pdf_link, 'rb')
+            data = StringIO.StringIO(filehandle.read())
+            output = make_response(data.getvalue())
+            output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
+            output.headers["Content-type"] = "application/zip"
+            return output
+
     return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
-    # Grab ZIP file from in-memory, make response with correct MIME-type
 
 
 @organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])

@@ -68,7 +68,7 @@
                                                         {% if group.disbursement_pdf_link == "#" %}
                                                             <a href="{{ group.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a type="button" href="/download_disbursement?group={{ group.group_id }}" >Download</a>
+                                                            <a type="button" href="{{ url_for("organisation_views.download_disbursement", group_id=group.group_id) }}">Download</a>
                                                         {% endif %}
                                                     </li>
                                                     <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
@@ -94,7 +94,6 @@
                 var form = $("#"+$(this).attr("data-id")+"form"); // You need to use standart javascript object here
                 var formData = new FormData();
                 formData.append('file', $('#'+$(this).attr("data-id")+"cheque_no")[0].files[0]);
-                Messenger().post("Submitting Cheque Info.");
                 $.ajax( {
                     url: '/organisation/cheque_info/'+$(this).attr("data-id"),
                     type: 'POST',
