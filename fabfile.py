@@ -78,6 +78,9 @@ def provision():
     # setup rabbitmq server.
     rabbitmq()
 
+    # setup wkhtmltopdf virtual x-server.
+    wkhtmltopdf()
+
     # notify slack channel.
     notify("successfully provisioned new server for {server}".format(server=env.host))
 
@@ -124,6 +127,11 @@ def rabbitmq():
     sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
 
     sudo('service rabbitmq-server restart')
+
+def wkhtmltopdf():
+    sudo("""echo -e '#!/bin/bash\nxvfb-run -a --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf $*' > /usr/bin/wkhtmltopdf.sh""")
+    sudo("chmod a+x /usr/bin/wkhtmltopdf.sh")
+    sudo("ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf")
 
 
 def stop(app_name):
