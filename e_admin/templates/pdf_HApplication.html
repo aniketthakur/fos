@@ -1,60 +1,38 @@
 {% extends "base_pdf.html" %}
 {% block css_sheets %}{{ super() }}
     <style type="text/css">
-        .value{
-            font-size: 12px;
-            font-weight: bold;
-        }
         label{
             font-size: 12px;
             font-family: "Courier New";
         }
-
         .english_font{
-            font-size: 10px;
+            font-size: 12px;
             font-family: "Courier New";
         }
         .english_font_small{
-            font-size: 8px;
+            font-size: 10px;
             font-family: "Courier New";
         }
-    </style>
-    <style type="text/css">
         @font-face {
             font-family: kruti dev ;
-            src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+            src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
         }
-
         .hinditext {
             font-family: kruti dev;
-            font-size:12px;
+            font-size:18px;
         }
         .hinditext-large {
             font-family: kruti dev;
-            font-size:16px;
+            font-size:20px;
         }
         .hinditext-vlarge {
             font-family: kruti dev;
-            font-size:22px;
+            font-size:25px;
         }
-
-        .hinditext {
-            font-family: kruti dev;
-            font-size:12px;
-        }
-        .hinditext-large {
-            font-family: kruti dev;
-            font-size:16px;
-        }
-        .hinditext-vlarge {
-            font-family: kruti dev;
-            font-size:22px;
-        }
-
         .condensed tr{
-            font-size:8px;
             line-height: 15px;
             min-height: 15px;
+            font-size:8px;
             height: 15px;
         }
         .font-large{
@@ -72,24 +50,19 @@
             height: 20px;
             font-size:8px;
         }
-
         .font-msmall tr{
             line-height: 20px;
             min-height: 20px;
             height: 20px;
             font-size:9px;
         }
-
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
     <span class="pull-right">{{ disbursement_date|dateformat }}</span>
-    <img width="100%" style="margin-left: 8px;" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
-
+    <img width="100%" style="margin-left: 8px;" src="{{ url_for('static', filename='img/pdf_images/passbook_top.jpg', _external=True) }}"/>
     <table border="1" style="width:100%;margin: 10px;">
         <tr><td width="100%" colspan="2"></td></tr>
         <tr><td width="100%" colspan="2"> </td></tr>
@@ -97,33 +70,30 @@
             <td style="width:50%">
                 Bank Name:{{app.bank_name}}
             </td>
-             <td >
+            <td >
                 A/C Number:{{app.bank_account_number}}
             </td>
         </tr>
         <tr>
              <td >
                 Account Holder Name:{{app.bank_account_holder_name}}
-            </td>
+             </td>
              <td >
                 Ifsc Code:{{app.bank_ifsc_code}}
             </td>
-
         </tr>
         <tr>
              <td >
                 Purpose Of Loan:{{app.purpose_of_loan}}
-            </td>
+             </td>
              <td >
                   Required Loan Amount:{{app.applied_loan}}
-            </td>
-
-
+             </td>
         </tr>
         <tr>
              <td >
                 Payment Option:{{app.repayment_method}}
-            </td>
+             </td>
              <td >
                 Product Name:{{ app.product.product_name}}
             </td>
@@ -131,24 +101,23 @@
         <tr>
              <td >
                 Group Name:{{ app.group.group_name }}
-            </td>
-
+             </td>
              <td >
                 Group Size:{{app.group_size}}
-            </td>
+             </td>
         </tr>
         <tr>
              <td style="width:100%" colspan="2">
                 Group leader Cell:{{app.center_leader_cell}}
-            </td>
+             </td>
         </tr>
     </table>
     <table border="1" style="width:100%;margin: 10px;">
         <tr>
              <td  style="width:50%">
-                Name: 
+                Name:
                 {{ app.applicant_name }}
-            </td>
+             </td>
              <td >
                 Aadhaar No:{{app.kyc_1.kyc_number}}
             </td>
@@ -156,47 +125,42 @@
         <tr>
              <td >
                 Gender:{{app.gender}}
-            </td>
+             </td>
              <td >
                 Age:{{app.age}}
-            </td>
+             </td>
         </tr>
         <tr>
              <td  colspan="2">
                 Relationship Status:{{app.member_relationship_status}}
-            </td>
-
+             </td>
         </tr>
         <tr>
              <td >
                  Education:{{app.education}}
-            </td>
+             </td>
              <td >
                 Physical Disability:{{app.member_disability}}
             </td>
         </tr>
         <tr>
              <td  colspan="2">
-                Father's/Husband's Name: 
+                Father's/Husband's Name:
                 {{app.member_f_or_h_name}}
             </td>
-
         </tr>
         <tr>
              <td >
                 Address: {{app.address}}
-            </td>
+             </td>
              <td >
                 Number of family Members:{{app.family_size}}
             </td>
         </tr>
         <tr>
              <td >
-
                  Taluk:{{app.member_taluk}}
-
-
-            </td>
+             </td>
              <td >
                 Male Count:{{app.male_count}}
             </td>
@@ -204,16 +168,15 @@
         <tr>
              <td >
                 District:{{app.member_city}}
-            </td>
+             </td>
              <td >
                 Female Count:{{app.female_count}}
-            </td>
+             </td>
         </tr>
         <tr>
              <td >
                 State:{{app.member_state}}
-
-            </td>
+             </td>
              <td >
                 Members Less than 18:{{app.children_below18}}
             </td>
@@ -221,7 +184,7 @@
         <tr>
              <td >
                 Country:{{app.member_country}}
-            </td>
+             </td>
              <td >
                 Members Above18:{{app.children_above18}}
             </td>
@@ -229,7 +192,7 @@
         <tr>
              <td >
                 Pincode:{{app.member_pincode}}
-            </td>
+             </td>
              <td >
                  Earning Members:{{app.total_earning_members}}
             </td>
@@ -237,7 +200,7 @@
         <tr>
              <td >
                 Mobile Number{{app.member_telephone}}
-            </td>
+             </td>
              <td >
                 Religion:{{app.religion}}
             </td>
@@ -246,9 +209,7 @@
             <td colspan="2">
                 Category:{{app.category}}
             </td>
-
         </tr>
-
     </table>
     <div class="hinditext" style="margin-left: 8px;">
         <span class="text-center">Jeejmeoej peenerjveecee </span>
@@ -271,9 +232,7 @@
         <p class="hinditext">
         Deece®³ee cee³e¬eÀes¬esÀef[ì ueesve Òee@[keÌì Debleie&le Deecneuee DeeHeuee   20000<span class="english_font">/(Apply amt)-</span>  ©.meeþer keÀpe& ceeieCeer Depe& efceUeuesuee Deens.<br/>
         Deece®³ee Debleie&le ceeie&oMe&keÀ met®eveebvegmeej legcner efouesu³ee keÀpe& ceeieCeer Depee&®³ee Hees®e HeeJeleer veblej peemleerle peemle 18 keÀecekeÀepeer³e efoJemeeble l³ee®³eeJej efveCe&³e IesTve Heg{erue Òeef¬eÀ³ee HetCe& keÀsueer peeF&ue.<br/>
-            </p>
-
-
+        </p>
         <p class="pull-left">
             <span class="hinditext">efoveebkeÀ</span>:  {{ disbursement_date|dateformat }}
         </p>
@@ -284,15 +243,15 @@
         <tr>
              <td style="width: 50%;">
                 Gurantor's Relationship with Borroweer:{{app.gurantor_s_relationship_with_borrower}}
-            </td>
+             </td>
              <td >
                 Gurantor-Borrower's are nominee for each other{{app.guarantor_borrowers_are_nominee}}
-            </td>
+             </td>
         </tr>
         <tr>
              <td >
                 Gurantor'sName:{{app.gurranter_s_name}}
-            </td>
+             </td>
              <td >
                 Gurantor's Sex:{{app.gurranter_s_sex}}
             </td>
@@ -300,21 +259,20 @@
         <tr>
              <td style="width:100%" colspan="2">
                 Gurantor's Age:{{app.gurranter_s_age}}
-            </td>
-
+             </td>
         </tr>
         <tr>
              <td >
                 Types of House{{app.type_of_residence}}
-            </td>
+             </td>
              <td >
                 Quality of House{{app.quality_of_house}}
-            </td>
+             </td>
         </tr>
         <tr>
              <td style="width:100%" colspan="2">
                 How Long are you Staying in house(in years):{{app.house_stay_duration}}
-            </td>
+             </td>
 {#             <td >#}
 {#                Source of Drinking water:#}
 {#                {{app.drinking_water}}#}
@@ -361,19 +319,11 @@
         <tr><td></td><td ><br/>CSP Signature:</td></tr>
         <tr><td></td><td ><br/>Branch Manager Signature:</td></tr>
     </table>
-
-
-
-
-
-
-
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/>
     <p class="text-center">----------------------------------------------------------------------------</p>
-
-    <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/app_pg1_bottom.png">
+    <img width="100%" src="{{ url_for('static', filename='img/pdf_images/app_pg1_bottom.png', _external=True) }}">
 {#    <table border="1" style="width:100%;margin: 10px;">#}
 {#        <tr>#}
 {#             <td >#}

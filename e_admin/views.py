@@ -1220,30 +1220,29 @@ def admin_pdf_application(app_id):
     app = EsthenosOrgApplication.objects.get(application_id=app_id)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
+
     kwargs = locals()
-    body = render_template( "pdf_HApplication.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.50in',
-            'margin-right': '0.50in',
-            'margin-bottom': '0.50in',
-            'margin-left': '0.50in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+    body = render_template("pdf_HApplication.html", **kwargs)
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.50in',
+        'margin-right': '0.50in',
+        'margin-bottom': '0.50in',
+        'margin-left': '0.50in',
+        'encoding': "UTF-8",
+        'orientation' : 'Portrait'
+    }
+    pdfkit.from_string(body, 'dpn.pdf', options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=application_%s.pdf' % app_id
+    response.headers['Content-Disposition'] = 'inline; filename=application_%s.pdf' % app_id
     return response
 
 
@@ -1284,7 +1283,7 @@ def admin_pdf_hccs_reciept(group_id):
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=250) or Q(status=272)or Q(status=276))
-    disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
+    disbursement_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
     kwargs = locals()
     body = render_template( "pdf_HMPL_LA_New_Hindi.html", **kwargs)
@@ -1298,7 +1297,7 @@ def admin_hmplloanagreement(group_id,dis_date_str):
             'encoding': "UTF-8",
             'orientation' : 'Portrait'
         }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
+        pdfkit.from_string(body, 'dpn.pdf', options=options)
     except Exception as e:
         print e.message
 
@@ -1308,8 +1307,7 @@ def admin_hmplloanagreement(group_id,dis_date_str):
             raw_bytes = raw_bytes + line
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'la'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'la'
     return response
 
 
