@@ -749,25 +749,25 @@ def disburse_document():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
-    print request.form.get("group_id")
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
+    group_id = request.form.get("group_id")
+    col_date_str = request.form.get("collection_date")
+    dis_date_str = request.form.get("disbursement_date")
+    print group_id, col_date_str, dis_date_str
+
+    user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
 
-    group = EsthenosOrgGroup.objects.get(group_id=request.form.get("group_id"))
-    apps = EsthenosOrgApplication.objects.filter(organisation=org,group=group)
-    print request.form.get("group_id")
-    dis_date_str =request.form.get("disbursement_date")
-    col_date_str =request.form.get("collection_date")
+    group = EsthenosOrgGroup.objects.get(group_id=group_id)
+    apps = EsthenosOrgApplication.objects.filter(organisation=org, group=group)
 
-    dis_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
-    col_date =   datetime.datetime.strptime(col_date_str, "%d-%m-%Y").date()
-    generate_post_grt_applications.apply_async((org.id,request.form.get("group_id"),dis_date_str,(col_date-dis_date).days))
+    dis_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
+    col_date = datetime.datetime.strptime(col_date_str, "%d-%m-%Y").date()
+
+    generate_post_grt_applications.apply_async((org.id, group_id, dis_date_str, (col_date-dis_date).days))
     for app in apps:
         app.generate_disbursement = True
-
         app.save()
+
     kwargs = locals()
     return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
 
@@ -800,46 +800,3 @@ def download_disbursement(group_id):
             return output
 
     return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
-
-
-@organisation_views.route('/disbursement/download/<app_id>', methods=["GET","POST"])
-@login_required
-@feature_enable("disbursement")
-def disbursement(app_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    org=user.organisation
-    filenames = ["dpn.pdf", "tmp.pdf","pass.pdf"]
-
-    # Folder name in ZIP archive which contains the above files
-    # E.g [thearchive.zip]/somefiles/file2.txt
-    # FIXME: Set this to something better
-    zip_subdir = app_id
-    zip_filename = "%s.zip" % zip_subdir
-
-    # Open StringIO to grab in-memory ZIP contents
-    s = StringIO.StringIO()
-
-    # The zip compressor
-    zf = zipfile.ZipFile(s, "w")
-
-    for fpath in filenames:
-        # Calculate path for file in zip
-        fdir, fname = os.path.split(fpath)
-        zip_path = os.path.join(zip_subdir, fname)
-
-        # Add file, at correct path
-        zf.write(fpath, zip_path)
-
-    # Must close zip for all contents to be written
-    zf.close()
-
-    # Grab ZIP file from in-memory, make response with correct MIME-type
-    output = make_response(s.getvalue())
-    output.headers["Content-Disposition"] = "attachment; filename=%s" %zip_filename
-    output.headers["Content-type"] = "application/zip"
-    return output
-
