@@ -965,16 +965,14 @@ def admin_dpn(org_id):
         abort(403)
 
     kwargs = locals()
-    body = render_template( "pdf_DPN.html", **kwargs)
-    try:
-        pdfkit.from_string(body, 'dpn.pdf')
-    except Exception as e:
-        print e.message
+    body = render_template("pdf_DPN.html", **kwargs)
+    pdfkit.from_string(body, 'dpn.pdf')
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'dpn'
@@ -1057,10 +1055,7 @@ def admin_lrpassbook(org_id):
 
     kwargs = locals()
     body = render_template( "pdf_LRPassbook.html", **kwargs)
-    try:
-        pdfkit.from_string(body, 'pass.pdf')
-    except Exception as e:
-        print e.message
+    pdfkit.from_string(body, 'pass.pdf')
 
     raw_bytes = ""
     with open('pass.pdf', 'rb') as r:
@@ -1093,19 +1088,16 @@ def admin_sanction(grp_id):
 
     kwargs = locals()
     body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.35in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.35in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'dpn.pdf',options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
@@ -1123,30 +1115,30 @@ def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.now()
+
     org_name = "Hindusthan Microfinance"
     kwargs = locals()
+
     body = render_template( "pdf_InsuranceFees.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.25in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.25in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'dpn.pdf',options=options)
+
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'if'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'if'
     return response
 
 
@@ -1155,30 +1147,30 @@ def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.now()
+
     org_name = "Hindusthan Microfinance"
     kwargs = locals()
     body = render_template( "pdf_Processing_Fees.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.35in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.25in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.25in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'dpn.pdf',options=options)
+
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'pf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'pf'
     return response
 
 
@@ -1188,30 +1180,29 @@ def admin_hmpdpn(group_id):
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
+
     kwargs = locals()
     body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.50in',
-            'margin-right': '0.50in',
-            'margin-bottom': '0.50in',
-            'margin-left': '0.50in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.50in',
+        'margin-right': '0.50in',
+        'margin-bottom': '0.50in',
+        'margin-left': '0.50in',
+        'encoding': "UTF-8",
+        'orientation' : 'Portrait'
+    }
+    pdfkit.from_string(body, 'dpn.pdf',options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'dpn'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'dpn'
     return response
 
 
@@ -1252,30 +1243,29 @@ def admin_pdf_hccs_reciept(group_id):
     apps = EsthenosOrgApplication.objects.filter(group=group)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
+
     kwargs = locals()
     body = render_template( "pdf_HCCS_Receipt.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.50in',
-            'margin-right': '0.50in',
-            'margin-bottom': '0.50in',
-            'margin-left': '0.50in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        pdfkit.from_string(body, 'dpn.pdf',options=options)
-    except Exception as e:
-        print e.message
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.50in',
+        'margin-right': '0.50in',
+        'margin-bottom': '0.50in',
+        'margin-left': '0.50in',
+        'encoding': "UTF-8",
+        'orientation' : 'Portrait'
+    }
+    pdfkit.from_string(body, 'dpn.pdf',options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'RdReceipt'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'RdReceipt'
     return response
 
 
@@ -1285,26 +1275,26 @@ def admin_hmplloanagreement(group_id,dis_date_str):
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=250) or Q(status=272)or Q(status=276))
     disbursement_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
+
     kwargs = locals()
     body = render_template( "pdf_HMPL_LA_New_Hindi.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.75in',
-            'margin-right': '0.25in',
-            'margin-bottom': '0.75in',
-            'margin-left': '0.25in',
-            'encoding': "UTF-8",
-            'orientation' : 'Portrait'
-        }
-        pdfkit.from_string(body, 'dpn.pdf', options=options)
-    except Exception as e:
-        print e.message
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.75in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.75in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Portrait'
+    }
+    pdfkit.from_string(body, 'dpn.pdf', options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'la'
@@ -1358,28 +1348,25 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     kwargs = locals()
 
     body = render_template( "pdf_HindustanPassbook.html", **kwargs)
-    try:
-        options = {
-            'page-size': 'A4',
-            'margin-top': '0.15in',
-            'margin-right': '0.0in',
-            'margin-bottom': '0.15in',
-            'margin-left': '0.0in',
-            'encoding': "UTF-8",
-            'orientation' : 'Landscape'
-        }
-        pdfkit.from_string(body, 'tmp.pdf',options=options)
-    except Exception as e:
-        print e.message
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.15in',
+        'margin-right': '0.0in',
+        'margin-bottom': '0.15in',
+        'margin-left': '0.0in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'tmp.pdf', options=options)
 
     raw_bytes = ""
     with open('tmp.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
+
     response = make_response(raw_bytes)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] =\
-    'inline; filename=%s.pdf' % 'hp'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'hp'
     return response
 
 
