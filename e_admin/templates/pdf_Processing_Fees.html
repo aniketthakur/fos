@@ -20,118 +20,109 @@
         .font-msmall{
             font-size:10px;
         }
-
         tr{
 
         }
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block meta %}
     <meta name="pdfkit-orientation" content="Landscape"/>
 {% endblock %}
+
+
 {% block maincontents %}
-
-
 <div class="row col-md-10 col-md-offset-1 font-small" style="background: #ffffff;">
-        <div class="col-md-10 col-md-offset-1">
-            <h5 class="text-center font-lsmall">PROCESSING FEE ACKNOWLEDGEMENT (GROUP COPY)</h5>
-            <div class="pull-left">
-                <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                     height="50" alt="">
-                <address>
-                    <strong>{{ org_name }}</strong><br>
-                </address>
-            </div>
+    <div class="col-md-10 col-md-offset-1">
+        <h5 class="text-center font-lsmall">PROCESSING FEE ACKNOWLEDGEMENT (GROUP COPY)</h5>
+        <div class="pull-left">
+            <img src="{{ url_for('static', filename='img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
+            <address>
+                <strong>{{ org_name }}</strong><br>
+            </address>
+        </div>
 
-            <div class="pull-left font-msmall">
-                <p>
-                    We {{ org_name }}, hereby acknowledge the receipt of Rs. <u>{{ apps[0].product.processing_fee }} /-</u> towards processing fee from the Borrowers of the Group <u>{{ group.group_name }}</u>
-                    Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> The details of payments are mentioned in the below Table.
-                </p>
+        <div class="pull-left font-msmall">
+            <p>
+                We {{ org_name }}, hereby acknowledge the receipt of Rs. <u>{{ apps[0].product.processing_fee }} /-</u> towards processing fee from the Borrowers of the Group <u>{{ group.group_name }}</u>
+                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> The details of payments are mentioned in the below Table.
+            </p>
+        </div>
+        <div class="clearfix"><br/></div>
+        <div class="clearfix"><br/></div>
+        <table class="table table-bordered table-condensed font-small">
+            <thead>
+            <tr>
+                <th style="width:5%"> No</th>
 
-            </div>
-            <div class="clearfix"><br/></div>
-            <div class="clearfix"><br/></div>
+                <th style="width:15%" class="text-left">NAME OF BORROWER</th>
 
-            <table class="table table-bordered table-condensed font-small">
-                <thead>
-                <tr>
-                    <th style="width:5%"> No</th>
+                <th style="width:5%"class="text-left">AGE</th>
 
-                    <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+                <th style="width:10%"class="text-center">Aadhaar Number</th>
 
-                    <th style="width:5%"class="text-left">AGE</th>
-
-                    <th style="width:10%"class="text-center">Aadhaar Number</th>
-
-                    <th style="width:15%">Member Code</th>
+                <th style="width:15%">Member Code</th>
 
 {#                    <th style="width:5%"class="text-left">Loan Account No.</th>#}
 
-                    <th style="width:10%"style="width:100px" class="text-center" >Loan Amount</th>
+                <th style="width:10%"style="width:100px" class="text-center" >Loan Amount</th>
 
-                    <th style="width:10%"class="text-left">Processing Fee</th>
+                <th style="width:10%"class="text-left">Processing Fee</th>
 
-                    <!--<th style="width:5%"class="text-left">Loan Purpose</th>
+                <!--<th style="width:5%"class="text-left">Loan Purpose</th>
 
-                    <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
+                <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
 
-                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                    {% for app in apps %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
-                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
-                        <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
-                        <td class="text-left">{{ app.application_id }}</td>
-                        {#                        <td class="text-left"></td>#}
-                        <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.product.processing_fee }}</td>
-
-
-                    </tr>
-                    {% endfor %}
-                    {% for i in range(1,20-apps|length) %}
-                        <tr>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <table style="width: 100%;">
+                <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
+            </tr>
+            </thead>
+            <tbody>
+                {% for app in apps %}
                 <tr>
-                    <td style="width: 50%;">
-                        <div class="col-md-3"><br>
-                            <p class="text-left text-black"> DATE :<br/>
-                                PLACE :</p>
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <p class="text-right text-black">For {{ org_name }}<br/><br/>
-                            Authorized Signatory<br/>
-                            [BM/ABM]</p>
-                    </td>
+                    <td>{{ loop.index }}</td>
+                    <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
+                    <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
+                    <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                    <td class="text-left">{{ app.application_id }}</td>
+                    {#                        <td class="text-left"></td>#}
+                    <td class="text-left">{{ app.applied_loan }}</td>
+                    <td class="text-left">{{ app.product.processing_fee }}</td>
+
+
                 </tr>
+                {% endfor %}
+                {% for i in range(1,20-apps|length) %}
+                    <tr>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%;">
+                    <div class="col-md-3"><br>
+                        <p class="text-left text-black"> DATE :<br/>
+                            PLACE :</p>
+                    </div>
+                </td>
+                <td style="width: 50%;">
+                    <p class="text-right text-black">For {{ org_name }}<br/><br/>
+                        Authorized Signatory<br/>
+                        [BM/ABM]</p>
+                </td>
+            </tr>
 
-            </table>
-            <div class="clearfix"><br/></div>
-            <div class="clearfix"><br/></div>
-            <div class="clearfix"></div>
-            <br>
-        </div>
-
-
+        </table>
+        <div class="clearfix"><br/></div>
+        <div class="clearfix"><br/></div>
+        <div class="clearfix"></div>
+        <br>
+    </div>
     <div class="col-md-10 col-md-offset-1">
         <h5 class="text-center font-lsmall">PROCESSING FEE ACKNOWLEDGEMENT (OFFICE COPY)</h5>
         <div class="pull-left">
-            <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                 height="50" alt="">
+            <img src="{{ url_for('static', filename='img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
             <address>
                 <strong>{{ org_name }}</strong><br>
             </address>
@@ -215,7 +206,5 @@
         <div class="clearfix"></div>
         <br>
     </div>
-
- </div>
-
+</div>
 {% endblock %}

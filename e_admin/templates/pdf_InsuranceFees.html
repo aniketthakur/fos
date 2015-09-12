@@ -41,8 +41,7 @@
         <div class="col-md-10 col-md-offset-1">
             <h5 class="text-center font-lsmall">INSURANCE PREMIUM ACKNOWLEDGEMENT (GROUP COPY)</h5>
             <div class="pull-left">
-                <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                     height="50" alt="">
+                <img src="{{ url_for('static', filename='img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
                 <address>
                     <strong>{{ org_name }}</strong><br>
                 </address>
@@ -54,7 +53,6 @@
                 of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
 
                 </p>
-
             </div>
             <div class="clearfix"><br/></div>
             <div class="clearfix"><br/></div>
@@ -130,20 +128,16 @@
         <div class="col-md-10 col-md-offset-1">
             <h5 class="text-center font-lsmall">INSURANCE PREMIUM ACKNOWLEDGEMENT (OFFICE COPY)</h5>
             <div class="pull-left">
-                <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                     height="50" alt="">
+                <img src="{{ url_for('static', filename='img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
                 <address>
                     <strong>{{ org_name }}</strong><br>
                 </address>
             </div>
-
             <div class="pull-left font-msmall">
                 <p>
                     We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u>{{ apps[0].product.insurance_free }} /-</u> towards Insurance Premium for the Borrowers and their Guarantors
                     of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
-
                 </p>
-
             </div>
             <div class="clearfix"><br/></div>
             <div class="clearfix"><br/></div>
@@ -200,22 +194,20 @@
                     <td style="width: 50%;">
                         <div class="col-md-3"><br>
                             <p class="text-left text-black"> DATE :<br/>
-                                PLACE :</p>
+                                PLACE :
+                            </p>
                         </div>
                     </td>
                     <td style="width: 50%;">
                         <p class="text-right text-black">For {{ org_name }}<br/><br/>
                             Authorized Signatory<br/>
-                            [BM/ABM]</p>
+                            [BM/ABM]
+                        </p>
                     </td>
                 </tr>
-
             </table>
             <div class="clearfix"><br/></div>
             <div class="clearfix"></div>
-
         </div>
-
     </div>
-
 {% endblock %}

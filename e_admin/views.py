@@ -1082,12 +1082,11 @@ def admin_sanction(grp_id):
     group = EsthenosOrgGroup.objects.get(group_id=grp_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
 
-    product = apps[0].product
     disbursement_date = datetime.datetime.now()
-    org_name = "Hindusthan Microfinance"
+    org_name = group.organisation.name
 
     kwargs = locals()
-    body = render_template( "pdf_Sanction_Letter_Hindusthan.html", **kwargs)
+    body = render_template("pdf_Sanction_Letter_Hindusthan.html", **kwargs)
     options = {
         'page-size': 'A4',
         'margin-top': '0.35in',
@@ -1097,10 +1096,10 @@ def admin_sanction(grp_id):
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'dpn.pdf',options=options)
+    pdfkit.from_string(body, 'pdf_sanction_letter.pdf',options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('pdf_sanction_letter.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
@@ -1114,12 +1113,13 @@ def admin_sanction(grp_id):
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+
     disbursement_date = datetime.datetime.now()
+    org_name = group.organisation.name
 
-    org_name = "Hindusthan Microfinance"
     kwargs = locals()
-
     body = render_template( "pdf_InsuranceFees.html", **kwargs)
+
     options = {
         'page-size': 'A4',
         'margin-top': '0.35in',
@@ -1129,10 +1129,10 @@ def admin_ipnpfr(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'dpn.pdf',options=options)
+    pdfkit.from_string(body, 'pdf_insurance_fees.pdf',options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('pdf_insurance_fees', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
@@ -1146,11 +1146,12 @@ def admin_ipnpfr(group_id):
 def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
     apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
-    disbursement_date = datetime.datetime.now()
 
-    org_name = "Hindusthan Microfinance"
+    disbursement_date = datetime.datetime.now()
+    org_name = group.organisation.name
+
     kwargs = locals()
-    body = render_template( "pdf_Processing_Fees.html", **kwargs)
+    body = render_template("pdf_Processing_Fees.html", **kwargs)
 
     options = {
         'page-size': 'A4',
@@ -1161,10 +1162,10 @@ def admin_processing_fees(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'dpn.pdf',options=options)
+    pdfkit.from_string(body, 'pdf_processing_fees.pdf',options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('pdf_processing_fees.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
