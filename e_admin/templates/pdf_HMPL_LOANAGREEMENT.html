@@ -1,11 +1,12 @@
 {% extends "base_pdf.html" %}
+
+
 {% block css_sheets %}{{ super() }}
 <style type="text/css">
     @font-face {
         font-family: kruti dev ;
-        src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+        src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
     }
-
     .hinditext {
         font-family: kruti dev;
         font-size:10px;
@@ -25,16 +26,12 @@
 </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
-
-
 <div class="col-md-12">
     <div class="grid simple">
     <div class="grid-body no-border"><br>
-<center><h2>Loan Agreement cum Guarantee Bond</h2></center>
+    <center><h2>Loan Agreement cum Guarantee Bond</h2></center>
 
    THIS INDENTURE made at___________________________________________________________________________________________________________________________________                                    on   between
 
@@ -201,14 +198,6 @@ _________________________________________________
 
 
 </div>
-        </div>
     </div>
-
-
-
-
-
-
-
-
+</div>
 {% endblock %}

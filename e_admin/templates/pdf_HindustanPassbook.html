@@ -3,9 +3,8 @@
     <style type="text/css">
         @font-face {
             font-family: kruti dev ;
-            src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+            src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
         }
-
         .hinditext {
             font-family: kruti dev;
             font-size:10px;
@@ -31,7 +30,6 @@
             font-family: kruti dev;
             font-size:22px;
         }
-
         .condensed tr{
             font-size:8px;
             line-height: 15px;
@@ -63,14 +61,14 @@
 
     </style>
 {% endblock %}
+
+
 {% block meta %}
     <meta name="pdfkit-orientation" content="Landscape"/>
 {% endblock %}
-{% block action_bar %}
 
-{% endblock %}
+
 {% block maincontents %}
-
     <span class="text-center font-large">Passbook/ <span class="hinditext-vlarge">HeemeyegkeÀ</span></span>
     <span class="pull-right font-vsmall">CSP Name: {{ app.owner.first_name }} {{ app.owner.last_name }} &nbsp&nbsp&nbsp&nbsp&nbsp</span>
     <span class="pull-right font-vsmall">Mobile No: {{ app.owner.postal_telephone }}</span><br/>
@@ -87,7 +85,6 @@
                     <th style="width:10%" class="text-right ">Total Installment  /&nbsp<span class="hinditext">SkegÀCe nHlee</span></th>
                     <th style="width:10%" class="">Loan C/F  /&nbsp<span class="hinditext">keÀpe& efMeuuekeÀ</span></th>
                 </tr>
-
                 {% for row in passbook_rows %}
                     <tr >
                         <td class="text-left">{{ loop.index }}</td>
@@ -99,8 +96,6 @@
                         <td class="text-center">{{ row["next_os"]|round(1) }}</td>
                     </tr>
                 {% endfor %}
-
-
                 <tr >
                     <td rowspan="3">I<br/>U<br/>C<br/></td>
                     <td colspan="2">
@@ -109,11 +104,7 @@
                         Result :  <br/>
                     </td>
                     <td rowspan="3" colspan="3">Signature</td>
-
                 </tr>
-
-
-
             </table>
         </td>
         <td style="width: 50%;padding: 10px">
@@ -137,8 +128,6 @@
                         <td></td>
                     </tr>
                 {% endfor %}
-
-
                 <tr >
                     <td rowspan="3">I<br/>U<br/>C<br/></td>
                     <td colspan="2">
@@ -147,20 +136,17 @@
                         Result :  <br/>
                     </td>
                     <td rowspan="3" colspan="3">Signature</td>
-
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
         <td style="width: 50%;padding: 10px">
-            <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindustan_passbook1.png"
-                 style="width: 100%;" alt="">
+            <img src="{{ url_for('static', filename='/img/pdf_images/hindustan_passbook1.png', _external=True) }}" style="width: 100%;" alt="">
         </td>
         <td style="width: 50%;">
-
             <table style="width: 100%;padding: 10px" class=" table-bordered font-small condensed"  >
-                <img width="100%" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/passbook_top.jpg"/>
+                <img width="100%" src="{{ url_for('static', filename='/img/pdf_images/passbook_top.jpg', _external=True) }}"/>
             </table>
             <table style="width: 100%;" class=" table-bordered font-vsmall condensed">
                 <tr><th colspan="6" class="text-center">BORROWER DETAILS  /&nbsp<span class="hinditext"> menkeÀpe&oeje®eer ceenerleer</span></th></tr>
@@ -192,8 +178,6 @@
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">
                 <tr><th colspan="7" class="text-center">Loan Details  /&nbsp<span class="hinditext">ueesve®eer ceenerlee</span></th></tr>
-
-
                 <tr>
                     <td style="width: 30%;"  class="text-right">Date of Dibursement  /&nbsp<span class="hinditext">keÀpe& efJelejCee®eer leejerKe</span></td>
                     <td colspan="4">{{ disbursement_date|dateformat }}</td>
@@ -211,7 +195,6 @@
                     <td colspan="4" class="text-center">Monthly  /&nbsp<span class="hinditext">ceeefmekeÀ</span></td>
 
                 </tr>
-
                 <tr>
                     <td  class="text-right">Repayment Day  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
                     <td class="text-center" colspan="4">{{ collection_day }} of the month</td>
@@ -236,26 +219,21 @@
                         {{ app.purpose_of_loan }}
                     </td>
                 </tr>
-
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">
                 <tr><th colspan="7" class="text-center">Insurance Details  /&nbsp<span class="hinditext">efJecee®eer ceeefnleer</span></th></tr>
-
-
                 <tr>
                     <td style="width: 30%;" class="text-right">Insured Person  /&nbsp<span class="hinditext">efJeceeOeejkeÀ J³ekeÀleer</span></td>
                     <td style="width: 30%;"><input type="checkbox" checked="checked" name="insuredPerson">Borrower  /&nbsp<span class="hinditext">menkeÀpe&oej</span> <input type="checkbox" checked="checked" name="insuredPerson"> Gurantor  /&nbsp<span class="hinditext">necceeroej</span></td>
                     <td style="width: 20%;">Sum Assured  /&nbsp<span class="hinditext">efJecee jkeÀkeÀce</span></td>
                     <td style="width: 20%;">{{ app.product.loan_amount }}</td>
                 </tr>
-
                 <tr>
                     <td class="text-right">Total Premium Paid  /&nbsp<span class="hinditext">Yejuesueer SsketÀCe efJecee nHlee jkeÀkeÀce</span></td>
                     <td>{{ app.product.total_insurance_fees }}</td>
                     <td>Cover Period  /&nbsp<span class="hinditext">efJecee®ee keÀeueeJeeOeer</span></td>
                     <td>{{ app.product.number_installments }} months</td>
                 </tr>
-
                 <tr>
                     <td class="text-right">Nominee (Borrower)  /&nbsp<span class="hinditext"></span></td>
                     {% if app.guarantor_borrowers_are_nominee == "YES" %}
@@ -263,10 +241,7 @@
                     {% else %}
                         <td colspan="3">{{ app.borrowers_nominee_name }}</td>
                     {% endif %}
-
                 </tr>
-
-
                 <tr>
                     <td class="text-right">Nominee (Guarantor)  /&nbsp<span class="hinditext"></span></td>
                     {% if app.guarantor_borrowers_are_nominee == "YES" %}
@@ -274,21 +249,17 @@
                     {% else %}
                         <td colspan="3">{{ app.gurantors_nominee_name }}</td>
                     {% endif %}
-
                 </tr>
                 <tr>
                     <td class="text-right">Emi Amount:-</td>
                     <td colspan="3">{{ app.product.emi }}</td>
                 </tr>
-
-
             </table>
-
             <div class="pull-right">_____________________________________</div>
             <br/>
             <div class="pull-right">BM/ABM&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
         </td>
     </tr>
-    </table>
+</table>
 
 {% endblock %}

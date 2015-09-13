@@ -1,11 +1,12 @@
 {% extends "base_pdf.html" %}
+
+
 {% block css_sheets %}{{ super() }}
 <style type="text/css">
     @font-face {
         font-family: kruti dev ;
-        src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+        src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
     }
-{#    /home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/#}
     .hinditext-large {
         font-family: kruti dev;
         font-size:25px;
@@ -37,27 +38,21 @@
         padding-top: 2px;
         padding-bottom: 2px;
     }
-
 </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
+
 {% block maincontents %}
-
-
 <div class="col-md-12">
-
     <div class="hinditext-large">
         {% for app in apps %}
         <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
-
         <table  border="1" style="width: 100%;" class="table table-bordered table-condensed hinditext-medium">
 
                 <tr >
                     <td>
-                        <img width="100px" src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/HCC.png">
+                        <img width="100px" src="{{ url_for('static', filename='/img/pdf_images/HCC.png', _external=True) }}">
                     </td>
                     <td colspan="2">
                         <b>efnbogmLeeve</b><br/>
@@ -65,8 +60,6 @@
                         jefpe. veb.: yeer. Dees. Sce./ [yu3et. Sve./Deej. Sme. Deej/meer. Deej. <span class="english">1041</span> meve <span class="english">1987</span><br/>
                         <span class="english">7/8</span>, efnbo m g Leeve YeJeve, kesÀ. S. jesæ[, pejercejer, kegÀuee& ( He.) cegbyeF& - 72. HeÀesve. <span class="english">28518136 /28593800</span>.<br/>
                     </td>
-
-
                 </tr>
             <tr>
                 <td colspan="2">HeeJeleer ¬eÀ. </td>
@@ -85,8 +78,6 @@
                 <td rowspan="1">veececee$e meYeemeo HeÀer ( ye Jeie&)
                     <br/>
                     <br/>
-
-
                 </td>
                 <td rowspan="1">
                     <br/><br/>
@@ -110,13 +101,9 @@
                 <td><br/> jesKeHeeue </td>
                 <td><br/> J³eJemLeeHekeÀ  </td>
             </tr>
-
         </table>
-            <div class="text-center">----------------------------------------------</div>
+        <div class="text-center">----------------------------------------------</div>
     {% endfor %}
-
     </div>
 </div>
-
-
 {% endblock %}

@@ -1,11 +1,12 @@
 {% extends "base_pdf.html" %}
+
+
 {% block css_sheets %}{{ super() }}
 <style type="text/css">
     @font-face {
         font-family: kruti dev ;
-        src: url('/home/esthenos/esthenos_cust_enrollment/esthenos/static/fonts/AYOGNI_N.TTF');
+        src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
     }
-
     .hinditext-large {
         font-family: kruti dev;
         font-size:22px;
@@ -37,16 +38,11 @@
         padding-top: 2px;
         padding-bottom: 2px;
     }
-
 </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block maincontents %}
-
-
 <div class="col-md-12">
     <center><h2 class="hinditext-large">keÀpe& keÀjej Je neceer yee@C[</h2></center>
     <div class="hinditext">
@@ -63,9 +59,7 @@
                 </tr>
             {% endfor %}
         </table>
-
         <b class="text-center">DeeefCe</b>
-
         <p>
             efnbogmLeeve cee³e¬eÀesHeÀe³eveevme ÒeeFJesì efueefceìsæ[<br/>
             ieeUe ¬eÀceebkeÀ 33 S  efJebiemeeiejHueepeeìskeÀ,<br/>
@@ -143,6 +137,4 @@
         </table>
     </div>
 </div>
-
-
 {% endblock %}

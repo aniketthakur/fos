@@ -1,5 +1,6 @@
-
 {% extends "base_pdf.html" %}
+
+
 {% block css_sheets %}{{ super() }}
     <style type="text/css">
         .font-small{
@@ -26,33 +27,28 @@
     </style>
 {% endblock %}
 
-{% block action_bar %}
 
-{% endblock %}
 {% block meta %}
     <meta name="pdfkit-orientation" content="Landscape"/>
 {% endblock %}
+
+
 {% block maincontents %}
-
-
 <div class="row col-md-10 col-md-offset-1 font-small" style="background: #ffffff;">
-        <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
             <h5 class="text-center font-lsmall">SANCTION LETTER (GROUP COPY)</h5>
             <div class="pull-left">
-                <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                     height="50" alt="">
+                <img src="{{ url_for('static', filename='/img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
                 <address>
                     <strong>{{ org_name }}</strong><br>
                 </address>
             </div>
-
             <div class="pull-left font-msmall">
                 We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
                 Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
             <br/><br/>
              The details of loan sanctions for the Group are mentioned in the below table.
             </div>
-
             <table class="table table-bordered table-condensed ">
                 <thead>
                 <tr>
@@ -128,25 +124,20 @@
             <div class="clearfix"><br/></div>
             <br>
         </div>
-
-
     <div class="col-md-10 col-md-offset-1">
         <h5 class="text-center font-lsmall">SANCTION LETTER (OFFICE COPY)</h5>
         <div class="pull-left">
-            <img src="/home/esthenos/esthenos_cust_enrollment/esthenos/static/img/pdf_images/hindusthan-logo.png"
-                 height="50" alt="">
+            <img src="{{ url_for('static', filename='/img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
             <address>
                 <strong>{{ org_name }}</strong><br>
             </address>
         </div>
-
         <div class="pull-left font-msmall">
             We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
             Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
             <br/><br/>
             The details of loan sanctions for the Group are mentioned in the below table.
         </div>
-
         <table class="table table-bordered table-condensed ">
             <thead>
             <tr>
@@ -192,8 +183,6 @@
                     <td class="text-left">{{ app.product.number_installments }}</td>
                     <td class="text-left">{{ app.product.interest_rate }}</td>
                     <td class="text-left">{{ app.purpose_of_loan }}</td>
-
-
                 </tr>
                 <!--{% endfor %}-->
             {% for i in range(1,13-apps|length) %}
@@ -214,16 +203,14 @@
                 <td style="width: 50%;">
                     <p class="text-right text-black">For {{ org_name }}<br/><br/>
                         Authorized Signatory<br/>
-                        [BM/ABM]</p>
+                        [BM/ABM]
+                    </p>
                 </td>
             </tr>
-
         </table>
         <div class="clearfix"></div>
         <div class="clearfix"><br/></div>
         <br>
     </div>
-
- </div>
-
+</div>
 {% endblock %}
