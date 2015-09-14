@@ -107,13 +107,13 @@
                               <a href="{{ url_for("organisation_views.scrutiny", appName=app.applicant_name) }}"><ins>{{ app.applicant_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <a href="#"><ins>branch-name</ins></a>
+                              <a href="#"><ins>{{ app.owner.org_branch.branch_name }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <a href="#"><ins>fos-name</ins></a>
+                              <a href="#"><ins>{{ app.owner.first_name|capitalize }} {{ app.owner.last_name|capitalize }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <a href="#"><ins>scrutiny-status</ins></a>
+                              <a href="#"><ins>{{ app.scrutiny_status }}</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.date_created|dateformat }}</td>
                         </tr>
