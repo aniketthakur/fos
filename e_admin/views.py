@@ -867,9 +867,11 @@ def cashflow_statusupdate(org_id, app_id):
         application.other_outstanding_emi = float(request.form.get("other_outstanding_emi"))
         application.other_outstanding_chit = float(request.form.get("other_outstanding_chit"))
         application.other_outstanding_insurance = float(request.form.get("other_outstanding_insurance"))
+        application.oother_outstanding_familynfriends = float(request.form.get("other_outstanding_familynfriends"))
         application.total_other_outstanding = application.other_outstanding_emi + \
                                               application.other_outstanding_chit + \
-                                              application.other_outstanding_insurance
+                                              application.other_outstanding_insurance + \
+                                              application.other_outstanding_familynfriends
 
         if request.form.get("status") == "true":
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
