@@ -148,6 +148,7 @@
                           <th style="width:20%">EMP ID</th>
                           <th style="width:20%">NAME</th>
                           <th style="width:20%">ROLES</th>
+                          <th style="width:20%">BRANCH</th>
                           <th style="width:20%">EMAIL</th>
                           <th style="width:20%">PHONE NUMBER</th>
                           <th style="width:20%">ACTIVE</th>
@@ -160,6 +161,7 @@
                               <td class="v-align-middle">{{ emp.id}}</td>
                               <td class="v-align-middle">{{ emp.first_name }}</td>
                               <td class="v-align-middle">{{ emp.user_roles }}</td>
+                              <td class="v-align-middle">{{ emp.org_branch.branch_name }}</td>
                               <td class="v-align-middle">{{ emp.email }}</td>
                               <td class="v-align-middle">{{ emp.postal_telephone }}</td>
                               <td class="v-align-middle">{{ emp.active|enabledfilter }}</td>
