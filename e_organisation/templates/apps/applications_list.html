@@ -9,7 +9,6 @@
     </div>
 
     <div class="row">
-        {% if feature_show("search_by_app_id") %}
         <div class="col-md-6 form-group">
             <form class="form-no-horizontal-spacing search-container" method="get">
                 <input type="text" class="inline form-control" name="appId" placeholder="Search By Applicant Id">
@@ -17,8 +16,6 @@
             </form>
             <div class="clearfix"></div>
         </div>
-        {% endif %}
-        {% if feature_show("search_by_app_name") %}
         <div class="col-md-6 form-group">
             <form class="form-no-horizontal-spacing search-container" method="get">
                 <input type="text" class="inline form-control" name="appName" placeholder="Search By Applicant Name">
@@ -26,7 +23,6 @@
             </form>
             <div class="clearfix"></div>
         </div>
-        {% endif %}
     </div>
 
     <div class="row">
