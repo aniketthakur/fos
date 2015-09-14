@@ -852,6 +852,7 @@ def cashflow_statusupdate(org_id, app_id):
         application.medical_expense = float(request.form.get("medical_expense"))
         application.business_expense = float(request.form.get("business_expense"))
         application.educational_expense = float(request.form.get("educational_expense"))
+        application.festival_expenditure = float(request.form.get("festival_expenditure"))
         application.entertainment_expense = float(request.form.get("entertainment_expense"))
         application.other_expense = float(request.form.get("other_expense"))
         application.total_expenditure = application.food_expense \
@@ -859,6 +860,7 @@ def cashflow_statusupdate(org_id, app_id):
                                    + application.medical_expense \
                                    + application.business_expense \
                                    + application.educational_expense \
+                                   + application.festival_expenditure \
                                    + application.entertainment_expense \
                                    + application.other_expense
 
