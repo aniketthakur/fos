@@ -84,49 +84,6 @@ def admin_settings_update():
     return redirect("/admin/settings")
 
 
-@admin_views.route('/admin/reports', methods=["GET", "POST"])
-@login_required
-def admin_reports_internal_main():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    organisations = EsthenosOrg.objects.all()
-
-    if request.method == "GET":
-        kwargs = locals()
-        return render_template("admin_reports.html", **kwargs)
-
-    if request.method == "POST":
-        applications = []
-        application_data = [get_application_headers() + ["Organisation Name"]]
-
-        report_name = "internal_report.csv"
-        report_end = request.form.get("end-date")
-        report_start = request.form.get("start-date")
-
-        if (report_start is None) or (report_end is None):
-            report_name = "internal_main_report.csv"
-            applications = EsthenosOrgApplication.objects.all()
-
-        else:
-            from datetime import datetime
-            endDate = datetime.strptime(report_end, "%m/%d/%Y")
-            startDate = datetime.strptime(report_start, "%m/%d/%Y")
-            report_name = "internal_range_report.csv"
-            applications = EsthenosOrgApplication.objects.filter(date_created__gte=startDate, date_created__lte=endDate)
-
-        for app in applications:
-            app_row_data = get_application_rowdata(app)
-            app_row_data.append(app.organisation.name)
-            application_data.append(app_row_data)
-
-        output = excel.make_response_from_array(application_data, 'csv')
-        output.headers["Content-Disposition"] = "attachment; filename=%s" % report_name
-        output.headers["Content-type"] = "text/csv"
-        return output
-
-
 @admin_views.route('/admin/cbcheck', methods=["GET"])
 @login_required
 @feature_enable("hignmark_equifax")
