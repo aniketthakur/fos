@@ -21,11 +21,6 @@ def toFloat(value):
 
 
 class AddApplicationMobile(Form):
-    group_leader_cell = TextField( validators=[ v.Length(max=512)]) #8197997788
-    group_size = TextField( validators=[ v.Length(max=512)]) #20
-    center_name = TextField( validators=[ v.Length(max=512)]) #center1
-    group_name = TextField( validators=[ v.Length(max=512)]) #group1
-    product_name = TextField( validators=[ v.Length(max=512)]) #LP2000026
     name = TextField( validators=[ v.Length(max=512)]) #Swaraj Mahesh Palekar
     pincode = TextField( validators=[ v.Length(max=512)]) #581334
     district = TextField( validators=[ v.Length(max=512)]) #Uttara Kannada
@@ -132,26 +127,14 @@ class AddApplicationMobile(Form):
     kyc = TextField( validators=[ v.Length(max=2048)]) #2000
 
     def save( self):
-        c_user = current_user
-        user = EsthenosUser.objects.get(id=c_user.id)
+        user = EsthenosUser.objects.get(id=current_user.id)
         app = EsthenosOrgApplication(applicant_name=self.name.data)
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
+        app.owner = user
+        app.organisation = user.organisation
         app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         user.organisation.update(inc__application_count=1)
-
-        #center = EsthenosOrgCenter.objects.get(center_name=self.center_name.data,organisation=user.organisation)
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=self.group_name.data)
-        #products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
-        products = EsthenosOrgProduct.objects.filter(product_name=self.product_name.data)
-        app.organisation = user.organisation
-        if len(products) > 0:
-            app.product = products[0]
-        else:
-            app.product = EsthenosOrgProduct.objects.all()[0]
-
-        app.owner = user
-        app.group = group
 
         if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
             app.guarantor_borrowers_are_nominee = "NO"
@@ -294,9 +277,7 @@ class AddApplicationMobile(Form):
                                       + app.other_outstanding_familynfriends
 
         app.net_income = app.total_income - app.total_expenditure - app.total_other_outstanding
-        app.loan_eligibility_based_on_net_income = app.net_income * app.product.number_installments
-
-        status = EsthenosOrgApplicationStatus(status = app.current_status,updated_on=app.current_status_updated)
+        status = EsthenosOrgApplicationStatus(status=app.current_status, updated_on=app.current_status_updated)
         status.save()
 
         app.timeline.append(status)

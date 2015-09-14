@@ -16,7 +16,7 @@ class EsthenosOrgNotification(db.Document):
 
 
 class EsthenosOrgNotificationResource(Resource):
-    document= EsthenosOrgNotification
+    document = EsthenosOrgNotification
 
 
 class EsthenosOrgState(db.Document):
@@ -25,18 +25,7 @@ class EsthenosOrgState(db.Document):
 
 
 class EsthenosOrgStateResource(Resource):
-    document= EsthenosOrgState
-
-
-class EsthenosOrgArea(db.Document):
-    region = db.ReferenceField('EsthenosOrgRegion')
-    state = db.ReferenceField('EsthenosOrgState')
-    organisation = db.ReferenceField('EsthenosOrg')
-    area_name = db.StringField(max_length=60,required=True)
-
-
-class EsthenosOrgAreaResource(Resource):
-    document= EsthenosOrgArea
+    document = EsthenosOrgState
 
 
 class EsthenosOrgRegion(db.Document):
@@ -46,21 +35,30 @@ class EsthenosOrgRegion(db.Document):
 
 
 class EsthenosOrgRegionResource(Resource):
-    document= EsthenosOrgRegion
+    document = EsthenosOrgRegion
+
+
+class EsthenosOrgArea(db.Document):
+    state = db.ReferenceField('EsthenosOrgState')
+    region = db.ReferenceField('EsthenosOrgRegion')
+    organisation = db.ReferenceField('EsthenosOrg')
+    area_name = db.StringField(max_length=60,required=True)
+
+
+class EsthenosOrgAreaResource(Resource):
+    document = EsthenosOrgArea
 
 
 class EsthenosOrgBranch(db.Document):
-    region = db.ReferenceField('EsthenosOrgRegion')
     state = db.ReferenceField('EsthenosOrgState')
+    region = db.ReferenceField('EsthenosOrgRegion')
     area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
-    #branch = db.StringField(max_length=60,required=True)
-    # branch_id = db.StringField(max_length=60,required=True)
 
 
 class EsthenosOrgBranchResource(Resource):
-    document= EsthenosOrgBranch
+    document = EsthenosOrgBranch
 
 
 class EsthenosOrgToken(db.EmbeddedDocument):
@@ -475,7 +473,7 @@ class EsthenosOrgApplication(db.Document):
     state_name = db.StringField(max_length=512, required=False,default="")
     state_id = db.StringField(max_length=512, required=False,default="")
     region_name = db.StringField(max_length=512, required=False,default="")
-    region_id  = db.StringField(max_length=512, required=False,default="")
+    region_id = db.StringField(max_length=512, required=False,default="")
     cm_id = db.StringField(max_length=512, required=False,default="")
     cm_cell_no = db.StringField(max_length=512, required=False,default="")
     repeat_application_id = db.StringField(max_length=512, required=False,default="")
