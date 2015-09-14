@@ -126,7 +126,7 @@ class AddApplicationMobile(Form):
 
     kyc = TextField( validators=[ v.Length(max=2048)]) #2000
 
-    def save( self):
+    def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
         app = EsthenosOrgApplication(applicant_name=self.name.data)
         settings = EsthenosSettings.objects.all()[0]
@@ -151,7 +151,6 @@ class AddApplicationMobile(Form):
         app.borrowers_nominee_name = self.borrowers_nominee_name.data
         app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
 
-        app.member_pincode = self.pincode.data
         app.male_count = toInt(self.male_count.data)
         app.female_count = toInt(self.female_count.data)
         app.house_stay_duration = toFloat(self.how_long_are_you_staying_in_house__in_years.data)
@@ -160,9 +159,6 @@ class AddApplicationMobile(Form):
         app.bank_ifsc_code = self.ifsc_code.data
         app.bank_account_number = self.account_number.data
         app.bank_account_holder_name = self.account_holder_name.data
-
-        app.member_disability = self.physical_disability_member.data
-        app.member_f_or_h_name = self.father_s__husband_s_name.data
 
         app.gurranter_s_age = toFloat(self.gurranter_s_age.data)
         app.gurranter_s_sex = self.gurranter_s_sex.data
@@ -191,6 +187,9 @@ class AddApplicationMobile(Form):
         app.member_city = self.district.data
         app.member_taluk = self.taluk.data
         app.member_village = ""
+        app.member_pincode = self.pincode.data
+        app.member_disability = self.physical_disability_member.data
+        app.member_f_or_h_name = self.father_s__husband_s_name.data
         app.member_relationship_status = self.relationship_status.data
 
         app.cast = ""
@@ -198,7 +197,6 @@ class AddApplicationMobile(Form):
         app.category = self.category.data
         app.applied_loan = toFloat(self.required_loan_amount.data)
 
-        app.education = self.education.data
         app.type_of_residence = self.type_of_house.data
         app.quality_of_house = self.quality_of_house.data
         app.drinking_water = self.source_of_drinking_water.data
@@ -208,29 +206,22 @@ class AddApplicationMobile(Form):
         app.children_above18 = toInt(self.members_above_18.data)
         app.children_below18 = toInt(self.members_less_than_18.data)
         app.family_asset = self.other_family_asset_s.data
-#        app.money_lenders_loan = float(self.application_money_lenders_loan.data)
-#        app.money_lenders_loan_roi = float(self.application_money_lenders_loan_roi.data)
-#        app.bank_loan = float(self.application_bank_loan.data)
-#        app.bank_loan_roi = float(self.application_bank_loan_roi.data)
-#        app.branch_name = self.application_branch_name.data
-#        app.branch_id  = self.applciation_branch_id.data
-#        app.state_id = self.application_state_id.data
-#        app.region_id = self.application_region_id.data
-#        app.cm_id = self.application_cm_id.data
-#        app.cm_cell_no = self.application_cm_cell_no.data
-#        app.repeat_client_id = self.application_repeat_client_id.data
 
         app.repayment_method = self.repayment_option.data
         app.applicant_name = self.name.data
+        app.age = self.age.data
         app.dob = self.dob_yob.data
         app.gender = self.gender.data
+        app.education = self.education.data
+
         app.num_cows = toInt(self.family_assets_number_of_cows.data)
         app.num_sheeps = toInt(self.family_assets_number_of_sheeps.data)
 
         app.address = self.address.data
+
         app.primary_business = self.primary_business_activities.data
         app.secondary_business = self.secondary_business_activities.data
-        app.tertiary_business=self.tertiary_business_activities.data
+        app.tertiary_business = self.tertiary_business_activities.data
 
         app.primary_business_category = self.primary_business_category.data
         app.secondary_business_category = self.secondary_business_category.data

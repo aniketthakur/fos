@@ -69,6 +69,9 @@ class EsthenosUser(BaseUser):
     def get_organization(self):
         return self.organisation
 
+    def get_phone_number(self):
+        return "%s %s" % (self.postal_tele_code, self.postal_telephone)
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 

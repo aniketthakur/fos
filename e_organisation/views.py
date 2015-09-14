@@ -78,6 +78,7 @@ def reports_internal_main():
 
     user = EsthenosUser.objects.get(id=current_user.id)
 
+
     if request.method == "GET":
         kwargs = locals()
         return render_template("client_reports.html", **kwargs)
@@ -85,27 +86,26 @@ def reports_internal_main():
     if request.method == "POST":
         applications = []
         application_data = [
-          ["ApplicationID", "Applicant Name", "Group Name", "Branch Name", "Cheque #", "Bank Name"]
+          get_application_headers()
         ]
 
-        report_name = "eqifax_reports.csv"
+        report_name = "internal_report.csv"
         report_end = request.form.get("end-date")
         report_start = request.form.get("start-date")
 
         if (report_start is None) or (report_end is None):
-            report_name = "eqifax_full_reports.csv"
+            report_name = "internal_full_report.csv"
             applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
 
         else:
             from datetime import datetime
             endDate = datetime.strptime(report_end, "%m/%d/%Y")
             startDate = datetime.strptime(report_start, "%m/%d/%Y")
-            report_name = "eqifax_range_reports.csv"
+            report_name = "internal_range_report.csv"
             applications = EsthenosOrgApplication.objects.filter(date_created__gte=startDate, date_created__lte=endDate, organisation=user.organisation)
 
         for app in applications:
-            app_branch = app.group.branch.branch_name if app.group.branch else ""
-            app_row_data = [app.application_id, app.applicant_name, app.group.group_name, app_branch, app.cheque_no, app.cheque_bank_name]
+            app_row_data = get_application_rowdata(app)
             application_data.append(app_row_data)
 
         output = excel.make_response_from_array(application_data, 'csv')

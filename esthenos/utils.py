@@ -67,7 +67,7 @@ def make_highmark_request_for_application_id(app_id):
     app.highmark_submitted = True
     hmrequest = EsthenosOrgApplicationHighMarkRequest()
     hmrequest.applicant_id1=app.application_id
-    hmrequest.acct_open_date=app.created_on
+    hmrequest.acct_open_date=app.date_created
     hmrequest.applicant_address1=app.address+" "
     hmrequest.applicant_address1_city=app.member_city
     hmrequest.applicant_address1_pincode=app.member_pincode
@@ -96,7 +96,7 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.credit_inquiry_purpose_type=app.purpose_of_loan
     hmrequest.credit_inquiry_purpose_type_description=""
     hmrequest.credit_inquiry_stage="PRE-SCREEN"
-    hmrequest.credit_report_transaction_date_time=app.excepted_disbursment_date
+    hmrequest.credit_report_transaction_date_time=""
     hmrequest.credit_report_transaction_id=""
     hmrequest.credit_request_type="JOIN"
     hmrequest.kendra_id=app.center
