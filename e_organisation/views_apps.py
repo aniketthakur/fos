@@ -8,76 +8,75 @@ def application_list():
       abort(403)
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  org  = user.organisation
+  org = user.organisation
+  branches = EsthenosOrgBranch.objects.all()
 
-  groupId = request.args.get('groupId', '')
-  groupName = request.args.get('groupName', '')
-  centerName = request.args.get('centerName', '')
+  fosId = request.args.get('fosId', '')
+  branchId = request.args.get('branchId', '')
 
-  if (groupId is not None) and (groupId != ''):
-    groups = EsthenosOrgGroup.objects.filter(organisation=org, group_id=groupId)
+  if (fosId is not None) and (fosId != ''):
+    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", id=fosId)
 
-  elif (groupName is not None) and (groupName != ''):
-    groups = EsthenosOrgGroup.objects.filter(organisation=org, group_name=groupName)
-
-  elif (centerName is not None) and (centerName != ''):
-    groups = EsthenosOrgGroup.objects.filter(organisation=org, location_name=centerName)
+  elif (branchId is not None) and (branchId != ''):
+    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", org_branch=branchId)
 
   else:
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM")
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
 
 
-@organisation_views.route('/applications/group/<group_id>', methods=["GET"])
+@organisation_views.route('/applications/fos/<fos_id>', methods=["GET"])
 @login_required
-def application_list_group(group_id):
+def application_list_fos(fos_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
-  applications = []
   user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+  fos_agent = EsthenosUser.objects.get(id=fos_id)
 
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(application_id=appId, group=group)
+    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent, application_id=appId)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(applicant_name=appName, group=group)
+    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent, applicant_name=appName)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(group=group)
+    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent)
 
+  title = "FOS: {fname} {lname}".format(fname=fos_agent.first_name, lname=fos_agent.last_name)
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
 
 
-@organisation_views.route('/applications/center/<group_id>', methods=["GET"])
+@organisation_views.route('/applications/branch/<branch_id>', methods=["GET"])
 @login_required
-def application_list_center(group_id):
+def application_list_branch(branch_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
-  applications = []
   user = EsthenosUser.objects.get(id=current_user.id)
-  group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+  org = user.organisation
+  branch = EsthenosOrgBranch.objects.get(id=branch_id)
 
+  applications = []
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(application_id=appId, group=group)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org, application_id=appId)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(applicant_name=appName, group=group)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org, applicant_name=appName)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(group=group)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org)
 
+  title = "Branch: {branch}".format(branch=branch.branch_name)
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
 

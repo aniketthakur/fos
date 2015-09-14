@@ -4,7 +4,7 @@
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Group: {{ group.group_name }} <span class="semi-bold">Application</span></h3>
+            <h3>{{ title }} <span class="semi-bold">Applications</span></h3>
         </div>
     </div>
 
@@ -39,7 +39,6 @@
                             <th style="width:1%" >#</th>
                             <th style="width:19%">Application ID</th>
                             <th style="width:20%">Applicant Name</th>
-                            <th style="width:15%">Group Name</th>
                             <th style="width:25%">Date</th>
                             <th style="width:20%">Progress Status</th>
                             <th style="width:15%">Log</th>
@@ -54,9 +53,6 @@
                               <a href="{{ url_for("organisation_views.scrutiny_application", app_id=app.application_id) }}"><ins>{{ app.application_id }}</ins></a>
                             </td>
                             <td class="v-align-middle">{{ app.applicant_name }}</td>
-                            <td class="v-align-middle">
-                              <a href="{{ url_for("organisation_views.application_list_group", group_id=app.group.group_id) }}"><ins>{{ app.group.group_name }}</ins></a>
-                            </td>
                             <td class="v-align-middle">{{ app.date_created|datetimeformat }}</td>
                             <td class="v-align-middle">{{ app.current_status.status_message }}</td>
                             <td class="v-align-middle">

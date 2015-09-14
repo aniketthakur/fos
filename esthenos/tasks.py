@@ -74,7 +74,7 @@ def zip_custom(src, dst):
 def org_applications_stats_update():
     organisations = EsthenosOrg.objects.all()
     for org in organisations:
-        date_obj =  datetime.datetime.now()
+        date_obj = datetime.datetime.now()
         date_obj.day
         stat = EsthenosOrgStats.objects.get_or_create(organisation=org)
 
@@ -271,18 +271,17 @@ def all_prefilled_applications():
                 #check for validation status and accordingly set the status
                 pass
 
-            status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
+            status = EsthenosOrgApplicationStatus(status=application.current_status, updated_on=application.current_status_updated)
             status.save()
             application.timeline.append(status)
 
-            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=125)[0],updated_on=datetime.datetime.now())
+            status = EsthenosOrgApplicationStatus(status=EsthenosOrgApplicationStatusType.objects.filter(status_code=125)[0], updated_on=datetime.datetime.now())
             status.save()
             application.timeline.append(status)
 
             application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=130)[0]
-            application.current_status_updated  = datetime.datetime.now()
+            application.current_status_updated = datetime.datetime.now()
             application.status = 130
-
             application.save()
 
 

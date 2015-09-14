@@ -610,24 +610,6 @@ def mobile_application_json():
 
     print request.json
     user = EsthenosUser.objects.get(id=current_user.id)
-    group_name = request.json.get('group_name')
-    center_name = request.json.get('center_name')
-    group, center = None, None
-
-    if center_name is None:
-        center_name = group_name
-
-    if (center_name is not None) and len(center_name) > 0 and (group_name is not None) and len(group_name) > 0:
-        unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-        center, status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
-        if status:
-            center.center_id = unique_center_id
-            center.save()
-            EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
-
-        group = EsthenosOrgGroup.objects.get(organisation=user.organisation,group_name=group_name)
-        EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-
     app_form = AddApplicationMobile.from_json(request.json)
 
     if app_form.validate():
@@ -638,9 +620,6 @@ def mobile_application_json():
     else:
         print "Could Not validate" + str(app_form.errors)
         return Response(json.dumps({'status':'failure'}), content_type="application/json", mimetype='application/json')
-
-    kwargs = locals()
-    return render_template("auth/login_admin.html", **kwargs)
 
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])

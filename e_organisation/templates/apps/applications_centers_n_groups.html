@@ -3,48 +3,35 @@
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Application <span class="semi-bold">Status</span></h3>
+            <h3>FOS <span class="semi-bold">& Branches</span></h3>
         </div>
     </div>
 
     <div class="row">
-        {% if feature_show("search_by_group_id") %}
         <div class="col-md-6 form-group">
             <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.application_list") }}">
-                <input type="text" class="inline form-control" name="groupId" placeholder="Search By group id">
-                <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
-            </form>
-            <div class="clearfix"></div>
-        </div>
-        {% endif %}
-        {% if feature_show("search_by_group_name") %}
-        <div class="col-md-6 form-group">
-            <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.application_list") }}">
-                <select class="inline select2 form-control" name="groupId">
-                    <option selected disabled>search by group name</option>
-                    {% for group in groups %}
-                    <option value="{{ group.group_id }}">{{ group.group_name }}</option>
+                <select class="inline select2 form-control" name="branchId">
+                    <option selected disabled>search by branch name</option>
+                    {% for branch in branches %}
+                    <option value="{{ branch.id }}">{{ branch.branch_name }}</option>
                     {% endfor %}
                 </select>
                 <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
             </form>
             <div class="clearfix"></div>
         </div>
-        {% endif %}
-        {% if feature_show("search_by_center_name") %}
         <div class="col-md-6 form-group">
             <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.application_list") }}">
-                <select class="inline select2 form-control" name="groupId">
-                    <option selected disabled>search by center name</option>
-                    {% for group in groups %}
-                    <option value="{{ group.group_id }}">{{ group.location_name }}</option>
+                <select class="inline select2 form-control" name="fosId">
+                    <option selected disabled>search by fos name</option>
+                    {% for fos in fos_agents %}
+                    <option value="{{ fos.id }}">{{ fos.first_name }} {{ fos.last_name }}</option>
                     {% endfor %}
                 </select>
                 <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
             </form>
             <div class="clearfix"></div>
         </div>
-        {% endif %}
     </div>
 
     <div class="row">
@@ -55,26 +42,26 @@
                         <thead>
                         <tr>
                             <th style="width:1%" >#</th>
-                            <th style="width:20%">FOS NAME</th>
                             <th style="width:20%">Branch NAME</th>
-                            <th style="width:20%">Branch Location</th>
-                            <th style="width:20%">Added Date</th>
+                            <th style="width:20%">FOS NAME</th>
+                            <th style="width:20%">FOS Email</th>
+                            <th style="width:20%">Phone Number</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for group in groups %}
+                        {% for fos in fos_agents %}
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="#"><ins>fos-name</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_branch", branch_id=fos.org_branch.id) }}"><ins>{{ fos.org_branch.branch_name }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
-                                  <a href="#"><ins>{{ group.group_name }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_fos", fos_id=fos.id) }}"><ins>{{ fos.first_name }} {{ fos.last_name }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
-                                  <a href="#"><ins>{{ group.location_name }}</ins></a>
+                                  <a href="#"><ins>{{ fos.email }}</ins></a>
                                 </td>
-                                <td><span class="muted">{{ group.created_at|datetimeformat }}</span></td>
+                                <td><span class="muted">{{ fos.postal_tele_code }}{{ fos.postal_telephone }}</span></td>
                             </tr>
                          {% endfor %}
                         </tbody>
