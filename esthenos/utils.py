@@ -92,7 +92,7 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.applicant_telephone_number1=app.member_telephone
     hmrequest.applicant_telephone_number2=""
     hmrequest.applied_for_amount__current_balance=""
-    hmrequest.branch_id=app.branch_id
+    hmrequest.branch_id=app.owner.org_branch.id
     hmrequest.credit_inquiry_purpose_type=app.purpose_of_loan
     hmrequest.credit_inquiry_purpose_type_description=""
     hmrequest.credit_inquiry_stage="PRE-SCREEN"
@@ -123,8 +123,9 @@ def make_highmark_request_for_application_id(app_id):
 
 def make_equifax_request_entry_application_id(app_id):
     app = EsthenosOrgApplication.objects.get(application_id = app_id)
-    if app.equifax_submitted == True:
+    if app.equifax_submitted:
         return
+
     app.equifax_submitted = True
     eqrequest = EsthenosOrgApplicationEqifax()
     eqrequest.reference_number=""
@@ -141,18 +142,21 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.postal_pin=app.member_pincode
     eqrequest.ration_card=""
     eqrequest.voter_id=""
-    if app.kyc_1 != None:
+
+    if app.kyc_1 is not None:
         eqrequest.national_id_card=app.kyc_1.kyc_number
     
     eqrequest.additional_id2=""
-    if app.kyc_2 != None:
+
+    if app.kyc_2 is not None:
         eqrequest.voter_id=app.kyc_2.kyc_number
+
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
     eqrequest.phone_mobile=app.member_telephone
     eqrequest.dob=app.dob
     eqrequest.gender=app.gender
-    eqrequest.branch_id=app.group.group_name
+    eqrequest.branch_id=app.owner.org_branch.branch_name
     eqrequest.kendra_id=app_id
     eqrequest.save()
     app.save()
