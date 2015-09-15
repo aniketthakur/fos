@@ -95,6 +95,11 @@ class AddApplicationMobile(Form):
     primary_business_activities = TextField( validators=[ v.Length(max=512)]) #something here
     primary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #8000
     primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
+    primary_business_expenditure___working_capital = TextField( validators=[ v.Length(max=512)]) #2000
+    primary_business_expenditure___employee_salary = TextField( validators=[ v.Length(max=512)]) #2000
+    primary_business_expenditure___rent = TextField( validators=[ v.Length(max=512)]) #2000
+    primary_business_expenditure___admin = TextField( validators=[ v.Length(max=512)]) #2000
+    primary_business_expenditure___other = TextField( validators=[ v.Length(max=512)]) #2000
 
     tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
     tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
@@ -245,18 +250,28 @@ class AddApplicationMobile(Form):
         app.medical_expense = toFloat(self.family_medical_expenditure_monthly.data)
         app.educational_expense = toFloat(self.family_education_expenditure_monthly.data)
         app.entertainment_expense = toFloat(self.family_entertainment_expenditure__monthly.data)
+
+        app.business_expense_working_capital = toFloat(self.primary_business_expenditure___working_capital.data)
+        app.business_expense_employee_salary = toFloat(self.primary_business_expenditure___employee_salary.data)
+        app.business_expense_rent = toFloat(self.primary_business_expenditure___rent.data)
+        app.business_expense_admin = toFloat(self.primary_business_expenditure___admin.data)
+        app.business_expense_other = toFloat(self.primary_business_expenditure___other.data)
         app.business_expense = app.primary_expenses\
                                + app.secondary_expenses \
-                               + app.tertiary_expenses
+                               + app.tertiary_expenses \
+                               + app.business_expense_other \
+                               + app.business_expense_admin \
+                               + app.business_expense_rent \
+                               + app.business_expense_employee_salary \
+                               + app.business_expense_working_capital
+
         app.total_expenditure = app.food_expense\
                                 + app.travel_expense\
                                 + app.entertainment_expense \
                                 + app.educational_expense \
                                 + app.medical_expense \
-                                + app.other_expense \
-                                + app.primary_expenses \
-                                + app.secondary_expenses \
-                                + app.tertiary_expenses
+                                + app.business_expense \
+                                + app.other_expense
 
         app.other_outstanding_emi = toFloat(self.financial_liabilities_bank_loans.data)
         app.other_outstanding_chit = toFloat(self.financial_liabilities_chits.data)
