@@ -600,6 +600,10 @@ class EsthenosOrgApplication(db.Document):
     generate_disbursement = db.BooleanField(default=False)
     generate_disbursement_done = db.BooleanField(default=False)
 
+    expected_tenure_in_months = db.IntField(default=0)
+    expected_emi_amount_served = db.FloatField(default=0.0)
+
+
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
 

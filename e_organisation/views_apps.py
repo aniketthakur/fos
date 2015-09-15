@@ -157,6 +157,9 @@ def cashflow_statusupdate(app_id):
                                             application.other_outstanding_insurance + \
                                             application.other_outstanding_familynfriends
 
+      application.expected_tenure_in_months = int(request.form.get("expected_tenure_in_months"))
+      application.expected_emi_amount_served = float(request.form.get("expected_emi_amount_served"))
+
       if request.form.get("status") == "true":
         application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
         application.current_status_updated = datetime.datetime.now()

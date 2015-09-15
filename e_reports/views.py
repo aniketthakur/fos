@@ -183,6 +183,9 @@ def get_application_headers():
     headers.append("Generate Disbursement")
     headers.append("Generate Disbursement Done")
 
+    headers.append("Expected Tenure In Months")
+    headers.append("Expected EMI Amount Served")
+
     return headers
 
 
@@ -356,6 +359,9 @@ def get_application_rowdata(app):
     row_data.append(app["highmark_submitted"])
     row_data.append(app["generate_disbursement"])
     row_data.append(app["generate_disbursement_done"])
+
+    row_data.append(app["expected_tenure_in_months"])
+    row_data.append(app["expected_emi_amount_served"])
 
     return row_data
 

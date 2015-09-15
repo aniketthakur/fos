@@ -293,21 +293,21 @@
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Total Existing Running number of Loans</h6>
+            <h6 class="semi-bold">Expected Tenure In Months</h6>
           </td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.total_running_loans }}" disabled>
+              <input type="text" class="form-control text-right" name="expected_tenure_in_months" value="{{ application.expected_tenure_in_months }}">
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Total Existing Loan Outstanding</h6>
+            <h6 class="semi-bold">Expected EMI can be served</h6>
           </td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right" value="{{ application.total_existing_outstanding_from }}" disabled>
+              <input type="text" class="form-control text-right" name="expected_emi_amount_served" value="{{ application.expected_emi_amount_served }}">
             </div>
           </td>
         </tr>
