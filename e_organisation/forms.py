@@ -214,7 +214,7 @@ class AddApplicationMobile(Form):
 
         app.repayment_method = self.repayment_option.data
         app.applicant_name = self.name.data
-        app.age = self.age.data
+        app.age = toInt(self.age.data)
         app.dob = self.dob_yob.data
         app.gender = self.gender.data
         app.education = self.education.data
