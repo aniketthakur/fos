@@ -2,8 +2,7 @@
 *.pyc
 venv/
 pygame
-/pitaya/data/
-/pitaya/uploads/
+e_uploads/
 *~
 \#*
 *.db
