@@ -248,6 +248,7 @@ class AddApplicationMobile(Form):
         app.other_expense = toFloat(self.family_other_expenditure_monthly.data)
         app.travel_expense = toFloat(self.family_travel_expenditure__monthly.data)
         app.medical_expense = toFloat(self.family_medical_expenditure_monthly.data)
+        app.festival_expenditure = toFloat(self.family_festival_expenditure_monthly.data)
         app.educational_expense = toFloat(self.family_education_expenditure_monthly.data)
         app.entertainment_expense = toFloat(self.family_entertainment_expenditure__monthly.data)
 
