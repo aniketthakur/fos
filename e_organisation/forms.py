@@ -219,6 +219,8 @@ class AddApplicationMobile(Form):
         app.gender = self.gender.data
         app.education = self.education.data
 
+        app.self_owned_land = toFloat(self.family_assets_land_acres)
+        app.orchard_acre = toFloat(self.family_assets_orchard__acres)
         app.num_cows = toInt(self.family_assets_number_of_cows.data)
         app.num_sheeps = toInt(self.family_assets_number_of_sheeps.data)
 
