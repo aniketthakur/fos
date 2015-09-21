@@ -20,13 +20,12 @@ def get_application_headers():
     headers.append("Date Updated")
     headers.append("Date Created")
 
-    headers.append("Status")
     headers.append("Current Status")
     headers.append("Current Status Updated")
 
     headers.append("Repeat Application ID")
     headers.append("Application ID")
-    headers.append("Upload Type")
+
     headers.append("Applicant Name")
     headers.append("Age")
     headers.append("DOB")
@@ -197,13 +196,12 @@ def get_application_rowdata(app):
     row_data.append(app["updated_on"])
     row_data.append(app["date_created"])
 
-    row_data.append(app["status"])
     row_data.append(app["current_status"])
     row_data.append(app["current_status_updated"])
 
     row_data.append(app["repeat_application_id"])
     row_data.append(app["application_id"])
-    row_data.append(app["upload_type"])
+
     row_data.append(app["applicant_name"])
     row_data.append(app["age"])
     row_data.append(app["dob"])

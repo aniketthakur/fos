@@ -431,13 +431,11 @@ class EsthenosOrgApplication(db.Document):
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     date_created = db.DateTimeField(default=datetime.datetime.now)
 
-    status = db.IntField(default=0)
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
 
-    repeat_application_id = db.StringField(max_length=512, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
-    upload_type = db.StringField(max_length=512, required=False,default="")
+    repeat_application_id = db.StringField(max_length=512, required=False,default="")
 
     applicant_name = db.StringField(max_length=45, required=False,default="")
     age = db.IntField(default=0)
