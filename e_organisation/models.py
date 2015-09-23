@@ -533,8 +533,24 @@ class EsthenosOrgApplication(db.Document):
     festival_expense = db.FloatField(default=0)
     educational_expense = db.FloatField(default=0.0)
     entertainment_expense = db.FloatField(default=0.0)
-    house_rent_expenditure = db.FloatField(default=0)
-    house_hold_expenditure = db.FloatField(default=0)
+
+    primary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
+    primary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
+    primary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
+    primary_asset_for_hypothecation_current_market_value = db.FloatField(default = 0.0)
+    primary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
+
+    secondary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
+    secondary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
+    secondary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
+    secondary_asset_for_hypothecation_current_market_value = db.FloatField(default=0.0)
+    secondary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
+
+    tertiary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
+    tertiary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
+    tertiary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
+    tertiary_asset_for_hypothecation_current_market_value = db.FloatField(default = 0.0)
+    tertiary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
 
     total_liability = db.FloatField(default=0.0)
     outstanding_1 = db.FloatField(default=0.0)

@@ -132,6 +132,24 @@ class AddApplicationMobile(Form):
         app.educational_expense = toFloat(applicant_misc.get("family_education_expenditure_monthly", ""))
         app.entertainment_expense = toFloat(applicant_misc.get("family_entertainment_expenditure__monthly", ""))
 
+        app.primary_asset_for_hypothecation_purchase_year = applicant_misc.get("primary_asset_for_hypothecation___purchase_year", "")
+        app.primary_asset_for_hypothecation_purchase_price = applicant_misc.get("primary_asset_for_hypothecation___purchase_price", "")
+        app.primary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("primary_asset_for_hypothecation___purchase_purpose", "")
+        app.primary_asset_for_hypothecation_current_market_value = applicant_misc.get("primary_asset_for_hypothecation___current_market_value", "")
+        app.primary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("primary_asset_for_hypothecation___details_of_hypothecated_goods", "")
+
+        app.secondary_asset_for_hypothecation_purchase_year  = applicant_misc.get("secondary_asset_for_hypothecation___purchase_year", "")
+        app.secondary_asset_for_hypothecation_purchase_price = applicant_misc.get("secondary_asset_for_hypothecation___purchase_price", "")
+        app.secondary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("secondary_asset_for_hypothecation___purchase_purpose", "")
+        app.secondary_asset_for_hypothecation_current_market_value = applicant_misc.get("secondary_asset_for_hypothecation___current_market_value", "")
+        app.secondary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("secondary_asset_for_hypothecation___details_of_hypothecated_goods", "")
+
+        app.tertiary_asset_for_hypothecation_purchase_year = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_year", "")
+        app.tertiary_asset_for_hypothecation_purchase_price = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_price", "")
+        app.tertiary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_purpose", "")
+        app.tertiary_asset_for_hypothecation_current_market_value = applicant_misc.get("tertiary_asset_for_hypothecation___current_market_value", "")
+        app.tertiary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("tertiary_asset_for_hypothecation___details_of_hypothecated_goods", "")
+
         app.other_outstanding_emi = toFloat(applicant_misc.get("financial_liabilities_bank_loans", ""))
         app.other_outstanding_chit = toFloat(applicant_misc.get("financial_liabilities_chits", ""))
         app.other_outstanding_insurance = toFloat(applicant_misc.get("financial_liabilities_insurance", ""))

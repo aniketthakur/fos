@@ -112,8 +112,24 @@ def get_application_headers():
     headers.append("festival expense")
     headers.append("educational expense")
     headers.append("entertainment expense")
-    headers.append("house rent expenditure")
-    headers.append("house hold expenditure")
+
+    headers.append("primary asset for hypothecation purchase year")
+    headers.append("primary asset for hypothecation purchase price")
+    headers.append("primary asset for hypothecation purchase purpose")
+    headers.append("primary asset for hypothecation current market value")
+    headers.append("primary asset for hypothecation details of hypothecated goods")
+
+    headers.append("secondary asset for hypothecation purchase year")
+    headers.append("secondary asset for hypothecation purchase price")
+    headers.append("secondary asset for hypothecation purchase purpose")
+    headers.append("secondary asset for hypothecation current market value")
+    headers.append("secondary asset for hypothecation details of hypothecated goods")
+
+    headers.append("tertiary asset for hypothecation purchase year")
+    headers.append("tertiary asset for hypothecation purchase price")
+    headers.append("tertiary asset for hypothecation purchase purpose")
+    headers.append("tertiary asset for hypothecation current market value")
+    headers.append("tertiary asset for hypothecation details of hypothecated goods")
 
     headers.append("total liability")
     headers.append("outstanding 1")
@@ -299,8 +315,24 @@ def get_application_rowdata(app):
     row_data.append(app.festival_expense)
     row_data.append(app.educational_expense)
     row_data.append(app.entertainment_expense)
-    row_data.append(app.house_rent_expenditure)
-    row_data.append(app.house_hold_expenditure)
+
+    row_data.append(app.primary_asset_for_hypothecation_purchase_year)
+    row_data.append(app.primary_asset_for_hypothecation_purchase_price)
+    row_data.append(app.primary_asset_for_hypothecation_purchase_purpose)
+    row_data.append(app.primary_asset_for_hypothecation_current_market_value)
+    row_data.append(app.primary_asset_for_hypothecation_details_of_hypothecated_goods)
+
+    row_data.append(app.secondary_asset_for_hypothecation_purchase_year)
+    row_data.append(app.secondary_asset_for_hypothecation_purchase_price)
+    row_data.append(app.secondary_asset_for_hypothecation_purchase_purpose)
+    row_data.append(app.secondary_asset_for_hypothecation_current_market_value)
+    row_data.append(app.secondary_asset_for_hypothecation_details_of_hypothecated_goods)
+
+    row_data.append(app.tertiary_asset_for_hypothecation_purchase_year)
+    row_data.append(app.tertiary_asset_for_hypothecation_purchase_price)
+    row_data.append(app.tertiary_asset_for_hypothecation_purchase_purpose)
+    row_data.append(app.tertiary_asset_for_hypothecation_current_market_value)
+    row_data.append(app.tertiary_asset_for_hypothecation_details_of_hypothecated_goods)
 
     row_data.append(app.total_liability)
     row_data.append(app.outstanding_1)
