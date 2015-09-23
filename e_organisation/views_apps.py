@@ -111,51 +111,31 @@ def cashflow_statusupdate(app_id):
       status.save()
       application.timeline.append(status)
 
-      application.primary_income = float(request.form.get("primary_income"))
-      application.tertiary_income = float(request.form.get("tertiary_income"))
-      application.secondary_income = float(request.form.get("secondary_income"))
+      application.primary_business_income_monthly = float(request.form.get("primary_income"))
+      application.tertiary_business_income_monthly = float(request.form.get("tertiary_income"))
+      application.secondary_business_income_monthly = float(request.form.get("secondary_income"))
       application.other_income = float(request.form.get("other_income"))
-      application.total_income = application.primary_income \
-                                 + application.secondary_income \
-                                 + application.tertiary_income \
-                                 + application.other_income
 
       application.food_expense = float(request.form.get("food_expense"))
+      application.other_expense = float(request.form.get("other_expense"))
       application.travel_expense = float(request.form.get("travel_expense"))
       application.medical_expense = float(request.form.get("medical_expense"))
-
-      application.business_expense_working_capital = float(request.form.get("business_expense_working_capital"))
-      application.business_expense_employee_salary = float(request.form.get("business_expense_employee_salary"))
-      application.business_expense_rent = float(request.form.get("business_expense_rent"))
-      application.business_expense_admin = float(request.form.get("business_expense_admin"))
-      application.business_expense_other = float(request.form.get("business_expense_other"))
-      application.business_expense = application.business_expense_working_capital \
-                                 + application.business_expense_employee_salary \
-                                 + application.business_expense_rent \
-                                 + application.business_expense_admin \
-                                 + application.business_expense_other
-
+      application.festival_expense = float(request.form.get("festival_expenditure"))
       application.educational_expense = float(request.form.get("educational_expense"))
-      application.festival_expenditure = float(request.form.get("festival_expenditure"))
       application.entertainment_expense = float(request.form.get("entertainment_expense"))
-      application.other_expense = float(request.form.get("other_expense"))
-      application.total_expenditure = application.food_expense \
-                                 + application.travel_expense \
-                                 + application.medical_expense \
-                                 + application.business_expense \
-                                 + application.educational_expense \
-                                 + application.festival_expenditure \
-                                 + application.entertainment_expense \
-                                 + application.other_expense
+
+      application.primary_business_expense_rent = float(request.form.get("business_expense_rent"))
+      application.primary_business_expense_admin = float(request.form.get("business_expense_admin"))
+      application.primary_business_expense_other = float(request.form.get("business_expense_other"))
+      application.primary_business_expense_working_capital = float(request.form.get("business_expense_working_capital"))
+      application.primary_business_expense_employee_salary = float(request.form.get("business_expense_employee_salary"))
+      application.tertiary_business_expenses_monthly = float(request.form.get("tertiary_business_expense"))
+      application.secondary_business_expenses_monthly = float(request.form.get("secondary_business_expense"))
 
       application.other_outstanding_emi = float(request.form.get("other_outstanding_emi"))
       application.other_outstanding_chit = float(request.form.get("other_outstanding_chit"))
       application.other_outstanding_insurance = float(request.form.get("other_outstanding_insurance"))
       application.oother_outstanding_familynfriends = float(request.form.get("other_outstanding_familynfriends"))
-      application.total_other_outstanding = application.other_outstanding_emi + \
-                                            application.other_outstanding_chit + \
-                                            application.other_outstanding_insurance + \
-                                            application.other_outstanding_familynfriends
 
       application.expected_tenure_in_months = int(request.form.get("expected_tenure_in_months"))
       application.expected_emi_amount_served = float(request.form.get("expected_emi_amount_served"))
@@ -232,8 +212,8 @@ def scrutiny():
   if not session['role'].startswith("ORG_"):
     abort(403)
 
-  user = EsthenosUser.objects.get(id=current_user.id)
-  groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
+  user = EsthenosUser.objects.get(id = current_user.id)
+  groups = EsthenosOrgGroup.objects.filter(organisation = user.organisation)
 
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
@@ -261,7 +241,7 @@ def scrutiny():
     applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=0)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)

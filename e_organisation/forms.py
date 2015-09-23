@@ -21,356 +21,181 @@ def toFloat(value):
 
 
 class AddApplicationMobile(Form):
-    name = TextField( validators=[ v.Length(max=512)]) #Swaraj Mahesh Palekar
-    pincode = TextField( validators=[ v.Length(max=512)]) #581334
-    district = TextField( validators=[ v.Length(max=512)]) #Uttara Kannada
-    state = TextField( validators=[ v.Length(max=512)]) #Karnataka
-    gender = TextField( validators=[ v.Length(max=512)]) #Male
-    country = TextField( validators=[ v.Length(max=512)]) #India
-    phone_number = TextField( validators=[ v.Length(max=512)]) #
-    age = TextField( validators=[ v.Length(max=512)]) #
-    physical_disability_member = TextField( validators=[ v.Length(max=512)]) #None
-    relationship_status = TextField( validators=[ v.Length(max=512)]) #Unmarried
-    education = TextField( validators=[ v.Length(max=512)]) #Secondary/Matric
-    category = TextField( validators=[ v.Length(max=512)]) #General
-    religion = TextField( validators=[ v.Length(max=512)]) #Hindu
-    taluk = TextField( validators=[ v.Length(max=512)]) #Honavar
-    father_s__husband_s_name = TextField( validators=[ v.Length(max=512)]) #S/O Mahesh Palekar
-    dob_yob = TextField( validators=[ v.Length(max=512)]) #1991
-    address = TextField( validators=[ v.Length(max=512)]) #Tonka
 
-    total_earning_members = TextField( validators=[ v.Length(max=512)]) #
-    total_number_of_family_members = TextField( validators=[ v.Length(max=512)]) #12
-
-    male_count = TextField( validators=[ v.Length(max=512)]) #6
-    female_count = TextField( validators=[ v.Length(max=512)]) #6
-
-    members_above_18 = TextField( validators=[ v.Length(max=512)]) #6
-    members_less_than_18 = TextField( validators=[ v.Length(max=512)]) #6
-
-    other_family_asset_s = TextField( validators=[ v.Length(max=512)]) #Bike, Gas
-
-    gurranter_s_sex = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_age = TextField( validators=[ v.Length(max=512)]) #
-    gurranter_s_name = TextField( validators=[ v.Length(max=512)]) #
-
-    gurantors_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
-    gurantors_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
-    gurantors_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
-
-    borrowers_nominee_age = TextField( validators=[ v.Length(max=512)]) #Habib
-    borrowers_nominee_gender = TextField( validators=[ v.Length(max=512)]) #Habib
-    borrowers_nominee_name = TextField( validators=[ v.Length(max=512)]) #Habib
-
-    gurantors_borrowers_are_nominee_for_each_other_ = TextField( validators=[ v.Length(max=512)]) #Yes
-    gurantor_s_relationship_with_borrower = TextField( validators=[ v.Length(max=512)]) #Father
-
-    type_of_house = TextField( validators=[ v.Length(max=512)]) #Self Owned
-    quality_of_house = TextField( validators=[ v.Length(max=512)]) #Kaccha/Mud
-    source_of_drinking_water = TextField( validators=[ v.Length(max=512)]) #Borewell, Open Well
-    how_long_are_you_staying_in_house__in_years = TextField( validators=[ v.Length(max=512)]) #25
-
-    repayment_option = TextField( validators=[ v.Length(max=512)]) #Monthly
-    purpose_of_the_loan = TextField( validators=[ v.Length(max=512)]) #cattle rearing
-    required_loan_amount = TextField( validators=[ v.Length(max=512)]) #25000
-
-    bank_name = TextField( validators=[ v.Length(max=512)]) #
-    ifsc_code = TextField( validators=[ v.Length(max=512)]) #
-    account_number = TextField( validators=[ v.Length(max=512)]) #')])
-    account_holder_name = TextField( validators=[ v.Length(max=512)]) #')])
-
-    interested_in_buying_other_products = TextField( validators=[ v.Length(max=512)]) #None
-
-    financial_liabilities_friends__family_hand_loans = TextField( validators=[ v.Length(max=512)]) #
-    financial_liabilities_chits = TextField( validators=[ v.Length(max=512)]) #
-    financial_liabilities_insurance = TextField( validators=[ v.Length(max=512)]) #
-    financial_liabilities_bank_loans = TextField( validators=[ v.Length(max=512)]) #
-
-    secondary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
-    secondary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
-    secondary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
-    secondary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #1000
-
-    primary_business_category = TextField( validators=[ v.Length(max=512)]) #Services
-    primary_business_activities = TextField( validators=[ v.Length(max=512)]) #something here
-    primary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #8000
-    primary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #2000
-    primary_business_expenditure___working_capital = TextField( validators=[ v.Length(max=512)]) #2000
-    primary_business_expenditure___employee_salary = TextField( validators=[ v.Length(max=512)]) #2000
-    primary_business_expenditure___rent = TextField( validators=[ v.Length(max=512)]) #2000
-    primary_business_expenditure___admin = TextField( validators=[ v.Length(max=512)]) #2000
-    primary_business_expenditure___other = TextField( validators=[ v.Length(max=512)]) #2000
-
-    tertiary_business_category = TextField( validators=[ v.Length(max=512)]) #
-    tertiary_business_activities = TextField( validators=[ v.Length(max=512)]) #New something
-    tertiary_business_income_monthly = TextField( validators=[ v.Length(max=512)]) #3000
-    tertiary_business_expenses_monthly = TextField( validators=[ v.Length(max=512)]) #3000
-
-    village_information_water_bodies = TextField( validators=[ v.Length(max=512)]) #Sea, Pond
-    village_information_medical_facility = TextField( validators=[ v.Length(max=512)]) #Public Hospital, None
-    village_information_sanitation = TextField( validators=[ v.Length(max=512)]) #Public
-    village_information_education_institutes = TextField( validators=[ v.Length(max=512)]) #Government School
-    village_information_financial_institutions = TextField( validators=[ v.Length(max=512)]) #Post Office
-    village_information_medical_category = TextField( validators=[ v.Length(max=512)]) #Allopathy, None
-    village_information_road_quality = TextField( validators=[ v.Length(max=512)]) #Kaccha
-    village_information_public_transportaion = TextField( validators=[ v.Length(max=512)]) #Train, Auto
-    village_information_electricity_hours = TextField( validators=[ v.Length(max=512)]) #6_15
-
-    family_assets_orchard__acres = TextField( validators=[ v.Length(max=512)]) #1
-    family_assets_land_acres = TextField( validators=[ v.Length(max=512)]) #1
-    family_assets_number_of_sheeps = TextField( validators=[ v.Length(max=512)]) #10
-    family_assets_number_of_cows = TextField( validators=[ v.Length(max=512)]) #20
-
-    family_food_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #2000
-    family_other_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #1000
-    family_travel_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
-    family_medical_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
-    family_festival_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #1000
-    family_education_expenditure_monthly = TextField( validators=[ v.Length(max=512)]) #
-    family_entertainment_expenditure__monthly = TextField( validators=[ v.Length(max=512)]) #1000
-
-    kyc = TextField( validators=[ v.Length(max=2048)]) #2000
+    assets_id = TextField(validators=[v.Length(max=512)])
+    applicant_other_info = TextField(validators=[v.Length(max=4096)])
+    applicant_aadhar_card = TextField(validators=[v.Length(max=2048)])
+    guarantor1_aadhar_card = TextField(validators=[v.Length(max=2048)])
+    guarantor2_aadhar_card = TextField(validators=[v.Length(max=2048)])
 
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
-        app = EsthenosOrgApplication(applicant_name=self.name.data)
-        settings = EsthenosSettings.objects.all()[0]
-        inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count+1
-        app.owner = user
-        app.organisation = user.organisation
-        app.application_id = user.organisation.name.upper()[0:2]+str(settings.organisations_count)+"{0:06d}".format(inc_count)
         user.organisation.update(inc__application_count=1)
+        settings = EsthenosSettings.objects.all()[0]
+        inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count + 1
 
-        if self.gurantors_borrowers_are_nominee_for_each_other_.data == "No":
-            app.guarantor_borrowers_are_nominee = "NO"
-            app.gurantors_nominee_name = self.gurantors_nominee_name.data
-            app.gurantors_nominee_gender = self.gurantors_nominee_gender.data
-            app.gurantors_nominee_age = self.gurantors_nominee_age.data
-            app.borrowers_nominee_age = self.borrowers_nominee_age.data
-            app.borrowers_nominee_gender = self.borrowers_nominee_gender.data
-            app.borrowers_nominee_name = self.borrowers_nominee_name.data
-            app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
-        else:
-            app.guarantor_borrowers_are_nominee = "YES"
+        applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"'))
+        applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
+        guarantor1 = json.loads(self.guarantor1_aadhar_card.data.replace("'", '"').replace('u"', '"'))
+        guarantor2 = json.loads(self.guarantor2_aadhar_card.data.replace("'", '"').replace('u"', '"'))
 
-        app.borrowers_nominee_name = self.borrowers_nominee_name.data
-        app.gurantor_s_relationship_with_borrower = self.gurantor_s_relationship_with_borrower.data
+        app = EsthenosOrgApplication(
+            name = applicant["name"],
+            owner = user,
+            appId = self.assets_id,
+            organisation = user.organisation,
+            application_id = user.organisation.name.upper()[0:2] + str(settings.organisations_count) + "{0:06d}".format(inc_count)
+        )
 
-        app.male_count = toInt(self.male_count.data)
-        app.female_count = toInt(self.female_count.data)
-        app.house_stay_duration = toFloat(self.how_long_are_you_staying_in_house__in_years.data)
+        app.age = toInt(applicant["age"])
+        app.dob = applicant["dob_yob"]
+        app.yob = applicant["dob_yob"]
+        app.city = applicant["district"]
+        app.taluk = applicant["taluk"]
+        app.state = applicant["state"]
+        app.district = applicant["district"]
+        app.address = applicant["address"]
+        app.country = applicant["country"]
+        app.pincode = applicant["pincode"]
+        app.mobile = applicant["mobile_number"]
+        app.tele_code = "+91"
+        app.tele_phone = applicant["phone_number"]
+        app.applicant_name = applicant["name"]
+        app.father_or_husband_name = applicant["father_s_husband_s_name"]
 
-        app.bank_name = self.bank_name.data
-        app.bank_ifsc_code = self.ifsc_code.data
-        app.bank_account_number = self.account_number.data
-        app.bank_account_holder_name = self.account_holder_name.data
+        # app.caste = applicant_misc["caste"]
+        app.gender = applicant_misc["gender"]
+        app.religion = applicant_misc["religion"]
+        app.category = applicant_misc["category"]
+        app.education = applicant_misc["education"]
+        app.disability = applicant_misc["physical_disability_member"]
 
-        app.gurranter_s_age = toFloat(self.gurranter_s_age.data)
-        app.gurranter_s_sex = self.gurranter_s_sex.data
-        app.gurranter_s_name = self.gurranter_s_name.data
+        app.male_count = toInt(applicant_misc["male_count"])
+        app.female_count = toInt(applicant_misc["female_count"])
+        app.members_above18 = toInt(applicant_misc["members_above_18"])
+        app.members_less_than_18 = toInt(applicant_misc["members_less_than_18"])
+        app.total_earning_members = toInt(applicant_misc["total_earning_members"])
+        app.total_number_of_family_members = toInt(applicant_misc["total_number_of_family_members"])
 
-        app.village_electricity = self.village_information_electricity_hours.data
-        app.village_hospital_category = self.village_information_medical_category.data
-        app.village_medical_facilities = self.village_information_medical_facility.data
-        app.village_public_transport = self.village_information_public_transportaion.data
-        app.village_road = self.village_information_road_quality.data
-        app.village_water = self.village_information_water_bodies.data
-        app.village_edu_facilities = self.village_information_education_institutes.data
-        app.village_financial_institution = self.village_information_financial_institutions.data
-        app.village_information_sanitation = self.village_information_sanitation.data
+        app.nominee_age = applicant_misc["nominee_age"]
+        app.nominee_name = applicant_misc["nominee_name"]
+        app.nominee_phone = applicant_misc["nominee_phone"]
+        app.nominee_gender = applicant_misc["nominee_gender"]
+        app.nominee_relationship_with_borrower = applicant_misc["nominee_relationship_with_borrower"]
 
-        app.status = 0
-        app.upload_type = "AUTOMATIC_UPLOAD"
+        app.type_of_house = applicant_misc["type_of_house"]
+        app.quality_of_house = applicant_misc["quality_of_house"]
+        app.house_stay_duration = toFloat(applicant_misc["how_long_are_you_staying_in_house__in_years"])
+
+        app.applied_loan = toFloat(applicant_misc["required_loan_amount"])
+        app.purpose_of_loan = applicant_misc["purpose_of_the_loan"]
+
+        app.family_assets_land_acres = toFloat(applicant_misc["family_assets_land_acres"])
+        app.family_assets_orchard_acres = toFloat(applicant_misc["family_assets_orchard__acres"])
+        app.family_assets_number_of_rented_houses_or_flats = toFloat(applicant_misc["family_assets_number_of_rented_houses_or_flats"])
+        app.family_assets_number_of_rented_shops_or_godowns = toFloat(applicant_misc["family_assets_number_of_rented_shops_or_godowns"])
+
+        app.bank_name = applicant_misc["bank_name"]
+        app.bank_ifsc_code = applicant_misc["ifsc_code"]
+        app.bank_account_number = applicant_misc["account_number"]
+        app.bank_account_holder_name = applicant_misc["account_holder_name"]
+        app.repayment_method = applicant_misc["repayment_option"]
+
+        app.primary_business_premise = applicant_misc["primary_business___premise"]
+        app.primary_business_category = applicant_misc["primary_business_category"]
+        app.primary_business_activities = applicant_misc["primary_business_activities"]
+        app.primary_business_seasonality = applicant_misc["primary_business_seasonality"]
+        app.primary_business_income_monthly = toFloat(applicant_misc["primary_business_income_monthly"])
+        app.primary_business_number_of_employees = toFloat(applicant_misc["primary_business___number_of_employees"])
+        app.primary_business_expense_rent = toFloat(applicant_misc["primary_business_expenditure___rent"])
+        app.primary_business_expense_admin = toFloat(applicant_misc["primary_business_expenditure___admin"])
+        app.primary_business_expense_other = toFloat(applicant_misc["primary_business_expenditure___other_expenses"])
+        app.primary_business_expense_working_capital = toFloat(applicant_misc["primary_business_expenditure___working_capital"])
+        app.primary_business_expense_employee_salary = toFloat(applicant_misc["primary_business_expenditure___employee_salary"])
+        app.primary_business_number_of_years_in_business = toFloat(applicant_misc["primary_business___number_of_years_in_business"])
+
+        app.secondary_business = applicant_misc.get("secondary_business_activities", "")
+        app.secondary_business_category = applicant_misc.get("secondary_business_category", "")
+        app.secondary_business_income_monthly = toFloat(applicant_misc.get("secondary_business_income_monthly", ""))
+        app.secondary_business_expenses_monthly = toFloat(applicant_misc.get("secondary_business_expenses_monthly", ""))
+
+        app.tertiary_business = applicant_misc.get("tertiary_business_activities", "")
+        app.tertiary_business_category = applicant_misc.get("tertiary_business_category", "")
+        app.tertiary_business_income_monthly = toFloat(applicant_misc.get("tertiary_business_income_monthly", ""))
+        app.tertiary_business_expenses_monthly = toFloat(applicant_misc.get("tertiary_business_expenses_monthly", ""))
+
+        app.food_expense = toFloat(applicant_misc["family_food_expenditure__monthly"])
+        app.other_expense = toFloat(applicant_misc["family_other_expenditure_monthly"])
+        app.travel_expense = toFloat(applicant_misc["family_travel_expenditure__monthly"])
+        app.medical_expense = toFloat(applicant_misc["family_medical_expenditure_monthly"])
+        app.festival_expense = toFloat(applicant_misc["family_festival_expenditure_monthly"])
+        app.educational_expense = toFloat(applicant_misc["family_education_expenditure_monthly"])
+        app.entertainment_expense = toFloat(applicant_misc["family_entertainment_expenditure__monthly"])
+
+        app.other_outstanding_emi = toFloat(applicant_misc["financial_liabilities_bank_loans"])
+        app.other_outstanding_chit = toFloat(applicant_misc["financial_liabilities_chits"])
+        app.other_outstanding_insurance = toFloat(applicant_misc["financial_liabilities_insurance"])
+        app.other_outstanding_familynfriends = toFloat(applicant_misc["financial_liabilities_friends__family_hand_loans"])
 
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=110)
         app.current_status_updated = datetime.datetime.now()
 
-        app.member_telephone = self.phone_number.data
-        app.member_tele_code = "+91"
-        app.member_country = self.country.data
-        app.member_state = self.state.data
-        app.member_city = self.district.data
-        app.member_taluk = self.taluk.data
-        app.member_village = ""
-        app.member_pincode = self.pincode.data
-        app.member_disability = self.physical_disability_member.data
-        app.member_f_or_h_name = self.father_s__husband_s_name.data
-        app.member_relationship_status = self.relationship_status.data
-
-        app.cast = ""
-        app.religion = self.religion.data
-        app.category = self.category.data
-        app.applied_loan = toFloat(self.required_loan_amount.data)
-
-        app.type_of_residence = self.type_of_house.data
-        app.quality_of_house = self.quality_of_house.data
-        app.drinking_water = self.source_of_drinking_water.data
-        app.purpose_of_loan = self.purpose_of_the_loan.data
-        app.family_size = toInt(self.total_number_of_family_members.data)
-        app.total_earning_members = toInt(self.total_earning_members.data)
-        app.children_above18 = toInt(self.members_above_18.data)
-        app.children_below18 = toInt(self.members_less_than_18.data)
-        app.family_asset = self.other_family_asset_s.data
-
-        app.repayment_method = self.repayment_option.data
-        app.applicant_name = self.name.data
-        app.age = toInt(self.age.data)
-        app.dob = self.dob_yob.data
-        app.gender = self.gender.data
-        app.education = self.education.data
-
-        app.self_owned_land = toFloat(self.family_assets_land_acres)
-        app.orchard_acre = toFloat(self.family_assets_orchard__acres)
-        app.num_cows = toInt(self.family_assets_number_of_cows.data)
-        app.num_sheeps = toInt(self.family_assets_number_of_sheeps.data)
-
-        app.address = self.address.data
-
-        app.primary_business = self.primary_business_activities.data
-        app.secondary_business = self.secondary_business_activities.data
-        app.tertiary_business = self.tertiary_business_activities.data
-
-        app.primary_business_category = self.primary_business_category.data
-        app.secondary_business_category = self.secondary_business_category.data
-        app.tertiary_business_category=self.tertiary_business_category.data
-
-        app.primary_income = toFloat(self.primary_business_income_monthly.data)
-        app.secondary_income = toFloat(self.secondary_business_income_monthly.data)
-        app.tertiary_income = toFloat(self.tertiary_business_income_monthly.data)
-        app.other_income = 0
-        app.total_income = app.primary_income\
-                           + app.secondary_income\
-                           + app.tertiary_income \
-                           + app.other_income
-
-        app.primary_expenses = toFloat(self.primary_business_expenses_monthly.data)
-        app.secondary_expenses = toFloat(self.secondary_business_expenses_monthly.data)
-        app.tertiary_expenses = toFloat(self.tertiary_business_expenses_monthly.data)
-        app.food_expense = toFloat(self.family_food_expenditure__monthly.data)
-        app.other_expense = toFloat(self.family_other_expenditure_monthly.data)
-        app.travel_expense = toFloat(self.family_travel_expenditure__monthly.data)
-        app.medical_expense = toFloat(self.family_medical_expenditure_monthly.data)
-        app.festival_expenditure = toFloat(self.family_festival_expenditure_monthly.data)
-        app.educational_expense = toFloat(self.family_education_expenditure_monthly.data)
-        app.entertainment_expense = toFloat(self.family_entertainment_expenditure__monthly.data)
-
-        app.business_expense_working_capital = toFloat(self.primary_business_expenditure___working_capital.data)
-        app.business_expense_employee_salary = toFloat(self.primary_business_expenditure___employee_salary.data)
-        app.business_expense_rent = toFloat(self.primary_business_expenditure___rent.data)
-        app.business_expense_admin = toFloat(self.primary_business_expenditure___admin.data)
-        app.business_expense_other = toFloat(self.primary_business_expenditure___other.data)
-        app.business_expense = app.primary_expenses\
-                               + app.secondary_expenses \
-                               + app.tertiary_expenses \
-                               + app.business_expense_other \
-                               + app.business_expense_admin \
-                               + app.business_expense_rent \
-                               + app.business_expense_employee_salary \
-                               + app.business_expense_working_capital
-
-        app.total_expenditure = app.food_expense\
-                                + app.travel_expense\
-                                + app.entertainment_expense \
-                                + app.educational_expense \
-                                + app.medical_expense \
-                                + app.business_expense \
-                                + app.other_expense
-
-        app.other_outstanding_emi = toFloat(self.financial_liabilities_bank_loans.data)
-        app.other_outstanding_chit = toFloat(self.financial_liabilities_chits.data)
-        app.other_outstanding_insurance = toFloat(self.financial_liabilities_insurance.data)
-        app.other_outstanding_familynfriends = toFloat(self.financial_liabilities_friends__family_hand_loans.data)
-        app.total_other_outstanding = + app.other_outstanding_emi \
-                                      + app.other_outstanding_chit \
-                                      + app.other_outstanding_insurance \
-                                      + app.other_outstanding_familynfriends
-
-        app.net_income = app.total_income - app.total_expenditure - app.total_other_outstanding
         status = EsthenosOrgApplicationStatus(status=app.current_status, updated_on=app.current_status_updated)
         status.save()
 
+        app.applicant_kyc = EsthenosOrgApplicationKYC(
+            kyc_type = applicant["type"],
+            kyc_number = applicant["uid"],
+            age = applicant["age"],
+            dob = applicant["dob_yob"],
+            name = applicant["name"],
+            taluk = applicant["taluk"],
+            state = applicant["state"],
+            gender = applicant_misc["gender"],
+            pincode = applicant["pincode"],
+            address = applicant["address"],
+            country = applicant["country"],
+            district = applicant["district"],
+            phone_number = applicant["phone_number"],
+            mobile_number = applicant["mobile_number"],
+            father_or_husband_name = applicant["father_s_husband_s_name"],
+        )
+
+        app.guarantor1_kyc = EsthenosOrgApplicationKYC(
+            kyc_type = applicant["type"],
+            kyc_number = applicant["uid"],
+            age = guarantor1["age"],
+            dob = guarantor1["dob_yob"],
+            name = guarantor1["name"],
+            taluk = guarantor1["taluk"],
+            state = guarantor1["state"],
+            pincode = guarantor1["pincode"],
+            address = guarantor1["address"],
+            country = guarantor1["country"],
+            district = guarantor1["district"],
+            phone_number = guarantor1["phone_number"],
+            mobile_number = guarantor1["mobile_number"],
+            father_or_husband_name = guarantor1["father_s_husband_s_name"],
+        )
+
+        app.guarantor2_kyc = EsthenosOrgApplicationKYC(
+            kyc_type = applicant["type"],
+            kyc_number = guarantor2["uid"],
+            age = guarantor2["age"],
+            dob = guarantor2["dob_yob"],
+            name = guarantor2["name"],
+            taluk = guarantor2["taluk"],
+            state = guarantor2["state"],
+            pincode = guarantor2["pincode"],
+            address = guarantor2["address"],
+            country = guarantor2["country"],
+            district = guarantor2["district"],
+            phone_number = guarantor2["phone_number"],
+            mobile_number = guarantor2["mobile_number"],
+            father_or_husband_name = guarantor2["father_s_husband_s_name"],
+        )
+
         app.timeline.append(status)
-        data_kyc = self.kyc.data.replace("'", '"').replace('u"', '"')
-
-        kyc_json = json.loads(data_kyc)
-        if kyc_json.has_key("aadhaar"):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            kyc_obj.kyc_type = "AADHAAR"
-
-            if "aadhar_f" in kyc_json["aadhaar"]:
-                kyc_obj.image_id_f = kyc_json["aadhaar"]["aadhar_f"]
-
-            if "aadhar_b" in kyc_json["aadhaar"]:
-                kyc_obj.image_id_b = kyc_json["aadhaar"]["aadhar_b"]
-
-            if "uid" in kyc_json["aadhaar"]:
-                kyc_obj.kyc_number = kyc_json["aadhaar"]["uid"]
-
-            if "yob" in kyc_json["aadhaar"]:
-                kyc_obj.dob = kyc_json["aadhaar"]["yob"]
-
-            if "name" in kyc_json["aadhaar"]:
-                kyc_obj.name = kyc_json["aadhaar"]["name"]
-
-            if "gender" in kyc_json["aadhaar"]:
-                kyc_obj.gender = kyc_json["aadhaar"]["gender"]
-
-            if kyc_json["aadhaar"].has_key("house"):
-                kyc_obj.address1 = kyc_json["aadhaar"]["house"]
-
-            if kyc_json["aadhaar"].has_key("lm"):
-                kyc_obj.address1 = kyc_json["aadhaar"]["lm"]
-
-            if "state" in kyc_json["aadhaar"]:
-                kyc_obj.state = kyc_json["aadhaar"]["state"]
-
-            if "dist" in kyc_json["aadhaar"]:
-                kyc_obj.dist = kyc_json["aadhaar"]["dist"]
-
-            if kyc_json["aadhaar"].has_key("vtc"):
-                kyc_obj.taluk = kyc_json["aadhaar"]["vtc"]
-
-            if "pc" in kyc_json["aadhaar"]:
-                kyc_obj.pincode = kyc_json["aadhaar"]["pc"]
-
-            app.kyc_1 = kyc_obj
-
-        kyc_obj = EsthenosOrgApplicationKYC()
-        if kyc_json.has_key("pan") :
-            kyc_obj.kyc_type = "PAN"
-            kyc_obj.image_id_f = kyc_json["pan"]["pancard_f"]
-
-        elif kyc_json.has_key("voters"):
-            kyc_obj.kyc_type = "VOTERS"
-            kyc_obj.image_id_f = kyc_json["voters"]["votercard_f"]
-            kyc_obj.image_id_b = kyc_json["voters"]["votercard_b"]
-        app.kyc_2 = kyc_obj
-
-        if kyc_json.has_key("gurrantor") and kyc_json["gurrantor"].has_key("gurrantors_f")and kyc_json["gurrantor"].has_key("gurrantors_b"):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            kyc_obj.type ="UNKNOWN"
-            kyc_obj.image_id_f = kyc_json["gurrantor"]["gurrantors_f"]
-            kyc_obj.image_id_b = kyc_json["gurrantor"]["gurrantors_b"]
-            app.gkyc_1 = kyc_obj
-
-        if kyc_json.has_key("other"):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            kyc_obj.type ="OTHER"
-            kyc_obj.image_id_f = kyc_json["other"]["other"]
-            app.other_documents.append(kyc_obj)
-
-        if kyc_json.has_key("bank"):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            kyc_obj.type ="BANK_STATEMENT"
-            kyc_obj.image_id_f = kyc_json["bank"]["bank_account_statement"]
-            app.other_documents.append(kyc_obj)
-
-        if kyc_json.has_key("ration"):
-            kyc_obj = EsthenosOrgApplicationKYC()
-            kyc_obj.type ="RATION"
-            kyc_obj.image_id_f = kyc_json["ration"]["ration_f"]
-            kyc_obj.image_id_b = kyc_json["ration"]["ration_b"]
-            app.other_documents.append(kyc_obj)
 
         app.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=120)
         app.current_status_updated = datetime.datetime.now()

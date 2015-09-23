@@ -251,6 +251,7 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     image_id_b = db.StringField(max_length=512, required=False,default="")
     kyc_type = db.StringField(max_length=512, required=False,default="")
     kyc_number = db.StringField(max_length=512, required=False,default="")
+    age = db.StringField(max_length=512, required=False,default="")
     dob = db.StringField(max_length=512, required=False,default="")
     name = db.StringField(max_length=255, required=False,default="")
     father_or_husband_name = db.StringField(max_length=255, required=False,default="")
@@ -425,6 +426,11 @@ class EsthenosOrgApplication(db.Document):
     product = db.ReferenceField('EsthenosOrgProduct', required=False)
     organisation = db.ReferenceField('EsthenosOrg')
 
+    applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    guarantor1_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    guarantor2_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
+
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     timeline = db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
 
@@ -434,92 +440,100 @@ class EsthenosOrgApplication(db.Document):
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
 
+    assets_id = db.StringField(max_length=255, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
-    repeat_application_id = db.StringField(max_length=512, required=False,default="")
 
-    applicant_name = db.StringField(max_length=45, required=False,default="")
     age = db.IntField(default=0)
     dob = db.StringField(max_length=512, required=False,default="")
-    gender = db.StringField(max_length=512, required=False,default="")
-    education = db.StringField(max_length=512, required=False,default="")
-
+    yob = db.StringField(max_length=512, required=False,default="")
+    applicant_name = db.StringField(max_length=45, required=False,default="")
+    city = db.StringField(max_length=128, required=False,default="")
+    taluk = db.StringField(max_length=128, required=False,default="")
+    state = db.StringField(max_length=128, required=False,default="")
+    district = db.StringField(max_length=128, required=False,default="")
     address = db.StringField(max_length=512, required=False,default="")
-    member_telephone = db.StringField(max_length=128, required=False,default="")
-    member_tele_code = db.StringField(max_length=128, required=False,default="")
-    member_country = db.StringField(max_length=128, required=False,default="")
-    member_state = db.StringField(max_length=128, required=False,default="")
-    member_city = db.StringField(max_length=128, required=False,default="")
-    member_taluk = db.StringField(max_length=128, required=False,default="")
-    member_village = db.StringField(max_length=128, required=False,default="")
-    member_pincode = db.StringField(max_length=10, required=False,default="")
-    member_disability = db.StringField(max_length=512, required=False,default="")
-    member_f_or_h_age = db.IntField(default=0)
-    member_f_or_h_name = db.StringField(max_length=512, required=False,default="")
-    member_id_proof_number = db.StringField(max_length=512, required=False,default="")
-    member_relationship_status = db.StringField(max_length=512, required=False,default="")
+    country = db.StringField(max_length=128, required=False,default="")
+    pincode = db.StringField(max_length=10, required=False,default="")
+    mobile = db.StringField(max_length=10, required=False,default="")
+    tele_code = db.StringField(max_length=128, required=False,default="")
+    tele_phone = db.StringField(max_length=128, required=False,default="")
+    father_or_husband_name = db.StringField(max_length=512, required=False,default="")
 
-    purpose_of_loan = db.StringField(max_length=512, required=False,default="")
-    applied_loan = db.FloatField(default=0.0)
+    caste = db.StringField(max_length=512, required=False,default="")
+    gender = db.StringField(max_length=512, required=False,default="")
     religion = db.StringField(max_length=512, required=False,default="")
     category = db.StringField(max_length=512, required=False,default="")
-    caste = db.StringField(max_length=512, required=False,default="")
+    education = db.StringField(max_length=512, required=False,default="")
+    disability = db.StringField(max_length=512, required=False,default="")
 
-    drinking_water = db.StringField(max_length=512, required=False,default="")
-    quality_of_house = db.StringField(max_length=512, required=False,default="")
-    type_of_residence = db.StringField(max_length=512, required=False,default="")
-    select_house_type = db.StringField(max_length=512, required=False,default="")
-    house_stay_duration = db.FloatField(default=0.0)
-
-    family_size = db.IntField(default=0)
-    adult_count = db.IntField(default=0)
     male_count = db.IntField(default=0.0)
     female_count = db.IntField(default=0.0)
-    children_above18 =  db.IntField(default=0)
-    children_below18 =  db.IntField(default=0)
+    members_above18 =  db.IntField(default=0)
+    members_less_than_18 =  db.IntField(default=0)
     total_earning_members = db.IntField(default=0)
+    total_number_of_family_members = db.IntField(default=0)
 
+    nominee_age = db.StringField(max_length=512, required=False,default="")
+    nominee_name = db.StringField(max_length=512, required=False,default="")
+    nominee_phone = db.StringField(max_length=512, required=False,default="")
+    nominee_gender = db.StringField(max_length=512, required=False,default="")
+    nominee_relationship_with_borrower = db.StringField(max_length=512, required=False,default="")
+
+    type_of_house = db.StringField(max_length=512, required=False,default="")
+    quality_of_house = db.StringField(max_length=512, required=False,default="")
+    house_stay_duration = db.FloatField(default=0.0)
+
+    applied_loan = db.FloatField(default=0.0)
+    purpose_of_loan = db.StringField(max_length=512, required=False,default="")
+
+    family_assets_land_acres = db.FloatField(default=0)
+    family_assets_orchard_acres = db.FloatField(default=0)
+    family_assets_number_of_rented_houses_or_flats = db.FloatField(default=0)
+    family_assets_number_of_rented_shops_or_godowns = db.FloatField(default=0)
+
+    bank_name = db.StringField(max_length=200, required=False,default="")
+    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
+    bank_account_number = db.StringField(max_length=200, required=False,default="")
+    bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
+    cheque_no = db.StringField(max_length=512, required=False,default="")
+    cheque_bank_name = db.StringField(max_length=512, required=False,default="")
+    repayment_mode = db.StringField(max_length=512, required=False,default="")
+    repayment_method = db.StringField(max_length=512, required=False,default="")
+
+    primary_business_premise = db.StringField(max_length=512, required=False,default="")
     primary_business_category = db.StringField(max_length=512, required=False,default="")
-    primary_business = db.StringField(max_length=512, required=False,default="")
+    primary_business_activities = db.StringField(max_length=512, required=False,default="")
+    primary_business_seasonality = db.StringField(max_length=512, required=False,default="")
+    primary_business_income_monthly = db.FloatField(default=0.0)
+    primary_business_number_of_employees = db.FloatField(default=0.0)
+    primary_business_expense_rent = db.FloatField(default=0.0)
+    primary_business_expense_admin = db.FloatField(default=0.0)
+    primary_business_expense_other = db.FloatField(default=0.0)
+    primary_business_expense_working_capital = db.FloatField(default=0.0)
+    primary_business_expense_employee_salary = db.FloatField(default=0.0)
+    primary_business_number_of_years_in_business = db.FloatField(default=0.0)
 
-    secondary_business_category = db.StringField(max_length=512, required=False,default="")
     secondary_business = db.StringField(max_length=512, required=False,default="")
+    secondary_business_category = db.StringField(max_length=512, required=False,default="")
+    secondary_business_income_monthly = db.FloatField(default=0.0)
+    secondary_business_expenses_monthly = db.FloatField(default=0.0)
 
-    tertiary_business_category = db.StringField(max_length=512, required=False,default="")
     tertiary_business = db.StringField(max_length=512, required=False,default="")
+    tertiary_business_category = db.StringField(max_length=512, required=False,default="")
+    tertiary_business_income_monthly = db.FloatField(default=0.0)
+    tertiary_business_expenses_monthly = db.FloatField(default=0.0)
 
-    family_assets = db.StringField(max_length=512, required=False,default="")
-    num_cows = db.IntField(default=0)
-    num_sheeps = db.IntField(default=0)
-    patta_land = db.FloatField(default=0)
-    shared_land = db.FloatField(default=0)
-    orchard_acre = db.FloatField(default=0)
-    self_owned_land = db.FloatField(default=0)
-
-    primary_income = db.FloatField(default=0.0)
-    secondary_income = db.FloatField(default=0.0)
-    tertiary_income = db.FloatField(default=0.0)
     other_income = db.FloatField(default=0.0)
-    total_income = db.FloatField(default=0.0)
 
-    primary_expenses = db.FloatField(default=0.0)
-    secondary_expenses = db.FloatField(default=0.0)
-    tertiary_expenses = db.FloatField(default=0.0)
     food_expense = db.FloatField(default=0.0)
+    other_expense = db.FloatField(default=0.0)
     travel_expense = db.FloatField(default=0.0)
     medical_expense = db.FloatField(default=0.0)
+    festival_expense = db.FloatField(default=0)
     educational_expense = db.FloatField(default=0.0)
-    festival_expenditure = db.FloatField(default=0)
     entertainment_expense = db.FloatField(default=0.0)
     house_rent_expenditure = db.FloatField(default=0)
     house_hold_expenditure = db.FloatField(default=0)
-    business_expense = db.FloatField(default=0.0)
-    business_expense_working_capital = db.FloatField(default=0.0)
-    business_expense_employee_salary = db.FloatField(default=0.0)
-    business_expense_rent = db.FloatField(default=0.0)
-    business_expense_admin = db.FloatField(default=0.0)
-    business_expense_other = db.FloatField(default=0.0)
-    other_expense = db.FloatField(default=0.0)
-    total_expenditure = db.FloatField(default=0.0)
 
     total_liability = db.FloatField(default=0.0)
     outstanding_1 = db.FloatField(default=0.0)
@@ -532,11 +546,8 @@ class EsthenosOrgApplication(db.Document):
     other_outstanding_chit = db.FloatField(default=0.0)
     other_outstanding_insurance = db.FloatField(default=0.0)
     other_outstanding_familynfriends = db.FloatField(default=0.0)
-    total_other_outstanding = db.FloatField(default=0.0)
 
-    net_income = db.FloatField(default=0.0)
     total_running_loans = db.IntField(default=0.0)
-
     total_running_loans_from_mfi = db.IntField(default=0)
     total_existing_outstanding_from = db.FloatField(default=0.0)
     total_existing_outstanding_from_mfi = db.FloatField(default=0.0)
@@ -549,50 +560,6 @@ class EsthenosOrgApplication(db.Document):
     defaults_with_no_mfis = db.IntField(default=0)
     attendence_percentage = db.FloatField(default=0.0)
 
-    kyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    kyc_2 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    gkyc_1 = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
-
-    interested_in_other_fp=db.StringField(max_length=512, required=False,default="")
-
-    village=db.StringField(max_length=512, required=False,default="")
-    village_road=db.StringField(max_length=512, required=False,default="")
-    village_water=db.StringField(max_length=512, required=False,default="")
-    village_electricity=db.StringField(max_length=10, required=False,default="")
-    village_edu_facilities=db.StringField(max_length=512, required=False,default="")
-    village_public_transport=db.StringField(max_length=512, required=False,default="")
-    village_hospital_category=db.StringField(max_length=512, required=False,default="")
-    village_medical_facilities=db.StringField(max_length=512, required=False,default="")
-    village_financial_institution=db.StringField(max_length=512, required=False,default="")
-    village_information_sanitation=db.StringField(max_length=512, required=False,default="")
-
-    bank_name = db.StringField(max_length=200, required=False,default="")
-    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
-    bank_account_number = db.StringField(max_length=200, required=False,default="")
-    bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
-    cheque_no=db.StringField(max_length=512, required=False,default="")
-    cheque_bank_name=db.StringField(max_length=512, required=False,default="")
-    repayment_mode = db.StringField(max_length=512, required=False,default="")
-    repayment_method = db.StringField(max_length=512, required=False,default="")
-
-    guranteer_s = db.StringField(max_length=512, required=False,default="")
-    gurranter_s_sex = db.StringField(max_length=10, required=False,default="")
-    gurranter_s_age = db.FloatField(default=0.0)
-    gurranter_s_name = db.StringField(max_length=512, required=False,default="")
-
-    gurantors_nominee_age = db.IntField(default=0)
-    gurantors_nominee_name = db.StringField(max_length=512, required=False,default="")
-    gurantors_nominee_gender = db.StringField(max_length=512, required=False,default="")
-    gurantor_s_relationship_with_borrower = db.StringField(max_length=20, required=False,default="")
-    guarantor_borrowers_are_nominee = db.StringField(max_length=512, required=False,default="")
-    gurantors_borrowers_are_nominee_for_each_other_ = db.StringField(max_length=10, required=False,default="")
-
-    borrower_s=db.StringField(max_length=512, required=False,default="")
-    borrowers_nominee_age = db.IntField(default=0)
-    borrowers_nominee_name = db.StringField(max_length=512, required=False,default="")
-    borrowers_nominee_gender = db.StringField(max_length=512, required=False,default="")
-
     equifax_submitted = db.BooleanField(default=False)
     highmark_submitted = db.BooleanField(default=False)
     generate_disbursement = db.BooleanField(default=False)
@@ -601,6 +568,40 @@ class EsthenosOrgApplication(db.Document):
     expected_tenure_in_months = db.IntField(default=0)
     expected_emi_amount_served = db.FloatField(default=0.0)
 
+    def total_income(self):
+        return self.primary_business_income_monthly \
+              + self.secondary_business_income_monthly \
+              + self.tertiary_business_income_monthly \
+              + self.other_income
+
+    def total_expenditure(self):
+        return self.food_expense\
+              + self.travel_expense\
+              + self.entertainment_expense \
+              + self.educational_expense \
+              + self.medical_expense \
+              + self.business_expense() \
+              + self.other_expense
+
+    def total_other_outstanding(self):
+        return self.other_outstanding_emi \
+              + self.other_outstanding_chit \
+              + self.other_outstanding_insurance \
+              + self.other_outstanding_familynfriends
+
+    def net_income(self):
+        return self.total_income() \
+              - self.total_expenditure() \
+              - self.total_other_outstanding()
+
+    def business_expense(self):
+        return self.secondary_business_expenses_monthly \
+              + self.tertiary_business_expenses_monthly \
+              + self.primary_business_expense_rent \
+              + self.primary_business_expense_admin \
+              + self.primary_business_expense_other \
+              + self.primary_business_expense_working_capital \
+              + self.primary_business_expense_employee_salary
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
