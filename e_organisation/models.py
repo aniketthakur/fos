@@ -437,6 +437,7 @@ class EsthenosOrgApplication(db.Document):
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     date_created = db.DateTimeField(default=datetime.datetime.now)
 
+    status = db.IntField(default=0)
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
 
