@@ -238,16 +238,16 @@
                             <span class="tag">Age : </span><span class="value">{{ application.age }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Fathers/Spouse Name : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Fathers/Spouse Name : </span><span class="value">{{ application.father_or_husband_name }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Mobile : </span><span class="value">{{ application.member_tele_code }}{{ application.member_telephone }}</span>
+                            <span class="tag">Mobile : </span><span class="value">{{ application.mobile }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Landline : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Landline : </span><span class="value">{{ application.tele_code }}{{ application.tele_phone }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_kyc.kyc_number }}</span>
                         </div>
                     </div>
                 </div>
@@ -257,16 +257,16 @@
                     <div class="business-info section">
                         <h4 class="section-title">Business Details</h4>
                         <div class="name">
-                            <span class="tag">Years In Business : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Years In Business : </span><span class="value">{{ application.primary_business_number_of_years_in_business }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Employees : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Employees : </span><span class="value">{{ application.primary_business_number_of_employees }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Seasonality : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Seasonality : </span><span class="value">{{ application.primary_business_seasonality }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Own/ Rented Business Premise : </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Own/ Rented Business Premise : </span><span class="value">{{ application.primary_business_premise }}</span>
                         </div>
                     </div>
                 </div>
@@ -298,10 +298,10 @@
                             <span class="tag">Business: </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Loan Purpose: </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Loan Purpose: </span><span class="value">{{ application.purpose_of_loan }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Loan Amount Applied: </span><span class="value">{{ application.applicant_name }}</span>
+                            <span class="tag">Loan Amount Applied: </span><span class="value">{{ application.applied_loan }}</span>
                         </div>
                     </div>
                 </div>
