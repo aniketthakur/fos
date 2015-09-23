@@ -23,6 +23,7 @@ def toFloat(value):
 class AddApplicationMobile(Form):
 
     assets_id = TextField(validators=[v.Length(max=512)])
+    assets_map = TextField(validators=[v.Length(max=10000)])
     business_lat = TextField(validators=[v.Length(max=512)])
     business_lng = TextField(validators=[v.Length(max=512)])
     applicant_other_info = TextField(validators=[v.Length(max=100000)])
@@ -36,14 +37,17 @@ class AddApplicationMobile(Form):
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count + 1
 
+        assets_map = json.loads(self.assets_map.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
         applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
-        applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
-        guarantor1 = json.loads(self.guarantor1_aadhar_card.data.replace("'", '"').replace('u"', '"'))
-        guarantor2 = json.loads(self.guarantor2_aadhar_card.data.replace("'", '"').replace('u"', '"'))
 
-        print self.assets_id.data
-        print self.business_lat.data
-        print self.business_lng.data
+        applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
+        applicant_docs = assets_map.get("applicant", {})
+
+        guarantor1 = json.loads(self.guarantor1_aadhar_card.data.replace("'", '"').replace('u"', '"'))
+        guarantor1_docs = assets_map.get("guarantor1", {})
+
+        guarantor2 = json.loads(self.guarantor2_aadhar_card.data.replace("'", '"').replace('u"', '"'))
+        guarantor2_docs = assets_map.get("guarantor2", {})
 
         app = EsthenosOrgApplication(
             name = applicant["name"],
@@ -219,6 +223,33 @@ class AddApplicationMobile(Form):
             phone_number = guarantor2["phone_number"],
             mobile_number = guarantor2["mobile_number"],
             father_or_husband_name = guarantor2["father_s_husband_s_name"],
+        )
+
+        app.applicant_docs = EsthenosOrgApplicationDocs(
+            pan_docs = applicant_docs.get("pan_card", []),
+            aadhar_docs = applicant_docs.get("aadhar_card", []),
+            voterid_docs = applicant_docs.get("voter_card", []),
+            personal_docs = applicant_docs.get("personal_docs", []),
+            business_docs = applicant_docs.get("business_docs", []),
+            other_docs = applicant_docs.get("other_card", []),
+        )
+
+        app.guarantor1_docs = EsthenosOrgApplicationDocs(
+            pan_docs = guarantor1_docs.get("pan_card", []),
+            aadhar_docs = guarantor1_docs.get("aadhar_card", []),
+            voterid_docs = guarantor1_docs.get("voter_card", []),
+            personal_docs = guarantor1_docs.get("personal_docs", []),
+            business_docs = guarantor1_docs.get("business_docs", []),
+            other_docs = guarantor1_docs.get("other_card", []),
+        )
+
+        app.guarantor2_docs = EsthenosOrgApplicationDocs(
+            pan_docs = guarantor2_docs.get("pan_card", []),
+            aadhar_docs = guarantor2_docs.get("aadhar_card", []),
+            voterid_docs = guarantor2_docs.get("voter_card", []),
+            personal_docs = guarantor2_docs.get("personal_docs", []),
+            business_docs = guarantor2_docs.get("business_docs", []),
+            other_docs = guarantor2_docs.get("other_card", []),
         )
 
         app.timeline.append(status)

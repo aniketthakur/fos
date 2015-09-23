@@ -88,6 +88,15 @@ class EsthenosOrgApplicationMap(db.EmbeddedDocument):
     gkyc_file_pixuate_id = db.DictField()
 
 
+class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
+    pan_docs = db.ListField(db.StringField(max_length=255))
+    aadhar_docs = db.ListField(db.StringField(max_length=255))
+    voterid_docs = db.ListField(db.StringField(max_length=255))
+    personal_docs = db.ListField(db.StringField(max_length=255))
+    business_docs = db.ListField(db.StringField(max_length=255))
+    other_docs = db.ListField(db.StringField(max_length=255))
+
+
 class EsthenosOrgUserUploadSession(db.DynamicDocument):
     unique_session_key = db.StringField(max_length=255, required=True)
     owner = db.ReferenceField('EsthenosUser')
@@ -426,8 +435,14 @@ class EsthenosOrgApplication(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
 
     applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    applicant_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+
     guarantor1_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    guarantor1_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+
     guarantor2_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
+    guarantor2_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+
     other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
 
     business_lat = db.StringField(max_length=512, required=False, default="")

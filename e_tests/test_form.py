@@ -4,7 +4,7 @@ import requests
 url = "http://localhost:8080/mobile/application/json"
 
 querystring = {
-  "instance_token":"-F1SOWPGj6CSj7p3LzRheMIOVO0ZBi4RLj4WLk8SI44"
+  "instance_token":"ChADpwltz-mp-WkS0VIVyt8dP0Xtvac8Ee8ZY1lsPIg"
 }
 
 payload = {
@@ -212,6 +212,8 @@ pay = {
     u'purpose_of_the_loan': u'Hb',
     u'primary_business___number_of_years_in_business': u'1346'
 }
+
+payload = {"assets_id":"ab22d3e5-3473-4b35-bbf0-16ce0da8e533","business_lng":77.4004362,"business_lat":28.5857611,"applicant_other_info":{},"guarantor1_aadhar_card":{"address":"4\/166, . near bus stand  ","dob_yob":"1992","pincode":"516257","state":"Andhra Pradesh","taluk":"Lakkireddipalle","phone_number":"","father_s_husband_s_name":"S\/O Fyroz Basha","age":"23","country":"India","district":"Cuddapah","name":"Pattan Saddam Hussain","uid":"565061987998","type":"AADHAAR","mobile_number":"8"},"applicant_aadhar_card":{"address":", . zakariya house,zakariya colony,3\/103 dargha mohalla Asind","dob_yob":"1984","pincode":"311301","state":"Rajasthan","taluk":"Asind","phone_number":"","father_s_husband_s_name":"S\/O Shabbir Mohammad Chhipa","age":"31","country":"India","district":"Bhilwara","name":"Arif Mohammad Chhipa","uid":"968354673454","type":"AADHAAR","mobile_number":"8"},"guarantor2_aadhar_card":{"address":"E-387, GALI N0-8.   Patparganj","dob_yob":"1981","pincode":"110091","state":"Delhi","taluk":"East Vinod Nagar","phone_number":"","father_s_husband_s_name":"S\/O Shri Asharfi Lal Mehto","age":"34","country":"India","district":"East Delhi","name":"Pramod Kumar","uid":"729348086056","type":"AADHAAR","mobile_number":"8"},"assets_map":{"guarantor1":{},"guarantor2":{},"applicant":{"pan_card":["ab22d3e5-3473-4b35-bbf0-16ce0da8e533\/applicant_pan_card_1.jpg"],"voter_card":["ab22d3e5-3473-4b35-bbf0-16ce0da8e533\/applicant_voter_card_0.jpg","ab22d3e5-3473-4b35-bbf0-16ce0da8e533\/applicant_voter_card_1.jpg"]}}}
 
 headers = {
   'content-type': "application/json"
