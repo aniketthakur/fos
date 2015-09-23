@@ -23,10 +23,10 @@ def toFloat(value):
 class AddApplicationMobile(Form):
 
     assets_id = TextField(validators=[v.Length(max=512)])
-    applicant_other_info = TextField(validators=[v.Length(max=4096)])
-    applicant_aadhar_card = TextField(validators=[v.Length(max=2048)])
-    guarantor1_aadhar_card = TextField(validators=[v.Length(max=2048)])
-    guarantor2_aadhar_card = TextField(validators=[v.Length(max=2048)])
+    applicant_other_info = TextField(validators=[v.Length(max=100000)])
+    applicant_aadhar_card = TextField(validators=[v.Length(max=100000)])
+    guarantor1_aadhar_card = TextField(validators=[v.Length(max=100000)])
+    guarantor2_aadhar_card = TextField(validators=[v.Length(max=100000)])
 
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
@@ -34,7 +34,7 @@ class AddApplicationMobile(Form):
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count + 1
 
-        applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"'))
+        applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
         applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
         guarantor1 = json.loads(self.guarantor1_aadhar_card.data.replace("'", '"').replace('u"', '"'))
         guarantor2 = json.loads(self.guarantor2_aadhar_card.data.replace("'", '"').replace('u"', '"'))
@@ -133,21 +133,21 @@ class AddApplicationMobile(Form):
         app.entertainment_expense = toFloat(applicant_misc.get("family_entertainment_expenditure__monthly", ""))
 
         app.primary_asset_for_hypothecation_purchase_year = applicant_misc.get("primary_asset_for_hypothecation___purchase_year", "")
-        app.primary_asset_for_hypothecation_purchase_price = applicant_misc.get("primary_asset_for_hypothecation___purchase_price", "")
+        app.primary_asset_for_hypothecation_purchase_price = toFloat(applicant_misc.get("primary_asset_for_hypothecation___purchase_price", ""))
         app.primary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("primary_asset_for_hypothecation___purchase_purpose", "")
-        app.primary_asset_for_hypothecation_current_market_value = applicant_misc.get("primary_asset_for_hypothecation___current_market_value", "")
+        app.primary_asset_for_hypothecation_current_market_value = toFloat(applicant_misc.get("primary_asset_for_hypothecation___current_market_value", ""))
         app.primary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("primary_asset_for_hypothecation___details_of_hypothecated_goods", "")
 
         app.secondary_asset_for_hypothecation_purchase_year  = applicant_misc.get("secondary_asset_for_hypothecation___purchase_year", "")
-        app.secondary_asset_for_hypothecation_purchase_price = applicant_misc.get("secondary_asset_for_hypothecation___purchase_price", "")
+        app.secondary_asset_for_hypothecation_purchase_price = toFloat(applicant_misc.get("secondary_asset_for_hypothecation___purchase_price", ""))
         app.secondary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("secondary_asset_for_hypothecation___purchase_purpose", "")
-        app.secondary_asset_for_hypothecation_current_market_value = applicant_misc.get("secondary_asset_for_hypothecation___current_market_value", "")
+        app.secondary_asset_for_hypothecation_current_market_value = toFloat(applicant_misc.get("secondary_asset_for_hypothecation___current_market_value", ""))
         app.secondary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("secondary_asset_for_hypothecation___details_of_hypothecated_goods", "")
 
         app.tertiary_asset_for_hypothecation_purchase_year = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_year", "")
-        app.tertiary_asset_for_hypothecation_purchase_price = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_price", "")
+        app.tertiary_asset_for_hypothecation_purchase_price = toFloat(applicant_misc.get("tertiary_asset_for_hypothecation___purchase_price", ""))
         app.tertiary_asset_for_hypothecation_purchase_purpose = applicant_misc.get("tertiary_asset_for_hypothecation___purchase_purpose", "")
-        app.tertiary_asset_for_hypothecation_current_market_value = applicant_misc.get("tertiary_asset_for_hypothecation___current_market_value", "")
+        app.tertiary_asset_for_hypothecation_current_market_value = toFloat(applicant_misc.get("tertiary_asset_for_hypothecation___current_market_value", ""))
         app.tertiary_asset_for_hypothecation_details_of_hypothecated_goods = applicant_misc.get("tertiary_asset_for_hypothecation___details_of_hypothecated_goods", "")
 
         app.other_outstanding_emi = toFloat(applicant_misc.get("financial_liabilities_bank_loans", ""))
