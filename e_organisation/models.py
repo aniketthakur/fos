@@ -247,23 +247,22 @@ class EsthenosOrgGroupResource(Resource):
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
-    image_id_f = db.StringField(max_length=512, required=False,default="")
-    image_id_b = db.StringField(max_length=512, required=False,default="")
     kyc_type = db.StringField(max_length=512, required=False,default="")
     kyc_number = db.StringField(max_length=512, required=False,default="")
     age = db.StringField(max_length=512, required=False,default="")
     dob = db.StringField(max_length=512, required=False,default="")
     name = db.StringField(max_length=255, required=False,default="")
-    father_or_husband_name = db.StringField(max_length=255, required=False,default="")
-    gender = db.StringField(max_length=512, required=False,default="")
-    address1 = db.StringField(max_length=512, required=False,default="")
-    address2 = db.StringField(max_length=512, required=False,default="")
-    state = db.StringField(max_length=128, required=False,default="")
-    dist = db.StringField(max_length=128, required=False,default="")
     taluk = db.StringField(max_length=128, required=False,default="")
+    state = db.StringField(max_length=128, required=False,default="")
+    gender = db.StringField(max_length=512, required=False,default="")
     pincode = db.StringField(max_length=512, required=False,default="")
+    address = db.StringField(max_length=512, required=False,default="")
+    country = db.StringField(max_length=512, required=False,default="")
+    district = db.StringField(max_length=512, required=False,default="")
+    phone_number = db.StringField(max_length=512, required=False,default="")
+    mobile_number = db.StringField(max_length=512, required=False,default="")
+    father_or_husband_name = db.StringField(max_length=255, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
-    raw = db.StringField(max_length=8048, required=False)
     validation = db.StringField(max_length=512, required=True,default="PENDING")
 
     def __unicode__(self):

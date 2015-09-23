@@ -48,7 +48,7 @@ class AddApplicationMobile(Form):
         app = EsthenosOrgApplication(
             name = applicant["name"],
             owner = user,
-            appId = self.assets_id.data,
+            assets_id = str(self.assets_id.data),
             business_lat = str(self.business_lat.data),
             business_lng = str(self.business_lng.data),
             organisation = user.organisation,
