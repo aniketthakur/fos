@@ -431,6 +431,9 @@ class EsthenosOrgApplication(db.Document):
     guarantor2_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
     other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
 
+    business_lat = db.StringField(max_length=512, required=False, default="")
+    business_lng = db.StringField(max_length=512, required=False, default="")
+
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     timeline = db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
 

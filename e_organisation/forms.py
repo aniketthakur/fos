@@ -23,6 +23,8 @@ def toFloat(value):
 class AddApplicationMobile(Form):
 
     assets_id = TextField(validators=[v.Length(max=512)])
+    business_lat = TextField(validators=[v.Length(max=512)])
+    business_lng = TextField(validators=[v.Length(max=512)])
     applicant_other_info = TextField(validators=[v.Length(max=100000)])
     applicant_aadhar_card = TextField(validators=[v.Length(max=100000)])
     guarantor1_aadhar_card = TextField(validators=[v.Length(max=100000)])
@@ -39,10 +41,16 @@ class AddApplicationMobile(Form):
         guarantor1 = json.loads(self.guarantor1_aadhar_card.data.replace("'", '"').replace('u"', '"'))
         guarantor2 = json.loads(self.guarantor2_aadhar_card.data.replace("'", '"').replace('u"', '"'))
 
+        print self.assets_id.data
+        print self.business_lat.data
+        print self.business_lng.data
+
         app = EsthenosOrgApplication(
             name = applicant["name"],
             owner = user,
-            appId = self.assets_id,
+            appId = self.assets_id.data,
+            business_lat = str(self.business_lat.data),
+            business_lng = str(self.business_lng.data),
             organisation = user.organisation,
             application_id = user.organisation.name.upper()[0:2] + str(settings.organisations_count) + "{0:06d}".format(inc_count)
         )
