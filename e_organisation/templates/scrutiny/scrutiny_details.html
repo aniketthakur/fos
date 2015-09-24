@@ -99,13 +99,19 @@
       padding: 15px;
     }
   </style>
+  <link rel="stylesheet" href="{{ url_for("static", filename="css/jquery.fancybox.css") }}" type="text/css" media="screen" />
 {% endblock %}
 
 
 {% block js_scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.fancybox.pack.js") }}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
             function initialize() {
                 var mapOptions = {
                   center: {lat: {{ application.business_lat }}, lng: {{ application.business_lng }}},
@@ -221,8 +227,10 @@
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Scrutiny: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+            <h3 class="pull-left">Scrutiny: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+            <h3 class="pull-right"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></h3>
         </div>
+        <div class="clearfix"></div>
     </div>
 
     <div class="row">
@@ -355,11 +363,76 @@
 
             <div class="grid simple documents">
                 <div class="grid-body no-border">
-                    <h5 class="inline"><a href="#">kyc</a></h5>
-                    <h5 class="inline"><a href="#">guarantor kyc</a></h5>
-                    <h5 class="inline"><a href="#">personal documents</a></h5>
-                    <h5 class="inline"><a href="#">business documents</a></h5>
-                    <h5 class="inline"><a href="#">other documents</a></h5>
+                    <h5 class="inline">
+                        {% if not application.applicant_docs.kyc_docs() %}
+                            <a href="#">Applicant KYC (0) <i class="fa fa-file-text-o"></i></a>
+                        {% endif %}
+                        {% for document in application.applicant_docs.kyc_docs()  %}
+                            {% if loop.first %}
+                            <a class="fancybox" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
+                              Applicant KYC ({{ application.applicant_docs.kyc_docs()|length }}) <i class="fa fa-file-text-o"></i>
+                            </a>
+                            {% else %}
+                            <a class="fancybox hidden" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <h5 class="inline">
+                        {% if not application.guarantor1_docs.kyc_docs and not applicant.guarantor2_docs.kyc_docs %}
+                            <a href="#">Guarantor KYC (0) <i class="fa fa-file-text-o"></i></a>
+                        {% endif %}
+                        {% for document in (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())  %}
+                            {% if loop.first %}
+                            <a class="fancybox" rel="guarantor-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
+                              Guarantor KYC ({{ (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())|length }}) <i class="fa fa-file-text-o"></i>
+                            </a>
+                            {% else %}
+                            <a class="fancybox hidden" rel="guarantor-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <h5 class="inline">
+                        {% if not application.applicant_docs.personal_docs %}
+                            <a href="#">Personal Documents (0) <i class="fa fa-file-text-o"></i></a>
+                        {% endif %}
+                        {% for document in application.applicant_docs.personal_docs %}
+                            {% if loop.first %}
+                            <a class="fancybox" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
+                              Personal Documents {{ application.applicant_docs.personal_docs|length }} <i class="fa fa-file-text-o"></i>
+                            </a>
+                            {% else %}
+                            <a class="fancybox hidden" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <h5 class="inline">
+                        {% if not application.applicant_docs.business_docs %}
+                            <a href="#">Business Documents (0) <i class="fa fa-file-text-o"></i></a>
+                        {% endif %}
+                        {% for document in application.applicant_docs.business_docs  %}
+                            {% if loop.first %}
+                            <a class="fancybox" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
+                              Business Documents ({{ application.applicant_docs.business_docs|length }}) <i class="fa fa-file-text-o"></i>
+                            </a>
+                            {% else %}
+                            <a class="fancybox hidden" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <h5 class="inline">
+                        {% if not application.applicant_docs.other_docs %}
+                            <a href="#">Other Documents (0) <i class="fa fa-file-text-o"></i></a>
+                        {% endif %}
+                        {% for document in application.applicant_docs.other_docs %}
+                            {% if loop.first %}
+                            <a class="fancybox" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
+                              Other Documents ({{ application.applicant_docs.other_docs|length }}) <i class="fa fa-file-text-o"></i>
+                            </a>
+                            {% else %}
+                            <a class="fancybox hidden" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
                 </div>
             </div>
         </div>

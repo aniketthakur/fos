@@ -96,6 +96,10 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
     business_docs = db.ListField(db.StringField(max_length=255))
     other_docs = db.ListField(db.StringField(max_length=255))
 
+    def kyc_docs(self):
+        print self.pan_docs + self.aadhar_docs + self.voterid_docs
+        return self.pan_docs + self.aadhar_docs + self.voterid_docs
+
 
 class EsthenosOrgUserUploadSession(db.DynamicDocument):
     unique_session_key = db.StringField(max_length=255, required=True)

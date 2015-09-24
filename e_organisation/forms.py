@@ -37,7 +37,7 @@ class AddApplicationMobile(Form):
         settings = EsthenosSettings.objects.all()[0]
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count + 1
 
-        assets_map = json.loads(self.assets_map.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
+        assets_map = json.loads(self.assets_map.data.replace("'", '"').replace('u"', '"').replace("\/", '/'))
         applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
 
         applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
@@ -233,6 +233,8 @@ class AddApplicationMobile(Form):
             business_docs = applicant_docs.get("business_docs", []),
             other_docs = applicant_docs.get("other_card", []),
         )
+        print applicant_docs
+        print app.applicant_docs
 
         app.guarantor1_docs = EsthenosOrgApplicationDocs(
             pan_docs = guarantor1_docs.get("pan_card", []),
@@ -242,6 +244,8 @@ class AddApplicationMobile(Form):
             business_docs = guarantor1_docs.get("business_docs", []),
             other_docs = guarantor1_docs.get("other_card", []),
         )
+        print guarantor1_docs
+        print app.guarantor1_docs
 
         app.guarantor2_docs = EsthenosOrgApplicationDocs(
             pan_docs = guarantor2_docs.get("pan_card", []),
@@ -251,6 +255,8 @@ class AddApplicationMobile(Form):
             business_docs = guarantor2_docs.get("business_docs", []),
             other_docs = guarantor2_docs.get("other_card", []),
         )
+        print guarantor2_docs
+        print app.guarantor2_docs
 
         app.timeline.append(status)
 
