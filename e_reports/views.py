@@ -52,6 +52,7 @@ def get_application_headers():
     headers.append("members above18")
     headers.append("members less than 18")
     headers.append("total earning members")
+    headers.append("total number of family members")
 
     headers.append("nominee age")
     headers.append("nominee name")
@@ -255,6 +256,7 @@ def get_application_rowdata(app):
     row_data.append(app.members_above18)
     row_data.append(app.members_less_than_18)
     row_data.append(app.total_earning_members)
+    row_data.append(app.total_number_of_family_members)
 
     row_data.append(app.nominee_age)
     row_data.append(app.nominee_name)
