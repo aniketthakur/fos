@@ -96,6 +96,10 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
     business_docs = db.ListField(db.StringField(max_length=255))
     other_docs = db.ListField(db.StringField(max_length=255))
 
+    def has_kyc(self):
+        print self.pan_docs + self.aadhar_docs + self.voterid_docs
+        return self.pan_docs + self.aadhar_docs + self.voterid_docs
+
     def kyc_docs(self):
         print self.pan_docs + self.aadhar_docs + self.voterid_docs
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
@@ -430,6 +434,14 @@ class EsthenosOrgApplicationStatus(db.Document):
     updated_on = db.DateTimeField(default=datetime.datetime.now)
 
 
+class EsthenosOrgLocation(db.EmbeddedDocument):
+    lat = db.FloatField(default=0.0)
+    lng = db.FloatField(default=0.0)
+
+    def __unicode__(self):
+      return {"lat": self.lat, "lng": self.lng}
+
+
 class EsthenosOrgApplication(db.Document):
     owner = db.ReferenceField('EsthenosUser')
     group = db.ReferenceField('EsthenosOrgGroup')
@@ -438,19 +450,19 @@ class EsthenosOrgApplication(db.Document):
     product = db.ReferenceField('EsthenosOrgProduct', required=False)
     organisation = db.ReferenceField('EsthenosOrg')
 
-    applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    applicant_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+    applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)
+    applicant_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs, default=EsthenosOrgApplicationDocs)
 
-    guarantor1_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    guarantor1_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+    guarantor1_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)
+    guarantor1_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs, default=EsthenosOrgApplicationDocs)
 
-    guarantor2_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC)
-    guarantor2_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs)
+    guarantor2_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)
+    guarantor2_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs, default=EsthenosOrgApplicationDocs)
 
     other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
 
-    business_lat = db.StringField(max_length=512, required=False, default="")
-    business_lng = db.StringField(max_length=512, required=False, default="")
+    home_loc = db.EmbeddedDocumentField(EsthenosOrgLocation, default=EsthenosOrgLocation)
+    business_loc = db.EmbeddedDocumentField(EsthenosOrgLocation, default=EsthenosOrgLocation)
 
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
     timeline = db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))

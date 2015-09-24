@@ -113,8 +113,8 @@
                 closeEffect: 'none'
             });
             function initialize() {
-                var mapOptions = {
-                  center: {lat: {{ application.business_lat }}, lng: {{ application.business_lng }}},
+                var mapOptions1 = {
+                  center: {lat: {{ application.business_loc.lat }}, lng: {{ application.business_loc.lng }}},
                   zoom: 7,
                   minZoom: 5,
                   maxZoom: 10,
@@ -122,8 +122,18 @@
                   mapTypeControl: false,
                   streetViewControl: false
                 };
-                var map1 = new google.maps.Map(document.getElementById('map-business'), mapOptions);
-                var map2 = new google.maps.Map(document.getElementById('map-residence'), mapOptions);
+                var map1 = new google.maps.Map(document.getElementById('map-business'), mapOptions1);
+
+                var mapOptions2 = {
+                  center: {lat: {{ application.home_loc.lat }}, lng: {{ application.home_loc.lng }}},
+                  zoom: 7,
+                  minZoom: 5,
+                  maxZoom: 10,
+                  zoomControl: false,
+                  mapTypeControl: false,
+                  streetViewControl: false
+                };
+                var map2 = new google.maps.Map(document.getElementById('map-residence'), mapOptions2);
             }
             google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -378,7 +388,7 @@
                         {% endfor %}
                     </h5>
                     <h5 class="inline">
-                        {% if not application.guarantor1_docs.kyc_docs and not applicant.guarantor2_docs.kyc_docs %}
+                        {% if not application.guarantor1_docs.kyc_docs() and not application.guarantor2_docs.kyc_docs() %}
                             <a href="#">Guarantor KYC (0) <i class="fa fa-file-text-o"></i></a>
                         {% endif %}
                         {% for document in (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())  %}

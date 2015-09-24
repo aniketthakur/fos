@@ -24,8 +24,8 @@ class AddApplicationMobile(Form):
 
     assets_id = TextField(validators=[v.Length(max=512)])
     assets_map = TextField(validators=[v.Length(max=10000)])
-    business_lat = TextField(validators=[v.Length(max=512)])
-    business_lng = TextField(validators=[v.Length(max=512)])
+    locations_map = TextField(validators=[v.Length(max=2048)])
+
     applicant_other_info = TextField(validators=[v.Length(max=100000)])
     applicant_aadhar_card = TextField(validators=[v.Length(max=100000)])
     guarantor1_aadhar_card = TextField(validators=[v.Length(max=100000)])
@@ -38,6 +38,7 @@ class AddApplicationMobile(Form):
         inc_count = EsthenosOrg.objects.get(id = user.organisation.id).application_count + 1
 
         assets_map = json.loads(self.assets_map.data.replace("'", '"').replace('u"', '"').replace("\/", '/'))
+        locations_map = json.loads(self.locations_map.data.replace("'", '"').replace('u"', '"').replace("\/", '/'))
         applicant_misc = json.loads(self.applicant_other_info.data.replace("'", '"').replace('u"', '"').replace(": None", ': "None"'))
 
         applicant = json.loads(self.applicant_aadhar_card.data.replace("'", '"').replace('u"', '"'))
@@ -53,8 +54,6 @@ class AddApplicationMobile(Form):
             name = applicant["name"],
             owner = user,
             assets_id = str(self.assets_id.data),
-            business_lat = str(self.business_lat.data),
-            business_lng = str(self.business_lng.data),
             organisation = user.organisation,
             application_id = user.organisation.name.upper()[0:2] + str(settings.organisations_count) + "{0:06d}".format(inc_count)
         )
@@ -172,6 +171,9 @@ class AddApplicationMobile(Form):
 
         status = EsthenosOrgApplicationStatus(status=app.current_status, updated_on=app.current_status_updated)
         status.save()
+
+        app.home_loc = EsthenosOrgLocation(lat=locations_map["home"]["lat"], lng=locations_map["home"]["lng"])
+        app.business_loc = EsthenosOrgLocation(lat=locations_map["business"]["lat"], lng=locations_map["business"]["lng"])
 
         app.applicant_kyc = EsthenosOrgApplicationKYC(
             kyc_type = applicant["type"],
