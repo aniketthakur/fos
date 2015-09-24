@@ -408,7 +408,7 @@
                         {% for document in application.applicant_docs.personal_docs %}
                             {% if loop.first %}
                             <a class="fancybox" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}">
-                              Personal Documents {{ application.applicant_docs.personal_docs|length }} <i class="fa fa-file-text-o"></i>
+                              Personal Documents ({{ application.applicant_docs.personal_docs|length }}) <i class="fa fa-file-text-o"></i>
                             </a>
                             {% else %}
                             <a class="fancybox hidden" rel="kyc-gallery" href="https://s3-ap-southeast-1.amazonaws.com/hindusthanarchives/{{ document }}"></a>
