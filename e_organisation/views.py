@@ -615,11 +615,11 @@ def mobile_application_json():
     if app_form.validate():
         print "Form Validated, Saving."
         app_form.save()
-        return Response(json.dumps({'status':'success'}), content_type="application/json", mimetype='application/json')
+        return Response(json.dumps({'success':'true'}), content_type="application/json", mimetype='application/json')
 
     else:
         print "Could Not validate" + str(app_form.errors)
-        return Response(json.dumps({'status':'failure'}), content_type="application/json", mimetype='application/json')
+        return Response(json.dumps({'success':'false'}), content_type="application/json", mimetype='application/json')
 
 
 @organisation_views.route('/upload_documents', methods=["GET","POST"])

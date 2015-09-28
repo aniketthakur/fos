@@ -80,6 +80,7 @@ class AddApplicationMobile(Form):
         app.category = applicant_misc.get("category", "")
         app.education = applicant_misc.get("education", "")
         app.disability = applicant_misc.get("physical_disability_member", "")
+        app.marital_status = applicant_misc.get("marital_status", "")
 
         app.male_count = toInt(applicant_misc.get("male_count", ""))
         app.female_count = toInt(applicant_misc.get("female_count", ""))

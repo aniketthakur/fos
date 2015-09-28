@@ -499,6 +499,7 @@ class EsthenosOrgApplication(db.Document):
     category = db.StringField(max_length=512, required=False,default="")
     education = db.StringField(max_length=512, required=False,default="")
     disability = db.StringField(max_length=512, required=False,default="")
+    marital_status = db.StringField(max_length=512, required=False,default="")
 
     male_count = db.IntField(default=0.0)
     female_count = db.IntField(default=0.0)

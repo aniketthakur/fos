@@ -250,6 +250,7 @@ def get_application_rowdata(app):
     row_data.append(app.category)
     row_data.append(app.education)
     row_data.append(app.disability)
+    row_data.append(app.marital_status)
 
     row_data.append(app.male_count)
     row_data.append(app.female_count)
