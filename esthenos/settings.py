@@ -69,6 +69,8 @@ CELERY_SETTINGS = {
 }
 
 AWS_SETTINGS = {
+    'AWS_S3_BUCKET' : 'hindusthanarchives',
+    'AWS_COGNITO_ID' : 'us-east-1:58e9693d-04b4-48a1-8820-b17c52514aaa',
     'AWS_ACCESS_KEY_ID' : 'AKIAITWBEHC2SAGDFQSA',
     'AWS_SECRET_ACCESS_KEY' : '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'
 }

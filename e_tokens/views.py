@@ -9,6 +9,7 @@ from models import EsthenosOrgUserToken
 
 from e_admin.models import EsthenosUser
 from esthenos.mongo_encoder import encode_model
+from esthenos.settings import AWS_SETTINGS
 
 token_views = Blueprint('token_views', __name__,template_folder='templates')
 
@@ -21,8 +22,8 @@ def generate_token_view():
     form = login_form
 
     if form.validate():
-        user = EsthenosUser.objects.get( email=form.email.data)
-        if user.active == False:
+        user = EsthenosUser.objects.get(email=form.email.data)
+        if not user.active:
             flash(u'Your account has been deactivated', 'error')
             kwargs = {"login_form": login_form}
 
@@ -42,8 +43,15 @@ def generate_token_view():
             full_token = generate_auth_token(user,expiration=expires)
 
         token = full_token.split(".")[2]
-        token_obj, status = EsthenosOrgUserToken.objects.get_or_create(full_token= full_token,token = token,user = user,expires_in=expires)
-        return Response(json.dumps({'message':'token generated','token':token}), content_type="application/json", mimetype='application/json')
+        token_obj, status = EsthenosOrgUserToken.objects.get_or_create(full_token=full_token, token=token, user=user, expires_in=expires)
+
+        response = {
+          'token' : token,
+          'bucket' : AWS_SETTINGS['AWS_S3_BUCKET'],
+          'poolId' : AWS_SETTINGS['AWS_COGNITO_ID'],
+          'message': 'token generated'
+        }
+        return Response(json.dumps(response), content_type="application/json", mimetype='application/json')
 
     return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
 
