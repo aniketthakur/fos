@@ -30,6 +30,17 @@ body {
   font-style: normal;
   font-weight: normal;
 }
+body.print-page {
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 14px;
+  margin: 0px !important;
+  padding: 0px !important;
+  line-height: 1.5;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: normal;
+}
 body.condense-menu .header-seperation {
   display: none;
 }

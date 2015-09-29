@@ -269,6 +269,21 @@ def scrutiny_application(app_id):
     return redirect(url_for("organisation_views.scrutiny"))
 
 
+@organisation_views.route('/scrutiny/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("accounts_scrutiny")
+def scrutiny_application_print(app_id):
+  if not session['role'].startswith("ORG_"):
+    abort(403)
+
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/scrutiny_print.html", **kwargs)
+
+
 @organisation_views.route('/sanctions', methods=["GET"])
 @login_required
 @feature_enable("accounts_sanctions")
