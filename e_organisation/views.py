@@ -604,7 +604,7 @@ def get_application():
 import wtforms_json
 wtforms_json.init()
 
-@organisation_views.route('/mobile/application/json', methods=['POST'])
+@organisation_views.route('/api/organisation/applications', methods=['POST'])
 @login_or_key_required
 def mobile_application_json():
 
