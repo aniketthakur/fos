@@ -1,7 +1,7 @@
 import datetime
 from esthenos.mongo_encoder import encode_model
-from e_admin.models import EsthenosUser
 from esthenos import db
+from e_organisation.models import EsthenosUser
 
 class EsthenosOrgUserToken(db.Document):
     token = db.StringField(max_length=255, required=True)

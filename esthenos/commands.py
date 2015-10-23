@@ -3,7 +3,6 @@ from flask.ext.script import Command, Option
 
 from slacker import Slacker
 from esthenos import db, settings
-from e_admin.models import *
 from e_organisation.models import *
 
 

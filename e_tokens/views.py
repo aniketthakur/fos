@@ -7,7 +7,7 @@ from flask_sauth.forms import RegistrationForm, LoginForm
 from utils import generate_auth_token, login_or_key_required
 from models import EsthenosOrgUserToken
 
-from e_admin.models import EsthenosUser
+from e_organisation.models import EsthenosUser
 from esthenos.mongo_encoder import encode_model
 from esthenos.settings import AWS_SETTINGS
 

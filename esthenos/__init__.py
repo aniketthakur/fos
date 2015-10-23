@@ -83,7 +83,7 @@ def get_ses_conn():
 
 @login_manager.user_loader
 def load_user(userid):
-    from e_admin.models import EsthenosUser
+    from e_organisation.models import EsthenosUser
     user = EsthenosUser.objects(id=userid).first()
     if user is not None and not session.has_key('role') :
         if user.has_role("ADMIN"):

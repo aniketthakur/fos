@@ -1,7 +1,7 @@
 from functools import wraps
 
 from flask import request, abort
-from e_admin.models import EsthenosUser
+from e_organisation.models import EsthenosUser
 
 from models import EsthenosOrgUserToken
 from esthenos import mainapp as app

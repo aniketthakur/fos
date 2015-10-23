@@ -10,7 +10,6 @@ from celery.task import periodic_task
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from esthenos import mainapp
-from e_admin.models import *
 from e_organisation.models import *
 from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
 

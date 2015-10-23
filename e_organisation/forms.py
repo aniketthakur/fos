@@ -4,7 +4,6 @@ from wtforms import Form, TextField, PasswordField, HiddenField, ValidationError
 from wtforms import validators as v
 from flask_login import current_user
 
-from e_admin.models import EsthenosUser, EsthenosSettings
 from e_organisation.models import *
 
 def toInt(value):

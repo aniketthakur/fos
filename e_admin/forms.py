@@ -4,7 +4,6 @@ from wtforms import SelectMultipleField, Form
 from flask_login import current_user
 from flask.ext.sauth.models import User, authenticate
 from e_organisation.models import *
-from e_admin.models import EsthenosUser, EsthenosSettings
 
 
 class AddOrganisationForm( Form):

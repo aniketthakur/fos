@@ -1,7 +1,111 @@
 import datetime
 from esthenos import db
 from blinker import signal
+from flask_sauth.models import BaseUser
 from flask.ext.mongorest.resources import Resource
+
+
+class EsthenosUser(BaseUser):
+    first_name = db.StringField(max_length=255, required=False,default="")
+    last_name = db.StringField(max_length=255, required=False,default="")
+    user_name = db.StringField(max_length=100,required=False)
+    email = db.StringField(max_length=255, required=False)
+    profile_pic = db.StringField(max_length=255, required=False)
+
+    unique_id = db.StringField(max_length=20, required=True,default = "NOTSET")
+    status = db.IntField(default=0)
+    activation_code = db.StringField(max_length=50, required=False)
+    active = db.BooleanField(default=False)
+    staff = db.BooleanField(default=False)
+    permissions = db.DictField()
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+
+    about = db.StringField(max_length=255, required=False)
+    designation = db.StringField(max_length=255,required=False)
+    date_of_birth = db.StringField(max_length=20, required=False)
+
+    postal_address = db.StringField(max_length=255, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
+    postal_state = db.StringField(max_length=100, required=False)
+    postal_country = db.StringField(max_length=100, required=False)
+    postal_telephone = db.StringField(max_length=20, required=False)
+    postal_tele_code = db.StringField(max_length=20, required=False)
+
+    owner = db.ReferenceField('EsthenosUser',required=False)
+    org_area = db.ReferenceField('EsthenosOrgArea',required=False)
+    org_state = db.ReferenceField('EsthenosOrgState',required=False)
+    org_region = db.ReferenceField('EsthenosOrgRegion',required=False)
+    org_branch = db.ReferenceField('EsthenosOrgBranch',required=False)
+    organisation = db.ReferenceField('EsthenosOrg',required=False)
+
+    def __unicode__(self):
+        return "%s, %s, %s" % (self.name, self.email, self.organisation)
+
+    def is_active(self):
+        return self.active
+
+    def is_staff(self):
+        return self.staff
+
+    def get_fullname(self):
+        return '%s %s' % (self.first_name, self.last_name)
+
+    def get_shortname(self):
+        return self.first_name
+
+    def get_organization(self):
+        return self.organisation
+
+    def get_phone_number(self):
+        return "%s %s" % (self.postal_tele_code, self.postal_telephone)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+
+class EsthenosOrg(db.Document):
+    code = db.StringField(max_length=5, required=False)
+    logo_url = db.StringField(max_length=255, required=False)
+    domain = db.StringField(max_length=128, required=False)
+    states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
+    monthly_target = db.IntField(default=0)
+    monthly_disbursed = db.IntField(default=0)
+    monthly_amount_disbursed = db.IntField(default=0)
+    name = db.StringField(max_length=512, required=True)
+    profile_pic = db.StringField(max_length=255, required=False)
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+    about = db.StringField(max_length=255, required=False)
+    owner = db.ReferenceField('EsthenosUser')
+    postal_address = db.StringField(max_length=255, required=False)
+    postal_country = db.StringField(max_length=100, required=False)
+    postal_state = db.StringField(max_length=100, required=False)
+    postal_telephone = db.StringField(max_length=512, required=False)
+    postal_tele_code = db.StringField(max_length=512, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
+    postal_code = db.StringField(max_length=10, required=False)
+    email = db.StringField( unique=True)
+    application_count = db.IntField(default=0)
+    group_count = db.IntField(default=1)
+    center_count = db.IntField(default=1)
+    employee_count = db.IntField(default=1)
+    user_count = db.IntField(default=1)
+
+    def __unicode__(self):
+      return "%s, %s, %s, %s" % (self.name, self.email, self.group_count, self.center_count)
+
+
+class EsthenosSettings(db.Document):
+    loan_cycle_1_rbi = db.FloatField(default=35000)
+    loan_cycle_1_plus_rbi = db.FloatField(default=100000)
+    one_year_tenure_limit_rbi = db.FloatField(default=15000)
+    hh_annual_income_limit_rural_rbi = db.FloatField(default=60000)
+    hh_annual_income_limit_urban_rbi = db.FloatField(default=120000)
+    total_indebtness_rbi = db.FloatField(default=100000)
+    max_existing_loan_count_rbi = db.IntField(default=2)
+    sales_tax = db.FloatField(default=12.36)
+    organisations_count = db.IntField(default=0)
 
 
 class EsthenosOrgNotification(db.Document):
@@ -15,30 +119,125 @@ class EsthenosOrgNotification(db.Document):
     notification_date = db.DateTimeField(default=datetime.datetime.now)
 
 
+class EsthenosOrgApplicationStatusType(db.Document):
+    status = db.StringField(max_length=100, required=True,default="")
+    status_message = db.StringField(max_length=512, required=True,default="")
+    group_status = db.StringField(max_length=512, required=True,default="")
+    status_code = db.IntField(default=0)
+    sub_status_code = db.IntField(default=0)
+    sub_status_message = db.StringField(max_length=512, required=True,default="")
+
+    def __unicode__(self):
+        return self.status
+
+
+class EsthenosOrgApplicationStatus(db.Document):
+    status = db.ReferenceField(EsthenosOrgApplicationStatusType)
+    status_message = db.StringField(max_length=512, required=True, default="")
+    updated_on = db.DateTimeField(default=datetime.datetime.now)
+
+
 class EsthenosOrgState(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg')
-    state_name = db.StringField(max_length=60,required=True)
+    organisation = db.ReferenceField(EsthenosOrg)
+    name = db.StringField(max_length=60, required=True)
 
 
 class EsthenosOrgRegion(db.Document):
-    state = db.ReferenceField('EsthenosOrgState')
-    organisation = db.ReferenceField('EsthenosOrg')
-    region_name = db.StringField(max_length=60,required=True)
+    organisation = db.ReferenceField(EsthenosOrg)
+    parent = db.ReferenceField(EsthenosOrgState)
+    name = db.StringField(max_length=60, required=True)
 
 
 class EsthenosOrgArea(db.Document):
-    state = db.ReferenceField('EsthenosOrgState')
-    region = db.ReferenceField('EsthenosOrgRegion')
-    organisation = db.ReferenceField('EsthenosOrg')
-    area_name = db.StringField(max_length=60,required=True)
+    organisation = db.ReferenceField(EsthenosOrg)
+    parent = db.ReferenceField(EsthenosOrgRegion)
+    name = db.StringField(max_length=60, required=True)
 
 
 class EsthenosOrgBranch(db.Document):
-    state = db.ReferenceField('EsthenosOrgState')
-    region = db.ReferenceField('EsthenosOrgRegion')
-    area = db.ReferenceField('EsthenosOrgArea')
-    organisation = db.ReferenceField('EsthenosOrg')
-    branch_name = db.StringField(max_length=60,required=True)
+    organisation = db.ReferenceField(EsthenosOrg)
+    parent = db.ReferenceField(EsthenosOrgArea)
+    name = db.StringField(max_length=60, required=True)
+
+
+class EsthenosOrgCenter(db.Document):
+    organisation = db.ReferenceField(EsthenosOrg)
+    parent = db.ReferenceField(EsthenosOrgBranch)
+    name = db.StringField(max_length=60, required=True)
+
+    center_id = db.StringField(max_length=10, required=False)
+    center_timeslot = db.DateTimeField(required = False)
+
+    @staticmethod
+    def unique_id(org):
+        return org.name.upper()[0:2]+"C"+"{0:06d}".format(org.center_count)
+
+
+class EsthenosOrgGroup(db.Document):
+    organisation = db.ReferenceField(EsthenosOrg)
+    parent = db.ReferenceField(EsthenosOrgCenter, required=False)
+    name = db.StringField(max_length=120, required=True)
+
+    group_id = db.StringField(max_length=20,required=False)
+    leader_name = db.StringField(max_length=120,required=False)
+    leader_number = db.StringField(max_length=120,required=False)
+
+    size = db.IntField(default=0)
+    size_override = db.BooleanField(default=False)
+    members = db.IntField(default=0)
+
+    status = db.IntField(default=0)
+    current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
+    current_status_updated = db.DateTimeField(default=datetime.datetime.now)
+
+    timeline = db.ListField(db.ReferenceField(EsthenosOrgApplicationStatus))
+
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+
+    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
+    disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
+
+    def applications(self):
+        return EsthenosOrgApplication.objects.filter(group=self)
+
+    def full(self):
+        return (self.size != 0 and self.members >= self.size) or self.size_override
+
+    def verified(self):
+        return EsthenosOrgApplication.objects.filter(group=self, status=170).count() == self.members
+
+    def update_status(self, status_code):
+        self.status = status_code
+        self.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=status_code)
+        self.current_status_updated = datetime.datetime.now()
+
+        status = EsthenosOrgApplicationStatus(
+          status=self.current_status,
+          updated_on=self.current_status_updated
+        )
+        status.save()
+        self.timeline.append(status)
+
+        for app in self.applications():
+            app.update_status(status_code)
+            app.save()
+
+        self.save()
+
+    def tojson(self):
+        return {
+          'group_id': str(self.group_id),
+          'group_size': str(self.size),
+          'group_name': str(self.name),
+          'group_members': str(self.members),
+          'current_status' : str(self.current_status.group_status),
+          'current_status_updated' : str(self.current_status_updated)
+        }
+
+    @staticmethod
+    def unique_id(org):
+        return org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
 
 
 class EsthenosOrgToken(db.EmbeddedDocument):
@@ -77,12 +276,13 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
     other_docs = db.ListField(db.StringField(max_length=255))
 
     def has_kyc(self):
-        print self.pan_docs + self.aadhar_docs + self.voterid_docs
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
 
     def kyc_docs(self):
-        print self.pan_docs + self.aadhar_docs + self.voterid_docs
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
+
+    def all_docs(self):
+        return self.pan_docs + self.aadhar_docs + self.voterid_docs + self.personal_docs + self.business_docs + self.other_docs
 
 
 class EsthenosOrgUserUploadSession(db.DynamicDocument):
@@ -136,7 +336,10 @@ class EsthenosOrgRoleSettings(db.Document):
 
 
 class EsthenosOrgStats(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg')
+    organisation = db.ReferenceField(EsthenosOrg)
+    stat_type = db.StringField(max_length=20, required=False)
+    datetime = db.DateTimeField(default=datetime.datetime.now)
+
     application_submitted = db.IntField(default=0)
     application_kyc_ready = db.IntField(default=0)
     application_kyc_done = db.IntField(default=0)
@@ -167,90 +370,6 @@ class EsthenosOrgStats(db.Document):
     application_disbursement_ready = db.IntField(default=0)
     application_disbursement_pending = db.IntField(default=0)
     application_disbursement_done = db.IntField(default=0)
-    stat_type = db.StringField(max_length=20, required=False) #2015JAN10,2015JANW1,2015JAN,2015,
-
-
-class EsthenosOrg(db.Document):
-    code = db.StringField(max_length=5, required=False)
-    logo_url = db.StringField(max_length=255, required=False)
-    domain = db.StringField(max_length=128, required=False)
-    states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
-    monthly_target = db.IntField(default=0)
-    monthly_disbursed = db.IntField(default=0)
-    monthly_amount_disbursed = db.IntField(default=0)
-    name = db.StringField(max_length=512, required=True)
-    profile_pic = db.StringField(max_length=255, required=False)
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-    about = db.StringField(max_length=255, required=False)
-    owner = db.ReferenceField('EsthenosUser')
-    postal_address = db.StringField(max_length=255, required=False)
-    postal_country = db.StringField(max_length=100, required=False)
-    postal_state = db.StringField(max_length=100, required=False)
-    postal_telephone = db.StringField(max_length=512, required=False)
-    postal_tele_code = db.StringField(max_length=512, required=False)
-    postal_city = db.StringField(max_length=100, required=False)
-    postal_code = db.StringField(max_length=10, required=False)
-    email = db.StringField( unique=True)
-    application_count = db.IntField(default=0)
-    group_count = db.IntField(default=1)
-    center_count = db.IntField(default=1)
-    employee_count = db.IntField(default=1)
-    user_count = db.IntField(default=1)
-
-    def __unicode__(self):
-      return "%s, %s, %s, %s" % (self.name, self.email, self.group_count, self.center_count)
-
-
-class EsthenosOrgCenter(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg')
-    center_id = db.StringField(max_length=10,required=False)
-    center_name = db.StringField(max_length=60,required=True)
-    size = db.IntField(default=0)
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
-    disbursement_pdf_link = db.StringField(max_length=512,required=False)
-
-    def __unicode__(self):
-      return "%s, %s, %s" % (self.center_id, self.center_name, self.organisation)
-
-
-class EsthenosOrgGroup(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg')
-    center = db.ReferenceField('EsthenosOrgCenter',required=False)
-    branch = db.ReferenceField('EsthenosOrgBranch',required=False)
-    group_id = db.StringField(max_length=20,required=False)
-    group_name = db.StringField(max_length=120,required=True)
-    leader_name = db.StringField(max_length=120,required=False)
-    leader_number = db.StringField(max_length=120,required=False)
-    size = db.IntField(default=0)
-    location_name = db.StringField(max_length=120,required=False)
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
-    disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
-
-    def update_status(self, status_code):
-        self.status = status_code
-        self.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=status_code)
-        self.current_status_updated = datetime.datetime.now()
-
-        status = EsthenosOrgApplicationStatus(
-          status=self.current_status,
-          updated_on=self.current_status_updated
-        )
-        status.save()
-        self.timeline.append(status)
-
-        for app in self.applications():
-            app.update_status(status_code)
-            app.save()
-
-        self.save()
-
-    def __unicode__(self):
-        return "%s, %s, %s, %s" % (self.organisation, self.group_name, self.location_name, self.size)
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
@@ -274,37 +393,6 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
 
     def __unicode__(self):
         return self.kyc_number + "<" + self.name + ">"
-
-
-class EsthenosOrgGroupGRTSession(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
-    state = db.StringField(max_length=128, required=True, default="none")
-
-
-class EsthenosOrgGroupCGT1Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions = db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
-    state = db.StringField(max_length=128, required=True, default="none")
-
-
-class EsthenosOrgGroupCGT2Session(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
-    state = db.StringField(max_length=128, required=True, default="none")
-
-
-class EsthenosOrgGRTTemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
 
 
 class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
@@ -332,35 +420,6 @@ class EsthenosOrgPsychometricTemplateQuestion(db.Document):
 
     language_type = db.StringField(max_length=128,required=True,default="Hindi")
     organisation = db.ReferenceField('EsthenosOrg')
-
-
-class EsthenosOrgCGT1TemplateQuestion(db.Document):
-    question = db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type = db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
-
-
-class EsthenosOrgCGT2TemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
-
-
-class EsthenosOrgTeleCallingTemplateQuestion(db.Document):
-    question=db.StringField(max_length=1024,required=True)
-    question_regional = db.StringField(max_length=1024,required=True)
-    language_type=db.StringField(max_length=128,required=True,default="Hindi")
-    organisation = db.ReferenceField('EsthenosOrg')
-
-
-class EsthenosOrgIndivijualTeleCallingSession(db.Document):
-    application = db.ReferenceField('EsthenosOrgApplication',required=True)
-    organisation = db.ReferenceField('EsthenosOrg',required=True)
-    group = db.ReferenceField('EsthenosOrgGroup',required=True)
-    questions=db.DictField(required=False)
-    score = db.FloatField(default=0,required=False)
 
 
 class EsthenosOrgProduct(db.Document):
@@ -407,23 +466,6 @@ class EsthenosOrgSettings(db.Document):
     highmark_password = db.StringField(max_length=100, required=True,default="")
 
 
-class EsthenosOrgApplicationStatusType(db.Document):
-    status = db.StringField(max_length=100, required=True,default="")
-    status_message = db.StringField(max_length=512, required=True,default="")
-    status_code = db.IntField(default=0)
-    sub_status_code = db.IntField(default=0)
-    sub_status_message = db.StringField(max_length=512, required=True,default="")
-
-    def __unicode__(self):
-        return self.status
-
-
-class EsthenosOrgApplicationStatus(db.Document):
-    status = db.ReferenceField('EsthenosOrgApplicationStatusType')
-    status_message = db.StringField(max_length=512, required=True,default="")
-    updated_on = db.DateTimeField(default=datetime.datetime.now)
-
-
 class EsthenosOrgLocation(db.EmbeddedDocument):
     lat = db.FloatField(default=0.0)
     lng = db.FloatField(default=0.0)
@@ -433,12 +475,12 @@ class EsthenosOrgLocation(db.EmbeddedDocument):
 
 
 class EsthenosOrgApplication(db.Document):
-    owner = db.ReferenceField('EsthenosUser')
-    group = db.ReferenceField('EsthenosOrgGroup')
-    center = db.ReferenceField('EsthenosOrgCenter')
-    branch = db.ReferenceField('EsthenosOrgBranch')
-    product = db.ReferenceField('EsthenosOrgProduct', required=False)
-    organisation = db.ReferenceField('EsthenosOrg')
+    owner = db.ReferenceField(EsthenosUser)
+    group = db.ReferenceField(EsthenosOrgGroup)
+    center = db.ReferenceField(EsthenosOrgCenter)
+    branch = db.ReferenceField(EsthenosOrgBranch)
+    product = db.ReferenceField(EsthenosOrgProduct)
+    organisation = db.ReferenceField(EsthenosOrg)
 
     applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)
     applicant_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs, default=EsthenosOrgApplicationDocs)
@@ -455,7 +497,7 @@ class EsthenosOrgApplication(db.Document):
     business_loc = db.EmbeddedDocumentField(EsthenosOrgLocation, default=EsthenosOrgLocation)
 
     tag = db.EmbeddedDocumentField(EsthenosOrgApplicationMap,required=False)
-    timeline = db.ListField(db.ReferenceField('EsthenosOrgApplicationStatus'))
+    timeline = db.ListField(db.ReferenceField(EsthenosOrgApplicationStatus))
 
     updated_on = db.DateTimeField(default=datetime.datetime.now)
     date_created = db.DateTimeField(default=datetime.datetime.now)
@@ -494,7 +536,7 @@ class EsthenosOrgApplication(db.Document):
     male_count = db.IntField(default=0.0)
     female_count = db.IntField(default=0.0)
     members_above18 =  db.IntField(default=0)
-    members_less_than_18 =  db.IntField(default=0)
+    members_less_than_18 = db.IntField(default=0)
     total_earning_members = db.IntField(default=0)
     total_number_of_family_members = db.IntField(default=0)
 
@@ -511,6 +553,7 @@ class EsthenosOrgApplication(db.Document):
     applied_loan = db.FloatField(default=0.0)
     purpose_of_loan = db.StringField(max_length=512, required=False,default="")
 
+    family_assets_other = db.StringField(max_length=512, required=False,default="")
     family_assets_land_acres = db.FloatField(default=0)
     family_assets_orchard_acres = db.FloatField(default=0)
     family_assets_number_of_rented_houses_or_flats = db.FloatField(default=0)
@@ -605,7 +648,6 @@ class EsthenosOrgApplication(db.Document):
     total_existing_outstanding_from = db.FloatField(default=0.0)
     total_existing_outstanding_from_mfi = db.FloatField(default=0.0)
 
-    loan_eligibility_based_on_net_income = db.FloatField(default=0.0)
     loan_eligibility_based_on_company_policy = db.FloatField(default=0.0)
 
     existing_loan_cycle = db.IntField(default=0)
@@ -655,6 +697,9 @@ class EsthenosOrgApplication(db.Document):
               + self.primary_business_expense_other \
               + self.primary_business_expense_working_capital \
               + self.primary_business_expense_employee_salary
+
+    def loan_eligibility_based_on_net_income(self):
+        return self.net_income() / 2 * self.product.number_installments
 
     def update_status(self, status_code):
         self.status = status_code

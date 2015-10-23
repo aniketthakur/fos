@@ -7,7 +7,6 @@ from flask import render_template, request, Response
 from flask_login import current_user, login_required
 
 from e_tokens.utils import login_or_key_required
-from e_admin.models import EsthenosUser
 from e_organisation.models import *
 from e_reports.views import get_application_headers, get_application_rowdata
 from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType, EsthenosOrgApplication
