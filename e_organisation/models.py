@@ -255,6 +255,24 @@ class EsthenosOrgGroup(db.Document):
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
 
+    def update_status(self, status_code):
+        self.status = status_code
+        self.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=status_code)
+        self.current_status_updated = datetime.datetime.now()
+
+        status = EsthenosOrgApplicationStatus(
+          status=self.current_status,
+          updated_on=self.current_status_updated
+        )
+        status.save()
+        self.timeline.append(status)
+
+        for app in self.applications():
+            app.update_status(status_code)
+            app.save()
+
+        self.save()
+
     def __unicode__(self):
         return "%s, %s, %s, %s" % (self.organisation, self.group_name, self.location_name, self.size)
 
@@ -530,6 +548,18 @@ class EsthenosOrgApplication(db.Document):
     bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
     bank_account_number = db.StringField(max_length=200, required=False,default="")
     bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
+    bank_bank_branch = db.StringField(max_length=200, required=False,default="")
+    bank_bank_account_type = db.StringField(max_length=200, required=False,default="")
+    bank_account_operational_since = db.StringField(max_length=200, required=False,default="")
+
+    bank2_name = db.StringField(max_length=200, required=False,default="")
+    bank2_ifsc_code = db.StringField(max_length=20, required=False,default="")
+    bank2_account_number = db.StringField(max_length=200, required=False,default="")
+    bank2_account_holder_name = db.StringField(max_length=200, required=False,default="")
+    bank2_bank_branch = db.StringField(max_length=200, required=False,default="")
+    bank2_bank_account_type = db.StringField(max_length=200, required=False,default="")
+    bank2_account_operational_since = db.StringField(max_length=200, required=False,default="")
+
     cheque_no = db.StringField(max_length=512, required=False,default="")
     cheque_bank_name = db.StringField(max_length=512, required=False,default="")
     repayment_mode = db.StringField(max_length=512, required=False,default="")
@@ -653,6 +683,18 @@ class EsthenosOrgApplication(db.Document):
               + self.primary_business_expense_other \
               + self.primary_business_expense_working_capital \
               + self.primary_business_expense_employee_salary
+
+    def update_status(self, status_code):
+        self.status = status_code
+        self.current_status = EsthenosOrgApplicationStatusType.objects.get(status_code=status_code)
+        self.current_status_updated = datetime.datetime.now()
+
+        status = EsthenosOrgApplicationStatus(
+          status=self.current_status,
+          updated_on=self.current_status_updated
+        )
+        status.save()
+        self.timeline.append(status)
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
