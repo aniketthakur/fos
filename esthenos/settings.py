@@ -163,6 +163,13 @@ APP_STATUS = [
         'sub_status' : 'CRITERIA_FAILED_DUPLICATE_AADHAAR'
     },
     {
+        'status' : 'APPLICATION_CF_CRITERIA_FAILED',
+        'status_message' : "Borrower's has more than on active loans",
+        'status_code' : 26,
+        'sub_status_code' : 2,
+        'sub_status' : 'CRITERIA_FAILED_MULTIPLE_ACTIVE_LOANS'
+    },
+    {
         'status' : 'APPLICATION_UPLOADED',
         'status_message' : 'Your application is uploaded to system',
         'status_code' : 100
@@ -218,88 +225,83 @@ APP_STATUS = [
         'status_code' : 180
     },
     {
-        'status' : 'APPLICATION_CGT1_READY',
-        'status_message' : 'Application is CGT1 Ready',
+        'status' : 'APPLICATION_SCRUTINY_READY',
+        'status_message' : 'Application is Ready for Scrutiny',
         'status_code' : 190
     },
     {
-        'status' : 'APPLICATION_CGT1_PENDING',
-        'status_message' : 'Application is CGT1 Pending',
+        'status' : 'APPLICATION_SCRUTINY_PENDING',
+        'status_message' : 'Application Scrutiny Pending',
+        'status_code' : 191
+    },
+    {
+        'status' : 'APPLICATION_SCRUTINY_FAILED',
+        'status_message' : 'Application Scrutiny failed',
+        'status_code' : 192
+    },
+    {
+        'status' : 'APPLICATION_SCRUTINY_PASSED',
+        'status_message' : 'Application Scrutiny Passed',
+        'status_code' : 193
+    },
+    {
+        'status' : 'APPLICATION_SCRUTINY_DONE',
+        'status_message' : 'Application SCRUTINY Done',
+        'status_code' : 194
+    },
+    {
+        'status' : 'APPLICATION_SANCTION_READY',
+        'status_message' : 'Application is Ready for Sanction',
         'status_code' : 200
     },
     {
-        'status' : 'APPLICATION_CGT1_FAILED',
-        'status_message' : 'Application has failed CGT1',
-        'status_code' : 210
+        'status' : 'APPLICATION_SANCTION_PENDING',
+        'status_message' : 'Application Sanction Pending',
+        'status_code' : 201
     },
     {
-        'status' : 'APPLICATION_CGT2_READY',
-        'status_message' : 'Application is CGT2 Ready',
-        'status_code' : 220
+        'status' : 'APPLICATION_SANCTION_FAILED',
+        'status_message' : 'Application Sanction failed',
+        'status_code' : 202
     },
     {
-        'status' : 'APPLICATION_CGT2_PENDING',
-        'status_message' : 'Application is CGT2 Pending',
-        'status_code' : 230
+        'status' : 'APPLICATION_SANCTION_PASSED',
+        'status_message' : 'Application Sanction Passed',
+        'status_code' : 203
     },
     {
-        'status' : 'APPLICATION_CGT2_FAILED',
-        'status_message' : 'Application has failed CGT2',
-        'status_code' : 240
-    },
-    {
-        'status' : 'APPLICATION_GRT_READY',
-        'status_message' : 'Application is GRT Ready',
-        'status_code' : 250
-    },
-    {
-        'status' : 'APPLICATION_GRT_PENDING',
-        'status_message' : 'Application is GRT Pending',
-        'status_code' : 260
-    },
-    {
-        'status' : 'APPLICATION_GRT_FAILED',
-        'status_message' : 'Application has failed GRT',
-        'status_code' : 270
-    },
-    {
-        'status' : 'APPLICATION_GRT_DONE',
-        'status_message' : 'Application GRT Done',
-        'status_code' : 272
-    },
-    {
-        'status' : 'APPLICATION_TELECALLING_PASSED',
-        'status_message' : 'Application tele calling has passed.',
-        'status_code' : 276
-    },
-    {
-        'status' : 'APPLICATION_TELECALLING_FAILED',
-        'status_message' : 'Application tele calling has failed.',
-        'status_code' : 278
+        'status' : 'APPLICATION_SANCTION_DONE',
+        'status_message' : 'Application Sanction Done',
+        'status_code' : 204
     },
     {
         'status' : 'APPLICATION_UNDERWRITING_READY',
         'status_message' : 'Application is under-writing ready.',
-        'status_code' : 280
+        'status_code' : 230
     },
     {
         'status' : 'APPLICATION_UNDERWRITING_DONE',
-        'status_message' : 'Application Under-writing done.',
-        'status_code' : 290
+        'status_message' : 'Application under-writing done.',
+        'status_code' : 231
     },
     {
         'status' : 'APPLICATION_DISBURSEMENT_READY',
         'status_message' : 'Application Disbursement ready',
-        'status_code' : 300
+        'status_code' : 240
     },
     {
         'status' : 'APPLICATION_DISBURSEMENT_CANCELLED',
         'status_message' : 'Application Disbursement has been cancelled,possibly due to CGT-GRT failure',
-        'status_code' : 310
+        'status_code' : 241
     },
     {
         'status' : 'APPLICATION_DISBURSEMENT_PENDING',
         'status_message' : 'Application Disbursement ready, waiting for disbursement over a week',
-        'status_code' : 320
+        'status_code' : 242
+    },
+    {
+        'status' : 'APPLICATION_DISBURSEMENT_DONE',
+        'status_message' : 'Application Disbursement Done',
+        'status_code' : 243
     }
 ]
