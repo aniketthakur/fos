@@ -9,11 +9,14 @@ querystring = {
 
 payload = {
     "applicant_other_card_land_details": {
-        "estimated_resale_value_of_property": "88",
-        "loan_outstanding_against_such_property": "8",
-        "land_description": "h"
+        "estimated_resale_value_of_property": "",
+        "loan_outstanding_against_such_property": "",
+        "land_description": "d"
     },
-    "assets_id": "acbd29e4-c21f-49ad-8417-239e5d180154",
+    "applicant_family_details_other_assets": {
+        "family_other_assets": "Flat/ House on rent, Bike, Tractor, Van"
+    },
+    "assets_id": "67bd3320-e690-48f8-b906-8cab82fb9636",
     "group": "",
     "applicant_other_card_home_image": {},
     "applicant_business_docs_details2": {
@@ -58,29 +61,46 @@ payload = {
         "pan_card_father_s_husband_s_name": "",
         "pincode": "516257",
         "pan_card_name": "",
-        "occupation": "g",
+        "occupation": "",
         "state": "Andhra Pradesh",
         "taluk": "Lakkireddipalle",
         "voter_id_father_s_husband_s_name": "",
         "voter_id": "",
-        "email_id": "b",
+        "email_id": "",
         "permanent_address": "",
         "pan_card_id": "",
-        "phone_number": "6",
+        "phone_number": "",
         "father_s_husband_s_name": "S/O Fyroz Basha",
         "age": "23",
         "country": "India",
         "district": "Cuddapah",
-        "name": "Pattan Saddam Hussain",
+        "name": "Pattan Saddam Hussainu",
         "uid": "565061987998",
         "voter_id_name": "",
         "type": "AADHAAR",
-        "mobile_number": "9"
+        "mobile_number": ""
     },
     "assets_map": {
-        "guarantor1": {},
-        "guarantor2": {},
-        "applicant": {}
+        "guarantor1": {
+            "aadhar_card": [
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_0.jpg",
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_1.jpg",
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_0.jpg",
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_1.jpg"
+            ]
+        },
+        "guarantor2": {
+            "aadhar_card": [
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor2_aadhar_card__aadhaar card_0.jpg",
+                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor2_aadhar_card__aadhaar card_1.jpg"
+            ]
+        },
+        "applicant": {
+            "aadhar_card": [
+                "67bd3320-e690-48f8-b906-8cab82fb9636/applicant_aadhar_card__aadhaar card_0.jpg",
+                "67bd3320-e690-48f8-b906-8cab82fb9636/applicant_aadhar_card__aadhaar card_1.jpg"
+            ]
+        }
     },
     "applicant_other_card_phone_details": {
         "internet_data_uses": "",
@@ -95,20 +115,30 @@ payload = {
     },
     "guarantor1_other_card_details2": {
         "bank_credit_co_perative_society": "",
-        "name_of_borrower": "h",
+        "name_of_borrower": "s",
         "loan_amount": ""
     },
     "applicant_other_card_electricity_details": {
-        "name": ""
+        "electricity_monthly_bill": "",
+        "power_supplier": ""
+    },
+    "applicant_hypothecation_goods_details1": {
+        "purchase_purpose": "",
+        "market_value": "",
+        "goods_details": "",
+        "purchase_year": "",
+        "purchase_price": "",
+        "goods_image": "",
+        "goods_docs_image": ""
     },
     "applicant_other_card_bank_details2": {
-        "bank_name": "hs",
-        "account_holder_name": "hx",
+        "bank_name": "",
+        "branch_ifsc_code": "",
+        "account_number": "",
+        "account_holder_name": "",
         "bank_branch": "",
-        "branch_ifsc_code": "a",
-        "account_operational_since": "7",
+        "account_operational_since": "",
         "bank_account_type": "Saving",
-        "account_number": "4"
     },
     "guarantor1_kyc_details": {
         "address": ", .   Singhasan",
@@ -116,15 +146,15 @@ payload = {
         "pan_card_father_s_husband_s_name": "",
         "pincode": "332027",
         "pan_card_name": "",
-        "occupation": "b",
+        "occupation": "",
         "state": "Rajasthan",
         "taluk": "Singhasan",
         "voter_id_father_s_husband_s_name": "",
         "voter_id": "",
-        "email_id": "b",
-        "permanent_address": "h",
+        "email_id": "",
+        "permanent_address": "",
         "pan_card_id": "",
-        "phone_number": "7",
+        "phone_number": "",
         "father_s_husband_s_name": "S/O Ganpat Singh",
         "age": "27",
         "country": "India",
@@ -133,7 +163,7 @@ payload = {
         "uid": "337972036560",
         "voter_id_name": "",
         "type": "AADHAAR",
-        "mobile_number": "0"
+        "mobile_number": ""
     },
     "locations_map": {
         "home": {
@@ -145,8 +175,8 @@ payload = {
             "lng": 0
         },
         "business": {
-            "lat": 23.00227111,
-            "lng": 72.53280684
+            "lat": 23.00233934,
+            "lng": 72.53279684
         }
     },
     "applicant_other_card_id_details": {
@@ -158,22 +188,31 @@ payload = {
     },
     "applicant_other_card_nominee_details": {
         "nominee_relation": "Father",
-        "nominee_phone": "97",
-        "nominee_age": "97",
-        "nominee_name": "bz",
+        "nominee_phone": "",
+        "nominee_age": "",
+        "nominee_name": "",
         "nominee_gender": "Male"
     },
     "center": "",
+    "applicant_hypothecation_goods_details2": {
+        "purchase_purpose": "",
+        "market_value": "",
+        "goods_details": "",
+        "purchase_year": "",
+        "purchase_price": "",
+        "goods_image": "",
+        "goods_docs_image": ""
+    },
     "applicant_business_docs_info": {
         "pancard_no": "",
         "details_of_principal_raw_materials": "",
-        "business_name": "hz",
+        "business_name": "",
         "area_market_value": "",
         "vat_service_tax_regn_no": "",
-        "description_business": "bz",
+        "description_business": "",
         "address_of_place_of_business": "",
         "shops__establishment_no": "",
-        "details_of_finished_goods": "zh",
+        "details_of_finished_goods": "",
         "area_occupied_of_business_sq_ft": ""
     },
     "applicant_family_details_details2": {
@@ -185,13 +224,13 @@ payload = {
         "relation": ""
     },
     "applicant_other_card_bank_details1": {
-        "bank_name": "q",
-        "account_holder_name": "z",
+        "bank_name": "",
+        "account_holder_name": "",
         "bank_branch": "",
-        "branch_ifsc_code": "v",
-        "account_operational_since": "6",
+        "branch_ifsc_code": "",
+        "account_operational_since": "",
         "bank_account_type": "Saving",
-        "account_number": "6"
+        "account_number": ""
     },
     "applicant_family_details_details1": {
         "name": "",
@@ -201,18 +240,33 @@ payload = {
         "annual_income": "",
         "relation": ""
     },
-    "applicant_page_branch": {
-        "tertiary_asset_for_hypothecation": "None"
+    "applicant_hypothecation_goods_details3": {
+        "purchase_purpose": "",
+        "market_value": "",
+        "goods_details": "",
+        "purchase_year": "",
+        "purchase_price": "",
+        "goods_image": "",
+        "goods_docs_image": ""
     },
     "applicant_other_card_credit_card_details": {
-        "issue_bank": "hz",
-        "card_no": "67"
+        "issue_bank": "",
+        "card_no": ""
     },
     "applicant_other_card_liabilities": {
         "liabilities_chits": "",
         "liabilities_friends__family_hand_loans": "",
         "liabilities_insurance": "",
         "liabilities_bank_loans": ""
+    },
+    "applicant_family_expenditure": {
+        "family_festival_expenditure__monthly": "",
+        "family_entertainment_expenditure__monthly": "",
+        "family_travel_expenditure__monthly": "",
+        "family_medical_expenditure__monthly": "",
+        "family_other_expenditure__monthly": "",
+        "family_food_expenditure__monthly": "",
+        "family_education_expenditure__monthly": ""
     },
     "applicant_loan_details_details1": {
         "type_of_loan": "",
@@ -236,7 +290,6 @@ payload = {
         "tenure_in_months": "",
         "loan_amount_key": ""
     },
-    "applicant_other_form_hypo_goods_image": {},
     "applicant_personal_docs": {
         "marital_status": "Married",
         "religion": "Hindu",
@@ -245,22 +298,10 @@ payload = {
         "gender": "Male",
         "category": "General"
     },
-    "applicant_other_form_other_info": {
-        "primary_asset_for_hypothecation___current_market_value": "5"
-    },
-    "applicant_family_details": {
-        "family_festival_expenditure__monthly": "",
-        "family_entertainment_expenditure__monthly": "",
-        "family_travel_expenditure__monthly": "",
-        "family_medical_expenditure__monthly": "",
-        "family_other_expenditure__monthly": "",
-        "family_food_expenditure__monthly": "",
-        "family_education_expenditure__monthly": ""
-    },
     "applicant_loan_details_applied_loan": {
         "repayment_option": "Weekly",
-        "required_loan_amount": "N",
-        "purpose_of_the_loan": "N"
+        "required_loan_amount": "",
+        "purpose_of_the_loan": ""
     },
     "applicant_business_docs_details3": {
         "biz_premise": "Own Premise",
@@ -288,12 +329,12 @@ payload = {
         "loan_amount_key": ""
     },
     "applicant_family_details_members": {
-        "members_above_18": "4",
-        "members_less_than_18": "3",
-        "total_number_of_family_members": "1",
-        "female_count": "2",
-        "total_earning_members": "4",
-        "male_count": "14"
+        "members_above_18": "",
+        "members_less_than_18": "",
+        "total_number_of_family_members": "",
+        "female_count": "",
+        "total_earning_members": "",
+        "male_count": ""
     },
     "applicant_loan_details_details2": {
         "type_of_loan": "",
@@ -306,9 +347,20 @@ payload = {
         "tenure_in_months": "",
         "loan_amount_key": ""
     },
+    "applicant_family_details_assets": {
+        "monthly_rent": "",
+        "family_assets_land_acres": "",
+        "family_assets_orchard__acres": "",
+        "family_assets_number_of_rented_shops_or_godowns": "",
+        "family_assets_number_of_rented_houses_or_flats": "",
+        "how_long_are_you_staying_in_house__in_years": "",
+        "quality_of_house": "Pakka/Concrete",
+        "rent_agreement": "Yes",
+        "type_of_house": ""
+    },
     "guarantor1_other_card_details1": {
         "bank_credit_co_perative_society": "",
-        "name_of_borrower": "b",
+        "name_of_borrower": "d",
         "loan_amount": ""
     },
     "guarantor2_kyc_details": {
@@ -317,15 +369,15 @@ payload = {
         "pan_card_father_s_husband_s_name": "",
         "pincode": "110091",
         "pan_card_name": "",
-        "occupation": "h",
+        "occupation": "",
         "state": "Delhi",
         "taluk": "East Vinod Nagar",
         "voter_id_father_s_husband_s_name": "",
         "voter_id": "",
-        "email_id": "b",
+        "email_id": "",
         "permanent_address": "",
         "pan_card_id": "",
-        "phone_number": "6",
+        "phone_number": "",
         "father_s_husband_s_name": "S/O Shri Asharfi Lal Mehto",
         "age": "34",
         "country": "India",
@@ -334,9 +386,8 @@ payload = {
         "uid": "729348086056",
         "voter_id_name": "",
         "type": "AADHAAR",
-        "mobile_number": "9"
+        "mobile_number": ""
     },
-    "applicant_other_form_hypo_docs_image": {},
     "product": ""
 }
 
