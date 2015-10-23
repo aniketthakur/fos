@@ -4,7 +4,7 @@ import requests
 url = "http://localhost:8080/api/organisation/applications"
 
 querystring = {
-    "instance_token":"ChADpwltz-mp-WkS0VIVyt8dP0Xtvac8Ee8ZY1lsPIg"
+    "instance_token":"NFdTXRJvmrgCd4Zt5CLrWul9OrWhhunh62s2aS9Lf2A"
 }
 
 payload = {

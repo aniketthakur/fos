@@ -163,7 +163,11 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.dob=app.dob
     eqrequest.gender=app.gender
     eqrequest.phone_mobile=app.tele_phone
-    eqrequest.branch_id=app.group.name
+
+    eqrequest.branch_id = ""
+    if app.group:
+        eqrequest.branch_id=app.group.name
+
     eqrequest.kendra_id=app_id
     eqrequest.save()
     app.save()
