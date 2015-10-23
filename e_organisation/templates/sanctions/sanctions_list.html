@@ -89,11 +89,12 @@
                         <tr>
                             <th style="width:1%" >#</th>
                             <th style="width:15%">Application ID</th>
-                            <th style="width:20%">Applicant Name</th>
+                            <th style="width:15%">Applicant Name</th>
                             <th style="width:15%">Branch Name</th>
-                            <th style="width:15%">FOS Name</th>
-                            <th style="width:15%">Sanction Status</th>
-                            <th style="width:15%">Sanction By</th>
+                            <th style="width:10%">FOS Name</th>
+                            <th style="width:10%">Scrutiny Status</th>
+                            <th style="width:10%">Sanction Status</th>
+                            <th style="width:10%">Sanction By</th>
                             <th style="width:10%">Date</th>
                         </tr>
                         </thead>
@@ -114,7 +115,10 @@
                               <a href="#"><ins>{{ app.owner.first_name|capitalize }} {{ app.owner.last_name|capitalize }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <div class="btn btn-success btn-small">{{ app.sanction.status }}</div>
+                              <div class="btn btn-small {{ app.scrutiny.status|css_approve_reject }}">{{ app.scrutiny.status }}</div>
+                            </td>
+                            <td class="v-align-middle">
+                              <div class="btn btn-small {{ app.sanction.status|css_approve_reject }}">{{ app.sanction.status }}</div>
                             </td>
                             <td class="v-align-middle">
                               {{ app.sanction.owner.name }}

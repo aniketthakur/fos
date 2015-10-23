@@ -121,6 +121,19 @@ def _jinja2_filter_datetime(num):
 def _jinja2_filter_enabledfilter(active):
     return "enabled" if active else "disabled"
 
+@mainapp.template_filter('css_approve_reject')
+def _jinja2_filter_css_approve_reject(value):
+    if value == "approved":
+        return "btn-success"
+
+    if value == "rejected":
+        return "btn-danger"
+
+    if value == "onhold":
+        return "btn-warning"
+
+    return ""
+
 @mainapp.template_filter('timeformat')
 def _jinja2_filter_datetime(date, fmt=None):
     if fmt:

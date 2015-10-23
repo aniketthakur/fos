@@ -114,7 +114,7 @@
                               <a href="#"><ins>{{ app.owner.first_name|capitalize }} {{ app.owner.last_name|capitalize }}</ins></a>
                             </td>
                             <td class="v-align-middle">
-                              <div class="btn btn-success btn-small">{{ app.scrutiny.status }}</div>
+                              <div class="btn btn-small {{ app.scrutiny.status|css_approve_reject }}">{{ app.scrutiny.status }}</div>
                             </td>
                             <td class="v-align-middle">
                               {{ app.scrutiny.owner.name }}

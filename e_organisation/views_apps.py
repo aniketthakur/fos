@@ -250,7 +250,7 @@ def scrutiny_application(app_id):
         status_code, status = 193, "approved"
 
     elif status == "reject":
-      status_code, status = 192, "reject"
+      status_code, status = 192, "rejected"
 
     elif status == "hold":
       status_code, status = 194, "onhold"
@@ -316,16 +316,16 @@ def sanctions():
   scrutinyStatus = request.args.get('scrutinyStatus', '')
 
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=201)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=191)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=201)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=191)
 
   elif (groupId is not None) and (groupId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=201)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=201)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)
@@ -353,7 +353,7 @@ def sanctions_application(app_id):
         status_code, status = 203, "approved"
 
     elif status == "reject":
-      status_code, status = 202, "reject"
+      status_code, status = 202, "rejected"
 
     elif status == "hold":
       status_code, status = 204, "onhold"
