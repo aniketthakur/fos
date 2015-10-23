@@ -23,7 +23,7 @@ mainapp.config['SERVER_EMAIL'] = "support@esthenos.com"
 mainapp.config['MIN_IMAGE_DIMENSION'] = 300
 mainapp.config["SECRET_KEY"] = "^udtr!d^_vw22_+a=f1*au01xn(adtyce7^5k5ndkf6e%2z%aq"
 mainapp.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
-mainapp.config["USER_MODEL_CLASS"] = "e_admin.models.EsthenosUser"
+mainapp.config["USER_MODEL_CLASS"] = "e_organisation.models.EsthenosUser"
 mainapp.config['ROOT'] = os.curdir
 mainapp.config['DATA_ROOT'] = os.path.join(mainapp.config['ROOT'],'pitaya/data/')
 mainapp.config['UPLOAD_FOLDER'] = os.path.join(mainapp.config['ROOT'],'pitaya/uploads')

@@ -122,4 +122,4 @@ def authenticate(email=None, password=None):
 
 from werkzeug import import_string, LocalProxy
 from flask import current_app
-User = LocalProxy( lambda: import_string(current_app.config.get( "USER_MODEL_CLASS", "e_admin.models.EsthenosUser")))
+User = LocalProxy( lambda: import_string(current_app.config.get( "USER_MODEL_CLASS", "e_organisation.models.EsthenosUser")))
