@@ -69,9 +69,9 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.applicant_id1=app.application_id
     hmrequest.acct_open_date=app.date_created
     hmrequest.applicant_address1=app.address+" "
-    hmrequest.applicant_address1_city=app.member_city
-    hmrequest.applicant_address1_pincode=app.member_pincode
-    hmrequest.applicant_address1_state=app.member_state
+    hmrequest.applicant_address1_city=app.city
+    hmrequest.applicant_address1_state=app.state
+    hmrequest.applicant_address1_pincode=app.pincode
     hmrequest.applicant_address2=""
     hmrequest.applicant_address2_city=""
     hmrequest.applicant_address2_pincode=""
@@ -89,20 +89,28 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.applicant_name3=""
     hmrequest.applicant_name4=""
     hmrequest.applicant_name5=""
-    hmrequest.applicant_telephone_number1=app.member_telephone
+    hmrequest.applicant_telephone_number1=app.tele_phone
     hmrequest.applicant_telephone_number2=""
     hmrequest.applied_for_amount__current_balance=""
-    hmrequest.branch_id=app.owner.org_branch.id
+
+    hmrequest.branch_id = ""
+    if app.owner.org_branch:
+      hmrequest.branch_id=app.owner.org_branch.branch_id
+
     hmrequest.credit_inquiry_purpose_type=app.purpose_of_loan
     hmrequest.credit_inquiry_purpose_type_description=""
     hmrequest.credit_inquiry_stage="PRE-SCREEN"
     hmrequest.credit_report_transaction_date_time=""
     hmrequest.credit_report_transaction_id=""
     hmrequest.credit_request_type="JOIN"
-    hmrequest.kendra_id=app.center
-    hmrequest.key_person_name=app.member_f_or_h_name
+
+    hmrequest.kendra_id = ""
+    if app.center:
+        hmrequest.kendra_id=app.center.name
+
+    hmrequest.key_person_name=app.father_or_husband_name
     hmrequest.key_person_relation=""
-    hmrequest.member_father_name=app.member_f_or_h_name
+    hmrequest.member_father_name=app.father_or_husband_name
     hmrequest.member_id=app.application_id
     hmrequest.member_mother_name=""
     hmrequest.member_relationship_name1=""
@@ -115,14 +123,15 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.member_relationship_type4=""
     hmrequest.member_mother_name=""
     hmrequest.member_spouse_name=""
-    hmrequest.nominee_name=app.member_f_or_h_name
+    hmrequest.nominee_name=app.father_or_husband_name
     hmrequest.segment_identifier=""
     hmrequest.sent_status=True
     hmrequest.save()
     app.save()
 
 def make_equifax_request_entry_application_id(app_id):
-    app = EsthenosOrgApplication.objects.get(application_id = app_id)
+    app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
     if app.equifax_submitted:
         return
 
@@ -131,37 +140,36 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.reference_number=""
     eqrequest.member_id_unique_accountnumber=""
     eqrequest.inquiry_purpose="0E"
-    eqrequest.transaction_amount=app.applied_loan
-    eqrequest.consumer_name=app.applicant_name
+    eqrequest.transaction_amount= app.applied_loan
+    eqrequest.consumer_name= app.applicant_name
     eqrequest.additional_type1=""
     eqrequest.additional_name1=""
     eqrequest.additional_type2="K02"
     eqrequest.additional_name2=app.guarantor1_kyc.name
-    eqrequest.address_city=app.address+" "+app.city
-    eqrequest.state_union_territory=app.state
+    eqrequest.address_city=app.address + " " + app.city
+    eqrequest.state_union_territory = app.state
     eqrequest.postal_pin = app.pincode
     eqrequest.ration_card = ""
-    eqrequest.voter_id=""
+    eqrequest.voter_id = ""
 
     if app.applicant_kyc is not None:
-        eqrequest.voter_id = app.applicant_kyc.kyc_number
+        eqrequest.voter_id = app.guarantor1_kyc.kyc_number
         eqrequest.national_id_card = app.applicant_kyc.kyc_number
-
-    eqrequest.additional_id2 = ""
-
+    
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
-    eqrequest.phone_mobile=app.member_telephone
+    eqrequest.additional_id2 = ""
+
     eqrequest.dob=app.dob
     eqrequest.gender=app.gender
-    eqrequest.branch_id=app.owner.org_branch.branch_name
+    eqrequest.phone_mobile=app.tele_phone
+    eqrequest.branch_id=app.group.name
     eqrequest.kendra_id=app_id
     eqrequest.save()
     app.save()
 
 
 def add_sample_highmark_response(app_id):
-
     hmresponse = EsthenosOrgApplicationHighMarkResponse()
     hmresponse.active_account="0"
     hmresponse.address="#81 MARIMUDDANAHALLI HUNSURE TO MYSOURE KARIMUDDANAHALLI 571189 KA"
