@@ -425,23 +425,23 @@
                     <h4 class="name">Financial Analysis</h4>
                     <div class="name">
                         <span class="tag">Total Income: </span>
-                        <input type="text" class="form-control medium" name="total_income" id="total_income">
+                        <input disabled type="text" class="form-control medium" name="total_income" id="total_income" value="{{ application.scrutiny.total_income }}">
                     </div>
                     <div class="name">
                         <span class="tag">Total Expenditure: </span>
-                        <input type="text" class="form-control medium" name="total_expenditure" id="total_expenditure">
+                        <input disabled type="text" class="form-control medium" name="total_expenditure" id="total_expenditure" value="{{ application.scrutiny.total_expense }}">
                     </div>
                     <div class="name">
                         <span class="tag">Loan to Value (LTV): </span>
-                        <input type="text" class="form-control medium" name="total_ltv" id="total_ltv">
+                        <input disabled type="text" class="form-control medium" name="total_ltv" id="total_ltv" value="{{ application.scrutiny.total_ltv }}">
                     </div>
                     <div class="name">
                         <span class="tag">Fix Obligation to Income Ratio (FOIR): </span>
-                        <input type="text" class="form-control medium" name="fior" id="fior">
+                        <input disabled type="text" class="form-control medium" name="fior" id="fior" value="{{ application.scrutiny.foir_ratio }}">
                     </div>
                     <div class="name">
                         <span class="tag">Loan Amount: </span>
-                        <input type="text" class="form-control medium" name="loan_amount" id="loan_amount">
+                        <input disabled type="text" class="form-control medium" name="total_amount" id="total_amount" value="{{ application.scrutiny.total_amount }}">
                     </div>
                     <div class="name cashflow">
                         <span class="tag"><a href="{{ url_for("organisation_views.application_cashflow", app_id=application.application_id) }}">Cash Flow Analysis</a></span>
@@ -453,10 +453,10 @@
             <div class="grid simple">
                 <div class="grid-body no-border">
                     <h4 class="name">Credit Memo</h4>
-                    <div class="field-date">Date : {{ today|dateformat }}</div>
+                    <div class="field-date">Date : {{ application.scrutiny.date|dateformat }}</div>
                     <div class="field-memo">
-                        Mr/ Mrs/ Miss <span class="tag">{{ application.applicant_name }}</span> Son/ Daughter/ Spouse of {{ application.applicant_father }} a permanent resident of <input type="text" class="form-control big input-with-icon" name="memo_applicant_address" id="memo_applicant_address"> owner of <input type="text" class="form-control big input-with-icon" name="memo_business_name" id="memo_business_name"> which deals in retail/wholsale/distribution/service of <input type="text" class="form-control big input-with-icon" name="memo_business_type" id="memo_business_type"> On the basis of her/his application, CB report and internal underwriting process, loan of INR <input type="text" class="form-control medium input-with-icon" name="loan_amount" id="loan_amount"> at <input type="text" class="form-control small input-with-icon" name="loan_interest" id="loan_interest"> % for <input type="text" class="form-control small input-with-icon" name="loan_period" id="loan_period"> month has been approved.
-                        Processing fee of <input type="text" class="form-control small input-with-icon" name="loan_processing_fee" id="loan_processing_fee"> % will be charged on the same loan amount with existing service tax. The EMI for said loan will be INR <input type="text" class="form-control small input-with-icon" name="loan_emi" id="loan_emi">
+                        Mr/ Mrs/ Miss <span class="tag">{{ application.applicant_name }}</span> Son/ Daughter/ Spouse of <span class="tag">{{ application.father_or_husband_name }}</span> a permanent resident of <input disabled type="text" class="form-control big input-with-icon" name="memo_applicant_address" id="memo_applicant_address" value="{{ application.scrutiny.memo_applicant_address }}"> owner of <input disabled type="text" class="form-control big input-with-icon" name="memo_business_name" id="memo_business_name" value="{{ application.scrutiny.memo_business_name }}"> which deals in retail/ wholsale/ distribution/ service of <input disabled type="text" class="form-control big input-with-icon" name="memo_business_type" id="memo_business_type" value="{{ application.scrutiny.memo_business_type }}"> On the basis of her/his application, CB report and internal underwriting process, loan of INR <input disabled type="text" class="form-control medium input-with-icon" name="memo_loan_amount" id="memo_loan_amount" value="{{ application.scrutiny.memo_loan_amount }}"> at <input disabled type="text" class="form-control small input-with-icon" name="memo_loan_interest" id="memo_loan_interest" value="{{ application.scrutiny.memo_loan_interest }}"> % for <input disabled type="text" class="form-control small input-with-icon" name="memo_loan_period" id="memo_loan_period" value="{{ application.scrutiny.memo_loan_period }}"> month has been approved.
+                        Processing fee of <input disabled type="text" class="form-control small input-with-icon" name="memo_loan_processing_fee" id="memo_loan_processing_fee" value="{{ application.scrutiny.memo_loan_processing_fee }}"> % will be charged on the same loan amount with existing service tax. The EMI for said loan will be INR <input disabled type="text" class="form-control small input-with-icon" name="memo_loan_emi" id="memo_loan_emi" value="{{ application.scrutiny.memo_loan_emi }}">
                     </div>
                     <div class="field-from pull-right">For {{ user.organisation.name }}</div>
                     <div class="clearfix"></div>
@@ -467,11 +467,12 @@
         </div>
     </div>
 
-    <div class="row actions section">
-        <div class="col-md-7 col-md-offset-3">
-            <button type="submit" class="btn btn-success btn-large">approve</button>
-            <button type="submit" class="btn btn-danger btn-large">reject</button>
-            <button type="submit" class="btn btn-warning btn-large">hold</button>
+    <div class="row actions section scrutiny-btn">
+        <input disabled type="hidden" id="status" name="status" value="">
+        <div class="col-md-8 col-md-offset-4">
+            <div data-status="approve" class="btn btn-success btn-large">approve</div>
+            <div data-status="reject" class="btn btn-danger btn-large">reject</div>
+            <div data-status="hold" class="btn btn-warning btn-large">hold</div>
         </div>
     </div>
     </div>

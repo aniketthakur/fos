@@ -140,15 +140,8 @@ def cashflow_statusupdate(app_id):
       application.expected_tenure_in_months = int(request.form.get("expected_tenure_in_months"))
       application.expected_emi_amount_served = float(request.form.get("expected_emi_amount_served"))
 
-      if request.form.get("status") == "true":
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
-        application.current_status_updated = datetime.datetime.now()
-        application.status = 170
-
-      else:
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=180)[0]
-        application.current_status_updated = datetime.datetime.now()
-        application.status = 170
+      status_code = 170 if request.form.get("status") == "true" else 180
+      application.update_status(status_code)
 
       application.save()
 
@@ -223,25 +216,13 @@ def scrutiny():
   scrutinyStatus = request.args.get('scrutinyStatus', '')
 
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=191)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName)
-
-  elif (groupId is not None) and (groupId != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=groupId)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
-
-  elif (groupName is not None) and (groupName != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_name=groupName)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
-
-  elif (centerName is not None) and (centerName != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=centerName)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=191)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
@@ -254,18 +235,51 @@ def scrutiny_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
+  user = EsthenosUser.objects.get(id=current_user.id)
+  today = datetime.datetime.now()
+  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+
   if request.method == "GET":
-    today = datetime.datetime.now()
-    user = EsthenosUser.objects.get(id=current_user.id)
-    application = EsthenosOrgApplication.objects.get(application_id=app_id)
-
-    print application.applicant_docs
-
     kwargs = locals()
     return render_template("scrutiny/scrutiny_details.html", **kwargs)
 
-
   elif request.method == "POST":
+
+    status_code, status = 191, request.form.get("status")
+    if status == "approve":
+        status_code, status = 193, "approved"
+
+    elif status == "reject":
+      status_code, status = 192, "reject"
+
+    elif status == "hold":
+      status_code, status = 194, "onhold"
+
+    scrutiny = EsthenosOrgApplicationScrutiny(
+      owner = user,
+      status = status,
+
+      total_income = float(request.form.get("total_income")),
+      total_expense = float(request.form.get("total_expenditure")),
+
+      foir_ratio = float(request.form.get("fior")),
+      total_value = float(request.form.get("total_ltv")),
+      total_amount = float(request.form.get("total_amount")),
+
+      memo_business_type = request.form.get("memo_business_type"),
+      memo_business_name = request.form.get("memo_business_name"),
+      memo_applicant_address = request.form.get("memo_applicant_address"),
+
+      memo_loan_emi = float(request.form.get("memo_loan_emi")),
+      memo_loan_amount = float(request.form.get("memo_loan_amount")),
+      memo_loan_period = float(request.form.get("memo_loan_period")),
+      memo_loan_interest = float(request.form.get("memo_loan_interest")),
+      memo_loan_processing_fee = float(request.form.get("memo_loan_processing_fee"))
+    )
+    application.scrutiny = scrutiny
+    application.update_status(status_code)
+    application.save()
+
     return redirect(url_for("organisation_views.scrutiny"))
 
 
@@ -302,25 +316,16 @@ def sanctions():
   scrutinyStatus = request.args.get('scrutinyStatus', '')
 
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=201)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=201)
 
   elif (groupId is not None) and (groupId != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=groupId)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
-
-  elif (groupName is not None) and (groupName != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_name=groupName)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
-
-  elif (centerName is not None) and (centerName != ''):
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, location_name=centerName)
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=201)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=0)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=201)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)
@@ -333,14 +338,49 @@ def sanctions_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
 
-  if request.method == "GET":
-    today = datetime.datetime.now()
-    user = EsthenosUser.objects.get(id=current_user.id)
-    application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  application = EsthenosOrgApplication.objects.get(application_id=app_id)
 
+  if request.method == "GET":
     kwargs = locals()
     return render_template("sanctions/sanctions_details.html", **kwargs)
 
-
   elif request.method == "POST":
+
+    status_code, status = 201, request.form.get("status")
+    if status == "approve":
+        status_code, status = 203, "approved"
+
+    elif status == "reject":
+      status_code, status = 202, "reject"
+
+    elif status == "hold":
+      status_code, status = 204, "onhold"
+
+    sanction = EsthenosOrgApplicationSanction(
+      owner = user,
+      status = status,
+
+      total_income = float(request.form.get("total_income")),
+      total_expense = float(request.form.get("total_expenditure")),
+
+      foir_ratio = float(request.form.get("fior")),
+      total_value = float(request.form.get("total_ltv")),
+      total_amount = float(request.form.get("total_amount")),
+
+      memo_business_type = request.form.get("memo_business_type"),
+      memo_business_name = request.form.get("memo_business_name"),
+      memo_applicant_address = request.form.get("memo_applicant_address"),
+
+      memo_loan_emi = float(request.form.get("memo_loan_emi")),
+      memo_loan_amount = float(request.form.get("memo_loan_amount")),
+      memo_loan_period = float(request.form.get("memo_loan_period")),
+      memo_loan_interest = float(request.form.get("memo_loan_interest")),
+      memo_loan_processing_fee = float(request.form.get("memo_loan_processing_fee"))
+    )
+    application.sanction = sanction
+    application.update_status(status_code)
+    application.save()
+
     return redirect(url_for("organisation_views.sanctions"))

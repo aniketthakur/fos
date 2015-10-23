@@ -245,6 +245,11 @@ APP_STATUS = [
         'status_code' : 193
     },
     {
+        'status' : 'APPLICATION_SCRUTINY_ONHOLD',
+        'status_message' : 'Application Scrutiny OnHold',
+        'status_code' : 194
+    },
+    {
         'status' : 'APPLICATION_SANCTION_READY',
         'status_message' : 'Application is Ready for Sanction',
         'status_code' : 200
@@ -263,6 +268,11 @@ APP_STATUS = [
         'status' : 'APPLICATION_SANCTION_PASSED',
         'status_message' : 'Application Sanction Passed',
         'status_code' : 203
+    },
+    {
+        'status' : 'APPLICATION_SANCTION_ONHOLD',
+        'status_message' : 'Application Sanction OnHold',
+        'status_code' : 204
     },
     {
         'status' : 'APPLICATION_UNDERWRITING_READY',

@@ -395,6 +395,52 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
         return self.kyc_number + "<" + self.name + ">"
 
 
+class EsthenosOrgApplicationScrutiny(db.EmbeddedDocument):
+    total_income = db.FloatField(required=False, default=0)
+    total_expense = db.FloatField(required=False, default=0)
+
+    foir_ratio = db.FloatField(required=False, default=0)
+    total_ltv = db.FloatField(required=False, default=0)
+    total_amount = db.FloatField(required=False, default=0)
+
+    memo_business_type = db.StringField(max_length=512, required=True, default="")
+    memo_business_name = db.StringField(max_length=512, required=True, default="")
+    memo_applicant_address = db.StringField(max_length=512, required=True, default="")
+
+    memo_loan_emi = db.FloatField(required=False, default=0)
+    memo_loan_amount = db.FloatField(required=False, default=0)
+    memo_loan_period = db.FloatField(required=False, default=0)
+    memo_loan_interest = db.FloatField(required=False, default=0)
+    memo_loan_processing_fee = db.FloatField(required=False, default=0)
+
+    date = db.DateTimeField(default=datetime.datetime.now)
+    owner = db.ReferenceField(EsthenosUser)
+    status = db.StringField(max_length=512, required=True, default="")
+
+
+class EsthenosOrgApplicationSanction(db.EmbeddedDocument):
+    total_income = db.FloatField(required=False, default=0)
+    total_expense = db.FloatField(required=False, default=0)
+
+    foir_ratio = db.FloatField(required=False, default=0)
+    total_ltv = db.FloatField(required=False, default=0)
+    total_amount = db.FloatField(required=False, default=0)
+
+    memo_business_type = db.StringField(max_length=512, required=True, default="")
+    memo_business_name = db.StringField(max_length=512, required=True, default="")
+    memo_applicant_address = db.StringField(max_length=512, required=True, default="")
+
+    memo_loan_emi = db.FloatField(required=False, default=0)
+    memo_loan_amount = db.FloatField(required=False, default=0)
+    memo_loan_period = db.FloatField(required=False, default=0)
+    memo_loan_interest = db.FloatField(required=False, default=0)
+    memo_loan_processing_fee = db.FloatField(required=False, default=0)
+
+    date = db.DateTimeField(default=datetime.datetime.now)
+    owner = db.ReferenceField(EsthenosUser)
+    status = db.StringField(max_length=512, required=True, default="")
+
+
 class EsthenosOrgPsychometricTemplateQuestionSession(db.Document):
       organisation = db.ReferenceField('EsthenosOrg',required=True)
       group = db.ReferenceField('EsthenosOrgGroup',required=True)
@@ -505,6 +551,9 @@ class EsthenosOrgApplication(db.Document):
     status = db.IntField(default=0)
     current_status = db.ReferenceField(EsthenosOrgApplicationStatusType)
     current_status_updated = db.DateTimeField(default=datetime.datetime.now)
+
+    scrutiny = db.EmbeddedDocumentField(EsthenosOrgApplicationScrutiny, default=EsthenosOrgApplicationScrutiny)
+    sanction = db.EmbeddedDocumentField(EsthenosOrgApplicationSanction, default=EsthenosOrgApplicationSanction)
 
     assets_id = db.StringField(max_length=255, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
