@@ -3,18 +3,6 @@ from views_base import *
 # import views for user applications.
 from views_apps import *
 
-# import views for feature - grt.
-from views_grt import *
-
-# import views for feature - cgt1.
-from views_cgt1 import *
-
-# import views for feature - cgt2.
-from views_cgt2 import *
-
-# import views for feature - tele-calling.
-from views_telecalling import *
-
 # import views for feature - psychometric test.
 from views_psychometric import *
 
