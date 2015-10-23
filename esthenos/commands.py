@@ -15,22 +15,18 @@ class DropDB(Command):
     """Drop existing database."""
 
     def run(self):
-        # dbname = settings.MONGODB_SETTINGS["DB"]
-        # db.connection.drop_database(dbname)
-        # notify("dropping database {database}".format(database=dbname))
-        print "drop-database is dangerous, uncomment above lines if you really mean it."
-        
+        notify("\ndropping db: {DB} on {HOST}:{PORT} started.\n".format(**settings.MONGODB_SETTINGS))
+        dbname = settings.MONGODB_SETTINGS["DB"]
+        db.connection.drop_database(dbname)
+        notify("dropping database {database} successful.".format(database=dbname))
+
 
 class InitDB(Command):
     """Initialize new database."""
 
     def run(self):
-        print "dropping database only creating new accounts and organization."
-        print "uncomment lines for clean initialize."
+        print "dropping collections & creating new accounts and organization."
         notify("\ninitializing db: {DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
-
-        # dbname = settings.MONGODB_SETTINGS["DB"]
-        # db.connection.drop_database(dbname)
 
         print "dropping & creating esthenos users."
         EsthenosUser.drop_collection()
@@ -53,7 +49,13 @@ class InitDB(Command):
         EsthenosSettings().save()
 
         organisations = settings.ORGS_SETTINGS
+
+        notify("dropped all organisations")
         EsthenosOrg().drop_collection()
+
+        notify("dropped all products")
+        EsthenosOrgProduct.drop_collection()
+
         EsthenosOrgHierarchy().drop_collection()
         for org in organisations:
             print "dropping & creating organization : %s" % org["name"]
@@ -125,7 +127,6 @@ class InitDB(Command):
 
             status_type.save()
         notify("{count} application statuses created".format(count=len(settings.APP_STATUS)))
-
 
         notify("dropping groups, state, region, area and branch collections.")
         EsthenosOrgGroup.drop_collection()
