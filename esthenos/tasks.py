@@ -12,9 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from esthenos import mainapp
 from e_admin.models import *
 from e_organisation.models import *
-
 from utils import make_equifax_request_entry_application_id,make_highmark_request_for_application_id
-from e_pixuate.pixuate import get_url_with_id, get_aadhaar_details_url, get_pan_details_url, get_vid_details_url
 
 
 conn = boto.connect_ses(
@@ -86,155 +84,131 @@ def org_applications_stats_update():
 @periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
 def tagged_applications():
+
     with mainapp.app_context():
         uploaded_applications = EsthenosOrgApplication.objects.filter(status=110)
-
         for application in uploaded_applications:
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=120)[0]
-            application.current_status_updated  = datetime.datetime.now()
-            application.status = 120
+            application.update_status(120)
             application.save()
 
 
 @celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def all_prefilled_applications():
+
     with mainapp.app_context():
-        today = datetime.datetime.now()
         all_tagged_applications = EsthenosOrgApplication.objects.filter(status=120)
-
         for application in all_tagged_applications:
-            status = EsthenosOrgApplicationStatus(status=application.current_status, updated_on=application.current_status_updated)
-            status.save()
-            application.timeline.append(status)
-
-            status = EsthenosOrgApplicationStatus(status=EsthenosOrgApplicationStatusType.objects.filter(status_code=125)[0], updated_on=datetime.datetime.now())
-            status.save()
-            application.timeline.append(status)
-
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=130)[0]
-            application.current_status_updated = datetime.datetime.now()
-            application.status = 130
+            application.update_status(125)
+            application.update_status(130)
             application.save()
 
 
 @celery.task
 @periodic_task(run_every=datetime.timedelta(seconds=120))
 def cb_checkready_applications():
-    today = datetime.datetime.now()
-    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=130)
 
+    all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=130)
     for application in all_cbcheckready_applications:
         make_equifax_request_entry_application_id(application.application_id)
         make_highmark_request_for_application_id(application.application_id)
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
 
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=140)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 140
+        application.update_status(140)
         application.save()
 
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
-    today = datetime.datetime.now()
-    cbcheck_statuscheck_applications = EsthenosOrgApplication.objects.filter(status=145)
 
-    for application in cbcheck_statuscheck_applications:
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
+    cbcheck_applications = EsthenosOrgApplication.objects.filter(status=145)
+    for application in cbcheck_applications:
         resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(kendra_or_centre_id=application.application_id)[0]
-        apps_with_same_aadhaar = EsthenosOrgApplication.objects.filter(kyc_1__kyc_number=resp.national_id_card)
+        apps_with_same_aadhaar = EsthenosOrgApplication.objects.filter(applicant_kyc__kyc_number=resp.national_id_card).count()
+
         is_failed = False
-        if len(apps_with_same_aadhaar)>1:
+        if apps_with_same_aadhaar > 1:
             is_failed = True
-            print "duplicate aadhaar found"
             for app in apps_with_same_aadhaar:
                 if app.application_id != application.application_id:
-                    print "duplicate aadhaar found in "+app.application_id
-                    status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
-                    status.status_message = "duplicate aadhaar found in "+app.application_id
-                    status.save()
-                    application.timeline.append(status)
-                    application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
-                    application.current_status_updated  = datetime.datetime.now()
-                    application.status = 20
-
+                    application.update_status(25)
+                    application.update_status(20)
                     break
+
         if not is_failed and resp.num_active_account > 2:
             is_failed = True
-            print "number of active loans 2+ "+application.application_id
-            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0],updated_on=datetime.datetime.now())
-            status.status_message = "number of active loans 2+"
-            status.save()
-            application.timeline.append(status)
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=25)[0]
-            application.current_status_updated  = datetime.datetime.now()
-            application.status = 25
+            application.update_status(26)
+            application.update_status(20)
 
         if not is_failed and resp.sum_overdue_amount > 0:
             is_failed = True
-            print "number of defaults 1+ "+application.application_id
-            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0],updated_on=datetime.datetime.now())
-            status.status_message = "number of defaults 1+"
-            status.save()
-            application.timeline.append(status)
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=20)[0]
-            application.current_status_updated  = datetime.datetime.now()
-            application.status = 20
+            application.update_status(20)
 
         if not is_failed:
-            status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=150)[0],updated_on=datetime.datetime.now())
-            status.save()
-            application.timeline.append(status)
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=160)[0]
-            application.current_status_updated  = datetime.datetime.now()
-            application.status = 160
+           application.update_status(160)
+
         application.save()
 
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def cashflow_ready_applications():
-    print "queue processor"
-    today = datetime.datetime.now()
-    Year,WeekNum,DOW = today.isocalendar()
-    # connect to another MongoDB server altogether
-    cashflow_ready_applications = EsthenosOrgApplication.objects.filter(status=160)
+    applications = EsthenosOrgApplication.objects.filter(status=160)
 
-    for application in cashflow_ready_applications:
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
+    for application in applications:
+        application.update_status(170)
+        application.save()
 
 
-        status = EsthenosOrgApplicationStatus(status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0],updated_on=datetime.datetime.now())
-        status.save()
-        application.timeline.append(status)
+@periodic_task(run_every=datetime.timedelta(minutes=1))
+def scrutiny_ready_applications():
+    applications = EsthenosOrgApplication.objects.filter(status=170)
 
-        #update cgt_grt links
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=190)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 190
+    for application in applications:
+        application.update_status(190)
+        application.update_status(191)
+        application.save()
+
+
+@periodic_task(run_every=datetime.timedelta(minutes=1))
+def sanction_ready_applications():
+    applications = EsthenosOrgApplication.objects.filter(status=193)
+
+    for application in applications:
+        application.update_status(200)
+        application.update_status(201)
+        application.save()
+
+
+@periodic_task(run_every=datetime.timedelta(minutes=1))
+def underwriting_applications():
+    applications = EsthenosOrgApplication.objects.filter(status=203)
+
+    for application in applications:
+        application.update_status(230)
+        application.update_status(231)
+        application.save()
+
+
+@periodic_task(run_every=datetime.timedelta(minutes=1))
+def disbursement_applications():
+    applications = EsthenosOrgApplication.objects.filter(status=231)
+
+    for application in applications:
+        application.update_status(240)
         application.save()
 
 
 @celery.task
 def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
     with mainapp.app_context():
-        print "generate_post_grt_applications"
-
         org = EsthenosOrg.objects.get(id=org_id)
         group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
-        print disbursement_date
-        print first_collection_after_indays
+        apps = EsthenosOrgApplication.objects.filter(group=group, status__gte=214)
+
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
         tf = dir+ "dpn.pdf"
+
         #generate dpn here
         downloadFile("http://localhost:8080/internal/pdf_dpn/"+group_id,tf)
         tmp_files.append(tf)
@@ -266,17 +240,12 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
 
         for app in apps:
             tf = dir+ app.application_id+"passbook.pdf"
-            print "http://localhost:8080/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays)
             downloadFile("http://localhost:8080/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
             tmp_files.append(tf)
 
             tf = dir+ app.application_id+"_application.pdf"
             downloadFile("http://localhost:8080/internal/pdf_application/"+app.application_id,tf)
             tmp_files.append(tf)
-
-
-        print tmp_files
-        filenames = tmp_files
 
         # Folder name in ZIP archive which contains the above files
         # E.g [thearchive.zip]/somefiles/file2.txt
@@ -296,26 +265,6 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         os.remove(tf+".zip")
         group.disbursement_pdf_link = k.key
         group.save()
-
-
-@periodic_task(run_every=datetime.timedelta(minutes=1))
-def cgt_grt_success_applications():
-    print "queue processor"
-    today = datetime.datetime.now()
-    Year,WeekNum,DOW = today.isocalendar()
-    # connect to another MongoDB server altogether
-    cgt_grt_success_applications = EsthenosOrgApplication.objects.filter(status=280)
-
-    for application in cgt_grt_success_applications:
-        status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-        status.save()
-        application.timeline.append(status)
-        #here we generate pdf for disbursement
-
-        application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=300)[0]
-        application.current_status_updated  = datetime.datetime.now()
-        application.status = 300
-        application.save()
 
 
 if __name__ == '__main__':

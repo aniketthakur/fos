@@ -269,13 +269,7 @@ def equifax_request_reports_import():
                 if len(applications)>0:
                     application = applications[0]
                     print application
-                    status = EsthenosOrgApplicationStatus(status = application.current_status,updated_on=application.current_status_updated)
-                    status.save()
-                    application.timeline.append(status)
-
-                    application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=145)[0]
-                    application.current_status_updated  = datetime.datetime.now()
-                    application.status = 145
+                    application.update_status(145)
                     application.save()
 
                     eq_resp = EsthenosOrgApplicationEqifaxResponse()

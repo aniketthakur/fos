@@ -136,20 +136,18 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.additional_type1=""
     eqrequest.additional_name1=""
     eqrequest.additional_type2="K02"
-    eqrequest.additional_name2=app.gurranter_s_name
-    eqrequest.address_city=app.address+" "+app.member_city
-    eqrequest.state_union_territory=app.member_state
-    eqrequest.postal_pin=app.member_pincode
-    eqrequest.ration_card=""
+    eqrequest.additional_name2=app.guarantor1_kyc.name
+    eqrequest.address_city=app.address+" "+app.city
+    eqrequest.state_union_territory=app.state
+    eqrequest.postal_pin = app.pincode
+    eqrequest.ration_card = ""
     eqrequest.voter_id=""
 
-    if app.kyc_1 is not None:
-        eqrequest.national_id_card=app.kyc_1.kyc_number
-    
-    eqrequest.additional_id2=""
+    if app.applicant_kyc is not None:
+        eqrequest.voter_id = app.applicant_kyc.kyc_number
+        eqrequest.national_id_card = app.applicant_kyc.kyc_number
 
-    if app.kyc_2 is not None:
-        eqrequest.voter_id=app.kyc_2.kyc_number
+    eqrequest.additional_id2 = ""
 
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
@@ -164,14 +162,6 @@ def make_equifax_request_entry_application_id(app_id):
 
 def add_sample_highmark_response(app_id):
 
-#        app.total_running_loans =
-#        app.total_existing_outstanding_from =
-#        app.total_running_loans_from_mfi =
-#        app.total_existing_outstanding_from_mfi =
-#        app.existing_loan_cycle =
-#        app.eligible_loan_cycle =self.cycle.data
-#        app.defaults_with_no_mfis =
-#        app.attendence_percentage =
     hmresponse = EsthenosOrgApplicationHighMarkResponse()
     hmresponse.active_account="0"
     hmresponse.address="#81 MARIMUDDANAHALLI HUNSURE TO MYSOURE KARIMUDDANAHALLI 571189 KA"
@@ -208,5 +198,4 @@ def add_sample_highmark_response(app_id):
     hmresponse.status="SUCCESS"
     hmresponse.value="Over Exposure"
     hmresponse.voter_id="ACS35085"
-    print hmresponse
     hmresponse.save()
