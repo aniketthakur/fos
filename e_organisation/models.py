@@ -15,27 +15,15 @@ class EsthenosOrgNotification(db.Document):
     notification_date = db.DateTimeField(default=datetime.datetime.now)
 
 
-class EsthenosOrgNotificationResource(Resource):
-    document = EsthenosOrgNotification
-
-
 class EsthenosOrgState(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     state_name = db.StringField(max_length=60,required=True)
-
-
-class EsthenosOrgStateResource(Resource):
-    document = EsthenosOrgState
 
 
 class EsthenosOrgRegion(db.Document):
     state = db.ReferenceField('EsthenosOrgState')
     organisation = db.ReferenceField('EsthenosOrg')
     region_name = db.StringField(max_length=60,required=True)
-
-
-class EsthenosOrgRegionResource(Resource):
-    document = EsthenosOrgRegion
 
 
 class EsthenosOrgArea(db.Document):
@@ -45,20 +33,12 @@ class EsthenosOrgArea(db.Document):
     area_name = db.StringField(max_length=60,required=True)
 
 
-class EsthenosOrgAreaResource(Resource):
-    document = EsthenosOrgArea
-
-
 class EsthenosOrgBranch(db.Document):
     state = db.ReferenceField('EsthenosOrgState')
     region = db.ReferenceField('EsthenosOrgRegion')
     area = db.ReferenceField('EsthenosOrgArea')
     organisation = db.ReferenceField('EsthenosOrg')
     branch_name = db.StringField(max_length=60,required=True)
-
-
-class EsthenosOrgBranchResource(Resource):
-    document = EsthenosOrgBranch
 
 
 class EsthenosOrgToken(db.EmbeddedDocument):
@@ -236,10 +216,6 @@ class EsthenosOrgCenter(db.Document):
       return "%s, %s, %s" % (self.center_id, self.center_name, self.organisation)
 
 
-class EsthenosOrgCenterResource(Resource):
-    document= EsthenosOrgRegion
-
-
 class EsthenosOrgGroup(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     center = db.ReferenceField('EsthenosOrgCenter',required=False)
@@ -275,10 +251,6 @@ class EsthenosOrgGroup(db.Document):
 
     def __unicode__(self):
         return "%s, %s, %s, %s" % (self.organisation, self.group_name, self.location_name, self.size)
-
-
-class EsthenosOrgGroupResource(Resource):
-    document= EsthenosOrgGroup
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
