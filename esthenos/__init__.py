@@ -124,7 +124,7 @@ def _jinja2_filter_enabledfilter(active):
 @mainapp.template_filter('css_approve_reject')
 def _jinja2_filter_css_approve_reject(value):
     if value == "approved":
-        return "btn-success"
+        return "btn-primary"
 
     if value == "rejected":
         return "btn-danger"
