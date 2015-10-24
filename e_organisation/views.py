@@ -66,7 +66,6 @@ def reports_internal_main():
 
     user = EsthenosUser.objects.get(id=current_user.id)
 
-
     if request.method == "GET":
         kwargs = locals()
         return render_template("client_reports.html", **kwargs)

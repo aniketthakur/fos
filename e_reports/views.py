@@ -45,6 +45,7 @@ def get_application_headers():
     headers.append("category")
     headers.append("education")
     headers.append("disability")
+    headers.append("marital status")
 
     headers.append("male count")
     headers.append("female count")
