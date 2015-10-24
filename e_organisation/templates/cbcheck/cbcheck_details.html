@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 
 {% block css_sheets %}{{ super() }}
@@ -12,15 +12,15 @@
         <div class="clearfix"><br/></div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-3"><a href="/admin/cbcheck/equifax/download" class="btn btn-small btn-success">Download Pending Equifax Reports</a></div>
-{#                <div class="col-md-3"><a href="/admin/cbcheck/highmark/download" class="btn btn-small btn-success">Download Pending HighMark Reports</a></div>#}
+                <div class="col-md-3"><a href="{{ url_for("organisation_views.eqifax_request_reports_download", org_id=organisation.id) }}" class="btn btn-small btn-success">Download Pending Equifax Reports</a></div>
+{#                <div class="col-md-3"><a href="{{ url_for("organisation_views.himark_request_reports_download", org_id=organisation.id) }}" class="btn btn-small btn-success">Download Pending HighMark Reports</a></div>#}
             </div>
         </div>
 
         <div class="clearfix"><br/></div>
         <div class="row">
             <div class="col-md-3">
-                <form class="dropzone no-margin" id="equifax_upload" action="/admin/cbcheck/equifax/">
+                <form class="dropzone no-margin" id="equifax_upload" action="{{ url_for("organisation_views.equifax_request_reports_import", org_id=organisation.id) }}">
                     <div class="fallback">
                         <input type="file" name="excel">
                         <label>Equifax</label>
@@ -28,12 +28,11 @@
                 </form>
             </div>
 {#            <div class="col-md-3">#}
-{#                <form class="dropzone no-margin" id="highmark_upload" action="/admin/cbcheck/highmark/">#}
+{#                <form class="dropzone no-margin" id="highmark_upload" action="{{ url_for("organisation_views.himark_request_reports_import", org_id=organisation.id) }}">#}
 {#                    <div class="fallback">#}
 {#                        <input type="file" name="excel">#}
 {#                        <label>Hignmark</label>#}
 {#                    </div>#}
-{##}
 {#                </form>#}
 {#            </div>#}
                 </form>
@@ -42,6 +41,8 @@
         <div class="clearfix"><br/></div>
     </div>
 {% endblock %}
+
+
 {% block js_scripts %}{{ super() }}
     <script src="{{ url_for('static', filename='plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
@@ -85,6 +86,4 @@
             };
         });
     </script>
-
-
 {% endblock %}

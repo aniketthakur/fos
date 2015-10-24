@@ -1,18 +1,4 @@
-import os, tempfile, datetime
-import json, hashlib, pyexcel
-
-from flask.ext import excel
-from flask import Flask, Blueprint, make_response
-from flask import render_template, request, Response
-from flask_login import current_user, login_required
-
-from e_tokens.utils import login_or_key_required
-from e_organisation.models import *
-from e_reports.views import get_application_headers, get_application_rowdata
-from e_organisation.models import EsthenosOrgApplicationStatus, EsthenosOrgApplicationStatusType, EsthenosOrgApplication
-
-storage_path =  os.path.join(os.curdir,'pitaya/uploads')
-admin_reports_views = Blueprint('admin_reports_views', __name__, template_folder='templates')
+from views_base import *
 
 
 def is_number(s):
@@ -23,9 +9,24 @@ def is_number(s):
         return False
 
 
-@admin_reports_views.route('/admin/cbcheck/highmark/', methods=["POST"])
-@login_or_key_required
-def himark_request_reports_import():
+@organisation_views.route('/organisation/cbcheck', methods=["GET"])
+@login_required
+@feature_enable("hignmark_equifax")
+def cbcheck_manual():
+    if not session['role'].startswith("ORG_"):
+        abort(403)
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    organisation = user.organisation
+
+    kwargs = locals()
+    return render_template("cbcheck/cbcheck_details.html", **kwargs)
+
+
+@organisation_views.route('/organisation/<org_id>/cbcheck/highmark', methods=["POST"])
+@login_required
+@feature_enable("hignmark_equifax")
+def himark_request_reports_import(org_id):
     c_user = current_user
     kwargs = locals()
     print request.files
@@ -107,9 +108,10 @@ def himark_request_reports_import():
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
 
 
-@admin_reports_views.route('/admin/cbcheck/highmark/download', methods=["GET"])
-@login_or_key_required
-def himark_request_reports():
+@organisation_views.route('/organisation/<org_id>/cbcheck/highmark/download', methods=["GET"])
+@login_required
+@feature_enable("hignmark_equifax")
+def himark_request_reports_download(org_id):
     c_user = current_user
     kwargs = locals()
 
@@ -245,9 +247,10 @@ def himark_request_reports():
         return output
 
 
-@admin_reports_views.route('/admin/cbcheck/equifax/', methods=["POST"])
-@login_or_key_required
-def equifax_request_reports_import():
+@organisation_views.route('/organisation/<org_id>/cbcheck/equifax', methods=["POST"])
+@login_required
+@feature_enable("hignmark_equifax")
+def equifax_request_reports_import(org_id):
     c_user = current_user
     kwargs = locals()
     print request.files
@@ -267,7 +270,6 @@ def equifax_request_reports_import():
                 applications = EsthenosOrgApplication.objects.filter(application_id=v[21])
                 if len(applications)>0:
                     application = applications[0]
-                    print application
                     application.update_status(145)
                     application.save()
 
@@ -404,14 +406,18 @@ def equifax_request_reports_import():
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
 
 
-@admin_reports_views.route('/admin/cbcheck/equifax/download', methods=["GET"])
-@login_or_key_required
-def eqifax_request_reports():
-    c_user = current_user
+@organisation_views.route('/organisation/<org_id>/cbcheck/equifax/download', methods=["GET"])
+@login_required
+@feature_enable("hignmark_equifax")
+def eqifax_request_reports_download(org_id):
+
+    user = EsthenosUser.objects.get(id=current_user.id)
+    organisation = user.organisation
+
     kwargs = locals()
-    from e_organisation.models import EsthenosOrgApplicationEqifax,EsthenosOrg
     if request.method == 'GET':
-        organisations = EsthenosOrg.objects.all()
+        organisations = EsthenosOrg.objects.filter(organisation=user.organisation)
+
         application_data = list()
         application_data.append(list())
         eq_request_headers = list()
@@ -440,46 +446,43 @@ def eqifax_request_reports():
         eq_request_headers.append("Branch ID")
         eq_request_headers.append("Kendra ID")
 
-        headers =  eq_request_headers
+        headers = eq_request_headers
         application_data.append(headers)
-        print organisations
-        for org in organisations:
 
-            applications = EsthenosOrgApplication.objects.filter(organisation=org,status__gte=100,status__lte=150)
-
-            for app in applications:
-                print app.applicant_name
-                try:
-                    eq_request = EsthenosOrgApplicationEqifax.objects.filter(kendra_id=app.application_id)[0]
-                    row_data = list()
-                    row_data.append(eq_request["reference_number"])
-                    row_data.append(eq_request["member_id_unique_accountnumber"])
-                    row_data.append(eq_request["inquiry_purpose"])
-                    row_data.append(eq_request["transaction_amount"])
-                    row_data.append(eq_request["consumer_name"])
-                    row_data.append(eq_request["additional_type1"])
-                    row_data.append(eq_request["additional_name1"])
-                    row_data.append(eq_request["additional_type2"])
-                    row_data.append(eq_request["additional_name2"])
-                    row_data.append(eq_request["address_city"])
-                    row_data.append("MH") #eq_request["state_union_territory"]
-                    row_data.append(eq_request["postal_pin"])
-                    row_data.append(eq_request["ration_card"])
-                    row_data.append(eq_request["voter_id"])
-                    row_data.append(eq_request["additional_id1"])
-                    row_data.append(eq_request["additional_id2"])
-                    row_data.append(eq_request["national_id_card"])
-                    row_data.append(eq_request["tax_id_pan"])
-                    row_data.append(eq_request["phone_home"])
-                    row_data.append(eq_request["phone_mobile"])
-                    row_data.append(eq_request["dob"])
-                    row_data.append(eq_request["gender"])
-                    row_data.append(eq_request["branch_id"])
-                    row_data.append(eq_request["kendra_id"])
-                    app_row_data = row_data
-                    application_data.append(app_row_data)
-                except Exception as e:
-                    print e.message
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=100, status__lte=150)
+        for app in applications:
+            print app.applicant_name
+            try:
+                eq_request = EsthenosOrgApplicationEqifax.objects.filter(kendra_id=app.application_id)[0]
+                row_data = list()
+                row_data.append(eq_request["reference_number"])
+                row_data.append(eq_request["member_id_unique_accountnumber"])
+                row_data.append(eq_request["inquiry_purpose"])
+                row_data.append(eq_request["transaction_amount"])
+                row_data.append(eq_request["consumer_name"])
+                row_data.append(eq_request["additional_type1"])
+                row_data.append(eq_request["additional_name1"])
+                row_data.append(eq_request["additional_type2"])
+                row_data.append(eq_request["additional_name2"])
+                row_data.append(eq_request["address_city"])
+                row_data.append("MH") #eq_request["state_union_territory"]
+                row_data.append(eq_request["postal_pin"])
+                row_data.append(eq_request["ration_card"])
+                row_data.append(eq_request["voter_id"])
+                row_data.append(eq_request["additional_id1"])
+                row_data.append(eq_request["additional_id2"])
+                row_data.append(eq_request["national_id_card"])
+                row_data.append(eq_request["tax_id_pan"])
+                row_data.append(eq_request["phone_home"])
+                row_data.append(eq_request["phone_mobile"])
+                row_data.append(eq_request["dob"])
+                row_data.append(eq_request["gender"])
+                row_data.append(eq_request["branch_id"])
+                row_data.append(eq_request["kendra_id"])
+                app_row_data = row_data
+                application_data.append(app_row_data)
+            except Exception as e:
+                print e.message
 
         output = excel.make_response_from_array(application_data, 'csv')
         output.headers["Content-Disposition"] = "attachment; filename=eqifax_request_reports.csv"

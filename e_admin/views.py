@@ -83,18 +83,6 @@ def admin_settings_update():
     return redirect("/admin/settings")
 
 
-@admin_views.route('/admin/cbcheck', methods=["GET"])
-@login_required
-@feature_enable("hignmark_equifax")
-def admin_cbcheck():
-     if session['role'] != "ADMIN":
-         abort(403)
-
-     user = EsthenosUser.objects.get(id=current_user.id)
-     kwargs = locals()
-     return render_template("admin_cbcheck.html", **kwargs)
-
-
 @admin_views.route('/admin/employees', methods=["GET","POST"])
 @login_required
 def admin_employees():

@@ -159,6 +159,14 @@
                         </a>
                     </li>
                     {% endif %}
+                    {% if feature_show("hignmark_equifax") %}
+                    <li class="">
+                        <a href="{{ url_for('organisation_views.cbcheck_manual') }}">
+                            <i class="fa fa-line-chart"></i>
+                            <span class="title">Highmark/ Equifax</span>
+                        </a>
+                    </li>
+                    {% endif %}
                 {% endblock %}
             </ul>
             <div class="clearfix"></div>

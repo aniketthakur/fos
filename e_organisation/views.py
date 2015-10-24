@@ -3,6 +3,9 @@ from views_base import *
 # import views for user applications.
 from views_apps import *
 
+# import views for cbcheck functionalities.
+from views_cbcheck import *
+
 # import views for feature - psychometric test.
 from views_psychometric import *
 

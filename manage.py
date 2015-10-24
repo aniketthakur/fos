@@ -32,8 +32,6 @@ mainapp.register_blueprint( token_views)
 from e_reports.views import reports_views
 mainapp.register_blueprint( reports_views)
 
-from e_admin_reports.views import admin_reports_views
-mainapp.register_blueprint( admin_reports_views)
 
 if __name__ == "__main__":
     manager.run()

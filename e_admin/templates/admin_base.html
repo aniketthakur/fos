@@ -89,11 +89,6 @@
                     <li class="start">
                         <a href="{{ url_for("admin_views.admin_application") }}"> <i class="icon-custom-home"></i> <span class="title">Applications</span></a>
                     </li>
-                    {% if feature_show("hignmark_equifax") %}
-                    <li class="start">
-                        <a href="/admin/cbcheck"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
-                    </li>
-                    {% endif %}
                 {% else %}
                     <li class="start active">
                         <a href="{{ url_for("admin_views.admin_dashboard") }}"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span></a>
@@ -107,11 +102,6 @@
                     <li class="start">
                         <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
                     </li>
-                    {% if feature_show("hignmark_equifax") %}
-                    <li class="start">
-                        <a href="{{ url_for("admin_views.admin_cbcheck") }}"> <i class="fa fa-flag"></i> <span class="title">Highmark/ Equifax</span></a>
-                    </li>
-                    {% endif %}
                 {% endif %}
                 {% endblock %}
             </ul>
