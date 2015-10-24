@@ -211,23 +211,6 @@ def admin_org_details(org_id):
     return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"] )
-@login_required
-def admin_org_regions_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    for region in request.form.get('org_regions').split(","):
-        state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
-        reg = EsthenosOrgRegion.objects.create(region_name=region, organisation=org, state=state)
-        reg.save()
-
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
-
-
 @admin_views.route('/admin/organisation/<org_id>/states', methods=["POST"] )
 @login_required
 def admin_org_states_update(org_id):
@@ -238,10 +221,24 @@ def admin_org_states_update(org_id):
     states = request.form.getlist('org_states')
 
     for state in states:
-        st, status = EsthenosOrgState.objects.get_or_create(state_name=state, organisation=org)
+        st, status = EsthenosOrgState.objects.get_or_create(name=state, organisation=org)
         org.states.append(st)
     org.save()
+    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
+
+@admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"] )
+@login_required
+def admin_org_regions_update(org_id):
+    if session['role'] != "ADMIN":
+        abort(403)
+
+    org = EsthenosOrg.objects.get(id=org_id)
+    state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
+
+    for region in request.form.get('org_regions').split(","):
+        reg, status = EsthenosOrgRegion.objects.get_or_create(name=region, organisation=org, parent=state)
+        reg.save()
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
@@ -252,13 +249,10 @@ def admin_org_areas_update(org_id):
         abort(403)
 
     org = EsthenosOrg.objects.get(id=org_id)
-    data = request.form.get('org_data').split(",")
-    areas = request.form.get('org_areas').split(",")
+    region = EsthenosOrgRegion.objects.get(id=request.form.get('org_region'))
 
-    for area in areas:
-        state = EsthenosOrgState.objects.get(id=data[0])
-        region = EsthenosOrgRegion.objects.get(id=data[1])
-        area_obj = EsthenosOrgArea.objects.create(area_name=area,organisation=org,state=state,region=region)
+    for area in request.form.get('org_areas').split(","):
+        area_obj, status = EsthenosOrgArea.objects.get_or_create(name=area, organisation=org, parent=region)
         area_obj.save()
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
@@ -270,35 +264,11 @@ def admin_org_branches_update(org_id):
         abort(403)
 
     org = EsthenosOrg.objects.get(id=org_id)
-    data = request.form.get('org_data').split(",")
-    branches = request.form.get('org_branch_data').split(",")
+    area = EsthenosOrgArea.objects.get(id=request.form.get('org_area'))
 
-    for branch in branches:
-        state = EsthenosOrgState.objects.get(id=data[0])
-        region = EsthenosOrgRegion.objects.get(id=data[1])
-        area = EsthenosOrgArea.objects.get(id=data[2])
-        branch = EsthenosOrgBranch.objects.create(branch_name=branch, area=area, organisation=org, state=state, region=region)
-        branch.save()
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
-
-
-@admin_views.route('/admin/organisation/<org_id>/centers', methods=["POST"] )
-@login_required
-def admin_org_centers_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    data = request.form.get('org_data').split(",")
-    centers = request.form.get('org_center_data').split(",")
-
-    for center in centers:
-        state = EsthenosOrgState.objects.get(id=data[0])
-        region = EsthenosOrgRegion.objects.get(id=data[1])
-        area = EsthenosOrgArea.objects.get(id=data[2])
-        branch = EsthenosOrgBranch.objects.get(id=data[3])
-        center = EsthenosOrgCenter.objects.create(center_name=center, area=area, organisation=org, state=state, region=region, branch=branch)
-        center.save()
+    for branch in request.form.get('org_branch_data').split(","):
+        branch_obj, status = EsthenosOrgBranch.objects.get_or_create(name=branch, organisation=org, parent=area)
+        branch_obj.save()
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
@@ -313,42 +283,6 @@ def admin_organisation_dashboard(org_id):
 
     kwargs = locals()
     return render_template("admin_organisation_dashboard.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/groups', methods=["GET", "POST"])
-@login_required
-def admin_organisation_groups(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    if request.method == "GET":
-        states = EsthenosOrgState.objects.filter(organisation=org)
-        areas = EsthenosOrgArea.objects.filter(organisation=org)
-        groups = EsthenosOrgGroup.objects.filter(organisation=org)
-        regions = EsthenosOrgRegion.objects.filter(organisation=org)
-        branches = EsthenosOrgBranch.objects.filter(organisation=org)
-        kwargs = locals()
-        return render_template("admin_add_org_group.html", **kwargs)
-
-    if request.method == "POST":
-        data = request.form.get('org_data').split(",")
-        loc_name = request.form.get('location_name')
-        group_name = request.form.get('group_name')
-        unique_group_id = org.name.upper()[0:2]+"G"+"{0:06d}".format(org.group_count)
-        branch = EsthenosOrgBranch.objects.get(id=data[3])
-        group, status = EsthenosOrgGroup.objects.get_or_create(organisation=org, group_name=group_name, location_name=loc_name)
-
-        if status:
-            group.location_name=loc_name
-            group.branch=branch
-            group.group_id = unique_group_id
-            group.save()
-            EsthenosOrg.objects.get(id = org.id).update(inc__group_count=1)
-
-        return redirect(url_for("admin_views.admin_organisation_groups", org_id=org_id))
 
 
 @admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
@@ -895,7 +829,7 @@ def admin_application_track(org_id, app_id):
 
     user = EsthenosUser.objects.get(id=current_user.id)
     organisation = EsthenosOrg.objects.get(id = org_id)
-    application = EsthenosOrgApplication.objects.get(organisation=organisation, application_id=app_id)
+    application = EsthenosOrgApplication.objects.get(organisation=organisation,application_id=app_id)
     kwargs = locals()
     return render_template("admin_application_tracking.html", **kwargs)
 
@@ -980,7 +914,7 @@ def admin_hmplcashflow(org_id):
 
 
 @admin_views.route('/admin/organisation/<org_id>/disbursement/hmplloancard', methods=["GET"])
-def admin_hmplloancard():
+def admin_hmplloancard(org_id):
     if session['role'] != "ADMIN":
         abort(403)
     kwargs = locals()
@@ -1040,7 +974,7 @@ def admin_disbursement_pdf(org_id):
 @admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
 def admin_sanction(grp_id):
     group = EsthenosOrgGroup.objects.get(group_id=grp_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
 
     disbursement_date = datetime.datetime.now()
     org_name = group.organisation.name
@@ -1072,7 +1006,7 @@ def admin_sanction(grp_id):
 @admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
 def admin_ipnpfr(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
 
     disbursement_date = datetime.datetime.now()
     org_name = group.organisation.name
@@ -1092,7 +1026,7 @@ def admin_ipnpfr(group_id):
     pdfkit.from_string(body, 'pdf_insurance_fees.pdf',options=options)
 
     raw_bytes = ""
-    with open('pdf_insurance_fees', 'rb') as r:
+    with open('pdf_insurance_fees.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
@@ -1105,7 +1039,7 @@ def admin_ipnpfr(group_id):
 @admin_views.route('/internal/pdf_pf/<group_id>', methods=["GET"])
 def admin_processing_fees(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
 
     disbursement_date = datetime.datetime.now()
     org_name = group.organisation.name
@@ -1122,7 +1056,7 @@ def admin_processing_fees(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'pdf_processing_fees.pdf',options=options)
+    pdfkit.from_string(body, 'pdf_processing_fees.pdf', options=options)
 
     raw_bytes = ""
     with open('pdf_processing_fees.pdf', 'rb') as r:
@@ -1138,7 +1072,7 @@ def admin_processing_fees(group_id):
 @admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
 def admin_hmpdpn(group_id):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=240)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
 
@@ -1154,7 +1088,7 @@ def admin_hmpdpn(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Portrait'
     }
-    pdfkit.from_string(body, 'dpn.pdf',options=options)
+    pdfkit.from_string(body, 'dpn.pdf', options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
@@ -1217,7 +1151,7 @@ def admin_pdf_hccs_reciept(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Portrait'
     }
-    pdfkit.from_string(body, 'dpn.pdf',options=options)
+    pdfkit.from_string(body, 'dpn.pdf', options=options)
 
     raw_bytes = ""
     with open('dpn.pdf', 'rb') as r:
@@ -1233,7 +1167,7 @@ def admin_pdf_hccs_reciept(group_id):
 @admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
 def admin_hmplloanagreement(group_id,dis_date_str):
     group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(Q(status=250) or Q(status=272)or Q(status=276))
+    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=210)
     disbursement_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
 
@@ -1318,10 +1252,10 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'tmp.pdf', options=options)
+    pdfkit.from_string(body, 'pdf_passbook.pdf', options=options)
 
     raw_bytes = ""
-    with open('tmp.pdf', 'rb') as r:
+    with open('pdf_passbook.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 

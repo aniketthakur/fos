@@ -90,7 +90,8 @@ FEATURES = {
 
     "admin_groups": False,
     "admin_select_regions": True,
-    "admin_select_regions_village": False,
+    "admin_select_regions_center": False,
+    "admin_select_regions_groups": False,
 
     "search_by_app_id": True,
     "search_by_app_name": True,

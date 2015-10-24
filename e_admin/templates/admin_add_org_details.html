@@ -71,13 +71,13 @@
                                 <h4>Select States</h4>
                                 <select id="org_state" name="org_state" style="width:100%" class="select2 form-control">
                                     {% for state in states %}
-                                        <option value='{{ state.id }}'>{{ state.state_name }}</option>
+                                        <option value='{{ state.id }}'>{{ state.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Set Region</h4>
-                                <div class="input-with-icon  right">
+                                <h4>Add New Clusters</h4>
+                                <div class="input-with-icon right">
                                     <input class="bootstrap-tagsinput" name="org_regions" id="org_regions" type="text" placeholder="Select Clusters"/>
                                 </div>
                             </div>
@@ -94,15 +94,15 @@
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" action="{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}" method="post">
                             <div class="col-md-4">
-                                <h4>Select State-Region</h4>
-                                <select id="regions_2" name="org_data" style="width:100%" class="select2 form-control" >
+                                <h4>Select Cluster</h4>
+                                <select id="regions_2" name="org_region" style="width:100%" class="select2 form-control" >
                                     {% for region in regions %}
-                                        <option value='{{ region.state.id }},{{ region.id }}'>{{ region.state.state_name }}-{{ region.region_name }}</option>
+                                        <option value='{{ region.id }}'>{{ region.parent.name }}-{{ region.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Set Area</h4>
+                                <h4>Add New Division</h4>
                                 <div class="input-with-icon  right">
                                     <input class="bootstrap-tagsinput" name="org_areas" id="org_areas" type="text" placeholder="Select Division"/>
                                 </div>
@@ -120,15 +120,15 @@
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" action="{{ url_for("admin_views.admin_org_branches_update", org_id=org.id) }}" method="post">
                             <div class="col-md-4">
-                                <h4>Select States-Region-Area</h4>
-                                <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
+                                <h4>Select Division</h4>
+                                <select id="regions_3" name="org_area" style="width:100%" class="select2 form-control" >
                                     {% for area in areas %}
-                                        <option value='{{ area.state.id }},{{ area.region.id }},{{ area.id }}'>{{ area.state.state_name }}-{{ area.region.region_name }}-{{ area.area_name }}</option>
+                                        <option value='{{ area.id }}'>{{ area.parent.parent.name }}-{{ area.parent.name }}-{{ area.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <h4>Set Branches</h4>
+                                <h4>Add New Branches</h4>
                                 <div class="input-with-icon  right">
                                     <input class="bootstrap-tagsinput" name="org_branch_data" id="org_branch_data" type="text" placeholder="Select Branches"/>
                                 </div>
@@ -143,34 +143,40 @@
                     </div>
                 </div>
                 {% endif %}
-                {% if feature_show("admin_select_regions_village") %}
-                <div class="grid-body">
-                    <div class="row pick-center-state-form">
-                        <form class="form-no-horizontal-spacing" action="{{ url_for("admin_views.admin_org_centers_update", org_id=org.id) }}" method="post">
-                            <div class="col-md-4">
-                                <h4>Select States-Region-Area-Branch</h4>
-                                <select id="regions_3" name="org_data" style="width:100%" class="select2 form-control" >
-                                    {% for branch in branches %}
-                                        <option value='{{ branch.state.id }},{{ branch.region.id }},{{ branch.area.id }},{{ branch.id }}'>{{ branch.state.state_name }}-{{ branch.region.region_name }}-{{ branch.area.area_name }}-{{ branch.branch_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <h4>Select Village Locations</h4>
-                                <div class="input-with-icon  right">
-                                    <input class="bootstrap-tagsinput" name="org_center_data" id="org_center_data" type="text" placeholder="Select Village Locations"/>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="pull-right">
-                                    <br><br>
-                                    <button class="btn btn-large btn-danger btn-cons org-submit" type="submit">Update</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-title">
+                    <h4><span class="semi-bold">Branches & Centers</span></h4>
                 </div>
-                {% endif %}
+                <div class="grid-body ">
+                    <table class="table table-hover table-condensed" id="organisation-group-table">
+                        <thead>
+                        <tr >
+                            <th style="width:1%" >#</th>
+                            <th style="width:10%">Branch</th>
+                            <th style="width:10%">Division</th>
+                            <th style="width:10%">Cluster</th>
+                            <th style="width:10%">State</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for branch in branches %}
+                            <tr>
+                                <td class="v-align-middle">{{ loop.index }}</td>
+                                <td class="v-align-middle">{{ branch.name }}</td>
+                                <td class="v-align-middle">{{ branch.parent.name }}</td>
+                                <td class="v-align-middle">{{ branch.parent.parent.name }}</td>
+                                <td class="v-align-middle">{{ branch.parent.parent.parent.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -205,6 +211,11 @@
                             required: true
                         },
                         org_center_data: {
+                            minlength: 2,
+                            maxlength: 30,
+                            required: true
+                        },
+                        org_group_data: {
                             minlength: 2,
                             maxlength: 30,
                             required: true
