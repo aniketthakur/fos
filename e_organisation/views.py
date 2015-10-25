@@ -545,49 +545,23 @@ def org_products():
 @organisation_views.route('/api/organisation/applications', methods=["GET"])
 @login_or_key_required
 def get_application():
-    group_name = request.args['group_name']
-    center_name = request.form.get('center_name')
     user = EsthenosUser.objects.get(id=current_user.id)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
 
-    print group_name
-    group = EsthenosOrgGroup.objects.filter(organisation=user.organisation, group_name=group_name)[0]
-
-    if center_name != None and group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__contains=center_name,group=group)\
-          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
-
-    elif center_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,center__center_name__contains=center_name)\
-          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
-
-    elif group_name != None:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation,group=group)\
-          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
-    else:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)\
-          .only("application_id","applicant_name","date_created","upload_type","current_status","loan_eligibility_based_on_net_income","loan_eligibility_based_on_company_policy")
-
-    myapps = list()
+    applications_list = list()
     for app in applications:
-        item = dict()
-        item["id"] = app["application_id"]
-        item["date_created"] = str(app["date_created"])
-        item["applicant_name"] = app["applicant_name"]
-        item["current_status"] = app["current_status"].status_message
-        item["loan_eligibility_based_on_net_income"] = app["loan_eligibility_based_on_net_income"]
-        item["loan_eligibility_based_on_company_policy"] = app["loan_eligibility_based_on_company_policy"]
-        myapps.append(item)
-    #center = EsthenosOrgCenter.objects.filter(center_name=center_name)[0]
+        item = {
+            "id" : app.application_id,
+            "date_created" : str(app.date_created),
+            "applicant_name" : app.applicant_name,
+            "current_status" : app.current_status.status_message,
+            "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
+            "loan_eligibility_based_on_company_policy" : app.loan_eligibility_based_on_company_policy
+        }
+        applications_list.append(item)
 
     resp = dict()
-    applications_list = []
-    #resp['center'] = center.name
-    #resp['center_size'] = center.size
-    if group is not None:
-        resp['group'] =  group.group_name
-        resp['group_size'] = group.size
-
-    resp["applications"] = myapps
+    resp["applications"] = applications_list
     return Response(response=json.dumps(resp), status=200, mimetype="application/json")
 
 

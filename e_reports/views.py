@@ -350,7 +350,7 @@ def get_application_rowdata(app):
     row_data.append(app.other_outstanding_familynfriends)
     row_data.append(app.total_other_outstanding())
 
-    row_data.append(app.loan_eligibility_based_on_net_income)
+    row_data.append(app.loan_eligibility_based_on_net_income())
     row_data.append(app.loan_eligibility_based_on_company_policy)
 
     row_data.append(app.existing_loan_cycle)
