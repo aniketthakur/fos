@@ -748,7 +748,7 @@ class EsthenosOrgApplication(db.Document):
               + self.primary_business_expense_employee_salary
 
     def loan_eligibility_based_on_net_income(self):
-        return self.net_income() / 2 * self.product.number_installments
+        return self.net_income() / 2 * 60
 
     def update_status(self, status_code):
         self.status = status_code

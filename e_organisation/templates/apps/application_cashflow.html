@@ -335,7 +335,7 @@
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
+              <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income() }}" disabled>
             </div>
           </td>
         </tr>
