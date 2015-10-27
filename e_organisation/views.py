@@ -678,11 +678,10 @@ def check_disbursement():
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-    groups = EsthenosOrgGroup.objects.filter(organisation=org)
-    centers = EsthenosOrgCenter.objects.filter(organisation=org)
+    apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240)
 
     kwargs = locals()
-    return render_template("centers_n_groups_disbussment.html", **kwargs)
+    return render_template("disburse/disbursement.html", **kwargs)
 
 
 @organisation_views.route('/disburse_group', methods=["PUT"])

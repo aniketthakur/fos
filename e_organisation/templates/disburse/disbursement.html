@@ -32,18 +32,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for group in groups %}
-                                <form action="#" name="{{ group.group_id }}form" id="{{ group.group_id }}form">
+                            {% for app in apps %}
+                                <form action="#" name="{{ app.application_id }}form" id="{{ app.application_id }}form">
                                     <tr>
                                         <input type="hidden">
                                         <td class="v-align-middle"><span class="muted">{{ loop.index }}</span></td>
-                                        <td class="v-align-middle">{{ group.group_id }}</td>
-                                        <td class="v-align-middle"><span class="muted">{{ group.group_name }}</span></td>
-                                        <td><span class="muted">{{ group.created_at|dateformat }}</span></td>
+                                        <td class="v-align-middle">{{ app.application_id }}</td>
+                                        <td class="v-align-middle"><span class="muted">{{ app.applicant_name }}</span></td>
+                                        <td><span class="muted">{{ app.date_created|dateformat }}</span></td>
                                         <td>
                                             <div class="input-with-icon  right">
                                                 <div class="input-append success date col-md-11">
-                                                    <input type="text" class="form-control disbursement_date" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}disbursement_date" >
+                                                    <input type="text" class="form-control disbursement_date" data-date-format="dd/mm/yyyy" id="{{ app.application_id }}disbursement_date" >
                                                     <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
                                                 </div>
                                             </div>
@@ -51,24 +51,24 @@
                                         <td>
                                             <div class="input-with-icon  right">
                                                 <div class="input-append success date col-md-11">
-                                                    <input type="text" class="form-control collection_date {{ group.group_id }}" data-date-format="dd/mm/yyyy" id="{{ group.group_id }}collection_date" >
+                                                    <input type="text" class="form-control collection_date {{ app.application_id }}" data-date-format="dd/mm/yyyy" id="{{ app.application_id }}collection_date" >
                                                     <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="file" class="form-control cheque_no  file" data-id="{{ group.group_id }}" name="cheque_no_file"  id="{{ group.group_id }}cheque_no" >
+                                            <input type="file" class="form-control cheque_no  file" data-id="{{ app.application_id }}" name="cheque_no_file"  id="{{ app.application_id }}cheque_no" >
                                         </td>
                                         <td class="v-align-middle">
                                             <div class="btn-group">
                                                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  group-id="{{ group.group_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
+                                                    <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  group-id="{{ app.application_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
                                                     <li>
-                                                        {% if group.disbursement_pdf_link == "#" %}
-                                                            <a href="{{ group.disbursement_pdf_link }}" >Download</a>
+                                                        {% if app.disbursement_pdf_link == "#" %}
+                                                            <a href="{{ app.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a type="button" href="{{ url_for("organisation_views.download_disbursement", group_id=group.group_id) }}">Download</a>
+                                                            <a type="button" href="{{ url_for("organisation_views.download_disbursement", group_id=app.application_id) }}">Download</a>
                                                         {% endif %}
                                                     </li>
                                                     <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
