@@ -316,16 +316,16 @@ def sanctions():
   scrutinyStatus = request.args.get('scrutinyStatus', '')
 
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=191)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=192)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=191)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=192)
 
   elif (groupId is not None) and (groupId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)
