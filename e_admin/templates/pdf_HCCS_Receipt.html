@@ -5,7 +5,7 @@
 <style type="text/css">
     @font-face {
         font-family: kruti dev ;
-        src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
+        src: url('/home/ubuntu/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
     }
     .hinditext-large {
         font-family: kruti dev;
@@ -52,7 +52,6 @@
 
                 <tr >
                     <td>
-                        <img width="100px" src="{{ url_for('static', filename='/img/pdf_images/HCC.png', _external=True) }}">
                     </td>
                     <td colspan="2">
                         <b>efnbogmLeeve</b><br/>
@@ -67,7 +66,7 @@
             </tr>
             <tr>
                 <td colspan="2">Þeer. meew. <span class="english">{{ app.applicant_name }}</span></td>
-                <td> MeeKee : <span class="english">{{ app.group.branch.branch_name }}</span></td>
+                <td> MeeKee : <span class="english"></span></td>
             </tr>
             <tr>
                 <td>leHeMeerue</td>

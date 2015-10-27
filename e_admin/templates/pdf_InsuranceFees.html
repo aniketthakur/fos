@@ -49,9 +49,8 @@
 
             <div class="pull-left font-msmall">
                 <p>
-                We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u>{{ apps[0].product.insurance_free }} /-</u> towards Insurance Premium for the Borrowers and their Guarantors
-                of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
-
+                We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u> /-</u> towards Insurance Premium for the Borrowers and their Guarantors
+                of the Group <u></u> Branch <u</u> Region <u></u>. The details of payments are mentioned in the below Table.
                 </p>
             </div>
             <div class="clearfix"><br/></div>
@@ -89,13 +88,10 @@
                         <td class="text-left" class="text-center">{{ app.applicant_name }}</td>
                         <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
                         <td class="text-right">{{ app.member_f_or_h_name }}</td>
-                        <td class="text-left">{{ app.kyc_1.kyc_number }}</td>
+                        <td class="text-left">{{ app.applicant_kyc.kyc_number }}</td>
                         <td class="text-left">{{ app.application_id }}</td>
-                        {#                        <td class="text-left"></td>#}
                         <td class="text-left">{{ app.applied_loan }}</td>
                         <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.product.insurance_free }}</td>
-
                     </tr>
                 {% endfor %}
                 {% for i in range(1,19-apps|length) %}
@@ -135,8 +131,8 @@
             </div>
             <div class="pull-left font-msmall">
                 <p>
-                    We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u>{{ apps[0].product.insurance_free }} /-</u> towards Insurance Premium for the Borrowers and their Guarantors
-                    of the Group <u>{{ group.group_name }}</u> Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u>. The details of payments are mentioned in the below Table.
+                    We {{ org_name }}, hereby acknowledge the receipt of Rs.  <u> /-</u> towards Insurance Premium for the Borrowers and their Guarantors
+                    of the Group <u></u> Branch <u></u> Region <u></u>. The details of payments are mentioned in the below Table.
                 </p>
             </div>
             <div class="clearfix"><br/></div>
@@ -156,15 +152,12 @@
 
                     <th style="width:5%"class="text-left">Member Code</th>
 
-{#                    <th style="width:10%"style="width:100px" class="text-center" >Loan Account No.</th>#}
-
                     <th style="width:10%"class="text-left">Loan Amount</th>
 
                     <th style="width:5%"class="text-left">Sum Assured</th>
 
                     <th style="width:5%"class="text-left">Ins. Pr. (for 2 Lives)</th>
 
-                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -174,13 +167,10 @@
                         <td class="text-left" class="text-center">{{ app.applicant_name }}</td>
                         <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
                         <td class="text-right">{{ app.member_f_or_h_name }}</td>
-                        <td class="text-left">{{ app.kyc_1.kyc_number }}</td>
+                        <td class="text-left">{{ app.applicant_kyc.kyc_number }}</td>
                         <td class="text-left">{{ app.application_id }}</td>
-{#                        <td class="text-left"></td>#}
                         <td class="text-left">{{ app.applied_loan }}</td>
                         <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.product.insurance_free }}</td>
-
                     </tr>
                  {% endfor %}
                 {% for i in range(1,19-apps|length) %}

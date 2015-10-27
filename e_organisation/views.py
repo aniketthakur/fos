@@ -691,53 +691,51 @@ def disburse_document():
     if not session['role'].startswith("ORG_"):
         abort(403)
 
-    group_id = request.form.get("group_id")
+    applicant_id = request.form.get("applicant_id")
     col_date_str = request.form.get("collection_date")
     dis_date_str = request.form.get("disbursement_date")
-    print group_id, col_date_str, dis_date_str
+    print applicant_id, col_date_str, dis_date_str
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
-
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(organisation=org, group=group)
+    apps = EsthenosOrgApplication.objects.filter(organisation=org, status__gte=240)
 
     dis_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     col_date = datetime.datetime.strptime(col_date_str, "%d-%m-%Y").date()
 
-    generate_post_grt_applications.apply_async((org.id, group_id, dis_date_str, (col_date-dis_date).days))
+    generate_post_grt_applications.apply_async((org.id, applicant_id, dis_date_str, (col_date-dis_date).days))
     for app in apps:
         app.generate_disbursement = True
         app.save()
 
     kwargs = locals()
-    return Response(json.dumps({"result":"We are preparing your download document, please wait !"},default=encode_model), content_type="application/json", mimetype='application/json')
+    response = {"result":"We are preparing your download document, please wait !"}
+    return Response(json.dumps(response, default=encode_model), content_type="application/json", mimetype='application/json')
 
 
-@organisation_views.route('/download_disbursement/<group_id>', methods=["GET"])
+@organisation_views.route('/download_disbursement/<applicant_id>', methods=["GET"])
 @login_required
 @feature_enable("disbursement")
-def download_disbursement(group_id):
+def download_disbursement(applicant_id):
     if not session['role'].startswith("ORG_"):
         abort(403)
 
-    #center_id = request.args.get("center")
     user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, group_id=group_id)
+    app = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=applicant_id)
     bucket = conn_s3.get_bucket("hindusthanarchives")
     bucket_list = bucket.list()
 
     for item in bucket_list:
-        print item, item.key, group.disbursement_pdf_link
-        if group.disbursement_pdf_link[1:] == item.key:
+        print item, item.key, app.disbursement_pdf_link
+        if app.disbursement_pdf_link[1:] == item.key:
             # check if file exists locally, if not: download it
-            if not os.path.exists(group.disbursement_pdf_link):
-                item.get_contents_to_filename(group.disbursement_pdf_link)
+            if not os.path.exists(app.disbursement_pdf_link):
+                item.get_contents_to_filename(app.disbursement_pdf_link)
 
-            filehandle = open(group.disbursement_pdf_link, 'rb')
+            filehandle = open(app.disbursement_pdf_link, 'rb')
             data = StringIO.StringIO(filehandle.read())
             output = make_response(data.getvalue())
-            output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % group_id
+            output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % applicant_id
             output.headers["Content-type"] = "application/zip"
             return output
 

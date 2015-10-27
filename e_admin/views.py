@@ -959,13 +959,12 @@ def admin_disbursement_pdf(org_id):
     return render_template( "pdf_disbursement.html", **kwargs)
 
 
-@admin_views.route('/internal/pdf_sl/<grp_id>', methods=["GET"])
-def admin_sanction(grp_id):
-    group = EsthenosOrgGroup.objects.get(group_id=grp_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
+@admin_views.route('/internal/pdf_sl/<applicant_id>', methods=["GET"])
+def admin_sanction(applicant_id):
+    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id).filter(status__gte=240)
 
     disbursement_date = datetime.datetime.now()
-    org_name = group.organisation.name
+    org_name = ""
 
     kwargs = locals()
     body = render_template("pdf_Sanction_Letter_Hindusthan.html", **kwargs)
@@ -991,13 +990,12 @@ def admin_sanction(grp_id):
     return response
 
 
-@admin_views.route('/internal/pdf_if/<group_id>', methods=["GET"])
-def admin_ipnpfr(group_id):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
+@admin_views.route('/internal/pdf_if/<applicant_id>', methods=["GET"])
+def admin_ipnpfr(applicant_id):
+    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id).filter(status__gte=240)
 
     disbursement_date = datetime.datetime.now()
-    org_name = group.organisation.name
+    org_name = ""
 
     kwargs = locals()
     body = render_template( "pdf_InsuranceFees.html", **kwargs)
@@ -1011,7 +1009,7 @@ def admin_ipnpfr(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Landscape'
     }
-    pdfkit.from_string(body, 'pdf_insurance_fees.pdf',options=options)
+    pdfkit.from_string(body, 'pdf_insurance_fees.pdf', options=options)
 
     raw_bytes = ""
     with open('pdf_insurance_fees.pdf', 'rb') as r:
@@ -1024,13 +1022,12 @@ def admin_ipnpfr(group_id):
     return response
 
 
-@admin_views.route('/internal/pdf_pf/<group_id>', methods=["GET"])
-def admin_processing_fees(group_id):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=214)
+@admin_views.route('/internal/pdf_pf/<applicant_id>', methods=["GET"])
+def admin_processing_fees(applicant_id):
+    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id).filter(status__gte=240)
 
     disbursement_date = datetime.datetime.now()
-    org_name = group.organisation.name
+    org_name = ""
 
     kwargs = locals()
     body = render_template("pdf_Processing_Fees.html", **kwargs)
@@ -1057,10 +1054,9 @@ def admin_processing_fees(group_id):
     return response
 
 
-@admin_views.route('/internal/pdf_dpn/<group_id>', methods=["GET"])
-def admin_hmpdpn(group_id):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=240)
+@admin_views.route('/internal/pdf_dpn/<applicant_id>', methods=["GET"])
+def admin_hmpdpn(applicant_id):
+    app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
 
@@ -1120,10 +1116,9 @@ def admin_pdf_application(app_id):
     return response
 
 
-@admin_views.route('/internal/pdf_hccs_reciept/<group_id>', methods=["GET"])
-def admin_pdf_hccs_reciept(group_id):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group)
+@admin_views.route('/internal/pdf_hccs_reciept/<applicant_id>', methods=["GET"])
+def admin_pdf_hccs_reciept(applicant_id):
+    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id)
     disbursement_date = datetime.datetime.now()
     interest_rate = 26.0
 
@@ -1139,10 +1134,10 @@ def admin_pdf_hccs_reciept(group_id):
         'encoding': "UTF-8",
         'orientation' : 'Portrait'
     }
-    pdfkit.from_string(body, 'dpn.pdf', options=options)
+    pdfkit.from_string(body, 'reciept.pdf', options=options)
 
     raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
+    with open('reciept.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
@@ -1152,10 +1147,9 @@ def admin_pdf_hccs_reciept(group_id):
     return response
 
 
-@admin_views.route('/internal/pdf_la/<group_id>/<dis_date_str>', methods=["GET"])
-def admin_hmplloanagreement(group_id,dis_date_str):
-    group = EsthenosOrgGroup.objects.get(group_id=group_id)
-    apps = EsthenosOrgApplication.objects.filter(group=group).filter(status__gte=210)
+@admin_views.route('/internal/pdf_la/<applicant_id>/<dis_date_str>', methods=["GET"])
+def admin_hmplloanagreement(applicant_id,dis_date_str):
+    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id).filter(status__gte=240)
     disbursement_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     interest_rate = 26.0
 
@@ -1187,7 +1181,7 @@ def admin_hmplloanagreement(group_id,dis_date_str):
 @admin_views.route('/internal/pdf_hp/<application_id>/<dis_date_str>/<loan_amount>/<emi>/<first_collection_after_indays>', methods=["GET"])
 def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_collection_after_indays):
     app = EsthenosOrgApplication.objects.get(application_id=application_id)
-    disbursement_date =    datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
+    disbursement_date = datetime.datetime.strptime(dis_date_str, "%d-%m-%Y").date()
     second_collection_after_indays = 30
     first_emi = float(emi)
     rate_of_interest= .260/12.0

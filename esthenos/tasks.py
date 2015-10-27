@@ -197,11 +197,10 @@ def disbursement_applications():
 
 
 @celery.task
-def generate_post_grt_applications(org_id,group_id,disbursement_date,first_collection_after_indays):
+def generate_post_grt_applications(org_id, applicant_id, disbursement_date, first_collection_after_indays):
     with mainapp.app_context():
         org = EsthenosOrg.objects.get(id=org_id)
-        group = EsthenosOrgGroup.objects.get(group_id=group_id,organisation=org)
-        apps = EsthenosOrgApplication.objects.filter(group=group, status__gte=214)
+        application = EsthenosOrgApplication.objects.get(organisation=org, application_id=applicant_id, status__gte=240)
 
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
@@ -209,52 +208,48 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         tf = dir+ "dpn.pdf"
 
         #generate dpn here
-        downloadFile("http://localhost:8080/internal/pdf_dpn/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_dpn/"+applicant_id,tf)
         tmp_files.append(tf)
 
         #generate agreement here
         tf = dir+ "agreement.pdf"
-        downloadFile("http://localhost:8080/internal/pdf_la/"+group_id+"/"+disbursement_date,tf)
+        downloadFile("http://localhost:8080/internal/pdf_la/"+applicant_id+"/"+disbursement_date,tf)
         tmp_files.append(tf)
 
         #generate sanction letter
         tf = dir+"sanction_letter.pdf"
-        downloadFile("http://localhost:8080/internal/pdf_sl/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_sl/"+applicant_id,tf)
         tmp_files.append(tf)
 
         #generate processing fees
         tf = dir+"processing_fees.pdf"
-        downloadFile("http://localhost:8080/internal/pdf_pf/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_pf/"+applicant_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"insurance_fees.pdf"
-        downloadFile("http://localhost:8080/internal/pdf_if/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_if/"+applicant_id,tf)
         tmp_files.append(tf)
 
         #generate insurance fees
         tf = dir+"hccs_receipt.pdf"
-        downloadFile("http://localhost:8080/internal/pdf_hccs_reciept/"+group_id,tf)
+        downloadFile("http://localhost:8080/internal/pdf_hccs_reciept/"+applicant_id,tf)
         tmp_files.append(tf)
 
-        for app in apps:
-            tf = dir+ app.application_id+"passbook.pdf"
-            downloadFile("http://localhost:8080/internal/pdf_hp/"+app.application_id+"/"+disbursement_date+"/"+str(app.product.loan_amount)+"/"+str(app.product.emi)+"/"+str(first_collection_after_indays),tf)
-            tmp_files.append(tf)
+        tf = dir+applicant_id+"passbook.pdf"
+        downloadFile("http://localhost:8080/internal/pdf_hp/"+applicant_id+"/"+disbursement_date+"/"+str(1234)+"/"+str(1234)+"/"+str(first_collection_after_indays),tf)
+        tmp_files.append(tf)
 
-            tf = dir+ app.application_id+"_application.pdf"
-            downloadFile("http://localhost:8080/internal/pdf_application/"+app.application_id,tf)
-            tmp_files.append(tf)
-
-        # Folder name in ZIP archive which contains the above files
-        # E.g [thearchive.zip]/somefiles/file2.txt
-        # FIXME: Set this to something better
+        tf = dir+applicant_id+"_application.pdf"
+        downloadFile("http://localhost:8080/internal/pdf_application/"+applicant_id,tf)
+        tmp_files.append(tf)
 
         zdir = tempfile.mkdtemp( prefix='zip_')
         zdir = zdir+"/"
-        # The zip compressor
-        tf = zdir+group_id
+
+        tf = zdir+applicant_id
         zip_custom(dir, tf)
+
         from boto.s3.key import Key
         bucket = conn_s3.get_bucket("hindusthanarchives")
         k = Key(bucket)
@@ -262,8 +257,9 @@ def generate_post_grt_applications(org_id,group_id,disbursement_date,first_colle
         k.set_contents_from_filename(tf+".zip")
         k.make_public()
         os.remove(tf+".zip")
-        group.disbursement_pdf_link = k.key
-        group.save()
+
+        application.disbursement_pdf_link = k.key
+        application.save()
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
     <style type="text/css">
         @font-face {
             font-family: kruti dev ;
-            src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
+            src: url('/home/ubuntu/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
         }
         .hinditext {
             font-family: kruti dev;
@@ -142,11 +142,9 @@
     </tr>
     <tr>
         <td style="width: 50%;padding: 10px">
-            <img src="{{ url_for('static', filename='/img/pdf_images/hindustan_passbook1.png', _external=True) }}" style="width: 100%;" alt="">
         </td>
         <td style="width: 50%;">
             <table style="width: 100%;padding: 10px" class=" table-bordered font-small condensed"  >
-                <img width="100%" src="{{ url_for('static', filename='/img/pdf_images/passbook_top.jpg', _external=True) }}"/>
             </table>
             <table style="width: 100%;" class=" table-bordered font-vsmall condensed">
                 <tr><th colspan="6" class="text-center">BORROWER DETAILS  /&nbsp<span class="hinditext"> menkeÀpe&oeje®eer ceenerleer</span></th></tr>
@@ -155,7 +153,6 @@
                     <td style="width: 15%;">{{ app.application_id }}</td>
                     <td colspan="4">{{ app.applicant_name}}</td>
                 </tr>
-
                 <tr>
                     <td   class="text-right">Spouse/Guarantor Name  /&nbsp<span class="hinditext"> pees[eroej efkeÀbJee menkeÀpe&oeje®es veeJe </span></td>
                     <td colspan="5">{{ app.member_f_or_h_name}}</td>
@@ -164,16 +161,14 @@
                     <td   class="text-right">Village  /&nbsp<span class="hinditext">ieeJe </span></td>
                     <td colspan="5">{{ app.member_village}}</td>
                 </tr>
-
                 <tr>
                     <td  class="text-right">Group Code & Name /&nbsp<span class="hinditext"> meWìj®ee keÀes[ efkeÀbJee veeJe</span></td>
-                    <td>{{ app.group.group_id }}</td>
-                    <td colspan="4">{{ app.group.group_name }}</td>
+                    <td></td>
+                    <td colspan="4"></td>
                 </tr>
-
                 <tr>
                     <td   class="text-right">Branch Name  /&nbsp<span class="hinditext">MeeKes®es veeJe </span></td>
-                    <td colspan="5">{{ app.group.branch.branch_name }}</td>
+                    <td colspan="5"></td>
                 </tr>
             </table>
             <table style="width: 100%;" class="  table-bordered font-small condensed">

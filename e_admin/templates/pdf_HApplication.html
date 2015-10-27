@@ -15,7 +15,7 @@
         }
         @font-face {
             font-family: kruti dev ;
-            src: url('{{ url_for('static', filename='fonts/AYOGNI_N.TTF', _external=True) }}');
+            src: url('/home/ubuntu/esthenos/esthenos/static/fonts/AYOGNI_N.TTF');
         }
         .hinditext {
             font-family: kruti dev;
@@ -119,7 +119,7 @@
                 {{ app.applicant_name }}
              </td>
              <td >
-                Aadhaar No:{{app.kyc_1.kyc_number}}
+                Aadhaar No:{{app.applicant_kyc.kyc_number}}
             </td>
         </tr>
         <tr>

@@ -45,8 +45,8 @@
 
         <div class="pull-left font-msmall">
             <p>
-                We {{ org_name }}, hereby acknowledge the receipt of Rs. <u>{{ apps[0].product.processing_fee }} /-</u> towards processing fee from the Borrowers of the Group <u>{{ group.group_name }}</u>
-                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> The details of payments are mentioned in the below Table.
+                We {{ org_name }}, hereby acknowledge the receipt of Rs. <u> /-</u> towards processing fee from the Borrowers of the Group <u></u>
+                Branch <u></u> Region <u></u> The details of payments are mentioned in the below Table.
             </p>
         </div>
         <div class="clearfix"><br/></div>
@@ -83,13 +83,9 @@
                     <td>{{ loop.index }}</td>
                     <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
                     <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
-                    <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                    <td class="text-right">{{ app.applicant_kyc.kyc_number }}</td>
                     <td class="text-left">{{ app.application_id }}</td>
-                    {#                        <td class="text-left"></td>#}
                     <td class="text-left">{{ app.applied_loan }}</td>
-                    <td class="text-left">{{ app.product.processing_fee }}</td>
-
-
                 </tr>
                 {% endfor %}
                 {% for i in range(1,20-apps|length) %}
@@ -130,8 +126,8 @@
 
         <div class="pull-left font-msmall">
             <p>
-                We {{ org_name }}, hereby acknowledge the receipt of Rs. <u>{{ apps[0].product.processing_fee }} /-</u> towards processing fee from the Borrowers of the Group <u>{{ group.group_name }}</u>
-                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> The details of payments are mentioned in the below Table.
+                We {{ org_name }}, hereby acknowledge the receipt of Rs. <u> /-</u> towards processing fee from the Borrowers of the Group <u></u>
+                Branch <u></u> Region <u></u> The details of payments are mentioned in the below Table.
             </p>
 
         </div>
@@ -170,13 +166,9 @@
                 <td>{{ loop.index }}</td>
                 <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
                 <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
-                <td class="text-right">{{ app.kyc_1.kyc_number }}</td>
+                <td class="text-right">{{ app.applicant_kyc.kyc_number }}</td>
                 <td class="text-left">{{ app.application_id }}</td>
-                {#                        <td class="text-left"></td>#}
                 <td class="text-left">{{ app.applied_loan }}</td>
-                <td class="text-left">{{ app.product.processing_fee }}</td>
-
-
             </tr>
             {% endfor %}
             {% for i in range(1,20-apps|length) %}

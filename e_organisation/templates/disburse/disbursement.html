@@ -63,12 +63,12 @@
                                             <div class="btn-group">
                                                 <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  group-id="{{ app.application_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
+                                                    <li><a class="btn-disburse" data-toggle="modal" href="#myModal"  applicant-id="{{ app.application_id }}" type="button"><span aria-hidden="true" class="fa fa-check ">Disburse</span></a></li>
                                                     <li>
                                                         {% if app.disbursement_pdf_link == "#" %}
                                                             <a href="{{ app.disbursement_pdf_link }}" >Download</a>
                                                         {% else %}
-                                                            <a type="button" href="{{ url_for("organisation_views.download_disbursement", group_id=app.application_id) }}">Download</a>
+                                                            <a type="button" href="{{ url_for("organisation_views.download_disbursement", applicant_id=app.application_id) }}">Download</a>
                                                         {% endif %}
                                                     </li>
                                                     <li><a  type="button"><span aria-hidden="true" class="fa fa-check"> Disbursement Done</span></a></li>
@@ -113,11 +113,11 @@
             });
 
             $(".btn-disburse").click(function() {
-                var disbursement_date = $("#"+$(this).attr("group-id")+"disbursement_date").val();
-                var collection_date = $("#"+$(this).attr("group-id")+"collection_date").val();
-                var formInput = document.getElementById($(this).attr("group-id")+"form");
+                var disbursement_date = $("#"+$(this).attr("applicant-id")+"disbursement_date").val();
+                var collection_date = $("#"+$(this).attr("applicant-id")+"collection_date").val();
+                var formInput = document.getElementById($(this).attr("applicant-id")+"form");
                 var fd = new FormData(formInput);
-                fd.append("group_id", $(this).attr("group-id"));
+                fd.append("applicant_id", $(this).attr("applicant-id"));
                 fd.append("disbursement_date", disbursement_date);
                 fd.append("collection_date", collection_date);
 
