@@ -46,7 +46,6 @@ def provision():
         'htop',
         'monit',
         'nginx',
-        'mongodb',
         'python-dev',
         'python-pip',
         'python-virtualenv',
