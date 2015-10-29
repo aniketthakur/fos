@@ -305,7 +305,7 @@ class AddApplicationMobile(Form):
         )
 
         assets_map = self.load(self.assets_map)
-        guarantor1_docs = assets_map.get("applicant", {})
+        guarantor1_docs = assets_map.get("guarantor1", {})
         app.guarantor1_docs = EsthenosOrgApplicationDocs(
             pan_docs = guarantor1_docs.get("pan_card", []),
             aadhar_docs = guarantor1_docs.get("aadhar_card", []),
@@ -316,7 +316,7 @@ class AddApplicationMobile(Form):
         )
 
         assets_map = self.load(self.assets_map)
-        guarantor2_docs = assets_map.get("applicant", {})
+        guarantor2_docs = assets_map.get("guarantor2", {})
         app.guarantor2_docs = EsthenosOrgApplicationDocs(
             pan_docs = guarantor2_docs.get("pan_card", []),
             aadhar_docs = guarantor2_docs.get("aadhar_card", []),
