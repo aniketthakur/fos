@@ -1,8 +1,8 @@
 ORGS_SETTINGS = [
     {
-        "org" : "fos-test.esthenos.com",
-        "name" : "FOS Test MicroFinance Pvt. Ltd.",
-        "email": "admin@fos-test.esthenos.com",
+        "org" : "fos.esthenos.com",
+        "name" : "FOS MicroFinance Pvt. Ltd.",
+        "email": "admin@fos.esthenos.com",
         "phone": "9876543210",
         "phone-code": "91",
         "postal-city": "Kolaba",
@@ -23,7 +23,7 @@ ORGS_SETTINGS = [
                 "tele_code" : "+91",
                 "fname" : "demo",
                 "lname" : "users",
-                "email" : "demo@fos-test.esthenos.com",
+                "email" : "demo@fos.esthenos.com",
                 "passwd" : "demodemo",
             }
         ],
@@ -41,9 +41,9 @@ ORGS_SETTINGS = [
 ]
 
 SERVER_SETTINGS = {
-    "org" : "fos-test.esthenos.com",
-    "host" : ["fos-test.prod.esthenos.com"],
-    "git-branch" : "fos-test",
+    "org" : "fos.esthenos.com",
+    "host" : ["fos-demo.prod.esthenos.com"],
+    "git-branch" : "fos-demo",
     "user-deploy" : "ubuntu",
     "user-details" : [
         {
@@ -58,7 +58,7 @@ SERVER_SETTINGS = {
 }
 
 MONGODB_SETTINGS = {
-    'DB': 'fos-test',
+    'DB': 'fos-demo',
     'PORT': 27017,
     'HOST': 'mongodb.prod.esthenos.com'
 }
