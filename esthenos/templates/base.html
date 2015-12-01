@@ -127,6 +127,11 @@
                         </a>
                     </li>
                     {% endif %}
+                    {% if feature_show("features_admin") %}
+                    <li class="start">
+                        <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
+                    </li>
+                    {% endif %}
                 {% endblock %}
             </ul>
             <div class="clearfix"></div>
