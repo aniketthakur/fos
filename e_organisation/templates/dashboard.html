@@ -344,47 +344,6 @@
         </div>
     </div>
 
-    {% if feature_show("questions_cgt2") %}
-    <div class="row applications-cgt2">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-yellow m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications CGT2 Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT2 Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     {% if feature_show("questions_telecalling") %}
     <div class="row applications-telecalling">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
@@ -633,25 +592,6 @@
             labels: ['Loan Applications', 'CGT1'],
             lineColors:['#0aa699','#6666ff'],
         });
-
-        {% if feature_show("questions_cgt2") %}
-        Morris.Line({
-            element: $('.applications-cgt2 .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'GRT'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        {% endif %}
 
         {% if feature_show("questions_telecalling") %}
         Morris.Line({
