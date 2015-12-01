@@ -3,7 +3,7 @@ from views_base import *
 
 @organisation_views.route('/group/status/psychometric', methods=["PUT"])
 @login_required
-@feature_enable("questions_psychometric")
+@feature_enable("features_psychometric_questions")
 def group_psychometric():
     if not session['role'].startswith("ORG_"):
         abort(403)
