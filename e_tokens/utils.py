@@ -15,9 +15,9 @@ from itsdangerous import SignatureExpired, BadSignature, JSONWebSignatureSeriali
 def feature_processor():
   def feature_show(feature):
       enabled = app.config["FEATURES"][feature]["enabled"]
-      #allowed = current_user.is_allowed(feature)
-      #is_admin = current_user.is_admin()
-      return (enabled)# and allowed) or (enabled and is_admin)
+      allowed = current_user.is_allowed(feature)
+      is_admin = current_user.is_admin()
+      return (enabled and allowed) or (enabled and is_admin)
   return dict(feature_show=feature_show)
 
 
@@ -26,10 +26,10 @@ def feature_enable(feature):
         @wraps(view_function)
         def decorated(*args, **kwargs):
             enabled = app.config["FEATURES"][feature]["enabled"]
-            #allowed = current_user.is_allowed(feature)
-            #is_admin = current_user.is_admin()
+            allowed = current_user.is_allowed(feature)
+            is_admin = current_user.is_admin()
 
-            if (enabled):# and allowed) or (enabled and is_admin):
+            if (enabled and allowed) or (enabled and is_admin):
                 return view_function(*args, **kwargs)
 
             else:
