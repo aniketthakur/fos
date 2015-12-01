@@ -82,7 +82,6 @@ FEATURES = {
 
     "hignmark_equifax": True,
 
-    "questions_grt": False,
     "questions_cgt1": False,
     "questions_cgt2": False,
     "questions_telecalling": False,
