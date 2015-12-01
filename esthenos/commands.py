@@ -1,5 +1,5 @@
 from flask.ext.sauth.models import User
-from flask.ext.script import Command, Option
+from flask.ext.script import Command, Option, prompt_bool
 
 from slacker import Slacker
 from esthenos import db, settings
@@ -15,10 +15,11 @@ class DropDB(Command):
     """Drop existing database."""
 
     def run(self):
-        notify("\ndropping db: {DB} on {HOST}:{PORT} started.\n".format(**settings.MONGODB_SETTINGS))
-        dbname = settings.MONGODB_SETTINGS["DB"]
-        db.connection.drop_database(dbname)
-        notify("dropping database {database} successful.".format(database=dbname))
+        if prompt_bool("Are you sure you want to loose all data for {DB}@{HOST}:{PORT}?".format(**settings.MONGODB_SETTINGS)):
+            notify("\ndropping db: {DB} on {HOST}:{PORT} started.\n".format(**settings.MONGODB_SETTINGS))
+            dbname = settings.MONGODB_SETTINGS["DB"]
+            db.connection.drop_database(dbname)
+            notify("dropping database {database} successful.".format(database=dbname))
 
 
 class InitDB(Command):
@@ -28,61 +29,60 @@ class InitDB(Command):
         print "dropping collections & creating new accounts and organization."
         notify("\ninitializing db: {DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
 
-        print "dropping & creating esthenos users."
-        EsthenosUser.drop_collection()
-        esthenos = settings.SERVER_SETTINGS
-        org, users = esthenos["org"], esthenos["user-details"]
-        for user in users:
-            fname, lname, passwd, role = user["fname"], user["lname"], user["passwd"], user["role"].upper()
-            email = "%s@%s" % (user["email"], org)
-            user = EsthenosUser.create_user(fname, email, passwd, True)
-            user.add_role(role)
-            user.username = fname
-            user.last_name = lname
-            user.first_name = fname
-            user.active = True
-            user.save()
-        notify("{count} esthenos users created.".format(count=len(users)))
-        
-        print "creating organizations with its users."
-        EsthenosSettings.drop_collection()
-        EsthenosSettings().save()
-
-        organisations = settings.ORGS_SETTINGS
-
-        notify("dropped all organisations")
+        notify("dropping all organisations.")
         EsthenosOrg().drop_collection()
-
-        notify("dropped all products")
-        EsthenosOrgProduct.drop_collection()
-
-        EsthenosOrgHierarchy().drop_collection()
-        for org in organisations:
-            print "dropping & creating organization : %s" % org["name"]
-            EsthenosOrg(
-                name = org["name"],
+        organisations = settings.ORGS_SETTINGS
+        for orgz in organisations:
+            print "dropping & creating organization : %s" % orgz["name"]
+            org, status = EsthenosOrg.objects.get_or_create(
+                name = orgz["name"],
+                email = orgz["email"],
+                domain = orgz["org"],
                 code = "1",
-                postal_telephone = org["phone"],
-                postal_tele_code = org["phone-code"],
-                postal_address = org["postal-address"],
-                postal_country = org["postal-country"],
-                postal_state = org["postal-state"],
-                postal_city = org["postal-city"],
-                postal_code = org["postal-code"],
-                email = org["email"],
-                owner = EsthenosUser.objects.filter(roles__contains="ADMIN").first()
-            ).save()
+                postal_telephone = orgz["phone"],
+                postal_tele_code = orgz["phone-code"],
+                postal_address = orgz["postal-address"],
+                postal_country = orgz["postal-country"],
+                postal_state = orgz["postal-state"],
+                postal_city = orgz["postal-city"],
+                postal_code = orgz["postal-code"],
+            )
 
-            org1 = EsthenosOrg.objects.get(name = org["name"])
+            print "dropping & creating user hierarchy for : %s" % orgz["name"]
+            # EsthenosOrgHierarchy().drop_collection()
+            hierarchy = orgz["hierarchy"]
+            for item in hierarchy:
+                he, st = EsthenosOrgHierarchy.objects.get_or_create(
+                    organisation = org,
+                    role=item["role"],
+                    level=item["level"],
+                    access=item["access"],
+                    title=item["title"],
+                    title_full=item["title_full"]
+                )
+            notify("{count} {name} hierarchy designations created.".format(count=len(hierarchy), name=orgz["name"]))
 
-            print "dropping & creating users for : %s" % org["name"]
-            users = org["users"]
+            notify("dropped all settings.")
+            EsthenosOrgSettings.drop_collection()
+            EsthenosOrgSettings().save()
+
+            notify("dropped all settings.")
+            EsthenosSettings.drop_collection()
+            EsthenosSettings().save()
+
+            notify("dropped all products.")
+            EsthenosOrgProduct.drop_collection()
+
+            print "dropping & creating esthenos users."
+            EsthenosUser.drop_collection()
+
+            print "dropping & creating users for : %s" % orgz["name"]
+            users = orgz["users"]
             for user in users:
                 emp = EsthenosUser(
-                    organisation = org1,
-                    roles = user["roles"],
+                    hierarchy = EsthenosOrgHierarchy.objects.get(role=user["role"]),
+                    organisation = org,
                     active = user["active"],
-                    name = "{fname} {lname}".format(fname=user["fname"], lname=user["lname"]),
                     email = user["email"],
                     last_name = user["lname"],
                     first_name = user["fname"],
@@ -96,20 +96,19 @@ class InitDB(Command):
                 )
                 emp.set_password(user["passwd"])
                 emp.save()
-                org1.update(inc__employee_count=1)
-            print "{count} {name} users created.".format(count=len(users), name=org["name"])
+                org.update(inc__employee_count=1)
+            print "{count} {name} users created.".format(count=len(users), name=orgz["name"])
 
-            print "dropping & creating user hierarchy for : %s" % org["name"]
-            hierarchy = org["hierarchy"]
-            for item in hierarchy:
-                EsthenosOrgHierarchy(
-                    role=item["role"],
-                    level=item["level"],
-                    title=item["title"],
-                    title_full=item["title_full"]
-                ).save()
-            notify("{count} {name} hierarchy designations created.".format(count=len(hierarchy), name=org["name"]))
+            notify("dropping groups, state, region, area and branch collections.")
+            EsthenosOrgArea.drop_collection()
+            EsthenosOrgState.drop_collection()
+            EsthenosOrgGroup.drop_collection()
+            EsthenosOrgCenter.drop_collection()
+            EsthenosOrgBranch.drop_collection()
+            EsthenosOrgRegion.drop_collection()
 
+            def generate_name(prefix, count):
+                return "%s%s" % (prefix, count)
 
         print "dropping & creating application status types."
         EsthenosOrgApplicationStatusType.drop_collection()
@@ -127,13 +126,6 @@ class InitDB(Command):
 
             status_type.save()
         notify("{count} application statuses created".format(count=len(settings.APP_STATUS)))
-
-        notify("dropping groups, state, region, area and branch collections.")
-        EsthenosOrgGroup.drop_collection()
-        EsthenosOrgState.drop_collection()
-        EsthenosOrgRegion.drop_collection()
-        EsthenosOrgArea.drop_collection()
-        EsthenosOrgBranch.drop_collection()
 
         notify("dropping all existing applications.")
         EsthenosOrgApplication.drop_collection()

@@ -12,7 +12,7 @@ ORGS_SETTINGS = [
         "postal-country": "India",
         "users" : [
             {
-                "roles" : ["ORG_CM"],
+                "role" : "ORG_ADMIN",
                 "active" : True,
                 "dob" : "01/01/1970",
                 "city" : "kabul",
@@ -20,7 +20,22 @@ ORGS_SETTINGS = [
                 "country" : "kabuland",
                 "address" : "1st kabul, kaula, kabuland.",
                 "telephone" : "9876543210",
-                "tele_code" : "+91",
+                "tele_code" : "91",
+                "fname" : "admin",
+                "lname" : "users",
+                "email" : "admin@fos-test.esthenos.com",
+                "passwd" : "adminadmin",
+            },
+            {
+                "role" : "ORG_CM",
+                "active" : True,
+                "dob" : "01/01/1970",
+                "city" : "kabul",
+                "state" : "kabula",
+                "country" : "kabuland",
+                "address" : "1st kabul, kaula, kabuland.",
+                "telephone" : "9876543210",
+                "tele_code" : "91",
                 "fname" : "demo",
                 "lname" : "users",
                 "email" : "demo@fos-test.esthenos.com",
@@ -28,15 +43,24 @@ ORGS_SETTINGS = [
             }
         ],
         "hierarchy" : [
-            { "level" : 1, "role": "ORG_CXO", "title" : "cxo", "title_full" : "chief executive officer" },
-            { "level" : 2, "role": "ORG_VP",  "title" : "vp",  "title_full" : "vice president"},
-            { "level" : 3, "role": "ORG_ZH",  "title" : "sh",  "title_full" : "state head" },
-            { "level" : 4, "role": "ORG_SH",  "title" : "cm",  "title_full" : "cluster manager" },
-            { "level" : 5, "role": "ORG_RM",  "title" : "dm",  "title_full" : "divisional manager" },
-            { "level" : 6, "role": "ORG_AM",  "title" : "cm",  "title_full" : "center area manager" },
-            { "level" : 7, "role": "ORG_BM",  "title" : "com", "title_full" : "center branch manager" },
-            { "level" : 8, "role": "ORG_CM",  "title" : "co",  "title_full" : "center officer" }
-        ]
+            {"level": 0, "access": "",          "role": "ORG_ADMIN",  "title": "admin",  "title_full": "organisation administrator"},
+            {"level": 1, "access": "",          "role": "ORG_CXO",    "title": "cxo",    "title_full": "chief executive officer"},
+            {"level": 2, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "vice president"},
+            {"level": 3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
+            {"level": 4, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
+            {"level": 5, "access": "regions",   "role": "ORG_RM",     "title": "dm",     "title_full": "divisional manager"},
+            {"level": 6, "access": "areas",     "role": "ORG_AM",     "title": "cm",     "title_full": "center area manager"},
+            {"level": 7, "access": "branches",  "role": "ORG_BM",     "title": "com",    "title_full": "center branch manager"},
+            {"level": 8, "access": "centers",   "role": "ORG_CM",     "title": "co",     "title_full": "center officer"}
+        ],
+        "geography" : {
+            "states" : 1,
+            "regions" : 1,
+            "areas" : 1,
+            "branches" : 2,
+            "groups" : 0,
+            "centers" : 0,
+        }
     }
 ]
 
@@ -44,17 +68,7 @@ SERVER_SETTINGS = {
     "org" : "fos-test.esthenos.com",
     "host" : ["fos-test.prod.esthenos.com"],
     "git-branch" : "fos-test",
-    "user-deploy" : "ubuntu",
-    "user-details" : [
-        {
-            "role" : "admin",
-            "fname" : "admin",
-            "lname" : "users",
-            "email" : "admin",
-            "passwd" : "adminadmin",
-            "mobile" : "+91-9876543210"
-        }
-    ]
+    "user-deploy" : "ubuntu"
 }
 
 MONGODB_SETTINGS = {
