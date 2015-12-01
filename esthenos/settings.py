@@ -81,8 +81,6 @@ FEATURES = {
     "disbursement_center_dashboard": False,
 
     "hignmark_equifax": True,
-
-    "questions_telecalling": False,
     "questions_psychometric": True,
 
     "admin_groups": False,

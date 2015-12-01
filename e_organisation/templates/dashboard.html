@@ -344,47 +344,6 @@
         </div>
     </div>
 
-    {% if feature_show("questions_telecalling") %}
-    <div class="row applications-telecalling">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-red m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications TeleCalling Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">TeleCalling Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     {% if feature_show("accounts_scrutiny_dashboard") %}
     <div class="row applications-scrutiny">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
@@ -592,25 +551,6 @@
             labels: ['Loan Applications', 'CGT1'],
             lineColors:['#0aa699','#6666ff'],
         });
-
-        {% if feature_show("questions_telecalling") %}
-        Morris.Line({
-            element: $('.applications-telecalling .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
-                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
-                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
-                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
-                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
-                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
-                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
-            ],
-            xkey: 'd',
-            ykeys: ['a','b','c'],
-            labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
-            lineColors:['#0aa699','#010699','#D45959'],
-        });
-        {% endif %}
 
         {% if feature_show("accounts_scrutiny_dashboard") %}
         Morris.Line({
