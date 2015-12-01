@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            {% if feature_show("accounts_scrutiny_dashboard") %}
+            {% if feature_show("features_applications_scrutiny") %}
             <div class="tiles red m-b-20">
                 <div class="tiles-body">
                     <div class="widget-stats last">
@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    {% if feature_show("accounts_scrutiny_dashboard") %}
+    {% if feature_show("features_applications_scrutiny") %}
     <div class="row applications-scrutiny">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-red m-b-20">
@@ -528,7 +528,7 @@
             lineColors:['#0aa699','#6666ff'],
         });
 
-        {% if feature_show("accounts_scrutiny_dashboard") %}
+        {% if feature_show("features_applications_scrutiny") %}
         Morris.Line({
             element: $('.applications-scrutiny .chart'),
             data: [

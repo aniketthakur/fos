@@ -200,7 +200,7 @@ def application_kyc(app_id):
 
 @organisation_views.route('/scrutiny', methods=["GET"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny():
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -230,7 +230,7 @@ def scrutiny():
 
 @organisation_views.route('/scrutiny/<app_id>', methods=["GET", "POST"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -285,7 +285,7 @@ def scrutiny_application(app_id):
 
 @organisation_views.route('/scrutiny/<app_id>/print', methods=["GET"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny_application_print(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -300,7 +300,7 @@ def scrutiny_application_print(app_id):
 
 @organisation_views.route('/sanctions', methods=["GET"])
 @login_required
-@feature_enable("accounts_sanctions")
+@feature_enable("features_applications_sanction")
 def sanctions():
   if not session['role'].startswith("ORG_"):
     abort(403)
@@ -333,7 +333,7 @@ def sanctions():
 
 @organisation_views.route('/sanctions/<app_id>', methods=["GET", "POST"])
 @login_required
-@feature_enable("accounts_sanctions")
+@feature_enable("features_applications_sanction")
 def sanctions_application(app_id):
   if not session['role'].startswith("ORG_"):
     abort(403)

@@ -79,15 +79,7 @@
                             <span class="title">Dashboard</span>
                         </a>
                     </li>
-                    {% if feature_show("accounts_enroll_customers") %}
-                    <li class="">
-                        <a href="/upload_documents">
-                            <i class="fa fa-envelope"></i>
-                            <span class="title">Enroll Customers</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("accounts_applications") %}
+                    {% if feature_show("features_fos_branches") %}
                     <li class="">
                         <a href="{{ url_for('organisation_views.application_list') }}">
                             <i class="fa fa-list-ul"></i>
@@ -95,7 +87,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("accounts_scrutiny") %}
+                    {% if feature_show("features_applications_scrutiny") %}
                     <li class="">
                           <a href="{{ url_for('organisation_views.scrutiny') }}">
                             <i class="fa fa-user"></i>
@@ -103,7 +95,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("accounts_sanctions") %}
+                    {% if feature_show("features_applications_sanction") %}
                     <li class="">
                           <a href="{{ url_for('organisation_views.sanctions') }}">
                             <i class="fa fa-check"></i>
@@ -111,7 +103,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("disbursement") %}
+                    {% if feature_show("features_applications_disbursement") %}
                     <li class="">
                         <a href="{{ url_for('organisation_views.check_disbursement') }}">
                             <i class="fa fa-inr"></i>

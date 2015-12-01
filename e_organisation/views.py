@@ -588,7 +588,7 @@ def mobile_application_json():
 
 @organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
-@feature_enable("disbursement")
+@feature_enable("features_applications_disbursement")
 def check_disbursement():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -603,7 +603,7 @@ def check_disbursement():
 
 @organisation_views.route('/disburse_group', methods=["PUT"])
 @login_required
-@feature_enable("disbursement")
+@feature_enable("features_applications_disbursement")
 def disburse_document():
     if not session['role'].startswith("ORG_"):
         abort(403)
@@ -632,7 +632,7 @@ def disburse_document():
 
 @organisation_views.route('/download_disbursement/<applicant_id>', methods=["GET"])
 @login_required
-@feature_enable("disbursement")
+@feature_enable("features_applications_disbursement")
 def download_disbursement(applicant_id):
     if not session['role'].startswith("ORG_"):
         abort(403)

@@ -76,35 +76,98 @@ AWS_SETTINGS = {
 }
 
 FEATURES = {
-    "disbursement": True,
-    "disbursement_group_dashboard": False,
-    "disbursement_center_dashboard": False,
-
-    "hignmark_equifax": True,
-    "questions_psychometric": True,
-
-    "admin_groups": False,
-    "admin_select_regions": True,
-    "admin_select_regions_center": False,
-    "admin_select_regions_groups": False,
-
-    "search_by_app_id": True,
-    "search_by_app_name": True,
-    "search_by_group_id": False,
-    "search_by_group_name": False,
-    "search_by_center_name": False,
-    "search_by_scrutiny_status": True,
-
-    "accounts_reports": True,
-
-    "accounts_scrutiny": True,
-    "accounts_scrutiny_dashboard": True,
-
-    "accounts_sanctions": True,
-    "accounts_sanctions_dashboard": True,
-
-    "accounts_applications": True,
-    "accounts_enroll_customers": False,
+    "features_admin": {
+        "title" : "Admin Features",
+        "enabled": True,
+    },
+    "features_profile": {
+        "title" : "Features For User Profile",
+        "enabled": True,
+    },
+    "features_notifications": {
+        "title" : "Features For Notifications",
+        "enabled": True,
+    },
+    "features_api_products": {
+        "title" : "Features For API Products",
+        "enabled": True,
+    },
+    "features_api_applications_post": {
+        "title" : "Features For API Application POST",
+        "enabled": True,
+    },
+    "features_api_performance_target": {
+        "title" : "Features For API Performance Target",
+        "enabled": True,
+    },
+    "features_fos_branches": {
+        "title" : "Features For FOS & Branches List",
+        "enabled" : True,
+    },
+    "features_applications_track": {
+        "title" : "Features For Applications Track",
+        "enabled" : True,
+    },
+    "features_applications_cashflow": {
+        "title" : "Features For Applications Cashflow",
+        "enabled" : True,
+    },
+    "features_applications_scrutiny": {
+        "title" : "Features For Application Scrutiny",
+        "enabled" : True,
+    },
+    "features_applications_sanction": {
+        "title" : "Features For Application Scrutiny",
+        "enabled" : True,
+    },
+    "features_applications_scrutiny_stats": {
+        "title" : "Stats For Application Scrutiny",
+        "enabled" : False,
+    },
+    "features_applications_disbursement": {
+        "title" : "Features For Disbursement",
+        "enabled": True,
+    },
+    "features_psychometric_questions": {
+        "title" : "Features For Notifications",
+        "enabled": True,
+    },
+    "hignmark_equifax": {
+        "title" : "HighMark / Equifax Verification",
+        "enabled" : True,
+    },
+    "search_by_app_id": {
+        "title" : "Search By Application ID",
+        "enabled" : True,
+    },
+    "search_by_app_name": {
+        "title" : "Search By Application Name",
+        "enabled" : True,
+    },
+    "search_by_group_id": {
+        "title" : "Search By Group ID",
+        "enabled" : True,
+    },
+    "search_by_group_name": {
+        "title" : "Search By Group Name",
+        "enabled" : True,
+    },
+    "search_by_center_id": {
+        "title" : "Search By Center ID",
+        "enabled" : True,
+    },
+    "search_by_center_name": {
+        "title" : "Search By Center Name",
+        "enabled" : True,
+    },
+    "search_by_scrutiny_status": {
+        "title" : "Search By Scrutiny Status",
+        "enabled" : False,
+    },
+    "accounts_reports": {
+        "title" : "Features For Reports",
+        "enabled" : True,
+    }
 }
 
 
