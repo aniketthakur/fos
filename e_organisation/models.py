@@ -5,95 +5,59 @@ from flask_sauth.models import BaseUser
 from flask.ext.mongorest.resources import Resource
 
 
-class EsthenosUser(BaseUser):
-    first_name = db.StringField(max_length=255, required=False,default="")
-    last_name = db.StringField(max_length=255, required=False,default="")
-    user_name = db.StringField(max_length=100,required=False)
-    email = db.StringField(max_length=255, required=False)
-    profile_pic = db.StringField(max_length=255, required=False)
-
-    unique_id = db.StringField(max_length=20, required=True,default = "NOTSET")
-    status = db.IntField(default=0)
-    activation_code = db.StringField(max_length=50, required=False)
-    active = db.BooleanField(default=False)
-    staff = db.BooleanField(default=False)
-    permissions = db.DictField()
-    created_at = db.DateTimeField(default=datetime.datetime.now)
-    updated_at = db.DateTimeField(default=datetime.datetime.now)
-
-    about = db.StringField(max_length=255, required=False)
-    designation = db.StringField(max_length=255,required=False)
-    date_of_birth = db.StringField(max_length=20, required=False)
-
-    postal_address = db.StringField(max_length=255, required=False)
-    postal_city = db.StringField(max_length=100, required=False)
-    postal_state = db.StringField(max_length=100, required=False)
-    postal_country = db.StringField(max_length=100, required=False)
-    postal_telephone = db.StringField(max_length=20, required=False)
-    postal_tele_code = db.StringField(max_length=20, required=False)
-
-    owner = db.ReferenceField('EsthenosUser',required=False)
-    org_area = db.ReferenceField('EsthenosOrgArea',required=False)
-    org_state = db.ReferenceField('EsthenosOrgState',required=False)
-    org_region = db.ReferenceField('EsthenosOrgRegion',required=False)
-    org_branch = db.ReferenceField('EsthenosOrgBranch',required=False)
-    organisation = db.ReferenceField('EsthenosOrg',required=False)
-
-    def __unicode__(self):
-        return "%s, %s, %s" % (self.name, self.email, self.organisation)
-
-    def is_active(self):
-        return self.active
-
-    def is_staff(self):
-        return self.staff
-
-    def get_fullname(self):
-        return '%s %s' % (self.first_name, self.last_name)
-
-    def get_shortname(self):
-        return self.first_name
-
-    def get_organization(self):
-        return self.organisation
-
-    def get_phone_number(self):
-        return "%s %s" % (self.postal_tele_code, self.postal_telephone)
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-
 class EsthenosOrg(db.Document):
     code = db.StringField(max_length=5, required=False)
-    logo_url = db.StringField(max_length=255, required=False)
-    domain = db.StringField(max_length=128, required=False)
-    states = db.ListField(db.ReferenceField('EsthenosOrgState'), required=False)
-    monthly_target = db.IntField(default=0)
-    monthly_disbursed = db.IntField(default=0)
-    monthly_amount_disbursed = db.IntField(default=0)
     name = db.StringField(max_length=512, required=True)
-    profile_pic = db.StringField(max_length=255, required=False)
+    about = db.StringField(max_length=255, required=False)
+    domain = db.StringField(max_length=128, required=False)
+
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
-    about = db.StringField(max_length=255, required=False)
-    owner = db.ReferenceField('EsthenosUser')
+
     postal_address = db.StringField(max_length=255, required=False)
     postal_country = db.StringField(max_length=100, required=False)
+    postal_code = db.StringField(max_length=10, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
     postal_state = db.StringField(max_length=100, required=False)
     postal_telephone = db.StringField(max_length=512, required=False)
     postal_tele_code = db.StringField(max_length=512, required=False)
-    postal_city = db.StringField(max_length=100, required=False)
-    postal_code = db.StringField(max_length=10, required=False)
+
     email = db.StringField( unique=True)
-    application_count = db.IntField(default=0)
     group_count = db.IntField(default=1)
     center_count = db.IntField(default=1)
-    employee_count = db.IntField(default=1)
+
+    admins = db.ListField(db.ReferenceField('EsthenosUser'))
+
     user_count = db.IntField(default=1)
+    employee_count = db.IntField(default=1)
+    application_count = db.IntField(default=0)
+
+    def is_admin(self, user):
+        return user in self.admins
 
     def __unicode__(self):
-      return "%s, %s, %s, %s" % (self.name, self.email, self.group_count, self.center_count)
+        return "%s, %s, %s, %s" % (self.name, self.email, self.group_count, self.center_count)
+
+
+class EsthenosOrgHierarchy(db.Document):
+    organisation = db.ReferenceField(EsthenosOrg)
+
+    role = db.StringField(max_length=10, required=True)
+    title = db.StringField(max_length=10, required=True)
+    title_full = db.StringField(max_length=50, required=True)
+
+    level = db.IntField(required=True)
+    access = db.StringField(required=True)
+    features = db.ListField(db.StringField(max_length=255))
+
+    def is_admin(self):
+        return (self.level == 0) and ("ADMIN" in self.role)
+
+    def has_permission(self, feature):
+        return feature in self.features
+
+    def __unicode__(self):
+        return "%s: %s" % (self.title, self.features)
 
 
 class EsthenosSettings(db.Document):
@@ -109,13 +73,12 @@ class EsthenosSettings(db.Document):
 
 
 class EsthenosOrgNotification(db.Document):
-    to_user = db.ReferenceField('EsthenosOrg')
-    from_user = db.ReferenceField('EsthenosOrg', required=False)
-    sender_name = db.StringField(max_length=255, required=True)
-    sender_extra_data = db.StringField(max_length=255, required=False)
-    notification_type = db.StringField(max_length=255, required=True) #BILLING ,COLLABORATION
-    message = db.StringField(max_length=255, required=True)
+    organisation = db.ReferenceField(EsthenosOrg)
+    to_user = db.ReferenceField('EsthenosUser')
+    from_user = db.ReferenceField('EsthenosUser')
     read_state = db.BooleanField(default=False)
+    message = db.StringField(max_length=255, required=True)
+    notification_type = db.StringField(max_length=255, required=True)
     notification_date = db.DateTimeField(default=datetime.datetime.now)
 
 
@@ -133,40 +96,307 @@ class EsthenosOrgApplicationStatusType(db.Document):
 
 class EsthenosOrgApplicationStatus(db.Document):
     status = db.ReferenceField(EsthenosOrgApplicationStatusType)
-    status_message = db.StringField(max_length=512, required=True, default="")
     updated_on = db.DateTimeField(default=datetime.datetime.now)
 
 
 class EsthenosOrgState(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     name = db.StringField(max_length=60, required=True)
+    regions = db.ListField(db.ReferenceField('EsthenosOrgRegion'))
+
+    def add_region(self, name):
+        region, status = EsthenosOrgRegion.objects.get_or_create(
+            name=name, organisation=self.organisation, parent=self
+        )
+        self.regions.append(region)
+        self.save()
+        return region, status
+
+    @property
+    def json(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+        }
+
+    @property
+    def children(self):
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "count": len(self.regions),
+            "children": [region.json for region in self.regions],
+        }
+
+    @property
+    def hierarchy(self):
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "regions": [region.hierarchy for region in self.regions]
+        }
+
+    def __unicode__(self):
+        return self.name
 
 
 class EsthenosOrgRegion(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     parent = db.ReferenceField(EsthenosOrgState)
     name = db.StringField(max_length=60, required=True)
+    areas = db.ListField(db.ReferenceField('EsthenosOrgArea'))
+
+    @property
+    def state(self):
+        return self.parent
+
+    @property
+    def json(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+        }
+
+    @property
+    def parents(self):
+        return {
+            "state": str(self.state.id),
+        }
+
+    @property
+    def children(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "count": len(self.areas),
+            "parents": self.parents,
+            "children": [area.json for area in self.areas],
+        }
+
+    @property
+    def hierarchy(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "parents": self.parents,
+            "children": [area.hierarchy for area in self.areas]
+        }
+
+    def add_area(self, name):
+        area, status = EsthenosOrgArea.objects.get_or_create(
+            name=name, organisation=self.organisation, parent=self
+        )
+        self.areas.append(area)
+        self.save()
+        return area, status
+
+    def __unicode__(self):
+        return self.name
 
 
 class EsthenosOrgArea(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     parent = db.ReferenceField(EsthenosOrgRegion)
     name = db.StringField(max_length=60, required=True)
+    branches = db.ListField(db.ReferenceField('EsthenosOrgBranch'))
+
+    @property
+    def region(self):
+        return self.parent
+
+    @property
+    def state(self):
+        return self.parent.parent
+
+    @property
+    def json(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+        }
+
+    @property
+    def parents(self):
+        return {
+            "state": str(self.state.id),
+            "region": str(self.region.id),
+        }
+
+    @property
+    def children(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "count": len(self.branches),
+            "parents": self.parents,
+            "children": [branch.json for branch in self.branches],
+        }
+
+    @property
+    def hierarchy(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "parents": self.parents,
+            "children": [branch.hierarchy for branch in self.branches]
+        }
+
+    def add_branch(self, name):
+        branch, status = EsthenosOrgBranch.objects.get_or_create(
+            name=name, organisation=self.organisation, parent=self
+        )
+        self.branches.append(branch)
+        self.save()
+        return branch, status
+
+    def __unicode__(self):
+        return self.name
 
 
 class EsthenosOrgBranch(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     parent = db.ReferenceField(EsthenosOrgArea)
     name = db.StringField(max_length=60, required=True)
+    centers = db.ListField(db.ReferenceField('EsthenosOrgCenter'))
+
+    @property
+    def area(self):
+        return self.parent
+
+    @property
+    def region(self):
+        return self.parent.parent
+
+    @property
+    def state(self):
+        return self.parent.parent.parent
+
+    @property
+    def json(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+        }
+
+    @property
+    def parents(self):
+        return {
+            "state": str(self.state.id),
+            "region": str(self.region.id),
+            "area": str(self.area.id),
+        }
+
+    @property
+    def children(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "count": len(self.centers),
+            "parents": self.parents,
+            "children": [center.json for center in self.centers],
+        }
+
+    @property
+    def hierarchy(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "parents": self.parents,
+            "children": [center.hierarchy for center in self.centers]
+        }
+
+    def add_center(self, name):
+        center, status = EsthenosOrgCenter.objects.get_or_create(
+            name=name, organisation=self.organisation, parent=self,
+            center_id=EsthenosOrgCenter.unique_id(self.organisation)
+        )
+        self.centers.append(center)
+        self.save()
+        self.organisation.update(inc__center_count=1)
+        return center, status
+
+    def __unicode__(self):
+        return self.name
 
 
 class EsthenosOrgCenter(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     parent = db.ReferenceField(EsthenosOrgBranch)
     name = db.StringField(max_length=60, required=True)
+    groups = db.ListField(db.ReferenceField('EsthenosOrgGroup'))
+
+    officer = db.StringField(max_length=60, required=True, default="")
+    officer_phone_number = db.StringField(max_length=60, required=True, default="")
 
     center_id = db.StringField(max_length=10, required=False)
     center_timeslot = db.DateTimeField(required = False)
+
+    @property
+    def branch(self):
+        return self.parent
+
+    @property
+    def area(self):
+        return self.parent.parent
+
+    @property
+    def region(self):
+        return self.parent.parent.parent
+
+    @property
+    def state(self):
+        return self.parent.parent.parent.parent
+
+    @property
+    def json(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "time": self.center_timeslot,
+        }
+
+    @property
+    def parents(self):
+        return {
+            "state": str(self.state.id),
+            "region": str(self.region.id),
+            "area": str(self.area.id),
+            "branch": str(self.branch.id),
+        }
+
+    @property
+    def children(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "count": len(self.groups),
+            "parents": self.parents,
+            "children": [group.json for group in self.groups],
+        }
+
+    @property
+    def hierarchy(self):
+        return {
+            "id": str(self.id),
+            "name": str(self.name),
+            "time": self.center_timeslot,
+            "parents": self.parents,
+            "children": [group.json for group in self.groups]
+        }
+
+    def add_group(self, name):
+        group, status = EsthenosOrgGroup.objects.get_or_create(
+            name=name, organisation=self.organisation, parent=self,
+            group_id=EsthenosOrgGroup.unique_id(self.organisation)
+        )
+        group.update_status(110)
+        self.groups.append(group)
+        self.save()
+        self.organisation.update(inc__group_count=1)
+        return group, status
+
+    def __unicode__(self):
+        return self.name
 
     @staticmethod
     def unique_id(org):
@@ -198,6 +428,33 @@ class EsthenosOrgGroup(db.Document):
     cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
 
+    @property
+    def group_name(self):
+        return self.name
+
+    @property
+    def center(self):
+        return self.parent
+
+    @property
+    def branch(self):
+        return self.parent.parent
+
+    @property
+    def area(self):
+        return self.parent.parent.parent
+
+    @property
+    def region(self):
+        return self.parent.parent.parent.parent
+
+    @property
+    def state(self):
+        return self.parent.parent.parent.parent.parent
+
+    def __unicode__(self):
+        return self.name
+
     def applications(self):
         return EsthenosOrgApplication.objects.filter(group=self)
 
@@ -225,8 +482,10 @@ class EsthenosOrgGroup(db.Document):
 
         self.save()
 
-    def tojson(self):
+    @property
+    def json(self):
         return {
+          'id' : str(self.id),
           'group_id': str(self.group_id),
           'group_size': str(self.size),
           'group_name': str(self.name),
@@ -252,6 +511,54 @@ class EsthenosOrgToken(db.EmbeddedDocument):
 
 class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
+
+
+class EsthenosUser(BaseUser):
+    last_name = db.StringField(max_length=255, required=True)
+    first_name = db.StringField(max_length=255, required=True)
+
+    email = db.StringField(max_length=255, required=False)
+    gender = db.StringField(max_length=255, required=False)
+    active = db.BooleanField(default=False)
+
+    created_at = db.DateTimeField(default=datetime.datetime.now)
+    updated_at = db.DateTimeField(default=datetime.datetime.now)
+
+    date_of_birth = db.StringField(max_length=20, required=False)
+    postal_address = db.StringField(max_length=255, required=False)
+    postal_code = db.StringField(max_length=100, required=False)
+    postal_city = db.StringField(max_length=100, required=False)
+    postal_state = db.StringField(max_length=100, required=False)
+    postal_country = db.StringField(max_length=100, required=False)
+    postal_telephone = db.StringField(max_length=20, required=False)
+    postal_tele_code = db.StringField(max_length=20, required=False)
+
+    states = db.ListField(db.ReferenceField(EsthenosOrgState))
+    regions = db.ListField(db.ReferenceField(EsthenosOrgRegion))
+    areas = db.ListField(db.ReferenceField(EsthenosOrgArea))
+    branches = db.ListField(db.ReferenceField(EsthenosOrgBranch))
+
+    hierarchy = db.ReferenceField(EsthenosOrgHierarchy, required=True)
+    organisation = db.ReferenceField(EsthenosOrg, required=True)
+
+    def is_admin(self):
+        return self.hierarchy.is_admin()
+
+    def is_allowed(self, feature):
+        # delegating it to hierarchy,
+        # so that this may later be fine tuned.
+        return self.hierarchy.has_permission(feature)
+
+    @property
+    def name(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
+    @property
+    def phone_number(self):
+        return "%s %s" % (self.postal_tele_code, self.postal_telephone)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
 
 class PixuateObjectUrlMap(db.Document):
@@ -285,54 +592,90 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
         return self.pan_docs + self.aadhar_docs + self.voterid_docs + self.personal_docs + self.business_docs + self.other_docs
 
 
-class EsthenosOrgUserUploadSession(db.DynamicDocument):
-    unique_session_key = db.StringField(max_length=255, required=True)
-    owner = db.ReferenceField('EsthenosUser')
-    session_group = db.ReferenceField('EsthenosOrgGroup', required=False)
-    session_center = db.ReferenceField('EsthenosOrgCenter', required=False)
-    number_of_applications = db.IntField(default=0, required=False)
-    number_of_kycs = db.IntField(default=0, required=False)
-    number_of_gkycs = db.IntField(default=0, required=False)
-    date_created = db.DateTimeField(default=datetime.datetime.now)
-    date_updated = db.DateTimeField(default=datetime.datetime.now)
-    applications = db.DictField()
-    tagged = db.BooleanField(default=False)
+class EsthenosOrgUserPerformanceItem(db.EmbeddedDocument):
+    owner = db.ReferenceField(EsthenosUser)
+    name = db.StringField(max_length=256, required=True)
+    created = db.DateTimeField(default=datetime.datetime.now)
+    updated = db.DateTimeField(default=datetime.datetime.now)
+
+    target = db.IntField(default=0)
+    achieved = db.IntField(default=0)
+
+    @property
+    def percentage(self):
+        return (self.achieved / max(self.target, 1)) * 100
+
+    @property
+    def json(self):
+        return {
+            "target" : self.target,
+            "achieved" : self.achieved,
+            "percentage" : self.percentage,
+        }
+
+    def __unicode__(self):
+        return "name: %s, achievement: %s" % (self.name, self.percentage)
 
 
-class EsthenosOrgHierarchy(db.Document):
-    level = db.IntField(required=True)
-    role = db.StringField(max_length=10, required=True)
-    title = db.StringField(max_length=10, required=True)
-    title_full = db.StringField(max_length=50, required=True)
+class EsthenosOrgUserPerformance(db.Document):
+    owner = db.ReferenceField(EsthenosUser)
+    hour = db.IntField(default=0, required=True)
+    created = db.DateTimeField(default=datetime.datetime.now)
+    updated = db.DateTimeField(default=datetime.datetime.now)
+
+    apps_sourced = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
+                                            default=EsthenosOrgUserPerformanceItem(name="apps-sourced"))
+
+    apps_disbursed = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
+                                              default=EsthenosOrgUserPerformanceItem(name="apps-disbursed"))
+
+    amount_disbursed = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
+                                                default=EsthenosOrgUserPerformanceItem(name="amount-disbursed"))
+
+    groups_disbursed = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
+                                               default=EsthenosOrgUserPerformanceItem(name="groups-disbursed"))
+
+    centers_disbursed = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
+                                                default=EsthenosOrgUserPerformanceItem(name="centers-disbursed"))
+
+    pending_grt = db.IntField(default=0)
+    pending_cgt1 = db.IntField(default=0)
+    pending_cgt2 = db.IntField(default=0)
+
+    @property
+    def json(self):
+        return {
+            "apps_sourced" : self.apps_sourced.json,
+            "apps_disbursed" : self.apps_disbursed.json,
+            "amount_disbursed" : self.amount_disbursed.json,
+            "groups_disbursed" : self.groups_disbursed.json,
+            "centers_disbursed" : self.centers_disbursed.json,
+
+            "pending_grt" : self.pending_grt,
+            "pending_cgt1" : self.pending_cgt1,
+            "pending_cgt2" : self.pending_cgt2,
+        }
 
 
-class EsthenosOrgRole(db.Document):
-    role = db.StringField(max_length=25, required=True)
-    features = db.ListField(db.StringField(max_length=255))
+class EsthenosOrgUserPerformanceTarget(db.Document):
+    owner = db.ReferenceField(EsthenosUser)
+    organisation = db.ReferenceField(EsthenosOrg)
+
+    name = db.StringField(max_length=512, required=True)
+    role = db.ReferenceField(EsthenosOrgHierarchy, required=True)
+
+    end_date = db.DateTimeField(default=datetime.datetime.now)
+    start_date = db.DateTimeField(default=datetime.datetime.now)
+
+    loan_target = db.FloatField(default=0)
+    group_target = db.FloatField(default=0)
+    center_target = db.FloatField(default=0)
+
+    business_target = db.FloatField(default=0)
+    applications_target = db.IntField(default=0)
 
 
-class EsthenosOrgRoleSettings(db.Document):
-    organisation = db.ReferenceField('EsthenosOrg')
-    role = db.StringField(max_length=25, required=True)
-    access_dash = db.StringField(max_length=10, required=True,default="no")
-    access_enroll_customer = db.StringField(max_length=10, required=True,default="no")
-    access_cgt = db.StringField(max_length=10, required=True,default="no")
-    access_grt = db.StringField(max_length=10, required=True,default="no")
-    access_disburse = db.StringField(max_length=10, required=True,default="no")
-    access_reports = db.StringField(max_length=10, required=True,default="no")
-    access_maker = db.StringField(max_length=10, required=True,default="no")
-    access_checker = db.StringField(max_length=10, required=True,default="no")
-    noti_de_done = db.StringField(max_length=10, required=True,default="no")
-    noti_cbc_done = db.StringField(max_length=10, required=True,default="no")
-    noti_cfa_done = db.StringField(max_length=10, required=True,default="no")
-    noti_dd_done = db.StringField(max_length=10, required=True,default="no")
-    noti_db_done = db.StringField(max_length=10, required=True,default="no")
-    reports_all_data = db.StringField(max_length=10, required=True,default="no")
-    reports_de_done = db.StringField(max_length=10, required=True,default="no")
-    reports_cbc_done = db.StringField(max_length=10, required=True,default="no")
-    reports_cfa_done = db.StringField(max_length=10, required=True,default="no")
-    reports_dd_done = db.StringField(max_length=10, required=True,default="no")
-    reports_db_done = db.StringField(max_length=10, required=True,default="no")
+    created = db.DateTimeField(default=datetime.datetime.now)
 
 
 class EsthenosOrgStats(db.Document):

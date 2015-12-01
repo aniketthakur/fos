@@ -114,6 +114,10 @@ FEATURES = {
         "title" : "Features For API Performance Target",
         "enabled": True,
     },
+    "features_performance_target": {
+        "title" : "Features For API Performance Target",
+        "enabled": True,
+    },
     "features_fos_branches": {
         "title" : "Features For FOS & Branches List",
         "enabled" : True,

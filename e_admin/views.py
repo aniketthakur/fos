@@ -25,140 +25,19 @@ from blinker import signal
 from esthenos import mainapp
 
 
-conn = boto.connect_ses(
-    aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=mainapp.config.get("AWS_SECRET_ACCESS_KEY"))
-
 signal_user_registered = signal('user-registered')
 
-
 admin_views = Blueprint('admin_views', __name__, template_folder='templates')
-
 
 ordinals= ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th',
            '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st',
            '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
 
 
-@admin_views.route('/admin/dashboard', methods=["GET"])
-@login_required
-def admin_dashboard():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    kwargs = locals()
-    return render_template("admin_dashboard.html", **kwargs)
-
-
-@admin_views.route('/admin/settings/update', methods=['POST'])
-@login_required
-def admin_settings_update():
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("ex_data_entry")
-        permissions['cash_flow']=request.form.get("ex_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("ex_view_reports")
-        emp.update(in__permissions = permissions)
-
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_MANAGER"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("manager_data_entry")
-        permissions['cash_flow']=request.form.get("manager_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("manager_view_reports")
-        emp.permissions=permissions
-        emp.update(in__permissions = permissions)
-
-    employees=EsthenosUser.objects.filter(roles__in=["EMP_VP"])
-    for emp in employees:
-        permissions=dict()
-        permissions['data_entry']=request.form.get("vp_data_entry")
-        permissions['cash_flow']=request.form.get("vp_cash_flow_analysis")
-        permissions['view_reports']=request.form.get("vp_view_reports")
-        emp.permissions=permissions
-        emp.update(in__permissions = permissions)
-
-    return redirect("/admin/settings")
-
-
-@admin_views.route('/admin/employees', methods=["GET","POST"])
-@login_required
-def admin_employees():
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    employees = EsthenosUser.objects.filter(roles__in=["EMP_EXECUTIVE", "EMP_MANAGER", "EMP_VP"])
-
-    if request.method == "POST":
-        org_form = AddEmployeeForm(request.form)
-        form = org_form
-        if form.validate():
-            form.save()
-            return redirect(url_for("admin_views.admin_employees"))
-
-        else:
-            flash_errors(org_form)
-            kwargs = {"login_form": org_form}
-            return render_template("admin_add_emp.html", **kwargs)
-
-    if request.method == "GET":
-        kwargs = locals()
-        return render_template("admin_add_emp.html", **kwargs)
-
-
-@admin_views.route('/admin/applications', methods=["GET"])
-@login_required
-def admin_application():
-    organisations = EsthenosOrg.objects.all()
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    permissions = user.permissions
-    if "EMP_EXECUTIVE" in permissions or "EMP_MANAGER" in permissions or "EMP_VP" in permissions:
-        if not permissions["data_entry"] == "yes":
-            abort(403)
-
-    if session['role'] != "ADMIN" and session['role'] != "EMP_EXECUTIVE":
-        abort(403)
-
-    appId = request.args.get('appId', '')
-    appName = request.args.get('appName', '')
-    groupId = request.args.get('groupId', '')
-    statusId = request.args.get('statusId', '')
-
-    applications = []
-    if (appId is not None) and (appId != ''):
-      applications = EsthenosOrgApplication.objects.filter(application_id=appId)
-
-    elif (appName is not None) and (appName != ''):
-      applications = EsthenosOrgApplication.objects.filter(applicant_name=appName)
-
-    elif (statusId is not None) and (statusId != ''):
-      status = EsthenosOrgApplicationStatusType.objects.get(id=statusId)
-      applications = EsthenosOrgApplication.objects.filter(current_status=status)
-
-    elif (groupId is not None) and (groupId != ''):
-      group = EsthenosOrgGroup.objects.get(id=groupId)
-      applications = EsthenosOrgApplication.objects.filter(group=group)
-
-    else:
-      applications = EsthenosOrgApplication.objects.all()
-
-    groups = EsthenosOrgGroup.objects.all()
-    status_types = EsthenosOrgApplicationStatusType.objects.all()
-
-    kwargs = locals()
-    return render_template("admin_applications.html", **kwargs)
-
-
 @admin_views.route('/admin/organisations', methods=["GET", "POST"])
 @login_required
+@feature_enable("features_admin")
 def admin_organisations():
-    if session['role'] != "ADMIN":
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
     organisations = EsthenosOrg.objects.all()
 
@@ -184,10 +63,8 @@ def admin_organisations():
 
 @admin_views.route('/admin/organisation/<org_id>/update', methods=["GET"] )
 @login_required
-def admin_org_details(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_organisation_details(org_id):
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
     areas = EsthenosOrgArea.objects.filter(organisation=org)
@@ -199,12 +76,11 @@ def admin_org_details(org_id):
     return render_template("admin_add_org_details.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/states', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/states/<state_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/states', methods=["GET", "POST"])
 @login_required
-def admin_org_states_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_org_states_update(org_id, state_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
     states = request.form.getlist('org_states')
 
@@ -215,12 +91,11 @@ def admin_org_states_update(org_id):
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
-@admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/regions/<region_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/regions', methods=["POST"])
 @login_required
-def admin_org_regions_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_org_regions_update(org_id, region_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
     state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
 
@@ -230,12 +105,11 @@ def admin_org_regions_update(org_id):
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
-@admin_views.route('/admin/organisation/<org_id>/areas', methods=["POST"] )
+@admin_views.route('/admin/organisation/<org_id>/areas/<area_id>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/areas', methods=["POST"])
 @login_required
-def admin_org_areas_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_org_areas_update(org_id, area_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
     region = EsthenosOrgRegion.objects.get(id=request.form.get('org_region'))
 
@@ -245,12 +119,11 @@ def admin_org_areas_update(org_id):
     return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
 
 
+@admin_views.route('/admin/organisation/<org_id>/branches/<branch_id>', methods=["GET"])
 @admin_views.route('/admin/organisation/<org_id>/branches', methods=["POST"] )
 @login_required
-def admin_org_branches_update(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_org_branches_update(org_id, branch_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
     area = EsthenosOrgArea.objects.get(id=request.form.get('org_area'))
 
@@ -262,10 +135,8 @@ def admin_org_branches_update(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/dashboard', methods=["GET"])
 @login_required
+@feature_enable("features_admin")
 def admin_organisation_dashboard(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
 
@@ -275,10 +146,8 @@ def admin_organisation_dashboard(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
 @login_required
+@feature_enable("features_admin")
 def admin_organisation_product(org_id):
-    if session['role'] != 'ADMIN':
-        abort(403)
-
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
 
@@ -297,45 +166,42 @@ def admin_organisation_product(org_id):
         return redirect("/admin/organisation/%s/products" % org_id)
 
 
-@admin_views.route('/admin/organisation/<org_id>/settings/role/<role_type>', methods=["GET"])
+@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET", "POST"])
 @login_required
-def admin_organisation_settings_role(org_id, role_type):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_organisation_settings(org_id):
     user = EsthenosUser.objects.get(id=current_user.id)
-    org_settings,status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation, role=role_type)
+    org = user.organisation
 
-    resp = dict()
-    resp["access_dash"] = org_settings.access_dash
-    resp["access_enroll_customer"]= org_settings.access_enroll_customer
-    resp["access_cgt"]= org_settings.access_cgt
-    resp["access_grt"]= org_settings.access_grt
-    resp["access_disburse"]= org_settings.access_disburse
-    resp["access_reports"]= org_settings.access_reports
-    resp["access_maker"]= org_settings.access_maker
-    resp["access_checker"]= org_settings.access_checker
-    resp["noti_de_done"]= org_settings.noti_de_done
-    resp["noti_cbc_done"]= org_settings.noti_cbc_done
-    resp["noti_cfa_done"]= org_settings.noti_cfa_done
-    resp["noti_dd_done"]= org_settings.noti_dd_done
-    resp["noti_db_done"]= org_settings.noti_db_done
-    resp["reports_all_data"]= org_settings.reports_all_data
-    resp["reports_de_done"]= org_settings.reports_de_done
-    resp["reports_cbc_done"]= org_settings.reports_cbc_done
-    resp["reports_cfa_done"]= org_settings.reports_cfa_done
-    resp["reports_dd_done"]= org_settings.reports_dd_done
-    resp["reports_db_done"]= org_settings.reports_db_done
+    features = mainapp.config["FEATURES"]
+    features = sorted(features.items(), key=lambda x: x[1]['title'])
 
-    return Response(response=json.dumps(resp), status=200, mimetype="application/json")
+    hierarchy = EsthenosOrgHierarchy.objects.filter(organisation=user.organisation, level__gt=0).order_by('+level')
+    settings, status = EsthenosOrgSettings.objects.get_or_create(organisation=user.organisation)
+
+    if request.method == "POST":
+        settings = {}
+        for designation in hierarchy:
+            settings[str(designation.id)] = []
+
+        for key, value in request.form.items():
+            designation, feature = key.split("|")
+            settings[designation].append(feature)
+
+        for designation in hierarchy:
+            setting = settings[str(designation.id)]
+            designation.update(set__features=setting)
+
+        return redirect(url_for("admin_views.admin_organisation_settings", org_id=org_id))
+
+    kwargs = locals()
+    return render_template("admin_org_settings.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/settings/other', methods=["POST"])
+@admin_views.route('/admin/organisation/<org_id>/guidelines', methods=["POST"])
 @login_required
-def admin_organisation_settings_rbi(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
+@feature_enable("features_admin")
+def admin_organisation_guidelines_rbi(org_id):
     organisation = EsthenosOrg.objects.get(id=org_id)
     settings, status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
 
@@ -357,58 +223,73 @@ def admin_organisation_settings_rbi(org_id):
         settings.product_cycle_4_group_max = int(request.form.get("product_cycle_4_group_max"))
         settings.save()
 
-        return redirect("/admin/organisation/%s/settings" % org_id)
+        return redirect(url_for("admin_views.admin_organisation_settings", org_id=org_id))
 
 
-@admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET", "POST"])
+@admin_views.route('/admin/organisation/<org_id>/targets', methods=["GET", "POST"])
 @login_required
-def admin_organisation_settings(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
+@feature_enable("features_performance_target")
+def admin_organisation_targets(org_id):
     user = EsthenosUser.objects.get(id=current_user.id)
-    organisation = EsthenosOrg.objects.get(id=org_id)
-    settings, status = EsthenosOrgSettings.objects.get_or_create(organisation=organisation)
+    org = user.organisation
+
+    if request.method == "GET":
+        states = EsthenosOrgState.objects.filter(organisation = user.organisation)
+        regions = EsthenosOrgRegion.objects.filter(organisation = user.organisation)
+        areas = EsthenosOrgArea.objects.filter(organisation = user.organisation)
+        branches = EsthenosOrgBranch.objects.filter(organisation = user.organisation)
+
+        hierarchy = EsthenosOrgHierarchy.objects.filter(organisation = user.organisation)
+        targets = EsthenosOrgUserPerformanceTarget.objects.filter(organisation = user.organisation)
+
+        kwargs = locals()
+        return render_template("admin_org_targets.html", **kwargs)
+
 
     if request.method == "POST":
-        role = request.form.get("role")
-        org_settings, status = EsthenosOrgRoleSettings.objects.get_or_create(organisation = user.organisation, role=role)
-        org_settings.access_dash = request.form.get("access_dash")
-        org_settings.access_enroll_customer = request.form.get("access_enroll_customer")
-        org_settings.access_cgt = request.form.get("access_cgt")
-        org_settings.access_grt = request.form.get("access_grt")
-        org_settings.access_disburse = request.form.get("access_disburse")
-        org_settings.access_reports = request.form.get("access_reports")
-        org_settings.access_maker = request.form.get("access_maker")
-        org_settings.access_checker = request.form.get("access_checker")
-        org_settings.noti_de_done = request.form.get("noti_de_done")
-        org_settings.noti_cbc_done = request.form.get("noti_cbc_done")
-        org_settings.noti_cfa_done = request.form.get("noti_cfa_done")
-        org_settings.noti_dd_done = request.form.get("noti_dd_done")
-        org_settings.noti_db_done = request.form.get("noti_db_done")
-        org_settings.reports_all_data = request.form.get("reports_all_data")
-        org_settings.reports_de_done = request.form.get("reports_de_done")
-        org_settings.reports_cbc_done = request.form.get("reports_cbc_done")
-        org_settings.reports_cfa_done = request.form.get("reports_cfa_done")
-        org_settings.reports_dd_done = request.form.get("reports_dd_done")
-        org_settings.reports_db_done = request.form.get("reports_db_done")
-        org_settings.save()
+        branches = request.form.getlist('org_states')
+        end_date = request.form.get("end_date")
+        start_date = request.form.get("start_date")
 
-        kwargs = locals()
-        return render_template("admin_org_settings.html", **kwargs)
+        loan_target = request.form.get("loan_name")
 
-    else:
-        kwargs = locals()
-        return render_template("admin_org_settings.html", **kwargs)
+        group_name = request.form.get("group_name")
+        center_name = request.form.get("center_name")
+        business_name = request.form.get("business_name")
+
+        from datetime import datetime
+
+        target, status = EsthenosOrgUserPerformanceTarget.objects.get_or_create(
+            owner = user,
+            organisation = user.organisation,
+
+            name = request.form.get("target_name"),
+
+            role = EsthenosOrgHierarchy.objects.get(
+                id=request.form.get("target_role")
+            ),
+
+            end_date = datetime.strptime(
+                request.form.get("end_date"), '%m/%d/%Y'
+            ),
+            start_date = datetime.strptime(
+                request.form.get("start_date"), '%m/%d/%Y'
+            ),
+
+            loan_target = request.form.get("loan_target"),
+            group_target = request.form.get("group_target"),
+            center_target = request.form.get("center_target"),
+
+            business_target = request.form.get("business_target"),
+            applications_target = request.form.get("applications_target")
+        )
+        return redirect(url_for("admin_views.admin_organisation_targets", org_id=org_id))
 
 
 @admin_views.route('/admin/organisation/<org_id>/employees', methods=["GET", "POST"])
 @login_required
+@feature_enable("features_admin")
 def admin_organisation_add_emp(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
     employees = EsthenosUser.objects.filter(organisation=org)
@@ -433,166 +314,30 @@ def admin_organisation_add_emp(org_id):
         return render_template("admin_org_add_emp.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/grt_questions',methods=['GET','POST'])
+@admin_views.route('/admin/organisation/<org_id>/employees/<emp_id>', methods=["GET", "POST"])
 @login_required
-def grt_questions(org_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
+@feature_enable("features_admin")
+def admin_organisation_add_emp_details(org_id, emp_id):
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
-    questions = EsthenosOrgGRTTemplateQuestion.objects.filter(organisation=org)
-
-    if request.method == "GET":
-        kwargs = locals()
-        return render_template("admin_organisation_grt_questions.html", **kwargs)
+    employee = EsthenosUser.objects.get(organisation=org, id=emp_id)
 
     if request.method == "POST":
-        question = AddOrgGRTTemplateQuestionsForm(request.form)
-        if question.validate():
-            question.save()
-            kwargs = locals()
-            return redirect("/admin/organisation/%s/grt_questions" % org_id)
-
-        else:
-            flash_errors(question)
-            kwargs = locals()
-            return render_template("admin_organisation_grt_questions.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/grt_questions/<question_id>/delete',methods=['POST'])
-@login_required
-def grt_questions_delete(org_id, question_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    question = EsthenosOrgGRTTemplateQuestion.objects.filter(id=question_id)
-    question.delete()
-    return redirect("/admin/organisation/%s/grt_questions" % org_id)
-
-
-@admin_views.route('/admin/organisation/<org_id>/cgt1_questions',methods=['GET','POST'])
-@login_required
-def cgt1_questions(org_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-    questions = EsthenosOrgCGT1TemplateQuestion.objects.filter(organisation=org)
+        form = AddOrganizationEmployeeForm(request.form)
+        form.update(employee)
+        return redirect(url_for("admin_views.admin_organisation_add_emp_details", org_id=org_id, emp_id=emp_id))
 
     if request.method == "GET":
+        states = EsthenosOrgState.objects.filter(organisation=org)
+        hierarchy = EsthenosOrgHierarchy.objects.filter(organisation=org, level__gt=0).order_by('+level')
         kwargs = locals()
-        return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-
-    if request.method == "POST":
-        question = AddOrgCGT1TemplateQuestionsForm(request.form)
-
-        if question.validate():
-            question.save()
-            kwargs = locals()
-            return redirect("/admin/organisation/%s/cgt1_questions" % org_id)
-
-        else:
-            flash_errors(question)
-            kwargs = locals()
-            return render_template("admin_organisation_cgt1_questions.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/cgt1_questions/<question_id>/delete',methods=['POST'])
-@login_required
-def cgt1_questions_delete(org_id, question_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    question = EsthenosOrgCGT1TemplateQuestion.objects.filter(id=question_id)
-    question.delete()
-    return redirect("/admin/organisation/%s/cgt1_questions" % org_id)
-
-
-@admin_views.route('/admin/organisation/<org_id>/cgt2_questions',methods=['GET','POST'])
-@login_required
-def cgt2_questions(org_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-    questions = EsthenosOrgCGT2TemplateQuestion.objects.filter(organisation=org)
-
-    if request.method == "GET":
-        kwargs = locals()
-        return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-
-    if request.method == "POST":
-        question = AddOrgCGT2TemplateQuestionsForm(request.form)
-
-        if question.validate():
-            question.save()
-            kwargs = locals()
-            return redirect("/admin/organisation/%s/cgt2_questions" % org_id)
-
-        else:
-            flash_errors(question)
-            kwargs = locals()
-            return render_template("admin_organisation_cgt2_questions.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/cgt2_questions/<question_id>/delete',methods=['POST'])
-@login_required
-def cgt2_questions_delete(org_id, question_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    question = EsthenosOrgCGT2TemplateQuestion.objects.filter(id=question_id)
-    question.delete()
-    return redirect("/admin/organisation/%s/cgt2_questions" % org_id)
-
-
-@admin_views.route('/admin/organisation/<org_id>/telecalling_questions',methods=['GET','POST'])
-@login_required
-def telecalling_questions(org_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-    questions = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(organisation=org)
-
-    if request.method == "GET":
-        kwargs = locals()
-        return render_template("admin_organisation_tele_questions.html", **kwargs)
-
-    if request.method == "POST":
-        question=AddOrgTeleCallingTemplateQuestionsForm(request.form)
-        if question.validate():
-            question.save()
-            kwargs = locals()
-            return redirect("/admin/organisation/%s/telecalling_questions" % org_id)
-
-        else:
-            flash_errors(question)
-            kwargs = locals()
-            return render_template("admin_organisation_tele_questions.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/telecalling_questions/<question_id>/delete',methods=['POST'])
-@login_required
-def telecalling_questions_delete(org_id, question_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
-    question = EsthenosOrgTeleCallingTemplateQuestion.objects.filter(id=question_id)
-    question.delete()
-    return redirect("/admin/organisation/%s/telecalling_questions" % org_id)
+        return render_template("admin_org_emp_details.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/psychometric_questions',methods=['GET','POST'])
 @login_required
+@feature_enable("features_psychometric_questions")
 def psychometric_questions(org_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
     questions = EsthenosOrgPsychometricTemplateQuestion.objects.filter(organisation=org)
@@ -617,346 +362,11 @@ def psychometric_questions(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/psychometric_questions/<question_id>/delete',methods=['POST'])
 @login_required
+@feature_enable("features_psychometric_questions")
 def psychometric_questions_delete(org_id, question_id):
-    if session['role'] != 'ADMIN':
-        return abort(403)
-
     question = EsthenosOrgPsychometricTemplateQuestion.objects.filter(id=question_id)
     question.delete()
     return redirect("/admin/organisation/%s/psychometric_questions" % org_id)
-
-
-@admin_views.route('/admin/organisation/<org_id>/areas/<reg_id>', methods=["GET"])
-@login_required
-def admin_org_areas_regions(org_id, reg_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    organisation = EsthenosOrg.objects.get(id=org_id)
-    areas = EsthenosOrgArea.objects.get(organisation=organisation, region=reg_id)
-
-    response = [{'id':str(ar.id),'name':ar.region_name} for ar in areas]
-    return Response(response=json.dumps(response), status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/organisation/<org_id>/branches/<area_id>', methods=["GET"])
-@login_required
-def admin_org_branches_areas(org_id,area_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    organisation = EsthenosOrg.objects.get(id=org_id)
-    branches = EsthenosOrgBranch.objects.get(organisation=organisation,area=area_id)
-
-    response = [{'id':str(br.id),'name':br.branch_name} for br in branches]
-    return Response(response=json.dumps(response), status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/organisation/<org_id>/regions/<state_id>', methods=["GET"])
-@login_required
-def admin_org_regions_states(org_id, state_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    organisation = EsthenosOrg.objects.get(id=org_id)
-    data = EsthenosOrgBranch.objects.get(organisation=organisation,state=state_id)
-
-    regions = []
-    for br in data:
-        regions.append({'id':str(br.id),'name':br.region_name})
-
-    return Response(response=json.dumps(regions), status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/organisation/<org_id>/applications', methods=["GET"])
-@login_required
-def admin_org_applications(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    organisation = EsthenosOrg.objects.get(id=org_id)
-    applications = EsthenosOrgApplication.objects.filter(organisation=organisation)
-    applications_list = []
-    for app in applications:
-        applications_list.append({'id':str(app.id),
-                                      'date_created':str(app.date_created),
-                                      'upload_type':app.upload_type,
-                                      'current_status':str(app.current_status.status)
-        })
-
-    return Response(response=json.dumps(applications_list), status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/organisation/<org_id>/application/<app_id>', methods=["GET"])
-@login_required
-def admin_application_id(org_id,app_id):
-    if not session['role'] == "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    app_urls = list()
-    applications = EsthenosOrgApplication.objects.filter(application_id = app_id)
-
-    if len(applications) == 0:
-        redirect("/admin/applications")
-
-    application = applications[0]
-    kyc_urls, kyc_ids = [], []
-    gkyc_urls, gkyc_ids = [], []
-
-    if application.tag is not None:
-        for kyc_id in application.tag.app_file_pixuate_id:
-            app_urls.append(get_url_with_id(kyc_id))
-
-        for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
-            kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
-            kyc_ids.append(kyc_id)
-            kyc_urls.append(get_url_with_id(kyc_id))
-
-        for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-            gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-            gkyc_ids.append(gkyc_id)
-            gkyc_urls.append(get_url_with_id(gkyc_id))
-
-    today = datetime.datetime.today()
-    disbursement_date = datetime.datetime.today() + timedelta(days=1)
-    disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
-    products = EsthenosOrgProduct.objects.filter(organisation = application.owner.organisation)
-
-    kwargs = locals()
-    return render_template("admin_application_manual_DE.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["GET"])
-@login_required
-def admin_application_cashflow(org_id, app_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
-
-    if len(applications) == 0:
-        redirect("/admin/organisation/%s/cbcheck" % org_id)
-
-    application = applications[0]
-    kwargs = locals()
-    return render_template("admin_cf.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/cashflow', methods=["POST"])
-@login_required
-def cashflow_statusupdate(org_id, app_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    application = EsthenosOrgApplication.objects.filter(application_id=app_id)
-
-    if len(application) >= 0:
-        application = application[0]
-        status = EsthenosOrgApplicationStatus(status=application.current_status, updated_on=datetime.datetime.now())
-        status.save()
-        application.timeline.append(status)
-
-        application.primary_income = float(request.form.get("primary_income"))
-        application.tertiary_income = float(request.form.get("tertiary_income"))
-        application.secondary_income = float(request.form.get("secondary_income"))
-        application.other_income = float(request.form.get("other_income"))
-        application.total_income = application.primary_income \
-                                   + application.secondary_income \
-                                   + application.tertiary_income \
-                                   + application.other_income
-
-        application.food_expense = float(request.form.get("food_expense"))
-        application.travel_expense = float(request.form.get("travel_expense"))
-        application.medical_expense = float(request.form.get("medical_expense"))
-        application.business_expense = float(request.form.get("business_expense"))
-        application.educational_expense = float(request.form.get("educational_expense"))
-        application.festival_expenditure = float(request.form.get("festival_expenditure"))
-        application.entertainment_expense = float(request.form.get("entertainment_expense"))
-        application.other_expense = float(request.form.get("other_expense"))
-        application.total_expenditure = application.food_expense \
-                                   + application.travel_expense \
-                                   + application.medical_expense \
-                                   + application.business_expense \
-                                   + application.educational_expense \
-                                   + application.festival_expenditure \
-                                   + application.entertainment_expense \
-                                   + application.other_expense
-
-        application.other_outstanding_emi = float(request.form.get("other_outstanding_emi"))
-        application.other_outstanding_chit = float(request.form.get("other_outstanding_chit"))
-        application.other_outstanding_insurance = float(request.form.get("other_outstanding_insurance"))
-        application.oother_outstanding_familynfriends = float(request.form.get("other_outstanding_familynfriends"))
-        application.total_other_outstanding = application.other_outstanding_emi + \
-                                              application.other_outstanding_chit + \
-                                              application.other_outstanding_insurance + \
-                                              application.other_outstanding_familynfriends
-
-        if request.form.get("status") == "true":
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=170)[0]
-            application.current_status_updated = datetime.datetime.now()
-            application.status = 170
-
-        else:
-            application.current_status = EsthenosOrgApplicationStatusType.objects.filter(status_code=180)[0]
-            application.current_status_updated = datetime.datetime.now()
-            application.status = 170
-
-        application.save()
-
-    return redirect("/admin/organisation/%s/application/%s/cashflow" % (org_id, app_id))
-
-
-@admin_views.route('/admin/organisation/<org_id>/application/<app_id>/track', methods=["GET"])
-@login_required
-def admin_application_track(org_id, app_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    organisation = EsthenosOrg.objects.get(id = org_id)
-    application = EsthenosOrgApplication.objects.get(organisation=organisation,application_id=app_id)
-    kwargs = locals()
-    return render_template("admin_application_tracking.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement', methods=["GET"])
-@login_required
-def admin_disbursement(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    kwargs = locals()
-    return render_template("admin_disbursement.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/schedule', methods=["GET"])
-def admin_schedule(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_SCHEDULE_A.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/pdf_dpn', methods=["GET"])
-def admin_dpn(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    kwargs = locals()
-    body = render_template("pdf_DPN.html", **kwargs)
-    pdfkit.from_string(body, 'dpn.pdf')
-
-    raw_bytes = ""
-    with open('dpn.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'dpn'
-    return response
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgement', methods=["GET"])
-def admin_acknowledgement(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPLACK.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/acknowledgementother', methods=["GET"])
-def admin_acknowledgementother(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_ACK_OTH.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplppl', methods=["GET"])
-def admin_hmplppl(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_PPL.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplgrt', methods=["GET"])
-def admin_hmplgrt(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_GRT.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplcashflow', methods=["GET"])
-def admin_hmplcashflow(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_CASHFLOW.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplloancard', methods=["GET"])
-def admin_hmplloancard(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_Loancard.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/hmplsanction', methods=["GET"])
-def admin_hmplsanction(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_HMPL_Sanction_Jlg.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/ljlga', methods=["GET"])
-@login_required
-def admin_ljlga(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_LJLGAgreement.html", **kwargs)
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/lrpassbook', methods=["GET"])
-@login_required
-def admin_lrpassbook(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    org_name = "Hindusthan Microfinance"
-    usr = EsthenosUser.objects.get(id=current_user.id)
-
-    kwargs = locals()
-    body = render_template( "pdf_LRPassbook.html", **kwargs)
-    pdfkit.from_string(body, 'pass.pdf')
-
-    raw_bytes = ""
-    with open('pass.pdf', 'rb') as r:
-        for line in r:
-            raw_bytes = raw_bytes + line
-
-    response = make_response(raw_bytes)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'Passbook'
-    return response
-
-
-@admin_views.route('/admin/organisation/<org_id>/disbursement/cgt_grt_pdf', methods=["GET"])
-@login_required
-def admin_disbursement_pdf(org_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-    kwargs = locals()
-    return render_template( "pdf_disbursement.html", **kwargs)
 
 
 @admin_views.route('/internal/pdf_sl/<applicant_id>', methods=["GET"])
@@ -1245,90 +655,3 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'hp'
     return response
-
-
-@admin_views.route('/admin/read_pan/<object_id>', methods=["GET"])
-@login_required
-def read_pan(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_pan_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/read_vid/<object_id>', methods=["GET"])
-@login_required
-def read_vid(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_vid_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/read_aadhaar/<object_id>', methods=["GET"])
-@login_required
-def read_aadhaar(object_id):
-    if session['role'] != "ADMIN":
-        abort(403)
-
-    user = EsthenosUser.objects.get(id=current_user.id)
-    url = get_url_with_id(object_id)
-    data = get_aadhaar_details_url(url)
-
-    kwargs = locals()
-    return Response(response=data, status=200, mimetype="application/json")
-
-
-@admin_views.route('/admin/login', methods=["GET", "POST"])
-def login_admin():
-    next_url = request.form.get( "next", None) or request.args.get( "next", None) or session.get("next_url", None)
-
-    if request.method == "GET" and not next_url and request.referrer:
-        urldata = urlparse.urlparse( request.referrer)
-        if urldata.path.find("/admin/login") != 0:
-            host = request.headers.get("HOST", "")
-            if host and urldata.netloc.find(host) > -1:
-                next_url = request.referrer
-
-    if not next_url:
-      next_url = "/admin/dashboard"
-
-    session["next_url"] = next_url
-
-    if request.method == "POST":
-        login_form = LoginForm( request.form)
-        form = login_form
-        if form.validate():
-            user = EsthenosUser.objects.get( email=form.email.data)
-            login_user(user)
-            confirm_login()
-            if form.role.data == "ADMIN":
-                session['type'] = "ADMIN"
-                return redirect(next_url)
-
-        else:
-            flash_errors(login_form)
-            kwargs = {"login_form": login_form}
-            return render_template( "auth/login_admin.html", **kwargs)
-    else:
-        login_form = LoginForm()
-
-    kwargs = locals()
-    return render_template("auth/login_admin.html", **kwargs)
-
-
-@admin_views.route('/admin/logout', methods=["GET"])
-@login_required
-def admin_logout():
-    logout_user()
-    return redirect( "/admin/login")

@@ -84,11 +84,7 @@ def get_ses_conn():
 @login_manager.user_loader
 def load_user(userid):
     from e_organisation.models import EsthenosUser
-    user = EsthenosUser.objects(id=userid).first()
-    if user is not None and not session.has_key('role') :
-        if user.has_role("ADMIN"):
-            session['role'] = "ADMIN"
-    return user
+    return EsthenosUser.objects(id=userid).first()
 
 @login_manager.unauthorized_handler
 def unauthorized():
@@ -120,6 +116,14 @@ def _jinja2_filter_datetime(num):
 @mainapp.template_filter('enabledfilter')
 def _jinja2_filter_enabledfilter(active):
     return "enabled" if active else "disabled"
+
+@mainapp.template_filter('enabledbutton')
+def _jinja2_filter_enabledbutton(active):
+    return "btn-primary" if active else "btn-danger"
+
+@mainapp.template_filter('permissionfilter')
+def _jinja2_filter_permissionfilter(permission):
+    return "checked" if permission else "unchecked"
 
 @mainapp.template_filter('css_approve_reject')
 def _jinja2_filter_css_approve_reject(value):
