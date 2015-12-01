@@ -7,7 +7,6 @@ import datetime
 
 from mongoengine import *
 from flask_login import UserMixin
-from flask.ext.sauth.utils import get_hexdigest
 
 righthand = '23456qwertasdfgzxcvbQWERTASDFGZXCVB'
 lefthand = '789yuiophjknmYUIPHJKLNM'
@@ -23,48 +22,21 @@ def generate_password(length=8):
     return ''.join(chars)
 
 
+def get_hexdigest(algorithm, salt, raw_password):
+    if algorithm == 'md5':
+        return hashlib.md5(salt + raw_password).hexdigest()
+
+    elif algorithm == 'sha1':
+        return hashlib.sha1(salt + raw_password).hexdigest()
+
+    raise ValueError('unknown password algorithm type in password')
+
+
 class BaseUser(Document, UserMixin):
-    name = StringField()
     email = StringField(unique=True)
     password = StringField(max_length=128)
 
-    date_joined = DateTimeField(default=datetime.datetime.now)
-    email_activation_key = StringField(default="")
-    is_email_activated = BooleanField(default=True)
-    password_reset_token = StringField()
-
-    roles = ListField(StringField(), default=[])
-
     meta = {"abstract": True}
-
-    @property
-    def first_name(self):
-        return self.name.split(" ")[0]
-
-    @property
-    def last_name(self):
-        arr = self.name.split(" ")
-        if len(arr) > 1:
-            return ' '.join( arr[1:])
-        else:
-            return ''
-
-    def has_role(self, role):
-        if not self.roles or role not in self.roles:
-            return False
-        return True
-
-    def add_role(self, role):
-        if role not in self.roles:
-            self.roles.append(role)
-
-    @property
-    def user_roles(self):
-        return ",".join(self.roles)
-
-    def remove_role( self, role):
-        if role in self.roles:
-            self.roles.remove(role)
 
     def set_password(self, raw_password):
         """Sets the user's password - always use this rather than directly
@@ -75,7 +47,6 @@ class BaseUser(Document, UserMixin):
         salt = get_hexdigest(algo, str(random()), str(random()))[:5]
         hash = get_hexdigest(algo, salt, raw_password)
         self.password = '%s$%s$%s' % (algo, salt, hash)
-        self.save()
         return self
 
     def check_password(self, raw_password):
@@ -87,18 +58,10 @@ class BaseUser(Document, UserMixin):
         algo, salt, hash = self.password.split('$')
         return hash == get_hexdigest(algo, salt, raw_password)
 
-    def generate_password_reset_token( self):
-        self.password_reset_token = hashlib.sha1( "%s-%s-%d" % ( str(self.id), str(time.time()), random())).hexdigest()
-        self.save()
-        return self.password_reset_token
-
     @classmethod
-    def create_user(cls, name, email, password, email_verified=True):
-        """Create (and save) a new user with the given password and email address"""
+    def create_user(cls, name, email, password):
         now = datetime.datetime.utcnow()
         
-        # Normalize the address by lowercasing the domain part of the email
-        # address.
         try:
             email_name, domain_part = email.strip().split('@', 1)
         except ValueError:
@@ -108,8 +71,6 @@ class BaseUser(Document, UserMixin):
             
         user = User(name=name, email=email, date_joined=now)
         user.set_password(password)
-        user.save()
-
         return user
 
 
@@ -122,4 +83,4 @@ def authenticate(email=None, password=None):
 
 from werkzeug import import_string, LocalProxy
 from flask import current_app
-User = LocalProxy( lambda: import_string(current_app.config.get( "USER_MODEL_CLASS", "e_organisation.models.EsthenosUser")))
+User = LocalProxy(lambda: import_string(current_app.config.get("USER_MODEL_CLASS", "e_organisation.models.EsthenosUser")))

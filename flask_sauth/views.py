@@ -1,12 +1,9 @@
-import urlparse
-
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, ResetPasswordForm, NewPasswordForm, ChangePasswordForm
 from flask.ext.login import confirm_login
 from flask.ext.sauth.models import User
 import boto
-import sys,traceback
 from blinker import signal
 from esthenos import mainapp
 
@@ -30,57 +27,37 @@ def flash_errors(form):
 
 @auth_views.route('/accounts/login', methods=["GET", "POST"])
 def login():
-    next_url = request.form.get("next", None) or request.args.get("next", None) or session.get("next_url", None)
-
-    if request.method == "GET" and not next_url and request.referrer:
-        urldata = urlparse.urlparse( request.referrer)
-        if urldata.path.find("/accounts") != 0:
-            host = request.headers.get("HOST", "")
-            if host and urldata.netloc.find(host) > -1:
-                next_url = request.referrer
-
-    if not next_url:
-      next_url = "/"
-
+    next_url = request.form.get("next", "/") or request.args.get("next", "/") or session.get("next_url", "/")
     session["next_url"] = next_url
 
     if current_user.is_authenticated():
         return redirect(next_url)
 
     if request.method == "POST":
-        login_form = LoginForm( request.form)
+        login_form = LoginForm(request.form)
         form = login_form
 
         if form.validate():
-            login_user(form.user_cache,True)
+            login_user(form.user_cache, True)
             is_fresh = request.form.get("fresh", None)
 
             if is_fresh is not None and is_fresh == "true":
                 confirm_login()
 
-            user = User.objects.get( email=form.email.data)
+            user = User.objects.get(email=form.email.data)
 
             if not user.active:
                 flash(u'Your account has been deactivated', 'error')
                 kwargs = {"login_form": login_form}
-                return render_template( "auth/login.html", **kwargs)
+                return render_template("auth/login.html", **kwargs)
 
-            if form.role.data == "ADMIN":
-                session['role'] = "ADMIN"
-                return redirect("/admin/servers")
-
-            elif form.role.data == "ORG_CM":
-                session['role'] = "ORG_CM"
-                return redirect("/")
-
-            else:
-                session['role'] = user.roles[0]
-                return redirect("/dashboard")
+            session['role'] = user.hierarchy.role
+            return redirect(next_url)
 
         else:
             flash_errors(login_form)
             kwargs = {"login_form": login_form}
-            return render_template( "auth/login.html", **kwargs)
+            return render_template("auth/login.html", **kwargs)
 
     else:
         login_form = LoginForm()
