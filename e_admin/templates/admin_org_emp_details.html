@@ -1,0 +1,441 @@
+{% extends "base.html" %}
+
+
+{% block maincontents %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="grid simple">
+        <div class="grid-body grid-page-title">
+          <h3 class="inline">Update Details : <span class="semi-bold">{{ employee.first_name|capitalize }} {{ employee.last_name|capitalize }}</span></h3>
+          <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
+          <div class="clearfix"></div>
+        </div>
+        <div class="grid-body">
+            <form class="form-no-horizontal-spacing" id="form-organisation-emp" method="post" action="{{ url_for("admin_views.admin_organisation_add_emp_details", org_id=org.id, emp_id=employee.id) }}">
+              <div class="row column-seperation">
+                <div class="col-md-6">
+                  <h4>Basic Information </h4>
+                  <div class="row form-row">
+                    <div class="col-md-7">
+                      <div class="input-with-icon  right">
+                        <input name="first_name_add_organisation" type="text" class="form-control" placeholder="First Name" maxlength="30" value="{{ employee.first_name }}">
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="input-with-icon  right">
+                        <input name="last_name_add_organisation" type="text" class="form-control" placeholder="Last Name" maxlength="30" value="{{ employee.last_name }}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-row">
+                    <div class="col-md-12">
+                      <div class="input-with-icon  right">
+                        <input name="email_add_organisation" type="text" class="form-control" minlength="3" maxlength="100" value="{{ employee.email }}" disabled>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-row">
+                    <div class="col-md-5">
+                      <div class="input-append success date no-padding">
+                        <input name="date_of_birth_add_organisation" type="text" class="form-control" placeholder="Date of Birth" value="{{ employee.date_of_birth }}">
+                        <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="radio form-group">
+                        <input id="male" type="radio" name="gender" value="male" {% if employee.gender == "male" %}checked{% endif %}>
+                        <label for="male">Male</label>
+                        <input id="female" type="radio" name="gender" value="female" {% if employee.gender == "female" %}checked{% endif %}>
+                        <label for="female">Female</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <input id="active" type="checkbox" name="active" value="active" {% if employee.active %}checked="checked"{% endif %}>
+                        <label class="checkbox-inline" for="account_status">Active</label>
+                      </div>
+                    </div>
+                  </div>
+                  <h4>Hierarchy</h4>
+                  <div class="row form-row">
+                    <div class="col-md-12 form-group">
+                      <select name="role" id="role" class="select2 form-control">
+                        <option value="{{ employee.hierarchy.id }}" data-level="{{ employee.hierarchy.level }}" selected>({{ employee.hierarchy.title|upper }}) {{ employee.hierarchy.title_full|upper }}</option>
+                        {% for designation in hierarchy %}
+                        <option value="{{ designation.id }}" data-level="{{ designation.level }}">({{ designation.title|upper }}) {{ designation.title_full|upper }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <h4>Postal Information</h4>
+                  <div class="row form-row">
+                    <div class="col-md-12">
+                      <div class="input-with-icon  right">
+                        <input name="address_add_org_emp" type="text" class="form-control" placeholder="Address" value="{{ employee.postal_address }}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-row">
+                    <div class="col-md-6 form-group">
+                      <div class="input-with-icon  right">
+                        <select name="country_add_organisation" class="form-control select2" id="postal_country">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 ">
+                      <div class="input-with-icon  right">
+                        <select name="state_add_organisation" class="form-control select2" id="postal_state">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-row">
+                    <div class="col-md-6 ">
+                      <div class="input-with-icon  right">
+                        <input name="city_add_organisation" type="text" class="form-control" placeholder="City" maxlength="30" value="{{ employee.postal_city }}">
+                      </div>
+                    </div>
+                    <div class="col-md-6 ">
+                      <div class="input-with-icon  right">
+                        <input name="postal_code_add_organisation" type="text" class="form-control" placeholder="Postal Code" minlength="5" maxlength="6" value="{{ employee.postal_code }}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-row">
+                    <div class="col-md-4 ">
+                      <div class="input-with-icon  right">
+                        <input name="tele_code_add_organisation" type="text" class="form-control" placeholder="+91" minlength="1" maxlength="2" value="{{ employee.postal_tele_code }}">
+                      </div>
+                    </div>
+                    <div class="col-md-8 ">
+                      <div class="input-with-icon  right">
+                        <input name="teleno_add_organisation" type="text" class="form-control" placeholder="Phone Number" maxlength="10" value="{{ employee.postal_telephone }}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <h4>Geography Details</h4>
+                  <table class="table table-hover table-condensed" id="organisation-emp-table">
+                      <thead>
+                      <tr >
+                          <th style="width:1%" >#</th>
+                          <th style="width:15%">States</th>
+                          <th style="width:15%">Regions</th>
+                          <th style="width:5%">Areas</th>
+                          <th style="width:20%">Branches</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for state in employee.states %}
+                      <tr>
+                          <td class="v-align-middle">{{ loop.index }}</td>
+                          <td class="v-align-middle">{{ state.name }}</td>
+                          <td class="v-align-middle">all regions</td>
+                          <td class="v-align-middle">all areas</td>
+                          <td class="v-align-middle">all branches</td>
+                      </tr>
+                      {% endfor %}
+
+                      {% for region in employee.regions %}
+                      <tr>
+                          <td class="v-align-middle">{{ loop.index }}</td>
+                          <td class="v-align-middle">{{ region.state }}</td>
+                          <td class="v-align-middle">{{ region.name }}</td>
+                          <td class="v-align-middle">all areas</td>
+                          <td class="v-align-middle">all branches</td>
+                      </tr>
+                      {% endfor %}
+
+                      {% for area in employee.areas %}
+                      <tr>
+                          <td class="v-align-middle">{{ loop.index }}</td>
+                          <td class="v-align-middle">{{ area.state }}</td>
+                          <td class="v-align-middle">{{ area.region }}</td>
+                          <td class="v-align-middle">{{ area.name }}</td>
+                          <td class="v-align-middle">all branches</td>
+                      </tr>
+                      {% endfor %}
+
+                      {% for branch in employee.branches %}
+                      <tr>
+                          <td class="v-align-middle">{{ loop.index }}</td>
+                          <td class="v-align-middle">{{ branch.state }}</td>
+                          <td class="v-align-middle">{{ branch.region }}</td>
+                          <td class="v-align-middle">{{ branch.area }}</td>
+                          <td class="v-align-middle">{{ branch.name }}</td>
+                      </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+
+                  <div class="row row-padding form-row">
+                    <div class="col-md-3">
+                      <h5>Assign States Access</h5>
+                      <select name="states" id="states" class="geo-select geo-state form-control" size="10" multiple>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <h5>Assign Regions Access</h5>
+                      <select name="regions" id="regions" class="geo-select geo-region form-control" size="10" multiple>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <h5>Assign Areas Access</h5>
+                      <select name="areas" id="areas" class="geo-select geo-area form-control" size="10" multiple>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3">
+                      <h5>Assign Branches Access</h5>
+                      <select name="branches" id="branches" class="geo-select geo-branch form-control" size="10" multiple>
+                      </select>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <div class="pull-right">
+                  <button class="btn btn-small btn-danger btn-cons" type="submit">Update Employee Details</button>
+                  <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block js_scripts %}
+  <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      var selection = {
+        "states" : {
+          {% for state in employee.states %}"{{ state.id }}" : {{ state.json|safe }},{% endfor %}
+          {% for region in employee.regions %}"{{ region.state.id }}" : {{ region.state.json|safe }},{% endfor %}
+          {% for area in employee.areas %}"{{ area.state.id }}" : {{ area.state.json|safe }},{% endfor %}
+          {% for branch in employee.branches %}"{{ branch.state.id }}" : {{ branch.state.json|safe }},{% endfor %}
+        },
+        "regions" : {
+          {% for region in employee.regions %}"{{ region.id }}" : {{ region.json|safe }},{% endfor %}
+          {% for area in employee.areas %}"{{ area.region.id }}" : {{ area.region.json|safe }},{% endfor %}
+          {% for branch in employee.branches %}"{{ branch.region.id }}" : {{ branch.region.json|safe }},{% endfor %}
+        },
+        "areas" : {
+          {% for area in employee.areas %}"{{ area.id }}" : {{ area.json|safe }},{% endfor %}
+          {% for branch in employee.branches %}"{{ branch.area.id }}" : {{ branch.area.json|safe }},{% endfor %}
+        },
+        "branches" : {
+          {% for branch in employee.branches %}"{{ branch.id }}" : {{ branch.json|safe }},{% endfor %}
+        }
+      };
+
+      $("#role").change(function(e) {
+        $(".geo-select").prop('disabled', true);
+
+        var option = $("option:selected", this);
+        var level = $("option:selected", this).data('level');
+
+        if (level >= 3) {
+          $("#states").prop('disabled', false);
+          var geoTag = "states";
+          var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/";
+          populateGeoItems(geoTag, geoUrl);
+        }
+
+        if (level >= 4) {
+          $("#regions").prop('disabled', false);
+        }
+
+        if (level >= 6) {
+          $("#areas").prop('disabled', false);
+        }
+
+        if (level >= 7) {
+          $("#branches").prop('disabled', false);
+        }
+      });
+
+      $("#states").change(function(e){
+        var geoTag = "regions";
+        var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/" + this.value;
+        populateGeoItems(geoTag, geoUrl);
+      });
+
+      $("#regions").change(function(e){
+        var geoTag = "areas";
+        var geoUrl = "{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}/" + this.value;
+        populateGeoItems(geoTag, geoUrl);
+      });
+
+      $("#areas").change(function(e){
+        var geoTag = "branches";
+        var geoUrl = "{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}/" + this.value;
+        populateGeoItems(geoTag, geoUrl);
+      });
+
+      $(".geo-select").prop('disabled', true);
+      populateGeoElements("areas", selection.areas);
+      populateGeoElements("states", selection.states);
+      populateGeoElements("regions", selection.regions);
+      populateGeoElements("branches", selection.branches);
+
+      function populateGeoItems(geoTag, geoURL) {
+        $.ajax({
+          cache: true,
+          url: geoURL
+        })
+        .done(function(response) {
+          var children = response["children"];
+          var el1 = _.map(children, 'id');
+          var el2 = _.keys(selection[geoTag]);
+          var reminder = _.difference(el1, el2);
+
+          $.each(children, function(k, v) {
+            if (!(v.id in selection[geoTag])) {
+              selection[geoTag][v.id] = v;
+            }
+          });
+
+          $.each(reminder, function(k, v) {
+            var geoValue = selection[geoTag][v];
+            var geoElement = "#" + geoTag;
+            $(geoElement).append($('<option>', {value: geoValue.id, text: geoValue.name }));
+          });
+        });
+      }
+
+      function populateGeoElements(geoTag, geoCollection) {
+        $.each(geoCollection, function(k, v){
+          var geoElement = "#" + geoTag;
+          $(geoElement).append($('<option>', {value: v.id, text: v.name, selected: "selected"}));
+        });
+      }
+
+      populateCountries("postal_country", "postal_state", {
+          "state" : "{{ employee.postal_state }}",
+          "country" : "{{ employee.postal_country }}"
+      });
+      $("#postal_state").select2();
+      $("#postal_country").select2();
+      $("#role").select2({
+        placeholder: "Select Designation",
+        allowClear: true
+      });
+
+      $(':input','#form-organisation')
+          .not(':button, :submit, :reset, :hidden')
+          .val('')
+          .removeAttr('checked')
+          .removeAttr('selected');
+
+      $.validator.addMethod("loginRegex", function(value, element) {
+          return this.optional(element) || /^[a-z0-9\-\s]+\@{{ org.domain }}$/i.test(value);
+      }, "username must contain only letters, numbers, or dashes.");
+
+      $('#form-organisation-emp').validate({
+        errorElement: 'span',
+        errorClass: 'error',
+        focusInvalid: false,
+        ignore: "",
+        rules: {
+          first_name_add_organisation: {
+            minlength: 2,
+            maxlength: 30,
+            required: true,
+            lettersonly: true
+          },
+          last_name_add_organisation: {
+            minlength: 2,
+            maxlength: 30,
+            required: true,
+            lettersonly: true
+          },
+          email_add_organisation: {
+            minlength: 3,
+            maxlength: 100,
+            required: true,
+            loginRegex: true
+          },
+          password_add_organisation: {
+            minlength: 3,
+            maxlength: 30,
+            required: true
+          },
+          address_add_org_emp: {
+            minlength: 2,
+            required: true
+          },
+          city_add_organisation: {
+            minlength: 2,
+            maxlength: 30,
+            required: true,
+            lettersonly: true
+          },
+          postal_code_add_organisation: {
+            number:true,
+            minlength: 5,
+            maxlength: 6,
+            required: true
+          },
+          teleno_add_organisation: {
+            number:true,
+            minlength: 10,
+            maxlength: 10,
+            required: true
+          },
+          tele_code_add_organisation: {
+            minlength: 1,
+            maxlength: 2,
+            number:true,
+            required: true
+          }
+        },
+        invalidHandler: function (event, validator) {
+          //display error alert on form submit
+        },
+        errorPlacement: function (error, element) { // render error placement for each input type
+          var icon = $(element).parent('.input-with-icon').children('i');
+          var parent = $(element).parent('.input-with-icon');
+          icon.removeClass('fa fa-check').addClass('fa fa-exclamation');
+          parent.removeClass('success-control').addClass('error-control');
+        },
+        highlight: function (element) { // hightlight error inputs
+          var parent = $(element).parent();
+          parent.removeClass('success-control').addClass('error-control');
+        },
+        unhighlight: function (element) { // revert the change done by hightlight
+
+        },
+        success: function (label, element) {
+          var icon = $(element).parent('.input-with-icon').children('i');
+          var parent = $(element).parent('.input-with-icon');
+          icon.removeClass("fa fa-exclamation").addClass('fa fa-check');
+          parent.removeClass('error-control').addClass('success-control');
+        },
+        submitHandler: function (form) {
+          form.submit();
+        }
+      });
+      $('.cancel-button').click(function(){
+          location.href = '{{ url_for("admin_views.admin_organisation_add_emp", org_id=org.id) }}';
+      });
+      $('.input-append.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+      });
+    });
+  </script>
+{% endblock %}
