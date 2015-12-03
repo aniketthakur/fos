@@ -680,39 +680,119 @@ class EsthenosOrgUserPerformanceTarget(db.Document):
 
 class EsthenosOrgStats(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
-    stat_type = db.StringField(max_length=20, required=False)
-    datetime = db.DateTimeField(default=datetime.datetime.now)
+    granularity = db.StringField(max_length=20, required=True)
+    created = db.DateTimeField(default=datetime.datetime.now)
+
+    hour = db.IntField(default=0, required=True)
+    endtime = db.DateTimeField(default=datetime.datetime.now, required=True)
+    starttime = db.DateTimeField(default=datetime.datetime.now, required=True)
 
     application_submitted = db.IntField(default=0)
     application_kyc_ready = db.IntField(default=0)
     application_kyc_done = db.IntField(default=0)
     application_kyc_passed = db.IntField(default=0)
     application_kyc_failed = db.IntField(default=0)
+
     application_cbcheck_ready = db.IntField(default=0)
     application_cbcheck_done = db.IntField(default=0)
     application_cbcheck_passed = db.IntField(default=0)
     application_cbcheck_failed = db.IntField(default=0)
+
     application_cf_ready = db.IntField(default=0)
     application_cf_done = db.IntField(default=0)
     application_cf_passed = db.IntField(default=0)
     application_cf_failed = db.IntField(default=0)
+
     application_cgt1_ready = db.IntField(default=0)
     application_cgt1_done = db.IntField(default=0)
     application_cgt1_passed = db.IntField(default=0)
     application_cgt1_failed = db.IntField(default=0)
+
     application_cgt2_ready = db.IntField(default=0)
     application_cgt2_done = db.IntField(default=0)
     application_cgt2_passed = db.IntField(default=0)
     application_cgt2_failed = db.IntField(default=0)
+
     application_grt_ready = db.IntField(default=0)
     application_grt_done = db.IntField(default=0)
     application_grt_passed = db.IntField(default=0)
     application_grt_failed = db.IntField(default=0)
+
+    application_telecalling_ready = db.IntField(default=0)
+    application_telecalling_done = db.IntField(default=0)
+    application_telecalling_passed = db.IntField(default=0)
+    application_telecalling_failed = db.IntField(default=0)
+
     application_underwriting_ready = db.IntField(default=0)
     application_underwriting_done = db.IntField(default=0)
+
     application_disbursement_ready = db.IntField(default=0)
     application_disbursement_pending = db.IntField(default=0)
     application_disbursement_done = db.IntField(default=0)
+
+    total_groups_disbursed = db.FloatField(default=0)
+    total_centers_disbursed = db.FloatField(default=0)
+
+    total_loans_disbursed = db.FloatField(default=0)
+    total_loans_amount_disbursed = db.FloatField(default=0)
+
+    total_loans_leaked = db.FloatField(default=0)
+    total_loans_applied = db.FloatField(default=0)
+
+    def calculate(self):
+        print "calculating daily stats for start-time:%s end-time:%s" % (self.starttime, self.endtime)
+        applications = EsthenosOrgApplication.objects.filter(
+            organisation = self.organisation,
+            current_status_updated__lte = self.endtime,
+        )
+
+        self.application_submitted = self.calc_status(applications, 110)
+
+        self.application_cbcheck_done = self.calc_status(applications, 150)
+        self.application_cf_done = self.calc_status(applications, 170)
+
+        self.application_grt_done = self.calc_status(applications, 204)
+        self.application_cgt1_done = self.calc_status(applications, 190)
+        self.application_cgt2_done = self.calc_status(applications, 194)
+        self.application_telecalling_done = self.calc_status(applications, 223)
+
+        self.application_underwriting_done = self.calc_status(applications, 231)
+        self.application_disbursement_done = self.calc_status(applications, 240)
+
+        self.total_groups_disbursed = 1
+        self.total_centers_disbursed = 1
+
+        self.total_loans_disbursed = self.calc_status(applications, 240)
+        self.total_loans_amount_disbursed = self.calc_status(applications, 240)
+
+        self.total_loans_leaked = 1
+        self.total_loans_applied = self.calc_status(applications, 110)
+
+        self.save()
+
+    def calc_apps(self, applications, status_code):
+        def filter_status(x):
+            return x.status.status_code == status_code
+
+        def filter_time(x):
+            return (x.updated_on >= self.starttime) and (x.updated_on <= self.endtime)
+
+        def filter_app(x):
+            return filter_time(x) and filter_status(x)
+
+        apps = []
+        for application in applications:
+            apps += filter(filter_app, application.timeline)
+
+        return apps
+
+    def calc_status(self, applications, status_code):
+        apps = self.calc_apps(applications, status_code)
+        return len(apps)
+
+    def rollup_daily(self):
+        print "calculating daily stats for start-time:%s end-time:%s" % (self.starttime, self.endtime)
+        print "calculation"
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
