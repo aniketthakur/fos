@@ -4,24 +4,22 @@ from views_base import *
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
 def application_list():
-  if not session['role'].startswith("ORG_"):
-      abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
 
   fosId = request.args.get('fosId', '')
   branchId = request.args.get('branchId', '')
+  hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
   if (fosId is not None) and (fosId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", id=fosId)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, id=fosId)
 
   elif (branchId is not None) and (branchId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", org_branch=branchId)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, org_branch=branchId)
 
   else:
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM")
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
@@ -30,9 +28,6 @@ def application_list():
 @organisation_views.route('/applications/fos/<fos_id>', methods=["GET"])
 @login_required
 def application_list_fos(fos_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
@@ -56,9 +51,6 @@ def application_list_fos(fos_id):
 @organisation_views.route('/applications/branch/<branch_id>', methods=["GET"])
 @login_required
 def application_list_branch(branch_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
@@ -151,9 +143,6 @@ def cashflow_statusupdate(app_id):
 @organisation_views.route('/application/<app_id>/track', methods=["GET"])
 @login_required
 def applications_track(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=app_id)
   kwargs = locals()
@@ -202,9 +191,6 @@ def application_kyc(app_id):
 @login_required
 @feature_enable("features_applications_scrutiny")
 def scrutiny():
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id = current_user.id)
   groups = EsthenosOrgGroup.objects.filter(organisation = user.organisation)
 
@@ -232,9 +218,6 @@ def scrutiny():
 @login_required
 @feature_enable("features_applications_scrutiny")
 def scrutiny_application(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   today = datetime.datetime.now()
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
@@ -287,9 +270,6 @@ def scrutiny_application(app_id):
 @login_required
 @feature_enable("features_applications_scrutiny")
 def scrutiny_application_print(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
@@ -302,9 +282,6 @@ def scrutiny_application_print(app_id):
 @login_required
 @feature_enable("features_applications_sanction")
 def sanctions():
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
 
@@ -335,9 +312,6 @@ def sanctions():
 @login_required
 @feature_enable("features_applications_sanction")
 def sanctions_application(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
