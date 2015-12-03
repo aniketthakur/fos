@@ -13,60 +13,46 @@ from views_psychometric import *
 @organisation_views.route('/', methods=["GET"])
 @login_required
 def home_page():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
+    t = datetime.datetime.now()
     user = EsthenosUser.objects.get(id=current_user.id)
+
+    hour = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=t.hour)
+    hourly, status = EsthenosOrgStats.objects.get_or_create(
+      organisation=user.organisation, starttime=hour, granularity="HOURLY"
+    )
+
+    today = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=0)
+    todays, status = EsthenosOrgStats.objects.get_or_create(
+      organisation=user.organisation, starttime=today, granularity="TODAY"
+    )
+
+    #todo: fix start of the week.
+    week = datetime.datetime(year=t.year, month=t.month, day=1)
+    weekly, status = EsthenosOrgStats.objects.get_or_create(
+      organisation=user.organisation, starttime=week, granularity="WEEKLY"
+    )
+
+    month = datetime.datetime(year=t.year, month=t.month, day=1)
+    monthly, status = EsthenosOrgStats.objects.get_or_create(
+      organisation=user.organisation, starttime=month, granularity="MONTHLY"
+    )
+
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
 
 
 @organisation_views.route('/profile', methods=["GET","POST"])
 @login_required
+@feature_enable("features_profile")
 def user_profile_page():
-
     user = EsthenosUser.objects.get(id=current_user.id)
     kwargs = locals()
-
-    if request.method == "GET":
-        return render_template("user_profile.html", **kwargs)
-
-    if request.method == "POST":
-        file = request.files['file']
-        if file is not None and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            o_fname = os.path.abspath(os.path.join(mainapp.config['UPLOAD_FOLDER'], filename))
-            image_file = io.BytesIO(file.read())
-            im = Image.open(image_file)
-            new_file = None
-
-            if im.size[0] > 120:
-                new_file = resize(im,120)
-            else:
-                new_file = im
-
-            new_file.save(o_fname)
-            original_key = str(c_user.id) + '/pic/'+filename
-            upload_to_s3(s3_bucket(),o_fname,original_key,'public-read',True)
-            user.profile_pic = 'https://s3.amazonaws.com/digikyc/'+original_key
-
-        user.name = request.form.get('name')
-        user.last_name = request.form.get('last_name')
-        user.first_name = request.form.get('first_name')
-        user.allow_contact = bool(request.form.get('allow_contact',False))
-        user.email_updates = bool(request.form.get('email_updates',False))
-        user.train_complete = bool(request.form.get('train_complete',False))
-        user.email_quota_limit = bool(request.form.get('email_quota_limit',False))
-        user.save()
-        return render_template("user_profile.html", **kwargs)
+    return render_template("user_profile.html", **kwargs)
 
 
 @organisation_views.route('/reports', methods=["GET", "POST"])
 @login_required
 def reports_internal_main():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
 
     if request.method == "GET":
@@ -106,215 +92,16 @@ def reports_internal_main():
 
 @organisation_views.route('/notifications', methods=["GET"])
 @login_required
+@feature_enable("features_notifications")
 def notifications_page():
-    username = current_user.name
-    c_user = current_user
-    notifications = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False)
-    if request_wants_json():
-        return Response(json.dumps({"result":notifications},default=encode_model), content_type="application/json", mimetype='application/json')
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    notifications = EsthenosOrgNotification.objects.filter(to_user=user, read_state=False)
+    notifications_read = EsthenosOrgNotification.objects.filter(to_user=user, read_state=False).update(set__read_state=True)
+
     count = len(notifications)
     kwargs = locals()
     return render_template("notifications.html", **kwargs)
-
-
-@organisation_views.route('/notifications/read', methods=["PUT"])
-@login_required
-def set_notif_read():
-    username = current_user.name
-    c_user = current_user
-    res = EsthenosOrgNotification.objects.filter(to_user = c_user.id,read_state=False).update(set__read_state=True)
-    return Response('{"message":"status updated"}', content_type="application/json", mimetype='application/json')
-
-
-@organisation_views.route('/accounts/logout', methods=["GET"])
-@login_required
-def admin_logout():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    logout_user()
-    return redirect("/accounts/login")
-
-
-@organisation_views.route('/uploads_group_app', methods=["GET", "POST"])
-@login_required
-def uploads_group_app():
-    print session['role']
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-
-    kwargs = locals()
-    file = request.files['file']
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-
-        file.save(o_fname)
-        uploaded_resp = json.loads(upload_images(o_fname,file.filename))
-        file_id = file.filename.split("_")[0]
-
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            if app.file_id == int(file_id):
-                application = app
-                break
-
-        if application is None:
-            application = EsthenosOrgApplicationMap()
-            application.file_id = int(file_id)
-
-        application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
-        session_obj.applications[file_id]=application
-        session_obj.number_of_applications = session_obj.number_of_applications + 1
-        session_obj.save()
-        print session_obj.id
-
-    content = {'response': 'OK'}
-    return Response(response=content,
-        status=200,\
-        mimetype="application/json")
-
-
-@organisation_views.route('/uploads_group_kyc', methods=["GET", "POST"])
-@login_required
-def uploads_group_kyc():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    file = request.files['file']
-
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-        print "saving to .."+o_fname
-        file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
-        file_id = file.filename.split("_")[0]
-        kyc_type = file.filename.split("_")[1][0]
-        print file_id
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            if (app.file_id) == int(file_id):
-                application = app
-                break
-
-        if application == None:
-            application =  EsthenosOrgApplicationMap()
-            application.file_id = int(file_id)
-        application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
-        session_obj.applications[file_id]=application
-        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
-        session_obj.save()
-        print session_obj.id
-    content = {'response': 'OK'}
-    return Response(response=content,
-        status=200,\
-        mimetype="application/json")
-
-
-@organisation_views.route('/uploads_group_gkyc', methods=["GET", "POST"])
-@login_required
-def uploads_group_gkyc():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    file = request.files['file']
-
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-        print "saving to .."+o_fname
-        file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
-        file_id = file.filename.split("_")[0]
-        kyc_type = file.filename.split("_")[1][0]
-        print file_id
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            if (app.file_id) == int(file_id):
-                application = app
-                break
-        if application == None:
-            application =  EsthenosOrgApplicationMap()
-            application.file_id = int(file_id)
-        application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
-        session_obj.applications[file_id]=application
-        session_obj.number_of_kycs = session_obj.number_of_gkycs+ 1
-        session_obj.save()
-        print session_obj.id
-    content = {'response': 'OK'}
-    return Response(response=content,
-        status=200,\
-        mimetype="application/json")
-
-
-@organisation_views.route('/uploads_indivijual_app', methods=["GET", "POST"])
-@login_required
-def uploads_indivijual_app():
-    if not session['role'] or not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    file = request.files['file']
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-        print "saving to .."+o_fname
-        file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
-        kyc_type = file.filename.split("_")[1][0]
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            if app.file_id == 100:
-                application = app
-                break
-
-        if application == None:
-            application =  EsthenosOrgApplicationMap()
-            application.file_id = 100
-        application.app_file_pixuate_id.append(uploaded_resp[0]["id"])
-        session_obj.applications["1"] = application
-        session_obj.number_of_applications = 1
-        session_obj.save()
-        print session_obj.id
-    content = {'response': 'OK'}
-    return Response(response=content,
-        status=200,\
-        mimetype="application/json")
 
 
 @organisation_views.route('/organisation/cheque_info/<group_id>', methods=["POST"])
@@ -343,181 +130,18 @@ def cheque_info_import(group_id):
     return Response(json.dumps({'status':'sucess'}), content_type="application/json", mimetype='application/json')
 
 
-@organisation_views.route('/uploads_indivijual_kyc', methods=["GET", "POST"])
-@login_required
-def uploads_indivijual_kyc():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    file = request.files['file']
-
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-
-        file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
-        kyc_type = file.filename.split("_")[1][0]
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            if app.file_id == 100:
-                application = app
-                break
-
-        if application == None:
-            application =  EsthenosOrgApplicationMap()
-            application.file_id = 100
-
-        application.kyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
-        session_obj.applications["1"] = application
-        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
-        session_obj.save()
-
-    content = {'response': 'OK'}
-    return Response(response=content, status=200, mimetype="application/json")
-
-
-@organisation_views.route('/uploads_indivijual_gkyc', methods=["GET", "POST"])
-@login_required
-def uploads_indivijual_gkyc():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    kwargs = locals()
-    file = request.files['file']
-
-    if file:
-        filename = secure_filename(file.filename)
-        filename = str(random_with_N_digits(6)) +filename
-        o_fname = os.path.abspath(os.path.join(tempfile.gettempdir(), filename))
-        if os.path.exists(o_fname):
-            os.remove(o_fname)
-
-        file.save(o_fname)
-        uploaded_resp =  json.loads(upload_images(o_fname,file.filename))
-        kyc_type = file.filename.split("_")[1][0]
-        unique_key = request.form.get('unique_key')
-        session_obj = EsthenosOrgUserUploadSession.objects.get(unique_session_key=unique_key)
-        application = None
-        index = -1
-        for appkey in session_obj.applications.keys():
-            app = session_obj.applications[appkey]
-            index = index+1
-            if app.file_id == 100:
-                application = app
-                break
-
-        if application is None:
-            application =  EsthenosOrgApplicationMap()
-            application.file_id = 100
-
-        application.gkyc_file_pixuate_id[kyc_type] = uploaded_resp[0]["id"]
-        session_obj.applications["1"] = application
-        session_obj.number_of_kycs = session_obj.number_of_kycs+ 1
-        session_obj.save()
-
-    content = {'response': 'OK'}
-    return Response(response=content, status=200, mimetype="application/json")
-
-
-@organisation_views.route('/api/organisation/centers_n_groups', methods=["POST"])
+@organisation_views.route('/api/user/performance', methods=["GET"])
 @login_or_key_required
-def create_centers_n_groups():
-#    if not session['role'].startswith("ORG_"):
-#        abort(403)
-   user = EsthenosUser.objects.get(id=current_user.id)
-   group_name = request.form.get('group_name')
-   center_name = request.form.get('center_name')
-
-   if center_name is None:
-       center_name = group_name
-
-   if (center_name is not None) and len(center_name) > 0 and (group_name is not None) and len(group_name) != None:
-       unique_center_id = user.organisation.name.upper()[0:2]+"C"+"{0:06d}".format(user.organisation.center_count)
-
-       center, status = EsthenosOrgCenter.objects.get_or_create(center_name=center_name,organisation=user.organisation)
-       if status:
-           center.center_id = unique_center_id
-           center.save()
-           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__center_count=1)
-
-       unique_group_id = user.organisation.name.upper()[0:2]+"G"+"{0:06d}".format(user.organisation.group_count)
-
-       group, status = EsthenosOrgGroup.objects.get_or_create(center=center,organisation=user.organisation,group_name=group_name)
-       if status:
-           group.group_id = unique_group_id
-           group.save()
-           EsthenosOrg.objects.get(id = user.organisation.id).update(inc__group_count=1)
-       return Response('{"success":True}', content_type="application/json", mimetype='application/json')
-
-   return Response('{"success":False}', content_type="application/json", mimetype='application/json')
-
-
-@organisation_views.route('/api/organisation/centers_n_groups', methods=["GET"])
-@login_or_key_required
-def get_centers_n_groups():
+@feature_enable("features_api_performance_target")
+def performance():
     user = EsthenosUser.objects.get(id=current_user.id)
-    organisation = user.organisation
-
-    centers = EsthenosOrgCenter.objects.filter(organisation=organisation)
-    centers_list = []
-    for center in centers:
-        groups = EsthenosOrgGroup.objects.filter(organisation=organisation,center = center)
-        groups_list = []
-        for group in groups:
-            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name), 'group_location':str(group.location_name)})
-
-    groups = EsthenosOrgGroup.objects.filter(organisation=organisation)
-    groups_list = []
-    for group in groups:
-        applications_all = EsthenosOrgApplication.objects.filter(group=group)
-        applications_cgt_ready = EsthenosOrgApplication.objects.filter(group=group,status__gte=190)
-        if len(applications_all) == 0 or len(applications_all) > len(applications_cgt_ready):
-            groups_list.append({'id':str(group.group_id), 'group_name':str(group.group_name), 'group_location':str(group.location_name)})
-
-    data = '{"centers":'+json.dumps(centers_list)+',"groups":'+json.dumps(groups_list)+'}'
-    return Response(data, content_type="application/json", mimetype='application/json')
-
-
-@organisation_views.route('/api/organisation/update_group_details', methods=["PUT"])
-@login_or_key_required
-def update_group_number():
-#    if not session['role'].startswith("ORG_"):
-#        abort(403)
-    username = current_user.name
-    c_user = current_user
-    user = EsthenosUser.objects.get(id=c_user.id)
-    organisation = user.organisation
-    print request.form
-    group_name = request.form.get('group_name')
-    group = EsthenosOrgGroup.objects.filter(organisation=user.organisation,group_name=group_name)[0]
-    group_size = request.form.get('group_size')
-    group.size = int(group_size)
-    group_leader_name = request.form.get('group_leader_name')
-    group.leader_name = group_leader_name
-    group_leader_number = request.form.get('group_leader_number')
-    group.leader_number = group_leader_number
-    group.save()
-    data = '{"success":true}'
-    print data
-    return Response(data, content_type="application/json", mimetype='application/json')
+    performance, status = EsthenosOrgUserPerformance.objects.get_or_create(owner=user)
+    return Response(json.dumps(performance.json), content_type="application/json", mimetype='application/json')
 
 
 @organisation_views.route('/api/organisation/products', methods=["GET"])
 @login_or_key_required
+@feature_enable("features_api_products")
 def org_products():
     user = EsthenosUser.objects.get(id=current_user.id)
     organisations = EsthenosOrg.objects.all()
@@ -544,6 +168,7 @@ def org_products():
 
 @organisation_views.route('/api/organisation/applications', methods=["GET"])
 @login_or_key_required
+@feature_enable("features_api_applications_list")
 def get_application():
     user = EsthenosUser.objects.get(id=current_user.id)
     applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation)
@@ -570,6 +195,7 @@ wtforms_json.init()
 
 @organisation_views.route('/api/organisation/applications', methods=['POST'])
 @login_or_key_required
+@feature_enable("features_api_applications_post")
 def mobile_application_json():
 
     print request.json
@@ -590,9 +216,6 @@ def mobile_application_json():
 @login_required
 @feature_enable("features_applications_disbursement")
 def check_disbursement():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
     apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240)
@@ -605,9 +228,6 @@ def check_disbursement():
 @login_required
 @feature_enable("features_applications_disbursement")
 def disburse_document():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     applicant_id = request.form.get("applicant_id")
     col_date_str = request.form.get("collection_date")
     dis_date_str = request.form.get("disbursement_date")
@@ -634,9 +254,6 @@ def disburse_document():
 @login_required
 @feature_enable("features_applications_disbursement")
 def download_disbursement(applicant_id):
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
     app = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=applicant_id)
     bucket = conn_s3.get_bucket("hindusthanarchives")
