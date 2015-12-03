@@ -320,7 +320,6 @@ def admin_organisation_add_emp(org_id):
 
     if request.method == "POST":
         form = AddOrganizationEmployeeForm(request.form)
-        form.save(org_id)
 
         if form.validate():
             form.save(org_id)
@@ -329,13 +328,13 @@ def admin_organisation_add_emp(org_id):
         else:
             flash_errors(form)
             kwargs = locals()
-            return render_template("admin_org_add_emp.html", **kwargs)
+            return render_template("admin_org_emp_add.html", **kwargs)
 
-    else:
-        branches = EsthenosOrgBranch.objects.filter(organisation = org)
-        hierarchy = EsthenosOrgHierarchy.objects.all()
+    if request.method == "GET":
+        states = EsthenosOrgState.objects.filter(organisation=org)
+        hierarchy = EsthenosOrgHierarchy.objects.filter(organisation=org, level__gt=0).order_by('+level')
         kwargs = locals()
-        return render_template("admin_org_add_emp.html", **kwargs)
+        return render_template("admin_org_emp_add.html", **kwargs)
 
 
 @admin_views.route('/admin/organisation/<org_id>/employees/<emp_id>', methods=["GET", "POST"])
