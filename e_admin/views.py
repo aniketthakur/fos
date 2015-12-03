@@ -82,13 +82,22 @@ def admin_organisation_details(org_id):
 @feature_enable("features_admin")
 def admin_org_states_update(org_id, state_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
-    states = request.form.getlist('org_states')
 
-    for state in states:
-        st, status = EsthenosOrgState.objects.get_or_create(name=state, organisation=org)
-        org.states.append(st)
-    org.save()
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
+    if request.method == "POST":
+        states = request.form.getlist('org_states')
+        for state in states:
+            state, status = EsthenosOrgState.objects.get_or_create(name=state, organisation=org)
+            state.save()
+        return redirect(url_for("admin_views.admin_organisation_details", org_id=org_id))
+
+    if request.method == "GET" and (state_id is not None):
+        state = EsthenosOrgState.objects.get(organisation=org_id, id=state_id)
+        return jsonify(state.children)
+
+    if request.method == "GET":
+        states = EsthenosOrgState.objects.filter(organisation=org_id)
+        states = [state.json for state in states]
+        return jsonify(children=states, count=len(states))
 
 
 @admin_views.route('/admin/organisation/<org_id>/regions/<region_id>', methods=["GET"])
@@ -97,12 +106,17 @@ def admin_org_states_update(org_id, state_id=None):
 @feature_enable("features_admin")
 def admin_org_regions_update(org_id, region_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
-    state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
 
-    for region in request.form.get('org_regions').split(","):
-        reg, status = EsthenosOrgRegion.objects.get_or_create(name=region, organisation=org, parent=state)
-        reg.save()
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
+    if request.method == "POST":
+        state = EsthenosOrgState.objects.get(id=request.form.get('org_state'))
+        for region in request.form.get('org_regions').split(","):
+            reg, status = EsthenosOrgRegion.objects.get_or_create(name=region, organisation=org, parent=state)
+            reg.save()
+        return redirect(url_for("admin_views.admin_organisation_details", org_id=org_id))
+
+    if request.method == "GET":
+        region = EsthenosOrgRegion.objects.get(organisation=org_id, id=region_id)
+        return jsonify(region.children)
 
 
 @admin_views.route('/admin/organisation/<org_id>/areas/<area_id>', methods=["GET"])
@@ -111,12 +125,17 @@ def admin_org_regions_update(org_id, region_id=None):
 @feature_enable("features_admin")
 def admin_org_areas_update(org_id, area_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
-    region = EsthenosOrgRegion.objects.get(id=request.form.get('org_region'))
 
-    for area in request.form.get('org_areas').split(","):
-        area_obj, status = EsthenosOrgArea.objects.get_or_create(name=area, organisation=org, parent=region)
-        area_obj.save()
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
+    if request.method == "POST":
+        region = EsthenosOrgRegion.objects.get(id=request.form.get('org_region'))
+        for area in request.form.get('org_areas').split(","):
+            area_obj, status = EsthenosOrgArea.objects.get_or_create(name=area, organisation=org, parent=region)
+            area_obj.save()
+        return redirect(url_for("admin_views.admin_organisation_details", org_id=org_id))
+
+    if request.method == "GET":
+        area = EsthenosOrgArea.objects.get(organisation=org_id, id=area_id)
+        return jsonify(area.children)
 
 
 @admin_views.route('/admin/organisation/<org_id>/branches/<branch_id>', methods=["GET"])
@@ -125,12 +144,17 @@ def admin_org_areas_update(org_id, area_id=None):
 @feature_enable("features_admin")
 def admin_org_branches_update(org_id, branch_id=None):
     org = EsthenosOrg.objects.get(id=org_id)
-    area = EsthenosOrgArea.objects.get(id=request.form.get('org_area'))
 
-    for branch in request.form.get('org_branch_data').split(","):
-        branch_obj, status = EsthenosOrgBranch.objects.get_or_create(name=branch, organisation=org, parent=area)
-        branch_obj.save()
-    return redirect(url_for("admin_views.admin_org_details", org_id=org_id))
+    if request.method == "POST":
+        area = EsthenosOrgArea.objects.get(id=request.form.get('org_area'))
+        for branch in request.form.get('org_branch_data').split(","):
+            branch_obj, status = EsthenosOrgBranch.objects.get_or_create(name=branch, organisation=org, parent=area)
+            branch_obj.save()
+        return redirect(url_for("admin_views.admin_organisation_details", org_id=org_id))
+
+    if request.method == "GET":
+        branch = EsthenosOrgBranch.objects.get(organisation=org_id, id=branch_id)
+        return jsonify(branch.children)
 
 
 @admin_views.route('/admin/organisation/<org_id>/dashboard', methods=["GET"])
