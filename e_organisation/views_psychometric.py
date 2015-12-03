@@ -5,9 +5,6 @@ from views_base import *
 @login_required
 @feature_enable("features_psychometric_questions")
 def group_psychometric():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     data = json.loads(request.json)
     group_id = data['group_id']
     reqstatus = data['status']

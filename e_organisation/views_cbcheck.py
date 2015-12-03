@@ -13,9 +13,6 @@ def is_number(s):
 @login_required
 @feature_enable("hignmark_equifax")
 def cbcheck_manual():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
     organisation = user.organisation
 
