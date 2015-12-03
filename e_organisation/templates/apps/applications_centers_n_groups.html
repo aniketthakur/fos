@@ -50,10 +50,11 @@
                         </thead>
                         <tbody>
                         {% for fos in fos_agents %}
+                            {% for branch in fos.branches %}
                             <tr>
                                 <td class="v-align-middle">{{ loop.index }}</td>
                                 <td class="v-align-middle">
-                                  <a href="{{ url_for("organisation_views.application_list_branch", branch_id=fos.org_branch.id) }}"><ins>{{ fos.org_branch.branch_name }}</ins></a>
+                                  <a href="{{ url_for("organisation_views.application_list_branch", branch_id=branch.id) }}"><ins>{{ branch }}</ins></a>
                                 </td>
                                 <td class="v-align-middle">
                                   <a href="{{ url_for("organisation_views.application_list_fos", fos_id=fos.id) }}"><ins>{{ fos.first_name }} {{ fos.last_name }}</ins></a>
@@ -63,6 +64,7 @@
                                 </td>
                                 <td><span class="muted">{{ fos.postal_tele_code }}{{ fos.postal_telephone }}</span></td>
                             </tr>
+                            {% endfor %}
                          {% endfor %}
                         </tbody>
                     </table>
