@@ -36,7 +36,7 @@ gevent==1.0.2
 greenlet==0.4.9
 gunicorn==19.3.0
 itsdangerous==0.23
-jdcal==1.0
+jdcal==1.2
 kombu==2.5.16
 lxml==3.4.2
 mailchimp==2.0.9
