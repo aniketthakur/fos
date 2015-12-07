@@ -72,9 +72,9 @@ SERVER_SETTINGS = {
 }
 
 MONGODB_SETTINGS = {
-    'DB': 'fos-test',
+    'DB': 'fos-local',
     'PORT': 27017,
-    'HOST': 'mongodb.prod.esthenos.com'
+    'HOST': 'localhost'
 }
 
 CELERY_SETTINGS = {
