@@ -49,8 +49,8 @@ ORGS_SETTINGS = [
             {"level": 3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
             {"level": 4, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
             {"level": 5, "access": "regions",   "role": "ORG_RM",     "title": "dm",     "title_full": "divisional manager"},
-            {"level": 6, "access": "areas",     "role": "ORG_AM",     "title": "cm",     "title_full": "center area manager"},
-            {"level": 7, "access": "branches",  "role": "ORG_BM",     "title": "com",    "title_full": "center branch manager"},
+            {"level": 6, "access": "areas",     "role": "ORG_AM",     "title": "am",     "title_full": "area manager"},
+            {"level": 7, "access": "branches",  "role": "ORG_BM",     "title": "bm",     "title_full": "branch manager"},
             {"level": 8, "access": "centers",   "role": "ORG_CM",     "title": "co",     "title_full": "center officer"}
         ],
         "geography" : {
