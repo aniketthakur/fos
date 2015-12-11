@@ -102,6 +102,10 @@ FEATURES = {
         "title" : "Features For Notifications",
         "enabled": True,
     },
+    "features_products": {
+        "title" : "Features For Products",
+        "enabled": False,
+    },
     "features_api_products": {
         "title" : "Features For API Products",
         "enabled": True,

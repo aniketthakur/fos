@@ -170,7 +170,7 @@ def admin_organisation_dashboard(org_id):
 
 @admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
 @login_required
-@feature_enable("features_admin")
+@feature_enable("features_products")
 def admin_organisation_product(org_id):
     org = EsthenosOrg.objects.get(id=org_id)
     user = EsthenosUser.objects.get(id=current_user.id)
