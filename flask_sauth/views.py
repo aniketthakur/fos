@@ -38,7 +38,6 @@ def login():
         form = login_form
 
         if form.validate():
-            login_user(form.user_cache, True)
             is_fresh = request.form.get("fresh", None)
 
             if is_fresh is not None and is_fresh == "true":
@@ -46,7 +45,10 @@ def login():
 
             user = User.objects.get(email=form.email.data)
 
-            if not user.active:
+            if user.active:
+                login_user(form.user_cache, True)
+
+            elif not user.active:
                 flash(u'Your account has been deactivated', 'error')
                 kwargs = {"login_form": login_form}
                 return render_template("auth/login.html", **kwargs)
