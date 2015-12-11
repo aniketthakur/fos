@@ -139,7 +139,7 @@ class AddOrganizationEmployeeForm(Form):
 
         emp.email = self.email_add_organisation.data
         emp.gender = self.gender.data
-        emp.active = True if self.active.data == "active" else False
+        emp.active = False
 
         emp.date_of_birth = self.date_of_birth_add_organisation.data
         emp.postal_address = self.address_add_org_emp.data
