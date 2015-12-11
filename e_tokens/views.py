@@ -1,17 +1,16 @@
 import json
 
-from flask import Response
-from flask_login import current_user, login_required
+from flask import Response, jsonify
 from flask import Blueprint, request, session, flash
 
 from flask_sauth.forms import LoginForm
-from utils import generate_auth_token, login_or_key_required
+from utils import generate_auth_token
 from models import EsthenosOrgUserToken
-from esthenos.mongo_encoder import encode_model
 from esthenos.settings import AWS_SETTINGS
 from e_organisation.models import EsthenosUser
 
 token_views = Blueprint('token_views', __name__,template_folder='templates')
+
 
 @token_views.route('/api/app_token/generate', methods=["POST"])
 def generate_token_view():
@@ -22,8 +21,7 @@ def generate_token_view():
         user = EsthenosUser.objects.get(email=form.email.data)
 
         if not user.active:
-            flash(u'Your account has been deactivated', 'error')
-            kwargs = {"login_form": login_form}
+            return jsonify({'message':'your account has been deactivated'})
 
         session['role'] = user.hierarchy.role
         full_token = generate_auth_token(user, expiration=360000)
@@ -38,6 +36,6 @@ def generate_token_view():
           'poolId' : AWS_SETTINGS['AWS_COGNITO_ID'],
           'message': 'token generated'
         }
-        return Response(json.dumps(response), content_type="application/json", mimetype='application/json')
+        return jsonify(response)
 
-    return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
+    return jsonify({'message':'authentication failed'})
