@@ -6,6 +6,7 @@ from mongoengine import Q
 
 from job import make_celery
 from celery.task import periodic_task
+from esthenos.settings import AWS_SETTINGS
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -251,7 +252,7 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
         zip_custom(dir, tf)
 
         from boto.s3.key import Key
-        bucket = conn_s3.get_bucket("hindusthanarchives")
+        bucket = conn_s3.get_bucket(AWS_SETTINGS['AWS_S3_BUCKET'])
         k = Key(bucket)
         k.key = tf+".zip"
         k.set_contents_from_filename(tf+".zip")

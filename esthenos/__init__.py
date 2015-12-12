@@ -125,6 +125,10 @@ def _jinja2_filter_enabledbutton(active):
 def _jinja2_filter_permissionfilter(permission):
     return "checked" if permission else "unchecked"
 
+@mainapp.template_filter('cdnassets')
+def _jinja2_filter_cdn_assets(asset):
+    return "%s/%s" % (settings.AWS_SETTINGS["AWS_CDN_PATH"], asset)
+
 @mainapp.template_filter('css_approve_reject')
 def _jinja2_filter_css_approve_reject(value):
     if value == "approved":
