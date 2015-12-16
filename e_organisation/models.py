@@ -943,6 +943,49 @@ class EsthenosOrgLocation(db.EmbeddedDocument):
       return {"lat": self.lat, "lng": self.lng}
 
 
+class EsthenosOrgApplicationFamilyDetails(db.EmbeddedDocument):
+    age = db.IntField(required=False, default=0)
+    name = db.StringField(max_length=20, required=False,default="")
+    education = db.StringField(max_length=512, required=False,default="")
+    aadhar_number = db.StringField(max_length=20, required=False,default="")
+    annual_income = db.FloatField(required=False, default=0)
+    occupations_details = db.StringField(max_length=512, required=False,default="")
+    relation = db.StringField(max_length=512, required=False,default="")
+
+
+class EsthenosOrgApplicationLandDetails(db.EmbeddedDocument):
+    land_location = db.StringField(max_length=512, default="")
+    type_of_property = db.StringField(max_length=512, default="")
+    area_in_sqft = db.FloatField(default=0)
+    loan_outstanding = db.FloatField(default=0)
+    estimated_resale_value = db.FloatField(default=0)
+
+
+class EsthenosOrgApplicationLoanDetails(db.EmbeddedDocument):
+    type_of_loan= db.StringField(max_length=512, default="")
+    interest= db.FloatField(default=0)
+    name_of_bank= db.StringField(max_length=512, default="")
+    emi_repayments= db.FloatField(default=0)
+    outstanding_loan_amount= db.FloatField(default=0)
+    collateral_details= db.StringField(max_length=512, default="")
+    loan_detail= db.StringField(max_length=512, default="")
+    tenure_in_months= db.FloatField(default=0)
+    loan_amount_key= db.FloatField(default=0)
+
+
+class EsthenosOrgApplicationTypeEquipment(db.EmbeddedDocument):
+    estimated_value = db.FloatField(default=0)
+    is_equipment_given_as_collateral = db.StringField(max_length=512, default="")
+    date_of_manufacturing_equipment = db.StringField(max_length=512, default="")
+    details_of_equipment_supplier= db.StringField(max_length=512, default="")
+
+
+class EsthenosOrgApplicationDocsVehicle(db.EmbeddedDocument):
+    year_of_registration = db.FloatField(default=0)
+    estimated_resale_value = db.FloatField(default=0)
+    type_of_vehicle_manufacturer = db.StringField(max_length=512, default="")
+
+
 class EsthenosOrgApplication(db.Document):
     owner = db.ReferenceField(EsthenosUser)
     group = db.ReferenceField(EsthenosOrgGroup)
@@ -1076,6 +1119,15 @@ class EsthenosOrgApplication(db.Document):
     tertiary_business_income_monthly = db.FloatField(default=0.0)
     tertiary_business_expenses_monthly = db.FloatField(default=0.0)
 
+    details_of_finished_goods = db.StringField(max_length=512, required=False,default="")
+    business_outreach_methods = db.StringField(max_length=512, required=False,default="")
+    place_of_storage_for_material = db.StringField(max_length=512, required=False,default="")
+    details_of_principal_raw_materials = db.StringField(max_length=512, required=False,default="")
+    nature_of_keeping_business_accounts = db.StringField(max_length=512, required=False,default="")
+    place_agency_of_purchase_of_materials = db.StringField(max_length=512, required=False,default="")
+    business_assets_average_value_of_inventory = db.FloatField(default=0.0)
+    business_assets_average_value_of_receivables = db.FloatField(default=0.0)
+
     other_income = db.FloatField(default=0.0)
 
     food_expense = db.FloatField(default=0.0)
@@ -1135,6 +1187,44 @@ class EsthenosOrgApplication(db.Document):
 
     expected_tenure_in_months = db.IntField(default=0)
     expected_emi_amount_served = db.FloatField(default=0.0)
+
+    family_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details4 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details5 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+
+    loan_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
+    loan_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
+    loan_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
+    loan_details4 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
+
+    land_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
+    land_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
+    land_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
+
+    docs_vehicle1 = db.EmbeddedDocumentField(EsthenosOrgApplicationDocsVehicle, default=EsthenosOrgApplicationDocsVehicle)
+    docs_vehicle2 = db.EmbeddedDocumentField(EsthenosOrgApplicationDocsVehicle, default=EsthenosOrgApplicationDocsVehicle)
+    docs_vehicle3 = db.EmbeddedDocumentField(EsthenosOrgApplicationDocsVehicle, default=EsthenosOrgApplicationDocsVehicle)
+
+    type_equipment1 = db.EmbeddedDocumentField(EsthenosOrgApplicationTypeEquipment, default=EsthenosOrgApplicationTypeEquipment)
+    type_equipment2 = db.EmbeddedDocumentField(EsthenosOrgApplicationTypeEquipment, default=EsthenosOrgApplicationTypeEquipment)
+    type_equipment3 = db.EmbeddedDocumentField(EsthenosOrgApplicationTypeEquipment, default=EsthenosOrgApplicationTypeEquipment)
+
+    sales_revenue_in_1_month = db.FloatField(default=0.0)
+    sales_revenue_in_5_month = db.FloatField(default=0.0)
+    sales_revenue_in_4_month = db.FloatField(default=0.0)
+    sales_revenue_in_3_month = db.FloatField(default=0.0)
+    sales_revenue_in_10_month = db.FloatField(default=0.0)
+    sales_revenue_in_12_month = db.FloatField(default=0.0)
+    sales_revenue_in_8_month = db.FloatField(default=0.0)
+    total_annual_revenue_credit = db.FloatField(default=0.0)
+    sales_revenue_in_7_month = db.FloatField(default=0.0)
+    sales_revenue_in_6_month = db.FloatField(default=0.0)
+    sales_revenue_in_19_month = db.FloatField(default=0.0)
+    total_annual_revenue_cash = db.FloatField(default=0.0)
+    sales_revenue_in_2_month = db.FloatField(default=0.0)
+    sales_revenue_in_11_month = db.FloatField(default=0.0)
 
     def total_income(self):
         return self.primary_business_income_monthly \
