@@ -30,6 +30,8 @@ def generate_token_view():
         token_obj, status = EsthenosOrgUserToken.objects.get_or_create(full_token=full_token, token=token, user=user)
 
         response = {
+          'id': str(user.id),
+          'email': user.email,
           'role' : user.hierarchy.role,
           'token' : token,
           'bucket' : AWS_SETTINGS['AWS_S3_BUCKET'],
