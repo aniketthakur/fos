@@ -1,27 +1,39 @@
-import json
-
-from flask import Response, jsonify
-from flask import Blueprint, request, session, flash
+from flask import jsonify
+from flask import Blueprint, request, session
 
 from flask_sauth.forms import LoginForm
 from utils import generate_auth_token
 from models import EsthenosOrgUserToken
+from esthenos import mainapp as app
 from esthenos.settings import AWS_SETTINGS
 from e_organisation.models import EsthenosUser
 
-token_views = Blueprint('token_views', __name__,template_folder='templates')
+token_views = Blueprint('token_views', __name__)
 
 
-@token_views.route('/api/app_token/generate', methods=["POST"])
-def generate_token_view():
-    login_form = LoginForm(request.form)
-    form = login_form
+@token_views.route('/api/token/<feature>', methods=["POST"])
+def generate_token_view(feature):
+    form = LoginForm(request.form)
+    feature = "features_mobile_%s" % feature
+    enabled = app.config["FEATURES"][feature]["enabled"]
 
     if form.validate():
         user = EsthenosUser.objects.get(email=form.email.data)
 
+        if not enabled:
+            return jsonify({
+              'message':'the feature has been disabled.'
+            })
+
         if not user.active:
-            return jsonify({'message':'your account has been deactivated'})
+            return jsonify({
+              'message':'your account has been deactivated'
+            })
+
+        if not user.is_allowed(feature):
+            return jsonify({
+              'message':'you do not have permissions for the feature'
+            })
 
         session['role'] = user.hierarchy.role
         full_token = generate_auth_token(user, expiration=360000)

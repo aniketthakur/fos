@@ -95,8 +95,24 @@ FEATURES = {
         "title" : "Admin Features",
         "enabled": True,
     },
+    "features_mobile_audit": {
+        "title" : "Features For Mobile Audit",
+        "enabled": False,
+    },
+    "features_mobile_sourcing": {
+        "title" : "Features For Mobile Sourcing",
+        "enabled": True,
+    },
+    "features_mobile_collection": {
+        "title" : "Features For Mobile Collection",
+        "enabled": False,
+    },
     "features_profile": {
         "title" : "Features For User Profile",
+        "enabled": True,
+    },
+    "features_manuals": {
+        "title" : "Features For User Manuals",
         "enabled": True,
     },
     "features_notifications": {
