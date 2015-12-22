@@ -70,9 +70,6 @@ class InitDB(Command):
             EsthenosSettings.drop_collection()
             EsthenosSettings().save()
 
-            notify("dropped all products.")
-            EsthenosOrgProduct.drop_collection()
-
             print "dropping & creating esthenos users."
             EsthenosUser.drop_collection()
 

@@ -891,28 +891,6 @@ class EsthenosOrgPsychometricTemplateQuestion(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
 
 
-class EsthenosOrgProduct(db.Document):
-    product_name=db.StringField(max_length=128,required=True)
-    loan_type=db.StringField(max_length=128,required=False)
-    organisation = db.ReferenceField('EsthenosOrg')
-    loan_amount = db.FloatField(default=25000)
-    life_insurance = db.FloatField(default=0.0)
-    eligible_cycle = db.IntField(default=0)
-    number_installments = db.IntField(default=0)
-    emi = db.FloatField(default=0)
-    service_tax = db.FloatField(default=0)
-    insurance_service_tax = db.FloatField(default=0)
-    last_emi = db.FloatField(default=0)
-    processing_fee = db.FloatField(default=0)
-    total_processing_fees = db.FloatField(default=0)
-    interest_rate = db.FloatField(default=0)
-    insurance_period = db.FloatField(default=0)
-    insurance_free = db.FloatField(default=0.0)
-    total_insurance_fees = db.FloatField(default=0)
-    rd_free = db.FloatField(default=0)
-    emi_repayment=db.StringField(max_length=128,required=False)
-
-
 class EsthenosOrgSettings(db.Document):
     organisation = db.ReferenceField('EsthenosOrg')
     loan_cycle_1_org = db.FloatField(default=35000)
@@ -948,7 +926,6 @@ class EsthenosOrgApplication(db.Document):
     group = db.ReferenceField(EsthenosOrgGroup)
     center = db.ReferenceField(EsthenosOrgCenter)
     branch = db.ReferenceField(EsthenosOrgBranch)
-    product = db.ReferenceField(EsthenosOrgProduct)
     organisation = db.ReferenceField(EsthenosOrg)
 
     applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)

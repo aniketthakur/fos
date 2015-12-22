@@ -149,44 +149,6 @@ def applications_track(app_id):
   return render_template("apps/application_tracking.html", **kwargs)
 
 
-@organisation_views.route('/application/<app_id>/kyc', methods=["GET"])
-@login_required
-def application_kyc(app_id):
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
-
-  if len(applications) == 0:
-    redirect("/applications")
-
-  app_urls = []
-  kyc_urls, kyc_ids = [], []
-  gkyc_urls, gkyc_ids = [], []
-  application = applications[0]
-
-  if application.tag is not None:
-    for kyc_id in application.tag.app_file_pixuate_id:
-      app_urls.append(get_url_with_id(kyc_id))
-
-    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
-      kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
-      kyc_ids.append(kyc_id)
-      kyc_urls.append(get_url_with_id(kyc_id))
-
-    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-      gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-      gkyc_ids.append(gkyc_id)
-      gkyc_urls.append(get_url_with_id(gkyc_id))
-
-  today = datetime.datetime.today()
-  disbursement_date = datetime.datetime.today() + timedelta(days=1)
-  disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
-  products = EsthenosOrgProduct.objects.filter(organisation=application.owner.organisation)
-
-  kwargs = locals()
-  return render_template("apps/application_details.html", **kwargs)
-
-
 @organisation_views.route('/scrutiny', methods=["GET"])
 @login_required
 @feature_enable("features_applications_scrutiny")

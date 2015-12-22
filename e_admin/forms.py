@@ -221,55 +221,6 @@ class AddOrganizationEmployeeForm(Form):
         return emp
 
 
-class AddOrganisationProductForm( Form):
-    product_name=TextField( validators=[v.Length(max=255)])
-    loan_type=TextField( validators=[v.Length(max=255)])
-    loan_amount=TextField( validators=[ v.Length(max=255)])
-    life_insurance=TextField( validators=[ v.Length(max=255)])
-    eligible_cycle=TextField( validators=[ v.Length(max=255)])
-    number_installments=TextField( validators=[ v.Length(max=255)])
-    emi=TextField( validators=[ v.Length(max=255)])
-    last_emi=TextField( validators=[ v.Length(max=255)])
-    service_tax=TextField( validators=[ v.Length(max=255)])
-    insurance_service_tax=TextField( validators=[ v.Length(max=255)])
-    processing_fee=TextField( validators=[ v.Length(max=255)])
-    total_processing_fees=TextField( validators=[ v.Length(max=255)])
-    interest_rate=TextField( validators=[ v.Length(max=255)])
-    insurance_period=TextField( validators=[ v.Length(max=255)])
-    insurance_free=TextField( validators=[ v.Length(max=255)])
-    total_insurance_fees=TextField( validators=[ v.Length(max=255)])
-    emi_repayment=TextField( validators=[ v.Length(max=255)])
-    rd_fee=TextField( validators=[ v.Length(max=255)])
-
-    def validate_product_name(form,field):
-        product_name =field.data.lower().strip()
-        if( EsthenosOrgProduct.objects.filter(product_name=product_name).count()):
-            raise ValidationError( "Hey! This product is already registered with us")
-
-    def save( self,org_id):
-        prod=EsthenosOrgProduct(product_name=self.product_name.data)
-        prod.loan_amount=float(self.loan_amount.data)
-        prod.loan_type = self.loan_type.data
-        prod.life_insurance=float(self.life_insurance.data)
-        prod.eligible_cycle=int(self.eligible_cycle.data)
-        prod.number_installments=int(self.number_installments.data)
-        prod.emi=float(self.emi.data)
-        prod.service_tax=float(self.service_tax.data)
-        prod.insurance_service_tax=float(self.insurance_service_tax.data)
-        prod.last_emi=float(self.last_emi.data)
-        prod.processing_fee=float(self.processing_fee.data)
-        prod.total_processing_fees=float(self.total_processing_fees.data)
-        prod.interest_rate=float(self.interest_rate.data)
-        prod.insurance_free=float(self.insurance_free.data)
-        prod.insurance_period=float(self.insurance_period.data)
-        prod.total_insurance_fees=float(self.total_insurance_fees.data)
-        prod.emi_repayment=self.emi_repayment.data
-        prod.rd_fee=self.rd_fee.data
-        prod.organisation=EsthenosOrg.objects.get(id=org_id)
-        prod.save()
-        return prod
-
-
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     question = TextField( validators=[v.DataRequired(), v.Length(max=2048)])

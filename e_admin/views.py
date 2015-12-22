@@ -168,28 +168,6 @@ def admin_organisation_dashboard(org_id):
     return render_template("admin_organisation_dashboard.html", **kwargs)
 
 
-@admin_views.route('/admin/organisation/<org_id>/products', methods=["GET", "POST"])
-@login_required
-@feature_enable("features_products")
-def admin_organisation_product(org_id):
-    org = EsthenosOrg.objects.get(id=org_id)
-    user = EsthenosUser.objects.get(id=current_user.id)
-
-    if request.method == "GET":
-        products = EsthenosOrgProduct.objects.filter(organisation=org)
-
-        kwargs = locals()
-        return render_template("admin_org_add_product.html", **kwargs)
-
-    if request.method == "POST":
-        product = AddOrganisationProductForm(request.form)
-        if product.validate():
-            product.save(org_id)
-
-        kwargs = locals()
-        return redirect("/admin/organisation/%s/products" % org_id)
-
-
 @admin_views.route('/admin/organisation/<org_id>/settings', methods=["GET", "POST"])
 @login_required
 @feature_enable("features_admin")
