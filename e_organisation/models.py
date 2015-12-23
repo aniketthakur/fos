@@ -1043,7 +1043,7 @@ class EsthenosOrgApplication(db.Document):
     tele_phone = db.StringField(max_length=128, required=False,default="")
     father_or_husband_name = db.StringField(max_length=512, required=False,default="")
 
-    caste = db.StringField(max_length=512, required=False,default="")
+    # caste = db.StringField(max_length=512, required=False,default="")
     gender = db.StringField(max_length=512, required=False,default="")
     religion = db.StringField(max_length=512, required=False,default="")
     category = db.StringField(max_length=512, required=False,default="")
@@ -1064,16 +1064,14 @@ class EsthenosOrgApplication(db.Document):
     nominee_gender = db.StringField(max_length=512, required=False,default="")
     nominee_relationship_with_borrower = db.StringField(max_length=512, required=False,default="")
 
-    type_of_house = db.StringField(max_length=512, required=False,default="")
-    quality_of_house = db.StringField(max_length=512, required=False,default="")
+    residence_details = db.StringField(max_length=512, required=False,default="")
     house_stay_duration = db.FloatField(default=0.0)
+    rent_agreement = db.StringField(max_length=512, required=False,default="")
+    house_monthly_rent = db.FloatField(default=0.0)
 
     applied_loan = db.FloatField(default=0.0)
     purpose_of_loan = db.StringField(max_length=512, required=False,default="")
 
-    family_assets_other = db.StringField(max_length=512, required=False,default="")
-    family_assets_land_acres = db.FloatField(default=0)
-    family_assets_orchard_acres = db.FloatField(default=0)
     family_assets_number_of_rented_houses_or_flats = db.FloatField(default=0)
     family_assets_number_of_rented_shops_or_godowns = db.FloatField(default=0)
 
@@ -1098,29 +1096,6 @@ class EsthenosOrgApplication(db.Document):
     repayment_mode = db.StringField(max_length=512, required=False,default="")
     repayment_method = db.StringField(max_length=512, required=False,default="")
 
-    primary_business_premise = db.StringField(max_length=512, required=False,default="")
-    primary_business_category = db.StringField(max_length=512, required=False,default="")
-    primary_business_activities = db.StringField(max_length=512, required=False,default="")
-    primary_business_seasonality = db.StringField(max_length=512, required=False,default="")
-    primary_business_income_monthly = db.FloatField(default=0.0)
-    primary_business_number_of_employees = db.FloatField(default=0.0)
-    primary_business_expense_rent = db.FloatField(default=0.0)
-    primary_business_expense_admin = db.FloatField(default=0.0)
-    primary_business_expense_other = db.FloatField(default=0.0)
-    primary_business_expense_working_capital = db.FloatField(default=0.0)
-    primary_business_expense_employee_salary = db.FloatField(default=0.0)
-    primary_business_number_of_years_in_business = db.FloatField(default=0.0)
-
-    secondary_business = db.StringField(max_length=512, required=False,default="")
-    secondary_business_category = db.StringField(max_length=512, required=False,default="")
-    secondary_business_income_monthly = db.FloatField(default=0.0)
-    secondary_business_expenses_monthly = db.FloatField(default=0.0)
-
-    tertiary_business = db.StringField(max_length=512, required=False,default="")
-    tertiary_business_category = db.StringField(max_length=512, required=False,default="")
-    tertiary_business_income_monthly = db.FloatField(default=0.0)
-    tertiary_business_expenses_monthly = db.FloatField(default=0.0)
-
     details_of_finished_goods = db.StringField(max_length=512, required=False,default="")
     business_outreach_methods = db.StringField(max_length=512, required=False,default="")
     place_of_storage_for_material = db.StringField(max_length=512, required=False,default="")
@@ -1135,7 +1110,7 @@ class EsthenosOrgApplication(db.Document):
     education_expenses = db.FloatField(default=0.0)
     medical_expenses = db.FloatField(default=0.0)
     grocery_expenses = db.FloatField(default=0.0)
-    other_expenses = db.FloatField(default=0.0)
+    family_other_expenses = db.FloatField(default=0.0)
     conveyance_expenses = db.FloatField(default=0)
 
     electricity_charges = db.FloatField(default=0.0)
@@ -1193,6 +1168,15 @@ class EsthenosOrgApplication(db.Document):
 
     expected_tenure_in_months = db.IntField(default=0)
     expected_emi_amount_served = db.FloatField(default=0.0)
+
+    internet_data_uses = db.StringField(max_length=512, required=False, default="")
+    mobile_services_provider = db.StringField(max_length=512, required=False, default="")
+    billing_type = db.StringField(max_length=512, required=False, default="")
+    handset_type = db.StringField(max_length=512, required=False, default="")
+    average_monthly_bill = db.FloatField(default=0.0)
+
+    electricity_monthly_bill = db.FloatField(default=0.0)
+    power_supplier = db.StringField(max_length=512, required=False, default="")
 
     family_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
     family_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
@@ -1326,20 +1310,42 @@ class EsthenosOrgApplication(db.Document):
 
     no_borrowers_you_furnished_guarantees__ = db.StringField(max_length=512, required=False,default="")
 
+    @property
     def total_income(self):
-        return self.primary_business_income_monthly \
-              + self.secondary_business_income_monthly \
-              + self.tertiary_business_income_monthly \
-              + self.other_income
+        return self.total_annual_revenue_cash \
+              + self.total_annual_revenue_credit
 
+    @property
     def total_expenditure(self):
-        return self.food_expense\
-              + self.travel_expense\
-              + self.entertainment_expense \
-              + self.educational_expense \
-              + self.medical_expense \
-              + self.business_expense() \
-              + self.other_expense
+        return self.house_monthly_rent\
+              + self.average_monthly_bill\
+              + self.electricity_monthly_bill \
+              + self.grocery_expenses \
+              + self.conveyance_expenses \
+              + self.medical_expenses \
+              + self.education_expenses \
+              + self.family_other_expenses \
+              + self.monthly_rent \
+              + self.electricity_charges \
+              + self.petrol_expenses \
+              + self.freight_charges \
+              + self.salaries_and_wages \
+              + self.other_expenses \
+              + self.loan_details1.emi_repayments \
+              + self.loan_details2.emi_repayments \
+              + self.loan_details3.emi_repayments \
+              + self.loan_details4.emi_repayments \
+              + self.average_monthly_purchase
+
+    @property
+    def average_monthly_purchase(self):
+        return round((self.total_annual_purchase_cash \
+              + self.total_annual_purchase_credit)/12, 0)
+
+    @property
+    def average_monthly_income(self):
+        return round((self.total_annual_revenue_cash \
+              + self.total_annual_revenue_credit)/12, 0)
 
     def total_other_outstanding(self):
         return self.other_outstanding_emi \
@@ -1347,10 +1353,10 @@ class EsthenosOrgApplication(db.Document):
               + self.other_outstanding_insurance \
               + self.other_outstanding_familynfriends
 
+    @property
     def net_income(self):
-        return self.total_income() \
-              - self.total_expenditure() \
-              - self.total_other_outstanding()
+        return self.average_monthly_income \
+              - self.total_expenditure
 
     def business_expense(self):
         return self.secondary_business_expenses_monthly \
@@ -1361,8 +1367,9 @@ class EsthenosOrgApplication(db.Document):
               + self.primary_business_expense_working_capital \
               + self.primary_business_expense_employee_salary
 
+    @property
     def loan_eligibility_based_on_net_income(self):
-        return self.net_income() / 2 * 60
+        return self.net_income / 2 * 60
 
     def update_status(self, status_code):
         self.status = status_code

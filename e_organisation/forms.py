@@ -32,19 +32,18 @@ class AddApplicationMobile(Form):
     # guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
 
     guarantor2_kyc_details = TextField(validators=[v.Length(max=10000)])
-    # guarantor1_other_card_details2 = TextField(validators=[v.Length(max=10000)])
 
     applicant_kyc_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_id_details = TextField(validators=[v.Length(max=10000)])
+
     applicant_loan_details_applied_loan = TextField(validators=[v.Length(max=10000)])
 
     applicant_personal_docs = TextField(validators=[v.Length(max=10000)])
     applicant_nominee_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_other_card_liabilities = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_land_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_phone_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_electricity_details = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_phone_details = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_electricity_details = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_credit_card_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_hypothecation_goods_details1 = TextField(validators=[v.Length(max=10000)])
@@ -58,7 +57,6 @@ class AddApplicationMobile(Form):
     applicant_family_details_members = TextField(validators=[v.Length(max=10000)])
 
     applicant_family_details_assets = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_other_assets = TextField(validators=[v.Length(max=10000)])
 
     applicant_family_details_details1 = TextField(validators=[v.Length(max=10000)])
     applicant_family_details_details2 = TextField(validators=[v.Length(max=10000)])
@@ -80,9 +78,7 @@ class AddApplicationMobile(Form):
     applicant_other_card_type_equipment3 = TextField(validators=[v.Length(max=10000)])
 
     applicant_business_docs_info = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details1 = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details2 = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details3 = TextField(validators=[v.Length(max=10000)])
+
     applicant_business_docs_details4 = TextField(validators=[v.Length(max=10000)])
 
     applicant_personal_docs_vehicle1 = TextField(validators=[v.Length(max=10000)])
@@ -194,8 +190,19 @@ class AddApplicationMobile(Form):
         app.applicant_name = applicant_kyc["name"]
         app.father_or_husband_name = applicant_kyc["father_s_husband_s_name"]
 
+        data = self.load(self.applicant_other_card_phone_details)
+        app.internet_data_uses = data.get("internet_data_uses", "")
+        app.mobile_services_provider = data.get("mobile_services_provider", "")
+        app.billing_type = data.get("billing_type", "")
+        app.handset_type = data.get("handset_type", "")
+        app.average_monthly_bill = toFloat(data.get("average_monthly_bill", ""))
+
+        data = self.load(self.applicant_other_card_electricity_details)
+        app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
+        app.power_supplier = data.get("Tata Power", "")
+
         applicant_personal = self.load(self.applicant_personal_docs)
-        app.caste = applicant_personal.get("caste", "")
+        #app.caste = applicant_personal.get("caste", "")#remove
         app.gender = applicant_personal.get("gender", "")
         app.religion = applicant_personal.get("religion", "")
         app.category = applicant_personal.get("category", "") + applicant_personal.get("specify_category", "")
@@ -219,16 +226,11 @@ class AddApplicationMobile(Form):
         app.nominee_relation = data.get("nominee_relation", "")
 
         data = self.load(self.applicant_family_details_assets)
-        app.type_of_house = data.get("type_of_house", "")
-        app.quality_of_house = data.get("quality_of_house", "")
+        app.residence_details = data.get("residence_details")
         app.house_stay_duration = toFloat(data.get("how_long_are_you_staying_in_house__in_years", ""))
-        app.family_assets_land_acres = toFloat(data.get("family_assets_land_acres", ""))
-        app.family_assets_orchard_acres = toFloat(data.get("family_assets_orchard__acres", ""))
-        app.family_assets_number_of_rented_houses_or_flats = toFloat(data.get("family_assets_number_of_rented_houses_or_flats", ""))
-        app.family_assets_number_of_rented_shops_or_godowns = toFloat(data.get("family_assets_number_of_rented_shops_or_godowns", ""))
-
-        data = self.load(self.applicant_family_details_other_assets)
-        app.family_assets_other = data.get("family_other_assets", "")
+        app.rent_agreement = data.get("rent_agreement", "")
+        app.house_monthly_rent = toFloat(data.get("monthly_rent", ""))
+        
 
         data = self.load(self.applicant_loan_details_applied_loan)
         app.applied_loan = toFloat(data.get("required_loan_amount", ""))
@@ -253,32 +255,6 @@ class AddApplicationMobile(Form):
         app.bank2_bank_account_type = data.get("bank_account_type", "")
         app.bank2_account_operational_since = data.get("account_operational_since", "")
 
-        data = self.load(self.applicant_business_docs_details1)
-        app.primary_business_premise = data.get("biz_premise", "")
-        app.primary_business_category = data.get("biz_category", "")
-        app.primary_business_activities = data.get("biz_activity", "")
-        app.primary_business_seasonality = data.get("biz_seasonality", "")
-        app.primary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.primary_business_number_of_employees = toFloat(data.get("biz_num_employees", ""))
-        app.primary_business_expense_rent = toFloat(data.get("biz_expense_rent", ""))
-        app.primary_business_expense_admin = toFloat(data.get("biz_expense_admin", ""))
-        app.primary_business_expense_other = toFloat(data.get("biz_expense_other", ""))
-        app.primary_business_expense_working_capital = toFloat(data.get("biz_expense_working_capital", ""))
-        app.primary_business_expense_employee_salary = toFloat(data.get("biz_expense_salary", ""))
-        app.primary_business_number_of_years_in_business = toFloat(data.get("biz_num_years", ""))
-
-        data = self.load(self.applicant_business_docs_details2)
-        app.secondary_business = data.get("biz_activity", "")
-        app.secondary_business_category = data.get("biz_category", "")
-        app.secondary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.secondary_business_expenses_monthly = toFloat(data.get("biz_expenses_monthly", ""))
-
-        data = self.load(self.applicant_business_docs_details3)
-        app.tertiary_business = data.get("biz_activity", "")
-        app.tertiary_business_category = data.get("biz_category", "")
-        app.tertiary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.tertiary_business_expenses_monthly = toFloat(data.get("biz_expenses_monthly", ""))
-
         data = self.load(self.applicant_business_docs_details4)
         app.details_of_finished_goods = data.get("details_of_finished_goods","")
         app.business_outreach_methods = data.get("method_of_reaching_out_to_customers_to_increase_business","")
@@ -293,7 +269,7 @@ class AddApplicationMobile(Form):
         app.education_expenses = toFloat(data.get("education_expenses", ""))
         app.medical_expenses = toFloat(data.get("medical_expenses", ""))
         app.grocery_expenses = toFloat(data.get("grocery_expenses", ""))
-        app.other_expenses = toFloat(data.get("other_expenses", ""))
+        app.family_other_expenses = toFloat(data.get("other_expenses", ""))
         app.conveyance_expenses = toFloat(data.get("conveyance_expenses", ""))
 
         data = self.load(self.applicant_business_docs_customer1)

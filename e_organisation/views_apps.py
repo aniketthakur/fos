@@ -103,39 +103,38 @@ def cashflow_statusupdate(app_id):
       status.save()
       application.timeline.append(status)
 
-      application.primary_business_income_monthly = float(request.form.get("primary_income"))
-      application.tertiary_business_income_monthly = float(request.form.get("tertiary_income"))
-      application.secondary_business_income_monthly = float(request.form.get("secondary_income"))
-      application.other_income = float(request.form.get("other_income"))
 
-      application.food_expense = float(request.form.get("food_expense"))
-      application.other_expense = float(request.form.get("other_expense"))
-      application.travel_expense = float(request.form.get("travel_expense"))
-      application.medical_expense = float(request.form.get("medical_expense"))
-      application.festival_expense = float(request.form.get("festival_expenditure"))
-      application.educational_expense = float(request.form.get("educational_expense"))
-      application.entertainment_expense = float(request.form.get("entertainment_expense"))
+      application.total_annual_revenue_credit = float(request.form.get("Total Annual Revenue-Credit"))
+      application.total_annual_revenue_cash =  float(request.form.get("Total Annual Revenue-Cash"))
 
-      application.primary_business_expense_rent = float(request.form.get("business_expense_rent"))
-      application.primary_business_expense_admin = float(request.form.get("business_expense_admin"))
-      application.primary_business_expense_other = float(request.form.get("business_expense_other"))
-      application.primary_business_expense_working_capital = float(request.form.get("business_expense_working_capital"))
-      application.primary_business_expense_employee_salary = float(request.form.get("business_expense_employee_salary"))
-      application.tertiary_business_expenses_monthly = float(request.form.get("tertiary_business_expense"))
-      application.secondary_business_expenses_monthly = float(request.form.get("secondary_business_expense"))
+      application.house_monthly_rent = float(request.form.get("monthly_rent"))
+      application.average_monthly_bill = float(request.form.get("average_monthly_bill_phone"))
+      application.electricity_monthly_bill = float(request.form.get("average_monthly_bill_electricity"))
 
-      application.other_outstanding_emi = float(request.form.get("other_outstanding_emi"))
-      application.other_outstanding_chit = float(request.form.get("other_outstanding_chit"))
-      application.other_outstanding_insurance = float(request.form.get("other_outstanding_insurance"))
-      application.oother_outstanding_familynfriends = float(request.form.get("other_outstanding_familynfriends"))
+      application.grocery_expenses = float(request.form.get("grocery_expenses"))
+      application.conveyance_expenses = float(request.form.get("conveyance_expenses"))
+      application.medical_expenses = float(request.form.get("medical_expenses"))
+      application.education_expenses = float(request.form.get("education_expenses"))
+      application.family_other_expenses = float(request.form.get("other_expenses"))
+      application.monthly_rent = float(request.form.get("monthly_rent"))
 
-      application.expected_tenure_in_months = int(request.form.get("expected_tenure_in_months"))
-      application.expected_emi_amount_served = float(request.form.get("expected_emi_amount_served"))
+      application.electricity_charges = float(request.form.get("electricity_charges"))
+      application.petrol_expenses = float(request.form.get("petrol_expenses"))
+      application.freight_charges = float(request.form.get("freight_charges"))
+      application.salaries_and_wages = float(request.form.get("salaries_and_wages"))
+      application.other_expenses = float(request.form.get("other_expenses"))
 
-      status_code = 170 if request.form.get("status") == "true" else 180
-      application.update_status(status_code)
+      application.loan_details1.emi_repayments = float(request.form.get("emi_payment1"))
+      application.loan_details2.emi_repayments  = float(request.form.get("emi_payment2"))
+      application.loan_details3.emi_repayments  = float(request.form.get("emi_payment3"))
+      application.loan_details4.emi_repayments  = float(request.form.get("emi_payment4"))
 
-      application.save()
+      application.total_annual_purchase_cash = float(request.form.get("total_annual_purchase_cash"))
+      application.total_annual_purchase_credit = float(request.form.get("total_annual_purchase_credit"))
+
+    status_code = 170 if request.form.get("status") == "true" else 180
+    application.update_status(status_code)
+    application.save()
 
     return redirect("/application/%s/cashflow" % app_id)
 
