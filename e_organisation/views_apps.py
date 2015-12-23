@@ -32,18 +32,9 @@ def application_list_fos(fos_id):
   appName = request.args.get('appName', '')
 
   user = EsthenosUser.objects.get(id=current_user.id)
-  fos_agent = EsthenosUser.objects.get(id=fos_id)
+  applications = EsthenosOrgApplication.objects.filter()
 
-  if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent, application_id=appId)
-
-  elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent, applicant_name=appName)
-
-  else:
-    applications = EsthenosOrgApplication.objects.filter(owner=fos_agent)
-
-  title = "FOS: {fname} {lname}".format(fname=fos_agent.first_name, lname=fos_agent.last_name)
+  title = "FOS: FOS Application"
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
 
