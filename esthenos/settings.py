@@ -26,7 +26,7 @@ ORGS_SETTINGS ={
             "passwd" : "adminadmin",
         },
         {
-            "role" : "ORG_CM",
+            "role" : "ORG_BM",
             "active" : True,
             "dob" : "01/01/1970",
             "city" : "kabul",
@@ -41,7 +41,7 @@ ORGS_SETTINGS ={
             "passwd" : "demodemo",
         },
         {
-            "role" : "ORG_CM",
+            "role" : "ORG_BM",
             "active" : True,
             "dob" : "01/01/1970",
             "city" : "kabul",
@@ -63,8 +63,7 @@ ORGS_SETTINGS ={
         {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
         {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
         {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "cam",     "title_full": "center area manager"},
-        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BM",     "title": "cbm",    "title_full": "center branch manager"},
-        {"level": 7, "test_users":5 , "test_places":8, "access": "centers",   "role": "ORG_CM",     "title": "co",     "title_full": "center officer"}
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BM",     "title": "cbm",    "title_full": "center branch manager"}
     ],
     "geography" : {
         "states" : 1,

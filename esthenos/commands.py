@@ -261,7 +261,8 @@ class TestDBGeography(Command):
             return geo
 
         def create_geo_hierarchy(level, parent):
-            if level > 7:return
+            if level > ( len(orgz["hierarchy"])-1 ):return
+
             config = orgz["hierarchy"][level]
 
             for index in range(0, config["test_places"]):
@@ -342,7 +343,7 @@ class TestDBUserGeoAssign(Command):
         return []
 
     def assign_user_geo(self, level, org):
-        if level >=7: return
+        if level >=( len(self.orgz["hierarchy"])-1 ): return
 
         config = self.orgz["hierarchy"][level]
         hierarchy = EsthenosOrgHierarchy.objects.get(role=config["role"])
