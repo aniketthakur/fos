@@ -11,6 +11,15 @@
           <div class="clearfix"></div>
         </div>
         <div class="grid-body">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                  {% for message in messages %}
+                    <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
             <form class="form-no-horizontal-spacing" id="form-organisation-emp" method="post" action="{{ url_for("admin_views.admin_organisation_add_emp_details", org_id=org.id, emp_id=employee.id) }}">
               <div class="row column-seperation">
                 <div class="col-md-6">
@@ -175,27 +184,31 @@
 
                   <div class="row row-padding form-row">
                     <div class="col-md-3">
-                      <h5>Assign States Access</h5>
-                      <select name="states" id="states" class="geo-select geo-state form-control" size="10" multiple>
-                      </select>
+                      <h5 >Assign States Access</h5>
+                      <!-- <select name="states" id="states" class="geo-select geo-state form-control" size="10" multiple> -->
+                      <!-- </select> -->
+                      <label name="states" id="states" ></label>
                     </div>
 
                     <div class="col-md-3">
-                      <h5>Assign Regions Access</h5>
-                      <select name="regions" id="regions" class="geo-select geo-region form-control" size="10" multiple>
-                      </select>
+                      <h5 >Assign Regions Access</h5>
+                      <!-- <select name="regions" id="regions" class="geo-select geo-region form-control" size="10" multiple>
+                      </select> -->
+                      <label name="regions" id="regions" ></label>
                     </div>
 
                     <div class="col-md-3">
-                      <h5>Assign Areas Access</h5>
-                      <select name="areas" id="areas" class="geo-select geo-area form-control" size="10" multiple>
-                      </select>
+                      <h5 >Assign Areas Access</h5>
+                      <!-- <select name="areas" id="areas" class="geo-select geo-area form-control" size="10" multiple>
+                      </select> -->
+                      <label type="checkbox" name="areas" id="areas" ></label>
                     </div>
 
                     <div class="col-md-3">
                       <h5>Assign Branches Access</h5>
-                      <select name="branches" id="branches" class="geo-select geo-branch form-control" size="10" multiple>
-                      </select>
+                      <!-- <select name="branches" id="branches" class="geo-select geo-branch form-control" size="10" multiple>
+                      </select> -->
+                      <label type="checkbox" name="branches" id="branches" ></label>
                     </div>
                     <br>
                   </div>
@@ -220,6 +233,29 @@
   <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      var option=$("option:selected", $('#role'));
+      var level = option.data('level');
+
+      function disableCheckbox(geoTag){
+        var label = $('#'+geoTag).find('*');
+        $.each(label, function(){
+          $(this).prop('disabled',true);
+        });
+      }
+
+      function enableCheckbox(geoTag){
+        var label = $('#'+geoTag).find('*');
+        $.each(label, function(){
+          $(this).prop('disabled',false);
+        });
+      }
+
+      var accessLevelGTE = {
+        "states" : 3,
+        "regions" : 4,
+        "areas" : 5,
+        "branches" : 6,
+      };
 
       var selection = {
         "states" : {
@@ -242,57 +278,123 @@
         }
       };
 
+      function deselectCheckbox(geoTag){
+        var label = $('#'+geoTag).find('*');
+        $.each(label, function(){
+          $(this).prop('checked',false);
+        });
+      }
+
+      function removeChildren(geoTag){
+        var label = $('#'+geoTag).find('*');
+        $.each(label, function(){
+          $(this).remove();
+        });
+        cleanup(geoTag);
+      }
+
+      function cleanup(geoTag){
+        var toRemove = $('.class_'+geoTag);
+        $.each(toRemove, function(){
+          $(this).remove();
+        });
+      }
+
       $("#role").change(function(e) {
+        deselectCheckbox("states");
+        deselectCheckbox("regions");
+        deselectCheckbox("areas");
+        deselectCheckbox("branches");
+
+        removeChildren("regions");
+        removeChildren("areas");
+        removeChildren("branches");
+
         $(".geo-select").prop('disabled', true);
+        option = $("option:selected", this);
+        level = $("option:selected", this).data('level');
 
-        var option = $("option:selected", this);
-        var level = $("option:selected", this).data('level');
-
-        if (level >= 3) {
-          $("#states").prop('disabled', false);
+        if (level >= accessLevelGTE["states"]) {
+          $("#states").find('*').prop('disabled', false);
           var geoTag = "states";
           var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/";
-          populateGeoItems(geoTag, geoUrl);
-        }
-
-        if (level >= 4) {
-          $("#regions").prop('disabled', false);
-        }
-
-        if (level >= 6) {
-          $("#areas").prop('disabled', false);
-        }
-
-        if (level >= 7) {
-          $("#branches").prop('disabled', false);
+          populateGeoItems(geoTag, geoUrl,false);
         }
       });
 
-      $("#states").change(function(e){
+      function startOnDeselect(){
+        deselectCheckbox("states");
+
+        removeChildren("regions");
+        removeChildren("areas");
+        removeChildren("branches");
+      }
+
+      $("#states").on('change','input',function(e){
+        if($(this).prop("checked")==false){
+          startOnDeselect();
+        }
         var geoTag = "regions";
         var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/" + this.value;
-        populateGeoItems(geoTag, geoUrl);
+        if(level >= accessLevelGTE["regions"] && $(this).prop("checked")==true){
+          $("#"+geoTag).find('*').prop('disabled', false);
+          populateGeoItems(geoTag, geoUrl, false);
+        }
       });
 
-      $("#regions").change(function(e){
+      $("#regions").on('change','input',function(e){
+        if($(this).prop("checked")==false){
+          startOnDeselect();
+        }
         var geoTag = "areas";
         var geoUrl = "{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}/" + this.value;
-        populateGeoItems(geoTag, geoUrl);
+        if(level >= accessLevelGTE["areas"] && $(this).prop("checked")==true){
+          $("#"+geoTag).find('*').prop('disabled', false);
+          populateGeoItems(geoTag, geoUrl, false);
+        }
       });
 
-      $("#areas").change(function(e){
+      $("#areas").on('change','input',function(e){
+        if($(this).prop("checked")==false){
+          startOnDeselect();
+        }
         var geoTag = "branches";
         var geoUrl = "{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}/" + this.value;
-        populateGeoItems(geoTag, geoUrl);
+        if(level >= accessLevelGTE["branches"] && $(this).prop("checked")==true){
+          $("#"+geoTag).find('*').prop('disabled', false);
+          populateGeoItems(geoTag, geoUrl, false);
+        }
       });
 
-      $(".geo-select").prop('disabled', true);
-      populateGeoElements("areas", selection.areas);
-      populateGeoElements("states", selection.states);
-      populateGeoElements("regions", selection.regions);
-      populateGeoElements("branches", selection.branches);
+      var stateDisable=true,regionDisable=true,areaDisable=true,branchDisable=true;
+      var geoToRemove = "states";
 
-      function populateGeoItems(geoTag, geoURL) {
+      if (level>=accessLevelGTE["states"]){
+        stateDisable=false;
+        geoToRemove = "regions";
+      }
+      if (level>=accessLevelGTE["regions"]) {
+        regionDisable=false;
+        geoToRemove = "areas";
+      }
+      if (level>=accessLevelGTE["areas"]) {
+        areaDisable=false;
+        geoToRemove = "branches";
+      }
+      if (level>=accessLevelGTE["branches"]) {
+        branchDisable=false;
+        geoToRemove = "centers";
+      }
+
+      /*Order Important?*/
+      populateGeoElements("branches", selection.branches, branchDisable);
+      populateGeoElements("areas", selection.areas, areaDisable);
+      populateGeoElements("regions", selection.regions, regionDisable);
+      populateGeoElements("states", selection.states, stateDisable);
+
+      removeChildren(geoToRemove);
+
+      function populateGeoItems(geoTag, geoURL, disable) {
         $.ajax({
           cache: true,
           url: geoURL
@@ -308,22 +410,112 @@
               selection[geoTag][v.id] = v;
             }
           });
-
           $.each(reminder, function(k, v) {
             var geoValue = selection[geoTag][v];
             var geoElement = "#" + geoTag;
-            $(geoElement).append($('<option>', {value: geoValue.id, text: geoValue.name }));
+
+            var opening;
+            if(disable){
+              opening = '<input type="checkbox" name="'+geoTag+'" class="geo-select geo-'+geoTag+'" value='+geoValue.id+' size="10" disabled/>';
+            }else {
+              opening = '<input type="checkbox" name="'+geoTag+'" class="geo-select geo-'+geoTag+'" value='+geoValue.id+' size="10" />';
+            }
+            var className = "class_"+geoTag
+
+            var html_tag=opening+'<span class="'+className+'">'+geoValue.name+'</span>'+'<br>'
+
+            $(geoElement).append(html_tag);
           });
         });
       }
 
-      function populateGeoElements(geoTag, geoCollection) {
+      function populateGeoElements(geoTag, geoCollection,disable) {
+        var baseURL={
+          "states":"{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/",
+          "regions":"{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}/",
+          "areas":"{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}/",
+          "branches":"{{ url_for("admin_views.admin_org_branches_update", org_id=org.id) }}/",
+        };
+
         $.each(geoCollection, function(k, v){
           var geoElement = "#" + geoTag;
-          $(geoElement).append($('<option>', {value: v.id, text: v.name, selected: "selected"}));
-        });
-      }
+          var opening;
+          if(disable){
+            opening = '<input type="checkbox" name="'+geoTag+'" class="geo-select geo-'+geoTag+'" value='+v.id+' size="10" checked="True" disabled/>'
+          }else{
+            opening = '<input type="checkbox" name="'+geoTag+'" class="geo-select geo-'+geoTag+'" value='+v.id+' size="10" checked="True" />'
+          }
 
+          var className = "class_"+geoTag
+
+          var html_tag=opening+'<span class="'+className+'">'+v.name+'</span>'+'<br>';
+          var element = $(geoElement).append(html_tag);
+
+          if(geoTag=="states"){
+            populateGeoItems(geoTag,baseURL[geoTag],stateDisable);
+          }
+          var appendDisable=true;
+          var geoURL = baseURL[geoTag] + v.id;
+          var newGeoTag;
+          switch (geoTag) {
+            case "states":newGeoTag="regions";
+              appendDisable=regionDisable;
+              break;
+            case "regions":newGeoTag="areas";
+              appendDisable=areaDisable;
+              break;
+            case "areas":newGeoTag="branches";
+              appendDisable=branchDisable;
+              break;
+            default: newGeoTag="";
+              break;
+
+          }
+          if(geoTag!="branches" ){
+            populateGeoItems(newGeoTag,geoURL,appendDisable);
+          }
+        });
+
+      }
+      function formValidation(){
+        var st = $('#states').find('*');
+        var count=0;
+        $.each(st, function(){
+          if($(this).prop('checked',false))
+            count++;
+        });
+        if(count == st.length && level>=3){
+          console.log("ERROR");
+        }
+
+        var reg = $('#regions').find('*');
+        count =0;
+        $.each(reg, function(){
+          if($(this).prop('checked',false))
+            count++;
+        });
+        if(count == reg.length && level>=4){
+          console.log("ERROR");
+        }
+        var ar = $('#areas').find('*');
+        count =0;
+        $.each(ar, function(){
+          if($(this).prop('checked',false))
+            count++;
+        });
+        if(count == ar.length && level>=6){
+          console.log("ERROR");
+        }
+        var br = $('#branches').find('*');
+        count=0;
+        $.each(br, function(){
+          if($(this).prop('checked',true))
+            count++;
+        });
+        if(count == br.length && level>=7){
+          console.log("ERROR");
+        }
+      }
       populateCountries("postal_country", "postal_state", {
           "state" : "{{ employee.postal_state }}",
           "country" : "{{ employee.postal_country }}"
@@ -351,6 +543,50 @@
         focusInvalid: false,
         ignore: "",
         rules: {
+          // states:{
+          //   depends:function(element){
+          //     var st = $('#states').find('*');
+          //     $.each(st,function(){
+          //       if ($(this).prop("checked",true)){
+          //         return (level>=3);
+          //       }
+          //     });
+          //     return !(level>=3);
+          //   }
+          // },
+          // regions:{
+          //   depends:function(element){
+          //     var st = $('#regions').find('*');
+          //     $.each(st,function(){
+          //       if ($(this).prop("checked",true)){
+          //         return (level>=4);
+          //       }
+          //     });
+          //     return !(level>=4);
+          //   }
+          // },
+          // areas:{
+          //   depends:function(element){
+          //     var st = $('#areas').find('*');
+          //     $.each(st,function(){
+          //       if ($(this).prop("checked",true)){
+          //         return (level>=6);
+          //       }
+          //     });
+          //     return !(level>=6);
+          //   }
+          // },
+          // branches:{
+          //   depends:function(element){
+          //     var st = $('#branches').find('*');
+          //     $.each(st,function(){
+          //       if ($(this).prop("checked",true)){
+          //         return (level>=7);
+          //       }
+          //     });
+          //     return !(level>=7);
+          //   }
+          // },
           first_name_add_organisation: {
             minlength: 2,
             maxlength: 30,
@@ -426,6 +662,7 @@
           parent.removeClass('error-control').addClass('success-control');
         },
         submitHandler: function (form) {
+          // formValidation();
           form.submit();
         }
       });
