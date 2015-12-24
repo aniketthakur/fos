@@ -382,6 +382,23 @@ def psychometric_questions(org_id):
             kwargs = locals()
             return render_template("admin_organisation_psychometric_questions.html", **kwargs)
 
+@admin_views.route('/admin/organisation/<org_id>/employees/<emp_id>/password', methods=["GET", "POST"])
+@login_required
+@feature_enable("features_admin")
+def admin_organisation_emp_password(org_id, emp_id):
+    org = EsthenosOrg.objects.get(id=org_id)
+    user = EsthenosUser.objects.get(id=current_user.id)
+    employee = EsthenosUser.objects.get(organisation=org, id=emp_id)
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template('admin_org_emp_password.html', **kwargs)
+
+    if request.method == "POST":
+        password = request.form.get('password')
+        employee.set_password(password)
+        employee.save()
+        return redirect(url_for("admin_views.admin_organisation_add_emp", org_id=org_id))
 
 @admin_views.route('/admin/organisation/<org_id>/psychometric_questions/<question_id>/delete',methods=['POST'])
 @login_required
