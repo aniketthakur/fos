@@ -4,7 +4,7 @@ import requests
 url = "http://localhost:8080/api/organisation/applications"
 
 querystring = {
-    "instance_token":"RwSjeQ_kuRM95qNvsG-K_c6epI7Rtl_ZMbMwd7nnPdg"
+    "instance_token":"auRbniyrIcyg0H8U-cG02xgJkNqHgmc5BAKwcico0oA"
 }
 
 payload = {
@@ -317,6 +317,10 @@ payload = {
         "mobile_number": ""
     },
     "locations_map": {
+        "home": {
+            "lat": 12.97205203,
+            "lng": 77.65267892
+        },
         "business": {
             "lat": 12.97205203,
             "lng": 77.65267892

@@ -44,6 +44,7 @@ def login_or_key_required(view_function):
     # the new, post-decoration function. Note *args and **kwargs here.
     def decorated_function(*args, **kwargs):
         if request.args.get('instance_token'):
+            # print request.args.get('instance_token')
             user = verify_auth_token(request.args.get('instance_token'))
             if user is not None and current_user.is_authenticated():
                 return view_function(*args, **kwargs)

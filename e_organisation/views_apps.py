@@ -22,6 +22,8 @@ def application_list():
     fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy)
 
   kwargs = locals()
+  print hierarchy
+  print fos_agents
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
 
 

@@ -175,51 +175,86 @@ class AddOrganizationEmployeeForm(Form):
 
         emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
 
+        to_save = True
+
         selections = []
-        if emp.hierarchy.level >= 3:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 3:
             for state in self.states.data:
                 state = EsthenosOrgState.objects.get(id=state)
                 regions = map(lambda r: str(r.id), state.regions)
                 commons = set.intersection(set(regions), self.regions.data)
-                if not len(commons): selections.append(state)
+                print state.owner
+                if not len(commons) and state.owner == None:
+                    state.owner = emp
+                    state.save()
+                    selections.append(state)
+            if len(selections)<1:
+                to_save = False
         emp.states = selections
 
         selections = []
-        if emp.hierarchy.level >= 4:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 4:
             for region in self.regions.data:
                 region = EsthenosOrgRegion.objects.get(id=region)
                 areas = map(lambda r: str(r.id), region.areas)
                 commons = set.intersection(set(areas), self.areas.data)
-                if not len(commons): selections.append(region)
+                if not len(commons) and region.owner == None:
+                    region.owner = emp
+                    region.save()
+                    selections.append(region)
+            if len(selections)<1:
+                to_save = False
         emp.regions = selections
 
         selections = []
-        if emp.hierarchy.level >= 6:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 5:
             for area in self.areas.data:
                 area = EsthenosOrgArea.objects.get(id=area)
                 branches = map(lambda r: str(r.id), area.branches)
                 commons = set.intersection(set(branches), self.branches.data)
-                if not len(commons): selections.append(area)
+                if not len(commons) and area.owner == None:
+                    area.owner = emp
+                    area.save()
+                    selections.append(area)
+            if len(selections)<1:
+                to_save = False
         emp.areas = selections
 
         selections = []
-        if emp.hierarchy.level >= 7:
+        #todo centralize the level assignments
+        if emp.hierarchy.level >= 6:
             for branch in self.branches.data:
                 branch = EsthenosOrgBranch.objects.get(id=branch)
                 centers = map(lambda r: str(r.id), branch.centers)
                 commons = set.intersection(set(centers), self.centers.data)
-                if not len(commons): selections.append(branch)
+                if not len(commons):
+                    if emp.hierarchy.level == 6 and branch.owner == None:
+                        branch.owner = emp
+                        branch.save()
+                        selections.append(branch)
+                    if emp.hierarchy.level == 7:
+                        selections.append(branch)
+            if len(selections)<1:
+                to_save = False
         emp.branches = selections
 
         selections = []
-        if emp.hierarchy.level >= 8:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 7:
             for center in self.centers.data:
                 selections.append(EsthenosOrgCenter.objects.get(id=center))
         emp.centers = selections
 
-        emp.save()
-        return emp
+        if len(emp.branches)>1 and emp.hierarchy.level == 7:
+            to_save = False
 
+        if to_save:
+            emp.save()
+
+        return emp
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])
