@@ -1,13 +1,14 @@
 import json
 import requests
 
-url = "http://localhost:8080/api/organisation/applications"
+url = "http://localhost:8085/api/organisation/applications"
 
 querystring = {
     "instance_token":"auRbniyrIcyg0H8U-cG02xgJkNqHgmc5BAKwcico0oA"
 }
 
 payload = {
+    "email": "demo@fos-test.esthenos.com", "password":"demodemo",
     "group": "",
     "applicant_business_docs_customer1": {
         "address": "",
@@ -448,5 +449,5 @@ headers = {
   'content-type': "application/json"
 }
 
-response = requests.post(url, json=payload, params=querystring)
+response = requests.post(url, data=payload, params=querystring)
 print(response.text)

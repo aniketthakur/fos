@@ -7,24 +7,14 @@ def application_list():
   user = EsthenosUser.objects.get(id=current_user.id)
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
-
-  # fosId = request.args.get('fosId', '')
   branchId = request.args.get('branchId', '')
   hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
-
-  # if (fosId is not None) and (fosId != ''):
-  #   fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, id=fosId)
 
   fos_agents = []
   if (branchId is not None) and (branchId != ''):
     branch = EsthenosOrgBranch.objects.get(id=branchId)
     fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, branches__contains=branch)
 
-  #
-  # else:
-  #   fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy)
-  print branchId
-  print fos_agents
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
 

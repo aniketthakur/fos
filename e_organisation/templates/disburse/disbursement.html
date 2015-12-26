@@ -15,6 +15,59 @@
     </div>
 
     <div class="row">
+        <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.check_disbursement") }}">
+            {% if user.states|length %}
+            <div class="col-md-6 form-group">
+                <select class="inline select2 form-control" id="state" name="stateId">
+                    <option selected disabled>search by state</option>
+                    {% for entity in user.states %}
+                    <option class="geo-state" value="{{ entity.id }}">{{ entity.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            {% if user.states|length or user.regions|length %}
+            <div class="col-md-6 form-group">
+                <select class="inline select2 form-control" id="region" name="regionId">
+                    <option selected disabled>search by region</option>
+                    {% for entity in user.regions %}
+                    <option class="geo-region" value="{{ entity.id }}">{{ entity.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            {% if user.states|length or user.regions|length or user.areas|length %}
+            <div class="col-md-6 form-group">
+                <select class="inline select2 form-control" id="area" name="areaId">
+                    <option selected disabled>search by area</option>
+                    {% for entity in user.areas %}
+                    <option class="geo-area" value="{{ entity.id }}">{{ entity.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            {% if user.states|length or user.regions|length or user.areas|length or user.branches|length %}
+            <div class="col-md-6 form-group">
+                <select class="inline select2 form-control" id="branch" name="branchId">
+                    <option selected disabled>search by branch</option>
+                    {% for entity in user.branches %}
+                    <option class="geo-branch" value="{{ entity.id }}">{{ entity.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            {% endif %}
+            <div class="col-md-6 form-group">
+            <button class="inline btn btn-info btn-medium" type="submit" value="search">search</button>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
             <div class="grid simple ">
                 <div class="grid-body no-border">
@@ -131,6 +184,64 @@
                 };
                 request.send(fd);
             });
+
+            function populateGeoItems(geoTag, geoURL, key, parent){
+
+              $.ajax({
+                cache: true,
+                url: geoURL,
+                data : key,
+              })
+              .done(function(response){
+                var children = response["children"];
+
+                $.each(children, function(k, v){
+                  var child = children[k];
+                  var childID = child["id"];
+                  var childName = child["name"];
+
+                  $('#'+geoTag).append('<option value="'+childID+'">'+childName+'</option>');
+                });
+              });
+            }
+            function removeChildren(geoTag){
+              var children = $('#'+geoTag).find('*');
+              $.each(children, function(k, v){
+                $(this).remove();
+              });
+            }
+            $('#state').change('option', function(e){
+              var stateID = $(this).val();
+              var geoTag = 'region';
+              var url = "{{ url_for("admin_views.admin_org_states_list", org_id=org.id) }}";
+              removeChildren(geoTag);
+              var key = {
+                "state_id": stateID,
+              };
+              populateGeoItems(geoTag, url, key, stateID);
+            });
+            $('#region').change('option', function(e){
+              var regionID = $(this).val();
+              var geoTag = 'area';
+              var url = "{{ url_for("admin_views.admin_org_regions_list", org_id=org.id) }}";
+              removeChildren(geoTag);
+              var key = {
+                "region_id": regionID,
+              };
+              populateGeoItems(geoTag, url, key, regionID);
+            });
+            $('#area').change('option', function(e){
+              var areaID = $(this).val();
+              var geoTag = 'branch';
+              var url = "{{ url_for("admin_views.admin_org_areas_list", org_id=org.id) }}";
+              removeChildren(geoTag);
+              var key = {
+                "area_id": areaID,
+              };
+              populateGeoItems(geoTag, url, key, areaID);
+            });
+
+            $("select").select2();
         });
     </script>
 {% endblock %}

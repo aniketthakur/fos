@@ -170,7 +170,7 @@ wtforms_json.init()
 @login_or_key_required
 @feature_enable("features_api_applications_post")
 def mobile_application_json():
-
+    print "Here"
     print request.json
     user = EsthenosUser.objects.get(id=current_user.id)
     app_form = AddApplicationMobile.from_json(request.json)
@@ -184,14 +184,18 @@ def mobile_application_json():
         print "Could Not validate" + str(app_form.errors)
         return Response(json.dumps({'success':'false'}), content_type="application/json", mimetype='application/json')
 
-
 @organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
 @feature_enable("features_applications_disbursement")
 def check_disbursement():
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-    apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240)
+
+    branchId = request.args.get('branchId', '')
+    apps = []
+    if (branchId is not None) and (branchId != ''):
+        branch = EsthenosOrgBranch.objects.get(id=branchId)
+        apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240, branch=branch)
 
     kwargs = locals()
     return render_template("disburse/disbursement.html", **kwargs)
