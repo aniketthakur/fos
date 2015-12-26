@@ -240,25 +240,14 @@ def scrutiny_application_print(app_id):
 def sanctions():
   user = EsthenosUser.objects.get(id=current_user.id)
   groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
+  org = user.organisation
 
-  appId = request.args.get('appId', '')
-  appName = request.args.get('appName', '')
-  groupId = request.args.get('groupId', '')
-  groupName = request.args.get('groupName', '')
-  centerName = request.args.get('centerName', '')
-  scrutinyStatus = request.args.get('scrutinyStatus', '')
+  branchId = request.args.get('branchId', None)
 
-  if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=192)
-
-  elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=192)
-
-  elif (groupId is not None) and (groupId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
-
-  else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
+  applications = []
+  if (branchId is not None) and (branchId != ""):
+      branch = EsthenosOrgBranch.objects.get(id=branchId)
+      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=192)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)

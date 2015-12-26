@@ -97,7 +97,7 @@ class AddApplicationMobile(Form):
             assets_id = str(self.assets_id.data),
             organisation = user.organisation
         )
-
+        # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
         app.yob = applicant_kyc["dob_yob"]
         app.city = applicant_kyc["district"]

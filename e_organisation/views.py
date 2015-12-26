@@ -170,7 +170,6 @@ wtforms_json.init()
 @login_or_key_required
 @feature_enable("features_api_applications_post")
 def mobile_application_json():
-    print "Here"
     print request.json
     user = EsthenosUser.objects.get(id=current_user.id)
     app_form = AddApplicationMobile.from_json(request.json)

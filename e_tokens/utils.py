@@ -1,10 +1,9 @@
 from functools import wraps
 
 from flask import request, abort
-from e_organisation.models import EsthenosUser
-
 from models import EsthenosOrgUserToken
 from esthenos import mainapp as app
+from e_organisation.models import EsthenosUser
 
 from mongoengine.queryset import DoesNotExist
 from flask_login import current_user, current_app, login_user
@@ -44,7 +43,6 @@ def login_or_key_required(view_function):
     # the new, post-decoration function. Note *args and **kwargs here.
     def decorated_function(*args, **kwargs):
         if request.args.get('instance_token'):
-            # print request.args.get('instance_token')
             user = verify_auth_token(request.args.get('instance_token'))
             if user is not None and current_user.is_authenticated():
                 return view_function(*args, **kwargs)

@@ -1,14 +1,18 @@
 import json
 import requests
 
-url = "http://localhost:8085/api/organisation/applications"
+
+# url = "http://%s/api/token/sourcing" % ("localhost:8085")
+# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# response = requests.post(url, data=payload)
+# print response.text
 
 querystring = {
-    "instance_token":"auRbniyrIcyg0H8U-cG02xgJkNqHgmc5BAKwcico0oA"
+    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
 }
+url = "http://localhost:8085/api/organisation/applications"
 
 payload = {
-    "email": "demo@fos-test.esthenos.com", "password":"demodemo",
     "group": "",
     "applicant_business_docs_customer1": {
         "address": "",
@@ -247,6 +251,7 @@ payload = {
         "biz_activity": ""
     },
     "applicant_kyc_details": {
+        "name": "Gsh",
         "address": ", .   ",
         "dob_yob": "-1",
         "pan_card_father_s_husband_s_name": "",
@@ -265,7 +270,6 @@ payload = {
         "age": "-1",
         "country": "India",
         "district": "",
-        "name": "Gsh",
         "uid": "",
         "voter_id_name": "",
         "type": "AADHAAR",
@@ -445,9 +449,6 @@ payload = {
     }
 }
 
-headers = {
-  'content-type': "application/json"
-}
-
-response = requests.post(url, data=payload, params=querystring)
-print(response.text)
+for i in range(0, 10):
+    response = requests.post(url, json=payload, params=querystring)
+    print(response.text)

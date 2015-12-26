@@ -1401,6 +1401,7 @@ class EsthenosOrgApplication(db.Document):
     application_id = db.StringField(max_length=255, required=False,default="")
 
     age = db.IntField(default=0)
+    name = db.StringField(max_length=512, required=False,default="")
     dob = db.StringField(max_length=512, required=False,default="")
     yob = db.StringField(max_length=512, required=False,default="")
     applicant_name = db.StringField(max_length=45, required=False,default="")

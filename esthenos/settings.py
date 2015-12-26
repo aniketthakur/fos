@@ -81,7 +81,7 @@ ORGS_SETTINGS = {
         {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "vice president"},
         {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
         {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
-        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "cam",     "title_full": "center area manager"},
+        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "cam",    "title_full": "center area manager"},
         {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BM",     "title": "cbm",    "title_full": "center branch manager"},
         {"level": 7, "test_users":3 , "test_places":0, "access": "branches",  "role": "ORG_CM",     "title": "fos",    "title_full": "fos agent"}
     ],
