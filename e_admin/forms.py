@@ -159,6 +159,8 @@ class AddOrganizationEmployeeForm(Form):
         return emp
 
     def update(self, emp):
+        errors = {}
+
         emp.last_name = self.last_name_add_organisation.data
         emp.first_name = self.first_name_add_organisation.data
         emp.gender = self.gender.data
@@ -173,7 +175,10 @@ class AddOrganizationEmployeeForm(Form):
         emp.postal_telephone = self.teleno_add_organisation.data
         emp.postal_tele_code = self.tele_code_add_organisation.data
 
+        emp.save()
+
         emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
+
 
         to_save = True
 
@@ -184,13 +189,15 @@ class AddOrganizationEmployeeForm(Form):
                 state = EsthenosOrgState.objects.get(id=state)
                 regions = map(lambda r: str(r.id), state.regions)
                 commons = set.intersection(set(regions), self.regions.data)
-                print state.owner
                 if not len(commons) and state.owner == None:
                     state.owner = emp
                     state.save()
                     selections.append(state)
+                elif state.owner!=None:
+                    errors["states"] = "A selected state has already been assigned."
             if len(selections)<1:
                 to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a state."
         emp.states = selections
 
         selections = []
@@ -204,8 +211,11 @@ class AddOrganizationEmployeeForm(Form):
                     region.owner = emp
                     region.save()
                     selections.append(region)
+                elif region.owner!=None:
+                    errors["regions"] = "A selected region has already been assigned"
             if len(selections)<1:
                 to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a region."
         emp.regions = selections
 
         selections = []
@@ -219,8 +229,11 @@ class AddOrganizationEmployeeForm(Form):
                     area.owner = emp
                     area.save()
                     selections.append(area)
+                elif area.owner!=None:
+                    errors["areas"] = "A selected area has already been assigned."
             if len(selections)<1:
                 to_save = False
+                errors["not_selected"] = "The employee needs to be assigned an area."
         emp.areas = selections
 
         selections = []
@@ -235,10 +248,14 @@ class AddOrganizationEmployeeForm(Form):
                         branch.owner = emp
                         branch.save()
                         selections.append(branch)
+                    elif branch.owner!=None:
+                        errors["branches"] = "A selected branch has already been assigned."
                     if emp.hierarchy.level == 7:
                         selections.append(branch)
             if len(selections)<1:
                 to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a branch."
+
         emp.branches = selections
 
         selections = []
@@ -250,11 +267,11 @@ class AddOrganizationEmployeeForm(Form):
 
         if len(emp.branches)>1 and emp.hierarchy.level == 7:
             to_save = False
+            errors["not_selected"] = "The employee can only be assigned a single branch."
 
         if to_save:
             emp.save()
-
-        return emp
+        return emp, errors
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])

@@ -8,22 +8,24 @@ def application_list():
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
 
-  fosId = request.args.get('fosId', '')
+  # fosId = request.args.get('fosId', '')
   branchId = request.args.get('branchId', '')
   hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
-  if (fosId is not None) and (fosId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, id=fosId)
+  # if (fosId is not None) and (fosId != ''):
+  #   fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, id=fosId)
 
-  elif (branchId is not None) and (branchId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, org_branch=branchId)
+  fos_agents = []
+  if (branchId is not None) and (branchId != ''):
+    branch = EsthenosOrgBranch.objects.get(id=branchId)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, branches__contains=branch)
 
-  else:
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy)
-
-  kwargs = locals()
-  print hierarchy
+  #
+  # else:
+  #   fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy)
+  print branchId
   print fos_agents
+  kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
 
 
@@ -70,7 +72,7 @@ def application_list_branch(branch_id):
   else:
     applications = EsthenosOrgApplication.objects.filter(organisation=org)
 
-  title = "Branch: {branch}".format(branch=branch.branch_name)
+  title = "Branch: {branch}".format(branch=branch.name)
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
 

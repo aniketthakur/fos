@@ -13,7 +13,7 @@
         <div class="grid-body">
             {% with messages = get_flashed_messages() %}
               {% if messages %}
-                <ul class=flashes>
+                <ul class="flashes list-unstyled alert alert-danger">
                   {% for message in messages %}
                     <li>{{ message }}</li>
                   {% endfor %}
@@ -317,7 +317,7 @@
         if (level >= accessLevelGTE["states"]) {
           $("#states").find('*').prop('disabled', false);
           var geoTag = "states";
-          var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/";
+          var geoUrl = "{{ url_for("admin_views.admin_org_states_list", org_id=org.id) }}/";
           populateGeoItems(geoTag, geoUrl,false);
         }
       });
@@ -335,7 +335,7 @@
           startOnDeselect();
         }
         var geoTag = "regions";
-        var geoUrl = "{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/" + this.value;
+        var geoUrl = "{{ url_for("admin_views.admin_org_states_list", org_id=org.id) }}?state_id=" + this.value;
         if(level >= accessLevelGTE["regions"] && $(this).prop("checked")==true){
           $("#"+geoTag).find('*').prop('disabled', false);
           populateGeoItems(geoTag, geoUrl, false);
@@ -347,7 +347,7 @@
           startOnDeselect();
         }
         var geoTag = "areas";
-        var geoUrl = "{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}/" + this.value;
+        var geoUrl = "{{ url_for("admin_views.admin_org_regions_list", org_id=org.id) }}?region_id=" + this.value;
         if(level >= accessLevelGTE["areas"] && $(this).prop("checked")==true){
           $("#"+geoTag).find('*').prop('disabled', false);
           populateGeoItems(geoTag, geoUrl, false);
@@ -359,7 +359,7 @@
           startOnDeselect();
         }
         var geoTag = "branches";
-        var geoUrl = "{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}/" + this.value;
+        var geoUrl = "{{ url_for("admin_views.admin_org_areas_list", org_id=org.id) }}?area_id=" + this.value;
         if(level >= accessLevelGTE["branches"] && $(this).prop("checked")==true){
           $("#"+geoTag).find('*').prop('disabled', false);
           populateGeoItems(geoTag, geoUrl, false);
@@ -413,7 +413,6 @@
           $.each(reminder, function(k, v) {
             var geoValue = selection[geoTag][v];
             var geoElement = "#" + geoTag;
-
             var opening;
             if(disable){
               opening = '<input type="checkbox" name="'+geoTag+'" class="geo-select geo-'+geoTag+'" value='+geoValue.id+' size="10" disabled/>';
@@ -431,10 +430,10 @@
 
       function populateGeoElements(geoTag, geoCollection,disable) {
         var baseURL={
-          "states":"{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}/",
-          "regions":"{{ url_for("admin_views.admin_org_regions_update", org_id=org.id) }}/",
-          "areas":"{{ url_for("admin_views.admin_org_areas_update", org_id=org.id) }}/",
-          "branches":"{{ url_for("admin_views.admin_org_branches_update", org_id=org.id) }}/",
+          "states":"{{ url_for("admin_views.admin_org_states_list", org_id=org.id) }}?state_id=",
+          "regions":"{{ url_for("admin_views.admin_org_regions_list", org_id=org.id) }}?region_id=",
+          "areas":"{{ url_for("admin_views.admin_org_areas_list", org_id=org.id) }}?area_id=",
+          "branches":"{{ url_for("admin_views.admin_org_branches_list", org_id=org.id) }}branch_id=?",
         };
 
         $.each(geoCollection, function(k, v){
@@ -452,7 +451,7 @@
           var element = $(geoElement).append(html_tag);
 
           if(geoTag=="states"){
-            populateGeoItems(geoTag,baseURL[geoTag],stateDisable);
+            populateGeoItems(geoTag,"{{ url_for("admin_views.admin_org_states_list", org_id=org.id) }}",stateDisable);
           }
           var appendDisable=true;
           var geoURL = baseURL[geoTag] + v.id;
