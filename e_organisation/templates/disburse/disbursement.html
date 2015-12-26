@@ -209,6 +209,7 @@
               $.each(children, function(k, v){
                 $(this).remove();
               });
+              $('#'+geoTag).append('<option selected disabled>search by '+geoTag+'</option>');
             }
             $('#state').change('option', function(e){
               var stateID = $(this).val();
