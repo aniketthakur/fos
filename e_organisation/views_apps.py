@@ -13,7 +13,7 @@ def application_list():
   fos_agents = []
   if (branchId is not None) and (branchId != ''):
     branch = EsthenosOrgBranch.objects.get(id=branchId)
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, branches__contains=branch)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__contains=branch)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)

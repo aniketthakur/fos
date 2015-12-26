@@ -954,10 +954,10 @@ class EsthenosUser(BaseUser):
     postal_telephone = db.StringField(max_length=20, required=False)
     postal_tele_code = db.StringField(max_length=20, required=False)
 
-    states = db.ListField(db.ReferenceField(EsthenosOrgState))
-    regions = db.ListField(db.ReferenceField(EsthenosOrgRegion))
-    areas = db.ListField(db.ReferenceField(EsthenosOrgArea))
-    branches = db.ListField(db.ReferenceField(EsthenosOrgBranch))
+    access_states = db.ListField(db.ReferenceField(EsthenosOrgState))
+    access_regions = db.ListField(db.ReferenceField(EsthenosOrgRegion))
+    access_areas = db.ListField(db.ReferenceField(EsthenosOrgArea))
+    access_branches = db.ListField(db.ReferenceField(EsthenosOrgBranch))
 
     hierarchy = db.ReferenceField(EsthenosOrgHierarchy, required=True)
     organisation = db.ReferenceField(EsthenosOrg, required=True)
@@ -965,19 +965,19 @@ class EsthenosUser(BaseUser):
 
     def append_place(self, place):
         if isinstance(place, EsthenosOrgState):
-            self.states.append(place)
+            self.access_states.append(place)
 
         if isinstance(place, EsthenosOrgRegion):
-            self.regions.append(place)
+            self.access_regions.append(place)
 
         if isinstance(place, EsthenosOrgArea):
-            self.areas.append(place)
+            self.access_areas.append(place)
 
         if isinstance(place, EsthenosOrgBranch):
-            self.branches.append(place)
+            self.access_branches.append(place)
 
         if isinstance(place, EsthenosOrgCenter):
-            self.centers.append(place)
+            self.access_centers.append(place)
         place.owner = self
         place.save()
         self.save()
@@ -985,10 +985,52 @@ class EsthenosUser(BaseUser):
     def is_admin(self):
         return self.hierarchy.is_admin()
 
+    def access_geo(self, place_string):
+        level = self.hierarchy.level
+        value = -1
+        if place_string=="states":
+            value = 3
+        if place_string=="regions":
+            value = 4
+        if place_string=="areas":
+            value = 5
+        if place_string=="branches":
+            value = 6
+        if place_string=="centers":
+            value = 7
+        if place_string=="groups":
+            value = 8
+
+        return level<=value
+
     def is_allowed(self, feature):
         # delegating it to hierarchy,
         # so that this may later be fine tuned.
         return self.hierarchy.has_permission(feature)
+
+    @property
+    def states(self):
+        if self.hierarchy.access=="":
+            return EsthenosOrgState.objects.filter(organisation=self.organisation)
+        return self.access_states
+
+    @property
+    def regions(self):
+        if self.hierarchy.access=="":
+            return EsthenosOrgRegion.objects.filter(organisation=self.organisation)
+        return self.access_regions
+
+    @property
+    def areas(self):
+        if self.hierarchy.access=="":
+            return EsthenosOrgArea.objects.filter(organisation=self.organisation)
+        return self.access_areas
+
+    @property
+    def branches(self):
+        if self.hierarchy.access=="":
+            return EsthenosOrgBranch.objects.filter(organisation=self.organisation)
+        return self.access_branches
 
     @property
     def name(self):

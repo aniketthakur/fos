@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <form class="form-no-horizontal-spacing search-container" method="get" action="{{ url_for("organisation_views.scrutiny") }}">
-            {% if user.states|length %}
+            {% if user.access_geo("states") %}
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="state" name="stateId">
                     <option selected disabled>search by state</option>
@@ -20,7 +20,7 @@
                 <div class="clearfix"></div>
             </div>
             {% endif %}
-            {% if user.states|length or user.regions|length %}
+            {% if user.access_geo("regions") %}
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="region" name="regionId">
                     <option selected disabled>search by region</option>
@@ -31,7 +31,7 @@
                 <div class="clearfix"></div>
             </div>
             {% endif %}
-            {% if user.states|length or user.regions|length or user.areas|length %}
+            {% if user.access_geo("areas") %}
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="area" name="areaId">
                     <option selected disabled>search by area</option>
@@ -42,7 +42,7 @@
                 <div class="clearfix"></div>
             </div>
             {% endif %}
-            {% if user.states|length or user.regions|length or user.areas|length or user.branches|length %}
+            {% if user.access_geo("branches") %}
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="branch" name="branchId">
                     <option selected disabled>search by branch</option>
