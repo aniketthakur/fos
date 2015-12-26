@@ -2,7 +2,7 @@ import json
 import requests
 
 
-# url = "http://%s/api/token/sourcing" % ("localhost:8085")
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
 # payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
 # response = requests.post(url, data=payload)
 # print response.text

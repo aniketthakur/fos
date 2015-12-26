@@ -149,22 +149,13 @@ def applications_track(app_id):
 def scrutiny():
   user = EsthenosUser.objects.get(id = current_user.id)
   groups = EsthenosOrgGroup.objects.filter(organisation = user.organisation)
+  org = user.organisation
 
-  appId = request.args.get('appId', '')
-  appName = request.args.get('appName', '')
-  groupId = request.args.get('groupId', '')
-  groupName = request.args.get('groupName', '')
-  centerName = request.args.get('centerName', '')
-  scrutinyStatus = request.args.get('scrutinyStatus', '')
-
-  if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=191)
-
-  elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=191)
-
-  else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
+  branchId = request.args.get('branchId', None)
+  applications = []
+  if (branchId is not None) and (branchId != ""):
+      branch = EsthenosOrgBranch.objects.get(id=branchId)
+      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=191)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
