@@ -20,7 +20,7 @@
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="state" name="stateId">
                     <option selected disabled>search by state</option>
-                    {% for entity in user.access_states %}
+                    {% for entity in user.states %}
                     <option class="geo-state" value="{{ entity.id }}">{{ entity.name }}</option>
                     {% endfor %}
                 </select>
@@ -31,7 +31,7 @@
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="region" name="regionId">
                     <option selected disabled>search by region</option>
-                    {% for entity in user.access_regions %}
+                    {% for entity in user.regions %}
                     <option class="geo-region" value="{{ entity.id }}">{{ entity.name }}</option>
                     {% endfor %}
                 </select>
@@ -42,7 +42,7 @@
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="area" name="areaId">
                     <option selected disabled>search by area</option>
-                    {% for entity in user.access_areas %}
+                    {% for entity in user.areas %}
                     <option class="geo-area" value="{{ entity.id }}">{{ entity.name }}</option>
                     {% endfor %}
                 </select>
@@ -53,7 +53,7 @@
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="branch" name="branchId">
                     <option selected disabled>search by branch</option>
-                    {% for entity in user.access_branches %}
+                    {% for entity in user.branches %}
                     <option class="geo-branch" value="{{ entity.id }}">{{ entity.name }}</option>
                     {% endfor %}
                 </select>
