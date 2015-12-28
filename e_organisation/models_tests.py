@@ -636,7 +636,7 @@ class TestEsthenosStatsMonth(unittest.TestCase):
         self.assertEqual(5, len(m1.stats_total))
 
         t4 = time + timedelta(days=5)
-        d4 = d1 * 5
+        d4 = d1 * 2
         d4.key = t4.strftime("%Y-%m-%d")
         self.assertEqual(d4, m1.week(t4))
 
@@ -651,7 +651,7 @@ class TestEsthenosStatsMonth(unittest.TestCase):
         self.assertEqual(8, len(m1.stats_total))
 
         t4 = time + timedelta(days=7)
-        d4 = d1 * 7
+        d4 = d1 * 4
         d4.key = t4.strftime("%Y-%m-%d")
         self.assertEqual(d4, m1.week(t4))
 
@@ -666,7 +666,7 @@ class TestEsthenosStatsMonth(unittest.TestCase):
         self.assertEqual(14, len(m1.stats_total))
 
         t4 = time + timedelta(days=12)
-        d4 = d1 * 7
+        d4 = d1 * 2
         d4.key = t4.strftime("%Y-%m-%d")
         self.assertEqual(d4, m1.week(t4))
 
@@ -681,9 +681,9 @@ class TestEsthenosStatsMonth(unittest.TestCase):
         self.assertEqual(24, len(m1.stats_total))
 
         t4 = time + timedelta(days=10)
-        d4 = d1 * 10
+        d4 = d1 * 7
         d4.key = t4.strftime("%Y-%m-%d")
-        self.assertEqual(d4, m1.week(t4, timedelta(days=10)))
+        self.assertEqual(d4, m1.week(t4))
 
 
 class TestEsthenosStatsGeo(unittest.TestCase):

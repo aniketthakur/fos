@@ -420,10 +420,10 @@ class EsthenosOrgStatsMonth(db.Document):
         key = time.strftime('%Y-%m-%d')
         return self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
 
-    def week(self, time, days=timedelta(days=7)):
+    def week(self, time):
         """ return the latest stat as of for the given week. """
         day1 = self.day(time)
-        day2 = self.day(time - days)
+        day2 = self.day(time - timedelta(days=(time.weekday()+1)))
         return day1 - day2
 
     def update(self, stat, time):
