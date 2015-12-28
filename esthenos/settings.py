@@ -66,7 +66,7 @@ ORGS_SETTINGS = [
 
 SERVER_SETTINGS = {
     "org" : "fos-test.esthenos.com",
-    "host" : ["fos-test.prod.esthenos.com"],
+    "host" : ["localhost"],
     "git-branch" : "fos-test",
     "user-deploy" : "ubuntu"
 }
@@ -74,7 +74,7 @@ SERVER_SETTINGS = {
 MONGODB_SETTINGS = {
     'DB': 'fos-test',
     'PORT': 27017,
-    'HOST': 'mongodb.prod.esthenos.com'
+    'HOST': 'localhost'
 }
 
 CELERY_SETTINGS = {
