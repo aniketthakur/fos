@@ -8,34 +8,18 @@ from views_cbcheck import *
 
 # import views for feature - psychometric test.
 from views_psychometric import *
-
+from esthenos import settings
 
 @organisation_views.route('/', methods=["GET"])
 @login_required
 def home_page():
-    t = datetime.datetime.now()
     user = EsthenosUser.objects.get(id=current_user.id)
+    date = request.args.get('date', datetime.datetime.now().strftime("%Y%m%d"))
+    time = datetime.datetime.strptime(date, "%Y%m%d")
+    month = user.stats(time)
+    todays, weekly, monthly = month.only(time), month.week(time), month.day(time)
 
-    hour = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=t.hour)
-    hourly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=hour, granularity="HOURLY"
-    )
-
-    today = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=0)
-    todays, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=today, granularity="TODAY"
-    )
-
-    #todo: fix start of the week.
-    week = datetime.datetime(year=t.year, month=t.month, day=1)
-    weekly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=week, granularity="WEEKLY"
-    )
-
-    month = datetime.datetime(year=t.year, month=t.month, day=1)
-    monthly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=month, granularity="MONTHLY"
-    )
+    focus = settings.SERVER_SETTINGS["location"]
 
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)

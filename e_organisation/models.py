@@ -118,22 +118,64 @@ class EsthenosOrgStatsApplication(object):
         self.loan_applied = 0 # application submitted.
         self.loan_disbursed = 0
 
+        self.scrutiny_done = 0
+        self.scrutiny_ready = 0
+        self.scrutiny_failed = 0
+        self.scrutiny_passed = 0
+        self.scrutiny_onhold = 0
+
+        self.sanction_done = 0
+        self.sanction_ready = 0
+        self.sanction_failed = 0
+        self.sanction_passed = 0
+        self.sanction_onhold = 0
+
     def __add__(self, other):
         """ sum up application stats to return group stats."""
-        self.cb_passed += other.cb_passed
-        self.cb_failed += other.cb_failed
+        stats = EsthenosOrgStatsApplication()
+        stats.cb_passed = self.cb_passed + other.cb_passed
+        stats.cb_failed = self.cb_failed + other.cb_failed
+        stats.cf_passed = self.cf_passed + other.cf_passed
+        stats.cf_failed = self.cf_failed + other.cf_failed
+        stats.kyc_passed = self.kyc_passed + other.kyc_passed
+        stats.kyc_failed = self.kyc_failed + other.kyc_failed
+        stats.loan_amount = self.loan_amount + other.loan_amount
+        stats.loan_leaked = self.loan_leaked + other.loan_leaked
+        stats.loan_applied = self.loan_applied + other.loan_applied
+        stats.loan_disbursed = self.loan_disbursed + other.loan_disbursed
+        stats.sanction_done = self.sanction_done + other.sanction_done
+        stats.sanction_ready = self.sanction_ready + other.sanction_ready
+        stats.sanction_failed = self.sanction_failed + other.sanction_failed
+        stats.sanction_passed = self.sanction_passed + other.sanction_passed
+        stats.sanction_onhold = self.sanction_onhold + other.sanction_onhold
+        stats.scrutiny_done = self.scrutiny_done + other.scrutiny_done
+        stats.sanction_ready = self.scrutiny_ready + other.scrutiny_ready
+        stats.sanction_failed = self.scrutiny_failed + other.scrutiny_failed
+        stats.sanction_passed = self.scrutiny_passed + other.scrutiny_passed
+        stats.sanction_onhold = self.scrutiny_onhold + other.scrutiny_onhold
+        return stats
 
-        self.cf_passed += other.cf_passed
-        self.cf_failed += other.cf_failed
-
-        self.kyc_passed += other.kyc_passed
-        self.kyc_failed += other.kyc_failed
-
-        self.loan_amount += other.loan_amount
-        self.loan_leaked += other.loan_leaked
-        self.loan_applied += other.loan_applied
-        self.loan_disbursed += other.loan_disbursed
-        return self
+    def __eq__(self, other):
+        return self.cb_passed == other.cb_passed \
+        and self.cb_failed == other.cb_failed \
+        and self.cf_passed == other.cf_passed \
+        and self.cf_failed == other.cf_failed \
+        and self.kyc_passed == other.kyc_passed \
+        and self.kyc_failed == other.kyc_failed \
+        and self.loan_amount == other.loan_amount \
+        and self.loan_leaked == other.loan_leaked \
+        and self.loan_applied == other.loan_applied \
+        and self.loan_disbursed == other.loan_disbursed \
+        and self.sanction_done == other.sanction_done \
+        and self.sanction_ready == other.sanction_ready \
+        and self.sanction_failed == other.sanction_failed \
+        and self.sanction_passed == other.sanction_passed \
+        and self.sanction_onhold == other.sanction_onhold \
+        and self.scrutiny_done == other.scrutiny_done \
+        and self.scrutiny_ready == other.scrutiny_ready \
+        and self.scrutiny_failed == other.scrutiny_failed \
+        and self.scrutiny_passed == other.scrutiny_passed \
+        and self.scrutiny_onhold == other.scrutiny_onhold
 
 class EsthenosOrgLocation(db.EmbeddedDocument):
     lat = db.FloatField(default=0.0)
@@ -167,77 +209,6 @@ class EsthenosOrgTimeSlot(db.Document):
       return "%s, %s" % (self.time, self.day)
 
 
-class EsthenosOrgStatsGroup(object):
-
-    def __init__(self, stats):
-        self.cb_passed = stats.cb_passed
-        self.cb_failed = stats.cf_failed
-
-        self.cf_passed = stats.cf_passed
-        self.cf_failed = stats.cf_failed
-
-        self.kyc_passed = stats.kyc_passed
-        self.kyc_failed = stats.kyc_failed
-
-        self.cgt1_ready = 0
-        self.cgt1_passed = 0
-        self.cgt1_failed = 0
-
-        self.cgt2_ready = 0
-        self.cgt2_passed = 0
-        self.cgt2_failed = 0
-
-        self.grt_ready = 0
-        self.grt_passed = 0
-        self.grt_failed = 0
-
-        self.telecalling_ready = 0
-        self.telecalling_passed = 0
-        self.telecalling_failed = 0
-
-        self.disbursement_tat = 0
-        self.disbursement_done = 0
-        self.disbursement_ready = 0
-
-        self.loans_leaked = stats.loan_leaked
-        self.loans_applied = stats.loan_applied
-        self.loans_disbursed = stats.loan_disbursed
-        self.loans_disbursed_amount = stats.loan_amount
-
-    def __add__(self, other):
-        """ sum up group status to return center status. """
-        self.kyc_passed += other.kyc_passed
-        self.kyc_failed += other.kyc_failed
-
-        self.cb_passed += other.cb_passed
-        self.cb_failed += other.cb_failed
-
-        self.cf_passed += other.cf_passed
-        self.cf_failed += other.cf_failed
-
-        self.grt_passed += other.grt_passed
-        self.grt_failed += other.grt_failed
-
-        self.cgt1_passed += other.cgt1_passed
-        self.cgt1_failed += other.cgt1_passed
-
-        self.cgt2_passed += other.cgt2_passed
-        self.cgt2_failed += other.cgt2_passed
-
-        self.telecalling_passed += other.telecalling_passed
-        self.telecalling_failed += other.telecalling_failed
-
-        self.disbursement_tat += other.disbursement_tat
-        self.disbursement_done += other.disbursement_done
-        self.disbursement_ready += other.disbursement_ready
-
-        self.loans_leaked += other.loans_leaked
-        self.loans_applied += other.loans_applied
-        self.loans_disbursed += other.loans_disbursed
-        self.loans_disbursed_amount += other.loans_disbursed_amount
-        return other
-
-
 class EsthenosOrgStatsDay(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     created = db.DateTimeField(default=datetime.datetime.now())
@@ -261,14 +232,6 @@ class EsthenosOrgStatsDay(db.Document):
     cgt2_passed = db.IntField(default=0)
     cgt2_failed = db.IntField(default=0)
 
-    grt_ready  = db.IntField(default=0)
-    grt_passed = db.IntField(default=0)
-    grt_failed = db.IntField(default=0)
-
-    telecalling_ready  = db.IntField(default=0)
-    telecalling_passed = db.IntField(default=0)
-    telecalling_failed = db.IntField(default=0)
-
     disbursement_tat = db.IntField(default=0)
     disbursement_done = db.IntField(default=0)
     disbursement_ready = db.IntField(default=0)
@@ -278,86 +241,156 @@ class EsthenosOrgStatsDay(db.Document):
     loans_disbursed = db.IntField(default=0)
     loans_disbursed_amount = db.FloatField(default=0)
 
-    count_disbursed_groups = db.IntField(default=0)
-    count_disbursed_centers = db.IntField(default=0)
+    count_scrutiny_ready = db.IntField(default=0)
+    count_scrutiny_passed = db.IntField(default=0)
+    count_scrutiny_failed = db.IntField(default=0)
+    count_scrutiny_onhold = db.IntField(default=0)
+
+    count_sanctions_ready = db.IntField(default=0)
+    count_sanctions_passed = db.IntField(default=0)
+    count_sanctions_failed = db.IntField(default=0)
+    count_sanctions_onhold = db.IntField(default=0)
+
+    def describe(self):
+        print "key                     :", self.key
+        print "cb_passed               :", self.cb_passed
+        print "cb_failed               :", self.cb_failed
+        print "cf_passed               :", self.cf_passed
+        print "cf_failed               :", self.cf_failed
+        print "kyc_passed              :", self.kyc_passed
+        print "kyc_failed              :", self.kyc_failed
+        print "cgt1_ready              :", self.cgt1_ready
+        print "cgt1_passed             :", self.cgt1_passed
+        print "cgt1_failed             :", self.cgt1_failed
+        print "cgt2_ready              :", self.cgt2_ready
+        print "cgt2_passed             :", self.cgt2_passed
+        print "cgt2_failed             :", self.cgt2_failed
+        print "disbursement_tat        :", self.disbursement_tat
+        print "disbursement_done       :", self.disbursement_done
+        print "disbursement_ready      :", self.disbursement_ready
+        print "loans_leaked            :", self.loans_leaked
+        print "loans_applied           :", self.loans_applied
+        print "loans_disbursed         :", self.loans_disbursed
+        print "loans_disbursed_amount  :", self.loans_disbursed_amount
+        print "count_scrutiny_ready    :", self.count_scrutiny_ready
+        print "count_scrutiny_passed   :", self.count_scrutiny_passed
+        print "count_scrutiny_failed   :", self.count_scrutiny_failed
+        print "count_scrutiny_onhold   :", self.count_scrutiny_onhold
+        print "count_sanctions_ready   :", self.count_sanctions_ready
+        print "count_sanctions_passed  :", self.count_sanctions_passed
+        print "count_sanctions_failed  :", self.count_sanctions_failed
+        print "count_sanctions_onhold  :", self.count_sanctions_onhold
 
     def __add__(self, other):
-        self.cb_passed += other.cb_passed
-        self.cb_failed += other.cb_failed
+        stats = EsthenosOrgStatsDay(organisation=self.organisation, key=self.key)
+        stats.cb_passed = self.cb_passed + other.cb_passed
+        stats.cb_failed = self.cb_failed + other.cb_failed
 
-        self.cf_passed += other.cf_passed
-        self.cf_failed += other.cb_failed
+        stats.cf_passed = self.cf_passed + other.cf_passed
+        stats.cf_failed = self.cf_failed + other.cf_failed
 
-        self.kyc_passed += other.kyc_passed
-        self.kyc_failed += other.kyc_failed
+        stats.kyc_passed = self.kyc_passed + other.kyc_passed
+        stats.kyc_failed = self.kyc_failed + other.kyc_failed
 
-        self.cgt1_ready  += other.cgt1_ready
-        self.cgt1_passed += other.cgt1_passed
-        self.cgt1_failed += other.cgt1_failed
+        stats.cgt1_ready  = self.cgt1_ready + other.cgt1_ready
+        stats.cgt1_passed = self.cgt1_passed + other.cgt1_passed
+        stats.cgt1_failed = self.cgt1_failed + other.cgt1_failed
 
-        self.cgt2_ready  += other.cgt2_ready
-        self.cgt2_passed += other.cgt2_passed
-        self.cgt2_failed += other.cgt2_failed
+        stats.cgt2_ready  = self.cgt2_ready + other.cgt2_ready
+        stats.cgt2_passed = self.cgt2_passed + other.cgt2_passed
+        stats.cgt2_failed = self.cgt2_failed + other.cgt2_failed
 
-        self.grt_ready  += other.grt_ready
-        self.grt_passed += other.grt_passed
-        self.grt_failed += other.grt_failed
+        stats.disbursement_tat = self.disbursement_tat + other.disbursement_tat
+        stats.disbursement_done = self.disbursement_done + other.disbursement_done
+        stats.disbursement_ready = self.disbursement_ready + other.disbursement_ready
 
-        self.telecalling_ready  += other.telecalling_ready
-        self.telecalling_passed += other.telecalling_passed
-        self.telecalling_failed += other.telecalling_failed
+        stats.loans_leaked = self.loans_leaked + other.loans_leaked
+        stats.loans_applied = self.loans_applied + other.loans_applied
+        stats.loans_disbursed = self.loans_disbursed + other.loans_disbursed
+        stats.loans_disbursed_amount = self.loans_disbursed_amount + other.loans_disbursed_amount
 
-        self.disbursement_tat += other.disbursement_tat
-        self.disbursement_done += other.disbursement_done
-        self.disbursement_ready += other.disbursement_ready
+        stats.count_sanctions_ready = self.count_sanctions_ready + other.count_sanctions_ready
+        stats.count_sanctions_passed = self.count_sanctions_passed + other.count_sanctions_passed
+        stats.count_sanctions_failed = self.count_sanctions_failed + other.count_sanctions_failed
+        stats.count_sanctions_onhold = self.count_sanctions_onhold + other.count_sanctions_onhold
 
-        self.loans_leaked += other.loans_leaked
-        self.loans_applied += other.loans_applied
-        self.loans_disbursed += other.loans_disbursed
-        self.loans_disbursed_amount = other.loans_disbursed_amount
-
-        self.count_disbursed_groups += other.count_disbursed_groups
-        self.count_disbursed_centers += other.count_disbursed_centers
-        return self
+        stats.count_scrutiny_ready = self.count_scrutiny_ready + other.count_scrutiny_ready
+        stats.count_scrutiny_passed = self.count_scrutiny_passed + other.count_scrutiny_passed
+        stats.count_scrutiny_failed = self.count_scrutiny_failed + other.count_scrutiny_failed
+        stats.count_scrutiny_onhold = self.count_scrutiny_onhold + other.count_scrutiny_onhold
+        return stats
 
     def __sub__(self, other):
-        self.cb_passed -= other.cb_passed
-        self.cb_failed -= other.cb_failed
+        stats = EsthenosOrgStatsDay(organisation=self.organisation, key=self.key)
+        stats.cb_passed = self.cb_passed - other.cb_passed
+        stats.cb_failed = self.cb_failed - other.cb_failed
 
-        self.cf_passed -= other.cf_passed
-        self.cf_failed -= other.cb_failed
+        stats.cf_passed = self.cf_passed - other.cf_passed
+        stats.cf_failed = self.cf_failed - other.cf_failed
 
-        self.kyc_passed -= other.kyc_passed
-        self.kyc_failed -= other.kyc_failed
+        stats.kyc_passed = self.kyc_passed - other.kyc_passed
+        stats.kyc_failed = self.kyc_failed - other.kyc_failed
 
-        self.cgt1_ready  -= other.cgt1_ready
-        self.cgt1_passed -= other.cgt1_passed
-        self.cgt1_failed -= other.cgt1_failed
+        stats.cgt1_ready  = self.cgt1_ready - other.cgt1_ready
+        stats.cgt1_passed = self.cgt1_passed - other.cgt1_passed
+        stats.cgt1_failed = self.cgt1_failed - other.cgt1_failed
 
-        self.cgt2_ready  -= other.cgt2_ready
-        self.cgt2_passed -= other.cgt2_passed
-        self.cgt2_failed -= other.cgt2_failed
+        stats.cgt2_ready  = self.cgt2_ready - other.cgt2_ready
+        stats.cgt2_passed = self.cgt2_passed - other.cgt2_passed
+        stats.cgt2_failed = self.cgt2_failed - other.cgt2_failed
 
-        self.grt_ready  -= other.grt_ready
-        self.grt_passed -= other.grt_passed
-        self.grt_failed -= other.grt_failed
+        stats.disbursement_tat = self.disbursement_tat - other.disbursement_tat
+        stats.disbursement_done = self.disbursement_done - other.disbursement_done
+        stats.disbursement_ready = self.disbursement_ready - other.disbursement_ready
 
-        self.telecalling_ready  -= other.telecalling_ready
-        self.telecalling_passed -= other.telecalling_passed
-        self.telecalling_failed -= other.telecalling_failed
+        stats.loans_leaked = self.loans_leaked - other.loans_leaked
+        stats.loans_applied = self.loans_applied - other.loans_applied
+        stats.loans_disbursed = self.loans_disbursed - other.loans_disbursed
+        stats.loans_disbursed_amount = self.loans_disbursed_amount - other.loans_disbursed_amount
 
-        self.disbursement_tat -= other.disbursement_tat
-        self.disbursement_done -= other.disbursement_done
-        self.disbursement_ready -= other.disbursement_ready
+        stats.count_sanctions_ready = self.count_sanctions_ready - other.count_sanctions_ready
+        stats.count_sanctions_passed = self.count_sanctions_passed - other.count_sanctions_passed
+        stats.count_sanctions_failed = self.count_sanctions_failed - other.count_sanctions_failed
+        stats.count_sanctions_onhold = self.count_sanctions_onhold - other.count_sanctions_onhold
 
-        self.loans_leaked -= other.loans_leaked
-        self.loans_applied -= other.loans_applied
-        self.loans_disbursed -= other.loans_disbursed
-        self.loans_disbursed_amount = other.loans_disbursed_amount
+        stats.count_scrutiny_ready = self.count_scrutiny_ready - other.count_scrutiny_ready
+        stats.count_scrutiny_passed = self.count_scrutiny_passed - other.count_scrutiny_passed
+        stats.count_scrutiny_failed = self.count_scrutiny_failed - other.count_scrutiny_failed
+        stats.count_scrutiny_onhold = self.count_scrutiny_onhold - other.count_scrutiny_onhold
+        return stats
 
-        self.count_disbursed_groups -= other.count_disbursed_groups
-        self.count_disbursed_centers -= other.count_disbursed_centers
-        return self
+    def __mul__(self, other):
+        return reduce(lambda x, y: x + y, [self for index in range(other)])
+
+    def __eq__(self, other):
+        return self.key == other.key \
+           and self.cb_passed == self.cb_passed \
+           and self.cb_failed == other.cb_failed \
+           and self.cf_passed == other.cf_passed \
+           and self.cf_failed == other.cf_failed \
+           and self.kyc_passed == other.kyc_passed \
+           and self.kyc_failed == other.kyc_failed \
+           and self.cgt1_ready  == other.cgt1_ready \
+           and self.cgt1_passed == other.cgt1_passed \
+           and self.cgt1_failed == other.cgt1_failed \
+           and self.cgt2_ready  == other.cgt2_ready \
+           and self.cgt2_passed == other.cgt2_passed \
+           and self.cgt2_failed == other.cgt2_failed \
+           and self.disbursement_tat == other.disbursement_tat \
+           and self.disbursement_done == other.disbursement_done \
+           and self.disbursement_ready == other.disbursement_ready \
+           and self.loans_leaked == other.loans_leaked \
+           and self.loans_applied == other.loans_applied \
+           and self.loans_disbursed == other.loans_disbursed \
+           and self.loans_disbursed_amount == other.loans_disbursed_amount \
+           and self.count_sanctions_ready == other.count_sanctions_ready \
+           and self.count_sanctions_passed == other.count_sanctions_passed \
+           and self.count_sanctions_failed == other.count_sanctions_failed \
+           and self.count_sanctions_onhold == other.count_sanctions_onhold \
+           and self.count_scrutiny_ready == other.count_scrutiny_ready \
+           and self.count_scrutiny_passed == other.count_scrutiny_passed \
+           and self.count_scrutiny_failed == other.count_scrutiny_failed \
+           and self.count_scrutiny_onhold == other.count_scrutiny_onhold \
 
     def __unicode__(self):
         return "day-stats: %s" % self.key
@@ -375,67 +408,64 @@ class EsthenosOrgStatsMonth(db.Document):
 
     # k, v = year-month-day, EsthenosOrgStatsDay
     stats_daily = db.DictField(required=False)
+    stats_total = db.DictField(required=False)
 
-    def day(self, time=datetime.datetime.now()):
+    def day(self, time):
         """ return the latest stat as of for the given day. """
         key = time.strftime('%Y-%m-%d')
-        return self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation))
+        return self.stats_total.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
 
-    def only(self, time=datetime.datetime.now(), delta=timedelta(days=1)):
+    def only(self, time, delta=timedelta(days=1)):
         """ return the latest stat as of for the given day. """
         key = time.strftime('%Y-%m-%d')
-        day1 = self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation))
+        return self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
 
-        key = (time - delta).strftime('%Y-%m-%d')
-        day2 = self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation))
+    def week(self, time, days=timedelta(days=7)):
+        """ return the latest stat as of for the given week. """
+        day1 = self.day(time)
+        day2 = self.day(time - days)
         return day1 - day2
 
-    def week(self, time=datetime.datetime.now()):
-        """ return the latest stat as of for the given week. """
-        times = [(time-timedelta(days=i)) for i in range(7)]
-        stats = [self.day(time) for time in times]
-        return reduce(lambda x, y: x + y, stats)
-
-    @property
-    def stats(self):
-        """ return the latest stat as for today or New """
-        key = datetime.datetime.now()
-        return self.day(key)
-
-    def update(self, stat, time=datetime.datetime.now()):
+    def update(self, stat, time):
         """ update the stat object for today in the daily list. """
         curkey = time.strftime('%Y-%m-%d')
-        curday = self.stats_daily.get(curkey, EsthenosOrgStatsDay(organisation=self.organisation))
+        if curkey in self.stats_daily: self.stats_daily.get(curkey).delete()
+        if curkey in self.stats_total: self.stats_total.get(curkey).delete()
 
         # previous day, if its non-existent or prev month (ie. again not existent) we're good.
         prevkey = (time - timedelta(days=1)).strftime('%Y-%m-%d')
-        prevday = self.stats_daily.get(prevkey, EsthenosOrgStatsDay(organisation=self.organisation))
+        prevday = self.stats_total.get(prevkey, EsthenosOrgStatsDay(organisation=self.organisation, key=prevkey))
 
-        # reset the cur-day stat object.
-        curday -= curday
+        stat.key = curkey
+        stat.save()
+        self.stats_daily.update({curkey: stat})
 
-        # increment cur-day with statday.
-        curday += stat
-
-        # increment cur-day with prevday.
-        curday += prevday
-
-        # save cur-day stat.
-        curday.save()
-
-        self.stats_daily.update({curkey: curday})
+        total = stat + prevday
+        total.key = curkey
+        total.save()
+        self.stats_total.update({curkey: total})
         self.save()
 
     def __add__(self, other):
         """ returns sum of month stats, required for charts where users have sparse regions allocated. """
-        stat = EsthenosOrgStatsMonth(organisation=self.organisation)
-        keys = set(self.stats_daily.keys()).intersection(other.stats_daily.keys())
+        stat = EsthenosOrgStatsMonth(organisation=self.organisation, key=self.key)
+        keys = set(self.stats_daily.keys()).union(other.stats_daily.keys())
 
         for key in keys:
-            stat1 = self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation))
-            stat2 = other.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation))
-            stat.stats_daily({key, stat1 + stat2})
+            stat1 = self.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
+            stat2 = other.stats_daily.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
+            stat.stats_daily.update({key: stat1 + stat2})
+
+            stat1 = self.stats_total.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
+            stat2 = other.stats_total.get(key, EsthenosOrgStatsDay(organisation=self.organisation, key=key))
+            stat.stats_total.update({key: stat1 + stat2})
         return stat
+
+    def __eq__(self, other):
+        return self.key == other.key \
+           and len(self.stats_daily) == len(other.stats_daily) \
+           and set(self.stats_daily) == set(other.stats_daily) \
+           and reduce(lambda x, y: x == y, [self.stats_daily[key] == other.stats_daily[key] for key in self.stats_daily] + [True])
 
     def __unicode__(self):
         return "month-stats: %s" % self.key
@@ -449,31 +479,20 @@ class EsthenosOrgStatsGeo(db.Document):
     # k, v = year-month, EsthenosOrgStatsMonth
     stats_monthly = db.DictField(required=False)
 
-    def month(self, time=datetime.datetime.now()):
-        """ return StatsMonth for the specified month or New """
+    def month(self, time):
         key = time.strftime('%Y-%m')
         return self.stats_monthly.get(key, EsthenosOrgStatsMonth(organisation=self.organisation))
 
-    @property
-    def stats(self):
-        """ return latest stats for the current month or New """
-        key = datetime.datetime.now()
-        return self.month(key).stats
-
-    def update(self, stat, time=datetime.datetime.now()):
+    def update(self, stat, time):
         """ update the stat object for today. """
         # previous month, if its non-existent we're good.
         curkey = time.strftime('%Y-%m')
-        curmonth = self.stats_monthly.get(curkey, EsthenosOrgStatsMonth(organisation=self.organisation))
+        curmonth = self.stats_monthly.get(curkey, EsthenosOrgStatsMonth(organisation=self.organisation, key=curkey))
         curmonth.update(stat, time)
         curmonth.save()
 
         self.stats_monthly.update({curkey: curmonth})
         self.save()
-
-    def __add__(self, other):
-        """ returns sum of geo stats as StatDay """
-        return self.month() + other.month()
 
     def __unicode__(self):
         return "geo-stats: %s" % self.id
@@ -669,6 +688,51 @@ class EsthenosOrgBranch(db.Document):
     stats = db.ReferenceField(EsthenosOrgStatsGeo)
     owner = db.ReferenceField('EsthenosUser', default=None)
 
+    def stats(self, time):
+        stats = [a.stats(time) for a in self.applications] + [EsthenosOrgStatsApplication()]
+        stats = reduce(lambda x, y: x + y, stats)
+        return stats
+
+    def stats_day(self, time):
+        stats = self.stats(time)
+        daystat = EsthenosOrgStatsDay(organisation=self.organisation, key=time.strftime('%Y-%m-%d'))
+
+        daystat.cb_passed = stats.cb_passed
+        daystat.cb_failed = stats.cb_failed
+        daystat.cf_passed = stats.cf_passed
+        daystat.cf_failed = stats.cf_failed
+        daystat.kyc_passed = stats.kyc_passed
+        daystat.kyc_failed = stats.kyc_failed
+        daystat.cgt1_ready = stats.cgt1_ready
+        daystat.cgt1_passed = stats.cgt1_passed
+        daystat.cgt1_failed = stats.cgt1_failed
+        daystat.cgt2_ready  = stats.cgt2_ready
+        daystat.cgt2_passed = stats.cgt2_passed
+        daystat.cgt2_failed = stats.cgt2_failed
+        daystat.disbursement_tat = stats.disbursement_tat
+        daystat.disbursement_done = stats.disbursement_done
+        daystat.disbursement_ready = stats.disbursement_ready
+        daystat.loans_leaked = stats.loans_leaked
+        daystat.loans_applied = stats.loans_applied
+        daystat.loans_disbursed = stats.loans_disbursed
+        daystat.loans_disbursed_amount = stats.loans_disbursed_amount
+        daystat.count_disbursed_groups = 1 if stats.loans_disbursed > 0 else 0
+        daystat.count_disbursed_centers = 1 if stats.loans_disbursed > 0 else 0
+
+        daystat.scrutiny_done = stats.scrutiny_done
+        daystat.scrutiny_ready = stats.scrutiny_ready
+        daystat.scrutiny_failed = stats.scrutiny_failed
+        daystat.scrutiny_passed = stats.scrutiny_passed
+        daystat.scrutiny_onhold = stats.scrutiny_onhold
+
+        daystat.sanction_done = stats.sanction_done
+        daystat.sanction_ready = stats.sanction_ready
+        daystat.sanction_failed = stats.sanction_failed
+        daystat.sanction_passed = stats.sanction_passed
+        daystat.sanction_onhold = stats.sanction_onhold
+
+        return daystat
+
     @property
     def area(self):
         return self.parent
@@ -730,6 +794,10 @@ class EsthenosOrgBranch(db.Document):
     @staticmethod
     def create(name, parent):
         return parent.add_branch(name)
+
+    def applications(self):
+        return EsthenosOrgApplication.objects.filter(branch=self)
+
 
     def __unicode__(self):
         return self.name
@@ -847,7 +915,6 @@ class EsthenosOrgGroup(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now)
     updated_at = db.DateTimeField(default=datetime.datetime.now)
 
-    cgt_grt_pdf_link = db.StringField(max_length=512,required=False)
     disbursement_pdf_link = db.StringField(max_length=512,required=False,default="#")
 
     @property
@@ -929,6 +996,7 @@ class EsthenosOrgToken(db.EmbeddedDocument):
     unique_user_id = db.StringField(max_length=255, required=True)
     client_name = db.StringField(max_length=255, required=True)
     api_version = db.StringField(max_length=255, required=True)
+
 
 class EsthenosOrgTokenResource(Resource):
     document= EsthenosOrgToken
@@ -1040,6 +1108,24 @@ class EsthenosUser(BaseUser):
     def phone_number(self):
         return "%s %s" % (self.postal_tele_code, self.postal_telephone)
 
+    def stats(self, time):
+        """ return the aggregate stat object, for all regions assigned to the user. """
+        if self.hierarchy.access == "":
+            stats = \
+              [EsthenosOrgStatsMonth(organisation=self.organisation)] + \
+              [geo.stats.month(time) for geo in EsthenosOrgState.objects.filter(organisation=self.organisation) ]
+
+        else:
+            stats = \
+              [EsthenosOrgStatsMonth(organisation=self.organisation)] + \
+              [geo.stats.month(time) for geo in self.states ]  + \
+              [geo.stats.month(time) for geo in self.regions]  + \
+              [geo.stats.month(time) for geo in self.areas]    + \
+              [geo.stats.month(time) for geo in self.branches]
+
+        stats = reduce(lambda x, y: x + y, stats)
+        return stats
+
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
@@ -1121,7 +1207,6 @@ class EsthenosOrgUserPerformance(db.Document):
     centers_disbursed = db.EmbeddedDocumentField(EsthenosOrgUserPerformanceItem,
                                                 default=EsthenosOrgUserPerformanceItem(name="centers-disbursed"))
 
-    pending_grt = db.IntField(default=0)
     pending_cgt1 = db.IntField(default=0)
     pending_cgt2 = db.IntField(default=0)
 
@@ -1134,7 +1219,6 @@ class EsthenosOrgUserPerformance(db.Document):
             "groups_disbursed" : self.groups_disbursed.json,
             "centers_disbursed" : self.centers_disbursed.json,
 
-            "pending_grt" : self.pending_grt,
             "pending_cgt1" : self.pending_cgt1,
             "pending_cgt2" : self.pending_cgt2,
         }
@@ -1196,16 +1280,6 @@ class EsthenosOrgStats(db.Document):
     application_cgt2_passed = db.IntField(default=0)
     application_cgt2_failed = db.IntField(default=0)
 
-    application_grt_ready = db.IntField(default=0)
-    application_grt_done = db.IntField(default=0)
-    application_grt_passed = db.IntField(default=0)
-    application_grt_failed = db.IntField(default=0)
-
-    application_telecalling_ready = db.IntField(default=0)
-    application_telecalling_done = db.IntField(default=0)
-    application_telecalling_passed = db.IntField(default=0)
-    application_telecalling_failed = db.IntField(default=0)
-
     application_underwriting_ready = db.IntField(default=0)
     application_underwriting_done = db.IntField(default=0)
 
@@ -1234,10 +1308,8 @@ class EsthenosOrgStats(db.Document):
         self.application_cbcheck_done = self.calc_status(applications, 150)
         self.application_cf_done = self.calc_status(applications, 170)
 
-        self.application_grt_done = self.calc_status(applications, 204)
         self.application_cgt1_done = self.calc_status(applications, 190)
         self.application_cgt2_done = self.calc_status(applications, 194)
-        self.application_telecalling_done = self.calc_status(applications, 223)
 
         self.application_underwriting_done = self.calc_status(applications, 231)
         self.application_disbursement_done = self.calc_status(applications, 240)
@@ -1649,6 +1721,57 @@ class EsthenosOrgApplication(db.Document):
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
+
+    def stats(self, time):
+        date = time.date()
+        stats = EsthenosOrgStatsApplication()
+        for st in self.timeline:
+            code, updated = st.status.status_code, st.updated_on.date()
+            if code == 110 and updated == date:
+                stats.loan_applied = 1
+
+            if code == 125 and updated == date:
+                stats.kyc_passed = 1
+
+            if code == 150 and updated == date:
+                stats.cb_passed = 1
+
+            if code == 170 and updated == date:
+                stats.cf_passed = 1
+
+            if code == 180 and updated == date:
+                stats.cf_failed = 1
+
+            if code == 190 and updated == date:
+                stats.scrutiny_ready = 1
+            elif code == 192 and updated == date:
+                stats.scrutiny_failed = 1
+            elif code == 193 and updated == date:
+                stats.scrutiny_passed = 1
+            elif code == 194 and updated == date:
+                stats.scrutiny_onhold = 1
+
+            if code == 200 and updated == date:
+                stats.sanction_ready = 1
+            elif code == 202 and updated == date:
+                stats.sanction_failed = 1
+            elif code == 203 and updated == date:
+                stats.sanction_passed = 1
+            elif code == 204 and updated == date:
+                stats.sanction_onhold = 1
+
+            if code == 243 and updated == date:
+                stats.loan_amount = self.product.loan_amount
+                stats.loan_disbursed = 1
+                stats.disbursement_tat = (self.date_created - date).days
+                stats.disbursement_done = 1
+
+            #todo: add stages for cb/kyc failed.
+            stats.cb_failed = 0
+            stats.kyc_failed = 0
+            stats.loan_leaked = 0
+
+        return stats
 
 
 class EsthenosOrgApplicationHighMarkRequest(db.Document):

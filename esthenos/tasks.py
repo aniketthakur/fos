@@ -67,6 +67,31 @@ def zip_custom(src, dst):
     zf.close()
 
 
+@periodic_task(run_every=datetime.timedelta(minutes=15))
+@celery.task
+def calculate_stats():
+
+    time = datetime.datetime.now()
+
+    for branch in EsthenosOrgBranch.objects.all():
+        stats = branch.stats_day(time)
+        branch.stats.update(stats, time)
+
+    for area in EsthenosOrgArea.objects.all():
+        stats = [branch.stats.month(time).only(time) for branch in area.branches] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        area.stats.update(stats, time)
+
+    for region in EsthenosOrgRegion.objects.all():
+        stats = [area.stats.month(time).only(time) for area in region.areas] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        region.stats.update(stats, time)
+
+    for state in EsthenosOrgState.objects.all():
+        stats = [region.stats.month(time).only(time) for region in state.regions] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        state.stats.update(stats, time)
+
 @periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
 def org_applications_stats_update():
