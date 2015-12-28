@@ -183,7 +183,7 @@ FEATURES = {
     },
     "features_psychometric_questions": {
         "title" : "Features For Notifications",
-        "enabled": True,
+        "enabled": False,
     },
     "hignmark_equifax": {
         "title" : "HighMark / Equifax Verification",
