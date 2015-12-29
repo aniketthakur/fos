@@ -68,6 +68,9 @@ def provision():
     # setup nginx server.
     nginx()
 
+    # setup scalyr logging.
+    scalyr()
+
     # setup mongo server.
     mongodb()
 
@@ -95,6 +98,32 @@ def nginx():
 
     # restart nginx server.
     sudo('service nginx restart')
+
+def scalyr():
+    """ setup scalyr logging agent. """
+
+    sudo('wget -q -nc https://www.scalyr.com/scalyr-repo/stable/latest/scalyr-agent-2_2.0.14_all.deb')
+    sudo('dpkg -i scalyr-agent-2_2.0.14_all.deb')
+
+    config = open("e_deploy/esthenos-agent.json").read()
+    config = ''.join(config)
+    config = config.replace("___HOST_NAME___", client["host"][0])
+
+    with open("/tmp/esthenos-agent.json", "w") as agent:
+        agent.write(config)
+        agent.close()
+
+    put('/tmp/esthenos-agent.json', '/tmp/')
+    sudo("mv /tmp/esthenos-agent.json /etc/scalyr-agent-2/agent.json")
+
+    log = '/var/log/scalyr-agent-2'
+    sudo('mkdir -p {d}'.format(d=log))
+    sudo('chown -R {user}:{group} {d}'.format(user=env.user, group=env.user, d=log))
+
+    lib = '/var/lib/scalyr-agent-2'
+    sudo('chown -R {user}:{group} {d}'.format(user=env.user, group=env.user, d=lib))
+
+    sudo('scalyr-agent-2 start')
 
 def mongodb():
     """setting up mongo database (create-only)."""
