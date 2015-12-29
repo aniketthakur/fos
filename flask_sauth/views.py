@@ -6,6 +6,7 @@ from flask.ext.sauth.models import User
 import boto
 from blinker import signal
 from esthenos import mainapp
+from e_organisation.models import EsthenosUser
 
 conn = boto.connect_ses(
             aws_access_key_id=mainapp.config.get("AWS_ACCESS_KEY_ID"),
@@ -43,13 +44,18 @@ def login():
             if is_fresh is not None and is_fresh == "true":
                 confirm_login()
 
-            user = User.objects.get(email=form.email.data)
+            user = EsthenosUser.objects.get(email=form.email.data)
 
-            if user.active:
+            if user.active and user.hierarchy.role != "ORG_CM":
                 login_user(form.user_cache, True)
 
             elif not user.active:
                 flash(u'Your account has been deactivated', 'error')
+                kwargs = {"login_form": login_form}
+                return render_template("auth/login.html", **kwargs)
+
+            elif user.hierarchy.role == "ORG_CM":
+                flash(u'Your account cannot login to server', 'error')
                 kwargs = {"login_form": login_form}
                 return render_template("auth/login.html", **kwargs)
 
