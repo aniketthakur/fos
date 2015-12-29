@@ -153,8 +153,8 @@ def make_equifax_request_entry_application_id(app_id):
 
     eqrequest.additional_id2 = ""
 
-    if app.guarantor_kyc is not None:
-        eqrequest.voter_id=app.guarantor_kyc.kyc_number
+    if app.guarantor1_kyc is not None:
+        eqrequest.voter_id=app.guarantor1_kyc.kyc_number
 
     eqrequest.tax_id_pan=""
     eqrequest.phone_home=""
