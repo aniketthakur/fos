@@ -399,6 +399,10 @@ class EsthenosOrgStatsDay(db.Document):
     def total_tat(self):
         return self.disbursement_tat / min(1, self.created.day)
 
+    @property
+    def total_conversion(self):
+        fraction = (float(self.loans_disbursed) / max(1, self.loans_applied))
+        return "%.2f" % (fraction * 100)
 
 class EsthenosOrgStatsMonth(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
@@ -1774,11 +1778,11 @@ class EsthenosOrgApplication(db.Document):
                 stats.disbursement_tat = (self.date_created - date).days
                 stats.disbursement_done = 1
 
+            stats.loan_leaked = 1 if self.verification else 0
+
             #todo: add stages for cb/kyc failed.
             stats.cb_failed = 0
             stats.kyc_failed = 0
-            stats.loan_leaked = 0
-
         return stats
 
 

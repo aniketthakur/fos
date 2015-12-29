@@ -14,7 +14,7 @@
           font-size: 20px;
         }
         .summary span.item-count {
-          font-size: 33px;
+          font-size: 30px;
         }
         .summary .chart {
             margin-right: 10px;
@@ -112,7 +112,7 @@
                 <div class="tiles-body no-border">
                     <div class="inline chart pull-left"></div>
                     <div class="inline desc pull-right">
-                        <h1 class="item-count">91<span class="item-title">%</span></h1>
+                        <h1 class="item-count">{{ monthly.total_conversion }}<span class="item-title">%</span></h1>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -897,7 +897,7 @@
             this.configure(configuration);
         }
 
-        function createGauge(name, label, min, max)
+        function createGauge(name, label, min, max, value)
         {
             var config = {
                 size: 180,
@@ -918,16 +918,10 @@
             gauge.redraw(getRandomValue(gauge));
         }
 
-        function getRandomValue(gauge)
-        {
-            var overflow = 0; //10;
-            return gauge.config.min - overflow + (gauge.config.max - gauge.config.min + overflow*2) *  Math.random();
-        }
-
         function drawGauges()
         {
-            createGauge(".summary .summary-tat .chart", "TAT");
-            createGauge(".summary .summary-rate .chart", "Rate");
+            createGauge(".summary .summary-tat .chart", "TAT", 1, 10, {{ monthly.total_tat }});
+            createGauge(".summary .summary-rate .chart", "Rate", 1, 100, {{ monthly.total_conversion }});
         }
         drawGauges();
     });
