@@ -2,7 +2,7 @@ import os, sys
 
 SERVER_SETTINGS = {
     "org" : "fos-test.esthenos.com",
-    "host" : ["fos-test.prod.esthenos.com"],
+    "host" : "fos-test.prod.esthenos.com",
     "assets" : os.path.dirname(os.path.realpath(__file__)),
     "timezone" : "Asia/Kolkata",
     "git-branch" : "fos-test",
@@ -13,7 +13,7 @@ SERVER_SETTINGS = {
 MONGODB_SETTINGS = {
     'DB': 'fos-test',
     'PORT': 27017,
-    'HOST': 'localhost'
+    'HOST': 'mongodb.prod.esthenos.com'
 }
 
 ORGS_SETTINGS = {
@@ -41,38 +41,8 @@ ORGS_SETTINGS = {
             "tele_code" : "91",
             "fname" : "admin",
             "lname" : "users",
-            "email" : "admin@fos-test.esthenos.com",
+            "email" : "admin@" + SERVER_SETTINGS["org"],
             "passwd" : "adminadmin",
-        },
-        {
-            "role" : "ORG_BM",
-            "active" : True,
-            "dob" : "01/01/1970",
-            "city" : "kabul",
-            "state" : "kabula",
-            "country" : "kabuland",
-            "address" : "1st kabul, kaula, kabuland.",
-            "telephone" : "9876543210",
-            "tele_code" : "91",
-            "fname" : "demo",
-            "lname" : "users",
-            "email" : "demo@fos-test.esthenos.com",
-            "passwd" : "demodemo",
-        },
-        {
-            "role" : "ORG_BM",
-            "active" : True,
-            "dob" : "01/01/1970",
-            "city" : "kabul",
-            "state" : "kabula",
-            "country" : "kabuland",
-            "address" : "1st kabul, kaula, kabuland.",
-            "telephone" : "9876543210",
-            "tele_code" : "91",
-            "fname" : "demo",
-            "lname" : "users",
-            "email" : "demo@192.168.0.26:8080",
-            "passwd" : "demodemo",
         }
     ],
     "hierarchy" : [
