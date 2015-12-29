@@ -27,8 +27,7 @@ class AddOrganisationForm( Form):
             raise ValidationError("Hey! This organisation is already registered with us")
 
     def save(self):
-        settings = EsthenosSettings.objects.all()[0]
-        org = EsthenosOrg(name=self.org_name.data, code = ""+str(settings.organisations_count))
+        org = EsthenosOrg(name=self.org_name.data)
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
         org.postal_tele_code =self.postal_tele_code.data
@@ -37,7 +36,7 @@ class AddOrganisationForm( Form):
         org.postal_city =self.postal_city.data
         org.postal_code = self.postal_code.data
         org.email = self.email.data
-        org.owner = EsthenosUser.objects.get(id=current_user.id)
+        org.admins.append(EsthenosUser.objects.get(id=current_user.id))
 
         org.save()
         return org
@@ -100,6 +99,8 @@ class RegistrationFormAdmin( Form):
 class AddOrganizationEmployeeForm(Form):
     last_name_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     first_name_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
+
+    active = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     gender = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     date_of_birth_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
 
@@ -107,7 +108,6 @@ class AddOrganizationEmployeeForm(Form):
     password_add_organisation = PasswordField(validators=[v.DataRequired(), v.Length(max=30)])
 
     role = TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    branch = TextField(validators=[ v.Length(max=512)])
 
     address_add_org_emp = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     city_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
@@ -117,146 +117,179 @@ class AddOrganizationEmployeeForm(Form):
     tele_code_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
     postal_code_add_organisation = TextField( validators=[v.DataRequired(), v.Length(max=255)])
 
+    states = SelectMultipleField('states')
+    regions = SelectMultipleField('regions')
+    areas = SelectMultipleField('areas')
+    branches = SelectMultipleField('branches')
+    centers = SelectMultipleField('centers')
+
     def validate_email_add_organisation(form, field):
         email_add_organisation = field.data.lower().strip()
         if EsthenosUser.objects(email=email_add_organisation).count():
             raise ValidationError( "Hey! This email is already registered with us. Did you forget your password?")
 
     def save(self, org_id):
-        emp = EsthenosUser.create_user(self.first_name_add_organisation.data, self.email_add_organisation.data, self.password_add_organisation.data, True)
-        emp.organisation = EsthenosOrg.objects.get(id=org_id)
-        emp.postal_address = self.address_add_org_emp.data
-        emp.unique_id = emp.organisation.name.upper()[0:2]+"{0:03d}".format(emp.organisation.employee_count)
+        emp = EsthenosUser.create_user(self.first_name_add_organisation.data,
+                                       self.email_add_organisation.data,
+                                       self.password_add_organisation.data)
 
-        emp.roles = [self.role.data]
-        emp.active = True
-        emp.name = self.first_name_add_organisation.data
-        emp.email = self.email_add_organisation.data
         emp.last_name = self.last_name_add_organisation.data
         emp.first_name = self.first_name_add_organisation.data
-        emp.add_role(self.role.data)
+
+        emp.email = self.email_add_organisation.data
+        emp.gender = self.gender.data
+        emp.active = False
+
         emp.date_of_birth = self.date_of_birth_add_organisation.data
         emp.postal_address = self.address_add_org_emp.data
-        emp.postal_telephone = self.teleno_add_organisation.data
-        emp.postal_tele_code = self.tele_code_add_organisation.data
+        emp.postal_code = self.postal_code_add_organisation.data
         emp.postal_city = self.city_add_organisation.data
         emp.postal_state = self.state_add_organisation.data
         emp.postal_country = self.country_add_organisation.data
-        emp.owner = EsthenosUser.objects.get(id=current_user.id)
+        emp.postal_telephone = self.teleno_add_organisation.data
+        emp.postal_tele_code = self.tele_code_add_organisation.data
 
-        if self.branch.data is not None and self.branch.data:
-            emp.org_branch = EsthenosOrgBranch.objects.get(id = self.branch.data)
-
+        emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
+        emp.organisation = EsthenosOrg.objects.get(id=org_id)
         emp.save()
-        org = EsthenosOrg.objects.get(id = emp.organisation.id)
+
+        org = EsthenosOrg.objects.get(id=org_id)
         org.update(inc__employee_count=1)
         return emp
 
+    def deselect_employee_geo(self, emp):
+        for state in emp.states:
+            state.owner = None
+            state.save()
+        for region in emp.regions:
+            region.owner = None
+            region.save()
+        for area in emp.areas:
+            area.owner = None
+            area.save()
+        for branch in emp.branches:
+            branch.owner = None
+            branch.save()
 
-class AddOrganisationProductForm( Form):
-    product_name=TextField( validators=[v.Length(max=255)])
-    loan_type=TextField( validators=[v.Length(max=255)])
-    loan_amount=TextField( validators=[ v.Length(max=255)])
-    life_insurance=TextField( validators=[ v.Length(max=255)])
-    eligible_cycle=TextField( validators=[ v.Length(max=255)])
-    number_installments=TextField( validators=[ v.Length(max=255)])
-    emi=TextField( validators=[ v.Length(max=255)])
-    last_emi=TextField( validators=[ v.Length(max=255)])
-    service_tax=TextField( validators=[ v.Length(max=255)])
-    insurance_service_tax=TextField( validators=[ v.Length(max=255)])
-    processing_fee=TextField( validators=[ v.Length(max=255)])
-    total_processing_fees=TextField( validators=[ v.Length(max=255)])
-    interest_rate=TextField( validators=[ v.Length(max=255)])
-    insurance_period=TextField( validators=[ v.Length(max=255)])
-    insurance_free=TextField( validators=[ v.Length(max=255)])
-    total_insurance_fees=TextField( validators=[ v.Length(max=255)])
-    emi_repayment=TextField( validators=[ v.Length(max=255)])
-    rd_fee=TextField( validators=[ v.Length(max=255)])
+        emp.access_states = []
+        emp.access_regions = []
+        emp.access_areas = []
+        emp.save()
 
-    def validate_product_name(form,field):
-        product_name =field.data.lower().strip()
-        if( EsthenosOrgProduct.objects.filter(product_name=product_name).count()):
-            raise ValidationError( "Hey! This product is already registered with us")
+    def update(self, emp):
+        errors = {}
 
-    def save( self,org_id):
-        prod=EsthenosOrgProduct(product_name=self.product_name.data)
-        prod.loan_amount=float(self.loan_amount.data)
-        prod.loan_type = self.loan_type.data
-        prod.life_insurance=float(self.life_insurance.data)
-        prod.eligible_cycle=int(self.eligible_cycle.data)
-        prod.number_installments=int(self.number_installments.data)
-        prod.emi=float(self.emi.data)
-        prod.service_tax=float(self.service_tax.data)
-        prod.insurance_service_tax=float(self.insurance_service_tax.data)
-        prod.last_emi=float(self.last_emi.data)
-        prod.processing_fee=float(self.processing_fee.data)
-        prod.total_processing_fees=float(self.total_processing_fees.data)
-        prod.interest_rate=float(self.interest_rate.data)
-        prod.insurance_free=float(self.insurance_free.data)
-        prod.insurance_period=float(self.insurance_period.data)
-        prod.total_insurance_fees=float(self.total_insurance_fees.data)
-        prod.emi_repayment=self.emi_repayment.data
-        prod.rd_fee=self.rd_fee.data
-        prod.organisation=EsthenosOrg.objects.get(id=org_id)
-        prod.save()
-        return prod
+        emp.last_name = self.last_name_add_organisation.data
+        emp.first_name = self.first_name_add_organisation.data
+        emp.gender = self.gender.data
+        emp.active = True if self.active.data == "active" else False
 
+        emp.date_of_birth = self.date_of_birth_add_organisation.data
+        emp.postal_address = self.address_add_org_emp.data
+        emp.postal_code = self.postal_code_add_organisation.data
+        emp.postal_city = self.city_add_organisation.data
+        emp.postal_state = self.state_add_organisation.data
+        emp.postal_country = self.country_add_organisation.data
+        emp.postal_telephone = self.teleno_add_organisation.data
+        emp.postal_tele_code = self.tele_code_add_organisation.data
 
-class AddOrgGRTTemplateQuestionsForm( Form):
-    question = TextField( validators=[v.Length(max=2048)])
-    question_hindi = TextField( validators=[v.Length(max=2048)])
-    org_id = TextField( validators=[ v.Length(max=255)])
+        emp.save()
+        if self.role.data != '':
+            emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
 
-    def save( self):
-        ques=EsthenosOrgGRTTemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-        return ques
+        to_save = True
 
+        selections = []
+        self.deselect_employee_geo(emp)
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 3:
+            for state in self.states.data:
+                state = EsthenosOrgState.objects.get(id=state)
+                regions = map(lambda r: str(r.id), state.regions)
+                commons = set.intersection(set(regions), self.regions.data)
+                if not len(commons) and state.owner == None:
+                    state.owner = emp
+                    state.save()
+                    selections.append(state)
+                elif state.owner!=None:
+                    errors["states"] = "A selected state has already been assigned."
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a state."
+        emp.access_states = selections
 
-class AddOrgCGT1TemplateQuestionsForm( Form):
-    question = TextField( validators=[v.Length(max=2048)])
-    question_hindi = TextField( validators=[v.Length(max=2048)])
-    org_id = TextField( validators=[ v.Length(max=255)])
+        selections = []
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 4:
+            for region in self.regions.data:
+                region = EsthenosOrgRegion.objects.get(id=region)
+                areas = map(lambda r: str(r.id), region.areas)
+                commons = set.intersection(set(areas), self.areas.data)
+                if not len(commons) and region.owner == None:
+                    region.owner = emp
+                    region.save()
+                    selections.append(region)
+                elif region.owner!=None:
+                    errors["regions"] = "A selected region has already been assigned"
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a region."
+        emp.access_regions = selections
 
-    def save( self):
-        ques=EsthenosOrgCGT1TemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-        return ques
+        selections = []
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 5:
+            for area in self.areas.data:
+                area = EsthenosOrgArea.objects.get(id=area)
+                branches = map(lambda r: str(r.id), area.branches)
+                commons = set.intersection(set(branches), self.branches.data)
+                if not len(commons) and area.owner == None:
+                    area.owner = emp
+                    area.save()
+                    selections.append(area)
+                elif area.owner!=None:
+                    errors["areas"] = "A selected area has already been assigned."
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned an area."
+        emp.access_areas = selections
 
+        selections = []
+        #todo centralize the level assignments
+        if emp.hierarchy.level >= 6:
+            for branch in self.branches.data:
+                branch = EsthenosOrgBranch.objects.get(id=branch)
+                centers = map(lambda r: str(r.id), branch.centers)
+                commons = set.intersection(set(centers), self.centers.data)
+                if not len(commons):
+                    if emp.hierarchy.level == 6 and branch.owner == None:
+                        branch.owner = emp
+                        branch.save()
+                        selections.append(branch)
+                    elif branch.owner!=None:
+                        errors["branches"] = "A selected branch has already been assigned."
+                    if emp.hierarchy.level == 7:
+                        selections.append(branch)
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a branch."
 
-class AddOrgCGT2TemplateQuestionsForm( Form):
-    question = TextField( validators=[v.Length(max=2048)])
-    question_hindi = TextField( validators=[v.Length(max=2048)])
-    org_id = TextField( validators=[ v.Length(max=255)])
+        emp.access_branches = selections
 
-    def save( self):
-        ques=EsthenosOrgCGT2TemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-        return ques
+        selections = []
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 7:
+            for center in self.centers.data:
+                selections.append(EsthenosOrgCenter.objects.get(id=center))
+        emp.access_centers = selections
 
+        if len(emp.branches)>1 and emp.hierarchy.level == 7:
+            to_save = False
+            errors["not_selected"] = "The employee can only be assigned a single branch."
 
-class AddOrgTeleCallingTemplateQuestionsForm( Form):
-    org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])
-    question = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
-    question_hindi = TextField( validators=[v.DataRequired(), v.Length(max=2048)])
-
-    def save( self):
-        ques=EsthenosOrgTeleCallingTemplateQuestion()
-        ques.question=self.question.data
-        ques.question_regional = self.question_hindi.data
-        ques.organisation=EsthenosOrg.objects.get(id=self.org_id.data)
-        ques.save()
-        return ques
-
+        if to_save:
+            emp.save()
+        return emp, errors
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])

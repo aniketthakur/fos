@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 
 {% block maincontents %}
@@ -13,46 +13,21 @@
                 <div class="grid-body">
                     <div class="row">
                         <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/employees">Employees</a>
+                             <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_details", org_id=org.id) }}">Branches & Centers</a>
                         </div>
                         <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/products">Products</a>
+                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_add_emp", org_id=org.id) }}">Employees</a>
                         </div>
-                        {% if feature_show("admin_groups") %}
+                        {% if feature_show("features_psychometric_questions") %}
                         <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/groups">Groups</a>
-                        </div>
-                        {% endif %}
-                        {% if feature_show("questions_cgt1") %}
-                        <div class="col-md-4 admin-action">
-                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt1_questions">CGT1 Questions</a>
-                        </div>
-                        {% endif %}
-                        {% if feature_show("questions_cgt2") %}
-                        <div class="col-md-4 admin-action">
-                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/cgt2_questions">CGT2 Questions</a>
-                        </div>
-                        {% endif %}
-                        {% if feature_show("questions_grt") %}
-                        <div class="col-md-4 admin-action">
-                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/grt_questions">GRT Questions</a>
-                        </div>
-                        {% endif %}
-                        {% if feature_show("questions_psychometric") %}
-                        <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/psychometric_questions">Psychometric Test </a>
-                        </div>
-                        {% endif %}
-                        {% if feature_show("questions_telecalling") %}
-                        <div class="col-md-4 admin-action">
-                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/telecalling_questions">Tele Calling Questions</a>
+                             <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.psychometric_questions", org_id=org.id) }}">Psychometric Questions</a>
                         </div>
                         {% endif %}
                         <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/settings">Settings</a>
+                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_targets", org_id=org.id) }}">Performance Targets</a>
                         </div>
                         <div class="col-md-4 admin-action">
-                             <a class="btn btn-large btn-block btn-success" type="button" href="/admin/organisation/{{ org.id }}/update">Clusters & Branches</a>
+                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_settings", org_id=org.id) }}">Settings</a>
                         </div>
                     </div>
                 </div>

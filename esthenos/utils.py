@@ -70,8 +70,8 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.acct_open_date=app.date_created
     hmrequest.applicant_address1=app.address+" "
     hmrequest.applicant_address1_city=app.city
-    hmrequest.applicant_address1_state=app.state
     hmrequest.applicant_address1_pincode=app.pincode
+    hmrequest.applicant_address1_state=app.state
     hmrequest.applicant_address2=""
     hmrequest.applicant_address2_city=""
     hmrequest.applicant_address2_pincode=""
@@ -93,9 +93,8 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.applicant_telephone_number2=""
     hmrequest.applied_for_amount__current_balance=""
 
-    hmrequest.branch_id = ""
-    if app.owner.org_branch:
-      hmrequest.branch_id=app.owner.org_branch.branch_id
+    hmrequest.branch_id=app.branch.name
+    hmrequest.kendra_id=app.application_id
 
     hmrequest.credit_inquiry_purpose_type=app.purpose_of_loan
     hmrequest.credit_inquiry_purpose_type_description=""
@@ -103,10 +102,6 @@ def make_highmark_request_for_application_id(app_id):
     hmrequest.credit_report_transaction_date_time=""
     hmrequest.credit_report_transaction_id=""
     hmrequest.credit_request_type="JOIN"
-
-    hmrequest.kendra_id = ""
-    if app.center:
-        hmrequest.kendra_id=app.center.name
 
     hmrequest.key_person_name=app.father_or_husband_name
     hmrequest.key_person_relation=""
@@ -147,27 +142,26 @@ def make_equifax_request_entry_application_id(app_id):
     eqrequest.additional_type2="K02"
     eqrequest.additional_name2=app.guarantor1_kyc.name
     eqrequest.address_city=app.address + " " + app.city
-    eqrequest.state_union_territory = app.state
-    eqrequest.postal_pin = app.pincode
-    eqrequest.ration_card = ""
-    eqrequest.voter_id = ""
+    eqrequest.state_union_territory= app.state
+    eqrequest.postal_pin=app.pincode
+    eqrequest.ration_card=""
+    eqrequest.voter_id=""
 
     if app.applicant_kyc is not None:
         eqrequest.voter_id = app.guarantor1_kyc.kyc_number
         eqrequest.national_id_card = app.applicant_kyc.kyc_number
 
-    eqrequest.tax_id_pan=""
-    eqrequest.phone_home=""
     eqrequest.additional_id2 = ""
 
+    if app.guarantor_kyc is not None:
+        eqrequest.voter_id=app.guarantor_kyc.kyc_number
+
+    eqrequest.tax_id_pan=""
+    eqrequest.phone_home=""
+    eqrequest.phone_mobile=app.tele_phone
     eqrequest.dob=app.dob
     eqrequest.gender=app.gender
-    eqrequest.phone_mobile=app.tele_phone
-
-    eqrequest.branch_id = ""
-    if app.group:
-        eqrequest.branch_id=app.group.name
-
+    eqrequest.branch_id=app.branch.name
     eqrequest.kendra_id=app_id
     eqrequest.save()
     app.save()

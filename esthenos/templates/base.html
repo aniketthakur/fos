@@ -79,15 +79,7 @@
                             <span class="title">Dashboard</span>
                         </a>
                     </li>
-                    {% if feature_show("accounts_enroll_customers") %}
-                    <li class="">
-                        <a href="/upload_documents">
-                            <i class="fa fa-envelope"></i>
-                            <span class="title">Enroll Customers</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("accounts_applications") %}
+                    {% if feature_show("features_fos_branches") %}
                     <li class="">
                         <a href="{{ url_for('organisation_views.application_list') }}">
                             <i class="fa fa-list-ul"></i>
@@ -95,39 +87,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("questions_cgt1") %}
-                    <li class="">
-                        <a href="/check_cgt1">
-                            <i class="fa fa-question"></i>
-                            <span class="title">CGT 1</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("questions_cgt2") %}
-                    <li class="">
-                        <a href="/check_cgt2">
-                            <i class="fa fa-question"></i>
-                            <span class="title">CGT 2</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("questions_grt") %}
-                    <li class="">
-                        <a href="/check_grt">
-                            <i class="fa fa-question"></i>
-                            <span class="title">GRT</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("questions_telecalling") %}
-                    <li class="">
-                        <a href="/telecalling">
-                            <i class="fa fa-phone"></i>
-                            <span class="title">Tele Calling</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if feature_show("accounts_scrutiny") %}
+                    {% if feature_show("features_applications_scrutiny") %}
                     <li class="">
                           <a href="{{ url_for('organisation_views.scrutiny') }}">
                             <i class="fa fa-user"></i>
@@ -135,7 +95,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("accounts_sanctions") %}
+                    {% if feature_show("features_applications_sanction") %}
                     <li class="">
                           <a href="{{ url_for('organisation_views.sanctions') }}">
                             <i class="fa fa-check"></i>
@@ -143,7 +103,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if feature_show("disbursement") %}
+                    {% if feature_show("features_applications_disbursement") %}
                     <li class="">
                         <a href="{{ url_for('organisation_views.check_disbursement') }}">
                             <i class="fa fa-inr"></i>
@@ -165,6 +125,11 @@
                             <i class="fa fa-check"></i>
                             <span class="title">Highmark/ Equifax</span>
                         </a>
+                    </li>
+                    {% endif %}
+                    {% if feature_show("features_admin") %}
+                    <li class="start">
+                        <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
                     </li>
                     {% endif %}
                 {% endblock %}
@@ -200,6 +165,12 @@
 <script src="{{ url_for('static', filename='plugins/jquery-notifications/js/messenger.min.js' )}}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='plugins/jquery-notifications/js/messenger-theme-future.js' )}}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='js/core.js' )}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.7/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/additional-methods.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js" type="text/javascript"></script>
+
 
 {% block js_scripts_pre %}
 {% endblock %}

@@ -1,51 +1,24 @@
 import json
 import requests
 
-url = "http://localhost:8080/api/organisation/applications"
+
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# response = requests.post(url, data=payload)
+# print response.text
 
 querystring = {
-    "instance_token":"RwSjeQ_kuRM95qNvsG-K_c6epI7Rtl_ZMbMwd7nnPdg"
+    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
 }
+url = "http://localhost:8085/api/organisation/applications"
 
 payload = {
-    "applicant_other_card_land_details": {
-        "estimated_resale_value_of_property": "",
-        "loan_outstanding_against_such_property": "",
-        "land_description": "d"
-    },
-    "applicant_family_details_other_assets": {
-        "family_other_assets": "Flat/ House on rent, Bike, Tractor, Van"
-    },
-    "assets_id": "67bd3320-e690-48f8-b906-8cab82fb9636",
     "group": "",
-    "applicant_other_card_home_image": {},
-    "applicant_business_docs_details2": {
-        "biz_premise": "Own Premise",
-        "biz_expense_rent": "",
-        "biz_num_years": "",
-        "biz_expense_salary": "",
-        "biz_seasonality": "Yearly",
-        "biz_category": "Trading",
-        "biz_expense_other": "",
-        "biz_expense_admin": "",
-        "biz_expense_working_capital": "",
-        "biz_num_employees": "",
-        "biz_income_monthly": "",
-        "biz_activity": ""
-    },
-    "applicant_business_docs_details1": {
-        "biz_premise": "Own Premise",
-        "biz_expense_rent": "",
-        "biz_num_years": "",
-        "biz_expense_salary": "",
-        "biz_seasonality": "Yearly",
-        "biz_category": "Trading",
-        "biz_expense_other": "",
-        "biz_expense_admin": "",
-        "biz_expense_working_capital": "",
-        "biz_num_employees": "",
-        "biz_income_monthly": "",
-        "biz_activity": ""
+    "applicant_business_docs_customer1": {
+        "address": "",
+        "name": "",
+        "telephoneno": "",
+        "telephone_no": ""
     },
     "applicant_family_details_details3": {
         "name": "",
@@ -55,59 +28,12 @@ payload = {
         "annual_income": "",
         "relation": ""
     },
-    "applicant_kyc_details": {
-        "address": "4/166, . near bus stand  ",
-        "dob_yob": "1992",
-        "pan_card_father_s_husband_s_name": "",
-        "pincode": "516257",
-        "pan_card_name": "",
-        "occupation": "",
-        "state": "Andhra Pradesh",
-        "taluk": "Lakkireddipalle",
-        "voter_id_father_s_husband_s_name": "",
-        "voter_id": "",
-        "email_id": "",
-        "permanent_address": "",
-        "pan_card_id": "",
-        "phone_number": "",
-        "father_s_husband_s_name": "S/O Fyroz Basha",
-        "age": "23",
-        "country": "India",
-        "district": "Cuddapah",
-        "name": "Pattan Saddam Hussainu",
-        "uid": "565061987998",
-        "voter_id_name": "",
-        "type": "AADHAAR",
-        "mobile_number": ""
-    },
-    "assets_map": {
-        "guarantor1": {
-            "aadhar_card": [
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_0.jpg",
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_1.jpg",
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_0.jpg",
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor1_aadhar_card__aadhaar card_1.jpg"
-            ]
-        },
-        "guarantor2": {
-            "aadhar_card": [
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor2_aadhar_card__aadhaar card_0.jpg",
-                "67bd3320-e690-48f8-b906-8cab82fb9636/guarantor2_aadhar_card__aadhaar card_1.jpg"
-            ]
-        },
-        "applicant": {
-            "aadhar_card": [
-                "67bd3320-e690-48f8-b906-8cab82fb9636/applicant_aadhar_card__aadhaar card_0.jpg",
-                "67bd3320-e690-48f8-b906-8cab82fb9636/applicant_aadhar_card__aadhaar card_1.jpg"
-            ]
-        }
-    },
-    "applicant_other_card_phone_details": {
-        "internet_data_uses": "",
-        "mobile_services_provider": "",
-        "billing_type": "",
-        "handset_type": "",
-        "average_monthly_bill": ""
+    "applicant_nominee_details": {
+        "nominee_relation": "Father",
+        "nominee_phone": "",
+        "nominee_age": "",
+        "nominee_name": "",
+        "nominee_gender": "Male"
     },
     "timeslot": {
         "time": "",
@@ -115,113 +41,21 @@ payload = {
     },
     "guarantor1_other_card_details2": {
         "bank_credit_co_perative_society": "",
-        "name_of_borrower": "s",
+        "name_of_borrower": "",
         "loan_amount": ""
     },
     "applicant_other_card_electricity_details": {
         "electricity_monthly_bill": "",
         "power_supplier": ""
     },
-    "applicant_hypothecation_goods_details1": {
-        "purchase_purpose": "",
-        "market_value": "",
-        "goods_details": "",
-        "purchase_year": "",
-        "purchase_price": "",
-        "goods_image": "",
-        "goods_docs_image": ""
-    },
     "applicant_other_card_bank_details2": {
         "bank_name": "",
-        "branch_ifsc_code": "",
-        "account_number": "",
         "account_holder_name": "",
         "bank_branch": "",
+        "branch_ifsc_code": "",
         "account_operational_since": "",
         "bank_account_type": "Saving",
-    },
-    "guarantor1_kyc_details": {
-        "address": ", .   Singhasan",
-        "dob_yob": "1988",
-        "pan_card_father_s_husband_s_name": "",
-        "pincode": "332027",
-        "pan_card_name": "",
-        "occupation": "",
-        "state": "Rajasthan",
-        "taluk": "Singhasan",
-        "voter_id_father_s_husband_s_name": "",
-        "voter_id": "",
-        "email_id": "",
-        "permanent_address": "",
-        "pan_card_id": "",
-        "phone_number": "",
-        "father_s_husband_s_name": "S/O Ganpat Singh",
-        "age": "27",
-        "country": "India",
-        "district": "Sikar",
-        "name": "Vijender Singh",
-        "uid": "337972036560",
-        "voter_id_name": "",
-        "type": "AADHAAR",
-        "mobile_number": ""
-    },
-    "locations_map": {
-        "home": {
-            "lat": 0,
-            "lng": 0
-        },
-        "center": {
-            "lat": 0,
-            "lng": 0
-        },
-        "business": {
-            "lat": 23.00233934,
-            "lng": 72.53279684
-        }
-    },
-    "applicant_other_card_id_details": {
-        "pan_card": "",
-        "driving_license": "",
-        "passport": "",
-        "voter_id": "",
-        "ration_card": ""
-    },
-    "applicant_other_card_nominee_details": {
-        "nominee_relation": "Father",
-        "nominee_phone": "",
-        "nominee_age": "",
-        "nominee_name": "",
-        "nominee_gender": "Male"
-    },
-    "center": "",
-    "applicant_hypothecation_goods_details2": {
-        "purchase_purpose": "",
-        "market_value": "",
-        "goods_details": "",
-        "purchase_year": "",
-        "purchase_price": "",
-        "goods_image": "",
-        "goods_docs_image": ""
-    },
-    "applicant_business_docs_info": {
-        "pancard_no": "",
-        "details_of_principal_raw_materials": "",
-        "business_name": "",
-        "area_market_value": "",
-        "vat_service_tax_regn_no": "",
-        "description_business": "",
-        "address_of_place_of_business": "",
-        "shops__establishment_no": "",
-        "details_of_finished_goods": "",
-        "area_occupied_of_business_sq_ft": ""
-    },
-    "applicant_family_details_details2": {
-        "name": "",
-        "education": "",
-        "occupations_details": "",
-        "age": "",
-        "annual_income": "",
-        "relation": ""
+        "account_number": ""
     },
     "applicant_other_card_bank_details1": {
         "bank_name": "",
@@ -249,15 +83,20 @@ payload = {
         "goods_image": "",
         "goods_docs_image": ""
     },
-    "applicant_other_card_credit_card_details": {
-        "issue_bank": "",
-        "card_no": ""
+    "applicant_other_card_bank_details4": {
+        "bank_name": "",
+        "account_holder_name": "",
+        "bank_branch": "",
+        "branch_ifsc_code": "",
+        "account_operational_since": "",
+        "bank_account_type": "Saving",
+        "account_number": ""
     },
-    "applicant_other_card_liabilities": {
-        "liabilities_chits": "",
-        "liabilities_friends__family_hand_loans": "",
-        "liabilities_insurance": "",
-        "liabilities_bank_loans": ""
+    "applicant_business_docs_customer2": {
+        "address": "",
+        "name": "",
+        "telephoneno": "",
+        "telephone_no": ""
     },
     "applicant_family_expenditure": {
         "family_festival_expenditure__monthly": "",
@@ -290,16 +129,8 @@ payload = {
         "tenure_in_months": "",
         "loan_amount_key": ""
     },
-    "applicant_personal_docs": {
-        "marital_status": "Married",
-        "religion": "Hindu",
-        "physical_disability": "Partial",
-        "education": "Upto Primary",
-        "gender": "Male",
-        "category": "General"
-    },
     "applicant_loan_details_applied_loan": {
-        "repayment_option": "Weekly",
+        "repayment_option": "Monthly",
         "required_loan_amount": "",
         "purpose_of_the_loan": ""
     },
@@ -328,6 +159,250 @@ payload = {
         "tenure_in_months": "",
         "loan_amount_key": ""
     },
+    "applicant_family_details_assets": {
+        "monthly_rent": "",
+        "family_assets_land_acres": "",
+        "family_assets_number_of_rented_shops_or_godowns": "",
+        "family_assets_number_of_rented_houses_or_flats": "",
+        "how_long_are_you_staying_in_house__in_years": "",
+        "rent_agreement": "Yes",
+        "quality_of_house": "Pakka/Concrete",
+        "family_assets_orchard__acres": "",
+        "type_of_house": "Family Owned"
+    },
+    "guarantor1_other_card_details1": {
+        "bank_credit_co_perative_society": "",
+        "name_of_borrower": "",
+        "loan_amount": ""
+    },
+    "applicant_business_docs_customer4": {
+        "address": "",
+        "name": "",
+        "telephoneno": "",
+        "telephone_no": ""
+    },
+    "applicant_family_details_other_assets": {
+        "family_other_assets": "Bike, Truck, Tractor, TV"
+    },
+    "product": "",
+    "applicant_business_docs_customer5": {
+        "address": "",
+        "name": "",
+        "telephoneno": "",
+        "telephone_no": ""
+    },
+    "applicant_other_card_land_details": {
+        "estimated_resale_value_of_property": "",
+        "loan_outstanding_against_such_property": "",
+        "land_description": ""
+    },
+    "assets_id": "698dd0ba-bfcd-4261-a591-3bd0d09d736d",
+    "applicant_business_docs_billing": {
+        "credit_period_in_days_to_individuals": "7",
+        "chartered_accountant": "Yes",
+        "sale_and_purchase_book": "Yes",
+        "bank_account": "Yes",
+        "place_of_storage_for_production_of_raw_material": "Place of Business",
+        "formal_books_of_account": "Yes",
+        "source_of_funding_for_purchase_of_material": "Own Funds",
+        "credit_period_in_days_to_institutions": "7",
+        "number_of_days_credit_for_raw_material_purchase": "7"
+    },
+    "applicant_business_docs_detail4": {
+        "estimated_value": "",
+        "number_of_relatives_helping_in_business": "",
+        "permanent": "",
+        "wage_payment_to_employees": "Daily",
+        "type_of_equipment_machinery_used_in_business": "",
+        "age_of_machinery": "",
+        "contract_no": "",
+        "average_wage_paid": "",
+        "number_of_employees_already_present_in_mobile": "",
+        "collateral_created_or_security_given_of_equipment": "",
+        "method_of_reaching_out_to_customers_to_increase_business": "",
+        "details_of_manufacturer": ""
+    },
+    "applicant_business_docs_details2": {
+        "biz_premise": "Own Premise",
+        "biz_expense_rent": "",
+        "biz_num_years": "",
+        "biz_expense_salary": "",
+        "biz_seasonality": "Yearly",
+        "biz_category": "Trading",
+        "biz_expense_other": "",
+        "biz_expense_admin": "",
+        "biz_expense_working_capital": "",
+        "biz_num_employees": "",
+        "biz_income_monthly": "",
+        "biz_activity": ""
+    },
+    "applicant_business_docs_details1": {
+        "biz_premise": "Own Premise",
+        "biz_expense_rent": "",
+        "biz_num_years": "",
+        "biz_expense_salary": "",
+        "biz_seasonality": "Yearly",
+        "biz_category": "Trading",
+        "biz_expense_other": "",
+        "biz_expense_admin": "",
+        "biz_expense_working_capital": "",
+        "biz_num_employees": "",
+        "biz_income_monthly": "",
+        "biz_activity": ""
+    },
+    "applicant_kyc_details": {
+        "name": "Gsh",
+        "address": ", .   ",
+        "dob_yob": "-1",
+        "pan_card_father_s_husband_s_name": "",
+        "pincode": "",
+        "pan_card_name": "",
+        "occupation": "",
+        "state": "",
+        "taluk": "",
+        "voter_id_father_s_husband_s_name": "",
+        "voter_id": "",
+        "email_id": "",
+        "permanent_address": "",
+        "pan_card_id": "",
+        "phone_number": "",
+        "father_s_husband_s_name": "",
+        "age": "-1",
+        "country": "India",
+        "district": "",
+        "uid": "",
+        "voter_id_name": "",
+        "type": "AADHAAR",
+        "mobile_number": ""
+    },
+    "assets_map": {
+        "guarantor1": {},
+        "guarantor2": {},
+        "applicant": {}
+    },
+    "applicant_other_card_phone_details": {
+        "internet_data_uses": "",
+        "mobile_services_provider": "",
+        "billing_type": "",
+        "handset_type": "",
+        "average_monthly_bill": ""
+    },
+    "applicant_hypothecation_goods_details1": {
+        "purchase_purpose": "",
+        "market_value": "",
+        "goods_details": "",
+        "purchase_year": "",
+        "purchase_price": "",
+        "goods_image": "",
+        "goods_docs_image": ""
+    },
+    "guarantor1_kyc_details": {
+        "address": ", .   ",
+        "dob_yob": "-1",
+        "pan_card_father_s_husband_s_name": "",
+        "pincode": "",
+        "pan_card_name": "",
+        "occupation": "",
+        "state": "",
+        "taluk": "",
+        "voter_id_father_s_husband_s_name": "",
+        "voter_id": "",
+        "email_id": "",
+        "permanent_address": "",
+        "pan_card_id": "",
+        "phone_number": "",
+        "father_s_husband_s_name": "",
+        "age": "-1",
+        "country": "India",
+        "district": "",
+        "name": "",
+        "uid": "",
+        "voter_id_name": "",
+        "type": "AADHAAR",
+        "mobile_number": ""
+    },
+    "locations_map": {
+        "home": {
+            "lat": 12.97205203,
+            "lng": 77.65267892
+        },
+        "business": {
+            "lat": 12.97205203,
+            "lng": 77.65267892
+        }
+    },
+    "applicant_other_card_id_details": {
+        "pan_card": "",
+        "driving_license": "",
+        "passport": "",
+        "voter_id": "",
+        "ration_card": ""
+    },
+    "center": "",
+    "applicant_hypothecation_goods_details2": {
+        "purchase_purpose": "",
+        "market_value": "",
+        "goods_details": "",
+        "purchase_year": "",
+        "purchase_price": "",
+        "goods_image": "",
+        "goods_docs_image": ""
+    },
+    "applicant_business_docs_info": {
+        "pancard_no": "",
+        "details_of_principal_raw_materials": "",
+        "business_name": "",
+        "area_market_value": "",
+        "vat_service_tax_regn_no": "",
+        "description_business": "",
+        "address_of_place_of_business": "",
+        "shops__establishment_no": "",
+        "details_of_finished_goods": "",
+        "area_occupied_of_business_sq_ft": ""
+    },
+    "applicant_family_details_details2": {
+        "name": "",
+        "education": "",
+        "occupations_details": "",
+        "age": "",
+        "annual_income": "",
+        "relation": ""
+    },
+    "applicant_other_card_credit_card_details": {
+        "issue_bank": "",
+        "card_no": ""
+    },
+    "applicant_business_docs_home_image": {},
+    "applicant_other_card_liabilities": {
+        "liabilities_chits": "",
+        "liabilities_friends__family_hand_loans": "",
+        "liabilities_insurance": "",
+        "liabilities_bank_loans": ""
+    },
+    "applicant_business_docs_customer3": {
+        "address": "",
+        "name": "",
+        "telephoneno": "",
+        "telephone_no": ""
+    },
+    "applicant_business_docs_home_loc": {},
+    "applicant_other_card_bank_details3": {
+        "bank_name": "",
+        "account_holder_name": "",
+        "bank_branch": "",
+        "branch_ifsc_code": "",
+        "account_operational_since": "",
+        "bank_account_type": "Saving",
+        "account_number": ""
+    },
+    "applicant_personal_docs": {
+        "marital_status": "Married",
+        "religion": "Hindu",
+        "physical_disability": "None",
+        "education": "Upto Primary",
+        "gender": "Male",
+        "category": "General"
+    },
     "applicant_family_details_members": {
         "members_above_18": "",
         "members_less_than_18": "",
@@ -347,53 +422,33 @@ payload = {
         "tenure_in_months": "",
         "loan_amount_key": ""
     },
-    "applicant_family_details_assets": {
-        "monthly_rent": "",
-        "family_assets_land_acres": "",
-        "family_assets_orchard__acres": "",
-        "family_assets_number_of_rented_shops_or_godowns": "",
-        "family_assets_number_of_rented_houses_or_flats": "",
-        "how_long_are_you_staying_in_house__in_years": "",
-        "quality_of_house": "Pakka/Concrete",
-        "rent_agreement": "Yes",
-        "type_of_house": ""
-    },
-    "guarantor1_other_card_details1": {
-        "bank_credit_co_perative_society": "",
-        "name_of_borrower": "d",
-        "loan_amount": ""
-    },
     "guarantor2_kyc_details": {
-        "address": "E-387, GALI N0-8.   Patparganj",
-        "dob_yob": "1981",
+        "address": ", .   ",
+        "dob_yob": "-1",
         "pan_card_father_s_husband_s_name": "",
-        "pincode": "110091",
+        "pincode": "",
         "pan_card_name": "",
         "occupation": "",
-        "state": "Delhi",
-        "taluk": "East Vinod Nagar",
+        "state": "",
+        "taluk": "",
         "voter_id_father_s_husband_s_name": "",
         "voter_id": "",
         "email_id": "",
         "permanent_address": "",
         "pan_card_id": "",
         "phone_number": "",
-        "father_s_husband_s_name": "S/O Shri Asharfi Lal Mehto",
-        "age": "34",
+        "father_s_husband_s_name": "",
+        "age": "-1",
         "country": "India",
-        "district": "East Delhi",
-        "name": "Pramod Kumar",
-        "uid": "729348086056",
+        "district": "",
+        "name": "",
+        "uid": "",
         "voter_id_name": "",
         "type": "AADHAAR",
         "mobile_number": ""
-    },
-    "product": ""
+    }
 }
 
-headers = {
-  'content-type': "application/json"
-}
-
-response = requests.post(url, json=payload, params=querystring)
-print(response.text)
+for i in range(0, 10):
+    response = requests.post(url, json=payload, params=querystring)
+    print(response.text)

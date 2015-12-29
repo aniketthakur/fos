@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 
 {% block maincontents %}
@@ -10,7 +10,6 @@
                     <h3 class="v-align-middle pull-right"><a href="{{ url_for("admin_views.admin_organisation_dashboard", org_id=org.id) }}">{{ org.name }}</a></h3>
                     <div class="clearfix"></div>
                 </div>
-                {% if feature_show("admin_select_regions") %}
                 <div class="grid-body">
                     <div class="row pick-center-state-form">
                         <form class="form-no-horizontal-spacing" action="{{ url_for("admin_views.admin_org_states_update", org_id=org.id) }}" method="post">
@@ -142,7 +141,6 @@
                         </form>
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@
           font-size: 20px;
         }
         .summary span.item-count {
-          font-size: 33px;
+          font-size: 30px;
         }
         .summary .chart {
             margin-right: 10px;
@@ -38,7 +38,7 @@
                 <div class="tiles-body">
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Total Amount Disbursed</span> <span class="item-count animate-number semi-bold" >50,000 Lac INR</span>
+                            <span class="item-title">Total Amount Disbursed</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_disbursed_amount }} INR</span>
                         </div>
                     </div><br/>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total No. Applications Applied</span> <span class="item-count animate-number semi-bold" >34,456</span>
+                            <span class="item-title">Total No. Applications Applied</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_applied }}</span>
                         </div>
                     </div><br/>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total No. Applications Leaked</span> <span class="item-count animate-number semi-bold" >125</span>
+                            <span class="item-title">Total No. Applications Leaked</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_leaked }}</span>
                         </div>
                     </div><br/>
                 </div>
@@ -67,54 +67,30 @@
                 <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total No. Loans Disbursed</span> <span class="item-count animate-number semi-bold" >64,456</span>
+                            <span class="item-title">Total No. Loans Disbursed</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_disbursed }}</span>
                         </div>
                     </div><br/>
                 </div>
             </div>
 
-            {% if feature_show("disbursement_group_dashboard") %}
+            {% if feature_show("features_applications_scrutiny") %}
             <div class="tiles red m-b-20">
                 <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total No. Groups Disbursed</span> <span class="item-count animate-number semi-bold" >4,456</span>
-                        </div>
-                    </div><br/>
-                </div>
-            </div>
-            {% endif %}
-
-            {% if feature_show("disbursement_center_dashboard") %}
-            <div class="tiles red m-b-20">
-                <div class="tiles-body">
-                    <div class="widget-stats last">
-                        <div class="wrapper last">
-                            <span class="item-title">Total No. Centers Disbursed</span> <span class="item-count animate-number semi-bold" >356</span>
+                            <span class="item-title">Total No. Scrutiny Done</span> <span class="item-count animate-number semi-bold" >{{ monthly.count_scrutiny_passed }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             {% endif %}
 
-            {% if feature_show("accounts_scrutiny_dashboard") %}
+            {% if feature_show("features_applications_sanction") %}
             <div class="tiles red m-b-20">
                 <div class="tiles-body">
                     <div class="widget-stats last">
                         <div class="wrapper last">
-                            <span class="item-title">Total No. Scrutiny Done</span> <span class="item-count animate-number semi-bold" >356</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            {% if feature_show("accounts_sanctions_dashboard") %}
-            <div class="tiles red m-b-20">
-                <div class="tiles-body">
-                    <div class="widget-stats last">
-                        <div class="wrapper last">
-                            <span class="item-title">Total No. Sanctions Done</span> <span class="item-count animate-number semi-bold" >356</span>
+                            <span class="item-title">Total No. Sanctions Done</span> <span class="item-count animate-number semi-bold" >{{ monthly.count_sanctions_passed }}</span>
                         </div>
                     </div>
                 </div>
@@ -126,7 +102,7 @@
                 <div class="tiles-body no-border">
                     <div class="inline chart pull-left"></div>
                     <div class="inline desc pull-right">
-                        <h1 class="item-count">6</h1>
+                        <h1 class="item-count">{{ monthly.total_tat }}</h1>
                         <h3 class="item-title">Days</h3>
                     </div>
                     <div class="clearfix"></div>
@@ -136,7 +112,7 @@
                 <div class="tiles-body no-border">
                     <div class="inline chart pull-left"></div>
                     <div class="inline desc pull-right">
-                        <h1 class="item-count">91<span class="item-title">%</span></h1>
+                        <h1 class="item-count">{{ monthly.total_conversion }}<span class="item-title">%</span></h1>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -151,17 +127,17 @@
                     <div class="tiles-title text-black">Applications Submitted</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >{{ todays.loans_applied }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >{{ weekly.loans_applied }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_applied }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -190,17 +166,17 @@
                     <div class="tiles-title text-black">Disbursment </div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >2 / 25 / 500</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >{{ todays.loans_disbursed_amount }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >{{ weekly.loans_disbursed_amount }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >32 / 500 / 4500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >{{ monthly.loans_disbursed_amount }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -237,17 +213,17 @@
                     <div class="tiles-title text-black">KYC Validation </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="{{ todays.kyc_passed }}" data-animation-duration="700">{{ todays.kyc_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="{{ weekly.kyc_passed }}" data-animation-duration="700">{{ weekly.kyc_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="{{ monthly.kyc_passed }}" data-animation-duration="700">{{ monthly.kyc_passed }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -263,17 +239,17 @@
                     <div class="tiles-title text-black">CB Check </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="{{ todays.cb_passed }}" data-animation-duration="700">{{ todays.cb_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="{{ weekly.cb_passed }}" data-animation-duration="700">{{ weekly.cb_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="{{ monthly.cb_passed }}" data-animation-duration="700">{{ monthly.cb_passed }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -289,17 +265,17 @@
                     <div class="tiles-title text-black">Cashflow Analysis</div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" data-value="{{ todays.cf_passed }}" data-animation-duration="700">{{ todays.cf_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats">
                         <div class="wrapper transparent">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="1415" data-animation-duration="700">1415</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" data-value="{{ weekly.cf_passed }}" data-animation-duration="700">{{ weekly.cf_passed }}</span>
                         </div>
                     </div>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="2547" data-animation-duration="700">2,547</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" data-value="{{ monthly.cf_passed }}" data-animation-duration="700">{{ monthly.cf_passed }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -315,7 +291,7 @@
         <div class="col-md-4 donut-kyc">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>KYC <span class="semi-bold">Feb 2015</span></h4>
+                    <h4>KYC <span class="semi-bold">{{ monthly.created|dateformat("%b %Y") }}</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:200px;" ></div>
@@ -325,7 +301,7 @@
         <div class="col-md-4 donut-cbc">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>CB Check <span class="semi-bold">Feb 2015</span></h4>
+                    <h4>CB Check <span class="semi-bold">{{ monthly.created|dateformat("%b %Y") }}</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:200px;" ></div>
@@ -335,7 +311,7 @@
         <div class="col-md-4 donut-cfa">
             <div class="grid simple">
                 <div class="grid-title no-border">
-                    <h4>Cashflow Analysis<span class="semi-bold">Feb 2015</span></h4>
+                    <h4>Cashflow Analysis<span class="semi-bold">{{ monthly.created|dateformat("%b %Y") }}</span></h4>
                 </div>
                 <div class="grid-body no-border">
                     <div class="chart" style="height:200px;" ></div>
@@ -344,171 +320,7 @@
         </div>
     </div>
 
-    {% if feature_show("questions_cgt1") %}
-    <div class="row applications-cgt1">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-red m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications CGT1 Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT1 Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if feature_show("questions_cgt2") %}
-    <div class="row applications-cgt2">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-yellow m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications CGT2 Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">CGT2 Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if feature_show("questions_grt") %}
-    <div class="row applications-grt">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles gray m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications GRT Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">GRT Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if feature_show("questions_telecalling") %}
-    <div class="row applications-telecalling">
-        <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
-            <div class="tiles bg-red m-b-20">
-                <div class="tiles-body">
-                    <div class="tiles-title text-black">Applications TeleCalling Done</div>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats">
-                        <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
-                        </div>
-                    </div><br/>
-                    <div class="widget-stats ">
-                        <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
-                        </div>
-                    </div>
-                    <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                        <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                    </div>
-                    <div class="description"> <span class="text-white mini-description ">8% higher <span class="blend">than last month</span></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="grid simple">
-                <div class="grid-title no-border">
-                    <h4>Applications <span class="semi-bold">TeleCalling Done</span></h4>
-                </div>
-                <div class="grid-body no-border">
-                    <div class="chart" style="height:180px"> </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if feature_show("accounts_scrutiny_dashboard") %}
+    {% if feature_show("features_applications_scrutiny") %}
     <div class="row applications-scrutiny">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-red m-b-20">
@@ -516,17 +328,17 @@
                     <div class="tiles-title text-black">Applications Scrutiny Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >{{ todays.count_scrutiny_passed }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >{{ weekly.count_scrutiny_passed }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >{{ monthly.count_scrutiny_passed }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -549,7 +361,7 @@
     </div>
     {% endif %}
 
-    {% if feature_show("accounts_sanctions_dashboard") %}
+    {% if feature_show("features_applications_sanction") %}
     <div class="row applications-sanctions">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-red m-b-20">
@@ -557,17 +369,17 @@
                     <div class="tiles-title text-black">Applications Sanctions Done</div>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >150 / 300</span>
+                            <span class="item-title">Today</span> <span class="item-count animate-number semi-bold" >{{ todays.count_sanctions_ready }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats">
                         <div class="wrapper last">
-                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >500 / 1500</span>
+                            <span class="item-title">Week till date</span> <span class="item-count animate-number semi-bold" >{{ weekly.count_sanctions_ready }}</span>
                         </div>
                     </div><br/>
                     <div class="widget-stats ">
                         <div class="wrapper last">
-                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >2500 / 7500</span>
+                            <span class="item-title">Month till date</span> <span class="item-count animate-number semi-bold" >{{ monthly.count_sanctions_ready }}</span>
                         </div>
                     </div>
                     <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
@@ -590,7 +402,7 @@
     </div>
     {% endif %}
 
-    {% if feature_show("questions_psychometric") %}
+    {% if feature_show("features_psychometric_questions") %}
     <div class="row applications-psychometric">
         <div class="col-md-4 col-vlg-3 col-sm-6" style="height: 150px;">
             <div class="tiles bg-yellow m-b-20">
@@ -660,8 +472,8 @@
             size:200,
             element: $('.donut-cfa .chart'),
             data: [
-                {label: "Accepted", value: 96},
-                {label: "Rejected", value: 4},
+                {label: "Accepted", value: {{ monthly.cf_passed }} },
+                {label: "Rejected", value: {{ monthly.cf_failed }} }
             ],
             colors:['#0066FF','#91cdec']
         });
@@ -669,140 +481,52 @@
             size:200,
             element: $('.donut-kyc .chart'),
             data: [
-                {label: "Accepted", value: 96},
-                {label: "Rejected", value: 4},
-            ]
-            ,colors:['#9966FF','#91cdec']
+                {label: "Accepted", value: {{ monthly.kyc_passed }} },
+                {label: "Rejected", value: {{ monthly.kyc_failed }} }
+            ],
+            colors:['#9966FF','#91cdec']
         });
         Morris.Donut({
             size:200,
             element: $('.donut-cbc .chart'),
             data: [
-                {label: "Success", value: 93},
-                {label: "Failed", value: 7},
-            ]
-            ,colors:['#FF5050','#91cdec']
+                {label: "Success", value: {{ monthly.cb_passed }} },
+                {label: "Failed", value: {{ monthly.cb_failed }} },
+            ],
+            colors:['#FF5050','#91cdec']
         });
         Morris.Line({
             element: $('.monthly-applications .chart'),
             data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
+              {% for date, day in month.stats_total.items() %}
+                { d: '{{ date }}', a: {{ day.loans_applied }} },
+              {% endfor %}
             ],
             xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'KYC'],
+            ykeys: ['a'],
+            labels: ['Loan Applications'],
             lineColors:['#0aa699','#6666ff'],
         });
         Morris.Line({
             element: $('.monthly-disbursement .chart'),
             data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
+              {% for date, day in month.stats_total.items() %}
+                { d: '{{ date }}', a:{{ day.loans_disbursed }} },
+              {% endfor %}
             ],
             xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'CGT1'],
+            ykeys: ['a'],
+            labels: ['Loan Disbursed'],
             lineColors:['#0aa699','#6666ff'],
         });
 
-        {% if feature_show("questions_cgt1") %}
-        Morris.Line({
-            element: $('.applications-cgt1 .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'CGT2'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        {% endif %}
-
-        {% if feature_show("questions_cgt2") %}
-        Morris.Line({
-            element: $('.applications-cgt2 .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'GRT'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        {% endif %}
-
-        {% if feature_show("questions_grt") %}
-        Morris.Line({
-            element: $('.applications-grt .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 12000 },
-                { d: '2014-10', a: 3000,  b: 10000 },
-                { d: '2014-11', a: 3600,  b: 12000 },
-                { d: '2014-12', a: 4000,  b: 10500 },
-                { d: '2015-01', a: 4200,  b: 12000 },
-                { d: '2015-02', a: 4500,  b: 10500 },
-                { d: '2015-03', a: 4000, b: 12000 }
-            ],
-            xkey: 'd',
-            ykeys: ['a', 'b'],
-            labels: ['Loan Applications', 'GRT'],
-            lineColors:['#0aa699','#6666ff'],
-        });
-        {% endif %}
-
-        {% if feature_show("questions_telecalling") %}
-        Morris.Line({
-            element: $('.applications-telecalling .chart'),
-            data: [
-                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
-                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
-                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
-                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
-                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
-                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
-                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
-            ],
-            xkey: 'd',
-            ykeys: ['a','b','c'],
-            labels: ['Applications Submitted', 'Underwriting Done', 'Disbursement Done'],
-            lineColors:['#0aa699','#010699','#D45959'],
-        });
-        {% endif %}
-
-        {% if feature_show("accounts_scrutiny_dashboard") %}
+        {% if feature_show("features_applications_scrutiny") %}
         Morris.Line({
             element: $('.applications-scrutiny .chart'),
             data: [
-                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
-                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
-                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
-                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
-                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
-                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
-                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+              {% for date, day in month.stats_total.items() %}
+                { d: '{{ date }}', a:{{ day.count_scrutiny_passed }}, b:{{ day.count_scrutiny_failed }}, c:{{ day.count_scrutiny_onhold }} },
+              {% endfor %}
             ],
             xkey: 'd',
             ykeys: ['a','b','c'],
@@ -811,17 +535,13 @@
         });
         {% endif %}
 
-        {% if feature_show("accounts_sanctions_dashboard") %}
+        {% if feature_show("features_applications_sanction") %}
         Morris.Line({
             element: $('.applications-sanctions .chart'),
             data: [
-                { d: '2014-09', a: 3400, b: 3200,c: 3000 },
-                { d: '2014-10', a: 3000,  b: 2900,c: 2900 },
-                { d: '2014-11', a: 3600,  b: 3500,c: 3400 },
-                { d: '2014-12', a: 4000,  b: 3900,c: 3800 },
-                { d: '2015-01', a: 4200, b: 4100,c: 4000 },
-                { d: '2015-02', a: 4500, b: 4400,c: 4300 },
-                { d: '2015-03', a: 4000,  b: 3900,c: 3800 }
+              {% for date, day in month.stats_total.items() %}
+                { d: '{{ date }}', a:{{ day.count_sanctions_passed }}, b:{{ day.count_sanctions_failed }}, c:{{ day.count_sanctions_onhold }} },
+              {% endfor %}
             ],
             xkey: 'd',
             ykeys: ['a','b','c'],
@@ -830,7 +550,7 @@
         });
         {% endif %}
 
-        {% if feature_show("questions_psychometric") %}
+        {% if feature_show("features_psychometric_questions") %}
         Morris.Line({
             element: $('.applications-psychometric .chart'),
             data: [
@@ -1177,7 +897,7 @@
             this.configure(configuration);
         }
 
-        function createGauge(name, label, min, max)
+        function createGauge(name, label, min, max, value)
         {
             var config = {
                 size: 180,
@@ -1198,16 +918,10 @@
             gauge.redraw(getRandomValue(gauge));
         }
 
-        function getRandomValue(gauge)
-        {
-            var overflow = 0; //10;
-            return gauge.config.min - overflow + (gauge.config.max - gauge.config.min + overflow*2) *  Math.random();
-        }
-
         function drawGauges()
         {
-            createGauge(".summary .summary-tat .chart", "TAT");
-            createGauge(".summary .summary-rate .chart", "Rate");
+            createGauge(".summary .summary-tat .chart", "TAT", 1, 10, {{ monthly.total_tat }});
+            createGauge(".summary .summary-rate .chart", "Rate", 1, 100, {{ monthly.total_conversion }});
         }
         drawGauges();
     });

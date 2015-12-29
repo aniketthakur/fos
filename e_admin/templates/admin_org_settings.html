@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 
 {% block maincontents %}
@@ -11,170 +11,30 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="grid-body">
-                    <form class="form-no-horizontal-spacing" novalidate="novalidate" action="/admin/organisation/{{ org_id }}/settings" id="form-role_settings" method="post" >
+                    <form class="form-no-horizontal-spacing" novalidate="novalidate" action="{{ url_for("admin_views.admin_organisation_settings", org_id=org.id) }}" id="form-role_settings" method="post">
                     <div class="row">
-                        <div class="row form-row">
-                            <div class="col-md-12 form-group">
-                                <select name="role" id="role" class="select2 form-control">
-                                    <option value="ORG_CM">CM(Center Manager)</option>
-                                    <option value="ORG_BM">BM(Branch Manager)</option>
-                                    <option value="ORG_AM">AM(Area Manager)</option>
-                                    <option value="ORG_RM">RM(Regional Manager)</option>
-                                    <option value="ORG_SH">SH(State Head)</option>
-                                    <option value="ORG_ZH">ZH(Zonal Head)</option>
-                                    <option value="ORG_VP">VP(Vice President)</option>
-                                    <option value="ORG_VP">VP(Vice President)</option>
-                                    <option value="ORG_CXO">CXO</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4">
-                            <h4>Access Settings</h4>
-                            <div class="radio radio-success">
-                                <h5>Dashboard</h5>
-                                <input id="access_dash_y" type="radio" name="access_dash" value="yes"  checked="checked">
-                                <label for="access_dash_y">Yes</label>
-                                <input id="access_dash_n" type="radio" name="access_dash" value="no">
-                                <label for="access_dash_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Enroll Customer</h5>
-                                <input id="access_enroll_customer_y" type="radio" name="access_enroll_customer" value="yes"  checked="checked">
-                                <label for="access_enroll_customer_y">Yes</label>
-                                <input id="access_enroll_customer_n" type="radio" name="access_enroll_customer" value="no">
-                                <label for="access_enroll_customer_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>CGT</h5>
-                                <input id="access_cgt_y" type="radio" name="access_cgt" value="yes"  checked="checked">
-                                <label for="access_cgt_y">Yes</label>
-                                <input id="access_cgt_n" type="radio" name="access_cgt" value="no">
-                                <label for="access_cgt_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>GRT</h5>
-                                <input id="access_grt_y" type="radio" name="access_grt" value="yes"  checked="checked">
-                                <label for="access_grt_y">Yes</label>
-                                <input id="access_grt_n" type="radio" name="access_grt" value="no">
-                                <label for="access_grt_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Disbursement</h5>
-                                <input id="access_disburse_y" type="radio" name="access_disburse" value="yes"  checked="checked">
-                                <label for="access_disburse_y">Yes</label>
-                                <input id="access_disburse_n" type="radio" name="access_disburse" value="no">
-                                <label for="access_disburse_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Reports</h5>
-                                <input id="access_reports_y" type="radio" name="access_reports" value="yes"  checked="checked">
-                                <label for="access_reports_y">Yes</label>
-                                <input id="access_reports_n" type="radio" name="access_reports" value="no">
-                                <label for="access_reports_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>User-Maker</h5>
-                                <input id="access_maker_y" type="radio" name="access_maker" value="yes"  checked="checked">
-                                <label for="access_maker_y">Yes</label>
-                                <input id="access_maker_n" type="radio" name="access_maker" value="no">
-                                <label for="access_maker_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>User-Checker</h5>
-                                <input id="access_checker_y" type="radio" name="access_checker" value="yes"  checked="checked">
-                                <label for="access_checker_y">Yes</label>
-                                <input id="access_checker_n" type="radio" name="access_checker" value="no">
-                                <label for="access_checker_n">No</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <h4>Notification Settings</h4>
-                            <div class="radio radio-success">
-                                <h5>Data entry Done</h5>
-                                <input id="noti_de_doney" type="radio" name="noti_de_done" value="yes"  checked="checked">
-                                <label for="noti_de_doney">Yes</label>
-                                <input id="noti_de_donen" type="radio" name="noti_de_done" value="no">
-                                <label for="noti_de_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>CB check Done</h5>
-                                <input id="noti_cbc_doney" type="radio" name="noti_cbc_done" value="yes"  checked="checked">
-                                <label for="noti_cbc_doney">Yes</label>
-                                <input id="noti_cbc_donen" type="radio" name="noti_cbc_done" value="no">
-                                <label for="noti_cbc_donen">No</label>
-
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Cash flow Analysis Done</h5>
-                                <input id="noti_cfa_doney" type="radio" name="noti_cfa_done" value="yes"  checked="checked">
-                                <label for="noti_cfa_doney">Yes</label>
-                                <input id="noti_cfa_donen" type="radio" name="noti_cfa_done" value="no">
-                                <label for="noti_cfa_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Disbursment Documentation Done</h5>
-                                <input id="noti_dd_doney" type="radio" name="noti_dd_done" value="yes"  checked="checked">
-                                <label for="noti_dd_doney">Yes</label>
-                                <input id="noti_dd_donen" type="radio" name="noti_dd_done" value="no">
-                                <label for="noti_dd_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Disbursed</h5>
-                                <input id="noti_db_doney" type="radio" name="noti_db_done" value="yes"  checked="checked">
-                                <label for="noti_db_doney">Yes</label>
-                                <input id="noti_db_donen" type="radio" name="noti_db_done" value="no">
-                                <label for="noti_db_donen">No</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <h4>Reports Settings</h4>
-                            <div class="radio radio-success">
-                                <h5>All data inputs captured by LA+KYC</h5>
-                                <input id="reports_all_data_y"  type="radio" name="reports_all_data" value="yes"  checked="checked">
-                                <label for="reports_all_data_y">Yes</label>
-                                <input id="reports_all_data_n" type="radio" name="reports_all_data" value="no">
-                                <label for="reports_all_data_n">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Data entry Done</h5>
-                                <input id="reports_de_doney" type="radio" name="reports_de_done" value="yes"  checked="checked">
-                                <label for="reports_de_doney">Yes</label>
-                                <input id="reports_de_donen" type="radio" name="reports_de_done" value="no">
-                                <label for="reports_de_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>CB check Done</h5>
-                                <input id="reports_cbc_doney" type="radio" name="reports_cbc_done" value="yes"  checked="checked">
-                                <label for="reports_cbc_doney">Yes</label>
-                                <input id="reports_cbc_donen" type="radio" name="reports_cbc_done" value="no">
-                                <label for="reports_cbc_donen">No</label>
-
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Cash flow Analysis Done</h5>
-                                <input id="reports_cfa_doney" type="radio" name="reports_cfa_done" value="yes"  checked="checked">
-                                <label for="reports_cfa_doney">Yes</label>
-                                <input id="reports_cfa_donen" type="radio" name="reports_cfa_done" value="no">
-                                <label for="reports_cfa_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Disbursment Documentation Done</h5>
-                                <input id="reports_dd_doney" type="radio" name="reports_dd_done" value="yes"  checked="checked">
-                                <label for="reports_dd_doney">Yes</label>
-                                <input id="reports_dd_donen" type="radio" name="reports_dd_done" value="no">
-                                <label for="reports_dd_donen">No</label>
-                            </div>
-                            <div class="radio radio-success">
-                                <h5>Disbursed</h5>
-                                <input id="reports_db_doney" type="radio" name="reports_db_done" value="yes"  checked="checked">
-                                <label for="reports_db_doney">Yes</label>
-                                <input id="reports_db_donen" type="radio" name="reports_db_done" value="no">
-                                <label for="reports_db_donen">No</label>
-                            </div>
-                        </div>
+                        <table class="table table-hover table-condensed" id="organisation-emp-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%"></th>
+                                    {% for designation in hierarchy %}
+                                    <th style="width:5%">{{ designation.title_full|upper }}<br>({{ designation.title|upper }})</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for feature, featureDef in features %}
+                                {% if featureDef["enabled"] %}
+                                <tr>
+                                    <th style="width:20%">{{ loop.index }}. {{ featureDef["title"] }}</th>
+                                    {% for designation in hierarchy %}
+                                    <th style="width:5%"><input type="checkbox" name="{{ designation.id }}|{{ feature }}" {{ designation.has_permission(feature)|permissionfilter }}></th>
+                                    {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                     <div class="form-actions">
                         <div class="pull-right">
@@ -188,7 +48,7 @@
     </div>
 
     <div class="row">
-        <form action="/admin/organisation/{{ org_id }}/settings/other" method="post">
+        <form action="{{ url_for("admin_views.admin_organisation_guidelines_rbi", org_id=org.id) }}" method="post">
             <div class="col-md-6">
                 <div class="grid simple">
                     <div class="grid-body">
@@ -315,26 +175,4 @@
         </form>
     </div>
 </div>
-{% endblock %}
-
-
-{% block js_scripts %}{{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".select2").select2();
-            $.getJSON("/admin/organisation/{{ org_id }}/settings/role/ORG_CM", function(result){
-                $.each(result, function(i, field){
-                    $("input[name="+i+"][value=" + field + "]").attr('checked', 'checked');
-                });
-            });
-
-            $(".select2").on("change", function(e) {
-                $.getJSON("/admin/organisation/{{ org_id }}/settings/role/"+ $(this).val(), function(result){
-                    $.each(result, function(i, field){
-                        $("input[name="+i+"][value=" + field + "]").attr('checked', 'checked');
-                    });
-                });
-            });
-        });
-    </script>
 {% endblock %}

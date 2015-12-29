@@ -4,24 +4,16 @@ from views_base import *
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
 def application_list():
-  if not session['role'].startswith("ORG_"):
-      abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
-
-  fosId = request.args.get('fosId', '')
   branchId = request.args.get('branchId', '')
+  hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
-  if (fosId is not None) and (fosId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", id=fosId)
-
-  elif (branchId is not None) and (branchId != ''):
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM", org_branch=branchId)
-
-  else:
-    fos_agents = EsthenosUser.objects.filter(organisation=org, roles__contains="ORG_CM")
+  fos_agents = []
+  if (branchId is not None) and (branchId != ''):
+    branch = EsthenosOrgBranch.objects.get(id=branchId)
+    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__contains=branch)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
@@ -30,9 +22,6 @@ def application_list():
 @organisation_views.route('/applications/fos/<fos_id>', methods=["GET"])
 @login_required
 def application_list_fos(fos_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
@@ -56,9 +45,6 @@ def application_list_fos(fos_id):
 @organisation_views.route('/applications/branch/<branch_id>', methods=["GET"])
 @login_required
 def application_list_branch(branch_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
 
@@ -76,7 +62,7 @@ def application_list_branch(branch_id):
   else:
     applications = EsthenosOrgApplication.objects.filter(organisation=org)
 
-  title = "Branch: {branch}".format(branch=branch.branch_name)
+  title = "Branch: {branch}".format(branch=branch.name)
   kwargs = locals()
   return render_template("apps/applications_list.html", **kwargs)
 
@@ -151,78 +137,24 @@ def cashflow_statusupdate(app_id):
 @organisation_views.route('/application/<app_id>/track', methods=["GET"])
 @login_required
 def applications_track(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=app_id)
   kwargs = locals()
   return render_template("apps/application_tracking.html", **kwargs)
 
 
-@organisation_views.route('/application/<app_id>/kyc', methods=["GET"])
-@login_required
-def application_kyc(app_id):
-
-  user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter(application_id=app_id)
-
-  if len(applications) == 0:
-    redirect("/applications")
-
-  app_urls = []
-  kyc_urls, kyc_ids = [], []
-  gkyc_urls, gkyc_ids = [], []
-  application = applications[0]
-
-  if application.tag is not None:
-    for kyc_id in application.tag.app_file_pixuate_id:
-      app_urls.append(get_url_with_id(kyc_id))
-
-    for kyc_id_key in application.tag.kyc_file_pixuate_id.keys():
-      kyc_id = application.tag.kyc_file_pixuate_id[kyc_id_key]
-      kyc_ids.append(kyc_id)
-      kyc_urls.append(get_url_with_id(kyc_id))
-
-    for gkyc_id_key in application.tag.gkyc_file_pixuate_id.keys():
-      gkyc_id = application.tag.gkyc_file_pixuate_id[gkyc_id_key]
-      gkyc_ids.append(gkyc_id)
-      gkyc_urls.append(get_url_with_id(gkyc_id))
-
-  today = datetime.datetime.today()
-  disbursement_date = datetime.datetime.today() + timedelta(days=1)
-  disbursement_date_str = disbursement_date.strftime('%d/%m/%Y')
-  products = EsthenosOrgProduct.objects.filter(organisation=application.owner.organisation)
-
-  kwargs = locals()
-  return render_template("apps/application_details.html", **kwargs)
-
-
 @organisation_views.route('/scrutiny', methods=["GET"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny():
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id = current_user.id)
-  groups = EsthenosOrgGroup.objects.filter(organisation = user.organisation)
+  org = user.organisation
 
-  appId = request.args.get('appId', '')
-  appName = request.args.get('appName', '')
-  groupId = request.args.get('groupId', '')
-  groupName = request.args.get('groupName', '')
-  centerName = request.args.get('centerName', '')
-  scrutinyStatus = request.args.get('scrutinyStatus', '')
-
-  if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=191)
-
-  elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=191)
-
-  else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191)
+  branchId = request.args.get('branchId', None)
+  applications = []
+  if (branchId is not None) and (branchId != ""):
+      branch = EsthenosOrgBranch.objects.get(id=branchId)
+      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=191)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
@@ -230,11 +162,8 @@ def scrutiny():
 
 @organisation_views.route('/scrutiny/<app_id>', methods=["GET", "POST"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny_application(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
   today = datetime.datetime.now()
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
@@ -285,11 +214,8 @@ def scrutiny_application(app_id):
 
 @organisation_views.route('/scrutiny/<app_id>/print', methods=["GET"])
 @login_required
-@feature_enable("accounts_scrutiny")
+@feature_enable("features_applications_scrutiny")
 def scrutiny_application_print(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
@@ -300,32 +226,17 @@ def scrutiny_application_print(app_id):
 
 @organisation_views.route('/sanctions', methods=["GET"])
 @login_required
-@feature_enable("accounts_sanctions")
+@feature_enable("features_applications_sanction")
 def sanctions():
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   user = EsthenosUser.objects.get(id=current_user.id)
-  groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
+  org = user.organisation
 
-  appId = request.args.get('appId', '')
-  appName = request.args.get('appName', '')
-  groupId = request.args.get('groupId', '')
-  groupName = request.args.get('groupName', '')
-  centerName = request.args.get('centerName', '')
-  scrutinyStatus = request.args.get('scrutinyStatus', '')
+  branchId = request.args.get('branchId', None)
 
-  if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=appId, status__gte=192)
-
-  elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, applicant_name=appName, status__gte=192)
-
-  elif (groupId is not None) and (groupId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
-
-  else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192)
+  applications = []
+  if (branchId is not None) and (branchId != ""):
+      branch = EsthenosOrgBranch.objects.get(id=branchId)
+      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=192)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)
@@ -333,11 +244,8 @@ def sanctions():
 
 @organisation_views.route('/sanctions/<app_id>', methods=["GET", "POST"])
 @login_required
-@feature_enable("accounts_sanctions")
+@feature_enable("features_applications_sanction")
 def sanctions_application(app_id):
-  if not session['role'].startswith("ORG_"):
-    abort(403)
-
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)

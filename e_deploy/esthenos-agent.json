@@ -1,0 +1,27 @@
+// Configuration for the Scalyr Agent. For help:
+//
+// https://www.scalyr.com/help/scalyr-agent-2
+
+{
+  // Enter a "Write Logs" api key for your account. These are available at https://www.scalyr.com/keys
+  api_key: "05x6MtqbaJqMLh02KT6n_c0e3Ia2UN8fXF93pPsHTsaY-",
+
+  // Fields describing this server. These fields are attached to each log message, and
+  // can be used to filter data from a particular server or group of servers.
+  server_attributes: {
+     // Fill in this field if you'd like to override the server's hostname.
+     serverHost: "___HOST_NAME___",
+
+     // You can add whatever additional fields you'd like.
+     tier: "test"
+  }
+
+  // Log files to upload to Scalyr. You can use '*' wildcards here.
+  logs: [
+      { path: "/var/log/esthenos/esthenos-celery.log", attributes: {parser: "accessLog"} },
+      { path: "/var/log/esthenos/esthenos-webapp.log", attributes: {parser: "accessLog"} }
+  ],
+
+  monitors: [
+  ]
+}

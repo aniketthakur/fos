@@ -1,6 +1,5 @@
 from views_base import *
 
-
 def is_number(s):
     try:
         float(s)
@@ -8,20 +7,15 @@ def is_number(s):
     except ValueError:
         return False
 
-
 @organisation_views.route('/organisation/cbcheck', methods=["GET"])
 @login_required
 @feature_enable("hignmark_equifax")
 def cbcheck_manual():
-    if not session['role'].startswith("ORG_"):
-        abort(403)
-
     user = EsthenosUser.objects.get(id=current_user.id)
     organisation = user.organisation
 
     kwargs = locals()
     return render_template("cbcheck/cbcheck_details.html", **kwargs)
-
 
 @organisation_views.route('/organisation/<org_id>/cbcheck/highmark', methods=["POST"])
 @login_required
@@ -273,7 +267,7 @@ def equifax_request_reports_import(org_id):
                     application.update_status(145)
                     application.save()
 
-                    eq_resp = EsthenosOrgApplicationEqifaxResponse()
+                    eq_resp, status = EsthenosOrgApplicationEqifaxResponse.objects.get_or_create(application_id=v[21])
                     eq_resp.report_id=v[0]   #IntField(default=0)
                     eq_resp.reference_number=v[1]   #IntField(default=0)
                     eq_resp.unique_account_number=str(v[2])   #IntField(default=0)
