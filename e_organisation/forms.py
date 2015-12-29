@@ -20,10 +20,6 @@ def toFloat(value):
 
 
 class AddApplicationMobile(Form):
-    # group = TextField(validators=[v.Length(max=10000)])
-    # center = TextField(validators=[v.Length(max=10000)])
-    # product = TextField(validators=[v.Length(max=10000)])
-
     assets_id = TextField(validators=[v.Length(max=10000)])
     assets_map = TextField(validators=[v.Length(max=10000)])
     locations_map = TextField(validators=[v.Length(max=10000)])
@@ -93,6 +89,7 @@ class AddApplicationMobile(Form):
         app = EsthenosOrgApplication(
             name = applicant_kyc["name"],
             owner = user,
+            branch = user.branches[0],
             assets_id = str(self.assets_id.data),
             organisation = user.organisation
         )

@@ -148,7 +148,6 @@ def applications_track(app_id):
 @feature_enable("features_applications_scrutiny")
 def scrutiny():
   user = EsthenosUser.objects.get(id = current_user.id)
-  groups = EsthenosOrgGroup.objects.filter(organisation = user.organisation)
   org = user.organisation
 
   branchId = request.args.get('branchId', None)
@@ -230,7 +229,6 @@ def scrutiny_application_print(app_id):
 @feature_enable("features_applications_sanction")
 def sanctions():
   user = EsthenosUser.objects.get(id=current_user.id)
-  groups = EsthenosOrgGroup.objects.filter(organisation=user.organisation)
   org = user.organisation
 
   branchId = request.args.get('branchId', None)
