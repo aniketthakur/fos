@@ -399,6 +399,10 @@ class EsthenosOrgStatsDay(db.Document):
     def total_tat(self):
         return self.disbursement_tat / min(1, self.created.day)
 
+    @property
+    def total_conversion(self):
+        fraction = (float(self.loans_disbursed) / max(1, self.loans_applied))
+        return "%.2f" % (fraction * 100)
 
 class EsthenosOrgStatsMonth(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
