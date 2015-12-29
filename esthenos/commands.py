@@ -194,7 +194,6 @@ class TestDBGeography(Command):
         def create_geo(name, parent, config):
             geo, access = None, config["access"]
             print name, parent, config
-
             if access == "states":
                 geo, status = EsthenosOrgState.create(name=name, organisation=org)
 
