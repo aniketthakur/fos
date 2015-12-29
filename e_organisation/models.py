@@ -505,6 +505,9 @@ class EsthenosOrgState(db.Document):
     owner = db.ReferenceField('EsthenosUser', default=None)
     stats = db.ReferenceField(EsthenosOrgStatsGeo)
     def add_region(self, name):
+        regions_list = EsthenosOrgRegion.objects.filter(name=name, organisation=self.organisation, parent=self)
+        if regions_list:
+            return regions_list[0], True
         region, status = EsthenosOrgRegion.objects.get_or_create(
             name=name, organisation=self.organisation, parent=self
         )
@@ -596,6 +599,9 @@ class EsthenosOrgRegion(db.Document):
 
 
     def add_area(self, name):
+        areas_list = EsthenosOrgArea.objects.filter(name=name, organisation=self.organisation, parent=self)
+        if areas_list:
+            return areas_list[0], True
         stats = EsthenosOrgStatsGeo(organisation=self.organisation)
         stats.save()
         area, status = EsthenosOrgArea.objects.get_or_create(
@@ -663,8 +669,13 @@ class EsthenosOrgArea(db.Document):
         }
 
     def add_branch(self, name):
+        branches_list = EsthenosOrgBranch.objects.filter(name=name, organisation=self.organisation, parent=self)
+        if branches_list:
+            return branches_list[0], True
+
         stats = EsthenosOrgStatsGeo(organisation=self.organisation)
         stats.save()
+
         branch, status = EsthenosOrgBranch.objects.get_or_create(
             name=name, organisation=self.organisation, parent=self, stats=stats
         )
@@ -688,13 +699,10 @@ class EsthenosOrgBranch(db.Document):
     stats = db.ReferenceField(EsthenosOrgStatsGeo)
     owner = db.ReferenceField('EsthenosUser', default=None)
 
-    def stats(self, time):
+    def stats_day(self, time):
         stats = [a.stats(time) for a in self.applications] + [EsthenosOrgStatsApplication()]
         stats = reduce(lambda x, y: x + y, stats)
-        return stats
 
-    def stats_day(self, time):
-        stats = self.stats(time)
         daystat = EsthenosOrgStatsDay(organisation=self.organisation, key=time.strftime('%Y-%m-%d'))
 
         daystat.cb_passed = stats.cb_passed
