@@ -92,19 +92,6 @@ def calculate_stats():
         stats = reduce(lambda x, y: x + y, stats)
         state.stats.update(stats, time)
 
-@periodic_task(run_every=datetime.timedelta(seconds=60))
-@celery.task
-def org_applications_stats_update():
-    organisations = EsthenosOrg.objects.all()
-    for org in organisations:
-        date_obj = datetime.datetime.now()
-        date_obj.day
-        stat = EsthenosOrgStats.objects.get_or_create(organisation=org)
-
-        #stat.stat_type = ""
-
-    pass
-
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
 @celery.task
