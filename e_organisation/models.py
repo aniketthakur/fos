@@ -1778,11 +1778,11 @@ class EsthenosOrgApplication(db.Document):
                 stats.disbursement_tat = (self.date_created - date).days
                 stats.disbursement_done = 1
 
+            stats.loan_leaked = 1 if self.verification else 0
+
             #todo: add stages for cb/kyc failed.
             stats.cb_failed = 0
             stats.kyc_failed = 0
-            stats.loan_leaked = 0
-
         return stats
 
 
