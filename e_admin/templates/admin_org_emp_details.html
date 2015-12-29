@@ -69,7 +69,7 @@
                   <div class="row form-row">
                     <div class="col-md-12 form-group">
                       <select name="role" id="role" class="select2 form-control">
-                        <option value="{{ employee.hierarchy.id }}" data-level="{{ employee.hierarchy.level }}" selected>({{ employee.hierarchy.title|upper }}) {{ employee.hierarchy.title_full|upper }}</option>
+                        <option value="{{ employee.hierarchy.id }}" data-level="{{ employee.hierarchy.level }}" selected disabled>({{ employee.hierarchy.title|upper }}) {{ employee.hierarchy.title_full|upper }}</option>
                         {% for designation in hierarchy %}
                         <option value="{{ designation.id }}" data-level="{{ designation.level }}">({{ designation.title|upper }}) {{ designation.title_full|upper }}</option>
                         {% endfor %}
