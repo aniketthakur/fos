@@ -897,7 +897,7 @@
             this.configure(configuration);
         }
 
-        function createGauge(name, label, min, max)
+        function createGauge(name, label, min, max, value)
         {
             var config = {
                 size: 180,
@@ -918,16 +918,10 @@
             gauge.redraw(getRandomValue(gauge));
         }
 
-        function getRandomValue(gauge)
-        {
-            var overflow = 0; //10;
-            return gauge.config.min - overflow + (gauge.config.max - gauge.config.min + overflow*2) *  Math.random();
-        }
-
         function drawGauges()
         {
-            createGauge(".summary .summary-tat .chart", "TAT");
-            createGauge(".summary .summary-rate .chart", "Rate");
+            createGauge(".summary .summary-tat .chart", "TAT", 1, 10, {{ monthly.total_tat }});
+            createGauge(".summary .summary-rate .chart", "Rate", 1, 100, {{ monthly.total_conversion }});
         }
         drawGauges();
     });
