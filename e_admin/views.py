@@ -47,8 +47,6 @@ def admin_organisations():
 
         if form.validate():
             org = form.save()
-            settings = EsthenosSettings.objects.all()[0]
-            settings.update(inc__organisations_count=1)
             return redirect("/admin/organisation/%s/dashboard" % org.id)
 
         else:

@@ -62,18 +62,6 @@ class EsthenosOrgHierarchy(db.Document):
         return "%s: %s" % (self.title, self.features)
 
 
-class EsthenosSettings(db.Document):
-    loan_cycle_1_rbi = db.FloatField(default=35000)
-    loan_cycle_1_plus_rbi = db.FloatField(default=100000)
-    one_year_tenure_limit_rbi = db.FloatField(default=15000)
-    hh_annual_income_limit_rural_rbi = db.FloatField(default=60000)
-    hh_annual_income_limit_urban_rbi = db.FloatField(default=120000)
-    total_indebtness_rbi = db.FloatField(default=100000)
-    max_existing_loan_count_rbi = db.IntField(default=2)
-    sales_tax = db.FloatField(default=12.36)
-    organisations_count = db.IntField(default=0)
-
-
 class EsthenosOrgNotification(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
     to_user = db.ReferenceField('EsthenosUser')
@@ -176,6 +164,7 @@ class EsthenosOrgStatsApplication(object):
         and self.scrutiny_failed == other.scrutiny_failed \
         and self.scrutiny_passed == other.scrutiny_passed \
         and self.scrutiny_onhold == other.scrutiny_onhold
+
 
 class EsthenosOrgLocation(db.EmbeddedDocument):
     lat = db.FloatField(default=0.0)
@@ -403,6 +392,7 @@ class EsthenosOrgStatsDay(db.Document):
     def total_conversion(self):
         fraction = (float(self.loans_disbursed) / max(1, self.loans_applied))
         return "%.2f" % (fraction * 100)
+
 
 class EsthenosOrgStatsMonth(db.Document):
     organisation = db.ReferenceField(EsthenosOrg)
@@ -1478,14 +1468,6 @@ class EsthenosOrgSettings(db.Document):
     product_cycle_4_group_max = db.IntField(default=20)
     highmark_username = db.StringField(max_length=100, required=True,default="")
     highmark_password = db.StringField(max_length=100, required=True,default="")
-
-
-class EsthenosOrgLocation(db.EmbeddedDocument):
-    lat = db.FloatField(default=0.0)
-    lng = db.FloatField(default=0.0)
-
-    def __unicode__(self):
-      return {"lat": self.lat, "lng": self.lng}
 
 
 class EsthenosOrgApplication(db.Document):

@@ -88,7 +88,6 @@ class AddApplicationMobile(Form):
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
         user.organisation.update(inc__application_count=1)
-        settings = EsthenosSettings.objects.all()[0]
 
         applicant_kyc = self.load(self.applicant_kyc_details)
         app = EsthenosOrgApplication(
@@ -327,7 +326,7 @@ class AddApplicationMobile(Form):
         )
 
         app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
-        app.application_id = user.organisation.name.upper()[0:2] + str(settings.organisations_count) + "{0:06d}".format(app_count)
+        app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
 
         app.update_status(110)
         app.save()

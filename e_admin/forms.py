@@ -27,8 +27,7 @@ class AddOrganisationForm( Form):
             raise ValidationError("Hey! This organisation is already registered with us")
 
     def save(self):
-        settings = EsthenosSettings.objects.all()[0]
-        org = EsthenosOrg(name=self.org_name.data, code = ""+str(settings.organisations_count))
+        org = EsthenosOrg(name=self.org_name.data)
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
         org.postal_tele_code =self.postal_tele_code.data
@@ -37,7 +36,7 @@ class AddOrganisationForm( Form):
         org.postal_city =self.postal_city.data
         org.postal_code = self.postal_code.data
         org.email = self.email.data
-        org.owner = EsthenosUser.objects.get(id=current_user.id)
+        org.admins.append(EsthenosUser.objects.get(id=current_user.id))
 
         org.save()
         return org
