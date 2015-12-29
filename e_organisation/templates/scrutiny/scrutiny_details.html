@@ -384,13 +384,13 @@
             <div class="grid simple documents">
                 <div class="grid-body no-border">
                     <h5 class="inline">
-                        {% if not application.applicant_docs.kyc_docs() %}
+                        {% if not application.applicant_docs.kyc_docs %}
                             <a href="#"><i class="fa fa-file-text-o"></i> Applicant KYC (0)</a>
                         {% endif %}
-                        {% for document in application.applicant_docs.kyc_docs()  %}
+                        {% for document in application.applicant_docs.kyc_docs  %}
                             {% if loop.first %}
                             <a class="fancybox" rel="kyc-gallery" href="{{ document|cdnassets }}">
-                              <i class="fa fa-file-text-o"></i>  Applicant KYC ({{ application.applicant_docs.kyc_docs()|length }})
+                              <i class="fa fa-file-text-o"></i>  Applicant KYC ({{ application.applicant_docs.kyc_docs|length }})
                             </a>
                             {% else %}
                             <a class="fancybox hidden" rel="kyc-gallery" href="{{ document|cdnassets }}"></a>
@@ -398,13 +398,13 @@
                         {% endfor %}
                     </h5>
                     <h5 class="inline">
-                        {% if not application.guarantor1_docs.kyc_docs() and not application.guarantor2_docs.kyc_docs() %}
-                            <a href="#">Guarantor KYC (0) <i class="fa fa-file-text-o"></i></a>
+                        {% if not application.guarantor1_docs.kyc_docs and not application.guarantor2_docs.kyc_docs %}
+                            <a href="#"><i class="fa fa-file-text-o"></i> Guarantor KYC (0)</a>
                         {% endif %}
-                        {% for document in (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())  %}
+                        {% for document in (application.guarantor1_docs.kyc_docs + application.guarantor2_docs.kyc_docs)  %}
                             {% if loop.first %}
                             <a class="fancybox" rel="guarantor-gallery" href="{{ document|cdnassets }}">
-                              Guarantor KYC ({{ (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())|length }}) <i class="fa fa-file-text-o"></i>
+                              <i class="fa fa-file-text-o"></i> Guarantor KYC ({{ (application.guarantor1_docs.kyc_docs + application.guarantor2_docs.kyc_docs)|length }})
                             </a>
                             {% else %}
                             <a class="fancybox hidden" rel="guarantor-gallery" href="{{ document|cdnassets }}"></a>
@@ -462,7 +462,7 @@
                 <div class="grid-body no-border">
                     <div class="profile-pic section">
                        <div class="pic">
-                           <img width="235px" height="250px" src="{{ application.assets_id|cdnassets }}/applicant_photo_borrower_1.jpg">
+                           <img width="235px" height="250px" src="{{ application.assets_id|cdnassets }}/applicant_personal_docs_borrower_1.jpg">
                        </div>
                        <h5 class="title">click-to-call</h5>
                     </div>

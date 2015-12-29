@@ -127,7 +127,9 @@ def _jinja2_filter_permissionfilter(permission):
 
 @mainapp.template_filter('cdnassets')
 def _jinja2_filter_cdn_assets(asset):
-    return "%s/%s" % (settings.AWS_SETTINGS["AWS_CDN_PATH"], asset)
+    cdn = settings.AWS_SETTINGS["AWS_CDN_PATH"]
+    bucket = settings.AWS_SETTINGS["AWS_S3_BUCKET"]
+    return "%s/%s/%s" % (cdn, bucket,  asset)
 
 @mainapp.template_filter('css_approve_reject')
 def _jinja2_filter_css_approve_reject(value):

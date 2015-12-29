@@ -1156,9 +1156,11 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
     def has_kyc(self):
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
 
+    @property
     def kyc_docs(self):
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
 
+    @property
     def all_docs(self):
         return self.pan_docs + self.aadhar_docs + self.voterid_docs + self.personal_docs + self.business_docs + self.other_docs
 
@@ -1871,6 +1873,7 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
 
 
 class EsthenosOrgApplicationEqifaxResponse(db.Document):
+    application_id = db.StringField(max_length=255, required=True,default="")
     report_id=db.IntField(default=0)
     reference_number=db.StringField(max_length=255,required=False,default="")
     unique_account_number=db.StringField(max_length=255,required=False,default="")
