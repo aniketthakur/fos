@@ -158,6 +158,25 @@ class AddOrganizationEmployeeForm(Form):
         org.update(inc__employee_count=1)
         return emp
 
+    def deselect_employee_geo(self, emp):
+        for state in emp.states:
+            state.owner = None
+            state.save()
+        for region in emp.regions:
+            region.owner = None
+            region.save()
+        for area in emp.areas:
+            area.owner = None
+            area.save()
+        for branch in emp.branches:
+            branch.owner = None
+            branch.save()
+
+        emp.access_states = []
+        emp.access_regions = []
+        emp.access_areas = []
+        emp.save()
+
     def update(self, emp):
         errors = {}
 
@@ -179,10 +198,10 @@ class AddOrganizationEmployeeForm(Form):
 
         emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
 
-
         to_save = True
 
         selections = []
+        self.deselect_employee_geo(emp)
         #todo centralize the level assignments
         if emp.hierarchy.level == 3:
             for state in self.states.data:
@@ -198,7 +217,7 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a state."
-        emp.states = selections
+        emp.access_states = selections
 
         selections = []
         #todo centralize the level assignments
@@ -216,7 +235,7 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a region."
-        emp.regions = selections
+        emp.access_regions = selections
 
         selections = []
         #todo centralize the level assignments
@@ -234,7 +253,7 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned an area."
-        emp.areas = selections
+        emp.access_areas = selections
 
         selections = []
         #todo centralize the level assignments
@@ -256,14 +275,14 @@ class AddOrganizationEmployeeForm(Form):
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a branch."
 
-        emp.branches = selections
+        emp.access_branches = selections
 
         selections = []
         #todo centralize the level assignments
         if emp.hierarchy.level == 7:
             for center in self.centers.data:
                 selections.append(EsthenosOrgCenter.objects.get(id=center))
-        emp.centers = selections
+        emp.access_centers = selections
 
         if len(emp.branches)>1 and emp.hierarchy.level == 7:
             to_save = False
