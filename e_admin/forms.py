@@ -195,8 +195,8 @@ class AddOrganizationEmployeeForm(Form):
         emp.postal_tele_code = self.tele_code_add_organisation.data
 
         emp.save()
-
-        emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
+        if self.role.data != '':
+            emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
 
         to_save = True
 
