@@ -282,11 +282,11 @@
                         {% endif %}
                         {% for document in application.applicant_docs.kyc_docs()  %}
                             {% if loop.first %}
-                            <a class="fancybox" rel="kyc-gallery" href="{{ cdnassets|document }}">
+                            <a class="fancybox" rel="kyc-gallery" href="{{ document|cdnassets }}">
                               <i class="fa fa-file-text-o"></i>  Applicant KYC ({{ application.applicant_docs.kyc_docs()|length }})
                             </a>
                             {% else %}
-                            <a class="fancybox hidden" rel="kyc-gallery" href="{{ cdnassets|document }}"></a>
+                            <a class="fancybox hidden" rel="kyc-gallery" href="{{ document|cdnassets }}"></a>
                             {% endif %}
                         {% endfor %}
                     </h5>
@@ -296,11 +296,11 @@
                         {% endif %}
                         {% for document in (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())  %}
                             {% if loop.first %}
-                            <a class="fancybox" rel="guarantor-gallery" href="{{ cdnassets|document }}">
+                            <a class="fancybox" rel="guarantor-gallery" href="{{ document|cdnassets }}">
                               Guarantor KYC ({{ (application.guarantor1_docs.kyc_docs() + application.guarantor2_docs.kyc_docs())|length }}) <i class="fa fa-file-text-o"></i>
                             </a>
                             {% else %}
-                            <a class="fancybox hidden" rel="guarantor-gallery" href="{{ cdnassets|document }}"></a>
+                            <a class="fancybox hidden" rel="guarantor-gallery" href="{{ document|cdnassets }}"></a>
                             {% endif %}
                         {% endfor %}
                     </h5>
@@ -310,11 +310,11 @@
                         {% endif %}
                         {% for document in application.applicant_docs.personal_docs %}
                             {% if loop.first %}
-                            <a class="fancybox" rel="personal-docs-gallery" href="{{ cdnassets|document }}">
+                            <a class="fancybox" rel="personal-docs-gallery" href="{{ document|cdnassets }}">
                               <i class="fa fa-file-text-o"></i> Personal Documents ({{ application.applicant_docs.personal_docs|length }})
                             </a>
                             {% else %}
-                            <a class="fancybox hidden" rel="personal-docs-gallery" href="{{ cdnassets|document }}"></a>
+                            <a class="fancybox hidden" rel="personal-docs-gallery" href="{{ document|cdnassets }}"></a>
                             {% endif %}
                         {% endfor %}
                     </h5>
@@ -324,11 +324,11 @@
                         {% endif %}
                         {% for document in application.applicant_docs.business_docs  %}
                             {% if loop.first %}
-                            <a class="fancybox" rel="business-docs-gallery" href="{{ cdnassets|document }}">
+                            <a class="fancybox" rel="business-docs-gallery" href="{{ document|cdnassets }}">
                               <i class="fa fa-file-text-o"></i> Business Documents ({{ application.applicant_docs.business_docs|length }})
                             </a>
                             {% else %}
-                            <a class="fancybox hidden" rel="business-docs-gallery" href="{{ cdnassets|document }}"></a>
+                            <a class="fancybox hidden" rel="business-docs-gallery" href="{{ document|cdnassets }}"></a>
                             {% endif %}
                         {% endfor %}
                     </h5>
@@ -338,11 +338,11 @@
                         {% endif %}
                         {% for document in application.applicant_docs.other_docs %}
                             {% if loop.first %}
-                            <a class="fancybox" rel="other-docs-gallery" href="{{ cdnassets|document }}">
+                            <a class="fancybox" rel="other-docs-gallery" href="{{ document|cdnassets }}">
                               <i class="fa fa-file-text-o"></i> Other Documents ({{ application.applicant_docs.other_docs|length }})
                             </a>
                             {% else %}
-                            <a class="fancybox hidden" rel="other-docs-gallery" href="{{ cdnassets|document }}"></a>
+                            <a class="fancybox hidden" rel="other-docs-gallery" href="{{ document|cdnassets }}"></a>
                             {% endif %}
                         {% endfor %}
                     </h5>

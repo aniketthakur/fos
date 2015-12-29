@@ -140,7 +140,7 @@ FEATURES = {
         "enabled" : True,
     },
     "features_applications_sanction": {
-        "title" : "Features For Application Scrutiny",
+        "title" : "Features For Application Sanction",
         "enabled" : True,
     },
     "features_applications_scrutiny_stats": {
