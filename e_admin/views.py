@@ -321,8 +321,7 @@ def admin_organisation_add_emp(org_id):
 
         else:
             flash_errors(form)
-            kwargs = locals()
-            return render_template("admin_org_emp_add.html", **kwargs)
+            return redirect(url_for("admin_views.admin_organisation_add_emp", org_id=org_id))
 
     if request.method == "GET":
         states = EsthenosOrgState.objects.filter(organisation=org)
