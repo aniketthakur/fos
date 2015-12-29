@@ -301,14 +301,7 @@
       }
 
       $("#role").change(function(e) {
-        deselectCheckbox("states");
-        deselectCheckbox("regions");
-        deselectCheckbox("areas");
-        deselectCheckbox("branches");
-
-        removeChildren("regions");
-        removeChildren("areas");
-        removeChildren("branches");
+        startOnDeselect();
 
         $(".geo-select").prop('disabled', true);
         option = $("option:selected", this);
