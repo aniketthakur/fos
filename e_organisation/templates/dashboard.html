@@ -112,7 +112,7 @@
                 <div class="tiles-body no-border">
                     <div class="inline chart pull-left"></div>
                     <div class="inline desc pull-right">
-                        <h1 class="item-count">{{ monthly.total_conversion }}<span class="item-title">%</span></h1>
+                        <h1 class="item-count">{{ monthly.total_conversion|percentformat }}<span class="item-title">%</span></h1>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -921,7 +921,7 @@
         function drawGauges()
         {
             createGauge(".summary .summary-tat .chart", "TAT", 1, 10, {{ monthly.total_tat }});
-            createGauge(".summary .summary-rate .chart", "Rate", 1, 100, {{ monthly.total_conversion }});
+            createGauge(".summary .summary-rate .chart", "Rate", 1, 100, {{ monthly.total_conversion|percentformat }});
         }
         drawGauges();
     });
