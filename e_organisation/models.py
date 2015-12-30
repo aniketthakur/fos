@@ -102,9 +102,12 @@ class EsthenosOrgStatsApplication(object):
         self.kyc_failed = 0
 
         self.loan_amount = 0
-        self.loan_leaked = 0 # if cb, cf or kyc fail.
-        self.loan_applied = 0 # application submitted.
+        self.loan_leaked = 0
+        self.loan_applied = 0
         self.loan_disbursed = 0
+        self.disbursement_tat = 0
+        self.disbursement_done = 0
+        self.disbursement_ready = 0
 
         self.scrutiny_done = 0
         self.scrutiny_ready = 0
@@ -213,14 +216,6 @@ class EsthenosOrgStatsDay(db.Document):
     kyc_passed = db.IntField(default=0)
     kyc_failed = db.IntField(default=0)
 
-    cgt1_ready  = db.IntField(default=0)
-    cgt1_passed = db.IntField(default=0)
-    cgt1_failed = db.IntField(default=0)
-
-    cgt2_ready  = db.IntField(default=0)
-    cgt2_passed = db.IntField(default=0)
-    cgt2_failed = db.IntField(default=0)
-
     disbursement_tat = db.IntField(default=0)
     disbursement_done = db.IntField(default=0)
     disbursement_ready = db.IntField(default=0)
@@ -248,12 +243,6 @@ class EsthenosOrgStatsDay(db.Document):
         print "cf_failed               :", self.cf_failed
         print "kyc_passed              :", self.kyc_passed
         print "kyc_failed              :", self.kyc_failed
-        print "cgt1_ready              :", self.cgt1_ready
-        print "cgt1_passed             :", self.cgt1_passed
-        print "cgt1_failed             :", self.cgt1_failed
-        print "cgt2_ready              :", self.cgt2_ready
-        print "cgt2_passed             :", self.cgt2_passed
-        print "cgt2_failed             :", self.cgt2_failed
         print "disbursement_tat        :", self.disbursement_tat
         print "disbursement_done       :", self.disbursement_done
         print "disbursement_ready      :", self.disbursement_ready
@@ -280,14 +269,6 @@ class EsthenosOrgStatsDay(db.Document):
 
         stats.kyc_passed = self.kyc_passed + other.kyc_passed
         stats.kyc_failed = self.kyc_failed + other.kyc_failed
-
-        stats.cgt1_ready  = self.cgt1_ready + other.cgt1_ready
-        stats.cgt1_passed = self.cgt1_passed + other.cgt1_passed
-        stats.cgt1_failed = self.cgt1_failed + other.cgt1_failed
-
-        stats.cgt2_ready  = self.cgt2_ready + other.cgt2_ready
-        stats.cgt2_passed = self.cgt2_passed + other.cgt2_passed
-        stats.cgt2_failed = self.cgt2_failed + other.cgt2_failed
 
         stats.disbursement_tat = self.disbursement_tat + other.disbursement_tat
         stats.disbursement_done = self.disbursement_done + other.disbursement_done
@@ -320,14 +301,6 @@ class EsthenosOrgStatsDay(db.Document):
         stats.kyc_passed = self.kyc_passed - other.kyc_passed
         stats.kyc_failed = self.kyc_failed - other.kyc_failed
 
-        stats.cgt1_ready  = self.cgt1_ready - other.cgt1_ready
-        stats.cgt1_passed = self.cgt1_passed - other.cgt1_passed
-        stats.cgt1_failed = self.cgt1_failed - other.cgt1_failed
-
-        stats.cgt2_ready  = self.cgt2_ready - other.cgt2_ready
-        stats.cgt2_passed = self.cgt2_passed - other.cgt2_passed
-        stats.cgt2_failed = self.cgt2_failed - other.cgt2_failed
-
         stats.disbursement_tat = self.disbursement_tat - other.disbursement_tat
         stats.disbursement_done = self.disbursement_done - other.disbursement_done
         stats.disbursement_ready = self.disbursement_ready - other.disbursement_ready
@@ -359,12 +332,6 @@ class EsthenosOrgStatsDay(db.Document):
            and self.cf_failed == other.cf_failed \
            and self.kyc_passed == other.kyc_passed \
            and self.kyc_failed == other.kyc_failed \
-           and self.cgt1_ready  == other.cgt1_ready \
-           and self.cgt1_passed == other.cgt1_passed \
-           and self.cgt1_failed == other.cgt1_failed \
-           and self.cgt2_ready  == other.cgt2_ready \
-           and self.cgt2_passed == other.cgt2_passed \
-           and self.cgt2_failed == other.cgt2_failed \
            and self.disbursement_tat == other.disbursement_tat \
            and self.disbursement_done == other.disbursement_done \
            and self.disbursement_ready == other.disbursement_ready \
@@ -390,8 +357,7 @@ class EsthenosOrgStatsDay(db.Document):
 
     @property
     def total_conversion(self):
-        fraction = (float(self.loans_disbursed) / max(1, self.loans_applied))
-        return "%.2f" % (fraction * 100)
+        return (float(self.loans_disbursed) / max(1, self.loans_applied))
 
 
 class EsthenosOrgStatsMonth(db.Document):
@@ -502,8 +468,11 @@ class EsthenosOrgState(db.Document):
         regions_list = EsthenosOrgRegion.objects.filter(name=name, organisation=self.organisation, parent=self)
         if regions_list:
             return regions_list[0], True
+
+        stats = EsthenosOrgStatsGeo(organisation=self.organisation)
+        stats.save()
         region, status = EsthenosOrgRegion.objects.get_or_create(
-            name=name, organisation=self.organisation, parent=self
+            name=name, organisation=self.organisation, parent=self, stats=stats
         )
         self.regions.append(region)
         self.save()
@@ -595,6 +564,7 @@ class EsthenosOrgRegion(db.Document):
         areas_list = EsthenosOrgArea.objects.filter(name=name, organisation=self.organisation, parent=self)
         if areas_list:
             return areas_list[0], True
+
         stats = EsthenosOrgStatsGeo(organisation=self.organisation)
         stats.save()
         area, status = EsthenosOrgArea.objects.get_or_create(
@@ -668,7 +638,6 @@ class EsthenosOrgArea(db.Document):
 
         stats = EsthenosOrgStatsGeo(organisation=self.organisation)
         stats.save()
-
         branch, status = EsthenosOrgBranch.objects.get_or_create(
             name=name, organisation=self.organisation, parent=self, stats=stats
         )
@@ -704,21 +673,13 @@ class EsthenosOrgBranch(db.Document):
         daystat.cf_failed = stats.cf_failed
         daystat.kyc_passed = stats.kyc_passed
         daystat.kyc_failed = stats.kyc_failed
-        daystat.cgt1_ready = stats.cgt1_ready
-        daystat.cgt1_passed = stats.cgt1_passed
-        daystat.cgt1_failed = stats.cgt1_failed
-        daystat.cgt2_ready  = stats.cgt2_ready
-        daystat.cgt2_passed = stats.cgt2_passed
-        daystat.cgt2_failed = stats.cgt2_failed
         daystat.disbursement_tat = stats.disbursement_tat
         daystat.disbursement_done = stats.disbursement_done
         daystat.disbursement_ready = stats.disbursement_ready
-        daystat.loans_leaked = stats.loans_leaked
-        daystat.loans_applied = stats.loans_applied
-        daystat.loans_disbursed = stats.loans_disbursed
-        daystat.loans_disbursed_amount = stats.loans_disbursed_amount
-        daystat.count_disbursed_groups = 1 if stats.loans_disbursed > 0 else 0
-        daystat.count_disbursed_centers = 1 if stats.loans_disbursed > 0 else 0
+        daystat.loans_leaked = stats.loan_leaked
+        daystat.loans_applied = stats.loan_applied
+        daystat.loans_disbursed = stats.loan_disbursed
+        daystat.loans_disbursed_amount = stats.loan_amount
 
         daystat.scrutiny_done = stats.scrutiny_done
         daystat.scrutiny_ready = stats.scrutiny_ready
@@ -796,9 +757,9 @@ class EsthenosOrgBranch(db.Document):
     def create(name, parent):
         return parent.add_branch(name)
 
+    @property
     def applications(self):
         return EsthenosOrgApplication.objects.filter(branch=self)
-
 
     def __unicode__(self):
         return self.name
@@ -1248,111 +1209,6 @@ class EsthenosOrgUserPerformanceTarget(db.Document):
     created = db.DateTimeField(default=datetime.datetime.now)
 
 
-class EsthenosOrgStats(db.Document):
-    organisation = db.ReferenceField(EsthenosOrg)
-    granularity = db.StringField(max_length=20, required=True)
-    created = db.DateTimeField(default=datetime.datetime.now)
-
-    hour = db.IntField(default=0, required=True)
-    endtime = db.DateTimeField(default=datetime.datetime.now, required=True)
-    starttime = db.DateTimeField(default=datetime.datetime.now, required=True)
-
-    application_submitted = db.IntField(default=0)
-    application_kyc_ready = db.IntField(default=0)
-    application_kyc_done = db.IntField(default=0)
-    application_kyc_passed = db.IntField(default=0)
-    application_kyc_failed = db.IntField(default=0)
-
-    application_cbcheck_ready = db.IntField(default=0)
-    application_cbcheck_done = db.IntField(default=0)
-    application_cbcheck_passed = db.IntField(default=0)
-    application_cbcheck_failed = db.IntField(default=0)
-
-    application_cf_ready = db.IntField(default=0)
-    application_cf_done = db.IntField(default=0)
-    application_cf_passed = db.IntField(default=0)
-    application_cf_failed = db.IntField(default=0)
-
-    application_cgt1_ready = db.IntField(default=0)
-    application_cgt1_done = db.IntField(default=0)
-    application_cgt1_passed = db.IntField(default=0)
-    application_cgt1_failed = db.IntField(default=0)
-
-    application_cgt2_ready = db.IntField(default=0)
-    application_cgt2_done = db.IntField(default=0)
-    application_cgt2_passed = db.IntField(default=0)
-    application_cgt2_failed = db.IntField(default=0)
-
-    application_underwriting_ready = db.IntField(default=0)
-    application_underwriting_done = db.IntField(default=0)
-
-    application_disbursement_ready = db.IntField(default=0)
-    application_disbursement_pending = db.IntField(default=0)
-    application_disbursement_done = db.IntField(default=0)
-
-    total_groups_disbursed = db.FloatField(default=0)
-    total_centers_disbursed = db.FloatField(default=0)
-
-    total_loans_disbursed = db.FloatField(default=0)
-    total_loans_amount_disbursed = db.FloatField(default=0)
-
-    total_loans_leaked = db.FloatField(default=0)
-    total_loans_applied = db.FloatField(default=0)
-
-    def calculate(self):
-        print "calculating daily stats for start-time:%s end-time:%s" % (self.starttime, self.endtime)
-        applications = EsthenosOrgApplication.objects.filter(
-            organisation = self.organisation,
-            current_status_updated__lte = self.endtime,
-        )
-
-        self.application_submitted = self.calc_status(applications, 110)
-
-        self.application_cbcheck_done = self.calc_status(applications, 150)
-        self.application_cf_done = self.calc_status(applications, 170)
-
-        self.application_cgt1_done = self.calc_status(applications, 190)
-        self.application_cgt2_done = self.calc_status(applications, 194)
-
-        self.application_underwriting_done = self.calc_status(applications, 231)
-        self.application_disbursement_done = self.calc_status(applications, 240)
-
-        self.total_groups_disbursed = 1
-        self.total_centers_disbursed = 1
-
-        self.total_loans_disbursed = self.calc_status(applications, 240)
-        self.total_loans_amount_disbursed = self.calc_status(applications, 240)
-
-        self.total_loans_leaked = 1
-        self.total_loans_applied = self.calc_status(applications, 110)
-
-        self.save()
-
-    def calc_apps(self, applications, status_code):
-        def filter_status(x):
-            return x.status.status_code == status_code
-
-        def filter_time(x):
-            return (x.updated_on >= self.starttime) and (x.updated_on <= self.endtime)
-
-        def filter_app(x):
-            return filter_time(x) and filter_status(x)
-
-        apps = []
-        for application in applications:
-            apps += filter(filter_app, application.timeline)
-
-        return apps
-
-    def calc_status(self, applications, status_code):
-        apps = self.calc_apps(applications, status_code)
-        return len(apps)
-
-    def rollup_daily(self):
-        print "calculating daily stats for start-time:%s end-time:%s" % (self.starttime, self.endtime)
-        print "calculation"
-
-
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     kyc_type = db.StringField(max_length=512, required=False,default="")
     kyc_number = db.StringField(max_length=512, required=False,default="")
@@ -1761,7 +1617,8 @@ class EsthenosOrgApplication(db.Document):
                 stats.disbursement_tat = (self.date_created - date).days
                 stats.disbursement_done = 1
 
-            stats.loan_leaked = 1 if self.verification else 0
+            if code < 100 and updated == date:
+                stats.loan_leaked = 1
 
             #todo: add stages for cb/kyc failed.
             stats.cb_failed = 0

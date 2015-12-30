@@ -113,6 +113,10 @@ def _jinja2_filter_datetime(date, fmt=None):
 def _jinja2_filter_datetime(num):
     return num2words(num).upper()
 
+@mainapp.template_filter('percentformat')
+def _jinja2_filter_percentformat(fraction):
+    return "%.0f" % (fraction * 100)
+
 @mainapp.template_filter('enabledfilter')
 def _jinja2_filter_enabledfilter(active):
     return "enabled" if active else "disabled"

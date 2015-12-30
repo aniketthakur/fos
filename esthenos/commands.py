@@ -421,7 +421,6 @@ class ShowUsers( Command):
         for u in User.objects().order_by( "date_joined"):
             print "%s, %s" % (u.email.encode("utf-8"), u.name.encode("utf-8"))
 
-
 def add_commands( manager):
     manager.add_command( 'initdb', InitDB())
     manager.add_command( 'dropdb', DropDB())
