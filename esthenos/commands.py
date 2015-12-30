@@ -115,15 +115,6 @@ class InitDB(Command):
             status_type.save()
         notify("{count} {name} application statuses created".format(count=len(settings.APP_STATUS), name=orgz["name"]))
 
-        # calendar, status = EsthenosOrgCalendar.objects.get_or_create(organisation=org)
-        # for day in orgz["calendar"]["days"]:
-        #     for time in orgz["calendar"]["times"]:
-        #         slot, status = EsthenosOrgTimeSlot.objects.get_or_create(
-        #             organisation=org, time=time, day=day
-        #         )
-        #         calendar.timeslots.append(slot)
-        # calendar.save()
-        # notify("{count} {name} calendar timeslots created.".format(count=len(calendar.timeslots), name=orgz["name"]))
         notify("\nsuccessfully initialized db:{DB} on {HOST}:{PORT}\n".format(**settings.MONGODB_SETTINGS))
 
 class TestDBApplications(Command):

@@ -591,7 +591,6 @@ class EsthenosOrgRegion(db.Document):
             "children": [area.hierarchy for area in self.areas]
         }
 
-
     def add_area(self, name):
         areas_list = EsthenosOrgArea.objects.filter(name=name, organisation=self.organisation, parent=self)
         if areas_list:
