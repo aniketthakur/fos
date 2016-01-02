@@ -9,7 +9,7 @@ from esthenos.settings import MONGODB_SETTINGS as database
 
 
 env.user = client["user-deploy"]
-env.hosts = client["host"]
+env.hosts = [client["host"]]
 env.key_filename = "~/.ssh/esthenos.ops.key"
 env.use_ssh_config = True
 
@@ -17,11 +17,12 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 HOME_DIR = '/home/ubuntu'
 PIDS_DIR = '/var/run/esthenos/'
 LOGS_DIR = '/var/log/esthenos/'
+TIMEZONE = client["timezone"]
 DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
 GIT_SERVER_DB = "on branch {git-branch}".format(**client)
-GIT_SERVER_HOST = "on branch {host}".format(host=client["host"][0].split('.')[0])
+GIT_SERVER_HOST = "on branch {host}".format(host=client["host"].split('.')[0])
 GIT_SERVER_BRANCH = "on branch {DB}".format(**database)
 if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH) or (GIT_BRANCH != GIT_SERVER_HOST):
     print "\non different branch as compared to server-settings.\nabort.\n"
@@ -68,14 +69,17 @@ def provision():
     # setup nginx server.
     nginx()
 
-    # setup mongo server.
-    mongodb()
+    # setup scalyr logging.
+    scalyr()
 
     # setup monit service.
     monitrc()
 
     # setup rabbitmq server.
     rabbitmq()
+
+    # setup IST timezone at server.
+    timezone()
 
     # setup wkhtmltopdf virtual x-server.
     wkhtmltopdf()
@@ -88,7 +92,7 @@ def nginx():
 
     sudo('rm -f /etc/nginx/sites-enabled/default')
     sudo('rm -f /etc/nginx/sites-enabled/esthenos-webapp')
-    
+
     put('e_deploy/esthenos-nginx.conf', '/tmp/')
     sudo('mv /tmp/esthenos-nginx.conf /etc/nginx/sites-available/')
     sudo('ln -s /etc/nginx/sites-available/esthenos-nginx.conf /etc/nginx/sites-enabled/esthenos-webapp')
@@ -96,9 +100,39 @@ def nginx():
     # restart nginx server.
     sudo('service nginx restart')
 
+def scalyr():
+    """ setup scalyr logging agent. """
+
+    sudo('wget -q -nc https://www.scalyr.com/scalyr-repo/stable/latest/scalyr-agent-2_2.0.14_all.deb')
+    sudo('dpkg -i scalyr-agent-2_2.0.14_all.deb')
+
+    config = open("e_deploy/esthenos-agent.json").read()
+    config = ''.join(config)
+    config = config.replace("___HOST_NAME___", env.host)
+
+    with open("/tmp/esthenos-agent.json", "w") as agent:
+        agent.write(config)
+        agent.close()
+
+    put('/tmp/esthenos-agent.json', '/tmp/')
+    sudo("mv /tmp/esthenos-agent.json /etc/scalyr-agent-2/agent.json")
+
+    log = '/var/log/scalyr-agent-2'
+    sudo('mkdir -p {d}'.format(d=log))
+    sudo('chown -R {user}:{group} {d}'.format(user=env.user, group=env.user, d=log))
+
+    lib = '/var/lib/scalyr-agent-2'
+    sudo('chown -R {user}:{group} {d}'.format(user=env.user, group=env.user, d=lib))
+
+    sudo('scalyr-agent-2 start')
+
 def mongodb():
-    """setting up mongo database (create-only)."""
-    pass
+    """setup mongodb for the application server."""
+    packages = ' '.join([
+      "mongodb"
+    ])
+    sudo('apt-get update -qq')
+    sudo('apt-get install --quiet --assume-yes {packages}'.format(packages=packages))
 
 def monitrc():
     """setting up monitrc manager."""
@@ -120,18 +154,22 @@ def monitrc():
 
 def rabbitmq():
     """setting up rabbitmq server."""
-    
+
     sudo('rabbitmqctl add_user esthenos-tasks esthenos')
     sudo('rabbitmqctl add_vhost /esthenos-tasks')
     sudo('rabbitmqctl set_permissions -p /esthenos-tasks esthenos-tasks ".*" ".*" ".*"')
 
     sudo('service rabbitmq-server restart')
 
+def timezone():
+    """setting correct timezone."""
+
+    sudo('timedatectl set-timezone %s' % TIMEZONE)
+
 def wkhtmltopdf():
     sudo("""echo -e '#!/bin/bash\nxvfb-run -a --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf $*' > /usr/bin/wkhtmltopdf.sh""")
     sudo("chmod a+x /usr/bin/wkhtmltopdf.sh")
     sudo("ln -s /usr/bin/wkhtmltopdf.sh /usr/local/bin/wkhtmltopdf")
-
 
 def stop(app_name):
     with settings(warn_only=True):
@@ -168,12 +206,12 @@ def deploy():
     # notify slack for deploy start.
     notify("starting deployment of {version} on {server}".format(version=dirname, server=env.host))
 
-    
+
     deploy_path = os.path.join(HOME_DIR, dirname)
     run('mkdir -p {}'.format(deploy_path))
 
     print 'uploading webapp to %s' % deploy_path
-    rsync_project(remote_dir=deploy_path, local_dir='./', exclude=['.git', '*.pyc', '*.db', ".DS_Store"])
+    rsync_project(remote_dir=deploy_path, local_dir='./', exclude=['.git', '*.pyc', '*.db', ".DS_Store", '.idea'])
 
     with cd(deploy_path):
         _ensure_dirs()
@@ -189,10 +227,3 @@ def deploy():
     # notify slack for deployment finish
     notify("successfully deployed on server {version} on {server}".format(version=dirname, server=env.host))
 
-
-@parallel
-def logs():
-    """
-    Tail logfiles
-    """
-    sudo('tail -f {logdir}* /var/log/nginx/*.log'.format(logdir=LOGS_DIR))

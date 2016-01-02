@@ -13,13 +13,10 @@
                 <div class="grid-body">
                     <div class="row">
                         <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_add_emp", org_id=org.id) }}">Employees</a>
-                        </div>
-                        <div class="col-md-4 admin-action">
-                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_product", org_id=org.id) }}">Products</a>
-                        </div>
-                        <div class="col-md-4 admin-action">
                              <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_details", org_id=org.id) }}">Branches & Centers</a>
+                        </div>
+                        <div class="col-md-4 admin-action">
+                            <a class="btn btn-large btn-block btn-success" type="button" href="{{ url_for("admin_views.admin_organisation_add_emp", org_id=org.id) }}">Employees</a>
                         </div>
                         {% if feature_show("features_psychometric_questions") %}
                         <div class="col-md-4 admin-action">

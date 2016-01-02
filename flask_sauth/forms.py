@@ -27,16 +27,18 @@ class RegistrationForm(Form):
 
 
 class LoginForm( Form):
-    email = TextField(u"Email Address", validators=[v.DataRequired(), v.Email()])
+    email = TextField(u"Email Address")
     password = PasswordField( validators=[v.DataRequired()])
     role = HiddenField()
     next = HiddenField()
 
     def validate_email(self, field):
+        print field
         if not User.objects(email=field.data).count():
             raise ValidationError("This email address is not registered.")
 
     def validate_password(self, field):
+        print field
         self.user_cache = authenticate(email=self.email.data, password=field.data)
         if self.user_cache is None:
             raise ValidationError("Please enter correct information. Note that password is case-sensitive.")

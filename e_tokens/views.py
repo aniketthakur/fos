@@ -1,29 +1,39 @@
-import json
-
-from flask import Response
-from flask_login import current_user, login_required
-from flask import Blueprint, request, session, flash
+from flask import jsonify
+from flask import Blueprint, request, session
 
 from flask_sauth.forms import LoginForm
-from utils import generate_auth_token, login_or_key_required
+from utils import generate_auth_token
 from models import EsthenosOrgUserToken
-from esthenos.mongo_encoder import encode_model
+from esthenos import mainapp as app
 from esthenos.settings import AWS_SETTINGS
 from e_organisation.models import EsthenosUser
 
-token_views = Blueprint('token_views', __name__,template_folder='templates')
+token_views = Blueprint('token_views', __name__)
 
-@token_views.route('/api/app_token/generate', methods=["POST"])
-def generate_token_view():
-    login_form = LoginForm(request.form)
-    form = login_form
+
+@token_views.route('/api/token/<feature>', methods=["POST"])
+def generate_token_view(feature):
+    form = LoginForm(request.form)
+    feature = "features_mobile_%s" % feature
+    enabled = app.config["FEATURES"][feature]["enabled"]
 
     if form.validate():
         user = EsthenosUser.objects.get(email=form.email.data)
 
+        if not enabled:
+            return jsonify({
+              'message':'the feature has been disabled.'
+            })
+
         if not user.active:
-            flash(u'Your account has been deactivated', 'error')
-            kwargs = {"login_form": login_form}
+            return jsonify({
+              'message':'your account has been deactivated'
+            })
+
+        if not user.is_allowed(feature):
+            return jsonify({
+              'message':'you do not have permissions for the feature'
+            })
 
         session['role'] = user.hierarchy.role
         full_token = generate_auth_token(user, expiration=360000)
@@ -32,12 +42,14 @@ def generate_token_view():
         token_obj, status = EsthenosOrgUserToken.objects.get_or_create(full_token=full_token, token=token, user=user)
 
         response = {
+          'id': str(user.id),
+          'email': user.email,
           'role' : user.hierarchy.role,
           'token' : token,
           'bucket' : AWS_SETTINGS['AWS_S3_BUCKET'],
           'poolId' : AWS_SETTINGS['AWS_COGNITO_ID'],
           'message': 'token generated'
         }
-        return Response(json.dumps(response), content_type="application/json", mimetype='application/json')
+        return jsonify(response)
 
-    return Response(json.dumps({'message':'token generation failed'}), content_type="application/json", mimetype='application/json')
+    return jsonify({'message':'authentication failed'})

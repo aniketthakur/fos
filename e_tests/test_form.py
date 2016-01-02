@@ -7,15 +7,24 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-url = "http://localhost:8080/api/organisation/applications"
+
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# response = requests.post(url, data=payload)
+# print response.text
 
 querystring = {
-    "instance_token":"0MXwdcivD_QfawQ6vFbj_djYMVzb_CpzTtLH0P5mRbY"
+# <<<<<<< HEAD
+#     "instance_token":"0MXwdcivD_QfawQ6vFbj_djYMVzb_CpzTtLH0P5mRbY"
+# =======
+    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
+# >>>>>>> 1c3bd7e5fe5d1d9fdf8efd0f2f41b63f0124736f
 }
+url = "http://localhost:8085/api/organisation/applications"
 
 payload = {
     "group": "",
-    "applicant_business_docs_customer1":{   
+    "applicant_business_docs_customer1":{
         "address": "hdhddhh", #[All other are Customer Details from 1 to 5]
         "name_4": "hdhdhr",
         "name_3": "hdhdhdhdj",
@@ -268,6 +277,7 @@ payload = {
        "type_of_vehicle_manufacturer": "hr"
    },
     "applicant_kyc_details": {
+        "name": "Gsh",
         "address": "E-387, GALI N0-8.   Patparganj",
         "spouse_aadhar_card_number": "546764944949",	#[ADD]
         "dob_yob": "1981",
@@ -376,8 +386,8 @@ payload = {
    },
     "locations_map": {
         "home": {
-            "lat": 12.9721252,
-            "lng": 77.6530464
+            "lat": 12.97205203,
+            "lng": 77.65267892
         },
         "business": {
             "lat": 12.971891350075795,
@@ -556,9 +566,6 @@ payload = {
     }
 }
 
-headers = {
-  'content-type': "application/json"
-}
-
-response = requests.post(url, json=payload, params=querystring)
-print(response.text)
+for i in range(0, 10):
+    response = requests.post(url, json=payload, params=querystring)
+    print(response.text)

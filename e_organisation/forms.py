@@ -20,10 +20,6 @@ def toFloat(value):
 
 
 class AddApplicationMobile(Form):
-    # group = TextField(validators=[v.Length(max=10000)])
-    # center = TextField(validators=[v.Length(max=10000)])
-    # product = TextField(validators=[v.Length(max=10000)])
-
     assets_id = TextField(validators=[v.Length(max=10000)])
     assets_map = TextField(validators=[v.Length(max=10000)])
     locations_map = TextField(validators=[v.Length(max=10000)])
@@ -163,18 +159,18 @@ class AddApplicationMobile(Form):
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
         user.organisation.update(inc__application_count=1)
-        settings = EsthenosSettings.objects.all()[0]
 
         applicant_kyc = self.load(self.applicant_kyc_details)
         app = EsthenosOrgApplication(
             name = applicant_kyc.get("name",[]),
             owner = user,
+            branch = user.branches[0],
             assets_id = str(self.assets_id.data),
             organisation = user.organisation,
             spouse_aadhar_card_number = applicant_kyc.get("spouse_aadhar_card_number",[]),
             spouse_name = applicant_kyc.get("spouse_name",[])
         )
-
+        # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
         app.yob = applicant_kyc["dob_yob"]
         app.city = applicant_kyc["district"]
@@ -587,7 +583,7 @@ class AddApplicationMobile(Form):
         )
 
         app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
-        app.application_id = user.organisation.name.upper()[0:2] + str(settings.organisations_count) + "{0:06d}".format(app_count)
+        app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
 
         app.update_status(110)
         app.save()
