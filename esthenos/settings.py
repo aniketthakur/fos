@@ -71,7 +71,7 @@ CELERY_SETTINGS = {
 }
 
 AWS_SETTINGS = {
-    'AWS_CDN_PATH' : 'https://s3-ap-southeast-1.amazonaws.com/',
+    'AWS_CDN_PATH' : 's3.amazonaws.com',
     'AWS_S3_BUCKET' : 'fos-maitreya-esthenos',
     'AWS_COGNITO_ID' : 'us-east-1:f662e9d4-8d9c-4b8b-adea-38ad6116de4c',
     'AWS_ACCESS_KEY_ID' : 'AKIAJUAPOKY4RDFJ6KEA',
