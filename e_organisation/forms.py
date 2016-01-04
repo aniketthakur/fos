@@ -420,8 +420,8 @@ class AddApplicationMobile(Form):
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
 
         locations_map = self.load(self.locations_map)
-        app.home_loc = EsthenosOrgLocation(lat=locations_map["home"]["lat"], lng=locations_map["home"]["lng"])
-        app.business_loc = EsthenosOrgLocation(lat=locations_map["business"]["lat"], lng=locations_map["business"]["lng"])
+        app.home_loc = EsthenosOrgLocation(lat=locations_map.get("home",{}).get("lat",""), lng=locations_map.get("home",{}).get("lng",""))
+        app.business_loc = EsthenosOrgLocation(lat=locations_map.get("business",{}).get("lat",""), lng=locations_map.get("business",{}).get("lng",""))
 
         applicant = self.load(self.applicant_kyc_details)
         app.applicant_kyc = EsthenosOrgApplicationKYC(
