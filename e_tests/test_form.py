@@ -7,17 +7,16 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-
-# url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# url = "http://%s/api/token/sourcing" % ("localhost:8085")
+# payload = {"email": "fostest@maitreya.esthenos.com", "password":"fostest"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
 # <<<<<<< HEAD
-#     "instance_token":"0MXwdcivD_QfawQ6vFbj_djYMVzb_CpzTtLH0P5mRbY"
+    "instance_token":"BmQIRzj9hRW6jgFHTerrsKo5aFsPwwvfFI2KwmgvqMI"
 # =======
-    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
+#  "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
 # >>>>>>> 1c3bd7e5fe5d1d9fdf8efd0f2f41b63f0124736f
 }
 url = "http://localhost:8085/api/organisation/applications"
