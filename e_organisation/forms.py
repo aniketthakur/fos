@@ -167,7 +167,7 @@ class AddApplicationMobile(Form):
             branch = user.branches[0],
             assets_id = str(self.assets_id.data),
             organisation = user.organisation,
-            spouse_aadhar_card_number = toInt(applicant_kyc.get("spouse_aadhar_card_number",[])),
+            spouse_aadhar_card_number = applicant_kyc.get("spouse_aadhar_card_number",[]),
             spouse_name = applicant_kyc.get("spouse_name",[])
         )
         # app.name = applicant_kyc["name"]
@@ -440,7 +440,7 @@ class AddApplicationMobile(Form):
             phone_number = applicant["phone_number"],
             mobile_number = applicant["mobile_number"],
             father_or_husband_name = applicant["father_s_husband_s_name"],
-            spouse_aadhar_card_number = toInt(applicant["spouse_aadhar_card_number"]),
+            spouse_aadhar_card_number = applicant["spouse_aadhar_card_number"],
             spouse_name = applicant["spouse_name"]
         )
         
@@ -525,7 +525,7 @@ class AddApplicationMobile(Form):
             phone_number = guarantor1.get("phone_number", []),
             mobile_number = guarantor1.get("mobile_number", []),
             father_or_husband_name = guarantor1.get("father_s_husband_s_name", []),
-            spouse_aadhar_card_number = toInt(guarantor1.get("spouse_aadhar_card_number", [])),
+            spouse_aadhar_card_number = guarantor1.get("spouse_aadhar_card_number", []),
             spouse_name = guarantor1.get("spouse_name", [])
         )
 
@@ -545,7 +545,7 @@ class AddApplicationMobile(Form):
             phone_number = guarantor2.get("phone_number", []),
             mobile_number = guarantor2.get("mobile_number", []),
             father_or_husband_name = guarantor2.get("father_s_husband_s_name", []),
-            spouse_aadhar_card_number = toInt(guarantor2.get("spouse_aadhar_card_number", [])),
+            spouse_aadhar_card_number = guarantor2.get("spouse_aadhar_card_number", []),
             spouse_name = guarantor2.get("spouse_name", [])
         )
 

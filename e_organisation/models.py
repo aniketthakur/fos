@@ -1227,7 +1227,7 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     father_or_husband_name = db.StringField(max_length=255, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
     validation = db.StringField(max_length=512, required=True,default="PENDING")
-    spouse_aadhar_card_number = db.IntField(required=False, default=0)
+    spouse_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
     spouse_name = db.StringField(max_length=512, required=False,default="")
 
     def __unicode__(self):
