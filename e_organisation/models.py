@@ -1433,7 +1433,6 @@ class EsthenosOrgApplication(db.Document):
     tele_phone = db.StringField(max_length=128, required=False,default="")
     father_or_husband_name = db.StringField(max_length=512, required=False,default="")
 
-    # caste = db.StringField(max_length=512, required=False,default="")
     gender = db.StringField(max_length=512, required=False,default="")
     religion = db.StringField(max_length=512, required=False,default="")
     category = db.StringField(max_length=512, required=False,default="")
@@ -1457,7 +1456,8 @@ class EsthenosOrgApplication(db.Document):
     residence_details = db.StringField(max_length=512, required=False,default="")
     house_stay_duration = db.StringField(max_length=512, required=False,default="")
     rent_agreement = db.StringField(max_length=512, required=False,default="")
-    house_monthly_rent = db.StringField(max_length=512, required=False,default="")
+    house_monthly_rent = db.FloatField(default=0.0)
+
 
     applied_loan = db.FloatField(default=0.0)
     purpose_of_loan = db.StringField(max_length=512, required=False,default="")

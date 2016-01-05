@@ -198,7 +198,6 @@ class AddApplicationMobile(Form):
         app.power_supplier = data.get("Tata Power", "")
 
         applicant_personal = self.load(self.applicant_personal_docs)
-        #app.caste = applicant_personal.get("caste", "")#remove
         app.gender = applicant_personal.get("gender", "")
         app.religion = applicant_personal.get("religion", "")
         app.category = applicant_personal.get("category", "") + applicant_personal.get("specify_category", "")
@@ -225,7 +224,7 @@ class AddApplicationMobile(Form):
         app.residence_details = data.get("residence_details")
         app.house_stay_duration = data.get("how_long_are_you_staying_in_house__in_years", "")
         app.rent_agreement = data.get("rent_agreement", "")
-        app.house_monthly_rent = data.get("monthly_rent", "")
+        app.house_monthly_rent = toFloat(data.get("monthly_rent", ""))
         
 
         data = self.load(self.applicant_loan_details_applied_loan)
@@ -420,8 +419,8 @@ class AddApplicationMobile(Form):
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
 
         locations_map = self.load(self.locations_map)
-        app.home_loc = EsthenosOrgLocation(lat=locations_map.get("home",{}).get("lat",""), lng=locations_map.get("home",{}).get("lng",""))
-        app.business_loc = EsthenosOrgLocation(lat=locations_map.get("business",{}).get("lat",""), lng=locations_map.get("business",{}).get("lng",""))
+        app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
+        app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
         applicant = self.load(self.applicant_kyc_details)
         app.applicant_kyc = EsthenosOrgApplicationKYC(
