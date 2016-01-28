@@ -45,13 +45,13 @@ def application_list_branch(branch_id):
 
   applications = []
   if (appId is not None) and (appId != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=org, application_id=appId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org, application_id=appId , branch = branch)
 
   elif (appName is not None) and (appName != ''):
-    applications = EsthenosOrgApplication.objects.filter(organisation=org, applicant_name=appName)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org, applicant_name=appName, branch = branch)
 
   else:
-    applications = EsthenosOrgApplication.objects.filter(organisation=org)
+    applications = EsthenosOrgApplication.objects.filter(organisation=org,branch = branch)
 
   title = "Branch: {branch}".format(branch=branch.name)
   kwargs = locals()
