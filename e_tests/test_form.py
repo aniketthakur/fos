@@ -8,16 +8,16 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8085")
-# payload = {"email": "fostest@maitreya.esthenos.com", "password":"fostest"}
+# payload = {"email": "fostest@maitreya.esthenos.com", "password":"wel"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-# <<<<<<< HEAD
-    "instance_token":"BmQIRzj9hRW6jgFHTerrsKo5aFsPwwvfFI2KwmgvqMI"
-# =======
-#  "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
-# >>>>>>> 1c3bd7e5fe5d1d9fdf8efd0f2f41b63f0124736f
+
+#    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
+
+  "instance_token":"BmQIRzj9hRW6jgFHTerrsKo5aFsPwwvfFI2KwmgvqMI"
+
 }
 url = "http://localhost:8085/api/organisation/applications"
 
@@ -297,7 +297,7 @@ payload = {
         "age": "34",
         "country": "India",
         "district": "East Delhi",
-        "name": "Pramod Kumar",
+        "name": "Sushil Kumar",
         "uid": "729348086056",
         "voter_id_name": "Pattan Saddam Hussain",
         "type": "AADHAAR",
@@ -565,6 +565,6 @@ payload = {
     }
 }
 
-for i in range(0, 10):
+for i in range(0, 5):
     response = requests.post(url, json=payload, params=querystring)
     print(response.text)

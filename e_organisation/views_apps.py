@@ -24,9 +24,9 @@ def application_list():
 def application_list_fos(fos_id):
   appId = request.args.get('appId', '')
   appName = request.args.get('appName', '')
-
   user = EsthenosUser.objects.get(id=current_user.id)
-  applications = EsthenosOrgApplication.objects.filter()
+  fos_user = EsthenosUser.objects.get(id = fos_id)
+  applications = EsthenosOrgApplication.objects.filter(owner= fos_user)
 
   title = "FOS: FOS Application"
   kwargs = locals()
