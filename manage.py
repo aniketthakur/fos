@@ -35,4 +35,3 @@ mainapp.register_blueprint( reports_views)
 
 if __name__ == "__main__":
     manager.run()
-

@@ -27,8 +27,7 @@ class AddOrganisationForm( Form):
             raise ValidationError("Hey! This organisation is already registered with us")
 
     def save(self):
-        settings = EsthenosSettings.objects.all()[0]
-        org = EsthenosOrg(name=self.org_name.data, code = ""+str(settings.organisations_count))
+        org = EsthenosOrg(name=self.org_name.data)
         org.postal_address =self.postal_address.data
         org.postal_telephone =self.postal_telephone.data
         org.postal_tele_code =self.postal_tele_code.data
@@ -37,7 +36,7 @@ class AddOrganisationForm( Form):
         org.postal_city =self.postal_city.data
         org.postal_code = self.postal_code.data
         org.email = self.email.data
-        org.owner = EsthenosUser.objects.get(id=current_user.id)
+        org.admins.append(EsthenosUser.objects.get(id=current_user.id))
 
         org.save()
         return org
@@ -158,7 +157,28 @@ class AddOrganizationEmployeeForm(Form):
         org.update(inc__employee_count=1)
         return emp
 
+    def deselect_employee_geo(self, emp):
+        for state in emp.states:
+            state.owner = None
+            state.save()
+        for region in emp.regions:
+            region.owner = None
+            region.save()
+        for area in emp.areas:
+            area.owner = None
+            area.save()
+        for branch in emp.branches:
+            branch.owner = None
+            branch.save()
+
+        emp.access_states = []
+        emp.access_regions = []
+        emp.access_areas = []
+        emp.save()
+
     def update(self, emp):
+        errors = {}
+
         emp.last_name = self.last_name_add_organisation.data
         emp.first_name = self.first_name_add_organisation.data
         emp.gender = self.gender.data
@@ -173,53 +193,103 @@ class AddOrganizationEmployeeForm(Form):
         emp.postal_telephone = self.teleno_add_organisation.data
         emp.postal_tele_code = self.tele_code_add_organisation.data
 
-        emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
+        emp.save()
+        if self.role.data != '':
+            emp.hierarchy = EsthenosOrgHierarchy.objects.get(id=self.role.data)
+
+        to_save = True
 
         selections = []
-        if emp.hierarchy.level >= 3:
+        self.deselect_employee_geo(emp)
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 3:
             for state in self.states.data:
                 state = EsthenosOrgState.objects.get(id=state)
                 regions = map(lambda r: str(r.id), state.regions)
                 commons = set.intersection(set(regions), self.regions.data)
-                if not len(commons): selections.append(state)
-        emp.states = selections
+                if not len(commons) and state.owner == None:
+                    state.owner = emp
+                    state.save()
+                    selections.append(state)
+                elif state.owner!=None:
+                    errors["states"] = "A selected state has already been assigned."
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a state."
+        emp.access_states = selections
 
         selections = []
-        if emp.hierarchy.level >= 4:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 4:
             for region in self.regions.data:
                 region = EsthenosOrgRegion.objects.get(id=region)
                 areas = map(lambda r: str(r.id), region.areas)
                 commons = set.intersection(set(areas), self.areas.data)
-                if not len(commons): selections.append(region)
-        emp.regions = selections
+                if not len(commons) and region.owner == None:
+                    region.owner = emp
+                    region.save()
+                    selections.append(region)
+                elif region.owner!=None:
+                    errors["regions"] = "A selected region has already been assigned"
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a region."
+        emp.access_regions = selections
 
         selections = []
-        if emp.hierarchy.level >= 6:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 5:
             for area in self.areas.data:
                 area = EsthenosOrgArea.objects.get(id=area)
                 branches = map(lambda r: str(r.id), area.branches)
                 commons = set.intersection(set(branches), self.branches.data)
-                if not len(commons): selections.append(area)
-        emp.areas = selections
+                if not len(commons) and area.owner == None:
+                    area.owner = emp
+                    area.save()
+                    selections.append(area)
+                elif area.owner!=None:
+                    errors["areas"] = "A selected area has already been assigned."
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned an area."
+        emp.access_areas = selections
 
         selections = []
-        if emp.hierarchy.level >= 7:
+        #todo centralize the level assignments
+        if emp.hierarchy.level >= 6:
             for branch in self.branches.data:
                 branch = EsthenosOrgBranch.objects.get(id=branch)
                 centers = map(lambda r: str(r.id), branch.centers)
                 commons = set.intersection(set(centers), self.centers.data)
-                if not len(commons): selections.append(branch)
-        emp.branches = selections
+                if not len(commons):
+                    if emp.hierarchy.level == 6 and branch.owner == None:
+                        branch.owner = emp
+                        branch.save()
+                        selections.append(branch)
+                    elif branch.owner!=None:
+                        errors["branches"] = "A selected branch has already been assigned."
+                    if emp.hierarchy.level == 7:
+                        selections.append(branch)
+            if len(selections)<1:
+                to_save = False
+                errors["not_selected"] = "The employee needs to be assigned a branch."
+
+        emp.access_branches = selections
 
         selections = []
-        if emp.hierarchy.level >= 8:
+        #todo centralize the level assignments
+        if emp.hierarchy.level == 7:
             for center in self.centers.data:
                 selections.append(EsthenosOrgCenter.objects.get(id=center))
-        emp.centers = selections
+        emp.access_centers = selections
 
-        emp.save()
-        return emp
+        if len(emp.branches)>1 and emp.hierarchy.level == 7:
+            to_save = False
+            errors["not_selected"] = "The employee can only be assigned a single branch."
 
+        if to_save:
+            emp.save()
+        return emp, errors
 
 class AddOrgPsychometricTemplateQuestionsForm( Form):
     org_id = TextField( validators=[v.DataRequired(), v.Length(max=255)])

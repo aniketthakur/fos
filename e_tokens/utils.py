@@ -1,10 +1,9 @@
 from functools import wraps
 
 from flask import request, abort
-from e_organisation.models import EsthenosUser
-
 from models import EsthenosOrgUserToken
 from esthenos import mainapp as app
+from e_organisation.models import EsthenosUser
 
 from mongoengine.queryset import DoesNotExist
 from flask_login import current_user, current_app, login_user

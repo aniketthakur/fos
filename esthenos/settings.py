@@ -1,80 +1,68 @@
-ORGS_SETTINGS = [
-    {
-        "org" : "fos-test.esthenos.com",
-        "name" : "FOS Test MicroFinance Pvt. Ltd.",
-        "email": "admin@fos-test.esthenos.com",
-        "phone": "9876543210",
-        "phone-code": "91",
-        "postal-city": "Kolaba",
-        "postal-code": "123321",
-        "postal-state": "Bolaka",
-        "postal-address": "12, Bolak New Kada",
-        "postal-country": "India",
-        "users" : [
-            {
-                "role" : "ORG_ADMIN",
-                "active" : True,
-                "dob" : "01/01/1970",
-                "city" : "kabul",
-                "state" : "kabula",
-                "country" : "kabuland",
-                "address" : "1st kabul, kaula, kabuland.",
-                "telephone" : "9876543210",
-                "tele_code" : "91",
-                "fname" : "admin",
-                "lname" : "users",
-                "email" : "admin@fos-test.esthenos.com",
-                "passwd" : "adminadmin",
-            },
-            {
-                "role" : "ORG_CM",
-                "active" : True,
-                "dob" : "01/01/1970",
-                "city" : "kabul",
-                "state" : "kabula",
-                "country" : "kabuland",
-                "address" : "1st kabul, kaula, kabuland.",
-                "telephone" : "9876543210",
-                "tele_code" : "91",
-                "fname" : "demo",
-                "lname" : "users",
-                "email" : "demo@fos-test.esthenos.com",
-                "passwd" : "demodemo",
-            }
-        ],
-        "hierarchy" : [
-            {"level": 0, "access": "",          "role": "ORG_ADMIN",  "title": "admin",  "title_full": "organisation administrator"},
-            {"level": 1, "access": "",          "role": "ORG_CXO",    "title": "cxo",    "title_full": "chief executive officer"},
-            {"level": 2, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "vice president"},
-            {"level": 3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
-            {"level": 4, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
-            {"level": 5, "access": "regions",   "role": "ORG_RM",     "title": "dm",     "title_full": "divisional manager"},
-            {"level": 6, "access": "areas",     "role": "ORG_AM",     "title": "am",     "title_full": "area manager"},
-            {"level": 7, "access": "branches",  "role": "ORG_BM",     "title": "bm",     "title_full": "branch manager"},
-            {"level": 8, "access": "centers",   "role": "ORG_CM",     "title": "co",     "title_full": "center officer"}
-        ],
-        "geography" : {
-            "states" : 1,
-            "regions" : 1,
-            "areas" : 1,
-            "branches" : 2,
-            "groups" : 0,
-            "centers" : 0,
-        }
-    }
-]
+import os, sys
 
 SERVER_SETTINGS = {
     "org" : "fos-test.esthenos.com",
-    "host" : ["localhost"],
+    "host" : "fos-test.prod.esthenos.com",
+    "assets" : os.path.dirname(os.path.realpath(__file__)),
+    "timezone" : "Asia/Kolkata",
     "git-branch" : "fos-test",
-    "user-deploy" : "ubuntu"
+    "user-deploy" : "ubuntu",
+    "location" : {"lat": 12.9720095, "lng": 77.6504128}
 }
 
 MONGODB_SETTINGS = {
     'DB': 'fos-test',
     'PORT': 27017,
-    'HOST': 'localhost'
+    'HOST': 'mongodb.prod.esthenos.com'
+}
+
+ORGS_SETTINGS = {
+    "org"  : SERVER_SETTINGS["org"],
+    "prod" : SERVER_SETTINGS["host"],
+    "name" : "FOS Test MicroFinance Pvt. Ltd.",
+    "email": "admin@fos-test.esthenos.com",
+    "phone": "9876543210",
+    "phone-code": "91",
+    "postal-city": "Kolaba",
+    "postal-code": "123321",
+    "postal-state": "Bolaka",
+    "postal-address": "12, Bolak New Kada",
+    "postal-country": "India",
+    "users" : [
+        {
+            "role" : "ORG_ADMIN",
+            "active" : True,
+            "dob" : "01/01/1970",
+            "city" : "kabul",
+            "state" : "kabula",
+            "country" : "kabuland",
+            "address" : "1st kabul, kaula, kabuland.",
+            "telephone" : "9876543210",
+            "tele_code" : "91",
+            "fname" : "admin",
+            "lname" : "users",
+            "email" : "admin@" + SERVER_SETTINGS["org"],
+            "passwd" : "adminadmin",
+        }
+    ],
+    "hierarchy" : [
+        {"level": 0, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_ADMIN",  "title": "admin",  "title_full": "organisation administrator"},
+        {"level": 1, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_CXO",    "title": "cxo",    "title_full": "chief executive officer"},
+        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "vice president"},
+        {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
+        {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
+        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "cam",    "title_full": "center area manager"},
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BM",     "title": "cbm",    "title_full": "center branch manager"},
+        {"level": 7, "test_users":3 , "test_places":0, "access": "branches",  "role": "ORG_CM",     "title": "fos",    "title_full": "fos agent"}
+    ],
+    "geography" : {
+        "states" : 1,
+        "regions" : 1,
+        "areas" : 1,
+        "branches" : 2,
+        "groups" : 0,
+        "centers" : 0,
+    }
 }
 
 CELERY_SETTINGS = {
@@ -83,7 +71,7 @@ CELERY_SETTINGS = {
 }
 
 AWS_SETTINGS = {
-    'AWS_CDN_PATH' : 'https://s3-ap-southeast-1.amazonaws.com/',
+    'AWS_CDN_PATH' : 's3.amazonaws.com',
     'AWS_S3_BUCKET' : 'hindusthanarchives',
     'AWS_COGNITO_ID' : 'us-east-1:58e9693d-04b4-48a1-8820-b17c52514aaa',
     'AWS_ACCESS_KEY_ID' : 'AKIAITWBEHC2SAGDFQSA',
@@ -93,6 +81,10 @@ AWS_SETTINGS = {
 FEATURES = {
     "features_admin": {
         "title" : "Admin Features",
+        "enabled": True,
+    },
+    "features_geo_api" : {
+        "title" : "Allow api endpoints for geo information",
         "enabled": True,
     },
     "features_mobile_audit": {
@@ -148,7 +140,7 @@ FEATURES = {
         "enabled" : True,
     },
     "features_applications_sanction": {
-        "title" : "Features For Application Scrutiny",
+        "title" : "Features For Application Sanction",
         "enabled" : True,
     },
     "features_applications_scrutiny_stats": {
@@ -161,7 +153,7 @@ FEATURES = {
     },
     "features_psychometric_questions": {
         "title" : "Features For Notifications",
-        "enabled": True,
+        "enabled": False,
     },
     "hignmark_equifax": {
         "title" : "HighMark / Equifax Verification",

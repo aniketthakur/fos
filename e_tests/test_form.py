@@ -1,11 +1,16 @@
 import json
 import requests
 
-url = "http://localhost:8080/api/organisation/applications"
+
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# response = requests.post(url, data=payload)
+# print response.text
 
 querystring = {
-    "instance_token":"RwSjeQ_kuRM95qNvsG-K_c6epI7Rtl_ZMbMwd7nnPdg"
+    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
 }
+url = "http://localhost:8085/api/organisation/applications"
 
 payload = {
     "group": "",
@@ -246,6 +251,7 @@ payload = {
         "biz_activity": ""
     },
     "applicant_kyc_details": {
+        "name": "Gsh",
         "address": ", .   ",
         "dob_yob": "-1",
         "pan_card_father_s_husband_s_name": "",
@@ -264,7 +270,6 @@ payload = {
         "age": "-1",
         "country": "India",
         "district": "",
-        "name": "Gsh",
         "uid": "",
         "voter_id_name": "",
         "type": "AADHAAR",
@@ -317,6 +322,10 @@ payload = {
         "mobile_number": ""
     },
     "locations_map": {
+        "home": {
+            "lat": 12.97205203,
+            "lng": 77.65267892
+        },
         "business": {
             "lat": 12.97205203,
             "lng": 77.65267892
@@ -440,9 +449,6 @@ payload = {
     }
 }
 
-headers = {
-  'content-type': "application/json"
-}
-
-response = requests.post(url, json=payload, params=querystring)
-print(response.text)
+for i in range(0, 10):
+    response = requests.post(url, json=payload, params=querystring)
+    print(response.text)

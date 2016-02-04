@@ -13,6 +13,7 @@ from werkzeug.contrib.fixers import ProxyFix
 
 import boto
 import settings
+from raven.contrib.flask import Sentry
 from boto.s3.connection import S3Connection
 
 mainapp = Flask(__name__)
@@ -43,7 +44,6 @@ mainapp.config.update(
     DEBUG = True,
     TESTING = False,
 )
-
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -113,6 +113,10 @@ def _jinja2_filter_datetime(date, fmt=None):
 def _jinja2_filter_datetime(num):
     return num2words(num).upper()
 
+@mainapp.template_filter('percentformat')
+def _jinja2_filter_percentformat(fraction):
+    return "%.0f" % (fraction * 100)
+
 @mainapp.template_filter('enabledfilter')
 def _jinja2_filter_enabledfilter(active):
     return "enabled" if active else "disabled"
@@ -127,7 +131,9 @@ def _jinja2_filter_permissionfilter(permission):
 
 @mainapp.template_filter('cdnassets')
 def _jinja2_filter_cdn_assets(asset):
-    return "%s/%s" % (settings.AWS_SETTINGS["AWS_CDN_PATH"], asset)
+    cdn = settings.AWS_SETTINGS["AWS_CDN_PATH"]
+    bucket = settings.AWS_SETTINGS["AWS_S3_BUCKET"]
+    return "https://%s.%s/%s" % (bucket, cdn, asset)
 
 @mainapp.template_filter('css_approve_reject')
 def _jinja2_filter_css_approve_reject(value):

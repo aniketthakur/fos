@@ -67,18 +67,30 @@ def zip_custom(src, dst):
     zf.close()
 
 
-@periodic_task(run_every=datetime.timedelta(seconds=60))
+@periodic_task(run_every=datetime.timedelta(minutes=15))
 @celery.task
-def org_applications_stats_update():
-    organisations = EsthenosOrg.objects.all()
-    for org in organisations:
-        date_obj = datetime.datetime.now()
-        date_obj.day
-        stat = EsthenosOrgStats.objects.get_or_create(organisation=org)
+def calculate_stats():
 
-        #stat.stat_type = ""
+    time = datetime.datetime.now()
 
-    pass
+    for branch in EsthenosOrgBranch.objects.all():
+        stats = branch.stats_day(time)
+        branch.stats.update(stats, time)
+
+    for area in EsthenosOrgArea.objects.all():
+        stats = [branch.stats.month(time).only(time) for branch in area.branches] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        area.stats.update(stats, time)
+
+    for region in EsthenosOrgRegion.objects.all():
+        stats = [area.stats.month(time).only(time) for area in region.areas] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        region.stats.update(stats, time)
+
+    for state in EsthenosOrgState.objects.all():
+        stats = [region.stats.month(time).only(time) for region in state.regions] + [EsthenosOrgStatsDay(created=time)]
+        stats = reduce(lambda x, y: x + y, stats)
+        state.stats.update(stats, time)
 
 
 @periodic_task(run_every=datetime.timedelta(seconds=60))
@@ -120,9 +132,13 @@ def cb_checkready_applications():
 @periodic_task(run_every=datetime.timedelta(seconds=20))
 def cbcheck_statuscheck_applications():
 
+    settings = EsthenosOrgSettings.objects.all()[0]
     cbcheck_applications = EsthenosOrgApplication.objects.filter(status=145)
     for application in cbcheck_applications:
-        resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(kendra_or_centre_id=application.application_id)[0]
+        resp = EsthenosOrgApplicationEqifaxResponse.objects.filter(kendra_or_centre_id=application.application_id)
+        if not len(resp): continue
+
+        resp = resp[0]
         apps_with_same_aadhaar = EsthenosOrgApplication.objects.filter(applicant_kyc__kyc_number=resp.national_id_card).count()
 
         is_failed = False
@@ -134,7 +150,7 @@ def cbcheck_statuscheck_applications():
                     application.update_status(20)
                     break
 
-        if not is_failed and resp.num_active_account > 2:
+        if not is_failed and resp.num_active_account > settings.max_existing_loan_count_org:
             is_failed = True
             application.update_status(26)
             application.update_status(20)

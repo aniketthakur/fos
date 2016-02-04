@@ -8,34 +8,18 @@ from views_cbcheck import *
 
 # import views for feature - psychometric test.
 from views_psychometric import *
-
+from esthenos import settings
 
 @organisation_views.route('/', methods=["GET"])
 @login_required
 def home_page():
-    t = datetime.datetime.now()
     user = EsthenosUser.objects.get(id=current_user.id)
+    date = request.args.get('date', datetime.datetime.now().strftime("%Y%m%d"))
+    time = datetime.datetime.strptime(date, "%Y%m%d")
+    month = user.stats(time)
+    todays, weekly, monthly = month.only(time), month.week(time), month.day(time)
 
-    hour = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=t.hour)
-    hourly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=hour, granularity="HOURLY"
-    )
-
-    today = datetime.datetime(year=t.year, month=t.month, day=t.day, hour=0)
-    todays, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=today, granularity="TODAY"
-    )
-
-    #todo: fix start of the week.
-    week = datetime.datetime(year=t.year, month=t.month, day=1)
-    weekly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=week, granularity="WEEKLY"
-    )
-
-    month = datetime.datetime(year=t.year, month=t.month, day=1)
-    monthly, status = EsthenosOrgStats.objects.get_or_create(
-      organisation=user.organisation, starttime=month, granularity="MONTHLY"
-    )
+    focus = settings.SERVER_SETTINGS["location"]
 
     kwargs = locals()
     return render_template("dashboard.html", **kwargs)
@@ -170,7 +154,6 @@ wtforms_json.init()
 @login_or_key_required
 @feature_enable("features_api_applications_post")
 def mobile_application_json():
-
     print request.json
     user = EsthenosUser.objects.get(id=current_user.id)
     app_form = AddApplicationMobile.from_json(request.json)
@@ -184,14 +167,18 @@ def mobile_application_json():
         print "Could Not validate" + str(app_form.errors)
         return Response(json.dumps({'success':'false'}), content_type="application/json", mimetype='application/json')
 
-
 @organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
 @feature_enable("features_applications_disbursement")
 def check_disbursement():
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-    apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240)
+
+    branchId = request.args.get('branchId', '')
+    apps = []
+    if (branchId is not None) and (branchId != ''):
+        branch = EsthenosOrgBranch.objects.get(id=branchId)
+        apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240, branch=branch)
 
     kwargs = locals()
     return render_template("disburse/disbursement.html", **kwargs)
