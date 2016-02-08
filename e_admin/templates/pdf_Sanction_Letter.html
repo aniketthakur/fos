@@ -90,8 +90,8 @@
                         <td class="text-right">{{ app.applicant_kyc.kyc_number }}</td>
                         <td class="text-left">{{ app.applied_loan }}</td>
                         <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.product.number_installments }}</td>
-                        <td class="text-left">{{ app.product.interest_rate }}</td>
+                        <td class="text-left">{{ app.sanction.memo_loan_period }}</td>
+                        <td class="text-left">{{ app.sanction.memo_loan_interest }}</td>
                         <td class="text-left">{{ app.purpose_of_loan }}</td>
                     </tr>
 
@@ -179,8 +179,8 @@
                     {#                        <td class="text-left"></td>#}
                     <td class="text-left">{{ app.applied_loan }}</td>
                     <td class="text-left">{{ app.applied_loan }}</td>
-                    <td class="text-left">{{ app.product.number_installments }}</td>
-                    <td class="text-left">{{ app.product.interest_rate }}</td>
+                    <td class="text-left">{{ app.sanction.memo_loan_period }}</td>
+                    <td class="text-left">{{ app.sanction.memo_loan_interest }}</td>
                     <td class="text-left">{{ app.purpose_of_loan }}</td>
                 </tr>
                 <!--{% endfor %}-->

@@ -177,13 +177,13 @@
                     <td style="width: 30%;"  class="text-right">Date of Dibursement  /&nbsp<span class="hinditext">keÀpe& efJelejCee®eer leejerKe</span></td>
                     <td colspan="4">{{ disbursement_date|dateformat }}</td>
                     <td style="width: 20%;" class="text-right">Loan Amount:  /&nbsp<span class="hinditext">ueesve jkeÀkeÀce</span></td>
-                    <td style="width: 20%;">{{ app.product.loan_amount }}</td>
+                    <td style="width: 20%;">{{ app.sanction.memo_loan_amount }}</td>
                 </tr>
                 <tr>
                     <td   class="text-right">Loan Tenure  /&nbsp<span class="hinditext">keÀpe&keÀeueeJeOeer </span></td>
                     <td colspan="4" class="text-center">24 Months  /&nbsp<span class="hinditext">24 cenerves</span></td>
                     <td rowspan="2" class="text-right">Rate of Interst on Reducing Balance:  /&nbsp<span class="hinditext">Jîeepeoj</span></td>
-                    <td rowspan="2">{{ app.product.interest_rate }}%</td>
+                    <td rowspan="2">{{ app.sanction.memo_loan_interest }}%</td>
                 </tr>
                 <tr>
                     <td class="text-right" >Repayment Frequency  /&nbsp<span class="hinditext">keÀpe& nHl³ee®eer leejerKe</span></td>
@@ -195,7 +195,7 @@
                     <td class="text-center" colspan="4">{{ collection_day }} of the month</td>
                     <td>Processing Fee (including 14% service tax)  /&nbsp<span class="hinditext"></span></td>
                     <td>
-                        {{ app.product.processing_fee }}
+                        {{ app.sanction.memo_loan_processing_fee }}
                     </td>
                 </tr>
                 <tr>
@@ -205,8 +205,8 @@
                 <tr>
                     <td   class="text-right">LoanID  /&nbsp<span class="hinditext">ueesve ®es Dee æ[er</span></td>
                     <td colspan="4">{{ app.application_id }}</td>
-                    <td class="text-right">Loan Cycle  /&nbsp<span class="hinditext">keÀpee&®ee ìHHee</span></td>
-                    <td>{{ app.product.eligible_cycle }}</td>
+                    <!--<td class="text-right">Loan Cycle  /&nbsp<span class="hinditext">keÀpee&®ee ìHHee</span></td>-->
+                    <!--<td>{{ app.product.eligible_cycle }}</td>-->
                 </tr>
                 <tr>
                     <td class="text-right">Loan Purpose  /&nbsp<span class="hinditext">ueesve IesC³ee®es keÀejCe</span></td>
@@ -221,13 +221,13 @@
                     <td style="width: 30%;" class="text-right">Insured Person  /&nbsp<span class="hinditext">efJeceeOeejkeÀ J³ekeÀleer</span></td>
                     <td style="width: 30%;"><input type="checkbox" checked="checked" name="insuredPerson">Borrower  /&nbsp<span class="hinditext">menkeÀpe&oej</span> <input type="checkbox" checked="checked" name="insuredPerson"> Gurantor  /&nbsp<span class="hinditext">necceeroej</span></td>
                     <td style="width: 20%;">Sum Assured  /&nbsp<span class="hinditext">efJecee jkeÀkeÀce</span></td>
-                    <td style="width: 20%;">{{ app.product.loan_amount }}</td>
+                    <td style="width: 20%;">{{ app.sanction.memo_loan_amount }}</td>
                 </tr>
                 <tr>
-                    <td class="text-right">Total Premium Paid  /&nbsp<span class="hinditext">Yejuesueer SsketÀCe efJecee nHlee jkeÀkeÀce</span></td>
-                    <td>{{ app.product.total_insurance_fees }}</td>
+                    <!--<td class="text-right">Total Premium Paid  /&nbsp<span class="hinditext">Yejuesueer SsketÀCe efJecee nHlee jkeÀkeÀce</span></td>-->
+                    <!--<td>{{ app.sanction.total_insurance_fees }}</td>-->
                     <td>Cover Period  /&nbsp<span class="hinditext">efJecee®ee keÀeueeJeeOeer</span></td>
-                    <td>{{ app.product.number_installments }} months</td>
+                    <td>{{ app.sanction.memo_loan_period }} months</td>
                 </tr>
                 <tr>
                     <td class="text-right">Nominee (Borrower)  /&nbsp<span class="hinditext"></span></td>
@@ -247,7 +247,7 @@
                 </tr>
                 <tr>
                     <td class="text-right">Emi Amount:-</td>
-                    <td colspan="3">{{ app.product.emi }}</td>
+                    <td colspan="3">{{ app.sanction.memo_loan_emi }}</td>
                 </tr>
             </table>
             <div class="pull-right">_____________________________________</div>

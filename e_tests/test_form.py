@@ -9,6 +9,7 @@ import requests
 
 querystring = {
     "instance_token":"AQyC5r5BedpPVFcNc8uupzkB57rkdxEsbWl8_7tsGo0"
+#    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
 url = "http://localhost:8080/api/organisation/applications"
 
