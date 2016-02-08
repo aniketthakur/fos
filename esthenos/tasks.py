@@ -218,7 +218,6 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
     with mainapp.app_context():
         org = EsthenosOrg.objects.get(id=org_id)
         application = EsthenosOrgApplication.objects.get(organisation=org, application_id=applicant_id, status__gte=240)
-
         tmp_files = list()
         dir = tempfile.mkdtemp( prefix='pdf_')
         dir = dir+"/"
