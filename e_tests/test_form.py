@@ -7,8 +7,8 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-# url = "http://%s/api/token/sourcing" % ("localhost:8085")
-# payload = {"email": "fostest@maitreya.esthenos.com", "password":"wel"}
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+# payload = {"email": "cm@maitreya.esthenos.com", "password":"wel@123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
@@ -16,10 +16,10 @@ querystring = {
 
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 
-  "instance_token":"BmQIRzj9hRW6jgFHTerrsKo5aFsPwwvfFI2KwmgvqMI"
+  "instance_token":"nZ9ihkkKadpZuGelW5CCf0PhcvR2XNSBvDYfWUcZ_iM"
 
 }
-url = "http://localhost:8085/api/organisation/applications"
+url = "http://localhost:8080/api/organisation/applications"
 
 payload = {
     "group": "",

@@ -532,6 +532,7 @@ def admin_hmpdpn(applicant_id):
 def admin_pdf_application(app_id):
     app = EsthenosOrgApplication.objects.get(application_id=app_id)
     disbursement_date = datetime.datetime.now()
+    product_name = "MEL"
     interest_rate = 26.0
 
     kwargs = locals()
