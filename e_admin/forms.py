@@ -262,6 +262,10 @@ class AddOrganizationEmployeeForm(Form):
                 errors["not_selected"] = "The employee needs to be assigned a branch."
 
         emp.access_branches = selections
+        for i in selections:
+            emp.access_areas.append(i.parent)
+            emp.access_regions.append(i.parent.parent)
+            emp.access_states.append(i.parent.parent.parent)
 
         selections = []
         #todo centralize the level assignments

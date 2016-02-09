@@ -10,12 +10,12 @@ SERVER_SETTINGS = {
     "location" : {"lat": 12.9720095, "lng": 77.6504128}
 }
 
+
 MONGODB_SETTINGS = {
     'DB': 'fos-maitreya',
     'PORT': 27017,
     'HOST': 'mongodb-maitreya.prod.esthenos.com'
 }
-
 ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
