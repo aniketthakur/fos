@@ -297,6 +297,7 @@ class AddApplicationMobile(Form):
             voterid_docs = applicant_docs.get("voter_card", []),
             personal_docs = applicant_docs.get("personal_docs", []),
             business_docs = applicant_docs.get("business_docs", []),
+            hypothecation_goods = applicant_docs.get("hypothecation_goods",[]),
             other_docs = applicant_docs.get("other_card", []),
         )
 
