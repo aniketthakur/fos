@@ -231,8 +231,8 @@ class AddApplicationMobile(Form):
         app.other_outstanding_familynfriends = toFloat(data.get("liabilities_friends__family_hand_loans", ""))
 
         locations_map = self.load(self.locations_map)
-        app.home_loc = EsthenosOrgLocation(lat=locations_map["home"]["lat"], lng=locations_map["home"]["lng"])
-        app.business_loc = EsthenosOrgLocation(lat=locations_map["business"]["lat"], lng=locations_map["business"]["lng"])
+        app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
+        app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
         applicant = self.load(self.guarantor1_kyc_details)
         app.applicant_kyc = EsthenosOrgApplicationKYC(

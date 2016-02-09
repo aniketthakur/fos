@@ -3,14 +3,14 @@ import requests
 
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# payload = {"email": "fosagent@fos-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"kLU_SA8ocKgvDSbhdgp-JTIsNTIzTvaMFwP6cyE2MDc"
+    "instance_token":"AQyC5r5BedpPVFcNc8uupzkB57rkdxEsbWl8_7tsGo0"
 }
-url = "http://localhost:8085/api/organisation/applications"
+url = "http://localhost:8080/api/organisation/applications"
 
 payload = {
     "group": "",
@@ -449,6 +449,6 @@ payload = {
     }
 }
 
-for i in range(0, 10):
+for i in range(0, 4):
     response = requests.post(url, json=payload, params=querystring)
     print(response.text)
