@@ -20,11 +20,6 @@ def application_list():
 
   fos_agents = []
 
-  # if (branchId is not None) and (branchId != ''):
-  #   branch = EsthenosOrgBranch.objects.get(id=branchId)
-  #   fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__contains=branch)
-
-
   if (branchId is not None) and (branchId != ''):
     branch = EsthenosOrgBranch.objects.filter(id=branchId)
 
@@ -37,14 +32,11 @@ def application_list():
   if (stateId is not None) and (stateId != ''):
     state = EsthenosOrgState.objects.filter(id=stateId)
 
-  if state:
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_states__in=state)
-
-  if region:
+  if branch:
     if fos_agents:
-      fos_agents = fos_agents.filter(access_regions__in=region)
+      fos_agents = fos_agents.filter(access_branches__in=branch)
     else:
-      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_regions__in=region)
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__in=branch)
 
   if area:
     if fos_agents:
@@ -52,11 +44,17 @@ def application_list():
     else:
       fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_areas__in=area)
 
-  if branch:
+  if region:
     if fos_agents:
-      fos_agents = fos_agents.filter(access_branches__in=branch)
+      fos_agents = fos_agents.filter(access_regions__in=region)
     else:
-      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__in=branch)
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_regions__in=region)
+
+  if state:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_states__in=state)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_states__in=state)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
