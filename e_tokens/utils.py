@@ -24,6 +24,11 @@ def feature_enable(feature):
     def decorator(view_function):
         @wraps(view_function)
         def decorated(*args, **kwargs):
+            app.logger.debug("FEATUERS")
+            app.logger.debug("FEATUERS %s " % (feature))
+            app.logger.debug(" %s " % (app.config["FEATURES"]))
+            app.logger.debug("%s" % (app.config["FEATURES"][feature]))
+            app.logger.debug("%s " % (app.config["FEATURES"][feature]["enabled"]))
             enabled = app.config["FEATURES"][feature]["enabled"]
             allowed = current_user.is_allowed(feature)
             is_admin = current_user.is_admin()
