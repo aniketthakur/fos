@@ -96,6 +96,10 @@ class AddApplicationMobile(Form):
         app.state=app.branch.parent.parent.parent
         app.region=app.branch.parent.parent
         app.area=app.branch.parent
+        print app.state
+        print app.branch
+        print app.region
+        print app.area
         # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
         app.yob = applicant_kyc["dob_yob"]
