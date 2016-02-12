@@ -8,12 +8,49 @@ def application_list():
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
   branchId = request.args.get('branchId', '')
+  areaId = request.args.get('areaId', '')
+  regionId = request.args.get('regionId', '')
+  stateId = request.args.get('stateId', '')
+
   hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
   fos_agents = []
+
   if (branchId is not None) and (branchId != ''):
-    branch = EsthenosOrgBranch.objects.get(id=branchId)
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__contains=branch)
+    branch = EsthenosOrgBranch.objects.filter(id=branchId)
+
+  if (areaId is not None) and (areaId != ''):
+    area = EsthenosOrgArea.objects.filter(id=areaId)
+
+  if (regionId is not None) and (regionId != ''):
+    region = EsthenosOrgRegion.objects.filter(id=regionId)
+
+  if (stateId is not None) and (stateId != ''):
+    state = EsthenosOrgState.objects.filter(id=stateId)
+
+  if branch:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_branches__in=branch)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__in=branch)
+
+  if area:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_areas__in=area)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_areas__in=area)
+
+  if region:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_regions__in=region)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_regions__in=region)
+
+  if state:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_states__in=state)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_states__in=state)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
