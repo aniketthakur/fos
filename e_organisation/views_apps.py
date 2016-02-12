@@ -229,7 +229,7 @@ def scrutiny():
           isPreviousFalse = True
 
   if (stateId is not None) and (stateId != ""):
-      state = EsthenosOrgState.objects.get(id=state)
+      state = EsthenosOrgState.objects.get(id=stateId)
       if not isPreviousFalse:
         if applications:
           applications = applications.filter(state=state)
@@ -354,7 +354,7 @@ def sanctions():
         isPreviousFalse = True
 
   if (stateId is not None) and (stateId != ""):
-    state = EsthenosOrgState.objects.get(id=state)
+    state = EsthenosOrgState.objects.get(id=stateId)
     if not isPreviousFalse:
       if applications:
         applications = applications.filter(state=state)
