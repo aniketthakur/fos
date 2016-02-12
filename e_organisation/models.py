@@ -1332,6 +1332,9 @@ class EsthenosOrgApplication(db.Document):
     group = db.ReferenceField(EsthenosOrgGroup)
     center = db.ReferenceField(EsthenosOrgCenter)
     branch = db.ReferenceField(EsthenosOrgBranch)
+    area = db.ReferenceField(EsthenosOrgArea)
+    region = db.ReferenceField(EsthenosOrgRegion)
+    state = db.ReferenceField(EsthenosOrgState)
     organisation = db.ReferenceField(EsthenosOrg)
 
     applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)

@@ -212,7 +212,7 @@ def scrutiny():
       area = EsthenosOrgArea.objects.get(id=areaId)
       if not isPreviousFalse:
         if applications:
-          applications = applications.filer(area= area)
+          applications = applications.filter(area= area)
         else:
           applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, area=area, status__gte=191)
         if not applications:
@@ -222,7 +222,7 @@ def scrutiny():
       region = EsthenosOrgRegion.objects.get(id=regionId)
       if not isPreviousFalse:
         if applications:
-          applications = applications.filer(region=region)
+          applications = applications.filter(region=region)
         else:
           applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, region=region, status__gte=191)
         if not applications:
@@ -232,7 +232,7 @@ def scrutiny():
       state = EsthenosOrgState.objects.get(id=state)
       if not isPreviousFalse:
         if applications:
-          applications = applications.filer(state=state)
+          applications = applications.filter(state=state)
         else:
           applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, state=state, status__gte=191)
         if not applications:
@@ -315,13 +315,56 @@ def scrutiny_application_print(app_id):
 def sanctions():
   user = EsthenosUser.objects.get(id=current_user.id)
   org = user.organisation
-
   branchId = request.args.get('branchId', None)
+  areaId = request.args.get('areaId', '')
+  regionId = request.args.get('regionId', '')
+  stateId = request.args.get('stateId', '')
+  branch = ""
+  area = ""
+  region = ""
+  state = ""
+  isPreviousFalse = False
 
   applications = []
+
   if (branchId is not None) and (branchId != ""):
-      branch = EsthenosOrgBranch.objects.get(id=branchId)
-      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=192)
+    branch = EsthenosOrgBranch.objects.get(id=branchId)
+    applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=192)
+    if not applications:
+      isPreviousFalse = True
+
+  if (areaId is not None) and (areaId != ""):
+    area = EsthenosOrgArea.objects.get(id=areaId)
+    if not isPreviousFalse:
+      if applications:
+        applications = applications.filter(area= area)
+      else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, area=area, status__gte=192)
+      if not applications:
+        isPreviousFalse = True
+
+  if (regionId is not None) and (regionId != ""):
+    region = EsthenosOrgRegion.objects.get(id=regionId)
+    if not isPreviousFalse:
+      if applications:
+        applications = applications.filter(region=region)
+      else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, region=region, status__gte=192)
+      if not applications:
+        isPreviousFalse = True
+
+  if (stateId is not None) and (stateId != ""):
+    state = EsthenosOrgState.objects.get(id=state)
+    if not isPreviousFalse:
+      if applications:
+        applications = applications.filter(state=state)
+      else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, state=state, status__gte=192)
+      if not applications:
+        isPreviousFalse = True
+
+  if isPreviousFalse:
+    applications = []
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)

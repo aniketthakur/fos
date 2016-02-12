@@ -93,6 +93,9 @@ class AddApplicationMobile(Form):
             assets_id = str(self.assets_id.data),
             organisation = user.organisation
         )
+        app.state=app.branch.parent.parent.parent
+        app.region=app.branch.parent.parent
+        app.area=app.branch.parent
         # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
         app.yob = applicant_kyc["dob_yob"]

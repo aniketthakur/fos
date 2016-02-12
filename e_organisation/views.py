@@ -173,12 +173,56 @@ def mobile_application_json():
 def check_disbursement():
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-
     branchId = request.args.get('branchId', '')
+    areaId = request.args.get('areaId', '')
+    regionId = request.args.get('regionId', '')
+    stateId = request.args.get('stateId', '')
+    branch = ""
+    area = ""
+    region = ""
+    state = ""
+    isPreviousFalse = False
+
     apps = []
+
     if (branchId is not None) and (branchId != ''):
         branch = EsthenosOrgBranch.objects.get(id=branchId)
         apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240, branch=branch)
+        if not apps:
+            isPreviousFalse = True
+
+    if (areaId is not None) and (areaId != ""):
+        area = EsthenosOrgArea.objects.get(id=areaId)
+        if not isPreviousFalse:
+            if apps:
+                apps = apps.filter(area= area)
+            else:
+                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, area=area, status__gte=240)
+            if not apps:
+                isPreviousFalse = True
+
+    if (regionId is not None) and (regionId != ""):
+        region = EsthenosOrgRegion.objects.get(id=regionId)
+        if not isPreviousFalse:
+            if apps:
+                apps = apps.filter(region=region)
+            else:
+                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, region=region, status__gte=240)
+            if not apps:
+                isPreviousFalse = True
+
+    if (stateId is not None) and (stateId != ""):
+        state = EsthenosOrgState.objects.get(id=stateId)
+        if not isPreviousFalse:
+            if apps:
+                apps = apps.filter(state=state)
+            else:
+                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, state=state, status__gte=240)
+            if not apps:
+                isPreviousFalse = True
+
+    if isPreviousFalse:
+        apps = []
 
     kwargs = locals()
     return render_template("disburse/disbursement.html", **kwargs)
