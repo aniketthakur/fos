@@ -11,6 +11,10 @@ def application_list():
   areaId = request.args.get('areaId', '')
   regionId = request.args.get('regionId', '')
   stateId = request.args.get('stateId', '')
+  branch = ""
+  area = ""
+  region = ""
+  state = ""
 
   hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
