@@ -254,7 +254,7 @@ def disburse_document():
 def download_disbursement(applicant_id):
     user = EsthenosUser.objects.get(id=current_user.id)
     app = EsthenosOrgApplication.objects.get(organisation=user.organisation, application_id=applicant_id)
-    bucket = conn_s3.get_bucket(AWS_SETTINGS['AWS_S3_BUCKET'])
+    bucket = conn_s3.get_bucket(settings.AWS_SETTINGS['AWS_S3_BUCKET'])
     bucket_list = bucket.list()
 
     for item in bucket_list:
