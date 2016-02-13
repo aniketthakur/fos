@@ -111,6 +111,10 @@ FEATURES = {
         "title" : "Features For Notifications",
         "enabled": True,
     },
+    "features_api_applications_list":{
+        "title" : "Features For API Application List",
+        "enabled": True,
+    },
     "features_api_applications_post": {
         "title" : "Features For API Application POST",
         "enabled": True,

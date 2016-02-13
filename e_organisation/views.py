@@ -173,12 +173,50 @@ def mobile_application_json():
 def check_disbursement():
     user = EsthenosUser.objects.get(id=current_user.id)
     org = user.organisation
-
     branchId = request.args.get('branchId', '')
+    areaId = request.args.get('areaId', '')
+    regionId = request.args.get('regionId', '')
+    stateId = request.args.get('stateId', '')
+    branch = ""
+    area = ""
+    region = ""
+    state = ""
+
     apps = []
+
     if (branchId is not None) and (branchId != ''):
         branch = EsthenosOrgBranch.objects.get(id=branchId)
-        apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240, branch=branch)
+
+    if (areaId is not None) and (areaId != ""):
+        area = EsthenosOrgArea.objects.get(id=areaId)
+
+    if (regionId is not None) and (regionId != ""):
+        region = EsthenosOrgRegion.objects.get(id=regionId)
+
+    if (stateId is not None) and (stateId != ""):
+        state = EsthenosOrgState.objects.get(id=stateId)
+
+    for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240):
+        t = ""
+        if branch and i.branch == branch:
+            t = i
+        if area:
+            if t and not t.branch.parent == area:
+                t = ''
+            elif not t and i.branch.parent == area:
+                t = i
+        if region:
+            if t and not t.branch.parent.parent == region:
+                t = ''
+            elif not t and i.branch.parent.parent == region:
+                t = i
+        if state:
+            if t and not t.branch.parent.parent.parent == state:
+                t = ''
+            elif not t and i.branch.parent.parent.parent == state:
+                t = i
+        if t:
+            apps.append(i)
 
     kwargs = locals()
     return render_template("disburse/disbursement.html", **kwargs)

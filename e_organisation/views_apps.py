@@ -8,12 +8,53 @@ def application_list():
   org = user.organisation
   branches = EsthenosOrgBranch.objects.all()
   branchId = request.args.get('branchId', '')
+  areaId = request.args.get('areaId', '')
+  regionId = request.args.get('regionId', '')
+  stateId = request.args.get('stateId', '')
+  branch = ""
+  area = ""
+  region = ""
+  state = ""
+
   hierarchy = EsthenosOrgHierarchy.objects.get(organisation=org, role="ORG_CM")
 
   fos_agents = []
+
   if (branchId is not None) and (branchId != ''):
-    branch = EsthenosOrgBranch.objects.get(id=branchId)
-    fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__contains=branch)
+    branch = EsthenosOrgBranch.objects.filter(id=branchId)
+
+  if (areaId is not None) and (areaId != ''):
+    area = EsthenosOrgArea.objects.filter(id=areaId)
+
+  if (regionId is not None) and (regionId != ''):
+    region = EsthenosOrgRegion.objects.filter(id=regionId)
+
+  if (stateId is not None) and (stateId != ''):
+    state = EsthenosOrgState.objects.filter(id=stateId)
+
+  if branch:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_branches__in=branch)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_branches__in=branch)
+
+  if area:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_areas__in=area)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_areas__in=area)
+
+  if region:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_regions__in=region)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_regions__in=region)
+
+  if state:
+    if fos_agents:
+      fos_agents = fos_agents.filter(access_states__in=state)
+    else:
+      fos_agents = EsthenosUser.objects.filter(organisation=org, hierarchy=hierarchy, access_states__in=state)
 
   kwargs = locals()
   return render_template("apps/applications_centers_n_groups.html", **kwargs)
@@ -149,12 +190,49 @@ def applications_track(app_id):
 def scrutiny():
   user = EsthenosUser.objects.get(id = current_user.id)
   org = user.organisation
-
   branchId = request.args.get('branchId', None)
+  areaId = request.args.get('areaId', '')
+  regionId = request.args.get('regionId', '')
+  stateId = request.args.get('stateId', '')
+  branch = ""
+  area = ""
+  region = ""
+  state = ""
   applications = []
+
   if (branchId is not None) and (branchId != ""):
-      branch = EsthenosOrgBranch.objects.get(id=branchId)
-      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=191)
+    branch = EsthenosOrgBranch.objects.get(id=branchId)
+
+  if (areaId is not None) and (areaId != ""):
+    area = EsthenosOrgArea.objects.get(id=areaId)
+
+  if (regionId is not None) and (regionId != ""):
+    region = EsthenosOrgRegion.objects.get(id=regionId)
+
+  if (stateId is not None) and (stateId != ""):
+    state = EsthenosOrgState.objects.get(id=stateId)
+
+  for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=191):
+    t = ""
+    if branch and i.branch == branch:
+      t = i
+    if area:
+      if t and not t.branch.parent == area:
+        t = ''
+      elif not t and i.branch.parent == area:
+        t = i
+    if region:
+      if t and not t.branch.parent.parent == region:
+        t = ''
+      elif not t and i.branch.parent.parent == region:
+        t = i
+    if state:
+      if t and not t.branch.parent.parent.parent == state:
+        t = ''
+      elif not t and i.branch.parent.parent.parent == state:
+        t = i
+    if t:
+      applications.append(i)
 
   kwargs = locals()
   return render_template("scrutiny/scrutiny_list.html", **kwargs)
@@ -230,13 +308,49 @@ def scrutiny_application_print(app_id):
 def sanctions():
   user = EsthenosUser.objects.get(id=current_user.id)
   org = user.organisation
-
   branchId = request.args.get('branchId', None)
-
+  areaId = request.args.get('areaId', '')
+  regionId = request.args.get('regionId', '')
+  stateId = request.args.get('stateId', '')
+  branch = ""
+  area = ""
+  region = ""
+  state = ""
   applications = []
+
   if (branchId is not None) and (branchId != ""):
-      branch = EsthenosOrgBranch.objects.get(id=branchId)
-      applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch, status__gte=192)
+    branch = EsthenosOrgBranch.objects.get(id=branchId)
+
+  if (areaId is not None) and (areaId != ""):
+    area = EsthenosOrgArea.objects.get(id=areaId)
+
+  if (regionId is not None) and (regionId != ""):
+    region = EsthenosOrgRegion.objects.get(id=regionId)
+
+  if (stateId is not None) and (stateId != ""):
+    state = EsthenosOrgState.objects.get(id=stateId)
+
+  for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192):
+    t = ""
+    if branch and i.branch == branch:
+      t = i
+    if area:
+      if t and not t.branch.parent == area:
+        t = ''
+      elif not t and i.branch.parent == area:
+        t = i
+    if region:
+      if t and not t.branch.parent.parent == region:
+        t = ''
+      elif not t and i.branch.parent.parent == region:
+        t = i
+    if state:
+      if t and not t.branch.parent.parent.parent == state:
+        t = ''
+      elif not t and i.branch.parent.parent.parent == state:
+        t = i
+    if t:
+      applications.append(i)
 
   kwargs = locals()
   return render_template("sanctions/sanctions_list.html", **kwargs)

@@ -276,6 +276,18 @@ class AddOrganizationEmployeeForm(Form):
 
         emp.access_branches = selections
 
+        if emp.hierarchy.level >= 6:
+            for i in selections:
+                if i.parent not in emp.access_areas:
+                    emp.access_areas = []
+                    emp.access_areas.append(i.parent)
+                if i.parent.parent not in emp.access_regions:
+                    emp.access_regions = []
+                    emp.access_regions.append(i.parent.parent)
+                if i.parent.parent not in emp.access_states:
+                    emp.access_states = []
+                    emp.access_states.append(i.parent.parent.parent)
+
         selections = []
         #todo centralize the level assignments
         if emp.hierarchy.level == 7:
