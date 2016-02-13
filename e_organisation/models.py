@@ -1080,10 +1080,10 @@ class EsthenosUser(BaseUser):
         else:
             stats = \
               [EsthenosOrgStatsMonth(organisation=self.organisation)] + \
-              [geo.stats.month(time) for geo in self.states ]  + \
-              [geo.stats.month(time) for geo in self.regions]  + \
-              [geo.stats.month(time) for geo in self.areas]    + \
-              [geo.stats.month(time) for geo in self.branches]
+              [geo.stats.month(time) for geo in self.states if geo.stats]  + \
+              [geo.stats.month(time) for geo in self.regions if geo.stats]  + \
+              [geo.stats.month(time) for geo in self.areas if geo.stats]    + \
+              [geo.stats.month(time) for geo in self.branches if geo.stats]
 
         stats = reduce(lambda x, y: x + y, stats)
         return stats
