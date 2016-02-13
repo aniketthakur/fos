@@ -332,22 +332,22 @@ def sanctions():
 
   for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192):
     t = ""
-    if branch and i.parent == branch:
+    if branch and i.branch == branch:
       t = i
     if area:
-      if t and not t.parent == area:
+      if t and not t.branch.parent == area:
         t = ''
-      elif not t and i.parent == area:
+      elif not t and i.branch.parent == area:
         t = i
     if region:
-      if t and not t.parent.parent == region:
+      if t and not t.branch.parent.parent == region:
         t = ''
-      elif not t and i.parent.parent == region:
+      elif not t and i.branch.parent.parent == region:
         t = i
     if state:
-      if t and not t.parent.parent.parent == state:
+      if t and not t.branch.parent.parent.parent == state:
         t = ''
-      elif not t and i.parent.parent.parent == state:
+      elif not t and i.branch.parent.parent.parent == state:
         t = i
     if t:
       applications.append(i)
