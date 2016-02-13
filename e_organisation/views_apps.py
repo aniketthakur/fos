@@ -217,19 +217,19 @@ def scrutiny():
     if branch and i.branch == branch:
       t = i
     if area:
-      if t and not t.area == area:
+      if t and not t.branch.parent == area:
         t = ''
-      elif not t and i.area == area:
+      elif not t and i.branch.parent == area:
         t = i
     if region:
-      if t and not t.region == region:
+      if t and not t.branch.parent.parent == region:
         t = ''
-      elif not t and i.region == region:
+      elif not t and i.branch.parent.parent == region:
         t = i
     if state:
-      if t and not t.state == state:
+      if t and not t.branch.parent.parent.parent == state:
         t = ''
-      elif not t and i.state == state:
+      elif not t and i.branch.parent.parent.parent == state:
         t = i
     if t:
       applications.append(i)
@@ -332,22 +332,22 @@ def sanctions():
 
   for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=192):
     t = ""
-    if branch and i.branch == branch:
+    if branch and i.parent == branch:
       t = i
     if area:
-      if t and not t.area == area:
+      if t and not t.parent == area:
         t = ''
-      elif not t and i.area == area:
+      elif not t and i.parent == area:
         t = i
     if region:
-      if t and not t.region == region:
+      if t and not t.parent.parent == region:
         t = ''
-      elif not t and i.region == region:
+      elif not t and i.parent.parent == region:
         t = i
     if state:
-      if t and not t.state == state:
+      if t and not t.parent.parent.parent == state:
         t = ''
-      elif not t and i.state == state:
+      elif not t and i.parent.parent.parent == state:
         t = i
     if t:
       applications.append(i)

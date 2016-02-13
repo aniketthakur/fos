@@ -1573,18 +1573,6 @@ class EsthenosOrgApplication(db.Document):
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
 
-    @property
-    def area(self):
-        return self.branch.parent
-
-    @property
-    def region(self):
-        return self.branch.parent.parent
-
-    @property
-    def state(self):
-        return self.branch.parent.parent.parent
-
     def stats(self, time):
         date = time.date()
         stats = EsthenosOrgStatsApplication()
