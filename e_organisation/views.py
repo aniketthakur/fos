@@ -181,48 +181,42 @@ def check_disbursement():
     area = ""
     region = ""
     state = ""
-    isPreviousFalse = False
 
     apps = []
 
     if (branchId is not None) and (branchId != ''):
         branch = EsthenosOrgBranch.objects.get(id=branchId)
-        apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240, branch=branch)
-        if not apps:
-            isPreviousFalse = True
 
     if (areaId is not None) and (areaId != ""):
         area = EsthenosOrgArea.objects.get(id=areaId)
-        if not isPreviousFalse:
-            if apps:
-                apps = apps.filter(area= area)
-            else:
-                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, area=area, status__gte=240)
-            if not apps:
-                isPreviousFalse = True
 
     if (regionId is not None) and (regionId != ""):
         region = EsthenosOrgRegion.objects.get(id=regionId)
-        if not isPreviousFalse:
-            if apps:
-                apps = apps.filter(region=region)
-            else:
-                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, region=region, status__gte=240)
-            if not apps:
-                isPreviousFalse = True
 
     if (stateId is not None) and (stateId != ""):
         state = EsthenosOrgState.objects.get(id=stateId)
-        if not isPreviousFalse:
-            if apps:
-                apps = apps.filter(state=state)
-            else:
-                apps = EsthenosOrgApplication.objects.filter(organisation=user.organisation, state=state, status__gte=240)
-            if not apps:
-                isPreviousFalse = True
 
-    if isPreviousFalse:
-        apps = []
+    for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240):
+        t = ""
+        if branch and i.branch == branch:
+            t = i
+        if area:
+            if t and not t.area == area:
+                t = ''
+            elif not t and i.area == area:
+                t = i
+        if region:
+            if t and not t.region == region:
+                t = ''
+            elif not t and i.region == region:
+                t = i
+        if state:
+            if t and not t.state == state:
+                t = ''
+            elif not t and i.state == state:
+                t = i
+        if t:
+            apps.append(i)
 
     kwargs = locals()
     return render_template("disburse/disbursement.html", **kwargs)

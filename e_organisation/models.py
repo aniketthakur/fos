@@ -1332,9 +1332,6 @@ class EsthenosOrgApplication(db.Document):
     group = db.ReferenceField(EsthenosOrgGroup)
     center = db.ReferenceField(EsthenosOrgCenter)
     branch = db.ReferenceField(EsthenosOrgBranch)
-    area = db.ReferenceField(EsthenosOrgArea)
-    region = db.ReferenceField(EsthenosOrgRegion)
-    state = db.ReferenceField(EsthenosOrgState)
     organisation = db.ReferenceField(EsthenosOrg)
 
     applicant_kyc = db.EmbeddedDocumentField(EsthenosOrgApplicationKYC, default=EsthenosOrgApplicationKYC)
@@ -1575,6 +1572,18 @@ class EsthenosOrgApplication(db.Document):
 
     def __unicode__(self):
         return self.application_id + "<" + self.applicant_name + ">"
+
+    @property
+    def area(self):
+        return self.branch.parent
+
+    @property
+    def region(self):
+        return self.branch.parent.parent
+
+    @property
+    def state(self):
+        return self.branch.parent.parent.parent
 
     def stats(self, time):
         date = time.date()
