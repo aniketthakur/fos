@@ -147,7 +147,7 @@ class AddApplicationMobile(Form):
 
         data = self.load(self.applicant_loan_details_applied_loan)
         app.applied_loan = toFloat(data.get("required_loan_amount", ""))
-        app.purpose_of_loan = data.get("purpose_of_the_loan", "")
+        app.purpose_of_loan = data.get("purpose_of_loan", "")
         app.repayment_method = data.get("repayment_option", "")
 
         data = self.load(self.applicant_other_card_bank_details1)
