@@ -234,7 +234,7 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <h3>Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
-            <img src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+             <img src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} width="160" height="160">
             <h3 class="pull-right"><a href="{{ url_for("organisation_views.sanctions_application_print", app_id=application.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
         </div>
     </div>
