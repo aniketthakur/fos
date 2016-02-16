@@ -406,3 +406,15 @@ def sanctions_application(app_id):
     application.save()
 
     return redirect(url_for("organisation_views.sanctions"))
+
+
+@organisation_views.route('/sanctions/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_sanction")
+def sanctions_application_print(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("sanctions/sanctions_details_print.html", **kwargs)
