@@ -574,6 +574,7 @@
         </div>
     </div>
 
+    {% if application.status >= 190 %}
     <div class="row actions section scrutiny-btn">
         <input type="hidden" id="status" name="status" value="">
         <div class="col-md-8 col-md-offset-4">
@@ -582,6 +583,7 @@
             <div data-status="hold" class="btn btn-warning btn-large">hold</div>
         </div>
     </div>
+    {% endif %}
     </form>
 
     <div class="row section footer"></div>
