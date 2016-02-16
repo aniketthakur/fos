@@ -227,13 +227,14 @@
             });
         });
     </script>
-{% endblock %}
+{% endblock %}`
 
 
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
             <h3>Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+            <img src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
         </div>
     </div>
 
