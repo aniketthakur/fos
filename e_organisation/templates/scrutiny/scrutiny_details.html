@@ -116,9 +116,9 @@
             function initialize() {
                 var mapOptions1 = {
                   center: {lat: {{ application.business_loc.lat }}, lng: {{ application.business_loc.lng }}},
-                  zoom: 7,
+                  zoom: 16,
                   minZoom: 5,
-                  maxZoom: 10,
+                  maxZoom: 20,
                   zoomControl: false,
                   mapTypeControl: false,
                   streetViewControl: false
@@ -127,9 +127,9 @@
 
                 var mapOptions2 = {
                   center: {lat: {{ application.home_loc.lat }}, lng: {{ application.home_loc.lng }}},
-                  zoom: 7,
+                  zoom: 16,
                   minZoom: 5,
-                  maxZoom: 10,
+                  maxZoom: 20,
                   zoomControl: false,
                   mapTypeControl: false,
                   streetViewControl: false
