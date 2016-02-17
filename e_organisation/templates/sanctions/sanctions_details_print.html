@@ -233,8 +233,8 @@
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
-            <img src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+            <h3 class="pull-left">Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+            <img align = "right" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
         </div>
     </div>
 
@@ -390,5 +390,10 @@
 
     </form>
 
-    <div class="row section footer"></div>
+    <div class="row section footer">
+        <center>
+            <hr>
+            <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+        </center>
+    </div>
 {% endblock %}

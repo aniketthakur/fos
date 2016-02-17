@@ -3,12 +3,12 @@ import requests
 
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "fosagent@fos-test.esthenos.com", "password":"123"}
+# payload = {"email": "qwe@fos-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"AQyC5r5BedpPVFcNc8uupzkB57rkdxEsbWl8_7tsGo0"
+    "instance_token":"IFbheEMSGweX063gT3vPvGLsnKO-6FiGiix7waRm2SM"
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
 url = "http://localhost:8080/api/organisation/applications"
