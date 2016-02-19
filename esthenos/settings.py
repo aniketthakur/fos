@@ -1,43 +1,43 @@
 import os, sys
 
 SERVER_SETTINGS = {
-    "org" : "fos-test.esthenos.com",
-    "host" : "fos-test.prod.esthenos.com",
+    "org" : "maitreya.esthenos.com",
+    "host" : "fos-maitreya.prod.esthenos.com",
     "assets" : os.path.dirname(os.path.realpath(__file__)),
     "timezone" : "Asia/Kolkata",
-    "git-branch" : "fos-test",
+    "git-branch" : "fos-maitreya",
     "user-deploy" : "ubuntu",
     "location" : {"lat": 12.9720095, "lng": 77.6504128}
 }
 
-MONGODB_SETTINGS = {
-    'DB': 'fos-test',
-    'PORT': 27017,
-    'HOST': 'mongodb.prod.esthenos.com'
-}
 
+MONGODB_SETTINGS = {
+    'DB': 'fos-maitreya',
+    'PORT': 27017,
+    'HOST': 'mongodb-maitreya.prod.esthenos.com'
+}
 ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
-    "name" : "FOS Test MicroFinance Pvt. Ltd.",
-    "email": "admin@fos-test.esthenos.com",
-    "phone": "9876543210",
+    "name" : "Maitreya Capital and Business Services Pvt. Ltd.",
+    "email": "admin@maitreya.esthenos.com",
+    "phone": "9999999999",
     "phone-code": "91",
-    "postal-city": "Kolaba",
-    "postal-code": "123321",
-    "postal-state": "Bolaka",
-    "postal-address": "12, Bolak New Kada",
+    "postal-city": "Bangalore",
+    "postal-code": "999999",
+    "postal-state": "Karnataka",
+    "postal-address": "NA",
     "postal-country": "India",
     "users" : [
         {
             "role" : "ORG_ADMIN",
             "active" : True,
             "dob" : "01/01/1970",
-            "city" : "kabul",
-            "state" : "kabula",
-            "country" : "kabuland",
-            "address" : "1st kabul, kaula, kabuland.",
-            "telephone" : "9876543210",
+            "city" : "Bangalore",
+            "state" : "Karnataka",
+            "country" : "India",
+            "address" : "NA",
+            "telephone" : "9999999999",
             "tele_code" : "91",
             "fname" : "admin",
             "lname" : "users",
@@ -72,10 +72,10 @@ CELERY_SETTINGS = {
 
 AWS_SETTINGS = {
     'AWS_CDN_PATH' : 's3.amazonaws.com',
-    'AWS_S3_BUCKET' : 'hindusthanarchives',
-    'AWS_COGNITO_ID' : 'us-east-1:58e9693d-04b4-48a1-8820-b17c52514aaa',
-    'AWS_ACCESS_KEY_ID' : 'AKIAITWBEHC2SAGDFQSA',
-    'AWS_SECRET_ACCESS_KEY' : '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'
+    'AWS_S3_BUCKET' : 'fos-maitreya-esthenos',
+    'AWS_COGNITO_ID' : 'us-east-1:f662e9d4-8d9c-4b8b-adea-38ad6116de4c',
+    'AWS_ACCESS_KEY_ID' : 'AKIAJUAPOKY4RDFJ6KEA',
+    'AWS_SECRET_ACCESS_KEY' : '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'
 }
 
 FEATURES = {

@@ -45,6 +45,8 @@ mainapp.config.update(
     TESTING = False,
 )
 
+sentry = Sentry(mainapp, dsn='https://76234a0bb68845049ecc024e0cbb1d7a:a65219406437462d9f9feebc59da901b@app.getsentry.com/65543')
+
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.needs_refresh_message = u"To protect your account, please re-authenticate to access this page."

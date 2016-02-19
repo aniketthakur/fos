@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+`
 
 {% block maincontents %}
   <div class="page-title">
@@ -50,37 +50,19 @@
         </tr>
         <tr>
           <td class="unseen text-center">1</td>
-          <td>Primary Business Income</td>
+          <td>Total Annual Revenue-Cash</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" name="primary_income" value="{{ application.primary_business_income_monthly }}">
+              <input type="text" class="form-control text-right section-a" name="Total Annual Revenue-Cash" value="{{ application.total_annual_revenue_cash }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">2</td>
-          <td>Secondary Business Income</td>
+          <td>Total Annual Revenue-Credit</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a" name="secondary_income" value="{{ application.secondary_business_income_monthly }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">3</td>
-          <td>Tertiary Business Income</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-a" name="tertiary_income" value="{{ application.tertiary_business_income_monthly }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">4</td>
-          <td>Other income</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-a" name="other_income" value="{{ application.other_income }}">
+              <input type="text" class="form-control text-right section-a" name="Total Annual Revenue-Credit" value="{{ application.total_annual_revenue_credit }}">
             </div>
           </td>
         </tr>
@@ -91,10 +73,10 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-a-total" value="{{ application.total_income() }}" disabled>
+              <input type="text" class="form-control text-right section-a-total" value="{{ application.average_monthly_income }}" disabled>
             </div>
           </td>
-        </tr>
+       </tr>
         <tr>
           <td colspan="3" >
             <h4 class="semi-bold">(B) Total Gross expenditure said at the time of sourcing</h4>
@@ -102,140 +84,203 @@
         </tr>
         <tr>
           <td class="unseen text-center">5.1</td>
-          <td>Business expense - Working Capital Expenditure</td>
+          <td>Monthly Rent(House)</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="business_expense_working_capital" value="{{ application.primary_business_expense_working_capital }}">
+              <input type="text" class="form-control text-right section-b" name="monthly_rent" value="{{ application.house_monthly_rent}}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.2</td>
-          <td>Business expense - Employee Salary Expenditure</td>
+          <td>Average Monthly Bill(Phone)</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="business_expense_employee_salary" value="{{ application.primary_business_expense_employee_salary }}">
+              <input type="text" class="form-control text-right section-b" name="average_monthly_bill_phone" value="{{ application.average_monthly_bill }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.3</td>
-          <td>Business expense - Admin Expenditure</td>
+          <td>Average Monthly Bill(Electricity)</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="business_expense_admin" value="{{ application.primary_business_expense_admin }}">
+              <input type="text" class="form-control text-right section-b" name="average_monthly_bill_electricity" value="{{ application.electricity_monthly_bill }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.4</td>
-          <td>Business expense - Rent Expenditure</td>
+          <td>Average Monthly Expenses-Grocery</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="business_expense_rent" value="{{ application.primary_business_expense_rent }}">
+              <input type="text" class="form-control text-right section-b" name="grocery_expenses" value="{{ application.grocery_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.5</td>
-          <td>Business expense - Other Expenditures</td>
+          <td>Average Monthly Expenses-Conveyance</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="business_expense_other" value="{{ application.primary_business_expense_other }}">
+              <input type="text" class="form-control text-right section-b" name="conveyance_expenses" value="{{ application.conveyance_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.6</td>
-          <td>Business expense - Secondary Business Expenditures</td>
+          <td>Average Monthly Expenses-Medical</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="secondary_business_expense" value="{{ application.secondary_business_expenses_monthly }}">
+              <input type="text" class="form-control text-right section-b" name="medical_expenses" value="{{ application.medical_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.7</td>
-          <td>Business expense - Tertiary Business Expenditures</td>
+          <td>Average Monthly Expenses-Education</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1" name="tertiary_business_expense" value="{{ application.tertiary_business_expenses_monthly }}">
+              <input type="text" class="form-control text-right section-b" name="education_expenses" value="{{ application.education_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">5.8</td>
-          <td>Business expense - Total</td>
+          <td>Average Monthly Expenses-Other</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b1-total" name="business_expense" value="{{ application.business_expense() }}" disabled>
+              <input type="text" class="form-control text-right section-b" name="other_expenses" value="{{ application.family_other_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">6</td>
-          <td>Food expense</td>
+          <td>Monthly Rent(Business)</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="food_expense" value="{{ application.food_expense }}">
+              <input type="text" class="form-control text-right section-b" name="monthly_rent" value="{{ application.monthly_rent }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">7</td>
-          <td>Travel expense</td>
+          <td>Business Monthly Expenses-Electricity Charges</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="travel_expense" value="{{ application.travel_expense }}">
+              <input type="text" class="form-control text-right section-b" name="electricity_charges" value="{{ application.electricity_charges }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">8</td>
-          <td>Education expense</td>
+          <td>Business Monthly Expenses-Petrol Expenses</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="educational_expense" value="{{ application.educational_expense }}">
+              <input type="text" class="form-control text-right section-b" name="petrol_expenses" value="{{ application.petrol_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">9</td>
-          <td>Entertainment expense</td>
+          <td>Business Monthly Expenses-Freight Charges</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="entertainment_expense" value="{{ application.entertainment_expense }}">
+              <input type="text" class="form-control text-right section-b" name="freight_charges" value="{{ application.freight_charges }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">10</td>
-          <td>Medical expense</td>
+          <td>Business Monthly Expenses-Salaries and Wages</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="medical_expense" value="{{ application.medical_expense }}">
+              <input type="text" class="form-control text-right section-b" name="salaries_and_wages" value="{{ application.salaries_and_wages }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">11</td>
-          <td>Festival expense</td>
+          <td>Business Monthly Expenses-Other Expenses</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="festival_expenditure" value="{{ application.festival_expense }}">
+              <input type="text" class="form-control text-right section-b" name="other_expenses" value="{{ application.other_expenses }}">
             </div>
           </td>
         </tr>
         <tr>
           <td class="unseen text-center">12</td>
-          <td>Other expense</td>
+          <td>EMI for Loans from Bank/FI 1</td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b" name="other_expense" value="{{ application.other_expense }}">
+              <input type="text" class="form-control text-right section-b" name="emi_payment1" value="{{ application.loan_details1.emi_repayments }}">
+            </div>
+          </td>
+        </tr>
+         <tr>
+          <td class="unseen text-center">13</td>
+          <td>EMI for Loans from Bank/FI 2</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b" name="emi_payment2" value="{{ application.loan_details2.emi_repayments  }}">
+            </div>
+          </td>
+        </tr>
+         <tr>
+          <td class="unseen text-center">14</td>
+          <td>EMI for Loans from Bank/FI 3</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b" name="emi_payment3" value="{{ application.loan_details3.emi_repayments  }}">
+            </div>
+          </td>
+        </tr>
+         <tr>
+          <td class="unseen text-center">15</td>
+          <td>EMI for Loans from Bank/FI 4</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b" name="emi_payment4" value="{{ application.loan_details4.emi_repayments  }}">
             </div>
           </td>
         </tr>
         <tr>
+             <tr>
+          <td class="unseen text-center">16</td>
+          <td>Others</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right" name="other_expense" value="{{ application.other_expense }}">
+            </div>
+          </td>
+        </tr>
+              <tr>
+          <td class="unseen text-center">17</td>
+          <td>Total Annual Purchase-Cash</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="total_annual_purchase_cash" value="{{ application.total_annual_purchase_cash }}">
+            </div>
+          </td>
+        </tr>
+              <tr>
+          <td class="unseen text-center">18</td>
+          <td>Total Annual Purchase-Credit</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1" name="total_annual_purchase_credit" value="{{ application.total_annual_purchase_credit }}">
+            </div>
+          </td>
+        </tr>
+              <tr>
+          <td class="unseen text-center">19</td>
+          <td>Average Monthly Purchase</td>
+          <td>
+            <div class="controls">
+              <input type="text" class="form-control text-right section-b1-total" name="average_monthly_purchase" value="{{ application.average_monthly_purchase }}" disabled>
+            </div>
+          </td>
+        </tr>
           <td class="unseen text-center">
           </td>
           <td class="bold text-right">
@@ -243,69 +288,18 @@
           </td>
           <td>
             <div class="controls">
-              <input type="text" class="form-control text-right section-b-total" value="{{ application.total_expenditure() }}" disabled>
+              <input type="text" class="form-control text-right section-b-total" value="{{ application.total_expenditure}}" disabled>
             </div>
           </td>
         </tr>
-        <tr>
-          <td colspan="3" >
-            <h4 class="semi-bold">(C) Other Liability</h4>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">13</td>
-          <td>Chit</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-d" name="other_outstanding_chit" value="{{ application.other_outstanding_chit }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">14</td>
-          <td>Insurance</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-d" name="other_outstanding_insurance" value="{{ application.other_outstanding_insurance }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">15</td>
-          <td>EMI</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-d" name="other_outstanding_emi" value="{{ application.other_outstanding_emi }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center">16</td>
-          <td>Friends & Family (Handloans)</td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-d" name="other_outstanding_familynfriends" value="{{ application.other_outstanding_familynfriends }}">
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="unseen text-center"></td>
-          <td class="bold text-right">
-            <strong>(C) Total Outstanding</strong>
-          </td>
-          <td>
-            <div class="controls">
-              <input type="text" class="form-control text-right section-d-total" value="{{ application.total_other_outstanding() }}" disabled>
-            </div>
-          </td>
-        </tr>
+
         <tr>
           <td colspan="2" >
-            <h6 class="semi-bold">Net Income (A -B -C)</h6>
+            <h6 class="semi-bold">Net Income (A-B)</h6>
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right section-net-income" value="{{ application.net_income() }}" disabled>
+              <input type="text" class="form-control text-right section-net-income" value="{{ application.net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -335,7 +329,7 @@
           </td>
           <td>
             <div class="controls {% if application.loan_eligibility_based_on_net_income < application.applied_loan %}has-error{% endif %}">
-              <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income() }}" disabled>
+              <input type="text" class="form-control text-right section-loan-eligibility" value="{{ application.loan_eligibility_based_on_net_income }}" disabled>
             </div>
           </td>
         </tr>
@@ -354,8 +348,8 @@
               var total = 0.0;
               $(".section-a").each(function(index){
                 total += parseFloat($(this).val());
-              });
-              $(".section-a-total").val(total);
+              })    ;
+              $(".section-a-total").val(total/12);
               update_net_income();
               update_loan_eligibility();
             });
@@ -365,13 +359,14 @@
               $(".section-b1").each(function(index){
                 total += parseFloat($(this).val());
               });
-              $(".section-b1-total").val(total);
+              $(".section-b1-total").val(total = total/12);
               $(".section-b").each(function(index){
                 total += parseFloat($(this).val());
               });
               $(".section-b-total").val(total);
-              update_net_income();
-              update_loan_eligibility();
+                console.log(total);
+                 update_net_income();
+                 update_loan_eligibility();
             });
 
             $(".section-b").on("change", function(e){
@@ -379,6 +374,7 @@
               $(".section-b1").each(function(index){
                 total += parseFloat($(this).val());
               });
+              $(".section-b1-total").val(total = total/12);
               $(".section-b").each(function(index){
                 total += parseFloat($(this).val());
               });
@@ -399,17 +395,15 @@
 
             function update_net_income() {
               var total_income = parseFloat($(".section-a-total").val());
-              var total_liability = parseFloat($(".section-b-total").val());
-              var total_expenditure = parseFloat($(".section-d-total").val());
-              var net_income = total_income - total_liability - total_expenditure;
+              var total_expenditure = parseFloat($(".section-b-total").val());
+              var net_income = total_income - total_expenditure;
               $(".section-net-income").val(net_income);
             }
 
             function update_loan_eligibility() {
               var total_income = parseFloat($(".section-a-total").val());
-              var total_liability = parseFloat($(".section-b-total").val());
-              var total_expenditure = parseFloat($(".section-d-total").val());
-              var total_loan_eligibility = (total_income - total_liability - total_expenditure) / 2  * 24;
+              var total_expenditure = parseFloat($(".section-b-total").val());
+              var total_loan_eligibility = (total_income - total_expenditure) / 2  * 24;
               $(".section-loan-eligibility").val(total_loan_eligibility);
             }
 
