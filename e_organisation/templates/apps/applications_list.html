@@ -35,10 +35,11 @@
                             <th style="width:1%" >#</th>
                             <th style="width:19%">Application ID</th>
                             <th style="width:20%">Applicant Name</th>
-                            <th style="width:25%">Date</th>
+                            <th style="width:20%">Date</th>
                             <th style="width:20%">Progress Status</th>
-                            <th style="width:15%">Log</th>
-                            <th style="width:15%">Action</th>
+                            <th style="width:7%">Log</th>
+                            <th style="width:25%">Update Status</th>
+                            <th style="width:13%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -53,6 +54,15 @@
                             <td class="v-align-middle">{{ app.current_status.status_message }}</td>
                             <td class="v-align-middle">
                               <a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.applications_track", app_id=app.application_id) }}">Log</a>
+                            </td>
+                            <td class="v-align-middle">
+                              <center>
+                              {% if app.status < 190 %}
+                              <a class="btn btn-small btn-primary disabled" href="{{ url_for("organisation_views.application_update_status", app_id=app.application_id) }}">Update</a>
+                              {% else %}
+                              <a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.application_update_status", app_id=app.application_id) }}">Update</a>
+                              {% endif %}
+                              </center>
                             </td>
                             <td class="v-align-middle">
                               <a class="btn btn-small btn-primary" href="{{ url_for("organisation_views.application_cashflow", app_id=app.application_id) }}">Cashflow</a>

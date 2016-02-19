@@ -125,6 +125,35 @@ def application_cashflow(app_id):
   return render_template("apps/application_cashflow.html", **kwargs)
 
 
+@organisation_views.route('/application/<app_id>/update_status', methods=["GET", "POST"])
+@login_required
+def application_update_status(app_id):
+
+  user = EsthenosUser.objects.get(id=current_user.id)
+  applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, application_id=app_id)
+
+  if len(applications) == 0:
+    redirect("/application_status")
+
+  app_urls = list()
+  application = applications[0]
+
+  st = ['SCRUTINY READY', 'SANCTIONS READY']
+  st1 = [190, 200]
+  st = st[:1+(application.status-190)/10]
+  st1 = st1[:1+(application.status-190)/10]
+
+  if request.method == "GET":
+    kwargs = locals()
+    return render_template("apps/application_update_status.html", **kwargs)
+
+  if request.method == "POST":
+      form = request.form
+      application.update_status(int(form["app-status"]))
+      application.save()
+      return redirect(url_for("organisation_views.application_list_branch", branch_id=application.branch.id))
+
+
 @organisation_views.route('/application/<app_id>/cashflow', methods=["POST"])
 @login_required
 def cashflow_statusupdate(app_id):
