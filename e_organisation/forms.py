@@ -28,25 +28,19 @@ class AddApplicationMobile(Form):
     # guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
 
     guarantor2_kyc_details = TextField(validators=[v.Length(max=10000)])
-    # guarantor1_other_card_details2 = TextField(validators=[v.Length(max=10000)])
 
     applicant_kyc_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_id_details = TextField(validators=[v.Length(max=10000)])
+
     applicant_loan_details_applied_loan = TextField(validators=[v.Length(max=10000)])
 
     applicant_personal_docs = TextField(validators=[v.Length(max=10000)])
     applicant_nominee_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_other_card_liabilities = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_land_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_phone_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_electricity_details = TextField(validators=[v.Length(max=10000)])
-    # applicant_other_card_credit_card_details = TextField(validators=[v.Length(max=10000)])
 
-    # applicant_loan_details_details1 = TextField(validators=[v.Length(max=10000)])
-    # applicant_loan_details_details2 = TextField(validators=[v.Length(max=10000)])
-    # applicant_loan_details_details3 = TextField(validators=[v.Length(max=10000)])
-    # applicant_loan_details_details4 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_phone_details = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_electricity_details = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_credit_card_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_hypothecation_goods_details1 = TextField(validators=[v.Length(max=10000)])
     applicant_hypothecation_goods_details2 = TextField(validators=[v.Length(max=10000)])
@@ -59,16 +53,49 @@ class AddApplicationMobile(Form):
     applicant_family_details_members = TextField(validators=[v.Length(max=10000)])
 
     applicant_family_details_assets = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_other_assets = TextField(validators=[v.Length(max=10000)])
 
-    # applicant_family_details_details1 = TextField(validators=[v.Length(max=10000)])
-    # applicant_family_details_details2 = TextField(validators=[v.Length(max=10000)])
-    # applicant_family_details_details3 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_details1 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_details2 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_details3 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_details4 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_details5 = TextField(validators=[v.Length(max=10000)])
+    
+    applicant_loan_details_details1 = TextField(validators=[v.Length(max=10000)])
+    applicant_loan_details_details2 = TextField(validators=[v.Length(max=10000)])
+    applicant_loan_details_details3 = TextField(validators=[v.Length(max=10000)])
+    applicant_loan_details_details4 = TextField(validators=[v.Length(max=10000)])
 
-    # applicant_business_docs_info = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details1 = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details2 = TextField(validators=[v.Length(max=10000)])
-    applicant_business_docs_details3 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_land_details1 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_land_details2 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_land_details3 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_type_equipment1 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_type_equipment2 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_type_equipment3 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_business_docs_info = TextField(validators=[v.Length(max=10000)])
+
+    applicant_business_docs_details4 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_personal_docs_vehicle1 = TextField(validators=[v.Length(max=10000)])
+    applicant_personal_docs_vehicle2 = TextField(validators=[v.Length(max=10000)])
+    applicant_personal_docs_vehicle3 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_sales_info = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_family_assets = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_purchase_info = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_assets_liability = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_bus_monthly_exp = TextField(validators=[v.Length(max=10000)])
+
+    applicant_business_docs_customer1 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_emp_business_info = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_borrower_furnished = TextField(validators=[v.Length(max=10000)])
 
     def load(self, form):
         if (form.data is None) or (form.data == ""):
@@ -80,6 +107,54 @@ class AddApplicationMobile(Form):
                 .replace("\/", '/')\
                 .replace(": None", ': "None"')
         return json.loads(form)
+    
+    def load_family_details(self, data):
+        return EsthenosOrgApplicationFamilyDetails(
+            age = toInt(data.get("age", "")),
+            name = data.get("name", ""),
+            relation = data.get("relation", ""),
+            education = data.get("education", ""),
+            aadhar_number = data.get("aadhar_number", ""),
+            annual_income = toFloat(data.get("annual_income", "")),
+            occupations_details = data.get("occupations_details", ""),
+        )
+    
+    def load_land_details(self, data):
+        return EsthenosOrgApplicationLandDetails(
+            area_in_sqft = toFloat(data.get("area_in_sqft", "")),
+            land_location = data.get("land_location", ""),
+            type_of_property = data.get("type_of_property", ""),
+            loan_outstanding = toFloat(data.get("loan_outstanding", "")),
+            estimated_resale_value = toFloat(data.get("estimated_resale_value", ""))
+        )
+    
+    def load_loan_details(self, data):
+        return EsthenosOrgApplicationLoanDetails(
+            interest= toFloat(data.get("interest", "")),
+            type_of_loan = data.get("type_of_loan", ""),
+            name_of_bank = data.get("name_of_bank", ""),
+            loan_detail = data.get("loan_detail", ""),
+            emi_repayments = toFloat(data.get("emi_repayments", "")),
+            loan_amount_key = toFloat(data.get("loan_amount_key", "")),
+            tenure_in_months = toFloat(data.get("tenure_in_months", "")),
+            collateral_details = data.get("collateral_details", ""),
+            outstanding_loan_amount = toFloat(data.get("outstanding_loan_amount", ""))
+        )
+
+    def load_type_equipment(self, data):
+        return EsthenosOrgApplicationTypeEquipment(
+            estimated_value = toFloat(data.get("estimated_value","")),
+            details_of_equipment_supplier = data.get("details_of_equipment_supplier",""),
+            date_of_manufacturing_equipment = data.get("date_of_manufacturing_equipment",""),
+            is_equipment_given_as_collateral = data.get("is_equipment_given_as_collateral__dropdown_with_values","")
+        )
+
+    def load_docs_vehicle(self, data):
+        return EsthenosOrgApplicationDocsVehicle(
+            year_of_registration = toInt(data.get("year_of_registration","")),
+            estimated_resale_value = toFloat(data.get("estimated_resale_value","")),
+            type_of_vehicle_manufacturer = data.get("type_of_vehicle_manufacturer","")
+        )
 
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
@@ -87,11 +162,13 @@ class AddApplicationMobile(Form):
 
         applicant_kyc = self.load(self.applicant_kyc_details)
         app = EsthenosOrgApplication(
-            name = applicant_kyc["name"],
+            name = applicant_kyc.get("name",[]),
             owner = user,
             branch = user.branches[0],
             assets_id = str(self.assets_id.data),
-            organisation = user.organisation
+            organisation = user.organisation,
+            spouse_aadhar_card_number = applicant_kyc.get("spouse_aadhar_card_number",[]),
+            spouse_name = applicant_kyc.get("spouse_name",[])
         )
         # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
@@ -109,8 +186,18 @@ class AddApplicationMobile(Form):
         app.applicant_name = applicant_kyc["name"]
         app.father_or_husband_name = applicant_kyc["father_s_husband_s_name"]
 
+        data = self.load(self.applicant_other_card_phone_details)
+        app.internet_data_uses = data.get("internet_data_uses", "")
+        app.mobile_services_provider = data.get("mobile_services_provider", "")
+        app.billing_type = data.get("billing_type", "")
+        app.handset_type = data.get("handset_type", "")
+        app.average_monthly_bill = toFloat(data.get("average_monthly_bill", ""))
+
+        data = self.load(self.applicant_other_card_electricity_details)
+        app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
+        app.power_supplier = data.get("Tata Power", "")
+
         applicant_personal = self.load(self.applicant_personal_docs)
-        app.caste = applicant_personal.get("caste", "")
         app.gender = applicant_personal.get("gender", "")
         app.religion = applicant_personal.get("religion", "")
         app.category = applicant_personal.get("category", "") + applicant_personal.get("specify_category", "")
@@ -134,16 +221,11 @@ class AddApplicationMobile(Form):
         app.nominee_relation = data.get("nominee_relation", "")
 
         data = self.load(self.applicant_family_details_assets)
-        app.type_of_house = data.get("type_of_house", "")
-        app.quality_of_house = data.get("quality_of_house", "")
-        app.house_stay_duration = toFloat(data.get("how_long_are_you_staying_in_house__in_years", ""))
-        app.family_assets_land_acres = toFloat(data.get("family_assets_land_acres", ""))
-        app.family_assets_orchard_acres = toFloat(data.get("family_assets_orchard__acres", ""))
-        app.family_assets_number_of_rented_houses_or_flats = toFloat(data.get("family_assets_number_of_rented_houses_or_flats", ""))
-        app.family_assets_number_of_rented_shops_or_godowns = toFloat(data.get("family_assets_number_of_rented_shops_or_godowns", ""))
-
-        data = self.load(self.applicant_family_details_other_assets)
-        app.family_assets_other = data.get("family_other_assets", "")
+        app.residence_details = data.get("residence_details")
+        app.house_stay_duration = data.get("how_long_are_you_staying_in_house__in_years", "")
+        app.rent_agreement = data.get("rent_agreement", "")
+        app.house_monthly_rent = toFloat(data.get("monthly_rent", ""))
+        
 
         data = self.load(self.applicant_loan_details_applied_loan)
         app.applied_loan = toFloat(data.get("required_loan_amount", ""))
@@ -168,40 +250,41 @@ class AddApplicationMobile(Form):
         app.bank2_bank_account_type = data.get("bank_account_type", "")
         app.bank2_account_operational_since = data.get("account_operational_since", "")
 
-        data = self.load(self.applicant_business_docs_details1)
-        app.primary_business_premise = data.get("biz_premise", "")
-        app.primary_business_category = data.get("biz_category", "")
-        app.primary_business_activities = data.get("biz_activity", "")
-        app.primary_business_seasonality = data.get("biz_seasonality", "")
-        app.primary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.primary_business_number_of_employees = toFloat(data.get("biz_num_employees", ""))
-        app.primary_business_expense_rent = toFloat(data.get("biz_expense_rent", ""))
-        app.primary_business_expense_admin = toFloat(data.get("biz_expense_admin", ""))
-        app.primary_business_expense_other = toFloat(data.get("biz_expense_other", ""))
-        app.primary_business_expense_working_capital = toFloat(data.get("biz_expense_working_capital", ""))
-        app.primary_business_expense_employee_salary = toFloat(data.get("biz_expense_salary", ""))
-        app.primary_business_number_of_years_in_business = toFloat(data.get("biz_num_years", ""))
-
-        data = self.load(self.applicant_business_docs_details2)
-        app.secondary_business = data.get("biz_activity", "")
-        app.secondary_business_category = data.get("biz_category", "")
-        app.secondary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.secondary_business_expenses_monthly = toFloat(data.get("biz_expenses_monthly", ""))
-
-        data = self.load(self.applicant_business_docs_details2)
-        app.tertiary_business = data.get("biz_activity", "")
-        app.tertiary_business_category = data.get("biz_category", "")
-        app.tertiary_business_income_monthly = toFloat(data.get("biz_income_monthly", ""))
-        app.tertiary_business_expenses_monthly = toFloat(data.get("biz_expenses_monthly", ""))
+        data = self.load(self.applicant_business_docs_details4)
+        app.details_of_finished_goods = data.get("details_of_finished_goods","")
+        app.business_outreach_methods = data.get("method_of_reaching_out_to_customers_to_increase_business","")
+        app.place_of_storage_for_material = data.get("place_of_storage_for_material","")
+        app.details_of_principal_raw_materials = data.get("details_of_principal_raw_materials","")
+        app.nature_of_keeping_business_accounts = data.get("nature_of_keeping_business_accounts","")
+        app.place_agency_of_purchase_of_materials = data.get("place_agency_of_purchase_of_materials","")
+        app.business_assets_average_value_of_inventory = toFloat(data.get("business_assets_average_value_of_inventory",""))
+        app.business_assets_average_value_of_receivables = toFloat(data.get("business_assets_average_value_of_receivables",""))
 
         data = self.load(self.applicant_family_expenditure)
-        app.food_expense = toFloat(data.get("family_food_expenditure__monthly", ""))
-        app.other_expense = toFloat(data.get("family_other_expenditure__monthly", ""))
-        app.travel_expense = toFloat(data.get("family_travel_expenditure__monthly", ""))
-        app.medical_expense = toFloat(data.get("family_medical_expenditure_monthly", ""))
-        app.festival_expense = toFloat(data.get("family_festival_expenditure_monthly", ""))
-        app.educational_expense = toFloat(data.get("family_education_expenditure_monthly", ""))
-        app.entertainment_expense = toFloat(data.get("family_entertainment_expenditure__monthly", ""))
+        app.education_expenses = toFloat(data.get("education_expenses", ""))
+        app.medical_expenses = toFloat(data.get("medical_expenses", ""))
+        app.grocery_expenses = toFloat(data.get("grocery_expenses", ""))
+        app.family_other_expenses = toFloat(data.get("other_expenses", ""))
+        app.conveyance_expenses = toFloat(data.get("conveyance_expenses", ""))
+
+        data = self.load(self.applicant_business_docs_customer1)
+        app.address = data.get("address", "")
+        app.name_4 = data.get("name_4", "")
+        app.name_3 = data.get("name_3", "")
+        app.address_4 = data.get("address_4", "")
+        app.name_2 = data.get("name_2", "")
+        app.name_5 = data.get("name_5", "")
+        app.telephone_no_4 = toInt(data.get("telephone_no_4", ""))
+        app.address_4 = data.get("address_4", "")
+        app.address_2 = data.get("address_2", "")
+        app.institution_credit= data.get("address_2", "")
+        app.telephone_no_3 = toInt(data.get("telephone_no_3", ""))
+        app.address_3 = data.get("address_3", "")
+        app.telephone_no_2 = toInt(data.get("telephone_no_2", ""))
+        app.name= data.get("name", "")
+        app.individual_credit= data.get("individual_credit", "")
+        app.telephone_no_5 = toInt(data.get("telephone_no_5", ""))
+        app.telephone_no = toInt(data.get("telephone_no", ""))
 
         data = self.load(self.applicant_hypothecation_goods_details1)
         app.primary_asset_for_hypothecation_purchase_year = data.get("purchase_year", "")
@@ -230,11 +313,116 @@ class AddApplicationMobile(Form):
         app.other_outstanding_insurance = toFloat(data.get("liabilities_insurance", ""))
         app.other_outstanding_familynfriends = toFloat(data.get("liabilities_friends__family_hand_loans", ""))
 
+        data = self.load(self.applicant_other_card_sales_info)
+        app.sales_revenue_in_1_month = toFloat(data.get("sales_revenue_in_1_month", ""))
+        app.sales_revenue_in_5_month = toFloat(data.get("sales_revenue_in_5_month", ""))
+        app.sales_revenue_in_4_month = toFloat(data.get("sales_revenue_in_4_month", ""))
+        app.sales_revenue_in_3_month = toFloat(data.get("sales_revenue_in_3_month", ""))
+        app.sales_revenue_in_10_month = toFloat(data.get("sales_revenue_in_10_month", ""))
+        app.sales_revenue_in_12_month = toFloat(data.get("sales_revenue_in_12_month", ""))
+        app.sales_revenue_in_8_month = toFloat(data.get("sales_revenue_in_8_month", ""))
+        app.total_annual_revenue_credit = toFloat(data.get("total_annual_revenue_credit", ""))
+        app.sales_revenue_in_7_month = toFloat(data.get("sales_revenue_in_7_month", ""))
+        app.sales_revenue_in_6_month = toFloat(data.get("sales_revenue_in_6_month", ""))
+        app.sales_revenue_in_19_month = toFloat(data.get("sales_revenue_in_19_month", ""))
+        app.total_annual_revenue_cash = toFloat(data.get("total_annual_revenue_cash", ""))
+        app.sales_revenue_in_2_month = toFloat(data.get("sales_revenue_in_2_month", ""))
+        app.sales_revenue_in_11_month = toFloat(data.get("sales_revenue_in_11_month", ""))
+
+        data = self.load(self.applicant_other_card_purchase_info)
+        app.raw_material_purchase_in_5_month = toFloat(data.get("raw_material_purchase_in_5_month", ""))
+        app.raw_material_purchase_in_7_month = toFloat(data.get("raw_material_purchase_in_7_month", ""))
+        app.raw_material_purchase_in_4_month = toFloat(data.get("raw_material_purchase_in_4_month", ""))
+        app.raw_material_purchase_in_3_month = toFloat(data.get("raw_material_purchase_in_3_month", ""))
+        app.raw_material_purchase_in_8_month = toFloat(data.get("raw_material_purchase_in_8_month", ""))
+        app.raw_material_purchase_in_10_month = toFloat(data.get("raw_material_purchase_in_10_month", ""))
+        app.total_annual_purchase_cash = toFloat(data.get("total_annual_purchase_cash", ""))
+        app.raw_material_purchase_in_11_month = toFloat(data.get("raw_material_purchase_in_11_month", ""))
+        app.total_annual_purchase_credit = toFloat(data.get("total_annual_purchase_credit", ""))
+        app.raw_material_purchase_in_2_month = toFloat(data.get("raw_material_purchase_in_2_month", ""))
+        app.raw_material_purchase_in_12_month = toFloat(data.get("raw_material_purchase_in_12_month", ""))
+        app.raw_material_purchase_in_9_month = toFloat(data.get("raw_material_purchase_in_9_month", ""))
+        app.raw_material_purchase_in_1_month = toFloat(data.get("raw_material_purchase_in_1_month", ""))
+        app.raw_material_purchase_in_6_month = toFloat(data.get("raw_material_purchase_in_6_month", ""))
+
+        data = self.load(self.applicant_other_card_family_assets)
+        app.computer = data.get("computer", "")
+        app.ref_y_n = data.get("ref_y_n", "")
+        app.television = data.get("television", "")
+        app.wm_y_n = data.get("wm_y_n", "")
+        app.two_wheeler = data.get("2_wheeler", "")
+        app.refrigerator = data.get("refrigerator", "")
+        app.other_y_n = data.get("other_y_n", "")
+        app.television_y_n = data.get("televsn_y_n", "")
+        app.comp_y_n = data.get("comp_y_n", "")
+        app.two_wheeler_y_n = data.get("2wheeler_y_n", "")
+        app.washing_machine = data.get("washing_machine", "")
+
+        data = self.load(self.applicant_other_card_assets_liability)
+        app.insurance_policies = toInt(data.get("insurance_policies", ""))
+        app.loans_from_whom = data.get("loans_from_relatives,money_lender_etc", "")
+        app.creditors_for_raw_material = toFloat(data.get("creditors_for_raw_material", ""))
+        app.raw_material_in_han = toFloat(data.get("raw_material_in_han", ""))
+        app.loan_outstanding_against_agriculture = toFloat(data.get("loan_outstanding_against__property_value___agriculture", ""))
+        app.loan_outstanding_against_residential = toFloat(data.get("loan_outstanding_against__property_value___residential", ""))
+        app.vehicle_loans =toInt(data.get("vehicle_loans", ""))
+        app.loan_outstanding_against_commercial_ = toInt(data.get("loan_outstanding_against__property_value___commercial_", ""))
+        app.cash_and_bank_balance = toFloat(data.get("cash_and_bank_balance", ""))
+        app.vehicles_resale_value = toFloat(data.get("vehicles_current_estimate_of_resale_value", ""))
+        app.immovable_estimated_value_agriculture = toFloat(data.get("immovable_property_estimated_value___agriculture", ""))
+        app.immovable_estimated_value_residential = toFloat(data.get("immovable_property_estimated_value___residential", ""))
+        app.immovable_estimated_value_commercial = toFloat(data.get("immovable_property_estimated_value___commercial", ""))
+        app.fixed_deposit_and_ppf = toFloat(data.get("fixed_deposit_and_ppf", ""))
+        app.receivables_from_customer = toFloat(data.get("receivables_from_customer", ""))
+        app.gold_and_jewellery = toFloat(data.get("gold_and_jewellery", ""))
+
+        data = self.load(self.applicant_other_card_emp_business_info)
+        app.permanent_employees = toInt(data.get("permanent_employees", ""))
+        app.average_monthly_wage_for_relatives = toFloat(data.get("average_monthly_wage_for_relatives", ""))
+        app.relatives_in_business = toInt(data.get("relatives_in_business", ""))
+        app.wages_paid = data.get("wages_paid", "")
+        app.average_monthly_wage_for_contract_employees = toFloat(data.get("average_monthly_wage_for_contract_employees", ""))
+        app.contract_employees = toInt(data.get("contract_employees", ""))
+        app.average_monthly_wage_for_permanent_employees = toFloat(data.get("average_monthly_wage_for_permanent_employees", ""))
+
+        data = self.load(self.applicant_other_card_bus_monthly_exp)
+        app.electricity_charges = toFloat(data.get("electricity_charges", ""))
+        app.freight_charges = toFloat(data.get("freight_charges", ""))
+        app.petrol_expenses = toFloat(data.get("petrol_expenses", ""))
+        app.other_expenses = toFloat(data.get("other_expenses", ""))
+        app.salaries_and_wages = toFloat(data.get("salaries_and_wages", ""))
+
+        data = self.load(self.applicant_business_docs_info)
+        app.permissions_licenses_reqd = data.get("permissions_licenses_reqd", "")
+        app.business_name = data.get("business_name", "")
+        app.type_of_business_entity = data.get("type_of_business_entity", "")
+        app.area_market_value = toFloat(data.get("area_market_value", ""))
+        app.vat_service_tax_regn_no = data.get("vat_service_tax_regn_no", "")
+        app.monthly_rent = toFloat(data.get("monthly_rent", ""))
+        app.ssi_registration_entrepeneur_memorandum_ref_no = data.get("ssi_registration_entrepeneur_memorandum_ref_no", "")
+        app.description_business = data.get("description_business", "")
+        app.registered_rent_agreement = data.get("registered_rent_agreement", "")
+        app.shops__establishment_no = data.get("shops__establishment_no", "")
+        app.no_of_years_in_business = toInt(data.get("no_of_years_in_business", ""))
+        app.workplace_details = data.get("workplace_details", "")
+        app.pancard_no = data.get("pancard_no", "")
+        app.area_occupied = toFloat(data.get("area_occupied", ""))
+        app.outstanding_loan = toFloat(data.get("outstanding_loan", ""))
+        app.address_of_place_of_business = data.get("address_of_place_of_business", "")
+
+        data = self.load(self.applicant_other_card_credit_card_details)
+        app.issue_bank_2 = data.get("issue_bank_2", "")
+        app.issue_bank_1 = data.get("issue_bank_1", "")
+        app.issue_bank_3 = data.get("issue_bank_3", "")
+
+        data = self.load(self.applicant_other_card_borrower_furnished)
+        app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
+
         locations_map = self.load(self.locations_map)
         app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
         app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
-        applicant = self.load(self.guarantor1_kyc_details)
+        applicant = self.load(self.applicant_kyc_details)
         app.applicant_kyc = EsthenosOrgApplicationKYC(
             kyc_type = applicant["type"],
             kyc_number = applicant["uid"],
@@ -251,42 +439,113 @@ class AddApplicationMobile(Form):
             phone_number = applicant["phone_number"],
             mobile_number = applicant["mobile_number"],
             father_or_husband_name = applicant["father_s_husband_s_name"],
+            spouse_aadhar_card_number = applicant["spouse_aadhar_card_number"],
+            spouse_name = applicant["spouse_name"]
         )
+        
+        # add family details.
+        data = self.load(self.applicant_family_details_details1)
+        app.family_details1 = self.load_family_details(data)
 
+        data = self.load(self.applicant_family_details_details2)
+        app.family_details2 = self.load_family_details(data)
+
+        data = self.load(self.applicant_family_details_details3)
+        app.family_details3 = self.load_family_details(data)
+
+        data = self.load(self.applicant_family_details_details4)
+        app.family_details4 = self.load_family_details(data)
+
+        data = self.load(self.applicant_family_details_details5)
+        app.family_details5 = self.load_family_details(data)
+
+
+        # add land details.
+        data = self.load(self.applicant_other_card_land_details1)
+        app.land_details1 = self.load_land_details(data)
+
+        data = self.load(self.applicant_other_card_land_details2)
+        app.land_details2 = self.load_land_details(data)
+
+        data = self.load(self.applicant_other_card_land_details3)
+        app.land_details3 = self.load_land_details(data)
+
+        
+        # add loan details.
+        data = self.load(self.applicant_loan_details_details1)
+        app.loan_details1 = self.load_loan_details(data)
+
+        data = self.load(self.applicant_loan_details_details2)
+        app.loan_details2 = self.load_loan_details(data)
+
+        data = self.load(self.applicant_loan_details_details3)
+        app.loan_details3 = self.load_loan_details(data)
+
+        data = self.load(self.applicant_loan_details_details4)
+        app.loan_details4 = self.load_loan_details(data)
+
+
+        # add equipment type details.
+        data = self.load(self.applicant_other_card_type_equipment1)
+        app.type_equipment1 = self.load_type_equipment(data)
+
+        data = self.load(self.applicant_other_card_type_equipment2)
+        app.type_equipment2 = self.load_type_equipment(data)
+
+        data = self.load(self.applicant_other_card_type_equipment3)
+        app.type_equipment3 = self.load_type_equipment(data)
+
+
+        # add vehicle docs
+        data = self.load(self.applicant_personal_docs_vehicle1)
+        app.docs_vehicle1 = self.load_docs_vehicle(data)
+
+        data = self.load(self.applicant_personal_docs_vehicle2)
+        app.docs_vehicle2 = self.load_docs_vehicle(data)
+
+        data = self.load(self.applicant_personal_docs_vehicle3)
+        app.docs_vehicle3 = self.load_docs_vehicle(data)
+
+
+        # add guarantor details.
         guarantor1 = self.load(self.guarantor1_kyc_details)
         app.guarantor1_kyc = EsthenosOrgApplicationKYC(
-            kyc_type = guarantor1["type"],
-            kyc_number = guarantor1["uid"],
-            age = guarantor1["age"],
-            dob = guarantor1["dob_yob"],
-            name = guarantor1["name"],
-            taluk = guarantor1["taluk"],
-            state = guarantor1["state"],
-            pincode = guarantor1["pincode"],
-            address = guarantor1["address"],
-            country = guarantor1["country"],
-            district = guarantor1["district"],
-            phone_number = guarantor1["phone_number"],
-            mobile_number = guarantor1["mobile_number"],
-            father_or_husband_name = guarantor1["father_s_husband_s_name"],
+            kyc_type = guarantor1.get("type", []),
+            kyc_number = guarantor1.get("uid", []),
+            age = guarantor1.get("age", []),
+            dob = guarantor1.get("dob_yob", []),
+            name = guarantor1.get("name", []),
+            taluk = guarantor1.get("taluk", []),
+            state = guarantor1.get("state", []),
+            pincode = guarantor1.get("pincode", []),
+            address = guarantor1.get("address", []),
+            country = guarantor1.get("country", []),
+            district = guarantor1.get("district", []),
+            phone_number = guarantor1.get("phone_number", []),
+            mobile_number = guarantor1.get("mobile_number", []),
+            father_or_husband_name = guarantor1.get("father_s_husband_s_name", []),
+            spouse_aadhar_card_number = guarantor1.get("spouse_aadhar_card_number", []),
+            spouse_name = guarantor1.get("spouse_name", [])
         )
 
         guarantor2 = self.load(self.guarantor2_kyc_details)
         app.guarantor2_kyc = EsthenosOrgApplicationKYC(
-            kyc_type = guarantor2["type"],
-            kyc_number = guarantor2["uid"],
-            age = guarantor2["age"],
-            dob = guarantor2["dob_yob"],
-            name = guarantor2["name"],
-            taluk = guarantor2["taluk"],
-            state = guarantor2["state"],
-            pincode = guarantor2["pincode"],
-            address = guarantor2["address"],
-            country = guarantor2["country"],
-            district = guarantor2["district"],
-            phone_number = guarantor2["phone_number"],
-            mobile_number = guarantor2["mobile_number"],
-            father_or_husband_name = guarantor2["father_s_husband_s_name"],
+            kyc_type = guarantor2.get("type", []),
+            kyc_number = guarantor2.get("uid", []),
+            age = guarantor2.get("age", []),
+            dob = guarantor2.get("dob_yob", []),
+            name = guarantor2.get("name", []),
+            taluk = guarantor2.get("taluk", []),
+            state = guarantor2.get("state", []),
+            pincode = guarantor2.get("pincode", []),
+            address = guarantor2.get("address", []),
+            country = guarantor2.get("country", []),
+            district = guarantor2.get("district", []),
+            phone_number = guarantor2.get("phone_number", []),
+            mobile_number = guarantor2.get("mobile_number", []),
+            father_or_husband_name = guarantor2.get("father_s_husband_s_name", []),
+            spouse_aadhar_card_number = guarantor2.get("spouse_aadhar_card_number", []),
+            spouse_name = guarantor2.get("spouse_name", [])
         )
 
         assets_map = self.load(self.assets_map)
