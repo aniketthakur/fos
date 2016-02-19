@@ -105,11 +105,17 @@
   </style>
 {% endblock %}
 
-
 {% block js_scripts %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/jquery.fancybox.pack.js") }}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2S3Q62tKDDr77aZ-Z8a_r43TZ5El7Ww"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $(".fancybox").fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+
             function initialize() {
                 var mapOptions1 = {
                   center: {lat: {{ application.business_loc.lat }}, lng: {{ application.business_loc.lng }}},
@@ -157,7 +163,7 @@
                             <span class="tag">Name : </span><span class="value">{{ application.applicant_name }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Age : </span><span class="value">{{ application.age }}</span>
+                            <span class="tag">Age : </span><span class="value">{{ application.applicant_kyc.age }}</span>
                         </div>
                         <div class="name">
                             <span class="tag">Fathers/Spouse Name : </span><span class="value">{{ application.father_or_husband_name }}</span>
@@ -240,7 +246,7 @@
                             <span class="tag">Age: </span><span class="value">{{ application.guarantor1_kyc.age }}</span>
                         </div>
                         <div class="mobile">
-                            <span class="tag">Mobile: </span><span class="value">{{ application.guarantor1_kyc.mobile }}</span>
+                            <span class="tag">Mobile: </span><span class="value">{{ application.guarantor1_kyc.mobile_number }}</span>
                         </div>
                         <div class="landline">
                             <span class="tag">Landline: </span><span class="value">{{ application.guarantor1_kyc.phone_number }}</span>
@@ -261,7 +267,7 @@
                             <span class="tag">Age: </span><span class="value">{{ application.guarantor2_kyc.age }}</span>
                         </div>
                         <div class="mobile">
-                            <span class="tag">Mobile: </span><span class="value">{{ application.guarantor2_kyc.mobile }}</span>
+                            <span class="tag">Mobile: </span><span class="value">{{ application.guarantor2_kyc.mobile_number }}</span>
                         </div>
                         <div class="landline">
                             <span class="tag">Landline: </span><span class="value">{{ application.guarantor2_kyc.phone_number }}</span>
