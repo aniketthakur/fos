@@ -20,8 +20,9 @@
               <div class="col-md-6">
                 {% if application.status >= 190 %}
                   <select name="app-status" class="select2 form-control">
-                    {% for i in st %}
-                      <option value="{{ st1[loop.index-1] }}" name="{{ st1[loop.index-1] }}">{{ i }}</option>
+                    <option disabled>Select one of the following</option>
+                    {% for status in statuslist %}
+                      <option value="{{ status["status_code"]|int }}" name="{{ status["status"] }}">{{ status['status'] }}</option>
                     {% endfor %}
                   </select>
                 {% endif %}

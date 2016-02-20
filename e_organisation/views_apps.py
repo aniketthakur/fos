@@ -1,5 +1,5 @@
 from views_base import *
-
+from esthenos.settings import APP_STATUS
 
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
@@ -129,10 +129,8 @@ def application_update_status(app_id):
   app_urls = list()
   application = applications[0]
 
-  st = ['SCRUTINY READY', 'SANCTIONS READY']
-  st1 = [190, 200]
-  st = st[:1+(application.status-190)/10]
-  st1 = st1[:1+(application.status-190)/10]
+  statuslist = filter(lambda x: x['status_code'] >= 190 and x['status_code'] < application.status, APP_STATUS)
+  status = application.status
 
   if request.method == "GET":
     kwargs = locals()
