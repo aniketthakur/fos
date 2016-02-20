@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_print.html" %}
 
 
 {% block css_sheets %}
@@ -227,14 +227,14 @@
             });
         });
     </script>
-{% endblock %}
+{% endblock %}`
 
 
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
-            <h3 class="pull-right"><a href="{{ url_for("organisation_views.sanctions_application_print", app_id=application.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+            <h3 class="pull-left">Scrutinized Application: <span class="semi-bold">{{ application.applicant_name }}</span></h3>
+            <img align = "right" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
         </div>
     </div>
 
@@ -270,16 +270,16 @@
                     <div class="business-info section">
                         <h4 class="section-title">Business Details</h4>
                         <div class="name">
-                            <span class="tag">Business Name : </span><span class="value">{{ application.business_name }}</span>
+                            <span class="tag">Years In Business : </span><span class="value">{{ application.primary_business_number_of_years_in_business }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Type Of Business : </span><span class="value">{{ application.type_of_business_entity }}</span>
+                            <span class="tag">Employees : </span><span class="value">{{ application.primary_business_number_of_employees }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Workplace Details : </span><span class="value">{{ application.workplace_details }}</span>
+                            <span class="tag">Seasonality : </span><span class="value">{{ application.primary_business_seasonality }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Business Description  : </span><span class="value">{{ application.description_business }}</span>
+                            <span class="tag">Own/ Rented Business Premise : </span><span class="value">{{ application.primary_business_premise }}</span>
                         </div>
                     </div>
                 </div>
@@ -388,15 +388,12 @@
         </div>
     </div>
 
-    <div class="row actions section scrutiny-btn">
-        <input type="hidden" id="status" name="status" value="">
-        <div class="col-md-8 col-md-offset-4">
-            <div data-status="approve" class="btn btn-success btn-large">approve</div>
-            <div data-status="reject" class="btn btn-danger btn-large">reject</div>
-            <div data-status="hold" class="btn btn-warning btn-large">hold</div>
-        </div>
-    </div>
     </form>
 
-    <div class="row section footer"></div>
+    <div class="row section footer">
+        <center>
+            <hr>
+            <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+        </center>
+    </div>
 {% endblock %}

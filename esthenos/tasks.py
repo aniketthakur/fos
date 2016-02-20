@@ -271,7 +271,6 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
         k = Key(bucket)
         k.key = tf+".zip"
         k.set_contents_from_filename(tf+".zip")
-        k.make_public()
         os.remove(tf+".zip")
 
         application.disbursement_pdf_link = k.key

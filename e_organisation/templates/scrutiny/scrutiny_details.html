@@ -116,9 +116,9 @@
             function initialize() {
                 var mapOptions1 = {
                   center: {lat: {{ application.business_loc.lat }}, lng: {{ application.business_loc.lng }}},
-                  zoom: 7,
+                  zoom: 16,
                   minZoom: 5,
-                  maxZoom: 10,
+                  maxZoom: 20,
                   zoomControl: false,
                   mapTypeControl: false,
                   streetViewControl: false
@@ -127,9 +127,9 @@
 
                 var mapOptions2 = {
                   center: {lat: {{ application.home_loc.lat }}, lng: {{ application.home_loc.lng }}},
-                  zoom: 7,
+                  zoom: 16,
                   minZoom: 5,
-                  maxZoom: 10,
+                  maxZoom: 20,
                   zoomControl: false,
                   mapTypeControl: false,
                   streetViewControl: false
@@ -272,7 +272,7 @@
                             <span class="tag">Mobile : </span><span class="value">{{ application.mobile }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Landline : </span><span class="value">{{ application.tele_code }}{{ application.tele_phone }}</span>
+                            <span class="tag">Landline : </span><span class="value">{{ application.tele_phone }}</span>
                         </div>
                         <div class="name">
                             <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_kyc.kyc_number }}</span>

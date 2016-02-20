@@ -30,7 +30,7 @@ if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH) or (GIT_BR
     sys.exit(1)
 
 
-def notify(message, channel="#general", username="fab-bot"):
+def notify(message, channel="#deploy-fos", username="fab-bot"):
     slack = Slacker('xoxp-6694899808-6694899856-10378717686-a7deb0')
     slack.chat.post_message(channel, message, username=username)
 

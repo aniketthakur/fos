@@ -158,19 +158,6 @@ class AddOrganizationEmployeeForm(Form):
         return emp
 
     def deselect_employee_geo(self, emp):
-        for state in emp.states:
-            state.owner = None
-            state.save()
-        for region in emp.regions:
-            region.owner = None
-            region.save()
-        for area in emp.areas:
-            area.owner = None
-            area.save()
-        for branch in emp.branches:
-            branch.owner = None
-            branch.save()
-
         emp.access_states = []
         emp.access_regions = []
         emp.access_areas = []

@@ -39,7 +39,6 @@ def get_application_headers():
     headers.append("tele phone")
     headers.append("father or husband name")
 
-    headers.append("caste")
     headers.append("gender")
     headers.append("religion")
     headers.append("category")
@@ -244,7 +243,6 @@ def get_application_rowdata(app):
     row_data.append(app.tele_phone)
     row_data.append(app.father_or_husband_name)
 
-    row_data.append(app.caste)
     row_data.append(app.gender)
     row_data.append(app.religion)
     row_data.append(app.category)
