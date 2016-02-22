@@ -263,9 +263,10 @@ def get_application_rowdata(app):
     row_data.append(app.nominee_gender)
     row_data.append(app.nominee_relationship_with_borrower)
 
-    row_data.append(app.type_of_house)
-    row_data.append(app.quality_of_house)
+    row_data.append(app.residence_details)
     row_data.append(app.house_stay_duration)
+    row_data.append(app.rent_agreement)
+    row_data.append(app.house_monthly_rent)
 
     row_data.append(app.applied_loan)
     row_data.append(app.purpose_of_loan)

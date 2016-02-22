@@ -8,12 +8,12 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "qwe@fos-test.esthenos.com", "password":"123"}
+# payload = {"email": "testagent@fos-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"IFbheEMSGweX063gT3vPvGLsnKO-6FiGiix7waRm2SM"
+    "instance_token":"MRyHdfSC0gDZxEAsRKUxgHhfn6vJJ9FK1uRslyLnX-Y"
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
 url = "http://localhost:8080/api/organisation/applications"
@@ -273,7 +273,6 @@ payload = {
        "type_of_vehicle_manufacturer": "hr"
    },
     "applicant_kyc_details": {
-        "name": "Gsh",
         "address": "E-387, GALI N0-8.   Patparganj",
         "spouse_aadhar_card_number": "546764944949",	#[ADD]
         "dob_yob": "1981",
