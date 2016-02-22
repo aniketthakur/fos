@@ -16,7 +16,7 @@ querystring = {
     "instance_token":"MRyHdfSC0gDZxEAsRKUxgHhfn6vJJ9FK1uRslyLnX-Y"
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
-url = "http://localhost:8080/api/organisation/applications"
+url = "http://localhost:8081/api/organisation/applications"
 
 payload = {
     "group": "",
@@ -561,6 +561,6 @@ payload = {
     }
 }
 
-for i in range(0, 4):
+for i in range(0, 2):
     response = requests.post(url, json=payload, params=querystring)
     print(response.text)
