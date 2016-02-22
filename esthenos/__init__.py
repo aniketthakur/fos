@@ -10,6 +10,7 @@ from flask.ext.babel import Babel, gettext
 from flask.ext.mongoengine import MongoEngine
 from flask_login import  LoginManager
 from werkzeug.contrib.fixers import ProxyFix
+from esthenos import version
 
 import boto
 import settings
@@ -110,6 +111,10 @@ def _jinja2_filter_datetime(date, fmt=None):
         return date.strftime(fmt)
     else:
         return date.strftime(gettext('%%A'))
+
+@mainapp.template_filter('version')
+def _jinja2_filter_version(text):
+    return version.DEPLOY_VERSION
 
 @mainapp.template_filter('num2words')
 def _jinja2_filter_datetime(num):
