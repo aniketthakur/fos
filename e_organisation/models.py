@@ -1454,7 +1454,7 @@ class EsthenosOrgApplication(db.Document):
     nominee_relationship_with_borrower = db.StringField(max_length=512, required=False,default="")
 
     residence_details = db.StringField(max_length=512, required=False,default="")
-    house_stay_duration = db.FloatField(default=0.0)
+    house_stay_duration = db.StringField(max_length=512, required=False,default="")
     rent_agreement = db.StringField(max_length=512, required=False,default="")
     house_monthly_rent = db.FloatField(default=0.0)
 

@@ -222,7 +222,7 @@ class AddApplicationMobile(Form):
 
         data = self.load(self.applicant_family_details_assets)
         app.residence_details = data.get("residence_details")
-        app.house_stay_duration = toFloat(data.get("how_long_are_you_staying_in_house__in_years", ""))
+        app.house_stay_duration = data.get("how_long_are_you_staying_in_house__in_years", "")
         app.rent_agreement = data.get("rent_agreement", "")
         app.house_monthly_rent = toFloat(data.get("monthly_rent", ""))
         
