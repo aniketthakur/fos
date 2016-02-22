@@ -1,12 +1,16 @@
 import os, sys
 from fabric.api import *
 from slacker import Slacker
+from datetime import datetime
 from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
+from esthenos import version as ver
 from esthenos.settings import SERVER_SETTINGS as client
 from esthenos.settings import MONGODB_SETTINGS as database
 
+from jinja2 import Environment, PackageLoader
+jinja = Environment(loader=PackageLoader('esthenos', 'templates'))
 
 env.user = client["user-deploy"]
 env.hosts = [client["host"]]
@@ -227,3 +231,22 @@ def deploy():
     # notify slack for deployment finish
     notify("successfully deployed on server {version} on {server}".format(version=dirname, server=env.host))
 
+def version():
+    version = prompt("tag version number ?", default=float(ver.__VERSION__) + 0.1)
+    updated = datetime.now().strftime("%d.%m.%H.%M")
+    git_sha = check_output(
+        ["echo \"$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
+
+    context = {
+        "version" : version,
+        "git_sha" : git_sha,
+        "updated" : updated
+    }
+    template = jinja.get_template('version.py.txt')
+    with open('esthenos/version.py', 'w') as f:
+        f.write(template.render(context))
+
+    git_tag = "v{version}.{updated}".format(**context)
+    local("git tag %s" % git_tag)
+    local("git add esthenos/version.py")
+    local("git commit -m 'version tagged: %s' && git push && git push --tags" % git_tag)

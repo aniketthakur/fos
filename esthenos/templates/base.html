@@ -132,6 +132,9 @@
                         <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
                     </li>
                     {% endif %}
+                    <li class="version">
+                      <a href="#"><i class="fa fa-code-fork"></i> {{ ""|version }}</a>
+                    </li>
                 {% endblock %}
             </ul>
             <div class="clearfix"></div>

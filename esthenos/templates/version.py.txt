@@ -1,0 +1,7 @@
+import os, sys
+
+__VERSION__ = "{{ version }}"
+__GIT_SHA__ = "{{ git_sha }}"
+__UPDATED__ = "{{ updated }}"
+
+DEPLOY_VERSION = "%s.%s.%s" % (__VERSION__, __UPDATED__, __GIT_SHA__)

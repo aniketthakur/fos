@@ -7507,3 +7507,11 @@ input[type="checkbox"] {
 .row .search-container .btn-info {
   padding: 9px 12px;
 }
+.page-sidebar .page-sidebar-wrapper > ul > li.version > a {
+  color: #4B4D52;
+  font-size: 12px;
+}
+.page-sidebar .page-sidebar-wrapper > ul > li:hover.version > a {
+  color: #8B91A0;
+  font-size: 12px;
+}
