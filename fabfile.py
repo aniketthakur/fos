@@ -1,9 +1,11 @@
 import os, sys
 from fabric.api import *
 from slacker import Slacker
+from datetime import datetime
 from fabric.contrib.files import *
 from fabric.contrib.project import rsync_project
 from subprocess import check_output
+from esthenos import version as ver
 from esthenos.settings import SERVER_SETTINGS as client
 from esthenos.settings import MONGODB_SETTINGS as database
 
@@ -232,7 +234,7 @@ def deploy():
 def version():
     version = prompt("tag version number ?", default=float(ver.__VERSION__) + 0.1)
     updated = datetime.now().strftime("%d.%m.%H.%M")
-    git_sha = _check_output(
+    git_sha = check_output(
         ["echo \"$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
 
     context = {
