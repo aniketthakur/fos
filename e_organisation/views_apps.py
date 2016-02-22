@@ -287,7 +287,7 @@ def scrutiny_application(app_id):
       total_expense = float(request.form.get("total_expenditure")),
 
       foir_ratio = float(request.form.get("fior")),
-      total_value = float(request.form.get("total_ltv")),
+      total_ltv = float(request.form.get("total_ltv")),
       total_amount = float(request.form.get("total_amount")),
 
       memo_business_type = request.form.get("memo_business_type"),
