@@ -59,17 +59,13 @@ def get_application_headers():
     headers.append("nominee gender")
     headers.append("nominee relationship with borrower")
 
-    headers.append("type of house")
-    headers.append("quality of house")
+    headers.append("residence details")
     headers.append("house stay duration")
+    headers.append("rent agreement")
+    headers.append("monthly rent")
 
     headers.append("applied loan")
     headers.append("purpose of loan")
-
-    headers.append("family assets land acres")
-    headers.append("family assets orchard acres")
-    headers.append("family assets number of rented houses or flats")
-    headers.append("family assets number of rented shops or godowns")
 
     headers.append("bank name")
     headers.append("bank ifsc code")
@@ -80,38 +76,13 @@ def get_application_headers():
     headers.append("repayment mode")
     headers.append("repayment method")
 
-    headers.append("primary business premise")
-    headers.append("primary business category")
-    headers.append("primary business activities")
-    headers.append("primary business seasonality")
-    headers.append("primary business income monthly")
-    headers.append("primary business number of employees")
-    headers.append("primary business expense rent")
-    headers.append("primary business expense admin")
-    headers.append("primary business expense other")
-    headers.append("primary business expense working capital")
-    headers.append("primary business expense employee salary")
-    headers.append("primary business number of years in business")
-
-    headers.append("secondary business")
-    headers.append("secondary business category")
-    headers.append("secondary business income monthly")
-    headers.append("secondary business expenses monthly")
-
-    headers.append("tertiary business")
-    headers.append("tertiary business category")
-    headers.append("tertiary business income monthly")
-    headers.append("tertiary business expenses monthly")
-
     headers.append("other income")
 
-    headers.append("food expense")
-    headers.append("other expense")
-    headers.append("travel expense")
     headers.append("medical expense")
-    headers.append("festival expense")
     headers.append("educational expense")
-    headers.append("entertainment expense")
+    headers.append("grocery expense")
+    headers.append("conveyance expense")
+    headers.append("family other expense")
 
     headers.append("primary asset for hypothecation purchase year")
     headers.append("primary asset for hypothecation purchase price")
@@ -165,7 +136,6 @@ def get_application_headers():
     headers.append("expected tenure in months")
     headers.append("expected emi amount served")
 
-    headers.append("business expense")
     headers.append("total expenditure")
     headers.append("total income")
     headers.append("net income")
@@ -283,38 +253,13 @@ def get_application_rowdata(app):
     row_data.append(app.repayment_mode)
     row_data.append(app.repayment_method)
 
-    row_data.append(app.primary_business_premise)
-    row_data.append(app.primary_business_category)
-    row_data.append(app.primary_business_activities)
-    row_data.append(app.primary_business_seasonality)
-    row_data.append(app.primary_business_income_monthly)
-    row_data.append(app.primary_business_number_of_employees)
-    row_data.append(app.primary_business_expense_rent)
-    row_data.append(app.primary_business_expense_admin)
-    row_data.append(app.primary_business_expense_other)
-    row_data.append(app.primary_business_expense_working_capital)
-    row_data.append(app.primary_business_expense_employee_salary)
-    row_data.append(app.primary_business_number_of_years_in_business)
-
-    row_data.append(app.secondary_business)
-    row_data.append(app.secondary_business_category)
-    row_data.append(app.secondary_business_income_monthly)
-    row_data.append(app.secondary_business_expenses_monthly)
-
-    row_data.append(app.tertiary_business)
-    row_data.append(app.tertiary_business_category)
-    row_data.append(app.tertiary_business_income_monthly)
-    row_data.append(app.tertiary_business_expenses_monthly)
-
     row_data.append(app.other_income)
 
-    row_data.append(app.food_expense)
-    row_data.append(app.other_expense)
-    row_data.append(app.travel_expense)
-    row_data.append(app.medical_expense)
-    row_data.append(app.festival_expense)
-    row_data.append(app.educational_expense)
-    row_data.append(app.entertainment_expense)
+    row_data.append(app.medical_expenses)
+    row_data.append(app.education_expenses)
+    row_data.append(app.grocery_expenses)
+    row_data.append(app.conveyance_expenses)
+    row_data.append(app.family_other_expenses)
 
     row_data.append(app.primary_asset_for_hypothecation_purchase_year)
     row_data.append(app.primary_asset_for_hypothecation_purchase_price)
@@ -347,7 +292,7 @@ def get_application_rowdata(app):
     row_data.append(app.other_outstanding_familynfriends)
     row_data.append(app.total_other_outstanding())
 
-    row_data.append(app.loan_eligibility_based_on_net_income())
+    row_data.append(app.loan_eligibility_based_on_net_income)
     row_data.append(app.loan_eligibility_based_on_company_policy)
 
     row_data.append(app.existing_loan_cycle)
@@ -368,10 +313,9 @@ def get_application_rowdata(app):
     row_data.append(app.expected_tenure_in_months)
     row_data.append(app.expected_emi_amount_served)
 
-    row_data.append(app.business_expense())
-    row_data.append(app.total_expenditure())
-    row_data.append(app.total_income())
-    row_data.append(app.net_income())
+    row_data.append(app.total_expenditure)
+    row_data.append(app.total_income)
+    row_data.append(app.net_income)
 
     row_data.append(app.applicant_kyc.kyc_number)
     row_data.append(app.applicant_kyc.age)
