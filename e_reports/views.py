@@ -271,10 +271,8 @@ def get_application_rowdata(app):
     row_data.append(app.applied_loan)
     row_data.append(app.purpose_of_loan)
 
-    row_data.append(app.family_assets_land_acres)
-    row_data.append(app.family_assets_orchard_acres)
-    row_data.append(app.family_assets_number_of_rented_houses_or_flats)
-    row_data.append(app.family_assets_number_of_rented_shops_or_godowns)
+    # row_data.append(app.family_assets_number_of_rented_houses_or_flats)
+    # row_data.append(app.family_assets_number_of_rented_shops_or_godowns)
 
     row_data.append(app.bank_name)
     row_data.append(app.bank_ifsc_code)
