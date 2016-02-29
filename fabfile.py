@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, requests, json
 from fabric.api import *
 from slacker import Slacker
 from datetime import datetime
@@ -23,6 +23,7 @@ PIDS_DIR = '/var/run/esthenos/'
 LOGS_DIR = '/var/log/esthenos/'
 TIMEZONE = client["timezone"]
 DEPLOY_PATH = '%s/esthenos' % HOME_DIR
+SLACKURL = "https://hooks.slack.com/services/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"
 
 GIT_BRANCH = check_output(["git status | sed -n 1p | tr '[A-Z]' '[a-z]'"], shell=True).strip('\n ')
 GIT_SERVER_DB = "on branch {git-branch}".format(**client)
@@ -34,10 +35,16 @@ if (GIT_BRANCH != GIT_SERVER_DB) or (GIT_BRANCH != GIT_SERVER_BRANCH) or (GIT_BR
     sys.exit(1)
 
 
-def notify(message, channel="#deploy-fos", username="fab-bot"):
-    slack = Slacker('xoxp-6694899808-6694899856-10378717686-a7deb0')
-    slack.chat.post_message(channel, message, username=username)
-
+def notify(message, channel="#general", username="fab-bot"):
+    payload = {
+        "text": message,
+        "mrkdwn": "true",
+        "channel": channel,
+        "username": username,
+        "icon_emoji": ":ghost:",
+    }
+    request = requests.post(SLACKURL, data=json.dumps(payload))
+    return request.status_code, request.text
 
 def provision():
     # notify slack channel.
