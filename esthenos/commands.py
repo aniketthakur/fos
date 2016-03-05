@@ -5,6 +5,7 @@ from random import randint
 from itertools import permutations
 from slacker import Slacker
 from esthenos import db, settings
+from esthenos.notify import notify
 from e_organisation.models import *
 
 counter = 1
@@ -12,11 +13,6 @@ def generate_name(prefix, count):
     global counter
     counter = counter + 1
     return "%s%s%s" % (prefix, count, counter)
-
-def notify(message, channel="#general", username="fab-bot"):
-    slack = Slacker('xoxp-6694899808-6694899856-10378717686-a7deb0')
-    slack.chat.post_message(channel, message, username=username)
-    print message
 
 class DropDB(Command):
     """Drop existing database."""

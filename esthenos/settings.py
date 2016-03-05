@@ -78,6 +78,8 @@ AWS_SETTINGS = {
     'AWS_SECRET_ACCESS_KEY' : 'WvhXR8jSfDagYtiV8XebGEjMmRdT7HTEm5UtVFzX'
 }
 
+SLACKURL = "https://hooks.slack.com/services/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"
+
 FEATURES = {
     "features_admin": {
         "title" : "Admin Features",
