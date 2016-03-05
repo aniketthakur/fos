@@ -73,14 +73,14 @@
             </div>
             <ul>
                 {% block nav_bar %}
-                    <li class="start active">
+                    <li {% if 'dashboard' == active_page %} class='active' {% endif %} class="start">
                         <a href="/">
                             <i class="icon-custom-home"></i>
                             <span class="title">Dashboard</span>
                         </a>
                     </li>
                     {% if feature_show("features_fos_branches") %}
-                    <li class="">
+                    <li {% if 'fos_and_branches' == active_page %} class='active' {% endif %}>
                         <a href="{{ url_for('organisation_views.application_list') }}">
                             <i class="fa fa-list-ul"></i>
                             <span class="title">FOS & Branches</span>
@@ -88,7 +88,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("features_applications_scrutiny") %}
-                    <li class="">
+                    <li {% if 'scrutiny' == active_page %} class='active' {% endif %}>
                           <a href="{{ url_for('organisation_views.scrutiny') }}">
                             <i class="fa fa-user"></i>
                             <span class="title">Scrutiny</span>
@@ -96,7 +96,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("features_applications_sanction") %}
-                    <li class="">
+                    <li {% if 'sanctions' == active_page %} class='active' {% endif %}>
                           <a href="{{ url_for('organisation_views.sanctions') }}">
                             <i class="fa fa-check"></i>
                             <span class="title">Sanctions</span>
@@ -104,7 +104,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("features_applications_disbursement") %}
-                    <li class="">
+                    <li {% if 'disbursement' == active_page %} class='active' {% endif %}>
                         <a href="{{ url_for('organisation_views.check_disbursement') }}">
                             <i class="fa fa-inr"></i>
                             <span class="title">Disbursement</span>
@@ -112,7 +112,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("accounts_reports") %}
-                    <li class="">
+                    <li {% if 'reports' == active_page %} class='active' {% endif %}>
                         <a href="{{ url_for('organisation_views.reports_internal_main') }}">
                             <i class="fa fa-line-chart"></i>
                             <span class="title">Reports</span>
@@ -120,7 +120,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("hignmark_equifax") %}
-                    <li class="">
+                    <li {% if 'cbcheck' == active_page %} class='active' {% endif %}>
                         <a href="{{ url_for('organisation_views.cbcheck_manual') }}">
                             <i class="fa fa-check"></i>
                             <span class="title">Highmark/ Equifax</span>
@@ -128,7 +128,7 @@
                     </li>
                     {% endif %}
                     {% if feature_show("features_admin") %}
-                    <li class="start">
+                    <li {% if 'organisation' == active_page %} class='active' {% endif %} class="start">
                         <a href="{{ url_for("admin_views.admin_organisations") }}"> <i class="fa fa-flag"></i> <span class="title">Organisations</span></a>
                     </li>
                     {% endif %}

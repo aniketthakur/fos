@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% set active_page = 'cbcheck' %}
 
 {% block css_sheets %}{{ super() }}
     <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
