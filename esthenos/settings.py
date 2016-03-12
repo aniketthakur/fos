@@ -28,6 +28,24 @@ ORGS_SETTINGS = {
     "postal-state": "Bolaka",
     "postal-address": "12, Bolak New Kada",
     "postal-country": "India",
+    "highmark-url": "https://members.highmark.in/Inquiry/doGet.service/requestResponse",
+    "highmark-uname": "mfiinquiry@arohan.in",
+    "highmark-password": "8AA352B6FFD85E4A2B92511D9C3FDE6B140A0AD0",
+    "esthenos-client": "AROHAN",
+    "los-vendor": "esthenos",
+    "los-version": "1.0.0",
+    "los-name": "gravity",
+    "esthenos-client-mbrid": 'MFI0000020',
+    "acct-types-exclude": [
+        'shg'
+    ],
+    "mfi-exclude": [
+        'BANDHAN BANK LIMITED',
+        'HDFC BANK',
+        'IDBI Bank',
+        'INDUSIND BANK',
+        'YES BANK'
+    ],
     "users" : [
         {
             "role" : "ORG_ADMIN",

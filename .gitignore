@@ -8,3 +8,5 @@ e_uploads/
 *.db
 *.log
 dpn.pdf
+celerybeat.pid
+celerybeat-schedule

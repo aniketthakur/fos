@@ -1700,6 +1700,8 @@ class EsthenosOrgApplication(db.Document):
 
     no_borrowers_you_furnished_guarantees__ = db.StringField(max_length=512, required=False,default="")
 
+    highmark_response = db.StringField(required=False, default="")
+
     @property
     def total_income(self):
         return self.total_annual_revenue_cash \

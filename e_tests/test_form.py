@@ -2,24 +2,24 @@ import json
 import requests,sys
 
 # url = "http://%s/api/app_token/generate" % ("localhost:8080")
-# payload = {"email": "demo@fos-test.esthenos.com", "password":"demodemo"}
+# payload = {"email": "ramv@fos-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "testagent@fos-test.esthenos.com", "password":"123"}
+# payload = {"email": "ramv@fos-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"MRyHdfSC0gDZxEAsRKUxgHhfn6vJJ9FK1uRslyLnX-Y"
+    "instance_token":"xBKHOnzP-SkFALeow1VZSMPyIGJ9Fi0Scbm_u3uvZl0"
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
-url = "http://localhost:8081/api/organisation/applications"
+url = "http://localhost:8080/api/organisation/applications"
 
 payload = {
-    "group": "",
+    "group": "GOOD ONE",
     "applicant_business_docs_customer1":{
         "address": "hdhddhh", #[All other are Customer Details from 1 to 5]
         "name_4": "hdhdhr",
@@ -277,7 +277,7 @@ payload = {
         "spouse_aadhar_card_number": "546764944949",	#[ADD]
         "dob_yob": "1981",
         "pan_card_father_s_husband_s_name": "Saddam Hussain",
-        "pincode": "110091",
+        "pincode": "560093",
         "pan_card_name": "Pattan Saddam Hussain",
         "occupation": "Railway",
         "state": "Delhi",
@@ -293,9 +293,9 @@ payload = {
         "age": "34",
         "country": "India",
         "district": "East Delhi",
-        "name": "Sushil Kumar",
+        "name": "Lalit Sharma",
         "uid": "729348086056",
-        "voter_id_name": "Pattan Saddam Hussain",
+        "voter_id_name": "Lalit Sharma",
         "type": "AADHAAR",
         "mobile_number": "8797994949"
     },
@@ -402,7 +402,7 @@ payload = {
         "voter_id": "YUGDHKD8999",
         "ration_card": "RT08877788"
     },
-    "center": "",
+    "center": "HASI KUSHI",
     "applicant_hypothecation_goods_details2": {
         "purchase_purpose": "Hh",
         "market_value": "58858",
@@ -561,6 +561,6 @@ payload = {
     }
 }
 
-for i in range(0, 2):
+for i in range(0, 1):
     response = requests.post(url, json=payload, params=querystring)
     print(response.text)

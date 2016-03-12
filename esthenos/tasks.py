@@ -3,7 +3,7 @@ import requests, boto
 import tempfile, zipfile
 from datetime import date
 from mongoengine import Q
-
+from e_highmark import parse_response as pr
 from job import make_celery
 from celery.task import periodic_task
 from esthenos.settings import AWS_SETTINGS
@@ -100,6 +100,8 @@ def tagged_applications():
     with mainapp.app_context():
         uploaded_applications = EsthenosOrgApplication.objects.filter(status=110)
         for application in uploaded_applications:
+            print "DEBUG"
+            print application.save, application.house_stay_duration, type(application.house_stay_duration)
             application.update_status(120)
             application.save()
 
@@ -121,12 +123,12 @@ def all_prefilled_applications():
 def cb_checkready_applications():
 
     all_cbcheckready_applications = EsthenosOrgApplication.objects.filter(status=130)
-    for application in all_cbcheckready_applications:
-        make_equifax_request_entry_application_id(application.application_id)
-        make_highmark_request_for_application_id(application.application_id)
 
-        application.update_status(140)
-        application.save()
+    if len(all_cbcheckready_applications) > 0:
+        mainapp.logger.debug("SENDNG APPLICAITONS :%s" % len(all_cbcheckready_applications))
+        organisation = all_cbcheckready_applications[0].organisation
+        responses_list = pr.get_highmark_response_applications(all_cbcheckready_applications)
+        mainapp.logger.debug("applications for cb_checkready_highmark_applications :%s" % len(all_cbcheckready_applications))
 
 
 @periodic_task(run_every=datetime.timedelta(seconds=20))
