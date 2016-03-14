@@ -34,182 +34,155 @@
 
 
 {% block maincontents %}
-<div class="row col-md-10 col-md-offset-1 font-small" style="background: #ffffff;">
+<div class="row col-md-10 col-md-offset-1" style="background: #ffffff;">
     <div class="col-md-10 col-md-offset-1">
-            <h5 class="text-center font-lsmall">SANCTION LETTER (GROUP COPY)</h5>
-            <div class="pull-left">
-                <img src="{{ url_for('static', filename='/img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
-                <address>
-                    <strong>{{ org_name }}</strong><br>
-                </address>
-            </div>
-            <div class="pull-left font-msmall">
-                We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
-                Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
-            <br/><br/>
-             The details of loan sanctions for the Group are mentioned in the below table.
-            </div>
-            <table class="table table-bordered table-condensed ">
-                <thead>
-                <tr>
-                    <th style="width:5%"> No</th>
 
-                    <th style="width:15%" class="text-left">NAME OF BORROWER</th>
+        <h4 class="text-center font-lsmall"><strong>SANCTION LETTER</strong></h4>
 
-                    <th style="width:5%"class="text-left">AGE</th>
-
-                    <th style="width:10%"class="text-center">Aadhaar Number</th>
-
-                    <th style="width:8%">Loan Amount
-                        Applied</th>
-
-                    <th style="width:8%"class="text-left">Loan
-                        Amount
-                        Sanctioned</th>
-
-                    <th style="width:5%"style="width:100px" class="text-center" >Tenure
-                        of the
-                        Loan</th>
-
-                    <th style="width:5%"class="text-left">Rate of
-                        Interest</th>
-
-                    <th style="width:20%"class="text-left">Loan Purpose</th>
-
-                    <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
-
-                    <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-                </tr>
-                </thead>
-                <tbody>
-                <!--{% for app in apps %}-->
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
-                        <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
-                        <td class="text-right">{{ app.applicant_kyc.kyc_number }}</td>
-                        <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.applied_loan }}</td>
-                        <td class="text-left">{{ app.sanction.memo_loan_period }}</td>
-                        <td class="text-left">{{ app.sanction.memo_loan_interest }}</td>
-                        <td class="text-left">{{ app.purpose_of_loan }}</td>
-                    </tr>
-
-                <!--{% endfor %}-->
-                {% for i in range(1,13-apps|length) %}
-                    <tr>
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-            <table style="width: 100%;">
-                <tr>
-                    <td style="width: 50%;">
-                        <div class="col-md-3"><br>
-                            <p class="text-left text-black"> DATE :<br/>
-                                PLACE :</p>
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <p class="text-right text-black">For {{ org_name }}<br/><br/>
-                            Authorized Signatory<br/>
-                            [BM/ABM]</p>
-                    </td>
-                </tr>
-
-            </table>
-            <div class="clearfix"></div>
-            <div class="clearfix"><br/></div>
-            <br>
+        <div class="row">
+            <strong>
+                <span class="col-md-4">Date: {{date}}</span>
+                <span class="col-md-4 text-center"><ceter>Palce : </ceter></span>
+                <span class="col-md-4 text-right" align="right">Loan Application No. </span>
+            </strong>
         </div>
-    <div class="col-md-10 col-md-offset-1">
-        <h5 class="text-center font-lsmall">SANCTION LETTER (OFFICE COPY)</h5>
-        <div class="pull-left">
-            <img src="{{ url_for('static', filename='/img/pdf_images/hindusthan-logo.png', _external=True) }}" height="50" alt="">
-            <address>
-                <strong>{{ org_name }}</strong><br>
-            </address>
-        </div>
-        <div class="pull-left font-msmall">
-            We {{ org_name }}, hereby with reference to the loan application of the <u>{{ group.group_name }}</u>
-            Branch <u>{{ group.branch.branch_name }}</u> Region <u>{{ group.branch.region.region_name }}</u> dated <u>{{ disbursement_date|dateformat }}</u> inform that the application has been sanctioned.
-            <br/><br/>
-            The details of loan sanctions for the Group are mentioned in the below table.
-        </div>
-        <table class="table table-bordered table-condensed ">
-            <thead>
-            <tr>
-                <th style="width:5%"> No</th>
 
-                <th style="width:15%" class="text-left">NAME OF BORROWER</th>
-
-                <th style="width:5%"class="text-left">AGE</th>
-
-                <th style="width:10%"class="text-center">Aadhaar Number</th>
-
-                <th style="width:8%">Loan Amount
-                    Applied</th>
-
-                <th style="width:8%"class="text-left">Loan
-                    Amount
-                    Sanctioned</th>
-
-                <th style="width:5%"style="width:100px" class="text-center" >Tenure
-                    of the
-                    Loan</th>
-
-                <th style="width:5%"class="text-left">Rate of
-                    Interest</th>
-
-                <th style="width:20%"class="text-left">Loan Purpose</th>
-
-                <!--<th style="width:5%"class="text-left">SUM ASSURED</th>-->
-
-                <!--<th style="width:15%"class="text-left">Ins. Pr. (for 2 Lives)</th>-->
-            </tr>
-            </thead>
-            <tbody>
-            <!--{% for app in apps %}-->
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td class="text-left" class="text-right">{{ app.applicant_name }}</td>
-                    <td class="text-left">{{ app.age }}[{{ app.dob }}]</td>
-                    <td class="text-right">{{ app.applicant_kyc.kyc_number }}</td>
-                    {#                        <td class="text-left"></td>#}
-                    <td class="text-left">{{ app.applied_loan }}</td>
-                    <td class="text-left">{{ app.applied_loan }}</td>
-                    <td class="text-left">{{ app.sanction.memo_loan_period }}</td>
-                    <td class="text-left">{{ app.sanction.memo_loan_interest }}</td>
-                    <td class="text-left">{{ app.purpose_of_loan }}</td>
-                </tr>
-                <!--{% endfor %}-->
-            {% for i in range(1,13-apps|length) %}
-                <tr>
-                </tr>
-            {% endfor %}
-
-            </tbody>
-        </table>
-        <table style="width: 100%;">
-            <tr>
-                <td style="width: 50%;">
-                    <div class="col-md-3"><br>
-                        <p class="text-left text-black"> DATE :<br/>
-                            PLACE :</p>
-                    </div>
-                </td>
-                <td style="width: 50%;">
-                    <p class="text-right text-black">For {{ org_name }}<br/><br/>
-                        Authorized Signatory<br/>
-                        [BM/ABM]
-                    </p>
-                </td>
-            </tr>
-        </table>
-        <div class="clearfix"></div>
-        <div class="clearfix"><br/></div>
         <br>
+        <p><strong>Loan term Sheet/ Sanction Terms – Business Loans:</strong></p>
+
+        <table class="table-bordered" style="width:100%;">
+            <col width="5%">
+            <col width="40%%">
+            <col width="55%%">
+            <tr>
+                <td width="5%">1</td>
+                <td width="40%">Customer Name</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">2</td>
+                <td width="40%">Loan Amount</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%"></td>
+                <td width="40%">Loan Amount (in words)</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">3</td>
+                <td width="40%">Rate of interest (Customer IRR)</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">4</td>
+                <td width="40%">Processing fees (%)</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr><tr>
+                <td width="5%">5</td>
+                <td width="40%">Tenor (Months)</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">6</td>
+                <td width="40%">EMI</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">7</td>
+                <td width="40%">Number of Advance EMI</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+            <tr>
+                <td width="5%">8</td>
+                <td width="40%">EMI Scheme</td>
+                <td>{{app.applicant_kyc.name}}</td>
+            </tr>
+            <tr>
+                <td width="5%">9</td>
+                <td width="40%">Insurance Premium</td>
+                <td>{{app.applicant_kyc.name}}</td>
+             </tr>
+        </table>
+        <strong>10. Mode of Loan Repayment</strong>
+        <br/><strong>10.(A) Post Dated Cheques (PDC)</strong>
+            <table class="table-bordered" style="width:100%;">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <tr>
+                        <td>Bank Name</td>
+                        <td>Account Number</td>
+                        <td>Chq.No.From</td>
+                        <td>Chq.No.To</td>
+                        <td>No.of Chq.</td>
+                        <td>Amount</td>
+                        <td>Remarks</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+            </table>
+            <strong>10.(B) Electronic Clearing Services (ECS)</strong>
+            <table class="table-bordered" style="width:100%;">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <col width="16%">
+                    <tr>
+                        <td>Bank Name</td>
+                        <td>Account Number</td>
+                        <td>Amount of Installment</td>
+                        <td>Periodicity(M/BIM/Qty)</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+             </table>
+            11.(A)<strong> Foreclosure charges: </strong>NIL, post clearance of atleast one EMI.<br/>
+            11.(B)<strong> Part-repayment: </strong>Not Allowed<br/>
+            <strong>12 It is understood that the customer IRR mentioned above is as per the scheme opted for.</strong><br/>
+            <strong>13 Confirm the receipt of Maitreya Capital And Business Services Pvt. Ltd.</strong><br/>
+            <strong>Terms & Conditions governing this loan.</strong>
+            <strong>Received read and understood</strong><br/><br/>
+            <span align="left">Name of the Applicant: {{app.applicant_kyc.name}}</span> <span align="right">Signature____________________</span>
+            <p>Proprietor : </p>
+            <table style="width:100%" class="table-bordered">
+                <col width="50%">
+                <tr>
+                    <td>Name of the Co-Applicant(1): <br/><br/>
+                        Signature :
+                    </td>
+                    <td>Name of the Co-Applicant(2): <br/><br/>
+                        Signature :
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name of the Co-Applicant(1): <br/><br/>
+                        Signature :
+                    </td>
+                    <td>Name of the Co-Applicant(2): <br/><br/>
+                        Signature :
+                    </td>
+                </tr>
+            </table>
+        <br/><br/>
+        <p class="text-left">Company Common Seal</p>
+        <br/><br/><br/><br/>
+        <p class="text-right">Maitreya Capital Copy</p>
+
     </div>
 </div>
 {% endblock %}
