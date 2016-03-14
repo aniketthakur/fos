@@ -689,3 +689,53 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'hp'
     return response
+
+
+# @admin_views.route('/internal/preview/<name>', methods=["GET"])
+# def admin_pdf_views(name):
+#
+#     group = EsthenosOrgGroup.objects.get(id="56cc11e7ebc8b226dd193ccb")
+#     apps = EsthenosOrgApplication.objects.filter(group=group)
+#
+#
+#     # for app in apps:
+#     #     print app.name
+#     ap = apps[0]
+#
+#     # ment_date = datetime.datetime.now()
+#     # day_agr =  ment_date.strftime("%A")
+#
+#     #passbook_rows =  sheet_calc_sub(24, 22.99 , "3rd Friday", datetime.datetime.strptime("05-01-2016","%d-%m-%Y"), 1050, 20000)
+#     #target_list = calc_schedule(disbursement_date, app)
+#     #print target_list
+#     #tenure = 12
+#     disbursement_date = datetime.datetime.now()
+#     kwargs = locals()
+#     return render_template(name,**kwargs)
+
+
+@admin_views.route('/internal/preview/<name>', methods=["GET"])
+def admin_pdf_views(name):
+
+    # group = EsthenosOrgGroup.objects.get(id="56ab7477ebc8b2764f9a6fc0")
+    # apps = EsthenosOrgApplication.objects.filter(group=group)
+    app = EsthenosOrgApplication.objects.get(application_id="MA10000002")
+    disbursement_date = datetime.datetime.now()
+    interest_rate = 26.0
+    group = EsthenosOrgGroup.objects.all()
+    branch = EsthenosOrgBranch.objects.all()[0]
+    date = datetime.datetime.now().strftime("%d %B %Y")
+
+    # for app in apps:
+    #     print app.name
+    # app = apps[0]
+
+    # ment_date = datetime.datetime.now()
+    # day_agr =  ment_date.strftime("%A")
+
+    #passbook_rows =  sheet_calc_sub(24, 22.99 , "3rd Friday", datetime.datetime.strptime("05-01-2016","%d-%m-%Y"), 1050, 20000)
+    #target_list = calc_schedule(disbursement_date, app)
+    #print target_list
+    #tenure = 12
+    kwargs = locals()
+    return render_template(name,**kwargs)

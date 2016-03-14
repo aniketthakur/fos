@@ -8,15 +8,15 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "testagent@fos-test.esthenos.com", "password":"123"}
+# payload = {"email": "ramv@maitreya.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"MRyHdfSC0gDZxEAsRKUxgHhfn6vJJ9FK1uRslyLnX-Y"
+    "instance_token":"8f2ikItwg3wzDdt70wHz6-ekQ15FARHneB5wdLWevQU"
 #    "instance_token":"sfTQNI7jGmmt38c9i9O9BphuKZuMfZCpNHkfRC0T0pA"
 }
-url = "http://localhost:8081/api/organisation/applications"
+url = "http://localhost:8080/api/organisation/applications"
 
 payload = {
     "group": "",

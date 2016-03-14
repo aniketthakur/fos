@@ -1,0 +1,82 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        p{
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <h3></h3>
+                <h4 class="text-center"><strong>Schedule 3: Payment Schedule</strong></h4>
+                <br/><br/>
+                <table class="table-bordered" width="70%">
+                    <col width="30%">
+                    <col width="40%">
+                    <tbody>
+                        <tr>
+                            <td>Principal Amount</td>
+                            <td></td>
+                        </tr>
+                        <tr width="40%">
+                            <td>Interest Rate</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Interest Rate (Simple or Flat)</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/><br/>
+                <table class="table-bordered" width="100%">
+                    <col width="5%">
+                    <col width="25%">
+                    <col width="12%">
+                    <col width="28%">
+                    <col width="30%">
+                    <thead>
+                        <tr>
+                          <th>Month</th>
+                          <th>Equated Monthly Installment</th>
+                          <th>Interest</th>
+                          <th>Principal recovery from EMI</th>
+                          <th>Principal Outstanding as on Month End</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in range(0,13)%}
+                        <tr>
+                            <td>{{ loop.index -1 }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor%}
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            <br>
+            <br>
+        </div>
+        </div>
+
+    </div>
+{% endblock %}
