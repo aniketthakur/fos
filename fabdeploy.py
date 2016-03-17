@@ -10,7 +10,10 @@ DEPLOY_PATH = '%s/esthenos' % HOME_DIR
 
 def code():
     # notify slack for deploy start.
-    notify("starting auto-deployment {dirname}".format(dirname=DEPLOY_PATH))
+    git_sha = check_output(
+                ["echo \"$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
+
+    notify("starting auto-deployment esthenos-fos git-sha:%s" % git_sha
 
     with cd(DEPLOY_PATH):
         local("git pull --rebase")
@@ -22,4 +25,4 @@ def reboot():
     local('sudo monit restart esthenos-webapp')
 
     # notify slack for deployment finish
-    notify("successfully auto-deployed")
+    notify("successfully auto-deplyed esthenos-fos")
