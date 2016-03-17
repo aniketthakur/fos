@@ -331,7 +331,8 @@
                     </div>
                     <div class="profile-score section">
                        <div id="score-chart"></div>
-                       <h5 class="title">credit score</h5>
+                       <h4 class="title"><strong>Credit Score</strong></h4><h1><strong>{{ credit_score }}</strong></h1>
+                       <a class="inline btn btn-info btn-medium btn-info" href="{{ url_for("organisation_views.sanction_application_highmarkreport_print", app_id=application.id) }}" }}>View CB Check Report</a>
                     </div>
                 </div>
             </div>
