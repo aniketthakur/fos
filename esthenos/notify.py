@@ -1,7 +1,7 @@
 import os, sys, requests, json
 from esthenos.settings import SLACKURL
 
-def notify(message, channel="#deployments", username="deploy-bot"):
+def notify(message, channel="#deployments", username="fos-bot"):
     payload = {
         "text": message,
         "mrkdwn": "true",
