@@ -1,5 +1,7 @@
 from views_base import *
 from esthenos.settings import APP_STATUS
+import xml.etree.ElementTree as ET
+from lxml import html
 
 @organisation_views.route('/applications', methods=["GET"])
 @login_required
@@ -380,6 +382,13 @@ def sanctions_application(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  credit_score = 0
+
+  if application.highmark_response and ET.fromstring(application.highmark_response).find(".//PRINTABLE-REPORT/CONTENT"):
+    html_content = ET.fromstring(application.highmark_response).find(".//PRINTABLE-REPORT/CONTENT").text
+    html_tree = html.fromstring(html_content)
+    credit_score = html_tree.xpath('//td[@class="dataValueValue"]')
+    credit_score = 0 if not credit_score else credit_score[0].text
 
   if request.method == "GET":
     kwargs = locals()
@@ -435,3 +444,24 @@ def sanctions_application_print(app_id):
 
   kwargs = locals()
   return render_template("sanctions/sanctions_details_print.html", **kwargs)
+
+
+@organisation_views.route('/sanctions/<app_id>/highmarkreport/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def sanction_application_highmarkreport_print(app_id):
+    today = datetime.datetime.now()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+    content = ""
+
+    if request.method == "GET":
+        user = EsthenosUser.objects.get(id=current_user.id)
+        application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+        response = application.highmark_response
+        content = ""
+
+        if response and ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT") is not None:
+            content = ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT").text
+
+    return content
