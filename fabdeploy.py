@@ -13,7 +13,7 @@ def code():
     git_sha = check_output(
                 ["echo \"$(git log --pretty=format:'%h' -n 1)\""], shell=True).strip('\n ')
 
-    notify("starting auto-deployment esthenos-fos git-sha:%s" % git_sha
+    notify("starting auto-deployment esthenos-fos git-sha: %s" % git_sha)
 
     with cd(DEPLOY_PATH):
         local("git pull --rebase")
