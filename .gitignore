@@ -1,4 +1,5 @@
 .idea
+*.pdf
 *.pyc
 venv/
 pygame
@@ -7,6 +8,7 @@ e_uploads/
 \#*
 *.db
 *.log
+*.log.*
 dpn.pdf
 celerybeat.pid
 celerybeat-schedule
