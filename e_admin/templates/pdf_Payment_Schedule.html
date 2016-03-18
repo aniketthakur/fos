@@ -1,0 +1,97 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        p{
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+
+    <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <h3></h3>
+                <h4 class="text-center"><strong>Schedule 3: Payment Schedule</strong></h4>
+                <br/><br/>
+                <table class="table-bordered" width="70%">
+                    <col width="30%">
+                    <col width="40%">
+                    <tbody>
+                        <tr>
+                            <td>Principal Amount</td>
+                            <td>{{app.sanction.memo_loan_amount}}</td>
+                        </tr>
+                        <tr width="40%">
+                            <td>Interest Rate</td>
+                            <td>{{app.sanction.memo_loan_interest}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interest Rate (Simple or Flat)</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/><br/>
+
+
+                <table class="table-bordered" width="100%">
+                    <col width="5%">
+                    <col width="12%">
+                    <col width="25%">
+                    <col width="18%">
+                    <col width="25%">
+                    <col width="30%">
+                    <thead>
+                        <tr>
+                          <th class="text-center">Inst No.</th>
+                          <th class="text-center">Due Date</th>
+                          <th class="text-center">Interest Payment</th>
+                          <th class="text-center">Principal Payment</th>
+                          <th class="text-center">Total Installment</th>
+                          <th class="text-center">Loan C/F</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in range(0,13)%}
+                        <tr>
+                            <td>{{ loop.index -1 }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor%}
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+            </div>
+            <br>
+            <br>
+        </div>
+        </div>
+        <div class="row section footer">
+            <div class="col-md-8 col-md-offset-2">
+            <hr>
+            <center>
+                <img align = "left" height="30" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+                <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+            </center>
+        </div>
+        </div>
+
+
+    </div>
+{% endblock %}

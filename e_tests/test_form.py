@@ -8,7 +8,9 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
+
 # payload = {"email": "ramv@fos-test.esthenos.com", "password":"123"}
+
 # response = requests.post(url, data=payload)
 # print response.text
 

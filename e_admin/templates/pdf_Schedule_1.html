@@ -1,0 +1,384 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+    <style type="text/css">
+        p{
+            font-size: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block action_bar %}
+
+{% endblock %}
+{% block maincontents %}
+    <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <h3></h3>
+                <h4 class="text-center"><strong>SCHEDULE 1</strong></h4>
+                <br/>
+                <table class="table-bordered" style="width:100%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <col width="25%">
+                    <tr>
+                        <td>Loan Agreement No.</td>
+                        <td></td>
+                        <td>Place of Agreement</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Agreement Date</td>
+                        <td></td>
+                        <td>Area Office</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Name of the Borrower</td>
+                        <td>{{app.applicant_kyc.name}}</td>
+                        <td>Place of Agreement</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Borrower </td>
+                        <td>{{app.applicant_kyc.address}}</td>
+                        <td>Place of Agreement</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PAN Number</td>
+                        <td>{{app.kyc_number}}</td>
+                        <td>Aadhaar Number</td>
+                        <td>{{app.applicant_kyc.kyc_number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name of the Co-Borrower</td>
+                        <td></td>
+                        <td>Place of Agreement</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Co-Borrower </td>
+                        <td></td>
+                        <td>Place of Agreement</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PAN Number</td>
+                        <td></td>
+                        <td colspan="2">Aadhaar Number</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Name of the Guarantor 1</td>
+                        <td colspan="3">{{app.guarantor1_kyc.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Guarantor 1</td>
+                        <td colspan="3">{{app.guarantor1_kyc.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>PAN Number</td>
+                        <td>{{app.guarantor1_kyc.kyc_number}}</td>
+                        <td>Aadhaar Number</td>
+                        <td>{{app.guarantor1_kyc.kyc_number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name of the Guarantor 2</td>
+                        <td colspan="3">{{app.guarantor2_kyc.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Guarantor 2</td>
+                        <td colspan="3">{{app.guarantor2_kyc.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>PAN Number</td>
+                        <td>{{app.guarantor2_kyc.kyc_number}}</td>
+                        <td>Aadhaar Number</td>
+                        <td>{{app.guarantor2_kyc.kyc_number}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Vernacular Language</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>DETAILS OF THE FACILITY</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Type of Facility</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Facility Amount</td>
+                        <td></td>
+                        <td>Number of EMIs</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Jurisdiction of Courts</td>
+                        <td></td>
+                        <td>Jurisdiction of Courts</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>DETAILS FOR NOTICES</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Borrower</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Fax No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td colspan="3">{{app.owner.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile No.</td>
+                        <td colspan="3">{{app.applicant_kyc.mobile_number}}</td>
+                    </tr>
+                    <td>Address of the Co-Borrower</td>
+                        <td colspan="3"></td>
+                    <tr>
+                        <td>Fax No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Guarantor 1</td>
+                        <td colspan="3">{{app.guarantor1_kyc.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fax No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Address of the Guarantor 2</td>
+                        <td colspan="3">{{app.guarantor2_kyc.address}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fax No.</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile No.</td>
+                        <td colspan="3">{{app.guarantor2_kyc.mobile_number}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>DETAILS OF STANDING INSTRUCTIONS</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">In case of XXX</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>PURPOSE</strong><br/><span style="font-size:5">Please tick as applicable</span></td>
+                        <td colspan="2"><strong>PARTICULARS OF COLLATERAL</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Purchase of inventory for dealers / franchisee / business purposes
+                            <div>
+                              <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;">
+                              </div>
+                            </div>
+                        </td>
+                        <td colspan="2">Details of INVENTORY to be purchased <strong>(“Inventory”): </strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Purchase of equipment for job work / business purposes
+                            <div>
+                              <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;">
+                              </div>
+                            </div>
+                        </td>
+                        <td colspan="2">Details of EQUIPMENT to be purchased <strong>(“Equipment”):</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Payments to be made in connection with immovable property for job work / franchisee / business purposes
+                            <div>
+                              <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;">
+                              </div>
+                            </div>
+                        </td>
+                        <td colspan="2"><strong>Details of DEPOSIT:-</strong>
+                            <ol>
+                                <li>________________________</li>
+                                <li>________________________</li>
+                                <li>________________________</li>
+                                <li>________________________</li>
+                                <li>________________________</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Receivables Discounting (if Job Work / Inventory is converted into Receivables)
+                            <div>
+                              <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;">
+                              </div>
+                            </div>
+                        </td>
+                        <td colspan="2">Details of RECEIVABLES:-
+                            <ol>
+                                <li>Details of bills / invoices:</li>
+                                <li>Aggregate Amount, if applicable:</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>DESIGNATED ACCOUNT</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Particulars of Designated Account, if any</td>
+                        <td colspan="2">Details of RECEIVABLES:-
+                            <ul>
+                                <li>A/c No: </li>
+                                <li>Bank: </li>
+                                <li>Branch Address: </li>
+                                <li>IFSC Code: </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Disbursement into Designated Account</td>
+                        <td colspan="2">
+                            <ul>
+                                <li>Yes</li>
+                                <li>No</li>
+                            </ul>
+                            <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;"></div>
+                            <div style="border: 1px solid;padding-left: 5px;padding-right:5px ;width: 15px;height: 15px;"></div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Mention other mode of disbursement, if not into Designated <br/>Account(such as direct payment to suppliers, etc.)</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </table>
+
+                <br/>
+                <table class = "table-bordered " style="width:100%">
+                    <caption><strong>DETAILS OF FEES AND CHARGES</strong></caption>
+                    <thead>
+                        <tr>
+                            <th>S. NO.</th>
+                            <th>Nature of Charges</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Verification Charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Cheque Bounce Charges or ECS dishonour charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Charges for issuing duplicate termination papers (Duplicate NOC)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Charges for furnishing statement of account – 2nd time</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Cheque Swapping Charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Revocation/changes of ESC instruction charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Charges for issuing copy of any document at borrowers request</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Processing Fees</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Prepayment Charges / pre-closure charges / foreclosure charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Stamp Duty Charges (As per applicable laws of the State)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Registration Charges (if applicable)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Default Interest Rate</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Loan Statement / Duplicate Repayment Schedule Charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>NOC Issuance Charges</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>Legal / Collections / Repossession and Incidental Charges</td>
+                            <td>As per actuals, if any</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Other Statutory Charges (if applicable)</td>
+                            <td>As per actuals, if any</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="col-md-8 col-md-offset-2">
+        <hr>
+        <center>
+            <img align = "left" height="30" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+            <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+        </center>
+    </div>
+    </div>
+
+{% endblock %}
