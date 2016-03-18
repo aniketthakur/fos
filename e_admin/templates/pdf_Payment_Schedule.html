@@ -24,11 +24,11 @@
                     <tbody>
                         <tr>
                             <td>Principal Amount</td>
-                            <td></td>
+                            <td>{{app.sanction.memo_loan_amount}}</td>
                         </tr>
                         <tr width="40%">
                             <td>Interest Rate</td>
-                            <td></td>
+                            <td>{{app.sanction.memo_loan_interest}}</td>
                         </tr>
                         <tr>
                             <td>Interest Rate (Simple or Flat)</td>
@@ -37,25 +37,30 @@
                     </tbody>
                 </table>
                 <br/><br/>
+
+
                 <table class="table-bordered" width="100%">
                     <col width="5%">
-                    <col width="25%">
                     <col width="12%">
-                    <col width="28%">
+                    <col width="25%">
+                    <col width="18%">
+                    <col width="25%">
                     <col width="30%">
                     <thead>
                         <tr>
-                          <th>Month</th>
-                          <th>Equated Monthly Installment</th>
-                          <th>Interest</th>
-                          <th>Principal recovery from EMI</th>
-                          <th>Principal Outstanding as on Month End</th>
+                          <th class="text-center">Inst No.</th>
+                          <th class="text-center">Due Date</th>
+                          <th class="text-center">Interest Payment</th>
+                          <th class="text-center">Principal Payment</th>
+                          <th class="text-center">Total Installment</th>
+                          <th class="text-center">Loan C/F</th>
                         </tr>
                     </thead>
                     <tbody>
                         {%for i in range(0,13)%}
                         <tr>
                             <td>{{ loop.index -1 }}</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -77,6 +82,16 @@
             <br>
         </div>
         </div>
+        <div class="row section footer">
+            <div class="col-md-8 col-md-offset-2">
+            <hr>
+            <center>
+                <img align = "left" height="30" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+                <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+            </center>
+        </div>
+        </div>
+
 
     </div>
 {% endblock %}

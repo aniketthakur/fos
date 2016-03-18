@@ -16,7 +16,7 @@
             <div class="row">
                 <h3></h3>
                 <h4 class="text-center"><strong>SCHEDULE 1</strong></h4>
-                <br/><br/>
+                <br/>
                 <table class="table-bordered" style="width:100%">
                     <col width="25%">
                     <col width="25%">
@@ -94,7 +94,7 @@
                     </tr>
                     <tr>
                         <td>PAN Number</td>
-                        <td></td>
+                        <td>{{app.guarantor2_kyc.kyc_number}}</td>
                         <td>Aadhaar Number</td>
                         <td>{{app.guarantor2_kyc.kyc_number}}</td>
                     </tr>
@@ -108,7 +108,7 @@
                         <td colspan="4">Type of Facility</td>
                     </tr>
                     <tr>
-                        <td>Facility Amount</td>
+                        <td class="text-center">Facility Amount</td>
                         <td></td>
                         <td>Number of EMIs</td>
                         <td></td>
@@ -275,7 +275,7 @@
                     </tr>
                 </table>
 
-                <br/><br/>
+                <br/>
                 <table class = "table-bordered " style="width:100%">
                     <caption><strong>DETAILS OF FEES AND CHARGES</strong></caption>
                     <thead>
@@ -372,5 +372,13 @@
             </div>
         </div>
     </div>
+     <div class="col-md-8 col-md-offset-2">
+        <hr>
+        <center>
+            <img align = "left" height="30" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+            <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+        </center>
     </div>
+    </div>
+
 {% endblock %}

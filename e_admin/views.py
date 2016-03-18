@@ -504,7 +504,7 @@ def admin_hmpdpn(applicant_id):
     interest_rate = 26.0
 
     kwargs = locals()
-    body = render_template( "pdf_HMPL_DPN_HINDI.html", **kwargs)
+    body = render_template( "pdf_DPN.html", **kwargs)
 
     options = {
         'page-size': 'A4',

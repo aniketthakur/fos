@@ -11,7 +11,7 @@ from flask.ext.mongoengine import MongoEngine
 from flask_login import  LoginManager
 from werkzeug.contrib.fixers import ProxyFix
 from esthenos import version
-
+import num2words
 import boto
 import settings
 from raven.contrib.flask import Sentry
@@ -170,3 +170,10 @@ def page_not_found(e):
 def page_not_allowed(e):
     kwargs = {"redirect_url": "/" }
     return render_template('403.html', **kwargs), 403
+
+@mainapp.template_filter('num_to_words')
+def _jinja2_filter_num_to_words(num):
+    try:
+        return num2words.num2words(num)
+    except:
+        return num2words.num2words(0)

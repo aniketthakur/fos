@@ -38,15 +38,21 @@
     <div class="col-md-10 col-md-offset-1">
 
         <h4 class="text-center font-lsmall"><strong>SANCTION LETTER</strong></h4>
-
-        <div class="row">
-            <strong>
-                <span class="col-md-4">Date: {{date}}</span>
-                <span class="col-md-4 text-center"><ceter>Palce : </ceter></span>
-                <span class="col-md-4 text-right" align="right">Loan Application No. </span>
-            </strong>
-        </div>
-
+        <table width="100%">
+            <col width="33%">
+            <col width="33%">
+            <tr>
+                <td class="text-left">
+                    <strong>Date: {{date}}</strong>
+                </td>
+                <td class="text-center">
+                    <strong>Palce :</strong>
+                </td>
+                <td class="text-center">
+                    <strong>Loan Application No.</strong>
+                </td>
+            </tr>
+        </table>
         <br>
         <p><strong>Loan term Sheet/ Sanction Terms – Business Loans:</strong></p>
 
@@ -62,46 +68,46 @@
             <tr>
                 <td width="5%">2</td>
                 <td width="40%">Loan Amount</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_amount}}</td>
              </tr>
             <tr>
                 <td width="5%"></td>
                 <td width="40%">Loan Amount (in words)</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_amount|num_to_words}}</td>
              </tr>
             <tr>
                 <td width="5%">3</td>
                 <td width="40%">Rate of interest (Customer IRR)</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_interest}}</td>
              </tr>
             <tr>
                 <td width="5%">4</td>
                 <td width="40%">Processing fees (%)</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_processing_fee}}</td>
              </tr><tr>
                 <td width="5%">5</td>
                 <td width="40%">Tenor (Months)</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_period}}</td>
              </tr>
             <tr>
                 <td width="5%">6</td>
                 <td width="40%">EMI</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td>{{app.sanction.memo_loan_emi}}</td>
              </tr>
             <tr>
                 <td width="5%">7</td>
                 <td width="40%">Number of Advance EMI</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td></td>
              </tr>
             <tr>
                 <td width="5%">8</td>
                 <td width="40%">EMI Scheme</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td></td>
             </tr>
             <tr>
                 <td width="5%">9</td>
                 <td width="40%">Insurance Premium</td>
-                <td>{{app.applicant_kyc.name}}</td>
+                <td></td>
              </tr>
         </table>
         <strong>10. Mode of Loan Repayment</strong>
@@ -151,38 +157,63 @@
                         <td>&nbsp;</td>
                     </tr>
              </table>
+            <div style="font-size:10px">
             11.(A)<strong> Foreclosure charges: </strong>NIL, post clearance of atleast one EMI.<br/>
             11.(B)<strong> Part-repayment: </strong>Not Allowed<br/>
             <strong>12 It is understood that the customer IRR mentioned above is as per the scheme opted for.</strong><br/>
             <strong>13 Confirm the receipt of Maitreya Capital And Business Services Pvt. Ltd.</strong><br/>
             <strong>Terms & Conditions governing this loan.</strong>
             <strong>Received read and understood</strong><br/><br/>
-            <span align="left">Name of the Applicant: {{app.applicant_kyc.name}}</span> <span align="right">Signature____________________</span>
+            </div>
+
+            <table width="100%">
+                <tr>
+                    <td class="text-left">
+                        Name of the Applicant: {{app.applicant_kyc.name}}
+                    </td>
+                    <td class="text-right">
+                        Signature : ____________________
+                    </td>
+                </tr>
+            </table>
+
+            <br/>
             <p>Proprietor : </p>
-            <table style="width:100%" class="table-bordered">
+            <table style="width:100%" class="table-bordered" style="font-size:12px">
                 <col width="50%">
                 <tr>
-                    <td>Name of the Co-Applicant(1): <br/><br/>
+                    <td><br/>Name of the Co-Applicant(1): <br/><br/>
                         Signature :
                     </td>
-                    <td>Name of the Co-Applicant(2): <br/><br/>
+                    <td><br/>Name of the Co-Applicant(2): <br/><br/>
                         Signature :
                     </td>
                 </tr>
                 <tr>
-                    <td>Name of the Co-Applicant(1): <br/><br/>
+                    <td><br/>Name of the Co-Applicant(1): <br/><br/>
                         Signature :
                     </td>
-                    <td>Name of the Co-Applicant(2): <br/><br/>
+                    <td><br/>Name of the Co-Applicant(2): <br/><br/>
                         Signature :
                     </td>
                 </tr>
             </table>
         <br/><br/>
         <p class="text-left">Company Common Seal</p>
-        <br/><br/><br/><br/>
-        <p class="text-right">Maitreya Capital Copy</p>
-
+        <table width="100%" style="font-size:12px">
+            <td>
+                <img align = "left" height="50" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+            </td>
+            <td>
+                <p class="text-right">Maitreya Capital Copy</p>
+            </td>
+        </table>
+        <hr>
+        <div class="col-md-12" style="font-size:12px">
+            <center>
+                <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+            </center>
+        </div>
     </div>
 </div>
 {% endblock %}
