@@ -14,7 +14,7 @@ SERVER_SETTINGS = {
 MONGODB_SETTINGS = {
     'DB': 'fos-test',
     'PORT': 27017,
-    'HOST': 'localhost'
+    'HOST': 'mongodb.prod.esthenos.com'
 }
 ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
