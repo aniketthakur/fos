@@ -13,7 +13,7 @@
             line-height: 20px;
             min-height: 20px;
             height: 20px;
-            font-size:9px;
+            font-size:10px;
         }
         .font-lsmall h2{
             font-size:12px;
@@ -23,6 +23,14 @@
         }
         tr{
 
+        }
+        .footer{
+            position:fixed;
+            bottom:1px;
+            left:0px;
+            right:0px;
+            margin-bottom:0px;
+            font-size:10px;
         }
     </style>
 {% endblock %}
@@ -46,10 +54,10 @@
                     <strong>Date: {{date}}</strong>
                 </td>
                 <td class="text-center">
-                    <strong>Palce :</strong>
+                    <strong>Place :</strong>
                 </td>
-                <td class="text-center">
-                    <strong>Loan Application No.</strong>
+                <td class="text-right">
+                    <strong>Loan Application No. : _________</strong>
                 </td>
             </tr>
         </table>
@@ -182,23 +190,23 @@
             <table style="width:100%" class="table-bordered" style="font-size:12px">
                 <col width="50%">
                 <tr>
-                    <td><br/>Name of the Co-Applicant(1): <br/><br/>
-                        Signature :
+                    <td><strong>Name of Co-Applicant(1): </strong>{{app.guarantor1_kyc.name}} <br/>
+                        <strong>Signature :</strong><br/>
                     </td>
-                    <td><br/>Name of the Co-Applicant(2): <br/><br/>
-                        Signature :
+                    <td><strong>Name of Co-Applicant(2): </strong><br/>
+                        <strong>Signature :</strong>
                     </td>
                 </tr>
                 <tr>
-                    <td><br/>Name of the Co-Applicant(1): <br/><br/>
-                        Signature :
+                    <td><strong>Name of Co-Applicant(3): </strong><br/>
+                        <strong>Signature :</strong>
                     </td>
-                    <td><br/>Name of the Co-Applicant(2): <br/><br/>
-                        Signature :
+                    <td><strong>Name of Co-Applicant(4): </strong><br/>
+                        <strong>Signature :</strong>
                     </td>
                 </tr>
             </table>
-        <br/><br/>
+        <br/>
         <p class="text-left">Company Common Seal</p>
         <table width="100%" style="font-size:12px">
             <td>
@@ -208,8 +216,9 @@
                 <p class="text-right">Maitreya Capital Copy</p>
             </td>
         </table>
-        <hr>
-        <div class="col-md-12" style="font-size:12px">
+
+        <div class="col-md-12 footer">
+            <hr>
             <center>
                 <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
             </center>

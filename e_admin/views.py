@@ -696,7 +696,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
 #
 #     # group = EsthenosOrgGroup.objects.get(id="56ab7477ebc8b2764f9a6fc0")
 #     # apps = EsthenosOrgApplication.objects.filter(group=group)
-#     app = EsthenosOrgApplication.objects.get(application_id="MA10000002")
+#     app = EsthenosOrgApplication.objects.get(application_id="FO10000061")
 #     disbursement_date = datetime.datetime.now()
 #     interest_rate = 26.0
 #     #group = EsthenosOrgGroup.objects.all()
@@ -716,3 +716,5 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
 #     #tenure = 12
 #     kwargs = locals()
 #     return render_template(name,**kwargs)
+
+

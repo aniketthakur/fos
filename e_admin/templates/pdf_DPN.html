@@ -4,6 +4,14 @@
         p{
             font-size: 12px;
         }
+        .footer{
+
+            bottom:0px;
+            left:0px;
+            right:0px;
+            margin-bottom:0px;
+            font-size:11px;
+        }
     </style>
 {% endblock %}
 
@@ -21,11 +29,11 @@
                 <br/><br/><br/>
                 <p class="pull-right">Date : ______________________</p>
                 <br/><br/><br/>
-                <p class="text-center"><strong>Rs. {{app.sanction.memo_loan_amount}}/- (Rupees ______________________________ only) plus interest thereon @ {{app.sanction.memo_loan_interest}} % p.a.</strong></p>
+                <p class="text-center"><strong>Rs. {{app.sanction.memo_loan_amount}} /- (Rupees {{app.sanction.memo_loan_amount|num_to_words}} only) plus interest thereon @ {{app.sanction.memo_loan_interest}} % p.a.</strong></p>
 
 
 
-<p class="text-justify"><strong>ON DEMAND</strong>, for value received, _______________________________________________, the undersigned, having my / our residence / office at _____________________________________________________________________, does hereby / do hereby jointly and/or severally irrevocably and unconditionally promise to pay to or to the order of <strong>Maitreya Capital & Business Services Private Limited</strong>, a company incorporated under the Companies Act, 1956 and registered with the Reserve Bank of India as a non-banking financial company bearing registration no. ______________________________ dated ____________________________, having its registered office at _______________________________, in immediately available funds the sum of Rs.___________________________________________________________________________/- (Rupees __________________________________________________________________________ only) together with interest thereon @________% p.a., or at such other rate which Maitreya Capital & Business Services Private Limited may fix from time to time.
+<p class="text-justify"><strong>ON DEMAND</strong>, for value received, {{app.applicant_kyc.name }}, the undersigned, having my / our residence / office at {{app.applicant_kyc.address}}, does hereby / do hereby jointly and/or severally irrevocably and unconditionally promise to pay to or to the order of <strong>Maitreya Capital & Business Services Private Limited</strong>, a company incorporated under the Companies Act, 1956 and registered with the Reserve Bank of India as a non-banking financial company bearing registration no. ______________________________ dated ____________________________, having its registered office at _________________________________________________________, in immediately available funds the sum of Rs. {{app.sanction.memo_loan_amount}} /- (Rupees {{ app.sanction.memo_loan_amount|num_to_words}} only) together with interest thereon @ {{app.sanction.memo_loan_interest}} % p.a., or at such other rate which Maitreya Capital & Business Services Private Limited may fix from time to time.
 undersigned unconditionally and irrevocably waive(s) presentment for payment, notice of dishonour and noting and protest of this Demand Promissory Note.
 
 <p>The interest is to accrue monthly on the basis of a year of 365 days from and including the first day and last day of each month for which a rate of interest is determined.</p>
@@ -38,8 +46,9 @@ undersigned unconditionally and irrevocably waive(s) presentment for payment, no
                 <table class="table-bordered">
                     <tr>
                         <td>
-                            <br/><br/><br/>
-                            Name & signature of the Borrower(s) / authorised signatory
+                            Name & signature of the Borrower(s) / authorised signatory<br/>
+                            <strong>{{app.applicant_kyc.name}}</strong>
+
 <br><br/><br><br/><br><br/><br>
 
 [Include details of Board Resolutions in case Borrower is a Company and POA in case Borrower is a Partnership Firm / LLP / HUF]
@@ -51,10 +60,19 @@ undersigned unconditionally and irrevocably waive(s) presentment for payment, no
                         </td>
                     </tr>
                 </table>
-                <br/><br/>
+                <br/>
                 <div class="">
                     <h5 class="text-left text-black"> Place : __________________________</h5>
                  </div>
+
+                <div class="row section footer">
+                    <div class="col-md-12">
+                    <hr>
+                    <center>
+                        <img align = "left" height="30" width="100" src= {{ url_for('static', filename = 'img/maitreyacapital.png') }} >
+                        <b>Maitreya Capital & Business Services Pvt. Ltd. </b>B5-317, Shram Jeevan, Near Wadala RTO, Wadala (East), Mumbai: 400037
+                    </center>
+                </div>
     </div>
     </div>
 {% endblock %}
