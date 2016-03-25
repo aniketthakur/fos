@@ -239,6 +239,22 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
         downloadFile("http://localhost:8080/internal/pdf_sl/"+applicant_id,tf)
         tmp_files.append(tf)
 
+        #generate schedule 1
+        tf = dir+"schedule_1.pdf"
+        downloadFile("http://localhost:8080/internal/pdf_sd_1/"+applicant_id,tf)
+        tmp_files.append(tf)
+
+        #generate payment schedule
+        tf = dir+"payment_schedule.pdf"
+        downloadFile("http://localhost:8080/internal/pdf_ps/"+applicant_id,tf)
+        tmp_files.append(tf)
+
+        #generate continutiy letter
+        tf = dir+"continuity_letter.pdf"
+        downloadFile("http://localhost:8080/internal/pdf_cl/"+applicant_id,tf)
+        tmp_files.append(tf)
+
+
         #generate processing fees
         tf = dir+"processing_fees.pdf"
         downloadFile("http://localhost:8080/internal/pdf_pf/"+applicant_id,tf)

@@ -404,13 +404,13 @@ def psychometric_questions_delete(org_id, question_id):
 
 @admin_views.route('/internal/pdf_sl/<applicant_id>', methods=["GET"])
 def admin_sanction(applicant_id):
-    apps = EsthenosOrgApplication.objects.filter(application_id=applicant_id).filter(status__gte=240)
+    app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
 
     disbursement_date = datetime.datetime.now()
     org_name = ""
 
     kwargs = locals()
-    body = render_template("pdf_Sanction_Letter_Hindusthan.html", **kwargs)
+    body = render_template("pdf_Sanction_Letter.html", **kwargs)
     options = {
         'page-size': 'A4',
         'margin-top': '0.35in',
@@ -432,6 +432,98 @@ def admin_sanction(applicant_id):
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'sanction'
     return response
 
+
+@admin_views.route('/internal/pdf_sd_1/<applicant_id>', methods=["GET"])
+def admin_schedule_1(applicant_id):
+    app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
+
+    disbursement_date = datetime.datetime.now()
+    org_name = ""
+
+    kwargs = locals()
+    body = render_template("pdf_Schedule_1.html", **kwargs)
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.35in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'pdf_schedule_1.pdf',options=options)
+
+    raw_bytes = ""
+    with open('pdf_schedule_1.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'schedule_1'
+    return response
+
+
+@admin_views.route('/internal/pdf_ps/<applicant_id>', methods=["GET"])
+def admin_payment(applicant_id):
+    app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
+
+    disbursement_date = datetime.datetime.now()
+    org_name = ""
+
+    kwargs = locals()
+    body = render_template("pdf_Payment_Schedule.html", **kwargs)
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.35in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'pdf_payment_schedule.pdf',options=options)
+
+    raw_bytes = ""
+    with open('pdf_payment_schedule.pdf.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'payment_schedule'
+    return response
+
+
+@admin_views.route('/internal/pdf_cl/<applicant_id>', methods=["GET"])
+def admin_continuity(applicant_id):
+    app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
+
+    disbursement_date = datetime.datetime.now()
+    org_name = ""
+
+    kwargs = locals()
+    body = render_template("pdf_Continuity_Letter.html", **kwargs)
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.35in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'pdf_continuity_letter.pdf',options=options)
+
+    raw_bytes = ""
+    with open('pdf_continuity_letter.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'continuity_letter'
+    return response
 
 @admin_views.route('/internal/pdf_if/<applicant_id>', methods=["GET"])
 def admin_ipnpfr(applicant_id):
@@ -501,7 +593,6 @@ def admin_processing_fees(applicant_id):
 def admin_hmpdpn(applicant_id):
     app = EsthenosOrgApplication.objects.get(application_id=applicant_id)
     disbursement_date = datetime.datetime.now()
-    interest_rate = 26.0
 
     kwargs = locals()
     body = render_template( "pdf_DPN.html", **kwargs)
