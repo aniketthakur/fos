@@ -485,7 +485,7 @@ def admin_payment(applicant_id):
     pdfkit.from_string(body, 'pdf_payment_schedule.pdf',options=options)
 
     raw_bytes = ""
-    with open('pdf_payment_schedule.pdf.pdf', 'rb') as r:
+    with open('pdf_payment_schedule.pdf', 'rb') as r:
         for line in r:
             raw_bytes = raw_bytes + line
 
