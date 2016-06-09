@@ -1,0 +1,2364 @@
+{% extends "base_pdf.html" %}
+{% block css_sheets %}{{ super() }}
+  <style type="text/css">
+    p {
+      font-size: 10px;
+      font-family: Arial;
+    }
+    th {
+      font-family: Arial;
+      font-size: 10pt;
+      font-weight: bold;
+      text-align: center;
+    }
+    td {
+      height: 10px;
+      padding-left: 10px;
+    }
+  </style>
+{% endblock %}
+
+
+{% block maincontents %}
+  <div class="col-md-10 col-md-offset-1" style="background: #ffffff;">
+    <div class="col-md-10 col-md-offset-1">
+      <span class="pull-left"><b>RBI Certificate No.</b> B.05.02932 <b>CIN No.</b> U74140WB1991PTC053189</span>
+      <div class="row">
+        <br/>
+        <h4 style="text-align: center;">Data Entry Sheet</h4>
+        <div class="clearfix"></div>
+        <div class="text-justify">
+          <table style="width: 100%;font-family: Arial;font-size: small" border="1">
+            <tr>
+              <td colspan=2 rowspan=2 ><b><font size=1 color="#000000">Maitreya: Data Entry Sheet</font></b></td>
+             <td align="left" ><font color="#000000">Branch Name</font></td>
+             <td align="left" ><font color="#000000">Center ID</font></td>
+             <td align="left" ><font color="#000000">Group ID</font></td>
+            </tr>
+            <tr>
+              <td height="30" ><b><font size=1>Sl. No.</font></b></td>
+              <td ><b><font size=1>Headers</font></b></td>
+              <td align="left" ><b><font size=1>{{ application.applicant_kyc.name }}</font></b></td>
+            </tr>
+            <tr>
+              <td height="15"><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Personal Information</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td height="15" sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.applicant_kyc.name }}</td>
+            </tr>
+            <tr>
+              <td height="15" sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>UID</font></td>
+              <td>{{ application.applicant_kyc.kyc_number }}</td>
+            </tr>
+            <tr>
+              <td height="15" sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Father's/Husband's Name</font></td>
+              <td >{{ application.applicant_kyc.father_or_husband_name}}</td>
+            </tr>
+            <tr>
+              <td height="15" sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Date of Birth</font></td>
+              <td>{{ application.applicant_kyc.dob|dateformat }}</td>
+            </tr>
+            <tr>
+              <td height="15" sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.applicant_kyc.age}}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Gender</font></td>
+              <td>{{ application.applicant_kyc.gender }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.applicant_kyc.address }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Taluk</font></td>
+              <td>{{ application.applicant_kyc.taluk }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>9</font></td>
+              <td align="left" ><font size=1>District</font></td>
+              <td>{{ application.applicant_kyc.district }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>10</font></td>
+              <td align="left" ><font size=1>State</font></td>
+              <td>{{ application.applicant_kyc.state }}</td>
+            </tr>
+            <tr>
+              <td sdval="11"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Permanent Address</font></td>
+              <td>{{ application.applicant_kyc.address }}</td>
+            </tr>
+
+            <tr>
+              <td sdval="12"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Country</font></td>
+              <td>{{ application.applicant_kyc.country }}</td>
+            </tr>
+            <tr>
+              <td sdval="13"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Pincode</font></td>
+              <td>{{ application.applicant_kyc.pincode }}</td>
+            </tr>
+            <tr>
+              <td sdval="14"><font size=1>14</font></td>
+              <td align="left" ><font size=1>Occupation</font></td>
+              <td>{{ application.applicant_kyc.occupation }}</td>
+            </tr>
+            <tr>
+              <td sdval="15"><font size=1>15</font></td>
+              <td align="left" ><font size=1></font>Telephone Number</td>
+              <td>{{ application.applicant_kyc.phone_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="16"><font size=1>16</font></td>
+              <td align="left" ><font size=1></font>Mobile Number</td>
+              <td>{{ application.applicant_kyc.mobile_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="17"><font size=1>17</font></td>
+              <td align="left" ><font size=1>Email ID</font></td>
+              <td>{{ application.applicant_kyc.emailid }}</td>
+            </tr>
+            <tr>
+              <td sdval="18"><font size=1>18</font></td>
+              <td align="left" ><font size=1>Spouse Name</font></td>
+              <td>{{ application.applicant_kyc.spouse_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="19"><font size=1>19</font></td>
+              <td align="left" ><font size=1>Spouse Aadhar Card Number </font></td>
+              <td>{{ application.applicant_kyc.spouse_aadhar_card_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="20"><font size=1>20</font></td>
+              <td align="left" ><font size=1>Voter ID Number</font></td>
+              <td>{{ application.applicant_kyc.voterid }}</td>
+            </tr>
+            <tr>
+              <td sdval="21"><font size=1>21</font></td>
+              <td align="left" ><font size=1>Voter ID Name</font></td>
+              <td>{{application.applicant_kyc.voterid_name}}</td>
+            </tr>
+            <tr>
+              <td sdval="22"><font size=1>22</font></td>
+              <td align="left"  height="1px"><font size=1>Voter ID Father's/Husband's Name</font></td>
+              <td>{{ application.applicant_kyc.voter_id_father_s_husband_s_name }}</td>
+            </tr>
+              <tr>
+              <td sdval="23"><font size=1>23</font></td>
+              <td align="left"  height="1px"><font size=1>Pancard Number</font></td>
+              <td>{{ application.applicant_kyc.pancard_id }}</td>
+            </tr>
+              <tr>
+              <td sdval="24"><font size=1>24</font></td>
+              <td align="left"  height="1px"><font size=1>Pancard Name</font></td>
+              <td>{{ application.applicant_kyc.pancard_name }}</td>
+            </tr>
+             <tr>
+              <td sdval="25"><font size=1>25</font></td>
+              <td align="left"  height="1px"><font size=1>Pancard Father's/Husband's Name</font></td>
+              <td>{{ application.applicant_kyc.pan_card_father_s_husband_s_name }}</td>
+             </tr>
+            <tr>
+              <td height="15"><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Other Id Detail Page</font></b></td>
+                <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>1</font></td>
+              <td align="left"  height="1px"><font size=1>Pancard Number</font></td>
+                <td>{{ application.id_pancard }}</td>
+             </tr>
+              <tr>
+              <td sdval="10"><font size=1>2</font></td>
+              <td align="left"  height="1px"><font size=1>Ration card Number</font></td>
+              <td>{{ application.id_ration_card }}</td>
+              </tr>
+               <tr>
+              <td sdval="10"><font size=1>3</font></td>
+              <td align="left"  height="1px"><font size=1>Voter ID No</font></td>
+              <td>{{ application.id_voter }}</td>
+             </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left"  height="1px"><font size=1>Driving License No</font></td>
+              <td>{{ application.id_driving_license }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>5</font></td>
+              <td align="left"  height="1px"><font size=1>Passport No</font></td>
+              <td>{{ application.id_passport }}</td>
+            </tr>
+            <tr>
+              <td height="15"><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Personal Details</font></b></td>
+                <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>1</font></td>
+              <td align="left"  height="1px"><font size=1>Physical Disability</font></td>
+              <td>{{ application.disability }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>2</font></td>
+              <td align="left"  height="1px"><font size=1>Religion</font></td>
+              <td>{{ application.religion }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>3</font></td>
+              <td align="left"  height="1px"><font size=1>Category</font></td>
+              <td>{{ application.category }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left"  height="1px"><font size=1>Marital Status</font></td>
+              <td>{{ application.marital_status }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>5</font></td>
+              <td align="left"  height="1px"><font size=1>Education</font></td>
+               <td>{{ application.education }}</td>
+            </tr>
+            <tr>
+              <td height="15"><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Family Asset Page</font></b></td>
+                <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>1</font></td>
+              <td align="left"  height="1px"><font size=1>Residence Details</font></td>
+              <td>{{ application.residence_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>2</font></td>
+              <td align="left"  height="1px"><font size=1>House Rent Agreement</font></td>
+              <td>{{ application.rent_agreement }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>3</font></td>
+              <td align="left"  height="1px"><font size=1>Monthly Rent</font></td>
+              <td>{{ application.house_monthly_rent}}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left"  height="1px"><font size=1>House Stay Duration</font></td>
+              <td>{{ application.house_stay_duration }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>TELECOMMUNICATION DETAILS</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Mobile Service Provider</font></td>
+              <td>{{ application.mobile_services_provider }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Handset Type</font></td>
+              <td>{{ application.handset_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Internet Data Usage</font></td>
+              <td>{{ application.internet_data_uses }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Billing Type</font></td>
+              <td>{{ application.billing_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Monthly Bill</font></td>
+              <td align="left" >{{ application.average_monthly_bill }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>ELECTRICITY DETAILS</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Power Supplier</font></td>
+              <td >{{ application.power_supplier }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Monthly Bill</font></td>
+              <td>{{ application.electricity_monthly_bill }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>AVERAGE MONTHLY EXPENSES</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Grocery Expenses</font></td>
+              <td>{{ application.grocery_expenses }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Conveyance Expenses</font></td>
+              <td>{{ application.conveyance_expenses }}</td>
+            </tr>
+            <tr>
+              <td sdval="11"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Medical Expenses</font></td>
+              <td>{{ application.medical_expenses }}</td>
+            </tr>
+            <tr>
+              <td sdval="12"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education Expenses</font></td>
+              <td>{{ application.education_expenses }}</td>
+            </tr>
+            <tr>
+              <td sdval="13"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Other Expenses</font></td>
+              <td>{{ application.family_other_expenses }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Family Other Assets</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="14"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Refrigerator</font></td>
+              <td>{{ application.refrigerator }}</td>
+            </tr>
+            <tr>
+              <td sdval="15"><font size=1>2</font></td>
+              <td align="left" ><font size=1>2 Wheeler</font></td>
+              <td>{{ application.two_wheeler }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Television</font></td>
+              <td>{{ application.television }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Computer</font></td>
+              <td>{{ application.computer }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Washing Machine</font></td>
+              <td>{{ application.washing_machine }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Other</font></td>
+              <td>{{ application.other }}</td>
+            </tr>
+             <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member1</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details1.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details1.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details1.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details1.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details1.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details1.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details1.aadhar_number }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member1</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details1.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details1.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details1.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details1.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details1.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details1.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details1.aadhar_number }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details2.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details2.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details2.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details2.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details2.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details2.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details2.aadhar_number }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member3</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details3.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details3.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details3.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details3.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details3.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details3.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details3.aadhar_number }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member4</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details4.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details4.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details4.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details4.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details4.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details4.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details4.aadhar_number }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Family Member5</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.family_details5.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+              <td>{{ application.family_details5.relation }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.family_details5.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Education</font></td>
+              <td>{{ application.family_details5.education }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Occupation Details</font></td>
+              <td>{{ application.family_details5.occupations_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Annual Income</font></td>
+              <td>{{ application.family_details5.annual_income }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Aadhar Number</font></td>
+              <td>{{ application.family_details5.aadhar_number }}</td>
+            </tr>
+
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Personal Info: Bank Detail1 </font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Bank Name</font></td>
+                <td>{{ application.bank_details1.bank_name }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Branch Detail</font></td>
+                <td>{{ application.bank_details1.bank_bank_branch }}</td>
+            </tr>
+            <tr>
+               <td sdval="3"><font size=1>3</font></td>
+               <td align="left" ><font size=1>Account Holder Name</font></td>
+               <td>{{ application.bank_details1.bank_account_holder_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Account Type</font></td>
+              <td>{{ application.bank_details1.bank_bank_account_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Account Number</font></td>
+              <td>{{ application.bank_details1.bank_account_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Account Operational Since</font></td>
+              <td>{{ application.bank_details1.bank_account_operational_since }}</td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>7</font></td>
+                <td align="left" ><font size=1>IFSC Code</font></td>
+                <td>{{ application.bank_details1.bank_ifsc_code }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Personal Info: Bank Detail2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Bank Name</font></td>
+                <td>{{ application.bank_details2.bank_name }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Branch Detail</font></td>
+                <td>{{ application.bank_details2.bank_bank_branch }}</td>
+            </tr>
+            <tr>
+               <td sdval="3"><font size=1>3</font></td>
+               <td align="left" ><font size=1>Account Holder Name</font></td>
+               <td>{{ application.bank_details2.bank_account_holder_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Account Type</font></td>
+              <td>{{ application.bank_details2.bank_bank_account_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Account Number</font></td>
+              <td>{{ application.bank_details2.bank_account_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Account Operational Since</font></td>
+              <td>{{ application.bank_details2.bank_account_operational_since }}</td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>7</font></td>
+                <td align="left" ><font size=1>IFSC Code</font></td>
+                <td>{{ application.bank_details2.bank_ifsc_code }}</td>
+            </tr>
+
+                     <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Personal Info: Bank Detail3 </font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Bank Name</font></td>
+                <td>{{ application.bank_details3.bank_name }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Branch Detail</font></td>
+                <td>{{ application.bank_details3.bank_bank_branch }}</td>
+            </tr>
+            <tr>
+               <td sdval="3"><font size=1>3</font></td>
+               <td align="left" ><font size=1>Account Holder Name</font></td>
+               <td>{{ application.bank_details3.bank_account_holder_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Account Type</font></td>
+              <td>{{ application.bank_details3.bank_bank_account_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Account Number</font></td>
+              <td>{{ application.bank_details3.bank_account_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Account Operational Since</font></td>
+              <td>{{ application.bank_details3.bank_account_operational_since }}</td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>7</font></td>
+                <td align="left" ><font size=1>IFSC Code</font></td>
+                <td>{{ application.bank_details3.bank_ifsc_code }}</td>
+            </tr>
+
+
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Credit Card Info</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Issuer Bank 1</font></td>
+                 <td>{{ application.issue_bank_1}}</td>
+            </tr>
+            <tr>
+                <td sdval="3"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Issuer Bank 2</font></td>
+                <td>{{ application.issue_bank_2}}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Vehicle1 Owned</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+               <td sdval="1"><font size=1>1</font></td>
+               <td align="left" ><font size=1>Type Of Vehicle/Manufacturer</font></td>
+               <td>{{ application.docs_vehicle1.type_of_vehicle_manufacturer }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Year of Registration</font></td>
+                <td>{{ application.docs_vehicle1.year_of_registration }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Resale Value</font></td>
+              <td>{{ application.docs_vehicle1.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Vehicle2 Owned</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+               <td sdval="1"><font size=1>1</font></td>
+               <td align="left" ><font size=1>Type Of Vehicle/Manufacturer</font></td>
+               <td>{{ application.docs_vehicle2.type_of_vehicle_manufacturer }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Year of Registration</font></td>
+                <td>{{ application.docs_vehicle2.year_of_registration }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Resale Value</font></td>
+              <td>{{ application.docs_vehicle2.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Vehicle3 Owned</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+               <td sdval="1"><font size=1>1</font></td>
+               <td align="left" ><font size=1>Type Of Vehicle/Manufacturer</font></td>
+               <td>{{ application.docs_vehicle3.type_of_vehicle_manufacturer }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Year of Registration</font></td>
+                <td>{{ application.docs_vehicle3.year_of_registration }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Resale Value</font></td>
+              <td>{{ application.docs_vehicle3.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Nominee Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.nominee_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left"><font size=1>Age</font></td>
+              <td>{{ application.nominee_age}}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Gender</font></td>
+              <td>{{ application.nominee_gender }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Phone Number</font></td>
+              <td>{{ application.nominee_phone }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Relation</font></td>
+             <td>{{ application.nominee_relationship_with_borrower }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1></font></td>
+              <td align="left" ><font size=1>Details of Land/Immovable Property</font></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Type of Property</font></td>
+              <td>{{ application.land_details1.type_of_property }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Area in Sq. Ft</font></td>
+              <td>{{ application.land_details1.area_in_sqft }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Location</font></td>
+              <td>{{ application.land_details1.land_location }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Outstanding</font></td>
+              <td>{{ application.land_details1.loan_outstanding }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font>5</td>
+              <td align="left" ><b><font size=1>Estimated Resale Value</font></b></td>
+              <td>{{ application.land_details1.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1></font></td>
+              <td align="left" ><font size=1>Details of Land/Immovable Property 2</font></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Type of Property</font></td>
+              <td>{{ application.land_details2.type_of_property }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Area in Sq. Ft</font></td>
+              <td>{{ application.land_details2.area_in_sqft }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Location</font></td>
+              <td>{{ application.land_details2.land_location }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Outstanding</font></td>
+              <td>{{ application.land_details2.loan_outstanding }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font>5</td>
+              <td align="left" ><b><font size=1>Estimated Resale Value</font></b></td>
+              <td>{{ application.land_details2.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1></font></td>
+              <td align="left" ><font size=1>Details of Land/Immovable Property3</font></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Type of Property</font></td>
+              <td>{{ application.land_details3.type_of_property }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Area in Sq. Ft</font></td>
+              <td>{{ application.land_details3.area_in_sqft }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Location</font></td>
+              <td>{{ application.land_details3.land_location }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Outstanding</font></td>
+              <td>{{ application.land_details3.loan_outstanding }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font>5</td>
+              <td align="left" ><b><font size=1>Estimated Resale Value</font></b></td>
+              <td>{{ application.land_details3.estimated_resale_value }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>BUSINESS INFORMATION</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Business Name</font></td>
+              <td>{{ application.business_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Type of Business Entity</font></td>
+              <td>{{ application.type_of_business_entity }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Description of Business</font></td>
+               <td>{{ application.description_business }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>No of Years in Business</font></td>
+              <td>{{ application.no_of_years_in_business }}</td>
+            </tr>
+             <tr>
+              <td sdval="1"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Pancard No</font></td>
+              <td>{{ application.pancard_no}}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>6</font></td>
+              <td align="left" ><font size=1>VAT/Service Tax Regn No</font></td>
+              <td>{{ application.vat_service_tax_regn_no }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Shop and Establishment No</font></td>
+              <td>{{ application.shops__establishment_no }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>8</font></td>
+              <td align="left" ><font size=1>SSI Registration/Entrepeneur Memorandum Ref No</font></td>
+              <td>{{ application.ssi_registration_entrepeneur_memorandum_ref_no }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Permissions/Licenses Reqd</font></td>
+              <td>{{ application.permissions_licenses_reqd }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>10</font></td>
+              <td align="left" ><font size=1>Address of Place of Business</font></td>
+              <td>{{ application.address_of_place_of_business }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Workplace Details</font></td>
+              <td>{{ application.workplace_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Registered Rent Agreement</font></td>
+              <td>{{ application.registered_rent_agreement }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Monthly Rent</font></td>
+              <td>{{ application.monthly_rent}}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>14</font></td>
+              <td align="left" ><font size=1>Area Occupied</font></td>
+              <td>{{ application.area_occupied }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>15</font></td>
+              <td align="left" ><font size=1>Area Market Value</font></td>
+              <td>{{ application.area_market_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>16</font></td>
+              <td align="left" ><font size=1>Outstanding Loan</font></td>
+              <td>{{ application.outstanding_loan }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Business Info: Other Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Details of Finished Goods</font></td>
+              <td>{{ application.details_of_finished_goods }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Details of Principal Raw Materials</font></td>
+              <td>{{ application.details_of_principal_raw_materials}}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Method of Reaching out to Customers to increase Business</font></td>
+              <td>{{ application.business_outreach_methods }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Place/Agency of Purchase of Raw Materials</font></td>
+              <td>{{ application.place_agency_of_purchase_of_materials}}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Place of storage for Material</font></td>
+              <td>{{ application.place_of_storage_for_material }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Nature of keeping business accounts</font></td>
+              <td>{{ application.nature_of_keeping_business_accounts }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Business Assets-Average value of Inventory</font></td>
+              <td>{{ application.business_assets_average_value_of_inventory }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Business Assets-Average value of Receivables</font></td>
+              <td>{{ application.business_assets_average_value_of_receivables }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Type of Equipment/Machinery</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Details of Equipment Supplier</font></td>
+              <td>{{ application.type_equipment1.details_of_equipment_supplier }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Date of Manufacturing Equipment</font></td>
+              <td>{{ application.type_equipment1.date_of_manufacturing_equipment }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Value</font></td>
+              <td>{{ application.type_equipment1.estimated_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Is equipment given as Collateral?</font></td>
+              <td>{{ application.type_equipment1.is_equipment_given_as_collateral }}</td>
+            </tr>
+               <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Type of Equipment/Machinery 2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Details of Equipment Supplier</font></td>
+              <td>{{ application.type_equipment2.details_of_equipment_supplier }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Date of Manufacturing Equipment</font></td>
+              <td>{{ application.type_equipment2.date_of_manufacturing_equipment }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Value</font></td>
+              <td>{{ application.type_equipment2.estimated_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Is equipment given as Collateral?</font></td>
+              <td>{{ application.type_equipment2.is_equipment_given_as_collateral }}</td>
+            </tr>
+               <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Type of Equipment/Machinery 3</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Details of Equipment Supplier</font></td>
+              <td>{{ application.type_equipment3.details_of_equipment_supplier }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Date of Manufacturing Equipment</font></td>
+              <td>{{ application.type_equipment3.date_of_manufacturing_equipment }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Estimated Value</font></td>
+              <td>{{ application.type_equipment3.estimated_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Is equipment given as Collateral?</font></td>
+              <td>{{ application.type_equipment3.is_equipment_given_as_collateral }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Business Info: Employee Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Permanent Employees</font></td>
+              <td>{{ application.permanent_employees }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Average Monthly Wage for Permanent Employees</font></td>
+              <td>{{ application.average_monthly_wage_for_permanent_employees }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Contract Employees</font></td>
+              <td>{{ application.contract_employees }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Average Monthly Wage for Contract Employees</font></td>
+              <td>{{ application.average_monthly_wage_for_contract_employees }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Relatives in Business</font></td>
+              <td>{{ application.relatives_in_business}}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Average Monthly Wage for Relatives</font></td>
+              <td>{{ application.average_monthly_wage_for_relatives }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Wages Paid</font></td>
+              <td>{{ application.wages_paid }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Business Info: Monthly Expenses</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Electricity Charges</font></td>
+              <td>{{ application.electricity_charges }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Petrol Expenses</font></td>
+              <td>{{ application.petrol_expenses }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Freight Charges</font></td>
+              <td>{{ application.freight_charges }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Salaries and Wages</font></td>
+              <td>{{ application.salaries_and_wages }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Other Expenses</font></td>
+              <td>{{ application.other_expenses }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Sales Information for last 1 year</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Sale in January</font></td>
+              <td>{{ application.sales_revenue_in_1_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Sale in February</font></td>
+              <td>{{ application.sales_revenue_in_2_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Sale in March</font></td>
+              <td>{{ application.sales_revenue_in_3_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Sales in April</font></td>
+               <td>{{ application.sales_revenue_in_4_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Sales in May</font></td>
+               <td>{{ application.sales_revenue_in_5_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Sales in June</font></td>
+               <td>{{ application.sales_revenue_in_6_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Sales in July</font></td>
+              <td>{{ application.sales_revenue_in_7_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Sales in August</font></td>
+               <td>{{ application.sales_revenue_in_8_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Sales in September</font></td>
+               <td>{{ application.sales_revenue_in_19_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>10</font></td>
+              <td align="left" ><font size=1>Sale in October</font></td>
+               <td>{{ application.sales_revenue_in_10_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Sales in November</font></td>
+               <td>{{ application.sales_revenue_in_11_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Sales in December</font></td>
+              <td>{{ application.sales_revenue_in_12_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Total Annual Revenue-Cash</font></td>
+              <td>{{ application.total_annual_revenue_cash }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>14</font></td>
+              <td align="left" ><font size=1>Total Annual Revenue-Credit</font></td>
+              <td>{{ application.total_annual_revenue_credit }}</td>
+            </tr>
+                 <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Purhase Information for last 1 year</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Purhase in January</font></td>
+              <td>{{ application.raw_material_purchase_in_1_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Purhase in February</font></td>
+              <td>{{ application.raw_material_purchase_in_2_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Purhase in March</font></td>
+              <td>{{ application.raw_material_purchase_in_3_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Purhase in April</font></td>
+               <td>{{ application.raw_material_purchase_in_4_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Purhase in May</font></td>
+               <td>{{ application.raw_material_purchase_in_5_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Purhase in June</font></td>
+               <td>{{ application.raw_material_purchase_in_6_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>7</font></td>
+              <td align="left" ><font size=1>Purhase in July</font></td>
+              <td>{{ application.raw_material_purchase_in_7_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Purhase in August</font></td>
+               <td>{{ application.raw_material_purchase_in_8_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Purhase in September</font></td>
+               <td>{{ application.raw_material_purchase_in_9_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>10</font></td>
+              <td align="left" ><font size=1>Purhase in October</font></td>
+               <td>{{ application.raw_material_purchase_in_10_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Purhase in November</font></td>
+               <td>{{ application.raw_material_purchase_in_11_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Purhase in December</font></td>
+              <td>{{ application.raw_material_purchase_in_12_month }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Total Annual Purchase-Cash</font></td>
+              <td>{{ application.total_annual_purchase_cash }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>14</font></td>
+              <td align="left" ><font size=1>Total Annual Purchase-Credit</font></td>
+              <td>{{ application.total_annual_purchase_credit }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Customer1</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.address }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.telephone_no }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Customer2</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.name_2 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.address_2 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.telephone_no_2 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Customer3</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.name_3 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.address_3 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.telephone_no_3 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Customer4</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.name_4 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.address_4 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.telephone_no_4 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Customer5</font></b></td>
+               <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.name_5 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.address_5 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.telephone_no_5 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Supplier1</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.sup_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.sup_address }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.sup_telephoneno }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Supplier2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.sup_name_2 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.sup_address_2 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.sup_telephoneno_2 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Supplier3</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.sup_name_3 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.sup_address_3 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.sup_telephoneno_3 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Supplier4</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.sup_name_4 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.sup_address_4 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td> {{ application.sup_telephoneno_4 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Key Supplier5</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.sup_name_5 }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Address</font></td>
+              <td>{{ application.sup_address_5 }}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.sup_telephoneno_5 }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Business Info: Bank Details1</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Bank Name</font></td>
+                <td>{{ application.bank_details4.bank_name }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Branch Detail</font></td>
+                <td>{{ application.bank_details4.bank_bank_branch }}</td>
+            </tr>
+            <tr>
+               <td sdval="3"><font size=1>3</font></td>
+               <td align="left" ><font size=1>Account Holder Name</font></td>
+               <td>{{ application.bank_details4.bank_account_holder_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Account Type</font></td>
+              <td>{{ application.bank_details4.bank_bank_account_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Account Number</font></td>
+              <td>{{ application.bank_details4.bank_account_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Account Operational Since</font></td>
+              <td>{{ application.bank_details4.bank_account_operational_since }}</td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>7</font></td>
+                <td align="left" ><font size=1>IFSC Code</font></td>
+                <td>{{ application.bank_details4.bank_ifsc_code }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Business Info: Bank Details2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>1</font></td>
+                <td align="left" ><font size=1>Bank Name</font></td>
+                <td>{{ application.bank_details5.bank_name }}</td>
+            </tr>
+            <tr>
+                <td sdval="2"><font size=1>2</font></td>
+                <td align="left" ><font size=1>Branch Detail</font></td>
+                <td>{{ application.bank_details5.bank_bank_branch }}</td>
+            </tr>
+            <tr>
+               <td sdval="3"><font size=1>3</font></td>
+               <td align="left" ><font size=1>Account Holder Name</font></td>
+               <td>{{ application.bank_details5.bank_account_holder_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Account Type</font></td>
+              <td>{{ application.bank_details5.bank_bank_account_type }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Account Number</font></td>
+              <td>{{ application.bank_details5.bank_account_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Account Operational Since</font></td>
+              <td>{{ application.bank_details5.bank_account_operational_since }}</td>
+            </tr>
+            <tr>
+                <td sdval="1"><font size=1>7</font></td>
+                <td align="left" ><font size=1>IFSC Code</font></td>
+                <td>{{ application.bank_details5.bank_ifsc_code }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Borrowings: Loan1</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>From</font></td>
+              <td >{{ application.loan_details1.festival_expense }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Name of Bank/Credit Society Name</font></td>
+              <td >{{ application.loan_details1.name_of_bank }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Type of Loan</font></td>
+              <td >{{ application.loan_details1.type_of_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td >{{ application.loan_details1.loan_amount_key }}</td>
+            </tr>
+              <tr>
+              <td sdval="3"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Tenure in Months</font></td>
+              <td >{{ application.loan_details1.tenure_in_months }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Interest Rate</font></td>
+              <td >{{ application.loan_details1.interest }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>7</font></td>
+              <td align="left" ><font size=1>EMI</font></td>
+              <td >{{ application.loan_details1.emi_repayments }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Collateral Details</font></td>
+              <td >{{ application.loan_details1.collateral_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Outstanding Loan Amount</font></td>
+              <td >{{ application.loan_details1.outstanding_loan_amount }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Borrowings: Loan2</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>From</font></td>
+              <td >{{ application.loan_details2.festival_expense }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Name of Bank/Credit Society Name</font></td>
+              <td >{{ application.loan_details2.name_of_bank }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Type of Loan</font></td>
+              <td >{{ application.loan_details2.type_of_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td >{{ application.loan_details2.loan_amount_key }}</td>
+            </tr>
+              <tr>
+              <td sdval="3"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Tenure in Months</font></td>
+              <td >{{ application.loan_details2.tenure_in_months }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Interest Rate</font></td>
+              <td >{{ application.loan_details2.interest }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>7</font></td>
+              <td align="left" ><font size=1>EMI</font></td>
+              <td >{{ application.loan_details2.emi_repayments }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Collateral Details</font></td>
+              <td >{{ application.loan_details2.collateral_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Outstanding Loan Amount</font></td>
+              <td >{{ application.loan_details2.outstanding_loan_amount }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Borrowings: Loan</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>From</font></td>
+              <td >{{ application.loan_details3.festival_expense }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Name of Bank/Credit Society Name</font></td>
+              <td >{{ application.loan_details3.name_of_bank }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Type of Loan</font></td>
+              <td >{{ application.loan_details3.type_of_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td >{{ application.loan_details3.loan_amount_key }}</td>
+            </tr>
+              <tr>
+              <td sdval="3"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Tenure in Months</font></td>
+              <td >{{ application.loan_details3.tenure_in_months }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Interest Rate</font></td>
+              <td >{{ application.loan_details3.interest }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>7</font></td>
+              <td align="left" ><font size=1>EMI</font></td>
+              <td >{{ application.loan_details3.emi_repayments }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Collateral Details</font></td>
+              <td >{{ application.loan_details3.collateral_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Outstanding Loan Amount</font></td>
+              <td >{{ application.loan_details3.outstanding_loan_amount }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Borrowings: Loan</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>From</font></td>
+              <td >{{ application.loan_details4.festival_expense }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Name of Bank/Credit Society Name</font></td>
+              <td >{{ application.loan_details4.name_of_bank }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Type of Loan</font></td>
+              <td >{{ application.loan_details4.type_of_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td >{{ application.loan_details4.loan_amount_key }}</td>
+            </tr>
+              <tr>
+              <td sdval="3"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Tenure in Months</font></td>
+              <td >{{ application.loan_details4.tenure_in_months }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Interest Rate</font></td>
+              <td >{{ application.loan_details4.interest }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>7</font></td>
+              <td align="left" ><font size=1>EMI</font></td>
+              <td >{{ application.loan_details4.emi_repayments }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Collateral Details</font></td>
+              <td >{{ application.loan_details4.collateral_details }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Outstanding Loan Amount</font></td>
+              <td >{{ application.loan_details4.outstanding_loan_amount }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>For How Many Borrowers you have furnished Guarantees..?</font></b></td>
+              <td align="left" ><b><font size=1>Details of Guarantees Furnished on Behalf of Other Borrowers</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name of Borrower</font></td>
+              <td >{{ application.guarantor_carddetails1.name_of_borrower }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td>{{application.guarantor_carddetails1.loan_amount }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Bank/Credit Co-operative Society</font></td>
+              <td >{{ application.guarantor_carddetails1.bank_credit_society}}</td>
+            </tr>
+             <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Guarantees Furnished on Behalf of Other Borrowers</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name of Borrower</font></td>
+              <td >{{ application.guarantor_carddetails2.name_of_borrower }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td>{{application.guarantor_carddetails2.loan_amount }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Bank/Credit Co-operative Society</font></td>
+              <td >{{ application.guarantor_carddetails2.bank_credit_society}}</td>
+            </tr>
+             <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Details of Guarantees Furnished on Behalf of Other Borrowers</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name of Borrower</font></td>
+              <td >{{ application.guarantor_carddetails3.name_of_borrower }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Loan Amount</font></td>
+              <td>{{application.guarantor_carddetails3.loan_amount }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Bank/Credit Co-operative Society</font></td>
+              <td >{{ application.guarantor_carddetails3.bank_credit_society}}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Applied Loan Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Purpose Of Loan</font></td>
+              <td >{{ application.purpose_of_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Required Loan Amount</font></td>
+              <td >{{ application.applied_loan }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Repayment Option</font></td>
+              <td >{{ application.repayment_method }}</td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Guarantor 1 Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.guarantor1_kyc.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>UID</font></td>
+              <td>{{ application.guarantor1_kyc.kyc_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Father's/Husband's Name</font></td>
+              <td>{{ application.guarantor1_kyc.father_or_husband_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Date Of Birth</font></td>
+              <td>{{ application.guarantor1_kyc.dob }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.guarantor1_kyc.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Gender</font></td>
+              <td>{{ application.guarantor1_kyc.gender }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>7</font></td>
+              <td align="left" ><b><font size=1>Address</font></b></td>
+              <td>{{ application.guarantor1_kyc.address }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Taluk</font></td>
+              <td>{{ application.guarantor1_kyc.taluk }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>9</font></td>
+              <td align="left" ><font size=1>District</font></td>
+              <td>{{ application.guarantor1_kyc.district }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>10</font></td>
+              <td align="left" ><font size=1>State</font></td>
+              <td>{{ application.guarantor1_kyc.state }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Permanent Address</font></td>
+              <td>{{ application.guarantor1_kyc.address }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Country</font></td>
+              <td>{{ application.guarantor1_kyc.country }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Pincode</font></td>
+              <td>{{ application.guarantor1_kyc.pincode }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1>14</font></td>
+              <td align="left" ><b><font size=1>Occupation</font></b></td>
+              <td>{{ application.guarantor1_kyc.occupation }}</td>
+            </tr>
+            <tr>
+              <td><font size=1>15</font></td>
+              <td align="left" ><b><font size=1>Telephone Number</font></b></td>
+              <td>{{ application.guarantor1_kyc.phone_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>16</font></td>
+              <td align="left" ><font size=1>Mobile Number</font></td>
+              <td>{{ application.guarantor1_kyc.mobile_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>17</font></td>
+              <td align="left" ><font size=1>Email Id</font></td>
+              <td>{{ application.guarantor1_kyc.emailid }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>18</font></td>
+              <td align="left" ><font size=1>Spouse Name</font></td>
+              <td>{{ application.guarantor1_kyc.spouse_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>19</font></td>
+              <td align="left" ><font size=1>Spouse Aadhar Card Number</font></td>
+              <td>{{ application.guarantor1_kyc.spouse_aadhar_card_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>20</font></td>
+              <td align="left" ><font size=1>Voter ID Number</font></td>
+              <td>{{ application.guarantor1_kyc.voterid }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>21</font></td>
+              <td align="left" ><font size=1>Voter ID Name</font></td>
+              <td>{{ application.guarantor1_kyc.voterid_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>22</font></td>
+              <td align="left" ><font size=1>Voter ID Father's/Husband's Name</font></td>
+              <td>{{ application.guarantor1_kyc.voter_id_father_s_husband_s_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>23</font></td>
+              <td align="left" ><font size=1>Pancard Number</font></td>
+              <td>{{ application.guarantor1_kyc.pancard_id}}</td>
+            </tr>
+            <tr>
+              <td sdval="9"><font size=1>24</font></td>
+              <td align="left" ><font size=1>Pancard Name</font></td>
+              <td>{{ application.guarantor1_kyc.pancard_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="10"><font size=1>25</font></td>
+              <td align="left" ><font size=1>Pancard Father's/Husband's Name</font></td>
+              <td>{{ application.guarantor1_kyc.pan_card_father_s_husband_s_name }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Guarantor 2 Details</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="12"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Name</font></td>
+              <td>{{ application.guarantor2_kyc.name }}</td>
+            </tr>
+            <tr>
+              <td sdval="13"><font size=1>2</font></td>
+              <td align="left" ><font size=1>UID</font></td>
+              <td>{{ application.guarantor2_kyc.kyc_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="14"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Father's/Husband's Name</font></td>
+               <td>{{ application.guarantor2_kyc.father_or_husband_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="15"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Date Of Birth</font></td>
+              <td>{{ application.guarantor2_kyc.dob }}</td>
+            </tr>
+            <tr>
+              <td sdval="16"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Age</font></td>
+              <td>{{ application.guarantor2_kyc.age }}</td>
+            </tr>
+            <tr>
+              <td sdval="17"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Gender</font></td>
+              <td>{{ application.guarantor2_kyc.gender }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1>7</font></td>
+              <td align="left" ><b><font size=1>Address</font></b></td>
+              <td>{{ application.guarantor2_kyc.address }}</td>
+            </tr>
+            <tr>
+              <td><font size=1>8</font></td>
+              <td align="left" ><b><font size=1>Taluk</font></b></td>
+              <td>{{ application.guarantor2_kyc.taluk }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>9</font></td>
+              <td align="left" ><font size=1>District</font></td>
+              <td>{{ application.guarantor2_kyc.district }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>10</font></td>
+              <td align="left" ><font size=1>State</font></td>
+              <td>{{ application.guarantor2_kyc.state }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>11</font></td>
+              <td align="left" ><font size=1>Permanent Address</font></td>
+              <td>{{ application.guarantor2_kyc.address }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>12</font></td>
+              <td align="left" ><font size=1>Country</font></td>
+              <td>{{ application.guarantor2_kyc.country }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>13</font></td>
+              <td align="left" ><font size=1>Pincode</font></td>
+              <td>{{ application.guarantor2_kyc.pincode }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>14</font></td>
+              <td align="left" ><font size=1>Occupation</font></td>
+              <td>{{ application.guarantor2_kyc.occupation }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>15</font></td>
+              <td align="left" ><font size=1>Telephone Number</font></td>
+              <td>{{ application.guarantor2_kyc.phone_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="7"><font size=1>16</font></td>
+              <td align="left" ><font size=1>Mobile Number</font></td>
+             <td>{{ application.guarantor2_kyc.mobile_number }}</td>
+            </tr>
+            <tr>
+              <td sdval="8"><font size=1>17</font></td>
+              <td align="left" ><font size=1>Email Id</font></td>
+              <td>{{ application.guarantor2_kyc.emailid }}</td>
+            </tr>
+            <tr>
+              <td><font size=1>18</font></td>
+              <td align="left" ><b><font size=1>Spouse Name</font></b></td>
+             <td>{{ application.guarantor2_kyc.spouse_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>19</font></td>
+              <td align="left" ><font size=1>Spouse Aadhar Card Number</font></td>
+              <td>{{ application.guarantor2_kyc.spouse_aadhar_card_number }}</td>
+            </tr>
+            <tr>
+              <td height="45" sdval="2"><font size=1>20</font></td>
+              <td align="left" ><font size=1>Voter ID Number</font></td>
+              <td>{{ application.guarantor2_kyc.voterid }}</td>
+            </tr>
+            <tr>
+              <td height="45" sdval="3"><font size=1>21</font></td>
+              <td align="left" ><font size=1>Voter ID Name</font></td>
+              <td>{{ application.guarantor2_kyc.voterid_name }}</td>
+            </tr>
+            <tr>
+              <td height="30" sdval="4"><font size=1>22</font></td>
+              <td align="left" ><font size=1>Voter ID Father's/Husband's Name</font></td>
+              <td>{{ application.guarantor2_kyc.voter_id_father_s_husband_s_name }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>23</font></td>
+              <td align="left" ><font size=1>Pancard Number</font></td>
+              <td>{{ application.guarantor2_kyc.pancard_id }}</td>
+            <tr>
+              <td height="30" sdval="6"><font size=1>24</font></td>
+              <td align="left" ><font size=1>Pancard Name</font></td>
+              <td>{{ application.guarantor2_kyc.pancard_name }}</td>
+            </tr>
+            <tr>
+              <td><font size=1>25</font></td>
+              <td align="left" ><b><font size=1>Pancard Father's/Husband's Name</font></b></td>
+              <td>{{ application.guarantor2_kyc.pan_card_father_s_husband_s_name }}</td>
+            </tr>
+            <tr>
+              <td height="30"><font size=1></font></td>
+              <td align="left" ><b><font size=1>Assets and Liability</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Assets</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td height="30" sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Cash and Bank Balance</font></td>
+              <td>{{ application.cash_and_bank_balance }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Immovable Property(Estimated Value) – Residential</font></td>
+              <td>{{ application.immovable_estimated_value_residential }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Immovable Property(Estimated Value) – Commercial</font></td>
+              <td>{{ application.immovable_estimated_value_commercial }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Immovable Property(Estimated Value) – Agriculture</font></td>
+              <td>{{ application.immovable_estimated_value_agriculture }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Raw Material in Hand</font></td>
+              <td>{{ application.raw_material_in_han }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Receivables from Customer</font></td>
+              <td>{{ application.receivables_from_customer }}</td>
+            </tr>
+            <tr>
+              <td sdval="6"><font size=1>7</font></td>
+              <td align="left" ><b><font size=1>Vehicles(Current Estimate or Resale Value)</font></b></td>
+              <td>{{ application.vehicles_resale_value }}
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>8</font></td>
+              <td align="left" ><font size=1>Gold and Jewellery</font></td>
+              <td>{{ application.gold_and_jewellery }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>9</font></td>
+              <td align="left" ><font size=1>Fixed Deposit and PPF</font></td>
+              <td>{{ application.fixed_deposit_and_ppf }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>10</font></td>
+              <td align="left" ><font size=1>Insurance Policies</font></td>
+              <td>{{ application.insurance_policies }}</td>
+            </tr>
+             <tr>
+              <td><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Liability</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Loan Outstanding Against(Property Value) – Residential</font></td>
+              <td>{{ application.loan_outstanding_against_residential }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Loan Outstanding Against(Property Value) – Commercial</font></td>
+              <td>{{ application.loan_outstanding_against_commercial_ }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Loan Outstanding Against(Property Value) – Agriculture</font></td>
+              <td>{{ application.loan_outstanding_against_agriculture }}</td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Creditors for Raw Material</font></td>
+              <td>{{ application.creditors_for_raw_material }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Vehicle Loans</font></td>
+              <td>{{ application.vehicle_loans }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>6</font></td>
+              <td align="left" ><font size=1>Loans from Relatives,Money lender etc</font></td>
+              <td>{{ application.loans_from_whom }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Primary Asset for Hypothecation</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Goods Details</font></td>
+              <td>{{ application.primary_asset_for_hypothecation_details_of_hypothecated_goods }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Market Value</font></td>
+              <td>{{ application.primary_asset_for_hypothecation_current_market_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Purchase Year</font></td>
+              <td>{{ application.primary_asset_for_hypothecation_purchase_year }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Purchase Price</font></td>
+              <td>{{ application.primary_asset_for_hypothecation_purchase_price}}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Purchase Purpose</font></td>
+             <td>{{ application.primary_asset_for_hypothecation_purchase_purpose }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Secondary Asset for Hypothecation</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Goods Details</font></td>
+              <td>{{ application.secondary_asset_for_hypothecation_details_of_hypothecated_goods }}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Market Value</font></td>
+              <td>{{ application.secondary_asset_for_hypothecation_current_market_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Purchase Year</font></td>
+              <td>{{ application.secondary_asset_for_hypothecation_purchase_year }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Purchase Price</font></td>
+              <td>{{ application.secondary_asset_for_hypothecation_purchase_price }}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Purchase Purpose</font></td>
+             <td>{{ application.secondary_asset_for_hypothecation_purchase_purpose }}</td>
+            </tr>
+            <tr>
+              <td ><font size=1><br></font></td>
+              <td align="left" ><b><font size=1>Tertiary Asset for Hypothecation</font></b></td>
+              <td align="left" ><font color="#000000"><br></font></td>
+            </tr>
+            <tr>
+              <td sdval="1"><font size=1>1</font></td>
+              <td align="left" ><font size=1>Goods Details</font></td>
+              <td>{{ application.tertiary_asset_for_hypothecation_details_of_hypothecated_goods}}</td>
+            </tr>
+            <tr>
+              <td sdval="2"><font size=1>2</font></td>
+              <td align="left" ><font size=1>Market Value</font></td>
+              <td>{{ application.tertiary_asset_for_hypothecation_current_market_value }}</td>
+            </tr>
+            <tr>
+              <td sdval="3"><font size=1>3</font></td>
+              <td align="left" ><font size=1>Purchase Year</font></td>
+              <td>{{ application.tertiary_asset_for_hypothecation_purchase_year }}</td>
+            </tr>
+            <tr>
+              <td sdval="4"><font size=1>4</font></td>
+              <td align="left" ><font size=1>Purchase Price</font></td>
+              <td>{{ application.tertiary_asset_for_hypothecation_purchase_price}}</td>
+            </tr>
+            <tr>
+              <td sdval="5"><font size=1>5</font></td>
+              <td align="left" ><font size=1>Purchase Purpose</font></td>
+             <td>{{ application.tertiary_asset_for_hypothecation_purchase_purpose }}</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
