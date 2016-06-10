@@ -25,8 +25,9 @@ class AddApplicationMobile(Form):
     locations_map = TextField(validators=[v.Length(max=10000)])
 
     guarantor1_kyc_details = TextField(validators=[v.Length(max=10000)])
-    # guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
-
+    guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
+    guarantor1_other_card_details2 = TextField(validators=[v.Length(max=10000)])
+    guarantor1_other_card_details3 = TextField(validators=[v.Length(max=10000)])
     guarantor2_kyc_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_kyc_details = TextField(validators=[v.Length(max=10000)])
@@ -48,6 +49,9 @@ class AddApplicationMobile(Form):
 
     applicant_other_card_bank_details1 = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_bank_details2 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_bank_details3 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_bank_details4 = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_bank_details5 = TextField(validators=[v.Length(max=10000)])
 
     applicant_family_expenditure = TextField(validators=[v.Length(max=10000)])
     applicant_family_details_members = TextField(validators=[v.Length(max=10000)])
@@ -92,6 +96,10 @@ class AddApplicationMobile(Form):
     applicant_other_card_bus_monthly_exp = TextField(validators=[v.Length(max=10000)])
 
     applicant_business_docs_customer1 = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_cust_supplier = TextField(validators=[v.Length(max=10000)])
+
+    applicant_other_card_id_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_other_card_emp_business_info = TextField(validators=[v.Length(max=10000)])
 
@@ -139,6 +147,24 @@ class AddApplicationMobile(Form):
             tenure_in_months = toFloat(data.get("tenure_in_months", "")),
             collateral_details = data.get("collateral_details", ""),
             outstanding_loan_amount = toFloat(data.get("outstanding_loan_amount", ""))
+        )
+
+    def load_bank_details(self,data):
+        return EsthenosOrgApplicationBankDetails(
+            bank_name = data.get("bank_name", ""),
+            bank_ifsc_code = data.get("branch_ifsc_code", ""),
+            bank_account_number = data.get("account_number", ""),
+            bank_account_holder_name = data.get("account_holder_name", ""),
+            bank_bank_branch = data.get("bank_branch", ""),
+            bank_bank_account_type = data.get("bank_account_type", ""),
+            bank_account_operational_since = data.get("account_operational_since", "")
+        )
+
+    def load_guarantor_card_details(self,data):
+        return EsthenosOrgGuarantorCardDetails(
+            bank_credit_society = data.get("bank_credit_co_perative_society",""),
+            name_of_borrower = data.get("name_of_borrower",""),
+            loan_amount = toFloat(data.get("loan_amount",""))
         )
 
     def load_type_equipment(self, data):
@@ -232,24 +258,6 @@ class AddApplicationMobile(Form):
         app.purpose_of_loan = data.get("purpose_of_loan", "")
         app.repayment_method = data.get("repayment_option", "")
 
-        data = self.load(self.applicant_other_card_bank_details1)
-        app.bank_name = data.get("bank_name", "")
-        app.bank_ifsc_code = data.get("branch_ifsc_code", "")
-        app.bank_account_number = data.get("account_number", "")
-        app.bank_account_holder_name = data.get("account_holder_name", "")
-        app.bank_bank_branch = data.get("bank_branch", "")
-        app.bank_bank_account_type = data.get("bank_account_type", "")
-        app.bank_account_operational_since = data.get("account_operational_since", "")
-
-        data = self.load(self.applicant_other_card_bank_details2)
-        app.bank2_name = data.get("bank_name", "")
-        app.bank2_ifsc_code = data.get("branch_ifsc_code", "")
-        app.bank2_account_number = data.get("account_number", "")
-        app.bank2_account_holder_name = data.get("account_holder_name", "")
-        app.bank2_bank_branch = data.get("bank_branch", "")
-        app.bank2_bank_account_type = data.get("bank_account_type", "")
-        app.bank2_account_operational_since = data.get("account_operational_since", "")
-
         data = self.load(self.applicant_business_docs_details4)
         app.details_of_finished_goods = data.get("details_of_finished_goods","")
         app.business_outreach_methods = data.get("method_of_reaching_out_to_customers_to_increase_business","")
@@ -275,7 +283,7 @@ class AddApplicationMobile(Form):
         app.name_2 = data.get("name_2", "")
         app.name_5 = data.get("name_5", "")
         app.telephone_no_4 = toInt(data.get("telephone_no_4", ""))
-        app.address_4 = data.get("address_4", "")
+        app.address_5 = data.get("address_5", "")
         app.address_2 = data.get("address_2", "")
         app.institution_credit= data.get("address_2", "")
         app.telephone_no_3 = toInt(data.get("telephone_no_3", ""))
@@ -285,6 +293,31 @@ class AddApplicationMobile(Form):
         app.individual_credit= data.get("individual_credit", "")
         app.telephone_no_5 = toInt(data.get("telephone_no_5", ""))
         app.telephone_no = toInt(data.get("telephone_no", ""))
+
+        data = self.load(self.applicant_other_card_cust_supplier)
+        app.sup_address = data.get("address","")
+        app.sup_telephoneno_4 = data.get("telephoneno_4","")
+        app.sup_name_4 = data.get("name_4","")
+        app.sup_name_3 = data.get("name_3","")
+        app.sup_telephoneno_2= data.get("telephoneno_2","")
+        app.sup_address_5 = data.get("address_5","")
+        app.sup_telephoneno_5 = data.get("telephoneno_5","")
+        app.sup_telephoneno_3 = data.get("telephoneno_3","")
+        app.sup_credit = data.get("credit","7 days")
+        app.sup_name_2 = data.get("name_2","")
+        app.sup_name_5 = data.get("name_5","")
+        app.sup_address_4 = data.get("address_4","")
+        app.sup_address_2 = data.get("address_2","")
+        app.sup_address_3 = data.get("address_3","")
+        app.sup_name = data.get("name","")
+        app.sup_telephoneno = data.get("telephoneno","")
+
+        data = self.load(self.applicant_other_card_id_details)
+        app.id_pancard = data.get("pan_card","")
+        app.id_driving_license = data.get("driving_license","")
+        app.id_passport = data.get("passport","")
+        app.id_voter = data.get("voter_id","")
+        app.id_ration_card = data.get("ration_card","")
 
         data = self.load(self.applicant_hypothecation_goods_details1)
         app.primary_asset_for_hypothecation_purchase_year = data.get("purchase_year", "")
@@ -440,7 +473,15 @@ class AddApplicationMobile(Form):
             mobile_number = applicant["mobile_number"],
             father_or_husband_name = applicant["father_s_husband_s_name"],
             spouse_aadhar_card_number = applicant["spouse_aadhar_card_number"],
-            spouse_name = applicant["spouse_name"]
+            spouse_name = applicant["spouse_name"],
+            occupation = applicant["occupation"],
+            emailid = applicant["email_id"],
+            voterid = applicant["voter_id"],
+            voterid_name = applicant["voter_id_name"],
+            voter_id_father_s_husband_s_name = applicant["voter_id_father_s_husband_s_name"],
+            pancard_id = applicant["pan_card_id"],
+            pancard_name = applicant["pan_card_name"],
+            pan_card_father_s_husband_s_name = applicant["pan_card_father_s_husband_s_name"]
         )
         
         # add family details.
@@ -484,6 +525,31 @@ class AddApplicationMobile(Form):
         data = self.load(self.applicant_loan_details_details4)
         app.loan_details4 = self.load_loan_details(data)
 
+        #add bank details.
+        data = self.load(self.applicant_other_card_bank_details1)
+        app.bank_details1 = self.load_bank_details(data)
+
+        data = self.load(self.applicant_other_card_bank_details2)
+        app.bank_details2 = self.load_bank_details(data)
+
+        data = self.load(self.applicant_other_card_bank_details3)
+        app.bank_details3 = self.load_bank_details(data)
+
+        data = self.load(self.applicant_other_card_bank_details4)
+        app.bank_details4 = self.load_bank_details(data)
+
+        data = self.load(self.applicant_other_card_bank_details5)
+        app.bank_details5 = self.load_bank_details(data)
+
+        #guarantor1 card details
+        data = self.load(self.guarantor1_other_card_details1)
+        app.guarantor_carddetails1 = self.load_guarantor_card_details(data)
+
+        data = self.load(self.guarantor1_other_card_details2)
+        app.guarantor_carddetails2 = self.load_guarantor_card_details(data)
+
+        data = self.load(self.guarantor1_other_card_details3)
+        app.guarantor_carddetails3 = self.load_guarantor_card_details(data)
 
         # add equipment type details.
         data = self.load(self.applicant_other_card_type_equipment1)
@@ -525,7 +591,15 @@ class AddApplicationMobile(Form):
             mobile_number = guarantor1.get("mobile_number", []),
             father_or_husband_name = guarantor1.get("father_s_husband_s_name", []),
             spouse_aadhar_card_number = guarantor1.get("spouse_aadhar_card_number", []),
-            spouse_name = guarantor1.get("spouse_name", [])
+            spouse_name = guarantor1.get("spouse_name", []),
+            occupation = guarantor1.get("occupation", []),
+            emailid = guarantor1.get("email_id",[]),
+            voterid = guarantor1.get("voter_id",[]),
+            voterid_name = guarantor1.get("voter_id_name",[]),
+            voter_id_father_s_husband_s_name = guarantor1.get("voter_id_father_s_husband_s_name",[]),
+            pancard_id = guarantor1.get("pan_card_id",[]),
+            pancard_name = guarantor1.get("pan_card_name",[]),
+            pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[])
         )
 
         guarantor2 = self.load(self.guarantor2_kyc_details)
@@ -545,7 +619,15 @@ class AddApplicationMobile(Form):
             mobile_number = guarantor2.get("mobile_number", []),
             father_or_husband_name = guarantor2.get("father_s_husband_s_name", []),
             spouse_aadhar_card_number = guarantor2.get("spouse_aadhar_card_number", []),
-            spouse_name = guarantor2.get("spouse_name", [])
+            spouse_name = guarantor2.get("spouse_name", []),
+            occupation = guarantor1.get("occupation", []),
+            emailid = guarantor1.get("email_id",[]),
+            voterid = guarantor1.get("voter_id",[]),
+            voterid_name = guarantor1.get("voter_id_name",[]),
+            voter_id_father_s_husband_s_name = guarantor1.get("voter_id_father_s_husband_s_name",[]),
+            pancard_id = guarantor1.get("pan_card_id",[]),
+            pancard_name = guarantor1.get("pan_card_name",[]),
+            pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[])
         )
 
         assets_map = self.load(self.assets_map)

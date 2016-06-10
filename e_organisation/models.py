@@ -1229,6 +1229,14 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     validation = db.StringField(max_length=512, required=True,default="PENDING")
     spouse_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
     spouse_name = db.StringField(max_length=512, required=False,default="")
+    occupation = db.StringField(max_length=512, required=False,default="")
+    emailid = db.StringField(max_length=512, required=False,default="")
+    voterid = db.StringField(max_length=512, required=False,default="")
+    voterid_name = db.StringField(max_length=512, required=False,default="")
+    voter_id_father_s_husband_s_name = db.StringField(max_length=512, required=False,default="")
+    pancard_id = db.StringField(max_length=512, required=False,default="")
+    pancard_name = db.StringField(max_length=512, required=False,default="")
+    pan_card_father_s_husband_s_name = db.StringField(max_length=512, required=False,default="")
 
     def __unicode__(self):
         return self.kyc_number + "<" + self.name + ">"
@@ -1365,6 +1373,19 @@ class EsthenosOrgApplicationLoanDetails(db.EmbeddedDocument):
     tenure_in_months= db.FloatField(default=0)
     loan_amount_key= db.FloatField(default=0)
 
+class EsthenosOrgApplicationBankDetails(db.EmbeddedDocument):
+    bank_name = db.StringField(max_length=200, required=False,default="")
+    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
+    bank_account_number = db.StringField(max_length=200, required=False,default="")
+    bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
+    bank_bank_branch = db.StringField(max_length=200, required=False,default="")
+    bank_bank_account_type = db.StringField(max_length=200, required=False,default="")
+    bank_account_operational_since = db.StringField(max_length=200, required=False,default="")
+
+class EsthenosOrgGuarantorCardDetails(db.EmbeddedDocument):
+    bank_credit_society = db.StringField(max_length=200, required=False,default="")
+    name_of_borrower = db.StringField(max_length=200, required=False,default="")
+    loan_amount = db.FloatField(default=0.0)
 
 class EsthenosOrgApplicationTypeEquipment(db.EmbeddedDocument):
     estimated_value = db.FloatField(default=0)
@@ -1465,22 +1486,6 @@ class EsthenosOrgApplication(db.Document):
     family_assets_number_of_rented_houses_or_flats = db.FloatField(default=0)
     family_assets_number_of_rented_shops_or_godowns = db.FloatField(default=0)
 
-    bank_name = db.StringField(max_length=200, required=False,default="")
-    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
-    bank_account_number = db.StringField(max_length=200, required=False,default="")
-    bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
-    bank_bank_branch = db.StringField(max_length=200, required=False,default="")
-    bank_bank_account_type = db.StringField(max_length=200, required=False,default="")
-    bank_account_operational_since = db.StringField(max_length=200, required=False,default="")
-
-    bank2_name = db.StringField(max_length=200, required=False,default="")
-    bank2_ifsc_code = db.StringField(max_length=20, required=False,default="")
-    bank2_account_number = db.StringField(max_length=200, required=False,default="")
-    bank2_account_holder_name = db.StringField(max_length=200, required=False,default="")
-    bank2_bank_branch = db.StringField(max_length=200, required=False,default="")
-    bank2_bank_account_type = db.StringField(max_length=200, required=False,default="")
-    bank2_account_operational_since = db.StringField(max_length=200, required=False,default="")
-
     cheque_no = db.StringField(max_length=512, required=False,default="")
     cheque_bank_name = db.StringField(max_length=512, required=False,default="")
     repayment_mode = db.StringField(max_length=512, required=False,default="")
@@ -1579,6 +1584,16 @@ class EsthenosOrgApplication(db.Document):
     loan_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
     loan_details4 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
 
+    bank_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationBankDetails, default=EsthenosOrgApplicationBankDetails)
+    bank_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationBankDetails, default=EsthenosOrgApplicationBankDetails)
+    bank_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationBankDetails, default=EsthenosOrgApplicationBankDetails)
+    bank_details4 = db.EmbeddedDocumentField(EsthenosOrgApplicationBankDetails, default=EsthenosOrgApplicationBankDetails)
+    bank_details5 = db.EmbeddedDocumentField(EsthenosOrgApplicationBankDetails, default=EsthenosOrgApplicationBankDetails)
+
+    guarantor_carddetails1 = db.EmbeddedDocumentField(EsthenosOrgGuarantorCardDetails, default=EsthenosOrgGuarantorCardDetails)
+    guarantor_carddetails2 = db.EmbeddedDocumentField(EsthenosOrgGuarantorCardDetails, default=EsthenosOrgGuarantorCardDetails)
+    guarantor_carddetails3 = db.EmbeddedDocumentField(EsthenosOrgGuarantorCardDetails, default=EsthenosOrgGuarantorCardDetails)
+
     land_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
     land_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
     land_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
@@ -1651,6 +1666,30 @@ class EsthenosOrgApplication(db.Document):
     individual_credit =  db.StringField(max_length=512, required=False,default="")#(This Field is from page "Business info:Details of Key Customers")
     telephone_no_5 = db.FloatField(default=0.0)
     telephone_no = db.FloatField(default=0.0)
+
+    sup_address = db.StringField(max_length=512, required=False,default="")
+    sup_telephoneno_4 = db.IntField(required=True,default=0)
+    sup_name_4 = db.StringField(max_length=512, required=False,default="")
+    sup_name_3 = db.StringField(max_length=512, required=False,default="")
+    sup_telephoneno_2= db.IntField(required=True,default=0)
+    sup_address_5 = db.StringField(max_length=512, required=False,default="")
+    sup_telephoneno_5 = db.IntField(required=True,default=0)
+    sup_telephoneno_3 = db.IntField(required=True,default=0)
+    sup_credit = db.StringField(max_length=512, required=False,default="")
+    sup_name_2 = db.StringField(max_length=512, required=False,default="")
+    sup_name_5 = db.StringField(max_length=512, required=False,default="")
+    sup_address_4 = db.StringField(max_length=512, required=False,default="")
+    sup_address_2 = db.StringField(max_length=512, required=False,default="")
+    sup_address_3 = db.StringField(max_length=512, required=False,default="")
+    sup_name = db.StringField(max_length=512, required=False,default="")
+    sup_telephoneno = db.IntField(required=True,default=0)
+
+    id_pancard = db.StringField(max_length=512, required=False,default="")
+    id_driving_license = db.StringField(max_length=512, required=False,default="")
+    id_passport = db.StringField(max_length=512, required=False,default="")
+    id_voter = db.StringField(max_length=512, required=False,default="")
+    id_ration_card = db.StringField(max_length=512, required=False,default="")
+
 
     permanent_employees = db.IntField(required=True,default=0)
     average_monthly_wage_for_relatives = db.FloatField(default=0.0)

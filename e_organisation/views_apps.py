@@ -308,6 +308,31 @@ def scrutiny_application(app_id):
 
     return redirect(url_for("organisation_views.scrutiny"))
 
+@organisation_views.route('/scrutiny/<app_id>/download', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def sheet_download(app_id):
+    print "m in download"
+    tmp_files = list()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+    dir = "%s/" % tempfile.mkdtemp(prefix='pdf_')
+    tfa = dir + app_id + "_readysheet.pdf"
+
+    #TODO remove localhost
+    downloadFile("http://localhost:8080/internal/datasheet/%s" % (app_id), tfa)
+    tmp_files.append(tfa)
+
+    tf = "%s/%s" % (tempfile.mkdtemp(prefix='zip_'), app_id)
+    zip_custom(dir, tf)
+    filehandle = open(tf + ".zip", 'rb')
+
+    data = StringIO.StringIO(filehandle.read())
+    output = make_response(data.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=%s.zip" % app_id
+    output.headers["Content-type"] = "application/zip"
+    return output
+
 
 @organisation_views.route('/scrutiny/<app_id>/print', methods=["GET"])
 @login_required

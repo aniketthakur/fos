@@ -808,4 +808,30 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
 #     kwargs = locals()
 #     return render_template(name,**kwargs)
 
+@admin_views.route('/internal/datasheet/<app_id>', methods=["GET"])
+def admin_applicantdata(app_id):
 
+    application = EsthenosOrgApplication.objects.filter(id=app_id)
+    kwargs = locals()
+    body = render_template("pdf_applicant_data.html", **kwargs)
+
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0.35in',
+        'margin-right': '0.25in',
+        'margin-bottom': '0.25in',
+        'margin-left': '0.25in',
+        'encoding': "UTF-8",
+        'orientation' : 'Landscape'
+    }
+    pdfkit.from_string(body, 'applicant_data.pdf', options=options)
+
+    raw_bytes = ""
+    with open('applicant_data.pdf', 'rb') as r:
+        for line in r:
+            raw_bytes = raw_bytes + line
+
+    response = make_response(raw_bytes)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'applicant_data'
+    return response

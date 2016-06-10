@@ -112,7 +112,13 @@
                 openEffect: 'none',
                 closeEffect: 'none'
             });
-
+            $(".btn-download-la").click(function(e){
+                e.preventDefault();
+                var app_id = $(this).attr("data-id");
+                var download_url = "/scrutiny/" + app_id + "/download/" ;
+                var redirectWindow = window.open(download_url);
+                redirectWindow.location;
+            });
             function initialize() {
                 var mapOptions1 = {
                   center: {lat: {{ application.business_loc.lat }}, lng: {{ application.business_loc.lng }}},
@@ -304,16 +310,16 @@
                     <div class="bank-info section">
                         <h4 class="section-title">Bank Details</h4>
                         <div class="name">
-                            <span class="tag">Bank Name : </span><span class="value">{{ application.bank_name }}</span>
+                            <span class="tag">Bank Name : </span><span class="value">{{ application.bank_details1.bank_name }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Your Name in Bank : </span><span class="value">{{ application.bank_account_holder_name }}</span>
+                            <span class="tag">Your Name in Bank : </span><span class="value">{{ application.bank_details1.bank_account_holder_name }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Bank Account No: </span><span class="value">{{ application.bank_account_number }}</span>
+                            <span class="tag">Bank Account No: </span><span class="value">{{ application.bank_details1.bank_account_number }}</span>
                         </div>
                         <div class="name">
-                            <span class="tag">Bank IFSC Code: </span><span class="value">{{ application.bank_ifsc_code  }}</span>
+                            <span class="tag">Bank IFSC Code: </span><span class="value">{{ application.bank_details1.bank_ifsc_code  }}</span>
                         </div>
                     </div>
                 </div>
@@ -473,6 +479,10 @@
                     <div class="map section">
                        <div id="map-residence"></div>
                        <h5 class="title">residence location</h5>
+                    </div>
+                    <div class="col-md-8 col-md-offset-3">
+                        <!--<td><a class="btn btn-small btn-info btn-download-la" data-id="{{ application.id }}" href="#"> PDF </a></td>-->
+                        <a class="btn btn-small btn-info btn-download-la" data-id="{{ application.id }}">applicant data</a>
                     </div>
                 </div>
             </div>
