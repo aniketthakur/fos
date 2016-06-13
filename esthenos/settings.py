@@ -1,11 +1,11 @@
 import os, sys
 
 SERVER_SETTINGS = {
-    "org" : "fos-test.esthenos.com",
-    "host" : "fos-test.prod.esthenos.com",
+    "org" : "fos-aorhan-test.esthenos.com",
+    "host" : "fos-arohan-test.prod.esthenos.com",
     "assets" : os.path.dirname(os.path.realpath(__file__)),
     "timezone" : "Asia/Kolkata",
-    "git-branch" : "fos-test",
+    "git-branch" : "fos-arohan-test",
     "user-deploy" : "ubuntu",
     "location" : {"lat": 12.9720095, "lng": 77.6504128}
 }
@@ -20,7 +20,7 @@ ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
     "name" : "FOS Test MicroFinance Pvt. Ltd.",
-    "email": "admin@fos-test.esthenos.com",
+    "email": "admin@fos-aorhan-test.esthenos.com",
     "phone": "9876543210",
     "phone-code": "91",
     "postal-city": "Kolaba",
