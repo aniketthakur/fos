@@ -16,6 +16,7 @@ MONGODB_SETTINGS = {
     'PORT': 27017,
     'HOST': 'mongodb.prod.esthenos.com'
 }
+
 ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
