@@ -12,14 +12,14 @@ SERVER_SETTINGS = {
 
 
 MONGODB_SETTINGS = {
-    'DB': 'fos-test',
+    'DB': 'fos-arohan-test',
     'PORT': 27017,
     'HOST': 'mongodb.prod.esthenos.com'
 }
 ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
-    "name" : "FOS Test MicroFinance Pvt. Ltd.",
+    "name" : "FOS Arohan Test MicroFinance Pvt. Ltd.",
     "email": "admin@fos-aorhan-test.esthenos.com",
     "phone": "9876543210",
     "phone-code": "91",
