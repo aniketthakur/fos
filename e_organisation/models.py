@@ -1347,7 +1347,7 @@ class EsthenosOrgLocation(db.EmbeddedDocument):
 
 class EsthenosOrgApplicationFamilyDetails(db.EmbeddedDocument):
     age = db.IntField(required=False, default=0)
-    name = db.StringField(max_length=20, required=False,default="")
+    name = db.StringField(max_length=512, required=False,default="")
     education = db.StringField(max_length=512, required=False,default="")
     aadhar_number = db.StringField(max_length=20, required=False,default="")
     annual_income = db.FloatField(required=False, default=0)
