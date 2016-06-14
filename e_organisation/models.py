@@ -1375,7 +1375,7 @@ class EsthenosOrgApplicationLoanDetails(db.EmbeddedDocument):
 
 class EsthenosOrgApplicationBankDetails(db.EmbeddedDocument):
     bank_name = db.StringField(max_length=200, required=False,default="")
-    bank_ifsc_code = db.StringField(max_length=20, required=False,default="")
+    bank_ifsc_code = db.StringField(max_length=512, required=False,default="")
     bank_account_number = db.StringField(max_length=200, required=False,default="")
     bank_account_holder_name = db.StringField(max_length=200, required=False,default="")
     bank_bank_branch = db.StringField(max_length=200, required=False,default="")
