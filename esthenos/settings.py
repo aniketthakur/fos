@@ -66,13 +66,19 @@ ORGS_SETTINGS = {
     ],
     "hierarchy" : [
         {"level": 0, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_ADMIN",  "title": "admin",  "title_full": "organisation administrator"},
-        {"level": 1, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_CXO",    "title": "cxo",    "title_full": "chief executive officer"},
-        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "vice president"},
-        {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "sh",     "title_full": "state head"},
-        {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_SH",     "title": "cm",     "title_full": "cluster manager"},
-        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "cam",    "title_full": "center area manager"},
-        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BM",     "title": "cbm",    "title_full": "center branch manager"},
-        {"level": 7, "test_users":3 , "test_places":0, "access": "branches",  "role": "ORG_CM",     "title": "fos",    "title_full": "fos agent"}
+        {"level": 1, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_CXO",    "title": "cxo",    "title_full": "Business Head"},
+        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "ORG_VP",     "title": "vp",     "title_full": "Head central Ops"},
+        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "",           "title": "",       "title_full": "Head Credit and product"},
+        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "",           "title": "",       "title_full": "Zonal Credit Head"},
+        {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "",           "title": "",       "title_full": "Credit Manager"},
+        {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "zh",     "title_full": "Zonal Head"},
+        {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_CE",     "title": "ce",     "title_full": "Credit Executive"},
+        {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_RM",     "title": "rm",     "title_full": "Regional Manager"},
+        {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_CM",     "title": "cm",     "title_full": "Cluster manager"},
+        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_BQR",     "title": "bqr",    "title_full": "Branch Quality Representative"},
+        {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "am",    "title_full": "Area manager"},
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BH",     "title": "bh",    "title_full": "Senior/Branch Head"},
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_ILE",     "title": "ile",    "title_full": "Indivisual Loan Executive"}
     ],
     "geography" : {
         "states" : 1,
