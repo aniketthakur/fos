@@ -811,7 +811,7 @@ def admin_hindustanpassbook(application_id,dis_date_str,loan_amount,emi,first_co
 @admin_views.route('/internal/datasheet/<app_id>', methods=["GET"])
 def admin_applicantdata(app_id):
 
-    application = EsthenosOrgApplication.objects.filter(id=app_id)
+    application = EsthenosOrgApplication.objects.get(id=app_id)
     kwargs = locals()
     body = render_template("pdf_applicant_data.html", **kwargs)
 

@@ -9,13 +9,13 @@ import requests,sys
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
 #
-# payload = {"email": "testfos@fos-test.esthenos.com", "password":"123"}
+# payload = {"email": "fosagent@fos-test.esthenos.com", "password":"123"}
 #
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"TdXqJ-EHgjdbt-cKOflkqv2dFoBXWz8BYhptptyBAp0"
+    "instance_token":"ymIUBlc5lOr7EBISrwYbZpfbNlTKYyZkvsdGFmMqsC0"
 }
 url = "http://localhost:8080/api/organisation/applications"
 

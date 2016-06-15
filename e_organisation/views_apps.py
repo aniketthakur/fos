@@ -312,7 +312,6 @@ def scrutiny_application(app_id):
 @login_required
 @feature_enable("features_applications_scrutiny")
 def sheet_download(app_id):
-    print "m in download"
     tmp_files = list()
     user = EsthenosUser.objects.get(id=current_user.id)
     application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
