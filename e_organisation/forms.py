@@ -221,7 +221,7 @@ class AddApplicationMobile(Form):
 
         data = self.load(self.applicant_other_card_electricity_details)
         app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
-        app.power_supplier = data.get("Tata Power", "")
+        app.power_supplier = data.get("power_supplier", "")
 
         applicant_personal = self.load(self.applicant_personal_docs)
         app.gender = applicant_personal.get("gender", "")
@@ -464,7 +464,7 @@ class AddApplicationMobile(Form):
             name = applicant["name"],
             taluk = applicant["taluk"],
             state = applicant["state"],
-            gender = applicant_personal.get("gender", ""),
+            gender = applicant.get("gender", ""),
             pincode = applicant["pincode"],
             address = applicant["address"],
             country = applicant["country"],
@@ -583,6 +583,7 @@ class AddApplicationMobile(Form):
             name = guarantor1.get("name", []),
             taluk = guarantor1.get("taluk", []),
             state = guarantor1.get("state", []),
+            gender = guarantor1.get("gender", []),
             pincode = guarantor1.get("pincode", []),
             address = guarantor1.get("address", []),
             country = guarantor1.get("country", []),
@@ -611,6 +612,7 @@ class AddApplicationMobile(Form):
             name = guarantor2.get("name", []),
             taluk = guarantor2.get("taluk", []),
             state = guarantor2.get("state", []),
+            gender = guarantor1.get("gender", []),
             pincode = guarantor2.get("pincode", []),
             address = guarantor2.get("address", []),
             country = guarantor2.get("country", []),
