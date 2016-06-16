@@ -386,6 +386,7 @@ class AddApplicationMobile(Form):
         app.two_wheeler = data.get("2_wheeler", "")
         app.refrigerator = data.get("refrigerator", "")
         app.other_y_n = data.get("other_y_n", "")
+        app.other = data.get("other", "")
         app.television_y_n = data.get("televsn_y_n", "")
         app.comp_y_n = data.get("comp_y_n", "")
         app.two_wheeler_y_n = data.get("2wheeler_y_n", "")
