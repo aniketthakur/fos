@@ -1472,7 +1472,7 @@ class EsthenosOrgApplication(db.Document):
     nominee_name = db.StringField(max_length=512, required=False,default="")
     nominee_phone = db.StringField(max_length=512, required=False,default="")
     nominee_gender = db.StringField(max_length=512, required=False,default="")
-    nominee_relationship_with_borrower = db.StringField(max_length=512, required=False,default="")
+    nominee_relation = db.StringField(max_length=512, required=False,default="")
 
     residence_details = db.StringField(max_length=512, required=False,default="")
     house_stay_duration = db.StringField(max_length=512, required=False,default="")
