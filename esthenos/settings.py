@@ -1,7 +1,7 @@
 import os, sys
 
 SERVER_SETTINGS = {
-    "org" : "fos-aorhan-test.esthenos.com",
+    "org" : "fos-arohan-test.esthenos.com",
     "host" : "fos-arohan-test.prod.esthenos.com",
     "assets" : os.path.dirname(os.path.realpath(__file__)),
     "timezone" : "Asia/Kolkata",
@@ -20,7 +20,7 @@ ORGS_SETTINGS = {
     "org"  : SERVER_SETTINGS["org"],
     "prod" : SERVER_SETTINGS["host"],
     "name" : "FOS Arohan Test MicroFinance Pvt. Ltd.",
-    "email": "admin@fos-aorhan-test.esthenos.com",
+    "email": "admin@fos-arohan-test.esthenos.com",
     "phone": "9876543210",
     "phone-code": "91",
     "postal-city": "Kolaba",
