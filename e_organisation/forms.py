@@ -79,7 +79,7 @@ class AddApplicationMobile(Form):
 
     applicant_business_docs_info = TextField(validators=[v.Length(max=10000)])
 
-    applicant_business_docs_details4 = TextField(validators=[v.Length(max=10000)])
+    applicant_business_docs_detail4 = TextField(validators=[v.Length(max=10000)])
 
     applicant_personal_docs_vehicle1 = TextField(validators=[v.Length(max=10000)])
     applicant_personal_docs_vehicle2 = TextField(validators=[v.Length(max=10000)])
@@ -258,7 +258,7 @@ class AddApplicationMobile(Form):
         app.purpose_of_loan = data.get("purpose_of_loan", "")
         app.repayment_method = data.get("repayment_option", "")
 
-        data = self.load(self.applicant_business_docs_details4)
+        data = self.load(self.applicant_business_docs_detail4)
         app.details_of_finished_goods = data.get("details_of_finished_goods","")
         app.business_outreach_methods = data.get("method_of_reaching_out_to_customers_to_increase_business","")
         app.place_of_storage_for_material = data.get("place_of_storage_for_material","")
