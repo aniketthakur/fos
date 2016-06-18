@@ -231,7 +231,7 @@ def get_application_rowdata(app):
     row_data.append(app.nominee_name)
     row_data.append(app.nominee_phone)
     row_data.append(app.nominee_gender)
-    row_data.append(app.nominee_relationship_with_borrower)
+    row_data.append(app.nominee_relation)
 
     row_data.append(app.residence_details)
     row_data.append(app.house_stay_duration)
