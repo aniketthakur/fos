@@ -21,7 +21,7 @@
             {% if user.access_geo("states") %}
             <div class="col-md-6 form-group">
                 <select class="inline select2 form-control" id="state" name="stateId">
-                    <option selected disabled>search by state</option>
+                    <option selected disabled>search by zone</option>
                     {% for entity in user.states %}
                     <option class="geo-state" value="{{ entity.id }}">{{ entity.name }}</option>
                     {% endfor %}
