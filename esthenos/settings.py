@@ -78,7 +78,7 @@ ORGS_SETTINGS = {
         {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_BQR",     "title": "bqr",    "title_full": "Branch Quality Representative"},
         {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "am",    "title_full": "Area manager"},
         {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BH",     "title": "bh",    "title_full": "Senior/Branch Head"},
-        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_ILE",     "title": "ile",    "title_full": "Indivisual Loan Executive"}
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_ILE",     "title": "ile",    "title_full": "Individual Loan Executive"}
     ],
     "geography" : {
         "states" : 1,
