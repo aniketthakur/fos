@@ -1,16 +1,13 @@
 from celery import Celery
 from esthenos import mainapp as app
 
-def make_celery(task_name, broker = None, resultbackend = None):
-
-    if broker is None:
-        broker = app.config['CELERY_BROKER_URL']
-
-    if resultbackend == None:
-        resultbackend = app.config['CELERY_RESULT_BACKEND']
-
-    celery = Celery(task_name,backend=resultbackend ,broker=broker)
+def make_celery(task_name, broker, resultbackend):
+    celery = Celery(task_name, broker=broker)
     celery.conf.update(app.config)
+    celery.conf.update({
+        "CELERY_MAX_CACHED_RESULTS": 20,
+        "CELERY_TASK_RESULT_EXPIRES": 10,
+    })
 
     TaskBase = celery.Task
     class ContextTask(TaskBase):
