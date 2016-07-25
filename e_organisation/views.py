@@ -25,6 +25,22 @@ def home_page():
     return render_template("dashboard.html", **kwargs)
 
 
+@organisation_views.route('/api/organisation/branches', methods=["GET"])
+@login_or_key_required
+@feature_enable("features_fos_branches")
+def centers_list():
+    user = EsthenosUser.objects.get(id=current_user.id)
+    branches = []
+
+    if user.hierarchy.role == "ORG_CE":
+        branches = [branch for branch in user.branches]
+
+    return jsonify({
+        "count" : len(branches),
+        "branches" : [branch.json for branch in branches]
+    })
+
+
 @organisation_views.route('/profile', methods=["GET","POST"])
 @login_required
 @feature_enable("features_profile")
@@ -272,3 +288,89 @@ def download_disbursement(applicant_id):
             return output
 
     return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
+
+
+
+@organisation_views.route('/api/organisation/applications/pre_register', methods=['POST'])
+@login_or_key_required
+@feature_enable("features_api_applications_post")
+def application_pre_register_group():
+
+    from e_highmark import parse_response as pr
+    import xml.etree.ElementTree as ET
+    import esthenos
+
+    form = request.json
+    application_params = {}
+    address_params = {}
+    applicant_params = {}
+
+    product = EsthenosOrgProduct.objects.get(id=str(form['product_id']))
+    user = EsthenosUser.objects.get(id=current_user.id)
+    user.organisation.update(inc__application_count=1)
+
+    app = EsthenosOrgApplication(
+        applicant_name=form['name'],
+        owner=user,
+        organisation=user.organisation,
+    )
+
+    # app.update_status(105)
+    app.update_status(110)
+    app.update_status(120)
+    app.update_status(125)
+    # app.update_status(126)
+    app.update_status(130)
+    app.is_pre_registered = True
+
+    app.save()
+    # group.product = product
+    # group.add_application(app)
+    # group.save()
+    app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
+    app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
+    app.save()
+
+    applicant_params, address_params, application_params = app.get_params_for_pre_highmark(form)
+    response = pr.handle_request_response(applicant_params, address_params, application_params)
+
+    if response.status_code == 200 and ET.fromstring(response.content).find("./INDV-REPORTS") is not None:
+        app.highmark_response = response.text
+
+        response_p = ET.fromstring(response.content)
+        app.update_cashflow(response_p)
+        app.highmark_response = response.content
+        temp = pr.get_valules_from_highmark_response(response_p)
+        highmark_response = EsthenosOrgApplicationHighMarkResponse(
+            national_id_card = pr.get_national_id_card(response_p),
+            num_active_account = pr.get_num_active_account(response_p),
+            sum_overdue_amount = pr.get_sum_overdue_amount(response_p),
+            indv_response_list = temp[0],
+            total_loan_balance = temp[1],
+            total_dpd_count = temp[2]
+        )
+        highmark_response.save()
+        highmark_response.indv_response_list = temp[0]
+        highmark_response.toal_loan_balance = temp[1]
+        highmark_response.total_dpd_count = temp[2]
+        highmark_response.save()
+        app.highmark_response1 = highmark_response
+        app.update_status(140)
+        app.save()
+
+        app.update_status(145)
+
+        app.save()
+        highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
+
+        highmark_status.update_status([response])
+        highmark_status.save()
+
+        resp = app.highmark_response1
+        app.update_cashflow_from_highmark_response_1(resp)
+
+    return jsonify({
+        "success": True,
+        "application_id": str(app.application_id),
+        "message": "application pre register successful"
+    })

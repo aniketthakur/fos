@@ -1869,6 +1869,73 @@ class EsthenosOrgApplication(db.Document):
             stats.kyc_failed = 0
         return stats
 
+    def get_params_for_pre_highmark(self, form):
+
+        application_params = {}
+        address_params = {}
+        applicant_params = {}
+        applicant_name_headers = ['applicant_name_1', 'applicant_name_2', 'applicant_name_3','applicant_name_4', 'applicant_name_5']
+
+        applicant_name = form['name'].strip().split(" ")
+
+        if applicant_name[0] in ["Mr.", "Mrs.", "Miss", "Late"]:
+            applicant_name = applicant_name[1:]
+
+        for i in range(len(applicant_name), 5):
+            applicant_name.append("")
+
+        for i, j in zip(applicant_name_headers, applicant_name):
+            applicant_params[i] = j
+
+        applicant_id_headers = ['ID01', 'ID02', 'ID03', 'ID04', 'ID05', 'ID06', 'ID07']
+        applicant_id_headers_values = ['', form['voter_id_number'], form['uid_number'], '', form['ration_card_number'], '', form['pan_card_number']]
+
+        applicant_params["IDS"] = {}
+
+        for i,j in enumerate(zip(applicant_id_headers, applicant_id_headers_values)):
+            applicant_params["IDS"][j[0]] = j[1]
+
+        applicant_params['applicant_age_as_on'] = "29/07/2015"
+
+        applicant_params['applicant_dob'] = form['dob']
+        applicant_params['applicant_age'] = form['age']
+        applicant_params['id_type_1'] = "ID01"
+        applicant_params['id_type_1_value'] = form['voter_id_number']
+        applicant_params['applicant_phone_type_1'] = "P01"
+        applicant_params['applicant_phone_1'] = form['mobile_no']
+
+        applicant_relation_headers = ['K01', 'K02', 'K03', 'K04', 'K05', 'K06', 'K07']
+        applicant_relation_headers_values = [form['father_name'], form['spouse_name'], form['mother_name']]
+
+        applicant_params["REL"] = {}
+        i = 0
+        for j in applicant_relation_headers_values:
+            if j.strip():
+                applicant_params["REL"][applicant_relation_headers[i]] = j
+                i += 1
+
+        address_params = {}
+        address_params['address_type_1'] = "D01"
+        address_params['type_1_address'] = form['address']
+
+        address_params['type_1_city'] = form['district']
+        address_params['type_1_state'] = form['state']
+        address_params['type_1_pincode'] = form['pin_code']
+
+        application_params = {}
+        application_params['KENDRA-ID'] = form['center_name']
+        application_params['BRANCH-ID'] = form['group_name']
+        application_params['LOS-APP-ID'] = str(self.id)
+        application_params['LOAN-AMOUNT'] = self.product.loan_amount
+
+        self.pre_update_kyc_parameters(form)
+
+        return applicant_params, address_params, application_params
+
+    def __unicode__(self):
+        return self.application_id + "<" + self.applicant_name + ">"
+
+
 
 class EsthenosOrgApplicationHighMarkRequest(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
