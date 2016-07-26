@@ -288,6 +288,12 @@ APP_STATUS = [
         'status_code' : 100
     },
     {
+        'status' : 'APPLICATION_PRE_REGISTER_READY',
+        'status_message' : 'Application  is Pre-registerd',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 105
+    },
+    {
         'status' : 'APPLICATION_TAGGED',
         'status_message' : 'Application is tagged and ready of data entry',
         'status_code' : 110
@@ -301,6 +307,12 @@ APP_STATUS = [
         'status' : 'APPLICATION_KYC_VALIDATION_PASSED',
         'status_message' : 'Application KYC has completed, validation successful',
         'status_code' : 125
+    },
+    {
+        'status' : 'APPLICATION_PRE_REGISTER_COMPLETE',
+        'status_message' : 'Application  Pre registration complete',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 126
     },
     {
         'status' : 'APPLICATION_CBCHECK_READY',
@@ -336,6 +348,30 @@ APP_STATUS = [
         'status' : 'APPLICATION_CASH_FLOW_FAILED',
         'status_message' : 'Application  Cash Flow has Failed, failed in one or multiple criteria match',
         'status_code' : 180
+    },
+    {
+        'status' : 'APPLICATION_REGISTER_READY',
+        'status_message': 'Application  is Registration Ready',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 185
+    },
+    {
+        'status' : 'APPLICATION_REGISTER_COMPLETE',
+        'status_message' : 'Application  Registration Complete',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 186
+    },
+    {
+        'status' : 'APPLICATION_CASH_FLOW_PASS_AFTER_REGISTRATION',
+        'status_message' : 'Application is Cash flow Pass After Registration',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 187
+    },
+    {
+        'status' : 'APPLICATION_CASH_FLOW_FAIL_AFTER_REGISTRATION',
+        'status_message' : 'Application is Cash flow Fail After Registration',
+        'group_status' : 'Group Under Verification.',
+        'status_code' : 188
     },
     {
         'status' : 'APPLICATION_SCRUTINY_READY',

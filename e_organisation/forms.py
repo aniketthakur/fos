@@ -184,18 +184,23 @@ class AddApplicationMobile(Form):
 
     def save(self):
         user = EsthenosUser.objects.get(id=current_user.id)
-        user.organisation.update(inc__application_count=1)
+        is_app = True if app else False
 
         applicant_kyc = self.load(self.applicant_kyc_details)
-        app = EsthenosOrgApplication(
-            name = applicant_kyc.get("name",[]),
-            owner = user,
-            branch = user.branches[0],
-            assets_id = str(self.assets_id.data),
-            organisation = user.organisation,
-            spouse_aadhar_card_number = applicant_kyc.get("spouse_aadhar_card_number",[]),
-            spouse_name = applicant_kyc.get("spouse_name",[])
-        )
+        if not is_app:
+            user.organisation.update(inc__application_count=1)
+            app = EsthenosOrgApplication(
+                name = applicant_kyc["name"],
+                owner = user,
+                assets_id = str(self.assets_id.data),
+                organisation = user.organisation
+            )
+        else:
+            previous_state = app.status
+            app.assets_id = str(self.assets_id.data)
+            app.name = applicant_kyc['name']
+            app.update_status(185)
+
         # app.name = applicant_kyc["name"]
         app.dob = applicant_kyc["dob_yob"]
         app.yob = applicant_kyc["dob_yob"]
@@ -664,10 +669,28 @@ class AddApplicationMobile(Form):
             other_docs = guarantor2_docs.get("other_card", []),
         )
 
-        app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
-        app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
+        if not is_app:
+            group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=self.group.data)
+            app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
+            app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
 
-        app.update_status(110)
-        app.save()
+            app.update_status(110)
+            app.save()
+
+        else:
+            app.update_status(186)
+            app.is_registered = True
+            app.save()
+            if 170 == previous_state:
+                app.verified(True)
+                app.update_status(187)
+            else:
+                if previous_state < 140 and previous_state not in [20, 25, 26]:
+                    app.update_status(130)
+                elif (previous_state >= 140 and previous_state in [180, 188]) or (previous_state in [20, 25, 26]):
+                    app.update_status(188)
+
+            app.save()
+
 
         return None
