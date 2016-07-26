@@ -290,6 +290,31 @@ def download_disbursement(applicant_id):
     return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
 
 
+@organisation_views.route('/api/organisation/centers/groups/application/update_neighbor', methods=["POST"])
+@login_or_key_required
+@feature_enable("features_api_applications_list")
+def neighbour_complete_list():
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    if request.method == 'POST':
+        form = request.json
+        application = EsthenosOrgApplication.objects.filter(application_id=form['applicant_id'])
+
+        if application:
+            application[0].update_neighbor_data(form)
+            application[0].save()
+
+            return jsonify({
+                "success": True,
+                "message": "neighbor submission successful"
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "message": "neighbor submission unsuccessful"
+            })
+
+
 
 @organisation_views.route('/api/organisation/applications/pre_register', methods=['POST'])
 @login_or_key_required
