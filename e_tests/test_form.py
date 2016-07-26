@@ -6,20 +6,22 @@ import requests,sys
 # response = requests.post(url, data=payload)
 # print response.text
 # sys.exit(0)
-
+#
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-#
-# payload = {"email": "testfos@fos-test.esthenos.com", "password":"123"}
-#
+# payload = {"email": "testce@fos-arohan-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"TdXqJ-EHgjdbt-cKOflkqv2dFoBXWz8BYhptptyBAp0"
+    "instance_token":"f9rf973BejLpZQgbOmc5V3U7wDG2GLsTR7y1R86ITJQ"
 }
-url = "http://localhost:8080/api/organisation/applications"
+url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
+print url1
+response = requests.get(url1, params=querystring)
+print response.text
+# url = "http://localhost:8080/api/organisation/applications"
 
-payload = {
+payload1 = {
 
     "group": "G-NA",
     "applicant_business_docs_customer1": {
@@ -560,6 +562,6 @@ payload = {
     }
 }
 
-for i in range(0, 1):
-    response = requests.post(url, json=payload, params=querystring)
-    print(response.text)
+# for i in range(0, 1):
+#     response = requests.post(url, json=payload, params=querystring)
+#     print(response.text)

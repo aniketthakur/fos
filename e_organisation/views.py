@@ -33,7 +33,17 @@ def centers_list():
     branches = []
 
     if user.hierarchy.role == "ORG_CE":
-        branches = [branch for branch in user.branches]
+        for state in user.states:
+            print "st" ,state
+            for region in state.regions:
+                print "rg" , region
+                for area in region.areas:
+                    print "ar" , area
+                    branches.append(area.branches)
+        # branches = [area.branches for state in user.states for region in state.regions for area in region.areas]
+
+        # branches = user.branches
+        print "m here in %s" , branches
 
     return jsonify({
         "count" : len(branches),
@@ -399,3 +409,98 @@ def application_pre_register_group():
         "application_id": str(app.application_id),
         "message": "application pre register successful"
     })
+
+@organisation_views.route('/api/organisation/branches/<branchid>/applications/<state>', methods=["GET"])
+@login_or_key_required
+@feature_enable("features_api_applications_list")
+def application_get_group(group_id,state):
+    user = EsthenosUser.objects.get(id=current_user.id)
+    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=group_id)
+
+    if state == "pre_registration":
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group,status=126)
+    elif state == "neighbor_feedback":
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group,status=186)
+    else:
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+
+    passed_app_count = 0
+    applications_list = []
+    for app in applications:
+        #ADDED : CONSIDERING OLD APPLICAITONS
+        applicant_name = app.applicant_kyc.name.strip().split(' ')
+        applicant_name = applicant_name[1:] if applicant_name[0] in ['Mr.', 'Mrs.', 'Miss'] else applicant_name
+        applicant_name = ' '.join(applicant_name)
+
+        item = {
+            "date_created" : str(app.date_created),
+            "applicant_name_title" : app.applicant_kyc.name.strip().split(' ')[0],
+            "applicant_name" : applicant_name,
+            "spouse_name_title" : app.applicant_kyc.spouse_name.strip().split(' ')[0],
+            "spouse_name" : ' '.join(app.applicant_kyc.spouse_name.strip().split(' ')[1:]),
+            "current_status" : app.current_status.status_message,
+            "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
+            "loan_eligibility_based_on_company_policy" : int(app.loan_eligibility_based_on_company_policy),
+            "group": str(app.group.name),
+            "group_id": str(app.group.group_id),
+            "center_id": str(app.center.center_id),
+            "center": app.center.name,
+            "address": app.applicant_kyc.address,
+            "age": app.applicant_kyc.age,
+            "dob": str(app.applicant_kyc.dob),
+            "id": app.application_id,
+            "mobile_no": app.applicant_kyc.mobile_number,
+            "mother_name_title": app.applicant_kyc.mother_s_name.strip().split(' ')[0],
+            "mother_name": ' '.join(app.applicant_kyc.mother_s_name.strip().split(' ')[1:]),
+            "father_name": ' '.join(app.applicant_kyc.father_or_husband_name.strip().split(' ')[1:]),
+            "father_name_title": app.applicant_kyc.father_or_husband_name.strip().split(' ')[0],
+            "state": app.applicant_kyc.state,
+            "pincode": app.applicant_kyc.pincode,
+            "district": app.applicant_kyc.district,
+            "voter_id": app.applicant_kyc.voter_id,
+            "ration_id": app.applicant_kyc.ration_id,
+            "kyc_number": app.applicant_kyc.kyc_number,
+            "pan_card_id": app.applicant_kyc.pan_card_id
+        }
+
+        s = ""
+
+        item["loan"] = s
+        item["loan_total"] = ""
+        item["loan_default"] = ""
+        item["is_neighbor_complete"] = app.is_neighbor_complete
+
+        if app.highmark_response1:
+            for i in app.highmark_response1.indv_response_list:
+                if i.is_prohibited:
+                    s = s + str(i.mfi_name) + " " + str(i.loan_info_as_on) + " " + str(i.loan_balance) + " " + str(i.dpd_60+i.dpd_90) + " \n"
+
+        item["loan"] = s
+        s2 = ""
+        bal = 0
+        dpd = 0
+        if app.highmark_response:
+            s2, bal, dpd = utils.get_loan_bal_dpd_from_highmark_response(app.highmark_response)
+
+        s2 = s2.strip()
+        item["loan"] = s2
+        item["loan_total"] = "Total Balance : " + str(bal)
+        item["loan_default"] = "Total Default : " + str(dpd)
+        item["status"] = 0
+        item["register_complete"] = "yes" if 186 in [status.status.status_code for status in app.timeline] else "no"
+        item["is_blocked"] = "yes" if app.is_pre_registered and not app.is_registered else "no"
+
+        if not (app.status <= 26 or app.status in [180, 222, 192, 202, 212, 241]):
+            item["status"] = 1
+
+        applications_list.append(item)
+
+        # Text searching for keyword `failed` in App Status
+        if 'failed' not in app.current_status.status.lower():
+            passed_app_count += 1
+
+    response = group.json
+    response["applications"] = applications_list
+    response['validated_applications'] = passed_app_count
+
+    return Response(response=json.dumps(response), status=200, mimetype="application/json")

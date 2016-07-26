@@ -203,7 +203,8 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a state."
-        emp.access_states = selections
+            if len(selections) != 0:
+                emp.access_states = selections
 
         selections = []
         #todo centralize the level assignments
@@ -221,7 +222,8 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a region."
-        emp.access_regions = selections
+            if len(selections) != 0:
+                emp.access_regions = selections
 
         selections = []
         #todo centralize the level assignments
@@ -239,7 +241,8 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned an area."
-        emp.access_areas = selections
+            if len(selections) != 0:
+                emp.access_areas = selections
 
         selections = []
         #todo centralize the level assignments
@@ -260,8 +263,8 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections)<1:
                 to_save = False
                 errors["not_selected"] = "The employee needs to be assigned a branch."
-
-        emp.access_branches = selections
+            if len(selections) != 0:
+                emp.access_branches = selections
 
         if emp.hierarchy.level >= 6:
             for i in selections:
@@ -280,7 +283,8 @@ class AddOrganizationEmployeeForm(Form):
         if emp.hierarchy.level == 7:
             for center in self.centers.data:
                 selections.append(EsthenosOrgCenter.objects.get(id=center))
-        emp.access_centers = selections
+            if len(selections) != 0:
+                emp.access_centers = selections
 
         if len(emp.branches)>1 and emp.hierarchy.level == 7:
             to_save = False
