@@ -18,7 +18,7 @@ querystring = {
 url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
 print url1
 response = requests.get(url1, params=querystring)
-# print response.text
+print response.text
 # url = "http://localhost:8080/api/organisation/applications"
 
 payload1 = {

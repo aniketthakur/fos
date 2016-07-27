@@ -9,6 +9,7 @@ from views_cbcheck import *
 # import views for feature - psychometric test.
 from views_psychometric import *
 from esthenos import settings
+from flask import jsonify
 
 @organisation_views.route('/', methods=["GET"])
 @login_required
