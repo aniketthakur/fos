@@ -7,15 +7,15 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 #
-# url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "testce@fos-arohan-test.esthenos.com", "password":"123"}
+# url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
+# payload = {"email": "vivek@fos-arohan-test.esthenos.com", "password":"vivek"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"f9rf973BejLpZQgbOmc5V3U7wDG2GLsTR7y1R86ITJQ"
+    "instance_token":"K7Z_GENMyp3IxYc1Anx_FuN1We41ddgVdgMXW5f4PEY"
 }
-url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
+url1 = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 print url1
 response = requests.get(url1, params=querystring)
 print response.text

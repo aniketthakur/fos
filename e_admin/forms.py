@@ -157,11 +157,11 @@ class AddOrganizationEmployeeForm(Form):
         org.update(inc__employee_count=1)
         return emp
 
-    def deselect_employee_geo(self, emp):
-        emp.access_states = []
-        emp.access_regions = []
-        emp.access_areas = []
-        emp.save()
+    # def deselect_employee_geo(self, emp):
+    #     emp.access_states = []
+    #     emp.access_regions = []
+    #     emp.access_areas = []
+    #     emp.save()
 
     def update(self, emp):
         errors = {}
@@ -187,7 +187,7 @@ class AddOrganizationEmployeeForm(Form):
         to_save = True
 
         selections = []
-        self.deselect_employee_geo(emp)
+        # self.deselect_employee_geo(emp)
         #todo centralize the level assignments
         if emp.hierarchy.level == 3:
             for state in self.states.data:
