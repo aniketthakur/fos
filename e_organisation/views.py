@@ -413,16 +413,16 @@ def application_pre_register_group():
 @organisation_views.route('/api/organisation/branches/<branchid>/applications/<state>', methods=["GET"])
 @login_or_key_required
 @feature_enable("features_api_applications_list")
-def application_get_group(group_id,state):
+def application_get_group(branchid,state):
     user = EsthenosUser.objects.get(id=current_user.id)
-    group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=group_id)
+    branch = EsthenosOrgBranch.objects.get(id=branchid)
 
     if state == "pre_registration":
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group,status=126)
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=126)
     elif state == "neighbor_feedback":
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group,status=186)
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=186)
     else:
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, group=group)
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch)
 
     passed_app_count = 0
     applications_list = []
@@ -441,10 +441,6 @@ def application_get_group(group_id,state):
             "current_status" : app.current_status.status_message,
             "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
             "loan_eligibility_based_on_company_policy" : int(app.loan_eligibility_based_on_company_policy),
-            "group": str(app.group.name),
-            "group_id": str(app.group.group_id),
-            "center_id": str(app.center.center_id),
-            "center": app.center.name,
             "address": app.applicant_kyc.address,
             "age": app.applicant_kyc.age,
             "dob": str(app.applicant_kyc.dob),
