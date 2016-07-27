@@ -15,7 +15,8 @@ import requests,sys
 querystring = {
     "instance_token":"yrJD9tRCiBHfgYVByuLx-nCC4cL7infzsox2VICg0CA"
 }
-url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
+# url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
+url1 = "http://localhost:8080/api/organisation/branches/579867d2ebc8b2422fc9849f/applications/pre_registration"
 print url1
 response = requests.get(url1, params=querystring)
 print response.text

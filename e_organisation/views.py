@@ -495,7 +495,7 @@ def application_get_group(branchid,state):
         if 'failed' not in app.current_status.status.lower():
             passed_app_count += 1
 
-    response = group.json
+    response = {}
     response["applications"] = applications_list
     response['validated_applications'] = passed_app_count
 
