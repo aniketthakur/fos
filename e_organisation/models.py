@@ -1346,13 +1346,14 @@ class EsthenosOrgLocation(db.EmbeddedDocument):
 
 
 class EsthenosOrgApplicationFamilyDetails(db.EmbeddedDocument):
-    age = db.IntField(required=False, default=0)
+    age = db.StringField(max_length=20, required=False,default="")
     name = db.StringField(max_length=20, required=False,default="")
-    education = db.StringField(max_length=512, required=False,default="")
-    aadhar_number = db.StringField(max_length=20, required=False,default="")
-    annual_income = db.FloatField(required=False, default=0)
-    occupations_details = db.StringField(max_length=512, required=False,default="")
+    sex = db.StringField(max_length=20, required=False,default="")
     relation = db.StringField(max_length=512, required=False,default="")
+    education = db.StringField(max_length=512, required=False,default="")
+    years_of_involvement = db.StringField(max_length=20, required=False,default="")
+    monthly_income = db.FloatField(required=False, default=0)
+    occupations_details = db.StringField(max_length=512, required=False,default="")
 
 
 class EsthenosOrgApplicationLandDetails(db.EmbeddedDocument):
@@ -1436,6 +1437,41 @@ class EsthenosOrgApplication(db.Document):
 
     assets_id = db.StringField(max_length=255, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
+    #newly_added _ field
+    cbcheck_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
+    cbcheck_father_s_name = db.StringField(max_length=512, required=False,default="")
+    cbcheck_date_of_birth = db.StringField(max_length=512, required=False,default="")
+    cbcheck_state = db.StringField(max_length=512, required=False,default="")
+    cbcheck_pin_code = db.StringField(max_length=512, required=False,default="")
+    cbcheck_pan_card = db.StringField(max_length=512, required=False,default="")
+    cbcheck_ration_card = db.StringField(max_length=512, required=False,default="")
+    cbcheck_voter_id_number = db.StringField(max_length=512, required=False,default="")
+    cbcheck_mobile_number = db.StringField(max_length=512, required=False,default="")
+    cbcheck_address = db.StringField(max_length=512, required=False,default="")
+    cbcheck_name = db.StringField(max_length=512, required=False,default="")
+    cbcheck_age = db.StringField(max_length=512, required=False,default="")
+    cbcheck_spouse_name = db.StringField(max_length=512, required=False,default="")
+    cbcheck_mother_s_name = db.StringField(max_length=512, required=False,default="")
+    cbcheck_gender = db.StringField(max_length=512, required=False,default="")
+    cbcheck_district = db.StringField(max_length=512, required=False,default="")
+
+    guarantor1_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
+    guarantor1_father_s_name = db.StringField(max_length=512, required=False,default="")
+    guarantor1_date_of_birth = db.StringField(max_length=512, required=False,default="")
+    guarantor1_state = db.StringField(max_length=512, required=False,default="")
+    guarantor1_pin_code = db.StringField(max_length=512, required=False,default="")
+    guarantor1_pan_card = db.StringField(max_length=512, required=False,default="")
+    guarantor1_ration_card = db.StringField(max_length=512, required=False,default="")
+    guarantor1_voter_id_number = db.StringField(max_length=512, required=False,default="")
+    guarantor1_mobile_number = db.StringField(max_length=512, required=False,default="")
+    guarantor1_address = db.StringField(max_length=512, required=False,default="")
+    guarantor1_name = db.StringField(max_length=512, required=False,default="")
+    guarantor1_age = db.StringField(max_length=512, required=False,default="")
+    guarantor1_spouse_name = db.StringField(max_length=512, required=False,default="")
+    guarantor1_mother_s_name = db.StringField(max_length=512, required=False,default="")
+    guarantor1_relation_with_the_applicant = db.StringField(max_length=512, required=False,default="")
+    guarantor1_gender = db.StringField(max_length=512, required=False,default="")
+    guarantor1_district = db.StringField(max_length=512, required=False,default="")
 
     age = db.IntField(default=0)
     name = db.StringField(max_length=512, required=False,default="")
@@ -1454,12 +1490,13 @@ class EsthenosOrgApplication(db.Document):
     tele_phone = db.StringField(max_length=128, required=False,default="")
     father_or_husband_name = db.StringField(max_length=512, required=False,default="")
 
-    gender = db.StringField(max_length=512, required=False,default="")
+
     religion = db.StringField(max_length=512, required=False,default="")
     category = db.StringField(max_length=512, required=False,default="")
     education = db.StringField(max_length=512, required=False,default="")
     disability = db.StringField(max_length=512, required=False,default="")
-    marital_status = db.StringField(max_length=512, required=False,default="")
+    # gender = db.StringField(max_length=512, required=False,default="")
+    # marital_status = db.StringField(max_length=512, required=False,default="")
 
     male_count = db.IntField(default=0.0)
     female_count = db.IntField(default=0.0)
@@ -1578,6 +1615,8 @@ class EsthenosOrgApplication(db.Document):
     family_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
     family_details4 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
     family_details5 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details6 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
+    family_details7 = db.EmbeddedDocumentField(EsthenosOrgApplicationFamilyDetails, default=EsthenosOrgApplicationFamilyDetails)
 
     loan_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)
     loan_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLoanDetails, default=EsthenosOrgApplicationLoanDetails)

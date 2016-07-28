@@ -23,7 +23,8 @@ class AddApplicationMobile(Form):
     assets_id = TextField(validators=[v.Length(max=10000)])
     assets_map = TextField(validators=[v.Length(max=10000)])
     locations_map = TextField(validators=[v.Length(max=10000)])
-
+    applicant_other_card_cbcheck = TextField(validators=[v.Length(max=10000)])
+    guarantor1_other_card_co_applicant = TextField(validators=[v.Length(max=10000)])
     guarantor1_kyc_details = TextField(validators=[v.Length(max=10000)])
     guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
     guarantor1_other_card_details2 = TextField(validators=[v.Length(max=10000)])
@@ -34,7 +35,7 @@ class AddApplicationMobile(Form):
 
     applicant_loan_details_applied_loan = TextField(validators=[v.Length(max=10000)])
 
-    applicant_personal_docs = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_personal_detail = TextField(validators=[v.Length(max=10000)])
     applicant_nominee_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_other_card_liabilities = TextField(validators=[v.Length(max=10000)])
@@ -58,11 +59,14 @@ class AddApplicationMobile(Form):
 
     applicant_family_details_assets = TextField(validators=[v.Length(max=10000)])
 
-    applicant_family_details_details1 = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_details2 = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_details3 = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_details4 = TextField(validators=[v.Length(max=10000)])
-    applicant_family_details_details5 = TextField(validators=[v.Length(max=10000)])
+    #added new fields
+    applicant_family_details_family_members1 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members2 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members3 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members4 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members5 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members6 = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_family_members7 = TextField(validators=[v.Length(max=10000)])
     
     applicant_loan_details_details1 = TextField(validators=[v.Length(max=10000)])
     applicant_loan_details_details2 = TextField(validators=[v.Length(max=10000)])
@@ -118,15 +122,17 @@ class AddApplicationMobile(Form):
     
     def load_family_details(self, data):
         return EsthenosOrgApplicationFamilyDetails(
-            age = toInt(data.get("age", "")),
+            age = data.get("age", ""),
             name = data.get("name", ""),
-            relation = data.get("relation", ""),
+            sex = data.get("sex", ""),
+            relation = data.get("relationship", ""),
             education = data.get("education", ""),
-            aadhar_number = data.get("aadhar_number", ""),
-            annual_income = toFloat(data.get("annual_income", "")),
+            years_of_involvement = data.get("years_of_involvement", ""),
+            monthly_income = data.get("monthly_income", ""),
             occupations_details = data.get("occupations_details", ""),
         )
-    
+
+
     def load_land_details(self, data):
         return EsthenosOrgApplicationLandDetails(
             area_in_sqft = toFloat(data.get("area_in_sqft", "")),
@@ -228,13 +234,11 @@ class AddApplicationMobile(Form):
         app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
         app.power_supplier = data.get("Tata Power", "")
 
-        applicant_personal = self.load(self.applicant_personal_docs)
-        app.gender = applicant_personal.get("gender", "")
+        applicant_personal = self.load(self.applicant_other_card_personal_detail)
         app.religion = applicant_personal.get("religion", "")
-        app.category = applicant_personal.get("category", "") + applicant_personal.get("specify_category", "")
+        app.category = applicant_personal.get("category", "")
         app.education = applicant_personal.get("education", "")
         app.disability = applicant_personal.get("physical_disability", "")
-        app.marital_status = applicant_personal.get("marital_status", "")
 
         data = self.load(self.applicant_family_details_members)
         app.male_count = toInt(data.get("male_count", ""))
@@ -457,7 +461,7 @@ class AddApplicationMobile(Form):
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
 
         locations_map = self.load(self.locations_map)
-        app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
+        # app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
         app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
         applicant = self.load(self.applicant_kyc_details)
@@ -490,20 +494,26 @@ class AddApplicationMobile(Form):
         )
         
         # add family details.
-        data = self.load(self.applicant_family_details_details1)
+        data = self.load(self.applicant_family_details_family_members1)
         app.family_details1 = self.load_family_details(data)
 
-        data = self.load(self.applicant_family_details_details2)
+        data = self.load(self.applicant_family_details_family_members2)
         app.family_details2 = self.load_family_details(data)
 
-        data = self.load(self.applicant_family_details_details3)
+        data = self.load(self.applicant_family_details_family_members3)
         app.family_details3 = self.load_family_details(data)
 
-        data = self.load(self.applicant_family_details_details4)
+        data = self.load(self.applicant_family_details_family_members4)
         app.family_details4 = self.load_family_details(data)
 
-        data = self.load(self.applicant_family_details_details5)
+        data = self.load(self.applicant_family_details_family_members5)
         app.family_details5 = self.load_family_details(data)
+
+        data = self.load(self.applicant_family_details_family_members6)
+        app.family_details6 = self.load_family_details(data)
+
+        data = self.load(self.applicant_family_details_family_members7)
+        app.family_details7 = self.load_family_details(data)
 
 
         # add land details.
@@ -577,6 +587,43 @@ class AddApplicationMobile(Form):
         data = self.load(self.applicant_personal_docs_vehicle3)
         app.docs_vehicle3 = self.load_docs_vehicle(data)
 
+        #newly_added _ field
+        data = self.load(self.applicant_other_card_cbcheck)
+        app.cbcheck_aadhar_card_number = data.get("aadhar_card_number","")
+        app.cbcheck_father_s_name = data.get("father_s_name","")
+        app.cbcheck_date_of_birth = data.get("date_of_birth","")
+        app.cbcheck_state = data.get("state","")
+        app.cbcheck_pin_code = data.get("pin_code","")
+        app.cbcheck_pan_card = data.get("pan_card","")
+        app.cbcheck_ration_card = data.get("ration_card","")
+        app.cbcheck_voter_id_number = data.get("voter_id_number","")
+        app.cbcheck_mobile_number = data.get("mobile_number","")
+        app.cbcheck_address = data.get("address","")
+        app.cbcheck_name = data.get("name","")
+        app.cbcheck_age = data.get("age","")
+        app.cbcheck_spouse_name = data.get("spouse_name","")
+        app.cbcheck_mother_s_name = data.get("mother_s_name","")
+        app.cbcheck_gender = data.get("gender","")
+        app.cbcheck_district = data.get("district","")
+
+        data = self.load(self.guarantor1_other_card_co_applicant)
+        app.guarantor1_aadhar_card_number = data.get("aadhar_card_number","")
+        app.guarantor1_father_s_name = data.get("father_s_name","")
+        app.guarantor1_date_of_birth = data.get("date_of_birth","")
+        app.guarantor1_state = data.get("state","")
+        app.guarantor1_pin_code = data.get("pin_code","")
+        app.guarantor1_pan_card = data.get("pan_card","")
+        app.guarantor1_ration_card = data.get("ration_card","")
+        app.guarantor1_voter_id_number = data.get("voter_id_number","")
+        app.guarantor1_mobile_number = data.get("mobile_number","")
+        app.guarantor1_address = data.get("address","")
+        app.guarantor1_name = data.get("name","")
+        app.guarantor1_age = data.get("age","")
+        app.guarantor1_spouse_name = data.get("spouse_name","")
+        app.guarantor1_mother_s_name = data.get("mother_s_name","")
+        app.guarantor1_relation_with_the_applicant = data.get("relation_with_the_applicant","")
+        app.guarantor1_gender = data.get("gender","")
+        app.guarantor1_district = data.get("district","")
 
         # add guarantor details.
         guarantor1 = self.load(self.guarantor1_kyc_details)
