@@ -346,7 +346,7 @@ def application_pre_register_group():
     applicant = form["applicant_other_card_cbcheck"]
     for data in applicant:
         app = EsthenosOrgApplication(
-            applicant_name=data['name'],
+            applicant_name=applicant['name'],
             owner=user,
             organisation=user.organisation,
         )
@@ -365,49 +365,49 @@ def application_pre_register_group():
         app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
         app.save()
 
-        applicant_params, address_params, application_params = app.get_params_for_pre_highmark(form)
-        response = pr.handle_request_response(applicant_params, address_params, application_params)
+    applicant_params, address_params, application_params = app.get_params_for_pre_highmark(applicant)
+    response = pr.handle_request_response(applicant_params, address_params, application_params)
 
-        if response.status_code == 200 and ET.fromstring(response.content).find("./INDV-REPORTS") is not None:
-            app.highmark_response = response.text
+    if response.status_code == 200 and ET.fromstring(response.content).find("./INDV-REPORTS") is not None:
+        app.highmark_response = response.text
 
-            response_p = ET.fromstring(response.content)
-            app.update_cashflow(response_p)
-            app.highmark_response = response.content
-            temp = pr.get_valules_from_highmark_response(response_p)
-            highmark_response = EsthenosOrgApplicationHighMarkResponse(
-                national_id_card = pr.get_national_id_card(response_p),
-                num_active_account = pr.get_num_active_account(response_p),
-                sum_overdue_amount = pr.get_sum_overdue_amount(response_p),
-                indv_response_list = temp[0],
-                total_loan_balance = temp[1],
-                total_dpd_count = temp[2]
-            )
-            highmark_response.save()
-            highmark_response.indv_response_list = temp[0]
-            highmark_response.toal_loan_balance = temp[1]
-            highmark_response.total_dpd_count = temp[2]
-            highmark_response.save()
-            app.highmark_response1 = highmark_response
-            app.update_status(140)
-            app.save()
+        response_p = ET.fromstring(response.content)
+        app.update_cashflow(response_p)
+        app.highmark_response = response.content
+        temp = pr.get_valules_from_highmark_response(response_p)
+        highmark_response = EsthenosOrgApplicationHighMarkResponse(
+            national_id_card = pr.get_national_id_card(response_p),
+            num_active_account = pr.get_num_active_account(response_p),
+            sum_overdue_amount = pr.get_sum_overdue_amount(response_p),
+            indv_response_list = temp[0],
+            total_loan_balance = temp[1],
+            total_dpd_count = temp[2]
+        )
+        highmark_response.save()
+        highmark_response.indv_response_list = temp[0]
+        highmark_response.toal_loan_balance = temp[1]
+        highmark_response.total_dpd_count = temp[2]
+        highmark_response.save()
+        app.highmark_response1 = highmark_response
+        app.update_status(140)
+        app.save()
 
-            app.update_status(145)
+        app.update_status(145)
 
-            app.save()
-            highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
+        app.save()
+        highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
 
-            highmark_status.update_status([response])
-            highmark_status.save()
+        highmark_status.update_status([response])
+        highmark_status.save()
 
-            resp = app.highmark_response1
-            app.update_cashflow_from_highmark_response_1(resp)
+        resp = app.highmark_response1
+        app.update_cashflow_from_highmark_response_1(resp)
 
-        return jsonify({
-            "success": True,
-            "application_id": str(app.application_id),
-            "message": "application pre register successful"
-        })
+    return jsonify({
+        "success": True,
+        "application_id": str(app.application_id),
+        "message": "application pre register successful"
+    })
 
 @organisation_views.route('/api/organisation/branches/<branchid>/applications/<state>', methods=["GET"])
 @login_or_key_required
