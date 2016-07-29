@@ -24,8 +24,13 @@ class AddApplicationMobile(Form):
     assets_map = TextField(validators=[v.Length(max=10000)])
     locations_map = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_cbcheck = TextField(validators=[v.Length(max=10000)])
+
+    #newly added fields
     guarantor1_other_card_co_applicant = TextField(validators=[v.Length(max=10000)])
     guarantor1_kyc_details = TextField(validators=[v.Length(max=10000)])
+    applicant_family_details_ile_conformation= TextField(validators=[v.Length(max=10000)])
+
+
     guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
     guarantor1_other_card_details2 = TextField(validators=[v.Length(max=10000)])
     guarantor1_other_card_details3 = TextField(validators=[v.Length(max=10000)])
@@ -464,6 +469,9 @@ class AddApplicationMobile(Form):
         # app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
         app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
+        data = self.load(self.applicant_family_details_ile_conformation)
+        app.confirmation_for_originl_doc = data.get("i_confirm_that_i_have_seen_the_original_documents","")
+
         applicant = self.load(self.applicant_other_card_cbcheck)
         app.applicant_kyc = EsthenosOrgApplicationKYC(
             kyc_type = applicant.get("type",""),
@@ -493,7 +501,8 @@ class AddApplicationMobile(Form):
             pancard_name = applicant.get("pan_card_name",""),
             pan_card_father_s_husband_s_name = applicant.get("pan_card_father_s_husband_s_name",""),
         )
-        
+
+
         # add family details.
         data = self.load(self.applicant_family_details_family_members1)
         app.family_details1 = self.load_family_details(data)

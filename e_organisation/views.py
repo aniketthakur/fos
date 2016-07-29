@@ -340,7 +340,7 @@ def application_pre_register_group():
     address_params = {}
     applicant_params = {}
 
-    product = EsthenosOrgProduct.objects.get(id=str(form['product_id']))
+    # product = EsthenosOrgProduct.objects.get(id=str(form['product_id']))
     user = EsthenosUser.objects.get(id=current_user.id)
     user.organisation.update(inc__application_count=1)
 
