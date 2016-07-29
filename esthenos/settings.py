@@ -72,11 +72,11 @@ ORGS_SETTINGS = {
         {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "",           "title": "",       "title_full": "Zonal Credit Head"},
         {"level": 2, "test_users":1 , "test_places":0, "access": "",          "role": "",           "title": "",       "title_full": "Credit Manager"},
         {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_ZH",     "title": "zh",     "title_full": "Zonal Head"},
-        {"level": 3, "test_users":2 , "test_places":3, "access": "states",    "role": "ORG_CE",     "title": "ce",     "title_full": "Credit Executive"},
         {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_RM",     "title": "rm",     "title_full": "Regional Manager"},
         {"level": 4, "test_users":3 , "test_places":2, "access": "regions",   "role": "ORG_CM",     "title": "cm",     "title_full": "Cluster manager"},
         {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_BQR",     "title": "bqr",    "title_full": "Branch Quality Representative"},
         {"level": 5, "test_users":3 , "test_places":5, "access": "areas",     "role": "ORG_AM",     "title": "am",    "title_full": "Area manager"},
+        {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_CE",     "title": "ce",     "title_full": "Credit Executive"},
         {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_BH",     "title": "bh",    "title_full": "Senior/Branch Head"},
         {"level": 6, "test_users":3 , "test_places":6, "access": "branches",  "role": "ORG_ILE",     "title": "ile",    "title_full": "Individual Loan Executive"}
     ],
