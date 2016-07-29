@@ -188,7 +188,7 @@ class AddApplicationMobile(Form):
             type_of_vehicle_manufacturer = data.get("type_of_vehicle_manufacturer","")
         )
 
-    def save(self):
+    def save(self,app):
         user = EsthenosUser.objects.get(id=current_user.id)
         is_app = True if app else False
 
@@ -464,33 +464,34 @@ class AddApplicationMobile(Form):
         # app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
         app.business_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("business",{}).get("lat","")), lng=toFloat(locations_map.get("business",{}).get("lng","")))
 
-        applicant = self.load(self.applicant_kyc_details)
+        applicant = self.load(self.applicant_other_card_cbcheck)
         app.applicant_kyc = EsthenosOrgApplicationKYC(
-            kyc_type = applicant["type"],
-            kyc_number = applicant["uid"],
-            age = applicant["age"],
-            dob = applicant["dob_yob"],
-            name = applicant["name"],
-            taluk = applicant["taluk"],
-            state = applicant["state"],
-            gender = applicant_personal.get("gender", ""),
-            pincode = applicant["pincode"],
-            address = applicant["address"],
-            country = applicant["country"],
-            district = applicant["district"],
-            phone_number = applicant["phone_number"],
-            mobile_number = applicant["mobile_number"],
-            father_or_husband_name = applicant["father_s_husband_s_name"],
-            spouse_aadhar_card_number = applicant["spouse_aadhar_card_number"],
-            spouse_name = applicant["spouse_name"],
-            occupation = applicant["occupation"],
-            emailid = applicant["email_id"],
-            voterid = applicant["voter_id"],
-            voterid_name = applicant["voter_id_name"],
-            voter_id_father_s_husband_s_name = applicant["voter_id_father_s_husband_s_name"],
-            pancard_id = applicant["pan_card_id"],
-            pancard_name = applicant["pan_card_name"],
-            pan_card_father_s_husband_s_name = applicant["pan_card_father_s_husband_s_name"]
+            kyc_type = applicant.get("type",""),
+            kyc_number = applicant.get("aadhar_card_number",""),
+            age = applicant.get("age",""),
+            dob = applicant.get("date_of_birth",""),
+            name = applicant.get("name",""),
+            taluk = applicant.get("taluk",""),
+            state = applicant.get("state",""),
+            gender = applicant.get("gender", ""),
+            pincode = applicant.get("pin_code",""),
+            address = applicant.get("address",""),
+            country = applicant.get("country",""),
+            district = applicant.get("district",""),
+            phone_number = applicant.get("phone_number",""),
+            mobile_number = applicant.get("mobile_number",""),
+            mothers_name = applicant.get("mother_s_name",""),
+            father_or_husband_name = applicant.get("father_s_name",""),
+            spouse_aadhar_card_number = applicant.get("spouse_aadhar_card_number",""),
+            spouse_name = applicant.get("spouse_name",""),
+            occupation = applicant.get("occupation",""),
+            emailid = applicant.get("email_id",""),
+            voterid = applicant.get("voter_id",""),
+            voterid_name = applicant.get("voter_id_name",""),
+            voter_id_father_s_husband_s_name = applicant.get("voter_id_father_s_husband_s_name",""),
+            pancard_id = applicant.get("pan_card",""),
+            pancard_name = applicant.get("pan_card_name",""),
+            pan_card_father_s_husband_s_name = applicant.get("pan_card_father_s_husband_s_name",""),
         )
         
         # add family details.
@@ -588,68 +589,69 @@ class AddApplicationMobile(Form):
         app.docs_vehicle3 = self.load_docs_vehicle(data)
 
         #newly_added _ field
-        data = self.load(self.applicant_other_card_cbcheck)
-        app.cbcheck_aadhar_card_number = data.get("aadhar_card_number","")
-        app.cbcheck_father_s_name = data.get("father_s_name","")
-        app.cbcheck_date_of_birth = data.get("date_of_birth","")
-        app.cbcheck_state = data.get("state","")
-        app.cbcheck_pin_code = data.get("pin_code","")
-        app.cbcheck_pan_card = data.get("pan_card","")
-        app.cbcheck_ration_card = data.get("ration_card","")
-        app.cbcheck_voter_id_number = data.get("voter_id_number","")
-        app.cbcheck_mobile_number = data.get("mobile_number","")
-        app.cbcheck_address = data.get("address","")
-        app.cbcheck_name = data.get("name","")
-        app.cbcheck_age = data.get("age","")
-        app.cbcheck_spouse_name = data.get("spouse_name","")
-        app.cbcheck_mother_s_name = data.get("mother_s_name","")
-        app.cbcheck_gender = data.get("gender","")
-        app.cbcheck_district = data.get("district","")
-
-        data = self.load(self.guarantor1_other_card_co_applicant)
-        app.guarantor1_aadhar_card_number = data.get("aadhar_card_number","")
-        app.guarantor1_father_s_name = data.get("father_s_name","")
-        app.guarantor1_date_of_birth = data.get("date_of_birth","")
-        app.guarantor1_state = data.get("state","")
-        app.guarantor1_pin_code = data.get("pin_code","")
-        app.guarantor1_pan_card = data.get("pan_card","")
-        app.guarantor1_ration_card = data.get("ration_card","")
-        app.guarantor1_voter_id_number = data.get("voter_id_number","")
-        app.guarantor1_mobile_number = data.get("mobile_number","")
-        app.guarantor1_address = data.get("address","")
-        app.guarantor1_name = data.get("name","")
-        app.guarantor1_age = data.get("age","")
-        app.guarantor1_spouse_name = data.get("spouse_name","")
-        app.guarantor1_mother_s_name = data.get("mother_s_name","")
-        app.guarantor1_relation_with_the_applicant = data.get("relation_with_the_applicant","")
-        app.guarantor1_gender = data.get("gender","")
-        app.guarantor1_district = data.get("district","")
+        # data = self.load(self.applicant_other_card_cbcheck)
+        # app.cbcheck_aadhar_card_number = data.get("aadhar_card_number","")
+        # app.cbcheck_father_s_name = data.get("father_s_name","")
+        # app.cbcheck_date_of_birth = data.get("date_of_birth","")
+        # app.cbcheck_state = data.get("state","")
+        # app.cbcheck_pin_code = data.get("pin_code","")
+        # app.cbcheck_pan_card = data.get("pan_card","")
+        # app.cbcheck_ration_card = data.get("ration_card","")
+        # app.cbcheck_voter_id_number = data.get("voter_id_number","")
+        # app.cbcheck_mobile_number = data.get("mobile_number","")
+        # app.cbcheck_address = data.get("address","")
+        # app.cbcheck_name = data.get("name","")
+        # app.cbcheck_age = data.get("age","")
+        # app.cbcheck_spouse_name = data.get("spouse_name","")
+        # app.cbcheck_mother_s_name = data.get("mother_s_name","")
+        # app.cbcheck_gender = data.get("gender","")
+        # app.cbcheck_district = data.get("district","")
+        #
+        # data = self.load(self.guarantor1_other_card_co_applicant)
+        # app.guarantor1_aadhar_card_number = data.get("aadhar_card_number","")
+        # app.guarantor1_father_s_name = data.get("father_s_name","")
+        # app.guarantor1_date_of_birth = data.get("date_of_birth","")
+        # app.guarantor1_state = data.get("state","")
+        # app.guarantor1_pin_code = data.get("pin_code","")
+        # app.guarantor1_pan_card = data.get("pan_card","")
+        # app.guarantor1_ration_card = data.get("ration_card","")
+        # app.guarantor1_voter_id_number = data.get("voter_id_number","")
+        # app.guarantor1_mobile_number = data.get("mobile_number","")
+        # app.guarantor1_address = data.get("address","")
+        # app.guarantor1_name = data.get("name","")
+        # app.guarantor1_age = data.get("age","")
+        # app.guarantor1_spouse_name = data.get("spouse_name","")
+        # app.guarantor1_mother_s_name = data.get("mother_s_name","")
+        # app.guarantor1_relation_with_the_applicant = data.get("relation_with_the_applicant","")
+        # app.guarantor1_gender = data.get("gender","")
+        # app.guarantor1_district = data.get("district","")
 
         # add guarantor details.
-        guarantor1 = self.load(self.guarantor1_kyc_details)
+        guarantor1 = self.load(self.guarantor1_other_card_co_applicant)
         app.guarantor1_kyc = EsthenosOrgApplicationKYC(
             kyc_type = guarantor1.get("type", []),
-            kyc_number = guarantor1.get("uid", []),
+            kyc_number = guarantor1.get("aadhar_card_number", []),
             age = guarantor1.get("age", []),
-            dob = guarantor1.get("dob_yob", []),
+            dob = guarantor1.get("date_of_birth", []),
             name = guarantor1.get("name", []),
             taluk = guarantor1.get("taluk", []),
             state = guarantor1.get("state", []),
-            pincode = guarantor1.get("pincode", []),
+            pincode = guarantor1.get("pin_code", []),
             address = guarantor1.get("address", []),
             country = guarantor1.get("country", []),
             district = guarantor1.get("district", []),
             phone_number = guarantor1.get("phone_number", []),
             mobile_number = guarantor1.get("mobile_number", []),
-            father_or_husband_name = guarantor1.get("father_s_husband_s_name", []),
+            father_or_husband_name = guarantor1.get("father_s_name", []),
+            mothers_name = guarantor1.get("mother_s_name",[]),
             spouse_aadhar_card_number = guarantor1.get("spouse_aadhar_card_number", []),
             spouse_name = guarantor1.get("spouse_name", []),
             occupation = guarantor1.get("occupation", []),
             emailid = guarantor1.get("email_id",[]),
-            voterid = guarantor1.get("voter_id",[]),
+            voterid = guarantor1.get("voter_id_number",[]),
             voterid_name = guarantor1.get("voter_id_name",[]),
             voter_id_father_s_husband_s_name = guarantor1.get("voter_id_father_s_husband_s_name",[]),
-            pancard_id = guarantor1.get("pan_card_id",[]),
+            pancard_id = guarantor1.get("pan_card",[]),
             pancard_name = guarantor1.get("pan_card_name",[]),
             pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[])
         )
@@ -720,7 +722,6 @@ class AddApplicationMobile(Form):
             group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=self.group.data)
             app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
             app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
-
             app.update_status(110)
             app.save()
 

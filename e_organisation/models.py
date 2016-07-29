@@ -1210,6 +1210,7 @@ class EsthenosOrgUserPerformanceTarget(db.Document):
 
 
 class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
+
     kyc_type = db.StringField(max_length=512, required=False,default="")
     kyc_number = db.StringField(max_length=512, required=False,default="")
     age = db.StringField(max_length=512, required=False,default="")
@@ -1224,6 +1225,7 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     district = db.StringField(max_length=512, required=False,default="")
     phone_number = db.StringField(max_length=512, required=False,default="")
     mobile_number = db.StringField(max_length=512, required=False,default="")
+    mothers_name = db.StringField(max_length=512, required=False,default="")
     father_or_husband_name = db.StringField(max_length=255, required=False,default="")
     date_created = db.DateTimeField(default=datetime.datetime.now)
     validation = db.StringField(max_length=512, required=True,default="PENDING")
@@ -1438,22 +1440,22 @@ class EsthenosOrgApplication(db.Document):
     assets_id = db.StringField(max_length=255, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
     #newly_added _ field
-    cbcheck_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
-    cbcheck_father_s_name = db.StringField(max_length=512, required=False,default="")
-    cbcheck_date_of_birth = db.StringField(max_length=512, required=False,default="")
-    cbcheck_state = db.StringField(max_length=512, required=False,default="")
-    cbcheck_pin_code = db.StringField(max_length=512, required=False,default="")
-    cbcheck_pan_card = db.StringField(max_length=512, required=False,default="")
-    cbcheck_ration_card = db.StringField(max_length=512, required=False,default="")
-    cbcheck_voter_id_number = db.StringField(max_length=512, required=False,default="")
-    cbcheck_mobile_number = db.StringField(max_length=512, required=False,default="")
-    cbcheck_address = db.StringField(max_length=512, required=False,default="")
-    cbcheck_name = db.StringField(max_length=512, required=False,default="")
-    cbcheck_age = db.StringField(max_length=512, required=False,default="")
-    cbcheck_spouse_name = db.StringField(max_length=512, required=False,default="")
-    cbcheck_mother_s_name = db.StringField(max_length=512, required=False,default="")
-    cbcheck_gender = db.StringField(max_length=512, required=False,default="")
-    cbcheck_district = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_father_s_name = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_date_of_birth = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_state = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_pin_code = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_pan_card = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_ration_card = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_voter_id_number = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_mobile_number = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_address = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_name = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_age = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_spouse_name = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_mother_s_name = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_gender = db.StringField(max_length=512, required=False,default="")
+    # cbcheck_district = db.StringField(max_length=512, required=False,default="")
 
     guarantor1_aadhar_card_number = db.StringField(max_length=512, required=False,default="")
     guarantor1_father_s_name = db.StringField(max_length=512, required=False,default="")
@@ -1908,6 +1910,60 @@ class EsthenosOrgApplication(db.Document):
             stats.kyc_failed = 0
         return stats
 
+    def update_cashflow_from_highmark_response_1(self, resp):
+
+        apps_with_same_voter_id = EsthenosOrgApplication.objects.filter(applicant_kyc__voter_id=resp.national_id_card)
+
+        is_failed = False
+        loan_settings = EsthenosOrgSettings.objects.all()[0]
+
+        if len(apps_with_same_voter_id) > 1:
+            is_failed = True
+            for appl in apps_with_same_voter_id:
+                if appl.application_id != self.application_id:
+                    self.update_status(25)
+                    mainapp.logger.warning("[HIGHMARK] apps with same voterid appid1:%s appid1:%s voterid:%s" % (appl.application_id, self.application_id, resp.national_id_card))
+                    break
+
+        if not is_failed and resp.num_active_account > loan_settings.max_existing_loan_count_org:
+            is_failed = True
+            self.update_status(26)
+
+        if not is_failed and self.defaults_with_no_mfis > 0:
+            is_failed = True
+            self.update_status(20)
+
+        if not is_failed:
+            self.update_status(150)
+            self.update_status(160)
+
+        if not is_failed:
+            self.update_status(170)
+
+        self.save()
+
+
+    def pre_update_kyc_parameters(self, form):
+
+        self.applicant_kyc.name = form['name']
+        self.applicant_kyc.age = form['age']
+        self.applicant_kyc.mobile_number = form['mobile_number']
+        self.applicant_kyc.dob = form['date_of_birth']
+        self.applicant_kyc.spouse_name = form['spouse_name']
+        self.applicant_kyc.mother_s_name = form['mother_s_name']
+        self.applicant_kyc.father_or_husband_name = form['father_s_name']
+        self.applicant_kyc.district = form['district']
+        self.applicant_kyc.state = form['state']
+        self.applicant_kyc.pincode = form['pin_code']
+        self.applicant_kyc.address = form['address']
+        self.applicant_kyc.voter_id = form['voter_id_number']
+        self.applicant_kyc.kyc_number = form['uid_number']
+        self.applicant_kyc.pan_card_id = form['aadhar_card_number']
+        self.applicant_kyc.ration_id = form['ration_card']
+        self.applicant_kyc.gender = form['gender']
+
+        self.save()
+
     def get_params_for_pre_highmark(self, form):
 
         application_params = {}
@@ -1927,7 +1983,7 @@ class EsthenosOrgApplication(db.Document):
             applicant_params[i] = j
 
         applicant_id_headers = ['ID01', 'ID02', 'ID03', 'ID04', 'ID05', 'ID06', 'ID07']
-        applicant_id_headers_values = ['', form['voter_id_number'], form['uid_number'], '', form['ration_card_number'], '', form['pan_card_number']]
+        applicant_id_headers_values = ['', form['voter_id_number'], form['aadhar_card_number'], '', form['ration_card'], '', form['pan_card']]
 
         applicant_params["IDS"] = {}
 
@@ -1936,15 +1992,15 @@ class EsthenosOrgApplication(db.Document):
 
         applicant_params['applicant_age_as_on'] = "29/07/2015"
 
-        applicant_params['applicant_dob'] = form['dob']
+        applicant_params['applicant_dob'] = form['date_of_birth']
         applicant_params['applicant_age'] = form['age']
         applicant_params['id_type_1'] = "ID01"
         applicant_params['id_type_1_value'] = form['voter_id_number']
         applicant_params['applicant_phone_type_1'] = "P01"
-        applicant_params['applicant_phone_1'] = form['mobile_no']
+        applicant_params['applicant_phone_1'] = form['mobile_number']
 
         applicant_relation_headers = ['K01', 'K02', 'K03', 'K04', 'K05', 'K06', 'K07']
-        applicant_relation_headers_values = [form['father_name'], form['spouse_name'], form['mother_name']]
+        applicant_relation_headers_values = [form['father_s_name'], form['spouse_name'], form['mother_s_name']]
 
         applicant_params["REL"] = {}
         i = 0
@@ -1962,10 +2018,10 @@ class EsthenosOrgApplication(db.Document):
         address_params['type_1_pincode'] = form['pin_code']
 
         application_params = {}
-        application_params['KENDRA-ID'] = form['center_name']
-        application_params['BRANCH-ID'] = form['group_name']
+        # application_params['KENDRA-ID'] = form['center_name']
+        # application_params['BRANCH-ID'] = form['group_name']
         application_params['LOS-APP-ID'] = str(self.id)
-        application_params['LOAN-AMOUNT'] = self.product.loan_amount
+        # application_params['LOAN-AMOUNT'] = self.product.loan_amount
 
         self.pre_update_kyc_parameters(form)
 
