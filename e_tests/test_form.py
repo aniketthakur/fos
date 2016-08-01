@@ -6,17 +6,20 @@ import requests,sys
 # response = requests.post(url, data=payload)
 # print response.text
 # sys.exit(0)
-#
+
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "testce@fos-arohan-test.esthenos.com", "password":"123"}
+# url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
+# payload = {"email": "abhijit@fos-arohan-test.esthenos.com", "password":"1234"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"yrJD9tRCiBHfgYVByuLx-nCC4cL7infzsox2VICg0CA"
+    # "instance_token":"yrJD9tRCiBHfgYVByuLx-nCC4cL7infzsox2VICg0CA"
+    "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
 }
 # url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
-url1 = "http://localhost:8080/api/organisation/branches/579867d2ebc8b2422fc9849f/applications/pre_registration"
+# url1 = "http://%s/api/organisation/branches/579867d2ebc8b2422fc9849f/applications/pre_registration" % ("localhost:8080")
+url1 = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 print url1
 response = requests.get(url1, params=querystring)
 print response.text

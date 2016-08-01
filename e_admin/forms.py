@@ -252,11 +252,13 @@ class AddOrganizationEmployeeForm(Form):
                 centers = map(lambda r: str(r.id), branch.centers)
                 commons = set.intersection(set(centers), self.centers.data)
                 if not len(commons):
-                    if emp.hierarchy.level == 6 and branch.owner == None:
+                    if emp.hierarchy.level == 6 and branch.owner == None and emp.hierarchy.role == "ORG_BH":
                         branch.owner = emp
                         branch.save()
                         selections.append(branch)
-                    elif branch.owner!=None:
+                    elif emp.hierarchy.level == 6 and (emp.hierarchy.role == "ORG_ILE" or emp.hierarchy.role == "ORG_CE"):
+                        selections.append(branch)
+                    elif branch.owner!=None and emp.hierarchy.role == "ORG_BH":
                         errors["branches"] = "A selected branch has already been assigned."
                     if emp.hierarchy.level == 7:
                         selections.append(branch)
@@ -266,17 +268,17 @@ class AddOrganizationEmployeeForm(Form):
             if len(selections) != 0:
                 emp.access_branches = selections
 
-        if emp.hierarchy.level >= 6:
-            for i in selections:
-                if i.parent not in emp.access_areas:
-                    emp.access_areas = []
-                    emp.access_areas.append(i.parent)
-                if i.parent.parent not in emp.access_regions:
-                    emp.access_regions = []
-                    emp.access_regions.append(i.parent.parent)
-                if i.parent.parent not in emp.access_states:
-                    emp.access_states = []
-                    emp.access_states.append(i.parent.parent.parent)
+        # if emp.hierarchy.level >= 6:
+        #     for i in selections:
+        #         if i.parent not in emp.access_areas:
+        #             emp.access_areas = []
+        #             emp.access_areas.append(i.parent)
+        #         if i.parent.parent not in emp.access_regions:
+        #             emp.access_regions = []
+        #             emp.access_regions.append(i.parent.parent)
+        #         if i.parent.parent not in emp.access_states:
+        #             emp.access_states = []
+        #             emp.access_states.append(i.parent.parent.parent)
 
         selections = []
         #todo centralize the level assignments
