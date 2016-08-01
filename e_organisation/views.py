@@ -427,6 +427,10 @@ def application_get_group(branchid,state):
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=126)
     elif state == "neighbor_feedback":
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=186)
+    elif state == "luc_ready":
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=244)
+    elif state == "mv_ready":
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=246)
     else:
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch)
 
