@@ -40,6 +40,13 @@ def centers_list():
                     for branch in area.branches:
                         branches.append(branch)
 
+    if user.hierarchy.role == "ORG_ILE":
+        for state in user.states:
+            for region in state.regions:
+                for area in region.areas:
+                    for branch in area.branches:
+                        branches.append(branch)
+
     if branches is not []:
         return jsonify({
             "count" : len(branches),
