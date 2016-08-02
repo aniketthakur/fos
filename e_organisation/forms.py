@@ -101,8 +101,6 @@ class AddApplicationMobile(Form):
 
     applicant_other_card_purchase_info = TextField(validators=[v.Length(max=10000)])
 
-    applicant_other_card_assets_liability = TextField(validators=[v.Length(max=10000)])
-
     applicant_other_card_bus_monthly_exp = TextField(validators=[v.Length(max=10000)])
 
     applicant_business_docs_customer1 = TextField(validators=[v.Length(max=10000)])
@@ -406,24 +404,6 @@ class AddApplicationMobile(Form):
         app.two_wheeler_y_n = data.get("2wheeler_y_n", "")
         app.washing_machine = data.get("washing_machine", "")
 
-        data = self.load(self.applicant_other_card_assets_liability)
-        app.insurance_policies = toInt(data.get("insurance_policies", ""))
-        app.loans_from_whom = data.get("loans_from_relatives,money_lender_etc", "")
-        app.creditors_for_raw_material = toFloat(data.get("creditors_for_raw_material", ""))
-        app.raw_material_in_han = toFloat(data.get("raw_material_in_han", ""))
-        app.loan_outstanding_against_agriculture = toFloat(data.get("loan_outstanding_against__property_value___agriculture", ""))
-        app.loan_outstanding_against_residential = toFloat(data.get("loan_outstanding_against__property_value___residential", ""))
-        app.vehicle_loans =toInt(data.get("vehicle_loans", ""))
-        app.loan_outstanding_against_commercial_ = toInt(data.get("loan_outstanding_against__property_value___commercial_", ""))
-        app.cash_and_bank_balance = toFloat(data.get("cash_and_bank_balance", ""))
-        app.vehicles_resale_value = toFloat(data.get("vehicles_current_estimate_of_resale_value", ""))
-        app.immovable_estimated_value_agriculture = toFloat(data.get("immovable_property_estimated_value___agriculture", ""))
-        app.immovable_estimated_value_residential = toFloat(data.get("immovable_property_estimated_value___residential", ""))
-        app.immovable_estimated_value_commercial = toFloat(data.get("immovable_property_estimated_value___commercial", ""))
-        app.fixed_deposit_and_ppf = toFloat(data.get("fixed_deposit_and_ppf", ""))
-        app.receivables_from_customer = toFloat(data.get("receivables_from_customer", ""))
-        app.gold_and_jewellery = toFloat(data.get("gold_and_jewellery", ""))
-
         data = self.load(self.applicant_other_card_emp_business_info)
         app.permanent_employees = toInt(data.get("permanent_employees", ""))
         app.average_monthly_wage_for_relatives = toFloat(data.get("average_monthly_wage_for_relatives", ""))
@@ -466,23 +446,23 @@ class AddApplicationMobile(Form):
         data = self.load(self.applicant_other_card_borrower_furnished)
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
 
-        # data = self.load(self.applicant_other_card_assets_liabilities)
-        # app.cash_balance = data.get("cash_balance","")
-        # app.payable_supp = data.get("payable_to_suppliers","")
-        # app.payable_supp = data.get("fixed_deposit_and_ppf","")
-        # app.payable_supp = data.get("immovable_property_estimated_value___commercial","")
-        # app.payable_supp = data.get("others_long_term_loans","")
-        # app.payable_supp = data.get("loan__amount_payable_1_year_onwards": "",
-        # app.payable_supp = data.get("immovable_property_estimated_value___agriculture": "",
-        # app.payable_supp = data.get("receivables_from_customer": "",
-        # app.payable_supp = data.get("vehicles_current_estimate_of_resale_value": "",
-        # app.payable_supp = data.get("other_short_term_loans": "",
-        # app.payable_supp = data.get("bank_balance": "",
-        # app.payable_supp = data.get("immovable_property_estimated_value___residential": "",
-        # app.payable_supp = data.get("gold_and_jewellery": "",
-        # app.payable_supp = data.get("raw_material_in_han": "",
-        # app.payable_supp = data.get("insurance_policies": "",
-        # app.payable_supp = data.get("loan__emis_payable_in_the_next_1_year": ""
+        data = self.load(self.applicant_other_card_assets_liabilities)
+        app.cash_balance = data.get("cash_balance", "")
+        app.payable_supp = data.get("payable_to_suppliers", "")
+        app.fixed_deposit_ppf = data.get("fixed_deposit_and_ppf", "")
+        app.immovable_property_commercial = data.get("immovable_property_estimated_value___commercial", "")
+        app.others_long_term = data.get("others_long_term_loans", "")
+        app.loan_amount_payable_1 = data.get("loan__amount_payable_1_year_onwards", "")
+        app.immovable_property_agriculture = data.get("immovable_property_estimated_value___agriculture", "")
+        app.receivables_from_customer = data.get("receivables_from_customer", "")
+        app.vehicles_current_estimate = data.get("vehicles_current_estimate_of_resale_value", "")
+        app.short_term_loans = data.get("other_short_term_loans", "")
+        app.bank_balance = data.get("bank_balance", "")
+        app.immovable_property_residential = data.get("immovable_property_estimated_value___residential", "")
+        app.gold_and_jewellery = data.get("gold_and_jewellery", "")
+        app.raw_material_in_han = data.get("raw_material_in_han", "")
+        app.insurance_policies = data.get("insurance_policies", "")
+        app.loan_emis_payable_1 = data.get("loan__emis_payable_in_the_next_1_year", "")
 
         locations_map = self.load(self.locations_map)
         # app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))
