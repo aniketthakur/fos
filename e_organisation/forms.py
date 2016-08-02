@@ -728,7 +728,7 @@ class AddApplicationMobile(Form):
         )
 
         if not is_app:
-            group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=self.group.data)
+            # group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=self.branch.data)
             app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
             app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
             app.update_status(110)

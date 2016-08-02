@@ -347,30 +347,29 @@ def application_pre_register_group():
     address_params = {}
     applicant_params = {}
 
-    # product = EsthenosOrgProduct.objects.get(id=str(form['product_id']))
+
     user = EsthenosUser.objects.get(id=current_user.id)
     user.organisation.update(inc__application_count=1)
     applicant = form["applicant_other_card_cbcheck"]
-    for data in applicant:
-        app = EsthenosOrgApplication(
+    branch = EsthenosOrgProduct.objects.get(id=applicant['branch'])
+    app = EsthenosOrgApplication(
             applicant_name=applicant['name'],
             owner=user,
             organisation=user.organisation,
+            branch = branch
         )
 
-        app.update_status(105)
-        app.update_status(110)
-        app.update_status(120)
-        app.update_status(125)
-        app.update_status(126)
-        app.update_status(130)
-        app.is_pre_registered = True
-
-        app.save()
-
-        app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
-        app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
-        app.save()
+    app.update_status(105)
+    app.update_status(110)
+    app.update_status(120)
+    app.update_status(125)
+    app.update_status(126)
+    app.update_status(130)
+    app.is_pre_registered = True
+    app.save()
+    app_count = EsthenosOrg.objects.get(id=user.organisation.id).application_count + 1
+    app.application_id = user.organisation.name.upper()[0:2] + user.organisation.code + "{0:07d}".format(app_count)
+    app.save()
 
     applicant_params, address_params, application_params = app.get_params_for_pre_highmark(applicant)
     response = pr.handle_request_response(applicant_params, address_params, application_params)
