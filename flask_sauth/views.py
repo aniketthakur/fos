@@ -46,7 +46,7 @@ def login():
 
             user = EsthenosUser.objects.get(email=form.email.data)
 
-            if user.active and user.hierarchy.role != "ORG_CM":
+            if user.active and user.hierarchy.role != "ORG_ILE" and user.hierarchy.role != "ORG_CE":
                 login_user(form.user_cache, True)
 
             elif not user.active:
@@ -54,10 +54,16 @@ def login():
                 kwargs = {"login_form": login_form}
                 return render_template("auth/login.html", **kwargs)
 
-            elif user.hierarchy.role == "ORG_CM":
+            elif user.hierarchy.role == "ORG_ILE":
                 flash(u'Your account cannot login to server', 'error')
                 kwargs = {"login_form": login_form}
                 return render_template("auth/login.html", **kwargs)
+
+            elif user.hierarchy.role == "ORG_CE":
+               flash(u'Your account cannot login to server', 'error')
+               kwargs = {"login_form": login_form}
+               return render_template("auth/login.html", **kwargs)
+
 
             session['role'] = user.hierarchy.role
             return redirect(next_url)

@@ -18,7 +18,7 @@ def application_list():
   region = ""
   state = ""
 
-  hierarchy = EsthenosOrgHierarchy.objects.filter(organisation=org, role="ORG_CM")
+  hierarchy = EsthenosOrgHierarchy.objects.filter(organisation=org, role="ORG_ILE")
 
   fos_agents = []
 
