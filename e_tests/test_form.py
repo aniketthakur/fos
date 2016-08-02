@@ -8,21 +8,156 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
-# payload = {"email": "abhijit@fos-arohan-test.esthenos.com", "password":"1234"}
+url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
+# url = "http://%s/api/organisation/applications/pre_register" % ("fos-arohan-test.esthenos.com")
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+# payload = {"email": "testile@fos-arohan-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    # "instance_token":"yrJD9tRCiBHfgYVByuLx-nCC4cL7infzsox2VICg0CA"
-    "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
+    "instance_token":"gwrTJRr8ifBlEflS-7jQrmlciDcBSQGAZE8VjKNa9T8"
+    # "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
 }
+
+payload2 = {
+    "guarantor1_other_card_co_applicant": {
+        "address": "Hdhdu",
+        "aadhar_card_number": "57575",
+        "father_s_name": "  Jshgh",
+        "date_of_birth": "01/08/1983",
+        "state": "Assam",
+        "gender": "Female",
+        "pin_code": "757576",
+        "spouse_name": "  Usudu",
+        "age": "33",
+        "ration_card": "HZUZUDUDU",
+        "relation_with_the_applicant": "hzhxh",
+        "pan_card": "JZJDU2837H",
+        "district": "Usudu",
+        "name": "  Hshdu",
+        "mother_s_name": "  Hshdu",
+        "voter_id_number": "ISUDIDIR",
+        "mobile_number": "6767656567"
+    },
+    "assets_id": "d0a13d9d-aa28-4b03-882d-ea6705f09d61",
+    "applicant_family_details_family_members7": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "branch": "579867d2ebc8b2422fc9849f",
+    "applicant_family_details_family_members4": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "applicant_family_details_family_members2": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "assets_map": {
+        "guarantor1": {},
+        "guarantor2": {},
+        "applicant": {}
+    },
+    "applicant_family_details_family_members1": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "locations_map": {
+        "business": {
+            "lat": 0,
+            "lng": 0
+        }
+    },
+    "applicant_other_card_personal_detail": {
+        "religion": "Hindu",
+        "physical_disability": "None",
+        "education": "PG and Above",
+        "category": "Schedule Cast"
+    },
+    "applicant_family_details_family_members6": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "applicant_family_details_ile_conformation": {
+        "i_confirm_that_i_have_seen_the_original_documents": "Yes"
+    },
+    "applicant_family_details_family_members5": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "applicant_family_details_family_members3": {
+        "age": "",
+        "occupations_details": " ",
+        "relationship": "",
+        "name": "",
+        "education": "",
+        "sex": "",
+        "years_of_involvement": "",
+        "monthly_income": ""
+    },
+    "applicant_other_card_cbcheck": {
+        "address": "Ggggdxcg",
+        "aadhar_card_number": "558555555555",
+        "father_s_name": "Mr. Rtuugf",
+        "date_of_birth": "02/08/1987",
+        "state": "Jharkhand",
+        "gender": "Male",
+        "pin_code": "123654",
+        "spouse_name": "  ",
+        "age": "29",
+        "ration_card": "",
+        "pan_card": "WRYHG5677W",
+        "district": "Fhjjbgggg",
+        "name": "  Uurdyuu Ghii",
+        "mother_s_name": "Mrs. Ghjhvvvb",
+        "voter_id_number": "",
+        "mobile_number": "8865555588"
+    }
+}
+
 # url1 = "http://%s/api/organisation/branches" % ("localhost:8080")
 # url1 = "http://%s/api/organisation/branches/579867d2ebc8b2422fc9849f/applications/pre_registration" % ("localhost:8080")
-url1 = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
-print url1
-response = requests.get(url1, params=querystring)
-print response.text
+# url1 = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
+# print url1
+# response = requests.get(url1, params=querystring)
+# print response.text
 # url = "http://localhost:8080/api/organisation/applications"
 
 payload1 = {
@@ -566,6 +701,6 @@ payload1 = {
     }
 }
 
-# for i in range(0, 1):
-#     response = requests.post(url, json=payload, params=querystring)
-#     print(response.text)
+for i in range(0, 1):
+    response = requests.post(url, json=payload2, params=querystring)
+    print(response.text)
