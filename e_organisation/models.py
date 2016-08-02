@@ -2021,7 +2021,7 @@ class EsthenosOrgApplication(db.Document):
 
         application_params = {}
         # application_params['KENDRA-ID'] = form['center_name']
-        # application_params['BRANCH-ID'] = form['group_name']
+        application_params['BRANCH-ID'] = form['branch']
         application_params['LOS-APP-ID'] = str(self.id)
         # application_params['LOAN-AMOUNT'] = self.product.loan_amount
 
