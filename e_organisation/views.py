@@ -351,7 +351,7 @@ def application_pre_register_group():
     user = EsthenosUser.objects.get(id=current_user.id)
     user.organisation.update(inc__application_count=1)
     applicant = form["applicant_other_card_cbcheck"]
-    branch = EsthenosOrgProduct.objects.get(id=applicant['branch'])
+    branch = EsthenosOrgBranch.objects.get(id=applicant['branch'])
     app = EsthenosOrgApplication(
             applicant_name=applicant['name'],
             owner=user,

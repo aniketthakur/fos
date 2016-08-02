@@ -645,6 +645,7 @@ class AddApplicationMobile(Form):
             name = guarantor1.get("name", []),
             taluk = guarantor1.get("taluk", []),
             state = guarantor1.get("state", []),
+            gender = guarantor1.get("gender",[]),
             pincode = guarantor1.get("pin_code", []),
             address = guarantor1.get("address", []),
             country = guarantor1.get("country", []),
