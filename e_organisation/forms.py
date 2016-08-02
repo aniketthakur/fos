@@ -29,6 +29,7 @@ class AddApplicationMobile(Form):
     guarantor1_other_card_co_applicant = TextField(validators=[v.Length(max=10000)])
     guarantor1_kyc_details = TextField(validators=[v.Length(max=10000)])
     applicant_family_details_ile_conformation= TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_assets_liabilities = TextField(validators=[v.Length(max=10000)])
 
 
     guarantor1_other_card_details1 = TextField(validators=[v.Length(max=10000)])
@@ -228,37 +229,37 @@ class AddApplicationMobile(Form):
         app.applicant_name = applicant_kyc["name"]
         app.father_or_husband_name = applicant_kyc["father_s_husband_s_name"]
 
-        data = self.load(self.applicant_other_card_phone_details)
-        app.internet_data_uses = data.get("internet_data_uses", "")
-        app.mobile_services_provider = data.get("mobile_services_provider", "")
-        app.billing_type = data.get("billing_type", "")
-        app.handset_type = data.get("handset_type", "")
-        app.average_monthly_bill = toFloat(data.get("average_monthly_bill", ""))
-
-        data = self.load(self.applicant_other_card_electricity_details)
-        app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
-        app.power_supplier = data.get("Tata Power", "")
-
-        applicant_personal = self.load(self.applicant_other_card_personal_detail)
-        app.religion = applicant_personal.get("religion", "")
-        app.category = applicant_personal.get("category", "")
-        app.education = applicant_personal.get("education", "")
-        app.disability = applicant_personal.get("physical_disability", "")
-
-        data = self.load(self.applicant_family_details_members)
-        app.male_count = toInt(data.get("male_count", ""))
-        app.female_count = toInt(data.get("female_count", ""))
-        app.members_above18 = toInt(data.get("members_above_18", ""))
-        app.members_less_than_18 = toInt(data.get("members_less_than_18", ""))
-        app.total_earning_members = toInt(data.get("total_earning_members", ""))
-        app.total_number_of_family_members = toInt(data.get("total_number_of_family_members", ""))
-
-        data = self.load(self.applicant_nominee_details)
-        app.nominee_age = data.get("nominee_age", "")
-        app.nominee_name = data.get("nominee_name", "")
-        app.nominee_phone = data.get("nominee_phone", "")
-        app.nominee_gender = data.get("nominee_gender", "")
-        app.nominee_relation = data.get("nominee_relation", "")
+        # data = self.load(self.applicant_other_card_phone_details)
+        # app.internet_data_uses = data.get("internet_data_uses", "")
+        # app.mobile_services_provider = data.get("mobile_services_provider", "")
+        # app.billing_type = data.get("billing_type", "")
+        # app.handset_type = data.get("handset_type", "")
+        # app.average_monthly_bill = toFloat(data.get("average_monthly_bill", ""))
+        #
+        # data = self.load(self.applicant_other_card_electricity_details)
+        # app.electricity_monthly_bill = toFloat(data.get("electricity_monthly_bill", ""))
+        # app.power_supplier = data.get("Tata Power", "")
+        #
+        # applicant_personal = self.load(self.applicant_other_card_personal_detail)
+        # app.religion = applicant_personal.get("religion", "")
+        # app.category = applicant_personal.get("category", "")
+        # app.education = applicant_personal.get("education", "")
+        # app.disability = applicant_personal.get("physical_disability", "")
+        #
+        # data = self.load(self.applicant_family_details_members)
+        # app.male_count = toInt(data.get("male_count", ""))
+        # app.female_count = toInt(data.get("female_count", ""))
+        # app.members_above18 = toInt(data.get("members_above_18", ""))
+        # app.members_less_than_18 = toInt(data.get("members_less_than_18", ""))
+        # app.total_earning_members = toInt(data.get("total_earning_members", ""))
+        # app.total_number_of_family_members = toInt(data.get("total_number_of_family_members", ""))
+        #
+        # data = self.load(self.applicant_nominee_details)
+        # app.nominee_age = data.get("nominee_age", "")
+        # app.nominee_name = data.get("nominee_name", "")
+        # app.nominee_phone = data.get("nominee_phone", "")
+        # app.nominee_gender = data.get("nominee_gender", "")
+        # app.nominee_relation = data.get("nominee_relation", "")
 
         data = self.load(self.applicant_family_details_assets)
         app.residence_details = data.get("residence_details")
@@ -464,6 +465,24 @@ class AddApplicationMobile(Form):
 
         data = self.load(self.applicant_other_card_borrower_furnished)
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
+
+        # data = self.load(self.applicant_other_card_assets_liabilities)
+        # app.cash_balance = data.get("cash_balance","")
+        # app.payable_supp = data.get("payable_to_suppliers","")
+        # app.payable_supp = data.get("fixed_deposit_and_ppf","")
+        # app.payable_supp = data.get("immovable_property_estimated_value___commercial","")
+        # app.payable_supp = data.get("others_long_term_loans","")
+        # app.payable_supp = data.get("loan__amount_payable_1_year_onwards": "",
+        # app.payable_supp = data.get("immovable_property_estimated_value___agriculture": "",
+        # app.payable_supp = data.get("receivables_from_customer": "",
+        # app.payable_supp = data.get("vehicles_current_estimate_of_resale_value": "",
+        # app.payable_supp = data.get("other_short_term_loans": "",
+        # app.payable_supp = data.get("bank_balance": "",
+        # app.payable_supp = data.get("immovable_property_estimated_value___residential": "",
+        # app.payable_supp = data.get("gold_and_jewellery": "",
+        # app.payable_supp = data.get("raw_material_in_han": "",
+        # app.payable_supp = data.get("insurance_policies": "",
+        # app.payable_supp = data.get("loan__emis_payable_in_the_next_1_year": ""
 
         locations_map = self.load(self.locations_map)
         # app.home_loc = EsthenosOrgLocation(lat=toFloat(locations_map.get("home",{}).get("lat","")), lng=toFloat(locations_map.get("home",{}).get("lng","")))

@@ -8,15 +8,16 @@ import requests,sys
 # sys.exit(0)
 
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
-# url = "http://%s/api/organisation/applications/pre_register" % ("fos-arohan-test.esthenos.com")
+# url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
+url = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
+# url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
-# payload = {"email": "testile@fos-arohan-test.esthenos.com", "password":"123"}
+# payload = {"email": "Abhijit@fos-arohan-test.esthenos.com", "password":"1234"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"gwrTJRr8ifBlEflS-7jQrmlciDcBSQGAZE8VjKNa9T8"
+    "instance_token":"e17YBLfhDykjg2yjOaL-soQR2whDG1zDlrm8JcjyjSU"
     # "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
 }
 
@@ -156,8 +157,8 @@ payload2 = {
 # url1 = "http://%s/api/organisation/branches/579867d2ebc8b2422fc9849f/applications/pre_registration" % ("localhost:8080")
 # url1 = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 # print url1
-# response = requests.get(url1, params=querystring)
-# print response.text
+response = requests.get(url, params=querystring)
+print response.text
 # url = "http://localhost:8080/api/organisation/applications"
 
 payload1 = {
@@ -701,6 +702,6 @@ payload1 = {
     }
 }
 
-for i in range(0, 1):
-    response = requests.post(url, json=payload2, params=querystring)
-    print(response.text)
+# for i in range(0, 1):
+#     response = requests.post(url, json=payload2, params=querystring)
+#     print(response.text)

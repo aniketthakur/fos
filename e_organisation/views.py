@@ -31,21 +31,12 @@ def home_page():
 @feature_enable("features_fos_branches")
 def centers_list():
     user = EsthenosUser.objects.get(id=current_user.id)
-    branches = []
 
     if user.hierarchy.role == "ORG_CE":
-        for state in user.states:
-            for region in state.regions:
-                for area in region.areas:
-                    for branch in area.branches:
-                        branches.append(branch)
+        branches = user.branches
 
     if user.hierarchy.role == "ORG_ILE":
-        for state in user.states:
-            for region in state.regions:
-                for area in region.areas:
-                    for branch in area.branches:
-                        branches.append(branch)
+        branches = user.branches
 
     if branches is not []:
         return jsonify({
