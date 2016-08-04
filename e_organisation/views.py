@@ -449,17 +449,17 @@ def application_get_group(branchid,state):
             "dob": str(app.applicant_kyc.dob),
             "id": app.application_id,
             "mobile_no": app.applicant_kyc.mobile_number,
-            "mother_name_title": app.applicant_kyc.mother_s_name.strip().split(' ')[0],
-            "mother_name": ' '.join(app.applicant_kyc.mother_s_name.strip().split(' ')[1:]),
+            "mother_name_title": app.applicant_kyc.mothers_name.strip().split(' ')[0],
+            "mother_name": ' '.join(app.applicant_kyc.mothers_name.strip().split(' ')[1:]),
             "father_name": ' '.join(app.applicant_kyc.father_or_husband_name.strip().split(' ')[1:]),
             "father_name_title": app.applicant_kyc.father_or_husband_name.strip().split(' ')[0],
             "state": app.applicant_kyc.state,
             "pincode": app.applicant_kyc.pincode,
             "district": app.applicant_kyc.district,
-            "voter_id": app.applicant_kyc.voter_id,
+            "voter_id": app.applicant_kyc.voterid,
             "ration_id": app.applicant_kyc.ration_id,
             "kyc_number": app.applicant_kyc.kyc_number,
-            "pan_card_id": app.applicant_kyc.pan_card_id
+            "pan_card_id": app.applicant_kyc.pancard_id
         }
 
         s = ""

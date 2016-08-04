@@ -1237,6 +1237,7 @@ class EsthenosOrgApplicationKYC(db.EmbeddedDocument):
     voterid_name = db.StringField(max_length=512, required=False,default="")
     voter_id_father_s_husband_s_name = db.StringField(max_length=512, required=False,default="")
     pancard_id = db.StringField(max_length=512, required=False,default="")
+    ration_id = db.StringField(max_length=512, required=False,default="")
     pancard_name = db.StringField(max_length=512, required=False,default="")
     pan_card_father_s_husband_s_name = db.StringField(max_length=512, required=False,default="")
 

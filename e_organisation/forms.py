@@ -605,6 +605,7 @@ class AddApplicationMobile(Form):
             pancard_id = applicant.get("pan_card",""),
             pancard_name = applicant.get("pan_card_name",""),
             pan_card_father_s_husband_s_name = applicant.get("pan_card_father_s_husband_s_name",""),
+            ration_id = applicant.get("ration_card",""),
         )
 
 
@@ -777,7 +778,8 @@ class AddApplicationMobile(Form):
             voter_id_father_s_husband_s_name = guarantor1.get("voter_id_father_s_husband_s_name",[]),
             pancard_id = guarantor1.get("pan_card",[]),
             pancard_name = guarantor1.get("pan_card_name",[]),
-            pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[])
+            pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[]),
+            ration_id = guarantor1.get("ration_card",[])
         )
 
         guarantor2 = self.load(self.guarantor2_kyc_details)
