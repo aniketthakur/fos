@@ -1454,6 +1454,11 @@ class EsthenosOrgApplication(db.Document):
     guarantor2_docs = db.EmbeddedDocumentField(EsthenosOrgApplicationDocs, default=EsthenosOrgApplicationDocs)
 
     other_documents = db.ListField(db.EmbeddedDocumentField(EsthenosOrgApplicationKYC))
+
+    is_pre_registered = db.BooleanField(default=False)
+    is_registered = db.BooleanField(default=False)
+    is_neighbor_complete = db.BooleanField(default=False)
+
     disbursement_pdf_link = db.StringField(max_length=512, required=False, default="#")
 
     home_loc = db.EmbeddedDocumentField(EsthenosOrgLocation, default=EsthenosOrgLocation)

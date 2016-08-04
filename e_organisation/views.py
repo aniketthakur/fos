@@ -11,6 +11,8 @@ from views_psychometric import *
 from esthenos import settings
 from flask import jsonify
 
+from e_highmark import utils
+
 @organisation_views.route('/', methods=["GET"])
 @login_required
 def home_page():
