@@ -397,7 +397,7 @@ def application_pre_register_group():
         # highmark_status.save()
 
         resp = app.highmark_response1
-        # app.update_cashflow_from_highmark_response_1(resp)
+        app.update_cashflow_from_highmark_response_1(resp)
 
     return jsonify({
         "success": True,
