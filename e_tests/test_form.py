@@ -7,17 +7,17 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("localhost:8080")
 # url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
 # url = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
-url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
-# payload = {"email": "testile@fos-arohan-test.esthenos.com", "password":"123"}
+# url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
+payload = {"email": "nitin@fos-arohan-test.esthenos.com", "password":"1234"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"gwrTJRr8ifBlEflS-7jQrmlciDcBSQGAZE8VjKNa9T8"
+    "instance_token":"VAu9IbgAU2HlXH5dua21IwmgLPVkup4oHIQGLs8-gjs"
     # "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
 }
 
@@ -835,5 +835,5 @@ payload1 = {
 }
 
 # for i in range(0, 1):
-response = requests.post(url, json=payload3, params=querystring)
+response = requests.get(url, params=querystring)
 print(response.text)

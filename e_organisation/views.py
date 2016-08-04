@@ -435,7 +435,8 @@ def application_get_group(branchid,state):
         applicant_name = app.applicant_kyc.name.strip().split(' ')
         applicant_name = applicant_name[1:] if applicant_name[0] in ['Mr.', 'Mrs.', 'Miss'] else applicant_name
         applicant_name = ' '.join(applicant_name)
-
+        # "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
+        #  "loan_eligibility_based_on_company_policy" : int(app.loan_eligibility_based_on_company_policy),
         item = {
             "date_created" : str(app.date_created),
             "applicant_name_title" : app.applicant_kyc.name.strip().split(' ')[0],
@@ -443,8 +444,6 @@ def application_get_group(branchid,state):
             "spouse_name_title" : app.applicant_kyc.spouse_name.strip().split(' ')[0],
             "spouse_name" : ' '.join(app.applicant_kyc.spouse_name.strip().split(' ')[1:]),
             "current_status" : app.current_status.status_message,
-            "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
-            "loan_eligibility_based_on_company_policy" : int(app.loan_eligibility_based_on_company_policy),
             "address": app.applicant_kyc.address,
             "age": app.applicant_kyc.age,
             "dob": str(app.applicant_kyc.dob),
