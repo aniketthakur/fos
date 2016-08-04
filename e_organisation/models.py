@@ -1866,6 +1866,7 @@ class EsthenosOrgApplication(db.Document):
     no_borrowers_you_furnished_guarantees__ = db.StringField(max_length=512, required=False,default="")
 
     highmark_response = db.StringField(required=False, default="")
+    highmark_response1 = db.ReferenceField('EsthenosOrgApplicationHighMarkResponse', required=False, default=None)
 
     @property
     def total_income(self):
@@ -2163,6 +2164,9 @@ class EsthenosOrgApplicationHighMarkRequest(db.Document):
 
 class EsthenosOrgApplicationHighMarkResponse(db.Document):
     application_id = db.StringField(max_length=255, required=True,default="")
+    national_id_card = db.StringField(max_length=255,required=False,default="")
+    num_active_account = db.FloatField(default=0)
+    sum_overdue_amount = db.FloatField(default=0)
     sent_status = db.BooleanField(default=False)
     segment_identifier = db.StringField(max_length=255, required=False,default="")
     credit_request_type=db.StringField(max_length=255,required=False,default="")
@@ -2218,6 +2222,9 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     applicant_address2_state=db.StringField(max_length=255,required=False,default="")
     applicant_address2_pincode=db.StringField(max_length=255,required=False,default="")
     nominee_relationship_type=db.StringField(max_length=255,required=False,default="")
+    indv_response_list = db.ListField(db.ReferenceField('HighMarkIndvResponse'))
+    total_loan_balance = db.IntField(default=0)
+    total_dpd_count = db.IntField(default=0)
 
 
 class EsthenosOrgApplicationEqifaxResponse(db.Document):
@@ -2276,6 +2283,34 @@ class EsthenosOrgApplicationEqifaxResponse(db.Document):
     num_writtenoff_account=db.IntField(default=0)
     num_writtenoff_account_own=db.IntField(default=0)
     num_writtenoff_accountnon_own=db.IntField(default=0)
+
+class HighMarkIndvResponse(db.Document):
+    mfi_name = db.StringField(default="")
+    mfi_id = db.StringField(default="")
+    kendra = db.StringField(default="")
+    branch = db.StringField(default="")
+    cns_mr_mbrid = db.StringField(default="")
+    matched_type = db.StringField(default="")
+    report_date = db.StringField(default="")
+    insert_date = db.StringField(default="")
+    loan_account_type = db.StringField(default="")
+    loan_frequency = db.StringField(default="")
+    loan_status = db.StringField(default="")
+    loan_account_number = db.StringField(default="")
+    loan_disbursement_amt = db.IntField(default=0)
+    loan_balance = db.IntField(default=0)
+    loan_installment = db.IntField(default=0)
+    loan_overdue = db.IntField(default=0)
+    loan_dpd = db.IntField(default=0)
+    loan_disbursed_date = db.StringField(default="")
+    loan_closed_date = db.StringField(default="")
+    loan_cycle_id = db.StringField(default="")
+    loan_info_as_on = db.StringField(default="")
+    loan_history = db.StringField(default="")
+    dpd_30 = db.IntField(default=0)
+    dpd_60 = db.IntField(default=0)
+    dpd_90 = db.IntField(default=0)
+    is_prohibited = db.BooleanField(default=False)
 
 
 class HighmarkStatus(db.Document):

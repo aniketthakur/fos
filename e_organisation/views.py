@@ -467,7 +467,7 @@ def application_get_group(branchid,state):
         item["loan"] = s
         item["loan_total"] = ""
         item["loan_default"] = ""
-        item["is_neighbor_complete"] = app.is_neighbor_complete
+        # item["is_neighbor_complete"] = app.is_neighbor_complete
 
         if app.highmark_response1:
             for i in app.highmark_response1.indv_response_list:
