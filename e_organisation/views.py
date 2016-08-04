@@ -363,12 +363,14 @@ def application_pre_register_group():
 
     applicant_params, address_params, application_params = app.get_params_for_pre_highmark(applicant)
     response = pr.handle_request_response(applicant_params, address_params, application_params)
-
+    print response.text[:1500]
+    fo = open("/home/pooja/Documents/resp.txt","wb")
+    fo.write(response.text)
     if response.status_code == 200 and ET.fromstring(response.content).find("./INDV-REPORTS") is not None:
         app.highmark_response = response.text
 
         response_p = ET.fromstring(response.content)
-        app.update_cashflow(response_p)
+        # app.update_cashflow(response_p)
         app.highmark_response = response.content
         temp = pr.get_valules_from_highmark_response(response_p)
         highmark_response = EsthenosOrgApplicationHighMarkResponse(
@@ -380,10 +382,10 @@ def application_pre_register_group():
             total_dpd_count = temp[2]
         )
         highmark_response.save()
-        highmark_response.indv_response_list = temp[0]
-        highmark_response.toal_loan_balance = temp[1]
-        highmark_response.total_dpd_count = temp[2]
-        highmark_response.save()
+        # highmark_response.indv_response_list = temp[0]
+        # highmark_response.toal_loan_balance = temp[1]
+        # highmark_response.total_dpd_count = temp[2]
+        # highmark_response.save()
         app.highmark_response1 = highmark_response
         app.update_status(140)
         app.save()
@@ -391,13 +393,13 @@ def application_pre_register_group():
         app.update_status(145)
 
         app.save()
-        highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
-
-        highmark_status.update_status([response])
-        highmark_status.save()
+        # highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
+        #
+        # highmark_status.update_status([response])
+        # highmark_status.save()
 
         resp = app.highmark_response1
-        app.update_cashflow_from_highmark_response_1(resp)
+        # app.update_cashflow_from_highmark_response_1(resp)
 
     return jsonify({
         "success": True,

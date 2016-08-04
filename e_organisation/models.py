@@ -1994,6 +1994,7 @@ class EsthenosOrgApplication(db.Document):
             stats.kyc_failed = 0
         return stats
 
+
     def update_cashflow_from_highmark_response_1(self, resp):
 
         apps_with_same_voter_id = EsthenosOrgApplication.objects.filter(applicant_kyc__voter_id=resp.national_id_card)
@@ -2105,7 +2106,7 @@ class EsthenosOrgApplication(db.Document):
         # application_params['KENDRA-ID'] = form['center_name']
         application_params['BRANCH-ID'] = str(self.branch.id)
         application_params['LOS-APP-ID'] = str(self.id)
-        application_params['LOAN-AMOUNT'] = "XXXXX"
+        # application_params['LOAN-AMOUNT'] = "XXXXX"
 
         self.pre_update_kyc_parameters(form)
 
@@ -2197,7 +2198,7 @@ class EsthenosOrgApplicationHighMarkResponse(db.Document):
     branch_id=db.StringField(max_length=255,required=False,default="")
     member_id=db.StringField(max_length=255,required=True,default="")
     kendra_id=db.StringField(max_length=255,required=True,default="")
-    applied_for_amount__current_balance=db.IntField(required=True,default="")
+    applied_for_amount__current_balance=db.IntField(required=True,default=0)
     key_person_name=db.StringField(max_length=255,required=False,default="")
     key_person_relation=db.StringField(max_length=255,required=False,default="")
     nominee_name=db.StringField(max_length=255,required=False,default="")
@@ -2274,6 +2275,45 @@ class EsthenosOrgApplicationEqifaxResponse(db.Document):
     num_writtenoff_account=db.IntField(default=0)
     num_writtenoff_account_own=db.IntField(default=0)
     num_writtenoff_accountnon_own=db.IntField(default=0)
+
+
+class HighmarkStatus(db.Document):
+    total_failures=db.IntField(default=0)
+    total_success=db.IntField(default=0)
+    total_errors=db.IntField(default=0)
+    total_timeout_errors = db.IntField(default=0)
+    last_success=db.DateTimeField(default=datetime.datetime.now())
+    last_failure=db.DateTimeField(default=datetime.datetime.now())
+    organisation = db.ReferenceField(EsthenosOrg, required=True)
+
+    def update_status(self, responses_list):
+        fail_count = 0
+        success_count = 0
+        error_count = 0
+        last_success = 0
+        last_fail = 0
+
+        for response in responses_list:
+            if response.status_code != 200:
+                fail_count += 1
+                last_fail = datetime.datetime.now()
+            elif ET.fromstring(response.content).findall('./INDV-REPORTS'):
+                success_count += 1
+                last_success = datetime.datetime.now()
+            else:
+                error_count += 1
+                last_success = datetime.datetime.now()
+
+        self.total_success += success_count
+        self.total_failures += fail_count
+        self.total_errors += error_count
+
+        if last_success != 0:
+            self.last_success = last_success
+        if last_fail != 0:
+            self.last_failure = last_fail
+
+        self.save()
 
 
 class EsthenosOrgApplicationEqifax(db.Document):

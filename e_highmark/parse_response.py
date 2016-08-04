@@ -95,7 +95,7 @@ def get_query_params_from_app(app):
     application_params = {}
     application_params['BRANCH-ID'] = str(app.branch.id)
     application_params['LOS-APP-ID'] = str(app.id)
-    application_params['LOAN-AMOUNT'] = app.applied_loan
+    # application_params['LOAN-AMOUNT'] = app.applied_loan
 
     validate_address_params(address_params)
     validate_application_params(application_params)
@@ -135,3 +135,93 @@ def handle_request_response(applicant_params, address_params, application_params
     resp = send_request(applicant_params, address_params, application_params)
 
     return resp
+
+def get_valules_from_highmark_response(response):
+
+    loan_bal = 0
+    loan_dpd = 0
+    indv_resp_list = []
+    acct_type_excluded = settings.ORGS_SETTINGS["acct-types-exclude"]
+    acct_type_excluded = [x.lower() for x in acct_type_excluded]
+
+    mfi_excluded = settings.ORGS_SETTINGS["mfi-exclude"]
+    mfi_excluded = [x.lower() for x in mfi_excluded]
+
+    for i in response.findall(".//INDV-RESPONSE"):
+        indv_resp = HighMarkIndvResponse()
+        print "1." , i
+        indv_resp.mfi_name = i.find(".//MFI").text if i.find(".//MFI") else ''
+        indv_resp.mfi_name = i.find(".//MFI").text
+        indv_resp.mfi_id = i.find(".//MFI-ID").text if i.find(".//MFI-ID") else ''
+        indv_resp.branch = i.find(".//BRANCH").text if i.find(".//LOAN-CYCLE-ID") else ''
+        indv_resp.kendra = i.find(".//KENDRA").text if i.find(".//LOAN-CYCLE-ID") else ''
+        indv_resp.cns_mr_mbrid = i.find(".//CNSMRMBRID").text if i.find(".//CNSMRMBRID") else ''
+        indv_resp.matched_type = i.find(".//MATCHED-TYPE").text if i.find(".//MATCHED-TYPE") else ''
+        indv_resp.report_date = i.find(".//reportDt").text if i.find(".//reportDt") else ''
+        indv_resp.insert_date = i.find(".//INSERT-DATE").text
+        indv_resp.loan_account_type = i.find(".//ACCT-TYPE").text
+        indv_resp.loan_frequency = i.find(".//FREQ").text
+        indv_resp.loan_status = i.find(".//STATUS").text
+        indv_resp.loan_account_number = i.find(".//ACCT-NUMBER").text
+        indv_resp.loan_disbursement_amt = int(i.find(".//DISBURSED-AMT").text)
+        indv_resp.loan_balance = int(i.find(".//CURRENT-BAL").text)
+        indv_resp.loan_installment = int(i.find(".//INSTALLMENT-AMT").text) if i.find(".//INSTALLMENT-AMT") else 0
+        indv_resp.loan_overdue = int(i.find(".//OVERDUE-AMT").text) if i.find(".//OVERDUE-AMT") else 0
+        indv_resp.loan_dpd = int(i.find(".//DPD").text)
+        indv_resp.loan_disbursed_date = i.find(".//DISBURSED-DT").text
+        indv_resp.closed_date = i.find(".//CLOSED-DT").text if i.find(".//CLOSED-DT") else ''
+        indv_resp.loan_cycle_id = i.find(".//LOAN-CYCLE-ID").text
+        indv_resp.loan_info_as_on = i.find(".//INFO-AS-ON").text
+        indv_resp.loan_history = i.find(".//COMBINED-PAYMENT-HISTORY").text if i.find(".//COMBINED-PAYMENT-HISTORY") else ''
+        indv_resp.dpd_30 = int(i.find(".//TOT-DPD-30").text)
+        indv_resp.dpd_60 = int(i.find(".//TOT-DPD-60").text)
+        indv_resp.dpd_90 = int(i.find(".//TOT-DPD-90").text)
+        loan_bal = loan_bal+indv_resp.loan_balance
+        loan_dpd = loan_dpd+indv_resp.dpd_60+indv_resp.dpd_90
+        if i.find(".//ACCT-TYPE") and i.find(".//ACCT-TYPE").text.lower() not in acct_type_excluded and \
+                i.find(".//STATUS") and i.find(".//STATUS").text.strip().lower() == "active":
+            indv_resp.is_prohibited = True
+
+            indv_resp.save()
+            indv_resp_list.append(indv_resp)
+
+    return [indv_resp_list, loan_bal, loan_dpd]
+
+def get_sum_overdue_amount(response):
+
+    amount = 0
+    for indv in response.findall("./INDV-RESPONSES/INDV-RESPONSE-LIST/INDV-RESPONSE"):
+        if (int(indv.find("./GROUP-DETAILS/TOT-DPD-60").text) > 0 or int(indv.find("./GROUP-DETAILS/TOT-DPD-90").text) > 0) \
+                and indv.find("./LOAN-DETAIL/STATUS").text.lower() == "active":
+            amount += int(indv.find("./LOAN-DETAILS/OVERDUE-AMOUNT").text)
+
+    return amount
+
+
+def get_kendra_id(response):
+    return 0
+
+
+def get_national_id_card(response):
+
+    if response.find(".//INDV-REPORT/REQUEST/IDS") is not None and response.findall(".//INDV-REPORT/REQUEST/IDS/ID"):
+        for i in response.findall(".//INDV-REPORT/REQUEST/IDS/ID"):
+            if i.find(".//TYPE").text == 'ID02':
+                return i.find(".//VALUE").text
+            elif i.find(".//TYPE").text == 'ID03':
+                return i.find(".//VALUE").text
+
+        return response.find(".//INDV-REPORT/REQUEST/IDS/ID/VALUE").text
+    else:
+        return "000000000"
+
+
+def get_num_active_account(response):
+
+    diff_mfis = Counter()
+
+    for indv in response.findall(".//INDV-RESPONSE"):
+        if indv.find(".//LOAN-DETAIL/STATUS").text.lower() == "active":
+            diff_mfis[indv.find("./MFI").text.lower().strip()] += 1
+
+    return len(diff_mfis)

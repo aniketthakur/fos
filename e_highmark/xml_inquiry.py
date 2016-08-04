@@ -104,7 +104,6 @@ def add_application(root, application_params):
     etree.SubElement(root, 'MBR-ID').text=settings.ORGS_SETTINGS["esthenos-client-mbrid"]
     etree.SubElement(root, 'BRANCH-ID').text = application_params['BRANCH-ID']
     etree.SubElement(root, 'LOS-APP-ID').text = application_params['LOS-APP-ID']
-    etree.SubElement(root, 'LOAN-AMOUNT').text= str(application_params['LOAN-AMOUNT'])
 
 
 def add_inquiry(root, applicant_params, address_params, application_params):

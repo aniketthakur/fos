@@ -331,7 +331,7 @@ APP_STATUS = [
     },
     {
         'status' : 'APPLICATION_CBCHECK_SUCCESS',
-        'status_message' : 'Application CB Check has completed, validation cashflow analysis',
+        'status_message' : 'Application CB Check has completed',
         'status_code' : 150
     },
     {
