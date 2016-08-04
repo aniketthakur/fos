@@ -363,9 +363,7 @@ def application_pre_register_group():
 
     applicant_params, address_params, application_params = app.get_params_for_pre_highmark(applicant)
     response = pr.handle_request_response(applicant_params, address_params, application_params)
-    print response.text[:1500]
-    fo = open("/home/pooja/Documents/resp.txt","wb")
-    fo.write(response.text)
+
     if response.status_code == 200 and ET.fromstring(response.content).find("./INDV-REPORTS") is not None:
         app.highmark_response = response.text
 
