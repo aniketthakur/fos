@@ -251,24 +251,24 @@ class AddApplicationMobile(Form):
         else:
             previous_state = app.status
             app.assets_id = str(self.assets_id.data)
-            app.name = applicant_kyc['name']
+            app.name = app.applicant_kyc.name
             app.update_status(185)
 
         # app.name = applicant_kyc["name"]
-        app.dob = applicant_kyc["dob_yob"]
-        app.yob = applicant_kyc["dob_yob"]
-        app.city = applicant_kyc["district"]
-        app.taluk = applicant_kyc["taluk"]
-        app.state = applicant_kyc["state"]
-        app.district = applicant_kyc["district"]
-        app.address = applicant_kyc["address"]
-        app.country = applicant_kyc["country"]
-        app.pincode = applicant_kyc["pincode"]
-        app.mobile = applicant_kyc["mobile_number"]
-        app.tele_code = "+91"
-        app.tele_phone = applicant_kyc["phone_number"]
-        app.applicant_name = applicant_kyc["name"]
-        app.father_or_husband_name = applicant_kyc["father_s_husband_s_name"]
+        # app.dob = applicant_kyc["dob_yob"]
+        # app.yob = applicant_kyc["dob_yob"]
+        # app.city = applicant_kyc["district"]
+        # app.taluk = applicant_kyc["taluk"]
+        # app.state = applicant_kyc["state"]
+        # app.district = applicant_kyc["district"]
+        # app.address = applicant_kyc["address"]
+        # app.country = applicant_kyc["country"]
+        # app.pincode = applicant_kyc["pincode"]
+        # app.mobile = applicant_kyc["mobile_number"]
+        # app.tele_code = "+91"
+        # app.tele_phone = applicant_kyc["phone_number"]
+        # app.applicant_name = applicant_kyc["name"]
+        # app.father_or_husband_name = applicant_kyc["father_s_husband_s_name"]
 
         # data = self.load(self.applicant_other_card_phone_details)
         # app.internet_data_uses = data.get("internet_data_uses", "")

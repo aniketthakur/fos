@@ -24,134 +24,134 @@ querystring = {
 
 payload3 = {
     "guarantor1_other_card_co_applicant": {
-        "address": "Ncjxucjc Oo",
-        "aadhar_card_number": "525855555555",
-        "father_s_name": "Mr. Jvjfufigkgjfjgig",
-        "date_of_birth": "21/08/1987",
-        "state": "Meghalaya",
-        "gender": "Male",
-        "pin_code": "123456",
-        "spouse_name": "  ",
-        "age": "29",
-        "ration_card": "",
-        "relation_with_the_applicant": "jxjdjcjcjfififuf",
-        "pan_card": "DFGFF5555H",
-        "district": "ufjcjcjvjfjvif",
-        "name": "  Jdidjdfif Hgfdgg",
-        "mother_s_name": "Mrs. Jvkvkgjfivif",
-        "voter_id_number": "",
-        "mobile_number": "1234555455"
-    },
-    "assets_id": "188e06fb-5c53-4167-b0eb-af4af8824224",
-    "applicant_family_details_family_members7": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "branch": "57a468e0ebc8b20f2871b80b",
-    "applicant_family_details_family_members4": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "applicant_family_details_family_members2": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "assets_map": {
-        "guarantor1": {},
-        "guarantor2": {},
-        "applicant": {}
-    },
-    "applicant_family_details_family_members1": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "locations_map": {
-        "business": {
-            "lat": 12.910312,
-            "lng": 77.6231563
-        }
-    },
-    "applicant_other_card_personal_detail": {
-        "religion": "Hindu",
-        "physical_disability": "None",
-        "education": "Illiterate",
-        "category": "General"
-    },
-    "applicant_family_details_family_members6": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "applicant_family_details_ile_conformation": {
-        "i_confirm_that_i_have_seen_the_original_documents": "Yes"
-    },
-    "applicant_family_details_family_members5": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "applicant_family_details_family_members3": {
-        "age": "",
-        "occupations_details": " ",
-        "relationship": "",
-        "name": "",
-        "education": "",
-        "sex": "",
-        "years_of_involvement": "",
-        "monthly_income": ""
-    },
-    "applicant_other_card_cbcheck": {
-        "address": "Jcjcufufufufufjfjf",
-        "aadhar_card_number": "147852369045",
-        "father_s_name": "Mr. zhxhjdjdhd Uufiff",
-        "date_of_birth": "25/08/1988",
-        "state": "Chhattisgarh",
-        "gender": "Male",
-        "pin_code": "424675",
-        "spouse_name": "  ",
-        "age": "28",
-        "ration_card": "",
-        "pan_card": "QWERT1234F",
-        "district": "Hcjfhdudud",
-        "name": "  Vivek Dixit",
-        "mother_s_name": "Mrs. Hcjcjcjfufuf Fgggg",
-        "voter_id_number": "",
-        "mobile_number": "2356891478"
-    }
+       "address": "Hdhdu",
+       "aadhar_card_number": "57575",
+       "father_s_name": "  Jshgh",
+       "date_of_birth": "01/08/1983",
+       "state": "Assam",
+       "gender": "Female",
+       "pin_code": "757576",
+       "spouse_name": "  Usudu",
+       "age": "33",
+       "ration_card": "HZUZUDUDU",
+       "relation_with_the_applicant": "hzhxh",
+       "pan_card": "JZJDU2837H",
+       "district": "Usudu",
+       "name": "  Hshdu",
+       "mother_s_name": "  Hshdu",
+       "voter_id_number": "ISUDIDIR",
+       "mobile_number": "6767656567"
+   },
+   "assets_id": "d0a13d9d-aa28-4b03-882d-ea6705f09d61",
+   "applicant_family_details_family_members7": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "branch": "579eed0985cfef4980904db9",
+   "applicant_family_details_family_members4": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "applicant_family_details_family_members2": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "assets_map": {
+       "guarantor1": {},
+       "guarantor2": {},
+       "applicant": {}
+   },
+   "applicant_family_details_family_members1": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "locations_map": {
+       "business": {
+           "lat": 0,
+           "lng": 0
+       }
+   },
+   "applicant_other_card_personal_detail": {
+       "religion": "Hindu",
+       "physical_disability": "None",
+       "education": "PG and Above",
+       "category": "Schedule Cast"
+   },
+   "applicant_family_details_family_members6": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "applicant_family_details_ile_conformation": {
+       "i_confirm_that_i_have_seen_the_original_documents": "Yes"
+   },
+   "applicant_family_details_family_members5": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "applicant_family_details_family_members3": {
+       "age": "",
+       "occupations_details": " ",
+       "relationship": "",
+       "name": "",
+       "education": "",
+       "sex": "",
+       "years_of_involvement": "",
+       "monthly_income": ""
+   },
+   "applicant_other_card_cbcheck": {
+       "address": "Ggggdxcg",
+       "aadhar_card_number": "558555555555",
+       "father_s_name": "Mr. Rtuugf",
+       "date_of_birth": "02/08/1987",
+       "state": "Jharkhand",
+       "gender": "Male",
+       "pin_code": "123654",
+       "spouse_name": "  ",
+       "age": "29",
+       "ration_card": "",
+       "pan_card": "WRYHG5677W",
+       "district": "Fhjjbgggg",
+       "name": "  Uurdyuu Ghii",
+       "mother_s_name": "Mrs. Ghjhvvvb",
+       "voter_id_number": "",
+       "mobile_number": "8865555588"
+   }
 }
 
 payload2 = {
@@ -185,7 +185,7 @@ payload2 = {
         "years_of_involvement": "",
         "monthly_income": ""
     },
-    "branch": "579867d2ebc8b2422fc9849f",
+    "branch": "57a468e0ebc8b20f2871b80b",
     "applicant_family_details_family_members4": {
         "age": "",
         "occupations_details": " ",
