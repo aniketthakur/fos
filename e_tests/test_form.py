@@ -7,17 +7,18 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("localhost:8080")
+# url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("localhost:8080")
 # url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
 # url = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
-# url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
-payload = {"email": "nitin@fos-arohan-test.esthenos.com", "password":"1234"}
+# url = "http://%s/api/token/sourcing" % ("localhost:8080")
+url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
+# payload = {"email": "testile@fos-arohan-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    "instance_token":"VAu9IbgAU2HlXH5dua21IwmgLPVkup4oHIQGLs8-gjs"
+    "instance_token":"Y7Pxzm2zQZIvcRrrni_nPjyYMzdE7GNryu9tZfexR_I"
     # "instance_token":"d2ey5FgfSZckwjDV_OVMpF-Y7K_tmvk_zrKewGG4j9Y"
 }
 
@@ -52,7 +53,7 @@ payload3 = {
         "years_of_involvement": "",
         "monthly_income": ""
     },
-    "branch": "579867fbebc8b2422fc984a7",
+    "branch": "57a468e0ebc8b20f2871b80b",
     "applicant_family_details_family_members4": {
         "age": "",
         "occupations_details": " ",
@@ -835,5 +836,5 @@ payload1 = {
 }
 
 # for i in range(0, 1):
-response = requests.get(url, params=querystring)
+response = requests.post(url,data = payload2, params=querystring)
 print(response.text)

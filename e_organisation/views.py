@@ -162,10 +162,10 @@ def get_application():
             "id" : app.application_id,
             "date_created" : str(app.date_created),
             "applicant_name" : app.applicant_name,
-            "current_status" : app.current_status.status_message,
-            "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
-            "loan_eligibility_based_on_company_policy" : app.loan_eligibility_based_on_company_policy
+            "current_status" : app.current_status.status_message
         }
+        # "loan_eligibility_based_on_net_income" : app.loan_eligibility_based_on_net_income(),
+        #     "loan_eligibility_based_on_company_policy" : app.loan_eligibility_based_on_company_policy
         applications_list.append(item)
 
     resp = dict()
