@@ -239,7 +239,7 @@ class AddApplicationMobile(Form):
         user = EsthenosUser.objects.get(id=current_user.id)
         is_app = True if app else False
 
-        applicant_kyc = self.load(self.applicant_kyc_details)
+        applicant_kyc = self.load(self.applicant_other_card_cbcheck)
         if not is_app:
             user.organisation.update(inc__application_count=1)
             app = EsthenosOrgApplication(
