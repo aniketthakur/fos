@@ -534,6 +534,30 @@
         </div>
     </div>
 
+<div class="row hypothecation section">
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <a href="{{ url_for("organisation_views.balancesheet_page", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Balance Sheet</i></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <a href="{{ url_for("organisation_views.deviation_page", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Deviation Sheet</i></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <a href="{{ url_for("organisation_views.banking_page", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Banking Sheet</i></span></a>
+                </div>
+            </div>
+        </div>
+</div>
+
  {% if application.status > 180 %}
     <form class="form-no-horizontal-spacing" id="scrutiny-form" method="post" action="{{ url_for("organisation_views.scrutiny_application", app_id=application.application_id) }}">
     <div class="row reciept section">
