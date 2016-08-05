@@ -312,7 +312,6 @@ def scrutiny_application(app_id):
 @login_required
 @feature_enable("features_applications_scrutiny")
 def sheet_download(app_id):
-    print "m in download"
     tmp_files = list()
     user = EsthenosUser.objects.get(id=current_user.id)
     application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
@@ -408,6 +407,17 @@ def balancesheet_page(app_id):
 
   kwargs = locals()
   return render_template("scrutiny/balance_sheet.html", **kwargs)
+
+@organisation_views.route('/balance_sheet/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def balancesheet_page_print(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/balance_sheet_print.html", **kwargs)
 
 @organisation_views.route('/deviation_sheet/<app_id>', methods=["GET"])
 @login_required
