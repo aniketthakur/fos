@@ -180,18 +180,51 @@ wtforms_json.init()
 @login_or_key_required
 @feature_enable("features_api_applications_post")
 def mobile_application_json():
-    print request.json
-    user = EsthenosUser.objects.get(id=current_user.id)
+
     app_form = AddApplicationMobile.from_json(request.json)
 
-    if app_form.validate():
-        print "Form Validated, Saving."
-        app_form.save()
-        return Response(json.dumps({'success':'true'}), content_type="application/json", mimetype='application/json')
+    try:
+        applicationID = request.json.get('application_id', '')
+        app = EsthenosOrgApplication.objects.filter(application_id=applicationID) if applicationID else ''
+    except:
+        app = ''
 
+    # app = app[0] if app else ''
+    # TODO: IMPROVE THE CODE
+
+    if app:
+        app = app[0]
+        if app.is_registered:
+            return jsonify({
+                "success": False,
+                "message": "application submission failed"
+            })
     else:
-        print "Could Not validate" + str(app_form.errors)
-        return Response(json.dumps({'success':'false'}), content_type="application/json", mimetype='application/json')
+        app = ''
+
+    if app_form.validate():
+        app_form.save(app)
+        return jsonify({
+            "success": True,
+            "message": "application submission successful"
+        })
+
+    return jsonify({
+        "success": False,
+        "message": "application submission failed: %s" % str(app_form.errors)
+    })
+
+    # user = EsthenosUser.objects.get(id=current_user.id)
+    # app_form = AddApplicationMobile.from_json(request.json)
+    #
+    # if app_form.validate():
+    #     print "Form Validated, Saving."
+    #     app_form.save()
+    #     return Response(json.dumps({'success':'true'}), content_type="application/json", mimetype='application/json')
+    #
+    # else:
+    #     print "Could Not validate" + str(app_form.errors)
+    #     return Response(json.dumps({'success':'false'}), content_type="application/json", mimetype='application/json')
 
 @organisation_views.route('/check_disbursement', methods=["GET"])
 @login_required
