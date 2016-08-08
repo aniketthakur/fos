@@ -185,6 +185,7 @@ def mobile_application_json():
 
     try:
         applicationID = request.json.get('application_id', '')
+        mainapp.logger.debug("applicationID: %s " % applicationID)
         app = EsthenosOrgApplication.objects.filter(application_id=applicationID) if applicationID else ''
     except:
         app = ''
@@ -202,6 +203,7 @@ def mobile_application_json():
     else:
         app = ''
 
+    mainapp.logger.debug("app: %s " % len(app))
     if app_form.validate():
         app_form.save(app)
         return jsonify({
