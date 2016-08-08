@@ -49,7 +49,7 @@ class AddApplicationMobile(Form):
 
     applicant_other_card_phone_details = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_electricity_details = TextField(validators=[v.Length(max=10000)])
-    applicant_other_card_credit_card_details = TextField(validators=[v.Length(max=10000)])
+    # applicant_other_card_credit_card_details = TextField(validators=[v.Length(max=10000)])
 
     applicant_hypothecation_goods_hypothecation1 = TextField(validators=[v.Length(max=10000)])
     applicant_hypothecation_goods_hypothecation2 = TextField(validators=[v.Length(max=10000)])
@@ -65,7 +65,7 @@ class AddApplicationMobile(Form):
     applicant_family_details_other_assets = TextField(validators=[v.Length(max=10000)])
     applicant_family_details_members = TextField(validators=[v.Length(max=10000)])
     applicant_business_docs_detail4  = TextField(validators=[v.Length(max=10000)])
-    applicant_other_card_special_profile = TextField(validators=[v.Length(max=10000)])
+    # applicant_other_card_special_profile = TextField(validators=[v.Length(max=10000)])
 
     applicant_other_card_type_of_equipment1 = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_type_of_equipment2 = TextField(validators=[v.Length(max=10000)])
@@ -342,16 +342,16 @@ class AddApplicationMobile(Form):
         app.nature_of_keeping_business_accounts = data.get("nature_of_keeping_business_accounts", "")
         app.place_agency_of_purchase_of_materials = data.get("place_agency_of_purchase_of_materials", "")
         app.stock_value_as_seen = data.get("stock_value_as_seen", "")
-
-        data = self.load(applicant_other_card_special_profile)
-        app.purchase_detail1 = data.get("purchase_details_1", "")
-        app.purchase_cycle = data.get("purchase_cycle", "")
-        app.purchase_details2 = data.get("purchase_details_2", "")
-        app.cash_credit_percentage = data.get("cash_credit_percentage", "")
-        app.details_of_key_purchaser = data.get("details_of_key_purchaser", "")
-        app.is_business_socially_desirable = data.get("is_the_business_socially_desirable", "")
-        app.purchase_details3 = data.get("purchase_details_3", "")
-        app.payment_cycle_days = data.get("payment_cycle_days", "")
+        #
+        # data = self.load(applicant_other_card_special_profile)
+        # app.purchase_detail1 = data.get("purchase_details_1", "")
+        # app.purchase_cycle = data.get("purchase_cycle", "")
+        # app.purchase_details2 = data.get("purchase_details_2", "")
+        # app.cash_credit_percentage = data.get("cash_credit_percentage", "")
+        # app.details_of_key_purchaser = data.get("details_of_key_purchaser", "")
+        # app.is_business_socially_desirable = data.get("is_the_business_socially_desirable", "")
+        # app.purchase_details3 = data.get("purchase_details_3", "")
+        # app.payment_cycle_days = data.get("payment_cycle_days", "")
 
         data = self.load(self.applicant_business_docs_customer1)
         app.address = data.get("address", "")
@@ -513,10 +513,10 @@ class AddApplicationMobile(Form):
         app.description_business = data.get("description_business", "")
         app.activity = data.get("activity", "")
 
-        data = self.load(self.applicant_other_card_credit_card_details)
-        app.issue_bank_2 = data.get("issue_bank_2", "")
-        app.issue_bank_1 = data.get("issue_bank_1", "")
-        app.issue_bank_3 = data.get("issue_bank_3", "")
+        # data = self.load(self.applicant_other_card_credit_card_details)
+        # app.issue_bank_2 = data.get("issue_bank_2", "")
+        # app.issue_bank_1 = data.get("issue_bank_1", "")
+        # app.issue_bank_3 = data.get("issue_bank_3", "")
 
         data = self.load(self.applicant_other_card_borrower_furnished)
         app.no_borrowers_you_furnished_guarantees__ = data.get("for_how_many_borrowers_have_you_furnished_guarantees__", "")
