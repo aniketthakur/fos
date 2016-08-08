@@ -460,7 +460,7 @@ class AddApplicationMobile(Form):
             app.place_agency_of_purchase_of_materials = data.get("place_agency_of_purchase_of_materials", "")
             app.stock_value_as_seen = data.get("stock_value_as_seen", "")
 
-            data = self.load(applicant_other_card_special_profile)
+            data = self.load(self.applicant_other_card_special_profile)
             app.purchase_detail1 = data.get("purchase_details_1", "")
             app.purchase_cycle = data.get("purchase_cycle", "")
             app.purchase_details2 = data.get("purchase_details_2", "")
@@ -478,7 +478,7 @@ class AddApplicationMobile(Form):
             app.ref_name_2 = data.get("ref_name_2","")
             app.ref_remarks_2 = data.get("ref_remarks_2","")
 
-            data = self.load(applicant_business_docs_info_doc)
+            data = self.load(self.applicant_business_docs_info_doc)
             app.tds_no = data.get("tds_no","")
             app.current_account_no = data.get("current_account_no","")
             app.electric_bil = data.get("comercial_indus_electric_bill_consumer_no","")

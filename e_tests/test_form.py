@@ -7,13 +7,13 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("fos-arohan-test.esthenos.com")
-# url = "http://%s/api/organisation/applications/pre_register"  % ("localhost:8080")
+# url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("fos-arohan-test.esthenos.com")
+# url = "http://%s/api/organisation/applications/pre_register"  % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
-# url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
+url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
 # url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
-# payload = {"email": "nitin@fos-arohan-test.esthenos.com", "password":"1234"}
+payload = {"email": "nitin@fos-arohan-test.esthenos.com", "password":"1234"}
 # response = requests.post(url, data=payload)
 # print response.text
 
@@ -23,134 +23,134 @@ querystring = {
 }
 
 payload3 = {
-    "guarantor1_other_card_co_applicant": {
-       "address": "Hdhdu",
-       "aadhar_card_number": "57575",
-       "father_s_name": "  Jshgh",
-       "date_of_birth": "01/08/1983",
-       "state": "Assam",
-       "gender": "Female",
-       "pin_code": "757576",
-       "spouse_name": "  Usudu",
-       "age": "33",
-       "ration_card": "HZUZUDUDU",
-       "relation_with_the_applicant": "hzhxh",
-       "pan_card": "JZJDU2837H",
-       "district": "Usudu",
-       "name": "  Hshdu",
-       "mother_s_name": "  Hshdu",
-       "voter_id_number": "ISUDIDIR",
-       "mobile_number": "6767656567"
+    "applicant_other_card_cbcheck": {
+       "aadhar_card_number": "768686764676",
+       "father_s_name": "Mr. Hzhxhxjxxh",
+       "date_of_birth": "08/08/1991",
+       "state": "Jharkhand",
+       "pin_code": "676856",
+       "pan_card": "SJDJD7263H",
+       "ration_card": "HZHJHJDH",
+       "voter_id_number": "HZJXJXUDHHJ",
+       "mobile_number": "776876",
+       "address": "Jxuxuxzdj",
+       "name": "  Hdxdsf",
+       "age": "25",
+       "spouse_name": "Mr. Hz Hxhxx",
+       "mother_s_name": "Mrs. Jz Jx Hz Us Is J",
+       "gender": "Male",
+       "district": "Hxhxhxj"
    },
-   "assets_id": "d0a13d9d-aa28-4b03-882d-ea6705f09d61",
-   "applicant_family_details_family_members7": {
-       "age": "",
-       "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
-       "years_of_involvement": "",
-       "monthly_income": ""
+   "guarantor1_other_card_co_applicant": {
+       "aadhar_card_number": "686868646776",
+       "father_s_name": "Mr. Jxhxuzhzh",
+       "date_of_birth": "08/08/1986",
+       "state": "Jharkhand",
+       "pin_code": "768686",
+       "pan_card": "HDHDJ7263H",
+       "ration_card": "HZHXHXXIDH",
+       "voter_id_number": "JZJXJXZZDJDH",
+       "mobile_number": "6768384759",
+       "address": "Hx Hz Hxjdjdj",
+       "name": "  Hz Hz Ghj",
+       "age": "30",
+       "spouse_name": "Mr. Hxhxhdfh",
+       "mother_s_name": "Mrs. Hxhxhzh",
+       "relation_with_the_applicant": "bzhxxfhhxhxh",
+       "gender": "Male",
+       "district": "Jz Uxudh"
    },
-   "branch": "579eed0985cfef4980904db9",
-   "applicant_family_details_family_members4": {
-       "age": "",
-       "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
-       "years_of_involvement": "",
-       "monthly_income": ""
-   },
-   "applicant_family_details_family_members2": {
-       "age": "",
-       "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
-       "years_of_involvement": "",
-       "monthly_income": ""
-   },
-   "assets_map": {
-       "guarantor1": {},
-       "guarantor2": {},
-       "applicant": {}
-   },
-   "applicant_family_details_family_members1": {
-       "age": "",
-       "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
-       "years_of_involvement": "",
-       "monthly_income": ""
-   },
+   "assets_id": "a3b5daf8-93e3-4c74-a3b5-a6ee89ab85bd",
    "locations_map": {
        "business": {
-           "lat": 0,
-           "lng": 0
+           "lat": 12.972055,
+           "lng": 77.6529905
        }
    },
    "applicant_other_card_personal_detail": {
        "religion": "Hindu",
+       "education": "Upto 5th class",
        "physical_disability": "None",
-       "education": "PG and Above",
-       "category": "Schedule Cast"
+       "category": "Other Backward Class"
    },
-   "applicant_family_details_family_members6": {
+   "applicant_family_details_family_members4": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
        "age": "",
        "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
        "years_of_involvement": "",
-       "monthly_income": ""
+       "annual_income": "",
+       "education": ""
+   },
+   "branch": "57a091d885cfef0b638ed29b",
+   "applicant_family_details_family_members3": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
+       "age": "",
+       "occupations_details": " ",
+       "years_of_involvement": "",
+       "annual_income": "",
+       "education": ""
+   },
+   "assets_map": {
+       "applicant": {},
+       "guarantor1": {},
+       "guarantor2": {}
+   },
+   "applicant_family_details_family_members2": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
+       "age": "",
+       "occupations_details": " ",
+       "years_of_involvement": "",
+       "annual_income": "",
+       "education": ""
+   },
+   "applicant_family_details_family_members1": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
+       "age": "",
+       "occupations_details": " ",
+       "years_of_involvement": "",
+       "annual_income": "",
+       "education": ""
+   },
+   "applicant_family_details_family_members7": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
+       "age": "",
+       "occupations_details": " ",
+       "years_of_involvement": "",
+       "annual_income": "",
+       "education": ""
    },
    "applicant_family_details_ile_conformation": {
        "i_confirm_that_i_have_seen_the_original_documents": "Yes"
    },
+   "applicant_family_details_family_members6": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
+       "age": "",
+       "occupations_details": " ",
+       "years_of_involvement": "",
+       "annual_income": "",
+       "education": ""
+   },
    "applicant_family_details_family_members5": {
+       "relationship": "",
+       "sex": "",
+       "name": "",
        "age": "",
        "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
        "years_of_involvement": "",
-       "monthly_income": ""
-   },
-   "applicant_family_details_family_members3": {
-       "age": "",
-       "occupations_details": " ",
-       "relationship": "",
-       "name": "",
-       "education": "",
-       "sex": "",
-       "years_of_involvement": "",
-       "monthly_income": ""
-   },
-   "applicant_other_card_cbcheck": {
-       "address": "Ggggdxcg",
-       "aadhar_card_number": "558555555555",
-       "father_s_name": "Mr. Rtuugf",
-       "date_of_birth": "02/08/1987",
-       "state": "Jharkhand",
-       "gender": "Male",
-       "pin_code": "123654",
-       "spouse_name": "  ",
-       "age": "29",
-       "ration_card": "",
-       "pan_card": "WRYHG5677W",
-       "district": "Fhjjbgggg",
-       "name": "  Uurdyuu Ghii",
-       "mother_s_name": "Mrs. Ghjhvvvb",
-       "voter_id_number": "",
-       "mobile_number": "8865555588"
+       "annual_income": "",
+       "education": ""
    }
 }
 
