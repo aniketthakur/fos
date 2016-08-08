@@ -75,6 +75,7 @@ class AddApplicationMobile(Form):
     applicant_other_card_banking1 = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_banking2 = TextField(validators=[v.Length(max=10000)])
     applicant_other_card_banking3 = TextField(validators=[v.Length(max=10000)])
+    applicant_business_docs_info_doc = TextField(validators=[v.Length(max=10000)])
 
     #added new fields
     applicant_family_details_family_members1 = TextField(validators=[v.Length(max=10000)])
