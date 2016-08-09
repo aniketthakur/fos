@@ -229,7 +229,7 @@ class AddApplicationMobile(Form):
 
     def load_type_equipment(self, data):
         return EsthenosOrgApplicationTypeEquipment(
-            estimated_value = toFloat(data.get("estimated_value","")),
+            estimated_value = data.get("estimated_value",""),
             details_of_equipment_supplier = data.get("details_of_equipment_supplier",""),
             date_of_manufacturing_equipment = data.get("date_of_manufacturing_equipment",""),
         )
@@ -596,8 +596,8 @@ class AddApplicationMobile(Form):
             app.name= data.get("name", "")
             # app.individual_credit= data.get("individual_credit", "")
             # app.telephone_no_5 = toInt(data.get("telephone_no_5", ""))
-            app.telephone_no = toInt(data.get("telephone_no", ""))
-            app.telephoneno = toInt(data.get("telephoneno", ""))
+            app.telephone_no =data.get("telephone_no", "")
+            app.telephoneno = data.get("telephoneno", "")
 
 
             data = self.load(self.applicant_loan_details_applied_loan)
