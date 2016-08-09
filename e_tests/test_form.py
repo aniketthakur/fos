@@ -295,7 +295,7 @@ payload2 = {
 # url = "http://localhost:8080/api/organisation/applications"
 
 payload1 = {
-    "assets_id": "b5080980-5bae-4803-90b0-c2d88ca06512",
+    "assets_id": "fdc2d6b9-026c-4b55-a795-1bc953e0bb5f",
     "applicant_other_card_assets_liabilities": {
         "insurance_policies": "",
         "others_long_term_loans": "",
@@ -358,8 +358,8 @@ payload1 = {
         "place_agency_of_purchase_of_materials": "",
         "nature_of_keeping_business_accounts": "Sale/Purchase Note Book",
         "details_of_principal_raw_materials": "",
-        "current_receivables": "1565",
-        "stock_value_as_seen": "55555",
+        "current_receivables": "",
+        "stock_value_as_seen": "",
         "method_of_reaching_out_to_customers_to_increase_business": "",
         "place_of_storage_for_material": "Godown"
     },
@@ -389,11 +389,11 @@ payload1 = {
         "details_of_equipment_supplier": ""
     },
     "applicant_family_details_avg_monthly_exp": {
-        "education_expenses": "",
-        "medical_expenses": "",
-        "grocery_expenses": "",
-        "other_expenses": "",
-        "conveyance_expenses": ""
+        "education_expenses": "21",
+        "medical_expenses": "24",
+        "grocery_expenses": "25",
+        "other_expenses": "23",
+        "conveyance_expenses": "26"
     },
     "assets_map": {
         "guarantor1": {},
@@ -435,13 +435,13 @@ payload1 = {
         "month_4_20th": ""
     },
     "applicant_other_card_emp_business_info": {
-        "monthly_wage_for_permanent_employees": "25888",
-        "permanent_employees": "2",
-        "monthly_wage_for_contract_employees": "26555",
-        "monthly_wage_for_relatives": "23565",
-        "relatives_in_business": "2",
-        "wages_paid": "76008",
-        "contract_employees": "2"
+        "monthly_wage_for_permanent_employees": "",
+        "permanent_employees": "",
+        "monthly_wage_for_contract_employees": "",
+        "monthly_wage_for_relatives": "",
+        "relatives_in_business": "",
+        "wages_paid": '',
+        "contract_employees": ""
     },
     "applicant_other_card_bank_details2": {
         "account_holder_name": '',
@@ -483,7 +483,7 @@ payload1 = {
         "account_operational_since": "",
         "bank_account_type": "Saving",
         "micr_code": "",
-        "bank_name": "Bandhan Bank",
+        "bank_name": "Axis Bank",
         "account_number": ''
     },
     "applicant_business_docs_home_image": {},
@@ -513,13 +513,13 @@ payload1 = {
         "details_of_equipment_supplier": ""
     },
     "applicant_business_docs_info_doc": {
-        "current_account_no": "88767576745",
-        "permissions_licenses_reqd": "M Mvkckckv",
-        "comercial_indus_electric_bill_consumer_no": "M Jcjckckc",
-        "pancard_no": "Yxijcjcjc",
-        "ssi_registration_entrepeneur_memorandum_ref_no": "KVmckvpog",
-        "tds_no": " Uxhkchjcjkcjkcljcli",
-        "vat_service_tax_regn_no": "Mcjckck"
+        "current_account_no": "",
+        "permissions_licenses_reqd": "",
+        "comercial_indus_electric_bill_consumer_no": "",
+        "pancard_no": "",
+        "ssi_registration_entrepeneur_memorandum_ref_no": "",
+        "tds_no": "",
+        "vat_service_tax_regn_no": ""
     },
     "applicant_hypothecation_goods_hypothecation3": {
         "purchase_purpose": "",
@@ -595,7 +595,7 @@ payload1 = {
         "month_4_20th": ""
     },
     "applicant_other_card_special_profile": {
-        "is_the_business_socially_desirable": "Yes",
+        "is_the_business_socially_desirable": "",
         "purchase_details_2": "",
         "cash_credit_percentage": "",
         "details_of_key_purchaser": "",
@@ -715,19 +715,18 @@ payload1 = {
         "monthly_rent": ""
     },
     "applicant_other_card_bus_monthly_exp": {
-        "selling_expenses": "5688",
-        "transport_expenses": "50",
-        "fuel_expenses": "6000",
-        "utility_expenses": "2000"
+        "selling_expenses": "",
+        "transport_expenses": "",
+        "fuel_expenses": "",
+        "utility_expenses": ""
     },
-    "application_id": '',
+    "application_id": "FO10000084",
     "applicant_family_details_ce_conformation": {
         "i_confirm_that_i_have_seen_the_original_documents": "Yes"
     },
     "applicant_family_details_other_assets": {
-        "family_other_assets": "Refrigerator, 2 wheeler, Computer, Washing Machine"
+        "family_other_assets": "2 wheeler, Television, Computer, Washing Machine, Others"
     }
-
 }
 
 

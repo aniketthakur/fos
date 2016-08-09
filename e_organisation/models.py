@@ -1805,7 +1805,7 @@ class EsthenosOrgApplication(db.Document):
     sup_address_2 = db.StringField(max_length=512, required=False,default="")
     sup_address_3 = db.StringField(max_length=512, required=False,default="")
     sup_name = db.StringField(max_length=512, required=False,default="")
-    sup_telephoneno = db.IntField(required=True,default=0)
+    sup_telephoneno = db.StringField(max_length=512, required=False,default="")
 
     tds_no = db.StringField(max_length=512, required=False,default="")
     current_account_no = db.StringField(max_length=512, required=False,default="")
