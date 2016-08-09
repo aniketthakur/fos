@@ -42,6 +42,8 @@ class AddApplicationMobile(Form):
 
     applicant_loan_details_applied_loan = TextField(validators=[v.Length(max=10000)])
 
+    applicant_other_card_residence = TextField(validators=[v.Length(max=10000)])
+
     applicant_other_card_personal_detail = TextField(validators=[v.Length(max=10000)])
     applicant_nominee_details = TextField(validators=[v.Length(max=10000)])
 
@@ -826,39 +828,39 @@ class AddApplicationMobile(Form):
             #     pan_card_father_s_husband_s_name = guarantor1.get("pan_card_father_s_husband_s_name",[])
             # )
 
-            assets_map = self.load(self.assets_map)
-            applicant_docs = assets_map.get("applicant", {})
-            app.applicant_docs = EsthenosOrgApplicationDocs(
-                pan_docs = applicant_docs.get("pan_card", []),
-                aadhar_docs = applicant_docs.get("aadhar_card", []),
-                voterid_docs = applicant_docs.get("voter_card", []),
-                personal_docs = applicant_docs.get("personal_docs", []),
-                business_docs = applicant_docs.get("business_docs", []),
-                hypothecation_goods = applicant_docs.get("hypothecation_goods",[]),
-                other_docs = applicant_docs.get("other_card", []),
-            )
-
-            assets_map = self.load(self.assets_map)
-            guarantor1_docs = assets_map.get("guarantor1", {})
-            app.guarantor1_docs = EsthenosOrgApplicationDocs(
-                pan_docs = guarantor1_docs.get("pan_card", []),
-                aadhar_docs = guarantor1_docs.get("aadhar_card", []),
-                voterid_docs = guarantor1_docs.get("voter_card", []),
-                personal_docs = guarantor1_docs.get("personal_docs", []),
-                business_docs = guarantor1_docs.get("business_docs", []),
-                other_docs = guarantor1_docs.get("other_card", []),
-            )
-
-            assets_map = self.load(self.assets_map)
-            guarantor2_docs = assets_map.get("guarantor2", {})
-            app.guarantor2_docs = EsthenosOrgApplicationDocs(
-                pan_docs = guarantor2_docs.get("pan_card", []),
-                aadhar_docs = guarantor2_docs.get("aadhar_card", []),
-                voterid_docs = guarantor2_docs.get("voter_card", []),
-                personal_docs = guarantor2_docs.get("personal_docs", []),
-                business_docs = guarantor2_docs.get("business_docs", []),
-                other_docs = guarantor2_docs.get("other_card", []),
-            )
+            # assets_map = self.load(self.assets_map)
+            # applicant_docs = assets_map.get("applicant", {})
+            # app.applicant_docs = EsthenosOrgApplicationDocs(
+            #     pan_docs = applicant_docs.get("pan_card", []),
+            #     aadhar_docs = applicant_docs.get("aadhar_card", []),
+            #     voterid_docs = applicant_docs.get("voter_card", []),
+            #     personal_docs = applicant_docs.get("personal_docs", []),
+            #     business_docs = applicant_docs.get("business_docs", []),
+            #     hypothecation_goods = applicant_docs.get("hypothecation_goods",[]),
+            #     other_docs = applicant_docs.get("other_card", []),
+            # )
+            #
+            # assets_map = self.load(self.assets_map)
+            # guarantor1_docs = assets_map.get("guarantor1", {})
+            # app.guarantor1_docs = EsthenosOrgApplicationDocs(
+            #     pan_docs = guarantor1_docs.get("pan_card", []),
+            #     aadhar_docs = guarantor1_docs.get("aadhar_card", []),
+            #     voterid_docs = guarantor1_docs.get("voter_card", []),
+            #     personal_docs = guarantor1_docs.get("personal_docs", []),
+            #     business_docs = guarantor1_docs.get("business_docs", []),
+            #     other_docs = guarantor1_docs.get("other_card", []),
+            # )
+            #
+            # assets_map = self.load(self.assets_map)
+            # guarantor2_docs = assets_map.get("guarantor2", {})
+            # app.guarantor2_docs = EsthenosOrgApplicationDocs(
+            #     pan_docs = guarantor2_docs.get("pan_card", []),
+            #     aadhar_docs = guarantor2_docs.get("aadhar_card", []),
+            #     voterid_docs = guarantor2_docs.get("voter_card", []),
+            #     personal_docs = guarantor2_docs.get("personal_docs", []),
+            #     business_docs = guarantor2_docs.get("business_docs", []),
+            #     other_docs = guarantor2_docs.get("other_card", []),
+            # )
 
         if not is_app:
             # group = EsthenosOrgGroup.objects.get(organisation=user.organisation, id=self.branch.data)
