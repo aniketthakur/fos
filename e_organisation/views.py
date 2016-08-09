@@ -431,7 +431,7 @@ def application_pre_register_group():
 
         app.update_status(170)
         app.update_status(126)
-
+        app.update_status(185)
         app.save()
         # highmark_status = HighmarkStatus.objects.get(organisation=user.organisation)
         #
@@ -455,9 +455,9 @@ def application_get_group(branchid,state):
     branch = EsthenosOrgBranch.objects.get(id=branchid)
 
     if state == "pre_registration":
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=126)
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=185)
     elif state == "neighbor_feedback":
-        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=186)
+        applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=187)
     elif state == "luc_ready":
         applications = EsthenosOrgApplication.objects.filter(organisation=user.organisation, branch=branch,status=244)
     elif state == "mv_ready":

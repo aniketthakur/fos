@@ -873,14 +873,14 @@ class AddApplicationMobile(Form):
             app.update_status(186)
             app.is_registered = True
             app.save()
-            if 170 == previous_state:
-                app.verified(True)
-                app.update_status(187)
-            else:
-                if previous_state < 140 and previous_state not in [20, 25, 26]:
-                    app.update_status(130)
-                elif (previous_state >= 140 and previous_state in [180, 188]) or (previous_state in [20, 25, 26]):
-                    app.update_status(188)
+            # if 185 == previous_state:
+            app.verified(True)
+            app.update_status(187)
+            # else:
+            #     if previous_state < 140 and previous_state not in [20, 25, 26]:
+            #         app.update_status(130)
+            #     elif (previous_state >= 140 and previous_state in [180, 188]) or (previous_state in [20, 25, 26]):
+            #         app.update_status(188)
 
             app.save()
 
