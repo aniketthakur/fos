@@ -913,7 +913,7 @@ class EsthenosOrgGroup(db.Document):
         return (self.size != 0 and self.members >= self.size) or self.size_override
 
     def verified(self):
-        return EsthenosOrgApplication.objects.filter(group=self, status=170).count() == self.members
+        return EsthenosOrgApplication.objects.filter(group=self, status=186).count() == self.members
 
     def update_status(self, status_code):
         self.status = status_code
@@ -1728,6 +1728,9 @@ class EsthenosOrgApplication(db.Document):
     type_equipment2 = db.EmbeddedDocumentField(EsthenosOrgApplicationTypeEquipment, default=EsthenosOrgApplicationTypeEquipment)
     type_equipment3 = db.EmbeddedDocumentField(EsthenosOrgApplicationTypeEquipment, default=EsthenosOrgApplicationTypeEquipment)
 
+    verification = db.BooleanField(default=False)
+    verification_date = db.DateTimeField(default=None)
+
     sales_revenue_in_1_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_5_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_4_month = db.StringField(max_length=512, required=False,default="")
@@ -1872,6 +1875,14 @@ class EsthenosOrgApplication(db.Document):
 
     highmark_response = db.StringField(required=False, default="")
     highmark_response1 = db.ReferenceField('EsthenosOrgApplicationHighMarkResponse', required=False, default=None)
+
+    def verified(self, status):
+        #TODO : RESTORE NEIGHBOR FEEDBACK FOR NEW OFFLIE APPLICAITONS
+        # status = (status and self.is_neighbor_complete and (not self.is_pre_registered or (self.is_pre_registered and self.is_registered)) \
+        #           and (self.cashflow_forcefully_passed or self.status not in [20, 25, 26, 180, 188]))
+        self.verification = status
+        self.verification_date = datetime.datetime.now()
+        self.save()
 
     @property
     def total_income(self):
