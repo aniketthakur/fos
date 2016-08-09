@@ -99,6 +99,7 @@ class AddApplicationMobile(Form):
 
     applicant_other_card_ref = TextField(validators=[v.Length(max=10000)])
     applicant_business_docs_info = TextField(validators=[v.Length(max=10000)])
+    applicant_other_card_product = TextField(validators=[v.Length(max=10000)])
 
     applicant_business_docs_details4 = TextField(validators=[v.Length(max=10000)])
 
