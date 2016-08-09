@@ -1731,6 +1731,18 @@ class EsthenosOrgApplication(db.Document):
     verification = db.BooleanField(default=False)
     verification_date = db.DateTimeField(default=None)
 
+    phone_no = db.IntField(default=0)
+    occupation= db.StringField(max_length=200, required=False,default="")
+    remarks= db.StringField(max_length=200, required=False,default="")
+    location= db.StringField(max_length=200, required=False,default="")
+    neighbour_name= db.StringField(max_length=200, required=False,default="")
+
+    second_neighbour_phone_no = db.IntField(default=0)
+    second_neighbour_occupation= db.StringField(max_length=200, required=False,default="")
+    second_neighbour_remarks= db.StringField(max_length=200, required=False,default="")
+    second_neighbour_location= db.StringField(max_length=200, required=False,default="")
+    second_neighbour_name= db.StringField(max_length=200, required=False,default="")
+
     sales_revenue_in_1_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_5_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_4_month = db.StringField(max_length=512, required=False,default="")
@@ -2044,6 +2056,25 @@ class EsthenosOrgApplication(db.Document):
             self.update_status(170)
 
         self.save()
+
+
+    def update_neighbor_data(self, form):
+        self.second_neighbour_remarks = form['NeighborRemarksSecond']
+        self.second_neighbour_occupation = form['NeighborOccupationSecond']
+        self.second_neighbour_name = form['NeighborNameSecond']
+        self.second_neighbour_location = form['NeighborLocationSecond']
+        self.second_neighbour_phone_no = toFloat(form['NeighborPhoneNoSecond'])
+        self.phone_no = toFloat(form['NeighborPhoneNoFirst'])
+        self.occupation = form['NeighborOccupationFirst']
+        self.remarks = form['NeighborRemarksFirst']
+        self.location = form['NeighborLocationFirst']
+        self.neighbour_name = form['NeighborNameFirst']
+        self.is_neighbor_complete = True
+        self.verified(True)
+
+        self.save()
+
+
 
 
     def pre_update_kyc_parameters(self, form):

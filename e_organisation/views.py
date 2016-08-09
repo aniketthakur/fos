@@ -335,7 +335,7 @@ def download_disbursement(applicant_id):
     return Response(json.dumps({"success":False},default=encode_model), content_type="application/json", mimetype='application/json')
 
 
-@organisation_views.route('/api/organisation/centers/groups/application/update_neighbor', methods=["POST"])
+@organisation_views.route('/api/organisation/centers/branches/application/update_neighbor', methods=["POST"])
 @login_or_key_required
 @feature_enable("features_api_applications_list")
 def neighbour_complete_list():
