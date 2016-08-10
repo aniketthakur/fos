@@ -1,14 +1,13 @@
-{% extends "base.html" %}
+{% extends "base_print.html" %}
 {% set active_page = 'scrutiny' %}
 {% block maincontents %}
     <div class="row">
         <div class="col-md-12 form-group">
-            <h3>Balance <span class="semi-bold">Sheet :</span></h3>
-            <h3 class="pull-right"><a href="{{ url_for("organisation_views.balancesheet_page_print", app_id=application.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+            <h3>Banking <span class="semi-bold">Sheet :</span></h3>
         </div>
     </div>
-   <div class="grid simple ">
-       <div class="grid-body no-border">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
         <table class="table" cols=6>
             <thead>
               <tr>
@@ -35,7 +34,7 @@
                 <th >Payable to Suppliers</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.payable_supp}}</th>
+                <th ></th>
               </tr>
             <tr>
                 <th ></th>
@@ -43,7 +42,7 @@
                 <th >Loan: EMIs payable in the next 1 year</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.loan_emis_payable_1}}</th>
+                <th ></th>
               </tr>
             <tr>
                 <th ></th>
@@ -51,7 +50,7 @@
                 <th >Others</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.short_term_loans}}</th>
+                <th ></th>
               </tr>
             <tr>
                 <th ></th>
@@ -75,7 +74,7 @@
                 <th >Loan: amount payable 1 year onwards</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.loan_amount_payable_1}}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -83,7 +82,7 @@
                 <th >Others</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.others_long_term}}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -123,7 +122,7 @@
                 <th >Cash in Hand</th>
                 <th ></th>
                 <th ></th>
-                <th >{{ app.cash_balance }}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -131,7 +130,7 @@
                 <th >Cash in Bank</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.bank_balance}}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -139,7 +138,7 @@
                 <th >Receivable from Buyers</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.receivables_from_customer }}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -147,7 +146,7 @@
                 <th >Raw Material</th>
                 <th ></th>
                 <th ></th>
-                <th >{{app.raw_material_in_han}}</th>
+                <th ></th>
             </tr>
             <tr>
                 <th ></th>
@@ -263,6 +262,6 @@
             </tr>
             </tbody>
           </table>
-     </div>
-   </div>
+        </div>
+       </div>
 {% endblock %}

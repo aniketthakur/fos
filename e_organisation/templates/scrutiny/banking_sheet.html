@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% set active_page = 'scrutiny' %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>Balance <span class="semi-bold">Sheet :</span></h3>
+            <h3 class="pull-right"><a href="{{ url_for("organisation_views.balancesheet_page_print", app_id=application.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+        </div>
+    </div>
+   <div class="grid simple ">
+       <div class="grid-body no-border">
+        <table class="table" cols=6>
+            <thead>
+              <tr>
+                <th class="text-left" style="width:100px;font-size:18px">Liabilities</th>
+                <th class="text-left" style="width:100px"></th>
+                <th class="text-left" style="width:200px"></th>
+                <th class="text-left" style="width:100px"></th>
+                <th class="text-left" style="width:100px"></th>
+                <th class="text-left" style="width:100px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="text-left"></th>
+                <th class="text-left" style="font-size:14px">Short Term</th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+              </tr>
+              <tr>
+                <th ></th>
+                <th ></th>
+                <th >Payable to Suppliers</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.payable_supp}}</th>
+              </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Loan: EMIs payable in the next 1 year</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.loan_emis_payable_1}}</th>
+              </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Others</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.short_term_loans}}</th>
+              </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >TOTAL S.T. LIBILITIES</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th style="font-size:14px">Long Term</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Loan: amount payable 1 year onwards</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.loan_amount_payable_1}}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Others</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.others_long_term}}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >TOTAL L.T. LIBILITIES</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th>TOTAL LIBILITIES</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th style="font-size:18px" >Assets</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th style="font-size:14px">Short Term</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Cash in Hand</th>
+                <th ></th>
+                <th ></th>
+                <th >{{ app.cash_balance }}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Cash in Bank</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.bank_balance}}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Receivable from Buyers</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.receivables_from_customer }}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Raw Material</th>
+                <th ></th>
+                <th ></th>
+                <th >{{app.raw_material_in_han}}</th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Finished Goods</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Investments</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Others</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >TOTAL S.T. ASSETS</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th style="font-size:14px">Long Term</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Land</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Buildings</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Machinery & Equipment</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Vehicles used for business purpose only</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Movable assets</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >Others</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >TOTAL L.T. ASSETS</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >TOTAL ASSETS</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            <tr>
+                <th ></th>
+                <th ></th>
+                <th >PROPOSED DEBT TO EQUITY</th>
+                <th ></th>
+                <th ></th>
+                <th ></th>
+            </tr>
+            </tbody>
+          </table>
+     </div>
+   </div>
+{% endblock %}
