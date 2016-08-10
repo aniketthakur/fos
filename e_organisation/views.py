@@ -343,11 +343,11 @@ def neighbour_complete_list():
 
     if request.method == 'POST':
         form = request.json
-        application = EsthenosOrgApplication.objects.filter(application_id=form['applicant_id'])
+        application = EsthenosOrgApplication.objects.get(application_id=form['applicant_id'])
 
         if application:
-            application[0].update_neighbor_data(form)
-            application[0].save()
+            application.update_neighbor_data(form)
+            application.save()
 
             return jsonify({
                 "success": True,
