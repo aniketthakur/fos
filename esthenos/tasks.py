@@ -178,7 +178,7 @@ def cashflow_ready_applications():
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def scrutiny_ready_applications():
-    applications = EsthenosOrgApplication.objects.filter(status=187)
+    applications = EsthenosOrgApplication.objects.filter(status=187,is_neighbor_complete = True)
 
     for application in applications:
         application.update_status(190)

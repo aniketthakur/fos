@@ -9,260 +9,275 @@
     </div>
    <div class="grid simple ">
        <div class="grid-body no-border">
-        <table class="table" cols=6>
-            <thead>
-              <tr>
-                <th class="text-left" style="width:100px;font-size:18px">Liabilities</th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:200px"></th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:100px"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="text-left"></th>
-                <th class="text-left" style="font-size:14px">Short Term</th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-              </tr>
-              <tr>
-                <th ></th>
-                <th ></th>
-                <th >Payable to Suppliers</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.payable_supp}}</th>
-              </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Loan: EMIs payable in the next 1 year</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.loan_emis_payable_1}}</th>
-              </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.short_term_loans}}</th>
-              </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL S.T. LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th style="font-size:14px">Long Term</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Loan: amount payable 1 year onwards</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.loan_amount_payable_1}}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.others_long_term}}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL L.T. LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th>TOTAL LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th style="font-size:18px" >Assets</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th style="font-size:14px">Short Term</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Cash in Hand</th>
-                <th ></th>
-                <th ></th>
-                <th >{{ app.cash_balance }}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Cash in Bank</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.bank_balance}}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Receivable from Buyers</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.receivables_from_customer }}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Raw Material</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.raw_material_in_han}}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Finished Goods</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Investments</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL S.T. ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th style="font-size:14px">Long Term</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Land</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Buildings</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Machinery & Equipment</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Vehicles used for business purpose only</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Movable assets</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL L.T. ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >PROPOSED DEBT TO EQUITY</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            </tbody>
+          <table>
+              <thead>BANKING/LOANS</thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">BANK NAME</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ACCOUNT NO</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TYPE OF A/C</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MONTH/BALANCE</th>
+                        <td>10</td>
+                        <td>20</td>
+                        <td>30</td>
+                        <td></td>
+                        <td>CREDITS</td>
+                        <td></td>
+                        <td>INWARD BOUNCE</td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 1</th>
+                        <td>10</td>
+                        <td>20</td>
+                        <td>30</td>
+                        <td></td>
+                        <td>CREDITS</td>
+                        <td></td>
+                        <td>INWARD BOUNCE</td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 2</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>AQB1</td>
+                        <td></td>
+                        <td></td>
+                        <td>AQC1</td>
+                        <td>TIMES EMI</td>
+                         <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 3</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 4</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 5</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>AQB2</td>
+                        <td></td>
+                        <td>AQC1</td>
+                        <td>TIMES EMI</td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <th scope="row">MONTH 6</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                     <th scope="row" colspan="6"></th>
+                    </tr>
+                    <tr>
+                     <th scope="row" colspan="6">ACTIVE LOANS</th>
+                    </tr>
+                    <tr>
+                        <th scope="row">SL NO</th>
+                        <td>BANK/FI- </td>
+                        <td>TYPE OF LOAN</td>
+                        <td>AMOUNT</td>
+                        <td>TENURE</td>
+                        <td>PRINCIPAL OUTSTANDING</td>
+                        <td>EMI PAID</td>
+                        <td>BOUNCE IN LAST 3 MONTHS</td>
+                        <td>TOTAL BOUNCES</td>
+                        <td>LOAN NO</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                     <th scope="row" colspan="6"></th>
+                    </tr>
+                    <tr>
+                     <th scope="row" colspan="6">ACTIVE LOANS</th>
+                    </tr>
+                    <tr>
+                        <th scope="row">SL NO</th>
+                        <td>BANK/FI- </td>
+                        <td>TYPE OF LOAN</td>
+                        <td>AMOUNT</td>
+                        <td>TENURE</td>
+                        <td>BOUNCE IN LAST 3 MONTHS</td>
+                        <td>TOTAL BOUNCES</td>
+                        <td>LOAN NO</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
           </table>
-     </div>
+       </div>
    </div>
 {% endblock %}
