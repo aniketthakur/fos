@@ -445,7 +445,7 @@ def banking_page(app_id):
 @organisation_views.route('/banking_sheet/<app_id>/print', methods=["GET"])
 @login_required
 @feature_enable("features_applications_scrutiny")
-def banking_page(app_id):
+def banking_page_print(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
   application = EsthenosOrgApplication.objects.get(application_id=app_id)
