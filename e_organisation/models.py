@@ -5,6 +5,17 @@ from blinker import signal
 from flask_sauth.models import BaseUser
 from flask.ext.mongorest.resources import Resource
 
+def toInt(value):
+  try:
+    return int(value)
+  except:
+    return 0
+
+def toFloat(value):
+  try:
+    return float(value)
+  except:
+    return 0.0
 
 
 class EsthenosOrg(db.Document):
@@ -2063,8 +2074,8 @@ class EsthenosOrgApplication(db.Document):
         self.second_neighbour_occupation = form['NeighborOccupationSecond']
         self.second_neighbour_name = form['NeighborNameSecond']
         self.second_neighbour_location = form['NeighborLocationSecond']
-        self.second_neighbour_phone_no = toFloat(form['NeighborPhoneNoSecond'])
-        self.phone_no = toFloat(form['NeighborPhoneNoFirst'])
+        self.second_neighbour_phone_no = toInt(form['NeighborPhoneNoSecond'])
+        self.phone_no = toInt(form['NeighborPhoneNoFirst'])
         self.occupation = form['NeighborOccupationFirst']
         self.remarks = form['NeighborRemarksFirst']
         self.location = form['NeighborLocationFirst']

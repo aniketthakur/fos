@@ -180,7 +180,6 @@ wtforms_json.init()
 @login_or_key_required
 @feature_enable("features_api_applications_post")
 def mobile_application_json():
-    print "m in submission"
     app_form = AddApplicationMobile.from_json(request.json)
 
     try:
@@ -195,7 +194,6 @@ def mobile_application_json():
 
     if app:
         if app.is_registered:
-            print "566556"
             return jsonify({
                 "success": False,
                 "message": "application submission failed"
