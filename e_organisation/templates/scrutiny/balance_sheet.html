@@ -100,15 +100,15 @@
             </tr>
             <tr>
                 <td >Finished Goods</td>
-                <td ></td>
+                <td >{{app.immovable_property_commercial + app.immovable_property_agriculture + app.immovable_property_residential}}</td>
             </tr>
             <tr>
                 <td >Investments</td>
-                <td ></td>
+                <td>{{ app.app.fixed_deposit_ppf + app.insurance_policies}}</td>
             </tr>
             <tr>
                 <td >Others</td>
-                <td ></td>
+                <td >{{ app.gold_and_jewellery }}</td>
             </tr>
             <tr>
                 <td >TOTAL S.T. ASSETS</td>
@@ -121,23 +121,24 @@
             <tr>
                 <td rowspan="9"></td>
                 <td >Land</td>
-                <td ></td>
+                <td >{app.land_details1.estimated_resale_value}</td>
             </tr>
             <tr>
                 <td >Buildings</td>
-                <td ></td>
+                <td >{{ app.area_market_value }}</td>
             </tr>
             <tr>
                 <td >Machinery & Equipment</td>
-                <td ></td>
+                <td >{{ app.type_equipment1.estimated_value + app.type_equipment2.estimated_value + app.type_equipment3.estimated_value}}</td>
             </tr>
             <tr>
                 <td >Vehicles used for business purpose only</td>
-                <td ></td>
+                <td >{{app.vehicles_current_estimate}}</td>
             </tr>
             <tr>
                 <td >Movable assets</td>
-                <td ></td>
+                <td >{{ app.primary_asset_for_hypothecation_current_market_value + app.secondary_asset_for_hypothecation_current_market_value
+                    + app.tertiary_asset_for_hypothecation_current_market_value }}</td>
             </tr>
             <tr>
                 <td >Others</td>
@@ -155,7 +156,7 @@
             <tr>
                 <td >PROPOSED DEBT TO EQUITY</td>
                 <td colspan="2" ></td>
-                <td ></td>
+                <td >{{ app.cash_credit_percentage }}</td>
             </tr>
             </tbody>
           </table>

@@ -1728,8 +1728,8 @@ class EsthenosOrgApplication(db.Document):
     guarantor_carddetails3 = db.EmbeddedDocumentField(EsthenosOrgGuarantorCardDetails, default=EsthenosOrgGuarantorCardDetails)
 
     land_details1 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
-    land_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
-    land_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
+    # land_details2 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
+    # land_details3 = db.EmbeddedDocumentField(EsthenosOrgApplicationLandDetails, default=EsthenosOrgApplicationLandDetails)
 
     docs_vehicle1 = db.EmbeddedDocumentField(EsthenosOrgApplicationDocsVehicle, default=EsthenosOrgApplicationDocsVehicle)
     docs_vehicle2 = db.EmbeddedDocumentField(EsthenosOrgApplicationDocsVehicle, default=EsthenosOrgApplicationDocsVehicle)
