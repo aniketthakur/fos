@@ -447,7 +447,7 @@ def deviation_page_print(app_id):
 def banking_page(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/banking_sheet.html", **kwargs)
@@ -459,7 +459,7 @@ def banking_page(app_id):
 def banking_page_print(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/banking_sheet_print.html", **kwargs)

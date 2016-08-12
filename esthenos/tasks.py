@@ -292,6 +292,7 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
         os.remove(tf+".zip")
 
         application.disbursement_pdf_link = k.key
+        application.update_status(243)
         application.save()
 
 
