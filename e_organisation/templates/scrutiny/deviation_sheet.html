@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% set active_page = 'scrutiny' %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>Deviation <span class="semi-bold">Sheet :</span></h3>
+            <h3 class="pull-right"><a href="{{ url_for("organisation_views.deviation_page_print", app_id=app.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+        </div>
+    </div>
+   <div class="grid simple ">
+       <div class="grid-body">
+            <div>
+               <h5 class="text-center">DEVIATION SHEET</h5>
+           </div>
+        <table class="table table-bordered" cols=6>
+            <thead>
+              <tr style="width:100px;">
+                <th class="text-left" style="width:50%;font-size:18px;">CRITERIA</th>
+                <td class="text-left" style="width:50%;font-size:18px;">DEVIATION</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" style="font-size:14px">Age norms not met</td>
+                <td class="text-left"></td>
+              </tr>
+              <tr>
+                <td >Bank a/c less han 6 months</td>
+                <td >{{app.payable_supp}}</td>
+              </tr>
+            <tr>
+                <td >Business vintage</td>
+                <td >{{app.loan_emis_payable_1}}</td>
+            </tr>
+            <tr>
+                <td >Resi stability</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>Credit Bureau check</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Bounces in loan</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >inward cheque bounces</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>Financial ratios not met , to be specified</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Banking AQB of AVC not met</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >Debt to Equity</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>Field Verification</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td ></td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >Visited by Cedit Manager</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>Tele verification by : Name & ID</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Date and time of call</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >Person Contacted</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>Phone no.</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Remarks</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >1.PROFILE DETAILS</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>APPLICANT NAME:</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >CO APPLICANT NAME:</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >APPLICANT & CO APPLICANT RELATION PROOF DETAILS</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>OTHERS</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >3. REPAYMENT DETAILS</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >REPAYMENT FROM BANK & A/C DETAILS</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>4. CREDIT BUREAU CHECKS</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >CIBIL APPLICANT OD/DPD MAX 15 DAYS</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >CIBIL COAPPLICANT OD/DPD MAX 15 DAYS</td>
+                <td ></td>
+              </tr>
+            <tr>
+                <td>HIGH MARK APPLICANT OD/  NO DPD</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >HIGH MARK CO APPLICANT OD/ NO DPD</td>
+                <td ></td>
+            </tr>
+             <tr>
+                <td >LOAN ENQUIRY IN CB REPORT</td>
+                <td ></td>
+              </tr>
+            </tbody>
+          </table>
+     </div>
+   </div>
+{% endblock %}

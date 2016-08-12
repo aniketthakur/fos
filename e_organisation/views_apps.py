@@ -403,7 +403,7 @@ def sanctions():
 def balancesheet_page(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/balance_sheet.html", **kwargs)
@@ -414,7 +414,7 @@ def balancesheet_page(app_id):
 def balancesheet_page_print(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/balance_sheet_print.html", **kwargs)
@@ -425,10 +425,21 @@ def balancesheet_page_print(app_id):
 def deviation_page(app_id):
   today = datetime.datetime.now()
   user = EsthenosUser.objects.get(id=current_user.id)
-  application = EsthenosOrgApplication.objects.get(application_id=app_id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
   kwargs = locals()
   return render_template("scrutiny/deviation_sheet.html", **kwargs)
+
+@organisation_views.route('/deviation_sheet/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def deviation_page_print(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/deviation_sheet_print.html", **kwargs)
 
 @organisation_views.route('/banking_sheet/<app_id>', methods=["GET"])
 @login_required

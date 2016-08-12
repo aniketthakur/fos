@@ -4,262 +4,158 @@
     <div class="row">
         <div class="col-md-12 form-group">
             <h3>Balance <span class="semi-bold">Sheet :</span></h3>
-            <h3 class="pull-right"><a href="{{ url_for("organisation_views.balancesheet_page_print", app_id=application.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+            <h3 class="pull-right"><a href="{{ url_for("organisation_views.balancesheet_page_print", app_id=app.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
         </div>
     </div>
    <div class="grid simple ">
-       <div class="grid-body no-border">
-        <table class="table" cols=6>
+       <div class="grid-body">
+            <div>
+               <h5 class="text-center">BALANCE SHEET</h5>
+           </div>
+        <table class="table table-bordered" cols=6>
             <thead>
               <tr>
                 <th class="text-left" style="width:100px;font-size:18px">Liabilities</th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:200px"></th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:100px"></th>
-                <th class="text-left" style="width:100px"></th>
+                <td class="text-left" style="width:20%"></td>
+                <td class="text-left" style="width:20%"></td>
+                <td class="text-left" style="width:20%"></td>
+                <td rowspan="2" class="text-left" style="width:20%"></td>
+                <td rowspan="11" class="text-left" style="width:20%"></td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th class="text-left"></th>
-                <th class="text-left" style="font-size:14px">Short Term</th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
+                <td rowspan="10" class="text-left"></td>
+                <td class="text-left" style="font-size:14px">Short Term</td>
+                <td class="text-left"></td>
               </tr>
               <tr>
-                <th ></th>
-                <th ></th>
-                <th >Payable to Suppliers</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.payable_supp}}</th>
+                <td rowspan="4"></td>
+                <td >Payable to Suppliers</td>
+                <td >{{app.payable_supp}}</td>
               </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Loan: EMIs payable in the next 1 year</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.loan_emis_payable_1}}</th>
+                <td >Loan: EMIs payable in the next 1 year</td>
+                <td >{{app.loan_emis_payable_1}}</td>
               </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.short_term_loans}}</th>
+                <td >Others</td>
+                <td >{{app.short_term_loans}}</td>
               </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL S.T. LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >TOTAL S.T. LIBILITIES</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
+                <td style="font-size:14px">Long Term</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td rowspan="4"></td>
+                <td >Loan: amount payable 1 year onwards</td>
+                <td >{{app.loan_amount_payable_1}}</td>
+            </tr>
+            <tr>
+                <td >Others</td>
+                <td >{{app.others_long_term}}</td>
+            </tr>
+            <tr>
+                <td >TOTAL L.T. LIBILITIES</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td>TOTAL LIBILITIES</td>
+                <td rowspan="3"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th class="text-left" style="width:100px;font-size:18px">Assests</th>
+                <td class="text-left" style="width:20%"></td>
+
+                <td class="text-left" style="width:20%"></td>
+                <td rowspan="15" class="text-left" style="width:20%"></td>
+              </tr>
+            <tr>
+                <td rowspan="20" ></td>
+                <td style="font-size:14px">Short Term</td>
+                <td ></td>
+
+            </tr>
+            <tr>
+                <td rowspan="8" ></td>
+                <td >Cash in Hand</td>
+                <td >{{ app.cash_balance }}</td>
+            </tr>
+            <tr>
+                <td >Cash in Bank</td>
+                <td >{{app.bank_balance}}</td>
+            </tr>
+            <tr>
+                <td >Receivable from Buyers</td>
+                <td >{{app.receivables_from_customer }}</td>
+            </tr>
+            <tr>
+                <td >Raw Material</td>
+                <td >{{app.raw_material_in_han}}</td>
+            </tr>
+            <tr>
+                <td >Finished Goods</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Investments</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >Others</td>
+                <td ></td>
+            </tr>
+            <tr>
+                <td >TOTAL S.T. ASSETS</td>
+                <td ></td>
+            </tr>
+            <tr>
                 <th style="font-size:14px">Long Term</th>
                 <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Loan: amount payable 1 year onwards</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.loan_amount_payable_1}}</th>
+                <td rowspan="9"></td>
+                <td >Land</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.others_long_term}}</th>
+                <td >Buildings</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL L.T. LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >Machinery & Equipment</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th>TOTAL LIBILITIES</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >Vehicles used for business purpose only</td>
+                <td ></td>
             </tr>
             <tr>
-                <th style="font-size:18px" >Assets</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >Movable assets</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th style="font-size:14px">Short Term</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >Others</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Cash in Hand</th>
-                <th ></th>
-                <th ></th>
-                <th >{{ app.cash_balance }}</th>
+                <td >TOTAL L.T. ASSETS</td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Cash in Bank</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.bank_balance}}</th>
+                <td >TOTAL ASSETS</td>
+                <td ></td>
+                <td ></td>
             </tr>
             <tr>
-                <th ></th>
-                <th ></th>
-                <th >Receivable from Buyers</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.receivables_from_customer }}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Raw Material</th>
-                <th ></th>
-                <th ></th>
-                <th >{{app.raw_material_in_han}}</th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Finished Goods</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Investments</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL S.T. ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th style="font-size:14px">Long Term</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Land</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Buildings</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Machinery & Equipment</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Vehicles used for business purpose only</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Movable assets</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >Others</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL L.T. ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >TOTAL ASSETS</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th >PROPOSED DEBT TO EQUITY</th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
+                <td >PROPOSED DEBT TO EQUITY</td>
+                <td colspan="2" ></td>
+                <td ></td>
             </tr>
             </tbody>
           </table>
