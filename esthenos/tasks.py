@@ -208,7 +208,7 @@ def underwriting_applications():
 
 @periodic_task(run_every=datetime.timedelta(minutes=1))
 def disbursement_applications():
-    applications = EsthenosOrgApplication.objects.filter(status=231)
+    applications = EsthenosOrgApplication.objects.filter(status=191)
 
     for application in applications:
         application.update_status(240)
