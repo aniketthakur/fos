@@ -157,7 +157,7 @@ class AddApplicationMobile(Form):
             land_location = data.get("land_location", ""),
             ownership = data.get("ownership", ""),
             loan_outstanding = toFloat(data.get("loan_outstanding", "")),
-            estimated_resale_value = toFloat(data.get("estimated_resale_value", ""))
+            estimated_resale_value = toInt(data.get("estimated_resale_value", ""))
         )
 
     def load_loan_details(self, data):
@@ -229,7 +229,7 @@ class AddApplicationMobile(Form):
 
     def load_type_equipment(self, data):
         return EsthenosOrgApplicationTypeEquipment(
-            estimated_value = data.get("estimated_value",""),
+            estimated_value = toInt(data.get("estimated_value","")),
             details_of_equipment_supplier = data.get("details_of_equipment_supplier",""),
             date_of_manufacturing_equipment = data.get("date_of_manufacturing_equipment",""),
         )
@@ -237,7 +237,7 @@ class AddApplicationMobile(Form):
     def load_docs_vehicle(self, data):
         return EsthenosOrgApplicationDocsVehicle(
             year_of_registration = toInt(data.get("year_of_registration","")),
-            estimated_resale_value = toFloat(data.get("estimated_resale_value","")),
+            estimated_resale_value = toInt(data.get("estimated_resale_value","")),
             type_of_vehicle_manufacturer = data.get("type_of_vehicle_manufacturer","")
         )
 
@@ -375,22 +375,22 @@ class AddApplicationMobile(Form):
             app.update_status(185)
 
             data = self.load(self.applicant_other_card_assets_liabilities)
-            app.cash_balance = data.get("cash_balance", "")
-            app.payable_supp = data.get("payable_to_suppliers", "")
-            app.fixed_deposit_ppf = data.get("fixed_deposit_and_ppf", "")
-            app.immovable_property_commercial = data.get("immovable_property_estimated_value___commercial", "")
-            app.others_long_term = data.get("others_long_term_loans", "")
-            app.loan_amount_payable_1 = data.get("loan__amount_payable_1_year_onwards", "")
-            app.immovable_property_agriculture = data.get("immovable_property_estimated_value___agriculture", "")
-            app.receivables_from_customer = data.get("receivables_from_customer", "")
-            app.vehicles_current_estimate = data.get("vehicles_current_estimate_of_resale_value", "")
-            app.short_term_loans = data.get("other_short_term_loans", "")
-            app.bank_balance = data.get("bank_balance", "")
-            app.immovable_property_residential = data.get("immovable_property_estimated_value___residential", "")
-            app.gold_and_jewellery = data.get("gold_and_jewellery", "")
-            app.raw_material_in_han = data.get("raw_material_in_han", "")
+            app.cash_balance = toInt(data.get("cash_balance", ""))
+            app.payable_supp = toInt(data.get("payable_to_suppliers", ""))
+            app.fixed_deposit_ppf = toInt(data.get("fixed_deposit_and_ppf", ""))
+            app.immovable_property_commercial = toInt(data.get("immovable_property_estimated_value___commercial", ""))
+            app.others_long_term = toInt(data.get("others_long_term_loans", ""))
+            app.loan_amount_payable_1 = toInt(data.get("loan__amount_payable_1_year_onwards", ""))
+            app.immovable_property_agriculture = toInt(data.get("immovable_property_estimated_value___agriculture", ""))
+            app.receivables_from_customer = toInt(data.get("receivables_from_customer", ""))
+            app.vehicles_current_estimate = toInt(data.get("vehicles_current_estimate_of_resale_value", ""))
+            app.short_term_loans = toInt(data.get("other_short_term_loans", ""))
+            app.bank_balance = toInt(data.get("bank_balance", ""))
+            app.immovable_property_residential = toInt(data.get("immovable_property_estimated_value___residential", ""))
+            app.gold_and_jewellery = toInt(data.get("gold_and_jewellery", ""))
+            app.raw_material_in_han = toInt(data.get("raw_material_in_han", ""))
             app.insurance_policies = data.get("insurance_policies", "")
-            app.loan_emis_payable_1 = data.get("loan__emis_payable_in_the_next_1_year", "")
+            app.loan_emis_payable_1 = toInt(data.get("loan__emis_payable_in_the_next_1_year", ""))
 
              # add loan details.
             data = self.load(self.applicant_loan_details_active_details1)
@@ -468,7 +468,7 @@ class AddApplicationMobile(Form):
             app.purchase_detail1 = data.get("purchase_details_1", "")
             app.purchase_cycle = data.get("purchase_cycle", "")
             app.purchase_details2 = data.get("purchase_details_2", "")
-            app.cash_credit_percentage = data.get("cash_credit_percentage", "")
+            app.cash_credit_percentage = toInt(data.get("cash_credit_percentage", ""))
             app.details_of_key_purchaser = data.get("details_of_key_purchaser", "")
             app.is_business_socially_desirable = data.get("is_the_business_socially_desirable", "")
             app.purchase_details3 = data.get("purchase_details_3", "")
@@ -500,7 +500,7 @@ class AddApplicationMobile(Form):
             data = self.load(self.applicant_business_docs_info)
             app.business_name = data.get("business_name", "")
             app.workplace_details = data.get("workplace_details", "")
-            app.area_market_value = toFloat(data.get("area_market_value", ""))
+            app.area_market_value = toInt(data.get("area_market_value", ""))
             app.registered_rent_agreement = data.get("registered_rent_agreement", "")
             app.address_of_place_of_business = data.get("address_of_place_of_business", "")
             app.no_of_years_in_business = toInt(data.get("no_of_years_in_business", ""))
@@ -621,21 +621,21 @@ class AddApplicationMobile(Form):
             app.primary_asset_for_hypothecation_purchase_year = data.get("purchase_year", "")
             app.primary_asset_for_hypothecation_purchase_price = toFloat(data.get("purchase_price", ""))
             app.primary_asset_for_hypothecation_purchase_purpose = data.get("purchase_purpose", "")
-            app.primary_asset_for_hypothecation_current_market_value = toFloat(data.get("market_value", ""))
+            app.primary_asset_for_hypothecation_current_market_value = toInt(data.get("market_value", ""))
             app.primary_asset_for_hypothecation_details_of_hypothecated_goods = data.get("goods_details", "")
 
             data = self.load(self.applicant_hypothecation_goods_hypothecation2)
             app.secondary_asset_for_hypothecation_purchase_year  = data.get("purchase_year", "")
             app.secondary_asset_for_hypothecation_purchase_price = toFloat(data.get("purchase_price", ""))
             app.secondary_asset_for_hypothecation_purchase_purpose = data.get("purchase_purpose", "")
-            app.secondary_asset_for_hypothecation_current_market_value = toFloat(data.get("market_value", ""))
+            app.secondary_asset_for_hypothecation_current_market_value = toInt(data.get("market_value", ""))
             app.secondary_asset_for_hypothecation_details_of_hypothecated_goods = data.get("goods_details", "")
 
             data = self.load(self.applicant_hypothecation_goods_hypothecation3)
             app.tertiary_asset_for_hypothecation_purchase_year = data.get("purchase_year", "")
             app.tertiary_asset_for_hypothecation_purchase_price = toFloat(data.get("purchase_price", ""))
             app.tertiary_asset_for_hypothecation_purchase_purpose = data.get("purchase_purpose", "")
-            app.tertiary_asset_for_hypothecation_current_market_value = toFloat(data.get("market_value", ""))
+            app.tertiary_asset_for_hypothecation_current_market_value = toInt(data.get("market_value", ""))
             app.tertiary_asset_for_hypothecation_details_of_hypothecated_goods = data.get("goods_details", "")
 
             data = self.load(self.applicant_other_card_liabilities)

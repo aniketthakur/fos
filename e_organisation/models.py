@@ -1375,7 +1375,7 @@ class EsthenosOrgApplicationLandDetails(db.EmbeddedDocument):
     ownership = db.StringField(max_length=512, default="")
     area_in_sqft = db.FloatField(default=0)
     loan_outstanding = db.FloatField(default=0)
-    estimated_resale_value = db.FloatField(default=0)
+    estimated_resale_value = db.IntField(default=0)
 
 class EsthenosOrgApplicationLoanDetails(db.EmbeddedDocument):
     type_of_loan= db.StringField(max_length=512, default="")
@@ -1438,14 +1438,14 @@ class EsthenosOrgGuarantorCardDetails(db.EmbeddedDocument):
     loan_amount = db.FloatField(default=0.0)
 
 class EsthenosOrgApplicationTypeEquipment(db.EmbeddedDocument):
-    estimated_value = db.StringField(max_length=512, default="")
+    estimated_value = db.IntField(default=0)
     date_of_manufacturing_equipment = db.StringField(max_length=512, default="")
     details_of_equipment_supplier= db.StringField(max_length=512, default="")
 
 
 class EsthenosOrgApplicationDocsVehicle(db.EmbeddedDocument):
-    year_of_registration = db.FloatField(default=0)
-    estimated_resale_value = db.FloatField(default=0)
+    year_of_registration = db.IntField(default=0)
+    estimated_resale_value = db.IntField(default=0)
     type_of_vehicle_manufacturer = db.StringField(max_length=512, default="")
 
 class EsthenosOrgApplication(db.Document):
@@ -1491,22 +1491,22 @@ class EsthenosOrgApplication(db.Document):
     assets_id = db.StringField(max_length=255, required=False,default="")
     application_id = db.StringField(max_length=255, required=False,default="")
 
-    cash_balance = db.StringField(max_length=255, required=False,default="")
-    payable_supp = db.StringField(max_length=255, required=False,default="")
-    fixed_deposit_ppf = db.StringField(max_length=255, required=False,default="")
-    immovable_property_commercial = db.StringField(max_length=255, required=False,default="")
-    others_long_term = db.StringField(max_length=255, required=False,default="")
-    loan_amount_payable_1 = db.StringField(max_length=255, required=False,default="")
-    immovable_property_agriculture = db.StringField(max_length=255, required=False,default="")
-    receivables_from_customer = db.StringField(max_length=255, required=False,default="")
-    vehicles_current_estimate = db.StringField(max_length=255, required=False,default="")
-    short_term_loans = db.StringField(max_length=255, required=False,default="")
-    bank_balance = db.StringField(max_length=255, required=False,default="")
-    immovable_property_residential = db.StringField(max_length=255, required=False,default="")
-    gold_and_jewellery = db.StringField(max_length=255, required=False,default="")
-    raw_material_in_han = db.StringField(max_length=255, required=False,default="")
+    cash_balance = db.IntField(default=0)
+    payable_supp = db.IntField(default=0)
+    fixed_deposit_ppf = db.IntField(default=0)
+    immovable_property_commercial = db.IntField(default=0)
+    others_long_term = db.IntField(default=0)
+    loan_amount_payable_1 = db.IntField(default=0)
+    immovable_property_agriculture = db.IntField(default=0)
+    receivables_from_customer = db.IntField(default=0)
+    vehicles_current_estimate = db.IntField(default=0)
+    short_term_loans = db.IntField(default=0)
+    bank_balance = db.IntField(default=0)
+    immovable_property_residential = db.IntField(default=0)
+    gold_and_jewellery = db.IntField(default=0)
+    raw_material_in_han = db.IntField(default=0)
     insurance_policies = db.StringField(max_length=255, required=False,default="")
-    loan_emis_payable_1 = db.StringField(max_length=255, required=False,default="")
+    loan_emis_payable_1 = db.IntField(default=0)
 
 
     #newly_added _ field
@@ -1644,19 +1644,19 @@ class EsthenosOrgApplication(db.Document):
     primary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
     primary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
     primary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
-    primary_asset_for_hypothecation_current_market_value = db.FloatField(default = 0.0)
+    primary_asset_for_hypothecation_current_market_value = db.IntField(default=0)
     primary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
 
     secondary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
     secondary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
     secondary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
-    secondary_asset_for_hypothecation_current_market_value = db.FloatField(default=0.0)
+    secondary_asset_for_hypothecation_current_market_value = db.IntField(default=0)
     secondary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
 
     tertiary_asset_for_hypothecation_purchase_year = db.StringField(max_length=512, required=False, default="")
     tertiary_asset_for_hypothecation_purchase_price = db.FloatField(default=0.0)
     tertiary_asset_for_hypothecation_purchase_purpose = db.StringField(max_length=512, required=False, default="")
-    tertiary_asset_for_hypothecation_current_market_value = db.FloatField(default = 0.0)
+    tertiary_asset_for_hypothecation_current_market_value = db.IntField(default=0)
     tertiary_asset_for_hypothecation_details_of_hypothecated_goods = db.StringField(max_length=512, required=False, default="")
 
     total_liability = db.FloatField(default=0.0)
@@ -1864,6 +1864,15 @@ class EsthenosOrgApplication(db.Document):
     id_voter = db.StringField(max_length=512, required=False,default="")
     id_ration_card = db.StringField(max_length=512, required=False,default="")
 
+    purchase_detail1 = db.StringField(max_length=512, required=False,default="")
+    purchase_cycle = db.StringField(max_length=512, required=False,default="")
+    purchase_details2 = db.StringField(max_length=512, required=False,default="")
+    cash_credit_percentage = db.IntField(required=True,default=0)
+    details_of_key_purchaser = db.StringField(max_length=512, required=False,default="")
+    is_business_socially_desirable = db.StringField(max_length=512, required=False,default="")
+    purchase_details3 = db.StringField(max_length=512, required=False,default="")
+    payment_cycle_days = db.StringField(max_length=512, required=False,default="")
+
 
     permanent_employees = db.IntField(required=True,default=0)
     average_monthly_wage_for_relatives = db.FloatField(default=0.0)
@@ -1875,7 +1884,7 @@ class EsthenosOrgApplication(db.Document):
 
     business_name = db.StringField(max_length=512, required=False,default="")
     type_of_business_entity = db.StringField(max_length=512, required=False,default="")
-    area_market_value= db.FloatField(default=0.0)
+    area_market_value= db.IntField(default=0)
     monthly_rent= db.FloatField(default=0.0)
     activity = db.StringField(max_length=512, required=False,default="")
     description_business = db.StringField(max_length=512, required=False,default="")
