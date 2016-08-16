@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block css_sheets %}{{ super() }}
+    <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block maincontents %}
+   <div style="background: #ffffff;padding-left:20px;">
+      <div class="clearfix"><br/></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3"><h1><label>New Status Creation</label></h1></div>
+            </div>
+        </div>
+      <div class="clearfix"><br/></div>
+         <div class="row">
+            <div class="grid-body">
+                  <form class="form-no-horizontal-spacing" method="post" action="{{ url_for("admin_views.admin_organisation_statuscreation", org_id=org.id) }}">
+                      <table>
+                          <tr>
+                              <td style="width:50%" class="v-align-middle">List Of Status</td>
+                              <td style="width:50%" class="v-align-middle">
+                                  <div class="row form-row">
+                                    <div class="col-md-5 form-group">
+                                      <select name="status_list" id="status_list">
+                                        <option selected disabled>Following List</option>
+                                        {% for stat in statuses %}
+                                        <option value="{{ stat.id }}">{{ stat.status_message }}({{ stat.status_code }})</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                                  </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="width:50%" class="v-align-middle">Status</td>
+                              <td style="width:30%" class="v-align-middle">
+                                 <input name="status" type="text" class="form-control" placeholder="Enter Status">
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="width:50%" class="v-align-middle">Status Code</td>
+                              <td style="width:30%" class="v-align-middle">
+                              <input name="status_code" type="text" class="form-control" placeholder="Enter Status code">
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="width:50%" class="v-align-middle">Status Message</td>
+                              <td style="width:30%" class="v-align-middle">
+                              <input name="status_message" type="text" class="form-control" placeholder="Enter status message">
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="width:50%" class="v-align-middle">Group Status</td>
+                              <td style="width:30%" class="v-align-middle">
+                              <input name="group_status" type="text" class="form-control" placeholder="Enter group status">
+                              </td>
+                          </tr>
+                      </table>
+                        <div class="form-actions">
+                          <div class="pull-right">
+                              <button class="btn btn-small btn-danger btn-cons" type="submit">Add Status</button>
+                              <button class="btn btn-small btn-white btn-cons cancel-button" type="reset" value="clear">Cancel</button>
+                          </div>
+                      </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+{% endblock %}
+
+
+{% block js_scripts %}{{ super() }}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+{% endblock %}

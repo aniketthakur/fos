@@ -407,7 +407,6 @@ class AddApplicationMobile(Form):
             app.loan_details4 = self.load_loan_details(data)
 
 
-
             data = self.load(self.applicant_other_card_banking1)
             app.cardbank1 = self.load_cardbanking_details(data)
 

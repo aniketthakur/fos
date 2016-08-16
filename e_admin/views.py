@@ -835,3 +835,30 @@ def admin_applicantdata(app_id):
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=%s.pdf' % 'applicant_data'
     return response
+
+
+@admin_views.route('/organisation/<org_id>/status_creation', methods=["GET", "POST"])
+@login_required
+@feature_enable("features_admin")
+def admin_organisation_statuscreation(org_id):
+    user = EsthenosUser.objects.get(id=current_user.id)
+    org = user.organisation
+    statuses = EsthenosOrgApplicationStatusType.objects.filter()
+
+    if request.method == "GET":
+        kwargs = locals()
+        return render_template("admin_organisation_status_creation.html", **kwargs)
+
+    if request.method == 'POST':
+        status = request.form.get("status","")
+        status_code = request.form.get("status_code","")
+        status_message = request.form.get("status_message","")
+        group_status = request.form.get("group_status","")
+        status_type, temp = EsthenosOrgApplicationStatusType.objects.get_or_create(
+                status = status,
+                status_code = status_code,
+                status_message = status_message,
+                group_status = group_status,
+            )
+
+        return redirect(url_for("admin_views.admin_organisation_statuscreation", org_id=org.id))
