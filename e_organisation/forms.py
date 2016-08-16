@@ -389,7 +389,7 @@ class AddApplicationMobile(Form):
             app.immovable_property_residential = toInt(data.get("immovable_property_estimated_value___residential", ""))
             app.gold_and_jewellery = toInt(data.get("gold_and_jewellery", ""))
             app.raw_material_in_han = toInt(data.get("raw_material_in_han", ""))
-            app.insurance_policies = data.get("insurance_policies", "")
+            app.insurance_policies = toInt(data.get("insurance_policies", ""))
             app.loan_emis_payable_1 = toInt(data.get("loan__emis_payable_in_the_next_1_year", ""))
 
              # add loan details.

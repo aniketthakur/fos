@@ -1505,7 +1505,7 @@ class EsthenosOrgApplication(db.Document):
     immovable_property_residential = db.IntField(default=0)
     gold_and_jewellery = db.IntField(default=0)
     raw_material_in_han = db.IntField(default=0)
-    insurance_policies = db.StringField(max_length=255, required=False,default="")
+    insurance_policies = db.IntField(default=0)
     loan_emis_payable_1 = db.IntField(default=0)
 
 
