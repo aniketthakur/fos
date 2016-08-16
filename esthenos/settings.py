@@ -455,22 +455,22 @@ APP_STATUS = [
     },
     {
         'status' : 'APPLICATION_LOAN_UTILIZATION_CHECK_READY',
-        'status_message' : 'Application Disbursement ready',
+        'status_message' : 'Loan Utilization Ready',
         'status_code' : 244
     },
     {
         'status' : 'APPLICATION_LOAN_UTILIZATION_CHECK_DONE',
-        'status_message' : 'Application Disbursement Done',
+        'status_message' : 'Loan Utilization Done',
         'status_code' : 245
     },
     {
         'status' : 'APPLICATION_MONITORING_VISIT_READY',
-        'status_message' : 'Application Disbursement ready',
+        'status_message' : 'Monitoring Visit Ready',
         'status_code' : 246
     },
     {
         'status' : 'APPLICATION_MONITORING_VISIT_DONE',
-        'status_message' : 'Application Disbursement Done',
+        'status_message' : 'Monitoring Visit Done',
         'status_code' : 247
     }
 

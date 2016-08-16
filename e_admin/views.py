@@ -853,12 +853,10 @@ def admin_organisation_statuscreation(org_id):
         status = request.form.get("status","")
         status_code = request.form.get("status_code","")
         status_message = request.form.get("status_message","")
-        group_status = request.form.get("group_status","")
         status_type, temp = EsthenosOrgApplicationStatusType.objects.get_or_create(
                 status = status,
                 status_code = status_code,
                 status_message = status_message,
-                group_status = group_status,
             )
 
         return redirect(url_for("admin_views.admin_organisation_statuscreation", org_id=org.id))
