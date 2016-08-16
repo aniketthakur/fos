@@ -44,7 +44,7 @@
               </tr>
             <tr>
                 <td >TOTAL S.T. LIBILITIES</td>
-                <td ></td>
+                <td >{{app.total_st_liability }}</td>
             </tr>
             <tr>
                 <th style="font-size:14px">Long Term</th>
@@ -61,12 +61,12 @@
             </tr>
             <tr>
                 <td >TOTAL L.T. LIBILITIES</td>
-                <td ></td>
+                <td >{{app.total_lt_liability}}</td>
             </tr>
             <tr>
                 <td>TOTAL LIBILITIES</td>
                 <td rowspan="3"></td>
-                <td></td>
+                <td>{{ app.total_st_liability + app.total_lt_liability }}</td>
             </tr>
             <tr>
                 <th class="text-left" style="width:100px;font-size:18px">Assests</th>
@@ -112,7 +112,7 @@
             </tr>
             <tr>
                 <td >TOTAL S.T. ASSETS</td>
-                <td ></td>
+                <td >{{ app.total_st_assests }}</td>
             </tr>
             <tr>
                 <th style="font-size:14px">Long Term</th>
@@ -121,7 +121,7 @@
             <tr>
                 <td rowspan="9"></td>
                 <td >Land</td>
-                <td >{app.land_details1.estimated_resale_value}</td>
+                <td >{{app.land_details1.estimated_resale_value}}</td>
             </tr>
             <tr>
                 <td >Buildings</td>
@@ -146,12 +146,12 @@
             </tr>
             <tr>
                 <td >TOTAL L.T. ASSETS</td>
-                <td ></td>
+                <td >{{app.total_lt_assests}}</td>
             </tr>
             <tr>
                 <td >TOTAL ASSETS</td>
                 <td ></td>
-                <td ></td>
+                <td >{{app.total_st_assests + app.total_lt_assests}}</td>
             </tr>
             <tr>
                 <td >PROPOSED DEBT TO EQUITY</td>

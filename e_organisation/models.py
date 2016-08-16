@@ -1915,6 +1915,43 @@ class EsthenosOrgApplication(db.Document):
         self.save()
 
     @property
+    def total_st_liability(self):
+        return self.payable_supp\
+              + self.loan_emis_payable_1 \
+              + self.short_term_loans
+
+    @property
+    def total_lt_liability(self):
+        return self.loan_amount_payable_1\
+              + self.others_long_term
+
+    @property
+    def total_st_assests(self):
+        return self.cash_balance\
+              + self.bank_balance \
+              + self.short_term_loans \
+              + self.receivables_from_customer \
+              + self.raw_material_in_han \
+              + self.immovable_property_commercial \
+              + self.immovable_property_agriculture \
+              + self.immovable_property_residential \
+              + self.fixed_deposit_ppf \
+              + self.insurance_policies \
+              + self.gold_and_jewellery
+
+    @property
+    def total_lt_assests(self):
+        return self.land_details1.estimated_resale_value\
+              + self.area_market_value \
+              + self.type_equipment1.estimated_value \
+              + self.type_equipment2.estimated_value \
+              + self.type_equipment3.estimated_value \
+              + self.vehicles_current_estimate\
+              + self.primary_asset_for_hypothecation_current_market_value \
+              + self.secondary_asset_for_hypothecation_current_market_value  \
+              + self.tertiary_asset_for_hypothecation_current_market_value
+
+    @property
     def total_income(self):
         return self.total_annual_revenue_cash \
               + self.total_annual_revenue_credit
