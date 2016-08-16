@@ -100,8 +100,6 @@ def tagged_applications():
     with mainapp.app_context():
         uploaded_applications = EsthenosOrgApplication.objects.filter(status=110)
         for application in uploaded_applications:
-            print "DEBUG"
-            print application.save, application.house_stay_duration, type(application.house_stay_duration)
             application.update_status(120)
             application.save()
 
