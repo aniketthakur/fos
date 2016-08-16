@@ -244,7 +244,6 @@ class AddApplicationMobile(Form):
     def save(self,app):
         user = EsthenosUser.objects.get(id=current_user.id)
         is_app = True if app else False
-        mainapp.logger.debug("is_app: %s =" % is_app)
 
         if not is_app:
             user.organisation.update(inc__application_count=1)
