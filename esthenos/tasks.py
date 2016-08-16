@@ -212,8 +212,17 @@ def disbursement_applications():
 
     for application in applications:
         application.update_status(243)
+        application.update_status(244)
         application.save()
 
+
+@periodic_task(run_every=datetime.timedelta(minutes=1))
+def luc_done_applications():
+    applications = EsthenosOrgApplication.objects.filter(status=245)
+
+    for application in applications:
+        application.update_status(246)
+        application.save()
 
 @celery.task
 def generate_post_grt_applications(org_id, applicant_id, disbursement_date, first_collection_after_indays):

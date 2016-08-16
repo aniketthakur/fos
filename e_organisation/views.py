@@ -369,6 +369,7 @@ def luc_submission():
         app.luc_remarks = remarks
         app.luc_loan = loan
         app.luc_date = date
+        app.update_status(245)
         app.save()
 
         return jsonify({
@@ -389,6 +390,7 @@ def mv_submission():
         app = EsthenosOrgApplication.objects.get(application_id = application_id)
         app.mv_date = visit_Date
         app.mv_remarks = remarks
+        app.update_status(247)
         app.save()
         return jsonify({
                 "success": True,
