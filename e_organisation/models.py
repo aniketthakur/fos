@@ -1742,6 +1742,13 @@ class EsthenosOrgApplication(db.Document):
     verification = db.BooleanField(default=False)
     verification_date = db.DateTimeField(default=None)
 
+    luc_date = db.DateTimeField(default=None)
+    luc_remarks = db.StringField(max_length=200, required=False,default="")
+    luc_loan = db.StringField(max_length=200, required=False,default="")
+
+    mv_date = db.DateTimeField(default=None)
+    mv_remarks = db.StringField(max_length=200, required=False,default="")
+
     phone_no = db.IntField(default=0)
     occupation= db.StringField(max_length=200, required=False,default="")
     remarks= db.StringField(max_length=200, required=False,default="")

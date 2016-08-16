@@ -118,8 +118,6 @@ def notifications_page():
 @login_required
 def cheque_info_import(group_id):
     c_user = current_user
-    print request.form
-    print request.files
     if request.method == 'POST' and 'file' in request.files:
         # handle file upload
         filename = request.files['file'].filename
@@ -288,7 +286,6 @@ def disburse_document():
     applicant_id = request.form.get("applicant_id")
     col_date_str = request.form.get("collection_date")
     dis_date_str = request.form.get("disbursement_date")
-    print applicant_id, col_date_str, dis_date_str
 
     user = EsthenosUser.objects.get(id=current_user.id)
     org  = user.organisation
@@ -357,6 +354,46 @@ def neighbour_complete_list():
                 "message": "neighbor submission unsuccessful"
             })
 
+@organisation_views.route('/api/organisation/luc_submission', methods=["POST"])
+@login_or_key_required
+@feature_enable("features_api_applications_list")
+def luc_submission():
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    if request.method == 'POST':
+        loan = request.form.get("loan","")
+        date = request.form.get("date","")
+        remarks = request.form.get("remarks","")
+        application_id = request.form.get("app_id","")
+        app = EsthenosOrgApplication.objects.get(application_id = application_id)
+        app.luc_remarks = remarks
+        app.luc_loan = loan
+        app.luc_date = date
+        app.save()
+
+        return jsonify({
+                "success": True,
+                "message": "luc submission successful"
+            })
+
+@organisation_views.route('/api/organisation/mv_submission', methods=["POST"])
+@login_or_key_required
+@feature_enable("features_api_applications_list")
+def mv_submission():
+    user = EsthenosUser.objects.get(id=current_user.id)
+
+    if request.method == 'POST':
+        visit_Date = request.form.get("visit_Date","")
+        remarks = request.form.get("remarks","")
+        application_id = request.form.get("app_id","")
+        app = EsthenosOrgApplication.objects.get(application_id = application_id)
+        app.mv_date = visit_Date
+        app.mv_remarks = remarks
+        app.save()
+        return jsonify({
+                "success": True,
+                "message": "mv submission successful"
+            })
 
 
 @organisation_views.route('/api/organisation/applications/pre_register', methods=['POST'])
