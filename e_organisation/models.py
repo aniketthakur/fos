@@ -1952,13 +1952,18 @@ class EsthenosOrgApplication(db.Document):
     def total_lt_assests(self):
         return self.land_details1.estimated_resale_value\
               + self.area_market_value \
-              + self.vehicles_current_estimate\
-              + self.primary_asset_for_hypothecation_current_market_value \
-              + self.secondary_asset_for_hypothecation_current_market_value\
-              + self.tertiary_asset_for_hypothecation_current_market_value\
-              + self.type_equipment1.estimated_value \
-              + self.type_equipment2.estimated_value \
-              + self.type_equipment3.estimated_value
+              + toInt(self.vehicles_current_estimate)\
+              + toInt(self.primary_asset_for_hypothecation_current_market_value) \
+              + toInt(self.secondary_asset_for_hypothecation_current_market_value)\
+              + toInt(self.tertiary_asset_for_hypothecation_current_market_value)\
+              + toInt(self.type_equipment1.estimated_value) \
+              + toInt(self.type_equipment2.estimated_value) \
+              + toInt(self.type_equipment3.estimated_value)
+
+    @property
+    def total_assests(self):
+        return toInt(self.total_st_assests) \
+               + self.total_lt_assests
 
     @property
     def total_income(self):

@@ -21,46 +21,46 @@
             <tbody>
               <tr style="width:100px;">
                 <td class="text-left" style="width:50%;font-size:14px">DATE VISIT AND TIME OF VISIT</td>
-                <td class="text-left" style="width:50%;font-size:14px"></td>
+                <td class="text-left" style="width:50%;font-size:14px"><input type="text" class="form-control"></td>
               </tr>
               <tr>
                 <td >VISIT BY (NAME & ID)</td>
-                <td >{{app.payable_supp}}</td>
+                <td ><input type="text" class="form-control"></td>
               </tr>
               <tr>
                 <td colspan="2" style="text-align:center;">DETAILS</td>
             </tr>
             <tr>
                 <td >APPLICANT NAME</td>
-                <td ></td>
+                <td >{{app.applicant_kyc.name}}</td>
               </tr>
             <tr>
                 <td>APPLICANT AGE</td>
-                <td ></td>
+                <td >{{app.applicant_kyc.age}}</td>
             </tr>
             <tr>
                 <td >CO APPLICANT AGE</td>
-                <td ></td>
+                <td >{{app.guarantor1_kyc.age}}</td>
             </tr>
              <tr>
                 <td >LOAN TYPE (NEW/ REPEAT/ GRADUATE)</td>
-                <td ></td>
+                <td >{{app.loan_type}}</td>
               </tr>
             <tr>
                 <td>LOAN AMOUNT</td>
-                <td ></td>
+                <td >{{app.required_loan_amount}}</td>
             </tr>
             <tr>
                 <td >TENURE</td>
-                <td ></td>
+                <td >{{app.tenure}}</td>
             </tr>
              <tr>
                 <td >EMI</td>
-                <td ></td>
+                <td >{{app.emi}}</td>
               </tr>
             <tr>
                 <td>EMI CAPACITY AS PER CUSTOMER</td>
-                <td ></td>
+                <td >{{app.emi_capacity}}</td>
             </tr>
             <tr>
                 <td >BANK STATEMENT MONTHS</td>
@@ -68,26 +68,26 @@
             </tr>
              <tr>
                 <td >PURPOSE OF LOAN</td>
-                <td></td>
+                <td>{{app.prpose_of_loan}}</td>
               </tr>
             <tr>
                 <td>IF ASSET PURCHASE , AMT ALLOCATED FOR ASSET</td>
-                <td ></td>
+                <td >{{app.amount_allocated_for_assets}}</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center;">BUSINESS VERIFICATION</td>
             </tr>
              <tr>
                 <td >ACTIVITY</td>
-                <td ></td>
+                <td >{{app.activity}}</td>
               </tr>
             <tr>
                 <td>NATURE OF BUSINESS</td>
-                <td ></td>
+                <td >{{app.type_of_business_entity}}</td>
             </tr>
             <tr>
                 <td >SPECIAL PROFILE (YES/ NO)</td>
-                <td ></td>
+                <td >{{app.activity}}</td>
             </tr>
              <tr>
                 <td >RESI OWNED/RENTED</td>
