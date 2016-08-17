@@ -608,7 +608,7 @@ class AddApplicationMobile(Form):
             app.emi = data.get("emi","")
             app.tenure = data.get("tenure","")
             app.amount_allocated_for_assets = data.get("if_assets_purchaged_,_amount_allocated_for_assets","")
-            app.purpose_of_loan = data.get("purpose_of_loan","")
+            app.prpose_of_loan = data.get("purpose_of_loan","")
 
             data = self.load(self.applicant_other_card_id_details)
             app.id_pancard = data.get("pan_card","")

@@ -281,28 +281,28 @@ def scrutiny_application(app_id):
     elif status == "hold":
       status_code, status = 194, "onhold"
 
-    scrutiny = EsthenosOrgApplicationScrutiny(
-      owner = user,
-      status = status,
-
-      total_income = float(request.form.get("total_income")),
-      total_expense = float(request.form.get("total_expenditure")),
-
-      foir_ratio = float(request.form.get("fior")),
-      total_ltv = float(request.form.get("total_ltv")),
-      total_amount = float(request.form.get("total_amount")),
-
-      memo_business_type = request.form.get("memo_business_type"),
-      memo_business_name = request.form.get("memo_business_name"),
-      memo_applicant_address = request.form.get("memo_applicant_address"),
-
-      memo_loan_emi = float(request.form.get("memo_loan_emi")),
-      memo_loan_amount = float(request.form.get("memo_loan_amount")),
-      memo_loan_period = float(request.form.get("memo_loan_period")),
-      memo_loan_interest = float(request.form.get("memo_loan_interest")),
-      memo_loan_processing_fee = float(request.form.get("memo_loan_processing_fee"))
-    )
-    application.scrutiny = scrutiny
+    # scrutiny = EsthenosOrgApplicationScrutiny(
+    #   owner = user,
+    #   status = status,
+    #
+    #   total_income = float(request.form.get("total_income")),
+    #   total_expense = float(request.form.get("total_expenditure")),
+    #
+    #   foir_ratio = float(request.form.get("fior")),
+    #   total_ltv = float(request.form.get("total_ltv")),
+    #   total_amount = float(request.form.get("total_amount")),
+    #
+    #   memo_business_type = request.form.get("memo_business_type"),
+    #   memo_business_name = request.form.get("memo_business_name"),
+    #   memo_applicant_address = request.form.get("memo_applicant_address"),
+    #
+    #   memo_loan_emi = float(request.form.get("memo_loan_emi")),
+    #   memo_loan_amount = float(request.form.get("memo_loan_amount")),
+    #   memo_loan_period = float(request.form.get("memo_loan_period")),
+    #   memo_loan_interest = float(request.form.get("memo_loan_interest")),
+    #   memo_loan_processing_fee = float(request.form.get("memo_loan_processing_fee"))
+    # )
+    # application.scrutiny = scrutiny
     application.update_status(status_code)
     application.save()
 
@@ -463,6 +463,52 @@ def banking_page_print(app_id):
 
   kwargs = locals()
   return render_template("scrutiny/banking_sheet_print.html", **kwargs)
+
+@organisation_views.route('/credit_summary/<app_id>', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def credit_summary(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/credit_summary.html", **kwargs)
+
+
+@organisation_views.route('/credit_summary/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def credit_summary_print(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/credit_summary_print.html", **kwargs)
+
+@organisation_views.route('/visiting_report/<app_id>', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def visiting_report(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/visiting_report.html", **kwargs)
+
+
+@organisation_views.route('/visiting_report/<app_id>/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def visiting_report_print(app_id):
+  today = datetime.datetime.now()
+  user = EsthenosUser.objects.get(id=current_user.id)
+  app = EsthenosOrgApplication.objects.get(application_id=app_id)
+
+  kwargs = locals()
+  return render_template("scrutiny/visiting_report_print.html", **kwargs)
 
 
 @organisation_views.route('/sanctions/<app_id>', methods=["GET", "POST"])

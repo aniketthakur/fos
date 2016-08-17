@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% set active_page = 'scrutiny' %}
+{% block maincontents %}
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <h3>CREDIT <span class="semi-bold">SUMMARY :</span></h3>
+            <h3 class="pull-right"><a href="{{ url_for("organisation_views.credit_summary_print", app_id=app.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+        </div>
+    </div>
+   <div class="grid simple ">
+       <div class="grid-body">
+            <div>
+               <h5 class="text-center">CREDIT APPRIASAL MEMO SUMMARY</h5>
+           </div>
+        <table class="table table-bordered" cols=6>
+            <thead>
+              <tr style="width:100px;">
+                <th class="text-left" style="width:40%;font-size:14px;">BANKING</th>
+                <td class="text-left" style="width:15%;font-size:14px;">AQB1 /EMI</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;">AQC1/EMI</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+              </tr>
+            </thead>
+            <tbody>
+               <tr style="width:100px;">
+                <th class="text-left" style="width:40%;font-size:14px;"></th>
+                <td class="text-left" style="width:15%;font-size:14px;">AQB1 /EMI</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;">AQC1/EMI</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+              </tr>
+               <tr style="width:100px;">
+                <th class="text-left" style="width:40%;font-size:14px;"></th>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-center" colspan="2" style="width:40%;font-size:14px;">REQUIRED</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL INWARD BOUNCE</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">LAST CREDIT</th>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">45</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">DEBT TO EQUITY RATIO</th>
+                <td class="text-left" style="width:15%;font-size:14px;">5</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">2</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">EMI TO GROSS CASH SURPLUS </th>
+                <td class="text-left" style="width:15%;font-size:14px;">0.18</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0.5</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">LOWEST SALES SURPLUS RATIO- GROSS</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0.069</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">.15</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL LOAN OUTSTANDING TO SALES</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0.3</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0.6</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">EMI</th>
+                <td class="text-left" style="width:15%;font-size:14px;">4500</td>
+                <td class="text-left" style="width:15%;font-size:14px;"><=</td>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">LOANS</th>
+                <td class="text-left" style="width:15%;font-size:14px;" colspan="4"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">NO OF LOANS</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL LOAN AMOUNT</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL EMI</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">PRESENT PRINCIPAL OUTSTANDING</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL BOUNCES IN LAST 3 MONTHS</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">TOTAL BOUNCES</th>
+                <td class="text-left" style="width:15%;font-size:14px;">0</td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+                <td class="text-left" style="width:15%;font-size:14px;"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">APPROVED BY</th>
+                <td class="text-left" style="width:15%;font-size:14px;" colspan="4"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">EMP ID</th>
+                <td class="text-left" style="width:15%;font-size:14px;" colspan="4"></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">CREDIT MGR LEVEL DEVIATION COUNT</th>
+                <td class="text-left" style="width:15%;font-size:14px;" ></td>
+              </tr>
+              <tr>
+                <th class="text-left" style="width:40%;font-size:14px;">CH LEVEL DEVIATION COUNT</th>
+                <td class="text-left" style="width:15%;font-size:14px;" ></td>
+              </tr>
+            </tbody>
+        </table>
+       </div>
+   </div>
+{% endblock %}

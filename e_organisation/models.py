@@ -1856,7 +1856,7 @@ class EsthenosOrgApplication(db.Document):
     emi = db.StringField(max_length=512, required=False,default="")
     tenure = db.StringField(max_length=512, required=False,default="")
     amount_allocated_for_assets = db.StringField(max_length=512, required=False,default="")
-    purpose_of_loan = db.StringField(max_length=512, required=False,default="")
+    prpose_of_loan = db.StringField(max_length=512, required=False,default="")
 
     id_pancard = db.StringField(max_length=512, required=False,default="")
     id_driving_license = db.StringField(max_length=512, required=False,default="")
@@ -1952,13 +1952,13 @@ class EsthenosOrgApplication(db.Document):
     def total_lt_assests(self):
         return self.land_details1.estimated_resale_value\
               + self.area_market_value \
-              + self.type_equipment1.estimated_value \
-              + self.type_equipment2.estimated_value \
-              + self.type_equipment3.estimated_value \
               + self.vehicles_current_estimate\
               + self.primary_asset_for_hypothecation_current_market_value \
-              + self.secondary_asset_for_hypothecation_current_market_value  \
-              + self.tertiary_asset_for_hypothecation_current_market_value
+              + self.secondary_asset_for_hypothecation_current_market_value\
+              + self.tertiary_asset_for_hypothecation_current_market_value\
+              + self.type_equipment1.estimated_value \
+              + self.type_equipment2.estimated_value \
+              + self.type_equipment3.estimated_value
 
     @property
     def total_income(self):

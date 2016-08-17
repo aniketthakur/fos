@@ -277,9 +277,9 @@
                         <div class="name">
                             <span class="tag">Mobile : </span><span class="value">{{ application.mobile }}</span>
                         </div>
-                        <div class="name">
-                            <span class="tag">Landline : </span><span class="value">{{ application.tele_phone }}</span>
-                        </div>
+                        <!--<div class="name">-->
+                            <!--<span class="tag">Landline : </span><span class="value">{{ application.tele_phone }}</span>-->
+                        <!--</div>-->
                         <div class="name">
                             <span class="tag">Aadhar : </span><span class="value">{{ application.applicant_kyc.kyc_number }}</span>
                         </div>
@@ -344,7 +344,7 @@
             <div class="grid simple guarantor-details">
                 <div class="grid-body no-border col-md-6 pull-left">
                     <div class="section">
-                        <h4 class="section-title">Guarantor 1</h4>
+                        <h4 class="section-title">Co-applicant Details</h4>
                         <div class="name">
                             <span class="tag">Name: </span><span class="value">{{ application.guarantor1_kyc.name }}</span>
                         </div>
@@ -354,32 +354,11 @@
                         <div class="mobile">
                             <span class="tag">Mobile: </span><span class="value">{{ application.guarantor1_kyc.mobile_number }}</span>
                         </div>
-                        <div class="landline">
-                            <span class="tag">Landline: </span><span class="value">{{ application.guarantor1_kyc.phone_number }}</span>
-                        </div>
+                        <!--<div class="landline">-->
+                            <!--<span class="tag">Landline: </span><span class="value">{{ application.guarantor1_kyc.phone_number }}</span>-->
+                        <!--</div>-->
                         <div class="aadhar">
                             <span class="tag">Aadhar: </span><span class="value">{{ application.guarantor1_kyc.kyc_number }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-body no-border col-md-6 pull-right">
-                    <div class="section">
-                        <h4 class="section-title">Guarantor 2</h4>
-                        <div class="name">
-                            <span class="tag">Name: </span><span class="value">{{ application.guarantor2_kyc.name }}</span>
-                        </div>
-                        <div class="age">
-                            <span class="tag">Age: </span><span class="value">{{ application.guarantor2_kyc.age }}</span>
-                        </div>
-                        <div class="mobile">
-                            <span class="tag">Mobile: </span><span class="value">{{ application.guarantor2_kyc.mobile_number }}</span>
-                        </div>
-                        <div class="landline">
-                            <span class="tag">Landline: </span><span class="value">{{ application.guarantor2_kyc.phone_number }}</span>
-                        </div>
-                        <div class="aadhar">
-                            <span class="tag">Aadhar: </span><span class="value">{{ application.guarantor2_kyc.kyc_number }}</span>
                         </div>
                     </div>
                 </div>
@@ -553,6 +532,20 @@
             <div class="grid simple">
                 <div class="grid-body no-border">
                     <a href="{{ url_for("organisation_views.banking_page", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Banking Sheet</i></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <a href="{{ url_for("organisation_views.credit_summary", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Credit Summary</i></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <a href="{{ url_for("organisation_views.visiting_report", app_id=application.application_id) }}" target="_blank"><span class="semi-bold">Visiting Report</i></span></a>
                 </div>
             </div>
         </div>
