@@ -539,11 +539,11 @@ def application_get_group(branchid,state):
             "pan_card_id": app.applicant_kyc.pancard_id
         }
 
-        # s = ""
-        #
-        # item["loan"] = s
-        # item["loan_total"] = ""
-        # item["loan_default"] = ""
+        s = ""
+
+        item["loan"] = s
+        item["loan_total"] = ""
+        item["loan_default"] = ""
         # # item["is_neighbor_complete"] = app.is_neighbor_complete
         #
         # if app.highmark_response1:
