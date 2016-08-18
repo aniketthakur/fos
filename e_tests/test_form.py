@@ -7,46 +7,46 @@ import requests,sys
 # print response.text
 # sys.exit(0)
 
-# url = "http://%s/api/organisation/branches/57a18d0985cfef7e6ce0f769/applications/pre_registration" % ("fos-arohan-test.esthenos.com")
-url = "http://%s/api/organisation/applications"  % ("localhost:8080")
+url = "http://%s/api/organisation/branches/57b59094ebc8b23810d5d5cd/applications/pre_registration" % ("localhost:8080")
+# url = "http://%s/api/organisation/applications"  % ("localhost:8080")
 # url = "http://%s/api/organisation/branches" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("fos-arohan-test.esthenos.com")
 # url = "http://%s/api/token/sourcing" % ("localhost:8080")
 # url = "http://%s/api/organisation/applications"  % ("localhost:8080")
 # url = "http://%s/api/organisation/applications/pre_register" % ("localhost:8080")
-# payload = {"email": "ileagent@fos-arohan-test.esthenos.com", "password":"123"}
-# payload = {"email": "testce1@fos-arohan-test.esthenos.com", "password":"123"}
+# payload = {"email": "testile@fos-arohan-test.esthenos.com", "password":"123"}
+# payload = {"email": "testce@fos-arohan-test.esthenos.com", "password":"123"}
 # response = requests.post(url, data=payload)
 # print response.text
 
 querystring = {
-    # "instance_token":"VAu9IbgAU2HlXH5dua21IwmgLPVkup4oHIQGLs8-gjs"
-    # "instance_token":"Y7Pxzm2zQZIvcRrrni_nPjyYMzdE7GNryu9tZfexR_I"
+     #ile "instance_token":"cMsYQdzW6FaORTWfxO7YA06IT0BLi1iwiTxiokYpCOs"
+    "instance_token":"emCznTNvmPZwTYSbquGx4lzdOCgPgkEE7fdUUlpcrBw"
     # "instance_token":"_jwjjLLl6yBmsXYF9nqwgtSwRpFsdkNe8V23x1X9sQU"
-    "instance_token":"M-u5wznPyaAsHy5aWlgnJ0Xw1cocfQq9Qcic8eJMvu8"
+    #"instance_token":"M-u5wznPyaAsHy5aWlgnJ0Xw1cocfQq9Qcic8eJMvu8"
 }
 
-payload3 = {
-    "guarantor1_other_card_co_applicant": {
-        "address": "Vhtdgjhvvhgg Hhvvvhh",
-        "aadhar_card_number": "262425252525",
-        "father_s_name": "Mr. Ghgffghhh Ghgffyuhh",
-        "date_of_birth": "11/08/1987",
-        "state": "Assam",
+payload3 ={
+     "guarantor1_other_card_co_applicant": {
+        "address": "Allahabad",
+        "aadhar_card_number": "766464646464",
+        "father_s_name": "Mr. Ajit Singh",
+        "date_of_birth": "18/08/1991",
+        "state": "Uttar Pradesh",
         "gender": "Male",
-        "pin_code": "242415",
-        "spouse_name": "Mrs. Vghgfcvvv Bjhggg",
-        "age": "29",
-        "ration_card": "32417777",
-        "relation_with_the_applicant": "Brother",
-        "pan_card": "ERTYU5463V",
-        "district": "Fhhhfvhjhhhh",
-        "name": "  Fghhvfguhb Jhxfhhgg",
-        "mother_s_name": "Mrs. Ghhgghhhhg Hhggggh",
-        "voter_id_number": "FJDCNJGCVHJ",
-        "mobile_number": "9747456552"
+        "pin_code": "959949",
+        "spouse_name": "  ",
+        "age": "25",
+        "ration_card": "VKKGKGKGKGK",
+        "relation_with_the_applicant": "Grand Father",
+        "pan_card": "KGKFJ7884U",
+        "district": "Allahabad",
+        "name": "  Vikash Singh",
+        "mother_s_name": "Mrs. Ajita Singh",
+        "voter_id_number": "VKKGKGKGKGKG",
+        "mobile_number": "7994949494"
     },
-    "assets_id": "b953c236-fbe3-49c6-9295-25b0b62a9601",
+    "assets_id": "f332afd2-a695-419f-928f-30de07f1ad0f",
     "applicant_family_details_family_members7": {
         "age": "",
         "occupations_details": " ",
@@ -57,7 +57,7 @@ payload3 = {
         "sex": "",
         "years_of_involvement": ""
     },
-    "branch": "57a46939ebc8b20f2871b815",
+    "branch": "57b59094ebc8b23810d5d5cd",
     "applicant_family_details_family_members4": {
         "age": "",
         "occupations_details": " ",
@@ -95,14 +95,14 @@ payload3 = {
     },
     "locations_map": {
         "business": {
-            "lat": 0,
-            "lng": 0
+            "lat": 12.910312,
+            "lng": 77.6231563
         }
     },
     "applicant_other_card_personal_detail": {
         "religion": "Hindu",
-        "physical_disability": "None",
-        "education": "PG and Above",
+        "physical_disability": "Partial",
+        "education": "Illiterate",
         "category": "General"
     },
     "applicant_family_details_family_members6": {
@@ -139,22 +139,22 @@ payload3 = {
         "years_of_involvement": ""
     },
     "applicant_other_card_cbcheck": {
-        "address": "Stxhchjbbngg",
-        "aadhar_card_number": "252525252524",
-        "father_s_name": "Mr. Bvcxdfghjj Vhjjh",
-        "date_of_birth": "22/08/1989",
-        "state": "Assam",
-        "gender": "Male",
-        "pin_code": "782435",
-        "spouse_name": "Mrs. Qwerty Asd",
-        "age": "27",
-        "ration_card": "12345",
-        "pan_card": "QWERT4331V",
-        "district": "Rfthhddchh",
-        "name": "  Jithin Jithin",
-        "mother_s_name": "Mrs. Vuvghhgghhhhh",
-        "voter_id_number": "THJJJJJJJN",
-        "mobile_number": "8745213690"
+        "address": "Tolihinoo",
+        "aadhar_card_number": "772185078771",
+        "father_s_name": "Late Shayam Sunder Singh",
+        "date_of_birth": "18/08/1985",
+        "state": "Jharkhand",
+        "gender": "Female",
+        "pin_code": "834002",
+        "spouse_name": "  ",
+        "age": "31",
+        "ration_card": "NMFMFMFMFM",
+        "pan_card": "FFFGG5777H",
+        "district": "Ranchi",
+        "name": "  Manisha Singh",
+        "mother_s_name": "Mrs. Kunti Devi",
+        "voter_id_number": "MYG3900024",
+        "mobile_number": "9899749499"
     }
 }
 
@@ -596,7 +596,7 @@ payload1 = {
         "fuel_expenses": "",
         "utility_expenses": ""
     },
-    "application_id": "FO10000022",
+    "application_id": "FO10000004",
     "applicant_family_details_ce_conformation": {
         "i_confirm_that_i_have_seen_the_original_documents": "Yes"
     },
@@ -608,5 +608,5 @@ payload1 = {
 
 
 # # for i in range(0, 1):
-response = requests.post(url,json =payload1, params=querystring)
+response = requests.get(url,json =payload1, params=querystring)
 print(response.text)
