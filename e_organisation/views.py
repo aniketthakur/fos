@@ -544,24 +544,24 @@ def application_get_group(branchid,state):
         item["loan"] = s
         item["loan_total"] = ""
         item["loan_default"] = ""
-        # # item["is_neighbor_complete"] = app.is_neighbor_complete
-        #
-        # if app.highmark_response1:
-        #     for i in app.highmark_response1.indv_response_list:
-        #         if i.is_prohibited:
-        #             s = s + str(i.mfi_name) + " " + str(i.loan_info_as_on) + " " + str(i.loan_balance) + " " + str(i.dpd_60+i.dpd_90) + " \n"
-        #
-        # item["loan"] = s
-        # s2 = ""
-        # bal = 0
-        # dpd = 0
-        # if app.highmark_response:
-        #     s2, bal, dpd = utils.get_loan_bal_dpd_from_highmark_response(app.highmark_response)
-        #
-        # s2 = s2.strip()
-        # item["loan"] = s2
-        # item["loan_total"] = "Total Balance : " + str(bal)
-        # item["loan_default"] = "Total Default : " + str(dpd)
+        # item["is_neighbor_complete"] = app.is_neighbor_complete
+
+        if app.highmark_response1:
+            for i in app.highmark_response1.indv_response_list:
+                if i.is_prohibited:
+                    s = s + str(i.mfi_name) + " " + str(i.loan_info_as_on) + " " + str(i.loan_balance) + " " + str(i.dpd_60+i.dpd_90) + " \n"
+
+        item["loan"] = s
+        s2 = ""
+        bal = 0
+        dpd = 0
+        if app.highmark_response:
+            s2, bal, dpd = utils.get_loan_bal_dpd_from_highmark_response(app.highmark_response)
+
+        s2 = s2.strip()
+        item["loan"] = s2
+        item["loan_total"] = "Total Balance : " + str(bal)
+        item["loan_default"] = "Total Default : " + str(dpd)
         item["status"] = 0
         item["register_complete"] = "yes" if 186 in [status.status.status_code for status in app.timeline] else "no"
         item["is_blocked"] = "yes" if app.is_pre_registered and not app.is_registered else "no"

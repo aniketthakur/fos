@@ -20,8 +20,8 @@ url = "http://%s/api/organisation/branches/57b59094ebc8b23810d5d5cd/applications
 # print response.text
 
 querystring = {
-     #ile "instance_token":"cMsYQdzW6FaORTWfxO7YA06IT0BLi1iwiTxiokYpCOs"
-    "instance_token":"emCznTNvmPZwTYSbquGx4lzdOCgPgkEE7fdUUlpcrBw"
+      # "instance_token":"cMsYQdzW6FaORTWfxO7YA06IT0BLi1iwiTxiokYpCOs"
+ "instance_token":"emCznTNvmPZwTYSbquGx4lzdOCgPgkEE7fdUUlpcrBw"
     # "instance_token":"_jwjjLLl6yBmsXYF9nqwgtSwRpFsdkNe8V23x1X9sQU"
     #"instance_token":"M-u5wznPyaAsHy5aWlgnJ0Xw1cocfQq9Qcic8eJMvu8"
 }

@@ -16,7 +16,10 @@ def get_loan_bal_dpd_from_highmark_response(response):
 		for i in root.findall(".//INDV-RESPONSE"):
 			if i.find(".//LOAN-DETAIL/ACCT-TYPE").text.lower() not in esthenos.settings.ORGS_SETTINGS["acct-types-exclude"] and \
 							i.find(".//LOAN-DETAIL/STATUS").text.lower() == "active":
-				s2 = s2 + "\n" + str(i.find(".//MFI").text) + "/" + str(i.find(".//INFO-AS-ON").text) + "/" + str(i.find(".//CURRENT-BAL").text) + "/" + str(str(i.find(".//OVERDUE-AMT").text)) + "/" +str(int(i.find(".//TOT-DPD-60").text)+int(i.find(".//TOT-DPD-90").text))
+				try:
+					s2 = s2 + "\n" + str(i.find(".//MFI").text) + "/" + str(i.find(".//INFO-AS-ON").text) + "/" + str(i.find(".//CURRENT-BAL").text) + "/" + str(str(i.find(".//OVERDUE-AMT").text)) + "/" +str(int(i.find(".//TOT-DPD-60").text)+int(i.find(".//TOT-DPD-90").text))
+				except:
+					s2 = s2 + "\n" + str(i.find(".//MFI").text) + "/" + str(i.find(".//INFO-AS-ON").text) + "/" + str(i.find(".//CURRENT-BAL").text) + "/" + str(str(0)) + "/" + str(int(i.find(".//TOT-DPD-60").text) + int(i.find(".//TOT-DPD-90").text))
 				bal = bal+int(i.find(".//CURRENT-BAL").text)
 				dpd = dpd+int(i.find(".//TOT-DPD-60").text)+int(i.find(".//TOT-DPD-90").text)
 
