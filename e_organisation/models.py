@@ -1768,11 +1768,11 @@ class EsthenosOrgApplication(db.Document):
     sales_revenue_in_10_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_12_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_8_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_revenue_credit = db.StringField(max_length=512, required=False,default="")
+    total_annual_revenue_credit = db.IntField(default=0)
     sales_revenue_in_7_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_6_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_9_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_revenue_cash = db.StringField(max_length=512, required=False,default="")
+    total_annual_revenue_cash = db.IntField(default=0)
     sales_revenue_in_2_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_11_month = db.StringField(max_length=512, required=False,default="")
 
@@ -1782,9 +1782,9 @@ class EsthenosOrgApplication(db.Document):
     raw_material_purchase_in_3_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_8_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_10_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_purchase_cash = db.StringField(max_length=512, required=False,default="")
+    total_annual_purchase_cash = db.IntField(default=0)
     raw_material_purchase_in_11_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_purchase_credit = db.StringField(max_length=512, required=False,default="")
+    total_annual_purchase_credit = db.IntField(default=0)
     raw_material_purchase_in_2_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_12_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_9_month = db.StringField(max_length=512, required=False,default="")
@@ -1959,6 +1959,18 @@ class EsthenosOrgApplication(db.Document):
               + toInt(self.type_equipment1.estimated_value) \
               + toInt(self.type_equipment2.estimated_value) \
               + toInt(self.type_equipment3.estimated_value)
+
+    @property
+    def credit_sales(self):
+        return toInt(self.total_annual_revenue_credit \
+          /(self.total_annual_revenue_credit \
+               + self.total_annual_revenue_cash))
+
+    @property
+    def credit_purchase(self):
+        return toInt(self.total_annual_purchase_credit\
+                /(self.total_annual_purchase_credit \
+               + self.total_annual_purchase_cash))
 
     @property
     def total_assests(self):

@@ -64,7 +64,7 @@
             </tr>
             <tr>
                 <td >BANK STATEMENT MONTHS</td>
-                <td ></td>
+                <td ><input type="text" class="form-control"></td>
             </tr>
              <tr>
                 <td >PURPOSE OF LOAN</td>
@@ -83,67 +83,126 @@
               </tr>
             <tr>
                 <td>NATURE OF BUSINESS</td>
-                <td >{{app.type_of_business_entity}}</td>
+                <td >{{app.description_business}}</td>
             </tr>
             <tr>
                 <td >SPECIAL PROFILE (YES/ NO)</td>
-                <td >{{app.activity}}</td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="yes">YES</option>
+                            <option value="no">NO</option>
+                     </select>
+                </td>
             </tr>
              <tr>
                 <td >RESI OWNED/RENTED</td>
-                <td ></td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="owned">OWNED</option>
+                            <option value="rented">RENTED</option>
+                     </select>
+                </td>
               </tr>
             <tr>
                 <td>SHOP OWNED/ RENTED</td>
-                <td ></td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="owned">OWNED</option>
+                            <option value="rented">RENTED</option>
+                     </select>
+                </td>
             </tr>
             <tr>
                 <td >RESI STABILITY</td>
-                <td ></td>
+                <td>{{ app.house_stay_duration}}</td>
             </tr>
              <tr>
                 <td >BUSINESS VINTAGE</td>
-                <td ></td>
+                 <td>{{ app.no_of_years_in_business }}</td>
               </tr>
             <tr>
                 <td>RESI OWNERSHIP PROOF</td>
-                <td ></td>
+                <td ALIGN="center">
+                        <select>
+                            <option value="propertydeed">PROPERTY DEED</option>
+                            <option value="municipaltaxreceipt">MUNICIPAL TAX RECEIPT</option>
+                            <option value="electricitybill">ELECTRICITY BILL</option>
+                       </select>
+                </td>
             </tr>
             <tr>
                 <td>BUSINESS OWNERSHIP PROOF</td>
-                <td ></td>
+                <td ALIGN="center">
+                        <select>
+                            <option value="propertydeed">PROPERTY DEED</option>
+                            <option value="municipaltaxreceipt">MUNICIPAL TAX RECEIPT</option>
+                            <option value="electricitybill">ELECTRICITY BILL</option>
+                       </select>
+                </td>
             </tr>
              <tr>
                 <td >CREDIT SALES %</td>
-                <td ></td>
+                <td >{{app.credit_sales}}</td>
               </tr>
             <tr>
                 <td>CREDIT PURCHASE %</td>
-                <td ></td>
+                <td >{{app.credit_purchase}}</td>
             </tr>
             <tr>
                 <td >BUSINESS ACTIVITY</td>
-                <td ></td>
+                <td ALIGN="center">
+                        <select>
+                            <option value="low">LOW</option>
+                            <option value="medium">MEDIUM</option>
+                            <option value="high">HIGH</option>
+                       </select>
+                </td>
             </tr>
              <tr>
                 <td >PERSON MET</td>
-                <td ></td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="applicant">APPLICANT</option>
+                            <option value="coapplicant">CO-APPLICANT</option>
+                            <option value="both">BOTH</option>
+                     </select>
+                </td>
               </tr>
             <tr>
                 <td>BUSINESS FEEDBACK / CREDENTIALS</td>
-                <td ></td>
+                <td ALIGN="center" >
+                    <select>
+                            <option value="negative">NEGATIVE</option>
+                            <option value="positive">POSITIVE</option>
+                    </select>
+                </td>
             </tr>
                <tr>
                 <td>RESIDENCE FEEDBACK / CREDENTIALS</td>
-                <td ></td>
+                <td ALIGN="center" >
+                     <select>
+                            <option value="negative">NEGATIVE</option>
+                            <option value="positive">POSITIVE</option>
+                     </select>
+                </td>
             </tr>
             <tr>
                 <td >IS THE BUSINESS SOCIALLY DESIRABLE</td>
-                <td ></td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="yes">YES</option>
+                            <option value="no">NO</option>
+                     </select>
+                </td>
             </tr>
              <tr>
                 <td >ASSETS SEEN</td>
-                <td ></td>
+                <td ALIGN="center">
+                     <select>
+                            <option value="yes">YES</option>
+                            <option value="no">NO</option>
+                     </select>
+                </td>
               </tr>
             </tbody>
           </table>

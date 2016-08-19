@@ -209,8 +209,7 @@ def disbursement_applications():
     applications = EsthenosOrgApplication.objects.filter(status=191)
 
     for application in applications:
-        application.update_status(243)
-        application.update_status(244)
+        application.update_status(240)
         application.save()
 
 
@@ -300,6 +299,7 @@ def generate_post_grt_applications(org_id, applicant_id, disbursement_date, firs
 
         application.disbursement_pdf_link = k.key
         application.update_status(243)
+        application.update_status(244)
         application.save()
 
 
