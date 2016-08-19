@@ -159,8 +159,8 @@ def cashflow_statusupdate(app_id):
       application.timeline.append(status)
 
 
-      application.total_annual_revenue_credit = float(request.form.get("Total Annual Revenue-Credit"))
-      application.total_annual_revenue_cash =  float(request.form.get("Total Annual Revenue-Cash"))
+      application.total_annual_revenue_crdit = float(request.form.get("Total Annual Revenue-Credit"))
+      application.total_annual_revenue_csh =  float(request.form.get("Total Annual Revenue-Cash"))
 
       application.house_monthly_rent = float(request.form.get("monthly_rent"))
       application.average_monthly_bill = float(request.form.get("average_monthly_bill_phone"))
@@ -184,8 +184,8 @@ def cashflow_statusupdate(app_id):
       application.loan_details3.emi_repayments  = float(request.form.get("emi_payment3"))
       application.loan_details4.emi_repayments  = float(request.form.get("emi_payment4"))
 
-      application.total_annual_purchase_cash = float(request.form.get("total_annual_purchase_cash"))
-      application.total_annual_purchase_credit = float(request.form.get("total_annual_purchase_credit"))
+      application.total_annual_prchase_cash = float(request.form.get("total_annual_purchase_cash"))
+      application.total_annual_prchase_credit = float(request.form.get("total_annual_purchase_credit"))
 
     status_code = 170 if request.form.get("status") == "true" else 180
     application.update_status(status_code)

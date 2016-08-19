@@ -1768,11 +1768,11 @@ class EsthenosOrgApplication(db.Document):
     sales_revenue_in_10_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_12_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_8_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_revenue_credit = db.IntField(default=0)
+    total_annual_revenue_crdit = db.IntField(default=0)
     sales_revenue_in_7_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_6_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_9_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_revenue_cash = db.IntField(default=0)
+    total_annual_revenue_csh = db.IntField(default=0)
     sales_revenue_in_2_month = db.StringField(max_length=512, required=False,default="")
     sales_revenue_in_11_month = db.StringField(max_length=512, required=False,default="")
 
@@ -1782,9 +1782,9 @@ class EsthenosOrgApplication(db.Document):
     raw_material_purchase_in_3_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_8_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_10_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_purchase_cash = db.IntField(default=0)
+    total_annual_prchse_cash = db.IntField(default=0)
     raw_material_purchase_in_11_month = db.StringField(max_length=512, required=False,default="")
-    total_annual_purchase_credit = db.IntField(default=0)
+    total_annual_prchse_credit = db.IntField(default=0)
     raw_material_purchase_in_2_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_12_month = db.StringField(max_length=512, required=False,default="")
     raw_material_purchase_in_9_month = db.StringField(max_length=512, required=False,default="")
@@ -1962,15 +1962,15 @@ class EsthenosOrgApplication(db.Document):
 
     @property
     def credit_sales(self):
-        return toInt(self.total_annual_revenue_credit \
-          /(self.total_annual_revenue_credit \
-               + self.total_annual_revenue_cash))
+        return toInt(self.total_annual_revenue_crdit \
+          /(self.total_annual_revenue_crdit \
+               + self.total_annual_revenue_csh))
 
     @property
     def credit_purchase(self):
-        return toInt(self.total_annual_purchase_credit\
-                /(self.total_annual_purchase_credit \
-               + self.total_annual_purchase_cash))
+        return toInt(self.total_annual_prchase_credit\
+                /(self.total_annual_prchase_credit \
+               + self.total_annual_prchase_cash))
 
     @property
     def total_assests(self):
@@ -1979,8 +1979,8 @@ class EsthenosOrgApplication(db.Document):
 
     @property
     def total_income(self):
-        return self.total_annual_revenue_cash \
-              + self.total_annual_revenue_credit
+        return self.total_annual_revenue_csh \
+              + self.total_annual_revenue_crdit
 
     @property
     def total_expenditure(self):
@@ -2006,13 +2006,13 @@ class EsthenosOrgApplication(db.Document):
 
     @property
     def average_monthly_purchase(self):
-        return round((self.total_annual_purchase_cash \
-              + self.total_annual_purchase_credit)/12, 0)
+        return round((self.total_annual_prchase_cash \
+              + self.total_annual_prchase_credit)/12, 0)
 
     @property
     def average_monthly_income(self):
-        return round((self.total_annual_revenue_cash \
-              + self.total_annual_revenue_credit)/12, 0)
+        return round((self.total_annual_revenue_csh \
+              + self.total_annual_revenue_crdit)/12, 0)
 
     def total_other_outstanding(self):
         return self.other_outstanding_emi \
