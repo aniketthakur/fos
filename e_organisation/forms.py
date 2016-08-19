@@ -153,6 +153,7 @@ class AddApplicationMobile(Form):
 
     def load_land_details(self, data):
         return EsthenosOrgApplicationLandDetails(
+            residence_ownership_proof = data.get("residence_ownership_proof",""),
             area_in_sqft = toFloat(data.get("area_in_sqft", "")),
             land_location = data.get("land_location", ""),
             ownership = data.get("ownership", ""),
@@ -511,6 +512,8 @@ class AddApplicationMobile(Form):
             app.outstanding_loan = toFloat(data.get("outstanding_loan", ""))
             app.description_business = data.get("description_business", "")
             app.activity = data.get("activity", "")
+            app.business_ownership_proof = data.get("business_ownership_proof","")
+
         # app.name = applicant_kyc["name"]
         # app.dob = applicant_kyc["dob_yob"]
         # app.yob = applicant_kyc["dob_yob"]

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% set active_page = 'scrutiny' %}
 {% block maincontents %}
-    <div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
         <div class="col-md-12 form-group">
             <h3>VISIT <span class="semi-bold">REPORT :</span></h3>
             <h3 class="pull-right"><a href="{{ url_for("organisation_views.visiting_report_print", app_id=app.application_id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
@@ -12,6 +12,7 @@
             <!--<div>-->
                <!--<h5 class="text-center">VISIT REPORT</h5>-->
            <!--</div>-->
+        <form method="post" class="validateForm" id="visting_report_update" action="{{ url_for("organisation_views.visiting_report", app_id=app.application_id) }}">
         <table class="table table-bordered" cols=6>
             <thead>
               <tr style="width:100px;">
@@ -21,11 +22,11 @@
             <tbody>
               <tr style="width:100px;">
                 <td class="text-left" style="width:50%;font-size:14px">DATE VISIT AND TIME OF VISIT</td>
-                <td class="text-left" style="width:50%;font-size:14px"><input type="text" class="form-control"></td>
+                <td class="text-left" style="width:50%;font-size:14px"><input id="visit_date" type="text" class="form-control"></td>
               </tr>
               <tr>
                 <td >VISIT BY (NAME & ID)</td>
-                <td ><input type="text" class="form-control"></td>
+                <td ><input id="visit_name_id" type="text" class="form-control"></td>
               </tr>
               <tr>
                 <td colspan="2" style="text-align:center;">DETAILS</td>
@@ -88,7 +89,7 @@
             <tr>
                 <td >SPECIAL PROFILE (YES/ NO)</td>
                 <td ALIGN="center">
-                     <select>
+                     <select name="special_profile" id="special_profile">
                             <option value="yes">YES</option>
                             <option value="no">NO</option>
                      </select>
@@ -97,7 +98,7 @@
              <tr>
                 <td >RESI OWNED/RENTED</td>
                 <td ALIGN="center">
-                     <select>
+                     <select name="resi_typ" id="resi_typ">
                             <option value="owned">OWNED</option>
                             <option value="rented">RENTED</option>
                      </select>
@@ -106,7 +107,7 @@
             <tr>
                 <td>SHOP OWNED/ RENTED</td>
                 <td ALIGN="center">
-                     <select>
+                     <select name="shop_typ" id="shop_typ">
                             <option value="owned">OWNED</option>
                             <option value="rented">RENTED</option>
                      </select>
@@ -123,7 +124,7 @@
             <tr>
                 <td>RESI OWNERSHIP PROOF</td>
                 <td ALIGN="center">
-                        <select>
+                        <select id="rest_own_proof" name="rest_own_proof">
                             <option value="propertydeed">PROPERTY DEED</option>
                             <option value="municipaltaxreceipt">MUNICIPAL TAX RECEIPT</option>
                             <option value="electricitybill">ELECTRICITY BILL</option>
@@ -133,7 +134,7 @@
             <tr>
                 <td>BUSINESS OWNERSHIP PROOF</td>
                 <td ALIGN="center">
-                        <select>
+                        <select id = "business_own_proof" name="business_own_proof">
                             <option value="propertydeed">PROPERTY DEED</option>
                             <option value="municipaltaxreceipt">MUNICIPAL TAX RECEIPT</option>
                             <option value="electricitybill">ELECTRICITY BILL</option>
@@ -151,7 +152,7 @@
             <tr>
                 <td >BUSINESS ACTIVITY</td>
                 <td ALIGN="center">
-                        <select>
+                        <select id="business_activity" name="business_activity">
                             <option value="low">LOW</option>
                             <option value="medium">MEDIUM</option>
                             <option value="high">HIGH</option>
@@ -161,7 +162,7 @@
              <tr>
                 <td >PERSON MET</td>
                 <td ALIGN="center">
-                     <select>
+                     <select id = "person_met" name="person_met">
                             <option value="applicant">APPLICANT</option>
                             <option value="coapplicant">CO-APPLICANT</option>
                             <option value="both">BOTH</option>
@@ -171,7 +172,7 @@
             <tr>
                 <td>BUSINESS FEEDBACK / CREDENTIALS</td>
                 <td ALIGN="center" >
-                    <select>
+                    <select id="business_credentials" name="business_credentials">
                             <option value="negative">NEGATIVE</option>
                             <option value="positive">POSITIVE</option>
                     </select>
@@ -180,7 +181,7 @@
                <tr>
                 <td>RESIDENCE FEEDBACK / CREDENTIALS</td>
                 <td ALIGN="center" >
-                     <select>
+                     <select id ="residance_credentials" name="residance_credentials">
                             <option value="negative">NEGATIVE</option>
                             <option value="positive">POSITIVE</option>
                      </select>
@@ -189,7 +190,7 @@
             <tr>
                 <td >IS THE BUSINESS SOCIALLY DESIRABLE</td>
                 <td ALIGN="center">
-                     <select>
+                     <select id = "bsns_socialy_desirabl" name="bsns_socialy_desirabl">
                             <option value="yes">YES</option>
                             <option value="no">NO</option>
                      </select>
@@ -198,7 +199,7 @@
              <tr>
                 <td >ASSETS SEEN</td>
                 <td ALIGN="center">
-                     <select>
+                     <select id = "assest_seen" name="assest_seen">
                             <option value="yes">YES</option>
                             <option value="no">NO</option>
                      </select>
@@ -206,6 +207,23 @@
               </tr>
             </tbody>
           </table>
+           <button class="btn btn-medium btn-success btn-cons org-submit center" id="submitForm1" type="submit">Submit</button>
+           </form>
      </div>
    </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#states").select2();
+            populateCountries("country", "state");
+            $("#state").select2();
+            $("#country").select2();
+            $(".org-submit").click(function(){
+                $("#form-organisation").submit();
+            });
+        });
+
+     </script>
 {% endblock %}

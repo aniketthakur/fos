@@ -1376,6 +1376,7 @@ class EsthenosOrgApplicationLandDetails(db.EmbeddedDocument):
     area_in_sqft = db.FloatField(default=0)
     loan_outstanding = db.FloatField(default=0)
     estimated_resale_value = db.IntField(default=0)
+    residence_ownership_proof = db.StringField(max_length=512, default="")
 
 class EsthenosOrgApplicationLoanDetails(db.EmbeddedDocument):
     type_of_loan= db.StringField(max_length=512, default="")
@@ -1804,6 +1805,18 @@ class EsthenosOrgApplication(db.Document):
     two_wheeler_y_n = db.StringField(max_length=512, required=False,default="")
     washing_machine = db.StringField(max_length=512, required=False,default="")
 
+    business_socially_desirable  = db.StringField(max_length=512, required=False,default="")
+    assest_seen = db.StringField(max_length=512, required=False,default="")
+    residance_feedback_credentials = db.StringField(max_length=512, required=False,default="")
+    business_feedback_credentials =db.StringField(max_length=512, required=False,default="")
+    person_met = db.StringField(max_length=512, required=False,default="")
+    business_activity = db.StringField(max_length=512, required=False,default="")
+    shop_typ = db.StringField(max_length=512, required=False,default="")
+    resi_typ = db.StringField(max_length=512, required=False,default="")
+
+    visit_name_id  = db.StringField(max_length=512, required=False,default="")
+    visit_date = db.StringField(max_length=512, required=False,default="")
+
     address = db.StringField(max_length=512, required=False,default="") #[All other are Customer Details from 1 to 5]
     # name_4 = db.StringField(max_length=512, required=False,default="")
     # name_3 = db.StringField(max_length=512, required=False,default="")
@@ -1895,6 +1908,7 @@ class EsthenosOrgApplication(db.Document):
     area_occupied= db.FloatField(default=0.0)
     outstanding_loan= db.FloatField(default=0.0)
     address_of_place_of_business = db.StringField(max_length=512, required=False,default="")
+    business_ownership_proof = db.StringField(max_length=512, required=False,default="")
 
     product_details_1 = db.StringField(max_length=512, required=False,default="")
     product_details_2 = db.StringField(max_length=512, required=False,default="")
@@ -1962,15 +1976,23 @@ class EsthenosOrgApplication(db.Document):
 
     @property
     def credit_sales(self):
-        return toInt(self.total_annual_revenue_crdit \
+        try:
+           val = toInt(self.total_annual_revenue_crdit \
           /(self.total_annual_revenue_crdit \
                + self.total_annual_revenue_csh))
+        except ZeroDivisionError:
+           val = 0
+        return val
 
     @property
     def credit_purchase(self):
-        return toInt(self.total_annual_prchase_credit\
+        try:
+            val = toInt(self.total_annual_prchase_credit\
                 /(self.total_annual_prchase_credit \
                + self.total_annual_prchase_cash))
+        except ZeroDivisionError:
+            val = 0
+        return val
 
     @property
     def total_assests(self):

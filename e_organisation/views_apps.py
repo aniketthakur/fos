@@ -487,7 +487,7 @@ def credit_summary_print(app_id):
   kwargs = locals()
   return render_template("scrutiny/credit_summary_print.html", **kwargs)
 
-@organisation_views.route('/visiting_report/<app_id>', methods=["GET"])
+@organisation_views.route('/visiting_report/<app_id>', methods=["GET","POST"])
 @login_required
 @feature_enable("features_applications_scrutiny")
 def visiting_report(app_id):
@@ -495,8 +495,28 @@ def visiting_report(app_id):
   user = EsthenosUser.objects.get(id=current_user.id)
   app = EsthenosOrgApplication.objects.get(application_id=app_id)
 
-  kwargs = locals()
-  return render_template("scrutiny/visiting_report.html", **kwargs)
+  if request.method == "GET":
+      kwargs = locals()
+      return render_template("scrutiny/visiting_report.html", **kwargs)
+
+  if request.method == "POST":
+      app.visit_date = request.form.get("visit_date","")
+      app.visit_name_id = request.form.get("visit_name_id","")
+      print app.visit_name_id
+      app.business_socially_desirable = request.form.get("bsns_socialy_desirabl","")
+      app.assest_seen = request.form.get("assest_seen","")
+      app.residance_feedback_credentials = request.form.get("residance_credentials","")
+      app.business_feedback_credentials = request.form.get("business_credentials","")
+      app.person_met = request.form.get("business_credentials","")
+      app.business_activity = request.form.get("business_activity","")
+      app.business_ownership_proof = request.form.get("business_own_proof","")
+      app.land_details1.residence_ownership_proof = request.form.get("rest_own_proof","")
+      app.resi_typ = request.form.get("resi_typ","")
+      app.shop_typ = request.form.get("shop_typ","")
+      app.save()
+
+      kwargs = locals()
+      return render_template("scrutiny/visiting_report.html", **kwargs)
 
 
 @organisation_views.route('/visiting_report/<app_id>/print', methods=["GET"])
