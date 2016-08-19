@@ -253,7 +253,7 @@ def check_disbursement():
     if (stateId is not None) and (stateId != ""):
         state = EsthenosOrgState.objects.get(id=stateId)
 
-    for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status__gte=240):
+    for i in EsthenosOrgApplication.objects.filter(organisation=user.organisation, status=240):
         t = ""
         if branch and i.branch == branch:
             t = i

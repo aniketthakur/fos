@@ -1,0 +1,164 @@
+{% extends "base_print.html" %}
+{% set active_page = 'scrutiny' %}
+{% block maincontents %}
+   <div class="grid simple ">
+       <div class="grid-body">
+            <!--<div>-->
+               <!--<h5 class="text-center">VISIT REPORT</h5>-->
+           <!--</div>-->
+        <form method="post" class="validateForm" id="visting_report_update" action="{{ url_for("organisation_views.visiting_report", app_id=app.application_id) }}">
+        <table class="table table-bordered" cols=6>
+            <thead>
+              <tr style="width:100px;">
+                <th colspan="2" style="text-align:center;" style="width:50%;font-size:18px;">VISIT REPORT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="width:100px;">
+                <td class="text-left" style="width:50%;font-size:14px">DATE VISIT AND TIME OF VISIT</td>
+                <td class="text-left" style="width:50%;font-size:14px">{{app.visit_date}}</td>
+              </tr>
+              <tr>
+                <td >VISIT BY (NAME & ID)</td>
+                <td >{{app.visit_name_id}}</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="text-align:center;">DETAILS</td>
+            </tr>
+            <tr>
+                <td >APPLICANT NAME</td>
+                <td >{{app.applicant_kyc.name}}</td>
+              </tr>
+            <tr>
+                <td>APPLICANT AGE</td>
+                <td >{{app.applicant_kyc.age}}</td>
+            </tr>
+            <tr>
+                <td >CO APPLICANT AGE</td>
+                <td >{{app.guarantor1_kyc.age}}</td>
+            </tr>
+             <tr>
+                <td >LOAN TYPE (NEW/ REPEAT/ GRADUATE)</td>
+                <td >{{app.loan_type}}</td>
+              </tr>
+            <tr>
+                <td>LOAN AMOUNT</td>
+                <td >{{app.required_loan_amount}}</td>
+            </tr>
+            <tr>
+                <td >TENURE</td>
+                <td >{{app.tenure}}</td>
+            </tr>
+             <tr>
+                <td >EMI</td>
+                <td >{{app.emi}}</td>
+              </tr>
+            <tr>
+                <td>EMI CAPACITY AS PER CUSTOMER</td>
+                <td >{{app.emi_capacity}}</td>
+            </tr>
+            <tr>
+                <td >BANK STATEMENT MONTHS</td>
+                <td >{{app.bank_statements}}</td>
+            </tr>
+             <tr>
+                <td >PURPOSE OF LOAN</td>
+                <td>{{app.prpose_of_loan}}</td>
+              </tr>
+            <tr>
+                <td>IF ASSET PURCHASE , AMT ALLOCATED FOR ASSET</td>
+                <td >{{app.amount_allocated_for_assets}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">BUSINESS VERIFICATION</td>
+            </tr>
+             <tr>
+                <td >ACTIVITY</td>
+                <td >{{app.activity}}</td>
+              </tr>
+            <tr>
+                <td>NATURE OF BUSINESS</td>
+                <td >{{app.description_business}}</td>
+            </tr>
+            <tr>
+                <td >SPECIAL PROFILE (YES/ NO)</td>
+               <td>{{app.special_prof}}</td>
+            </tr>
+             <tr>
+                <td >RESI OWNED/RENTED</td>
+                <td>{{app.resi_typ}}</td>
+              </tr>
+            <tr>
+                <td>SHOP OWNED/ RENTED</td>
+                <td>{{app.shop_typ}}</td>
+            </tr>
+            <tr>
+                <td >RESI STABILITY</td>
+                <td>{{ app.house_stay_duration}}</td>
+            </tr>
+             <tr>
+                <td >BUSINESS VINTAGE</td>
+                 <td>{{ app.no_of_years_in_business }}</td>
+              </tr>
+            <tr>
+                <td>RESI OWNERSHIP PROOF</td>
+                 <td>{{app.land_details1.residence_ownership_proof}}</td>
+            </tr>
+            <tr>
+                <td>BUSINESS OWNERSHIP PROOF</td>
+                 <td>{{app.business_ownership_proof}}</td>
+            </tr>
+             <tr>
+                <td >CREDIT SALES %</td>
+                <td >{{app.credit_sales}}</td>
+              </tr>
+            <tr>
+                <td>CREDIT PURCHASE %</td>
+                <td >{{app.credit_purchase}}</td>
+            </tr>
+            <tr>
+                <td >BUSINESS ACTIVITY</td>
+                 <td >{{app.business_activity}}</td>
+            </tr>
+             <tr>
+                <td >PERSON MET</td>
+                <td >{{app.person_met}}</td>
+              </tr>
+            <tr>
+                <td>BUSINESS FEEDBACK / CREDENTIALS</td>
+                 <td >{{app.business_feedback_credentials}}</td>
+            </tr>
+               <tr>
+                <td>RESIDENCE FEEDBACK / CREDENTIALS</td>
+                 <td >{{app.residance_feedback_credentials}}</td>
+            </tr>
+            <tr>
+                <td >IS THE BUSINESS SOCIALLY DESIRABLE</td>
+                 <td >{{app.business_socially_desirable}}</td>
+            </tr>
+             <tr>
+                <td >ASSETS SEEN</td>
+                 <td >{{app.assest_seen}}</td>
+              </tr>
+            </tbody>
+          </table>
+           <button class="btn btn-medium btn-success btn-cons org-submit center" id="submitForm1" type="submit">Submit</button>
+           </form>
+     </div>
+   </div>
+{% endblock %}
+{% block js_scripts %}{{ super() }}
+    <script src="{{ url_for('static', filename='js/countries.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#states").select2();
+            populateCountries("country", "state");
+            $("#state").select2();
+            $("#country").select2();
+            $(".org-submit").click(function(){
+                $("#form-organisation").submit();
+            });
+        });
+
+     </script>
+{% endblock %}

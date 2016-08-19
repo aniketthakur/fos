@@ -502,7 +502,6 @@ def visiting_report(app_id):
   if request.method == "POST":
       app.visit_date = request.form.get("visit_date","")
       app.visit_name_id = request.form.get("visit_name_id","")
-      print app.visit_name_id
       app.business_socially_desirable = request.form.get("bsns_socialy_desirabl","")
       app.assest_seen = request.form.get("assest_seen","")
       app.residance_feedback_credentials = request.form.get("residance_credentials","")
@@ -513,6 +512,8 @@ def visiting_report(app_id):
       app.land_details1.residence_ownership_proof = request.form.get("rest_own_proof","")
       app.resi_typ = request.form.get("resi_typ","")
       app.shop_typ = request.form.get("shop_typ","")
+      app.special_prof = request.form.get("shop_typ","")
+      app.bank_statements = request.form.get("bank_statements","")
       app.save()
 
       kwargs = locals()
@@ -529,6 +530,84 @@ def visiting_report_print(app_id):
 
   kwargs = locals()
   return render_template("scrutiny/visiting_report_print.html", **kwargs)
+
+@organisation_views.route('/scrutiny/<app_id>/cbcheck', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def scrutiny_application_cbcheck(app_id):
+    if request.method == "GET":
+        user = EsthenosUser.objects.get(id=current_user.id)
+        application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+        response = application.highmark_response
+
+        data = {}
+        count_dpd = 0
+        acct_type_cases_excluded = ['shg']
+        total = 0
+
+        if response and "INDV-RESPONSE" in response:
+            root = ET.fromstring(response)
+            for indv in root.findall(".//INDV-RESPONSE"):
+                if indv.find(".//LOAN-DETAIL/ACCT-TYPE").text.lower() not in acct_type_cases_excluded \
+                        and indv.find(".//LOAN-DETAIL/STATUS").text.lower() == "active":
+                    mfi = indv.find("./MFI").text.lower().strip()
+                    mainapp.logger.debug("MFI %s", mfi)
+
+                    if mfi not in data:
+                        data[mfi] = []
+
+                    if mfi in data:
+                        bal = int(indv.find(".//LOAN-DETAIL/CURRENT-BAL").text)
+                        mainapp.logger.debug("BAL %s", bal)
+                        total += bal
+                        dpd = int(indv.find(".//TOT-DPD-60").text)+int(indv.find(".//TOT-DPD-90").text)
+                        count_dpd += dpd
+                        info_as_on = indv.find(".//LOAN-DETAIL/INFO-AS-ON").text
+                        data[mfi].append([bal, dpd, info_as_on])
+
+        mainapp.logger.debug("MFI %s", data.keys())
+        mainapp.logger.debug("TOTAL %s", total)
+        kwargs = locals()
+        return render_template("scrutiny/scrutiny_cbcheck.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny/<app_id>/highmarkreport', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def scrutiny_application_highmarkreport(app_id):
+    if request.method == "GET":
+        user = EsthenosUser.objects.get(id=current_user.id)
+        application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+        response = application.highmark_response
+        content = ""
+
+        if response and ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT") is not None:
+            content = ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT").text
+
+        kwargs = locals()
+        return render_template("scrutiny/scrutiny_details_highmark_report.html", **kwargs)
+
+
+@organisation_views.route('/scrutiny/<app_id>/highmarkreport/print', methods=["GET"])
+@login_required
+@feature_enable("features_applications_scrutiny")
+def scrutiny_application_highmarkreport_print(app_id):
+    today = datetime.datetime.now()
+    user = EsthenosUser.objects.get(id=current_user.id)
+    application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+    content = ""
+
+    if request.method == "GET":
+        user = EsthenosUser.objects.get(id=current_user.id)
+        application = EsthenosOrgApplication.objects.get(organisation=user.organisation, id=app_id)
+        response = application.highmark_response
+        content = ""
+
+        if response and ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT") is not None:
+            content = ET.fromstring(response).find(".//PRINTABLE-REPORT/CONTENT").text
+
+    return content
+
 
 
 @organisation_views.route('/sanctions/<app_id>', methods=["GET", "POST"])

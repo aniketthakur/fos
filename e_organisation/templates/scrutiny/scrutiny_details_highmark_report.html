@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block css_sheets %}{{ super() }}
+    <link href="{{ url_for('static', filename='css/custom-icon-set.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block maincontents %}
+
+<div class="row">
+        <div class="col-md-12 form-group">
+            <h3 class="pull-right"><a href="{{ url_for("organisation_views.scrutiny_application_highmarkreport_print", app_id=application.id) }}" target="_blank"><span class="semi-bold"><i class="fa fa-print fa-2x"></i></span></a></h3>
+        </div>
+        <div class="clearfix"></div>
+</div>
+<iframe srcdoc="{{ content }}" frameborder="0" height="1000" width="1200">
+
+</iframe>
+{% endblock %}

@@ -1813,9 +1813,10 @@ class EsthenosOrgApplication(db.Document):
     business_activity = db.StringField(max_length=512, required=False,default="")
     shop_typ = db.StringField(max_length=512, required=False,default="")
     resi_typ = db.StringField(max_length=512, required=False,default="")
-
     visit_name_id  = db.StringField(max_length=512, required=False,default="")
     visit_date = db.StringField(max_length=512, required=False,default="")
+    bank_statements = db.StringField(max_length=512, required=False,default="")
+    special_prof = db.StringField(max_length=512, required=False,default="")
 
     address = db.StringField(max_length=512, required=False,default="") #[All other are Customer Details from 1 to 5]
     # name_4 = db.StringField(max_length=512, required=False,default="")
