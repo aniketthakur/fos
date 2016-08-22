@@ -2196,7 +2196,7 @@ class EsthenosOrgApplication(db.Document):
         self.applicant_kyc.address = form['address']
         self.applicant_kyc.voter_id = form['voter_id_number']
         self.applicant_kyc.kyc_number = form['aadhar_card_number']
-        self.applicant_kyc.pan_card_id = form['pan_card']
+        self.applicant_kyc.pancard_id = form['pan_card']
         self.applicant_kyc.ration_id = form['ration_card']
         self.applicant_kyc.gender = form['gender']
 

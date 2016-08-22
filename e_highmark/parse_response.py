@@ -56,7 +56,7 @@ def get_query_params_from_app(app):
         applicant_params[i] = j
 
     applicant_id_headers = ['ID01', 'ID02', 'ID03', 'ID04', 'ID05', 'ID06', 'ID07']
-    applicant_id_headers_values = ['', '', app.applicant_kyc.kyc_number, '', '', '', '']
+    applicant_id_headers_values = [app.applicant_kyc.pan_card_id, app.applicant_kyc.voter_id, app.applicant_kyc.kyc_number, '', '', '', '']
 
     applicant_params["IDS"] = {}
 
