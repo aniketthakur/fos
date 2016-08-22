@@ -132,78 +132,22 @@
                         <td>TOTAL BOUNCES</td>
                         <td>LOAN NO</td>
                     </tr>
+                    {% for i in range(0,app.highmark_response1.indv_response_list|length)%}
+                       {% if app.highmark_response1.indv_response_list(i).loan_status == "ACTIVE" %}
                     <tr>
-                        <th style="text-align:center;" scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <th style="text-align:center;" scope="row">{{ loop.index+1 }}</th>
+                        <td>{app.highmark_response1.indv_response_list(i).mfi_name}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_account_type}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_disbursement_amt}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_frequency}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_balance}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_installment}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).dpd_90}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_dpd}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_account_number}</td>
                     </tr>
-                    <tr>
-                        <th style="text-align:center;" scope="row">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:center;" scope="row">3</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:center;" scope="row">4</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:center;" scope="row">5</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:center;" scope="row">6</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                        {% endif %}
+                    {% endfor %}
                     <tr>
                      <th scope="row" colspan="10" height="20"></th>
                     </tr>
@@ -221,67 +165,21 @@
                         <td>LOAN NO</td>
                          <td colspan="2" rowspan="7"></td>
                     </tr>
+                    {% for i in range(0,app.highmark_response1.indv_response_list|length)%}
+                       {% if app.highmark_response1.indv_response_list(i).loan_status != "ACTIVE" %}
                     <tr>
-                        <th style="width:10%;text-align:center;">1</th>
-                        <td ></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <th style="width:10%;text-align:center;">{{ loop.index+1 }}</th>
+                       <td>{app.highmark_response1.indv_response_list(i).mfi_name}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_account_type}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_disbursement_amt}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_frequency}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).dpd_90}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_dpd}</td>
+                        <td>{app.highmark_response1.indv_response_list(i).loan_account_number}</td>
 
                     </tr>
-                    <tr>
-                        <th style="width:10%;text-align:center;">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="width:10%;text-align:center;" scope="row">3</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="width:10%;text-align:center;">4</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="width:10%;text-align:center;">5</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th style="width:10%;text-align:center;">6</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
           </table>
        </div>
