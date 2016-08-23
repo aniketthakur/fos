@@ -369,6 +369,18 @@ class AddApplicationMobile(Form):
             app.cbcheck_gender = data.get("gender","")
             app.cbcheck_district = data.get("district","")
 
+            assets_map = self.load(self.assets_map)
+            applicant_docs = assets_map.get("applicant", {})
+            app.applicant_docs = EsthenosOrgApplicationDocs(
+               aadhar_docs = applicant_docs.get("aadhar_card", []),
+               pan_docs = applicant_docs.get("pan_card", []),
+               voterid_docs = applicant_docs.get("voter_card", []),
+               personal_docs = applicant_docs.get("personal_docs", []),
+               business_docs = applicant_docs.get("business_docs", []),
+               hypothecation_goods = applicant_docs.get("hypothecation_goods",[]),
+               other_docs = applicant_docs.get("other_card", []),
+            )
+
         else:
             previous_state = app.status
             app.assets_id = str(self.assets_id.data)
@@ -513,6 +525,17 @@ class AddApplicationMobile(Form):
             app.description_business = data.get("description_business", "")
             app.activity = data.get("activity", "")
             app.business_ownership_proof = data.get("business_ownership_proof","")
+
+
+
+            assets_map = self.load(self.assets_map)
+            applicant_docs = assets_map.get("applicant", {})
+            app.applicant_docs = EsthenosOrgApplicationDocs(
+              business_docs = applicant_docs.get("business_docs", []),
+              hypothecation_goods = applicant_docs.get("hypothecation_goods",[]),
+              family_details = applicant_docs.get("family_details",[]),
+              other_docs = applicant_docs.get("other_card", []),
+            )
 
         # app.name = applicant_kyc["name"]
         # app.dob = applicant_kyc["dob_yob"]

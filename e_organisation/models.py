@@ -1123,6 +1123,7 @@ class EsthenosOrgApplicationDocs(db.EmbeddedDocument):
     personal_docs = db.ListField(db.StringField(max_length=255))
     business_docs = db.ListField(db.StringField(max_length=255))
     other_docs = db.ListField(db.StringField(max_length=255))
+    family_details = db.ListField(db.StringField(max_length=255))
 
     def has_kyc(self):
         return self.pan_docs + self.aadhar_docs + self.voterid_docs
